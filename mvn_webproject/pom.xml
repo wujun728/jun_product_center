@@ -6,7 +6,7 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <name>Maven Web Project</name>
+    <name>mvn_webproject</name>
     <url>http://www.java.com</url>
 
     <properties>
