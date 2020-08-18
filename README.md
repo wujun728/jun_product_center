@@ -20,3 +20,13 @@ Maven构建项目的结构模板
 2. 新建 Feat_xxx 分支
 3. 提交代码
 4. 新建 Pull Request
+
+https://blog.csdn.net/u010938610/article/details/79282624
+spring cloud 实战项目搭建
+Eurreke
+
+https://github.com/izerui/tomcat-redis-session-manager
+
+https://blog.csdn.net/qq_38555490/article/details/105297271
+
+https://blog.csdn.net/antma/article/details/79629584
