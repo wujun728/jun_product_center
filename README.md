@@ -30,3 +30,5 @@ https://github.com/izerui/tomcat-redis-session-manager
 https://blog.csdn.net/qq_38555490/article/details/105297271
 
 https://blog.csdn.net/antma/article/details/79629584
+
+https://gitee.com/antma/SpringBootGetOpenId.git
