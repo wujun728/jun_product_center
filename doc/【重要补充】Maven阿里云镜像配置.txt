@@ -1,0 +1,5 @@
+maven官方下载Jar速度太慢了，经常超时，以及Jar包破损；
+
+所以这里推荐Maven阿里云镜像，具体配置参考：
+http://blog.java1234.com/blog/articles/252.html
+
