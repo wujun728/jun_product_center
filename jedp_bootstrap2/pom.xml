@@ -15,7 +15,7 @@
 		<shiro.version>1.2.2</shiro.version>
 		<cxf.version>2.7.11</cxf.version>
 		<hibernate-validator.version>5.0.2.Final</hibernate-validator.version>
-		<jackson.version>2.4.4</jackson.version>
+		<jackson.version>2.12.1</jackson.version>
 		<ehcache-core.version>2.6.9</ehcache-core.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
 		<ehcache.version>2.6.9</ehcache.version>
