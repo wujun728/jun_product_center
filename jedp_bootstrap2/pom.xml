@@ -19,7 +19,7 @@
 		<ehcache-core.version>2.6.9</ehcache-core.version>
 		<ehcache-web.version>2.0.4</ehcache-web.version>
 		<ehcache.version>2.6.9</ehcache.version>
-		<mysql-connector-java.version>5.1.25</mysql-connector-java.version>
+		<mysql-connector-java.version>8.0.16</mysql-connector-java.version>
 		<druid.version>1.0.9</druid.version>
 
 		<junit.version>4.12</junit.version>
