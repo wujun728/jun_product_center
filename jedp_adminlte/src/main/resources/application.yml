@@ -1,0 +1,57 @@
+server:
+  port: 8081
+  tomcat:
+    uri-encoding: utf-8
+#  servlet:
+#    context-path: /shiro
+logging:
+  level:
+    com.nbclass: DEBUG
+    tk.mybatis: DEBUG
+    org.springframework: WARN
+#  file: log/zb-shiro.log
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_shiro?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    filters: stat,wall,slf4j
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  redis:
+    host: 119.45.221.36
+    port: 6379
+    password:
+    timeout: 0
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis:
+  type-aliases-package: com.nbclass.model
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+mapper:
+  mappers: com.nbclass.util.MyMapper
+  not-empty: false
+  identity: MYSQL
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

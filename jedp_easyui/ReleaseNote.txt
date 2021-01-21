@@ -1,0 +1,1099 @@
+
+************************************************** 
+ [模块版本号] 3.00#20140321-1
+   修改人员名称: 司德加
+   最后修改时间：2014-03-21
+ 修改文件清单： 
+	/busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+    /com/spsoft/busmgr/dao/impl/MatterBaseDaoImpl.java
+    
+ 修改功能描述：
+ 	修改项目考核单条事项的办理页面
+ 	
+************************************************** 
+ [模块版本号] 3.00#20140318-1
+   修改人员名称: 曾阳波
+   最后修改时间：2014-03-18
+ 修改文件清单： 
+	/busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+    /busmgr/WebRoot/home/loadTaxOnTheWay.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IMatterBaseDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/MatterBaseDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IMatterBaseService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/MatterBaseServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/MatterBaseAction.java
+ 修改功能描述：
+ 	首页事项查询记录分组，一条的事项打开直接到办理页面
+************************************************** 
+ [模块版本号] 3.00#20140317-1
+   修改人员名称: 申俊波
+   最后修改时间：2014-03-17
+ 修改文件清单： 
+    /busmgr/WebRoot/projAuditReport/js/projAuditReport.js
+    /busmgr/WebRoot/projectScene/js/projScene.js
+    /busmgr/WebRoot/projAuditReport/projAuditReport.jsp
+	/busmgr/WebRoot/projectScene/projScene.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfActDealDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfActDealServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfActDealService.java
+    /busmgr/src/com/spsoft/busmgr/web/WfActDealAction.java
+    /busmgr/WebRoot/projectSymbol/js/projectSymbol.js
+    /busmgr/src/com/spsoft/busmgr/web/WfApplySymbolAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfApplysymbolServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfapplysymbolDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfApplySymbolDao.java
+ 修改功能描述：
+ 	修改报发号功能
+ 	增加项目选人工作
+ ************************************************** 
+ [模块版本号] 3.00#20140217-1
+   修改人员名称: 申俊波
+   最后修改时间：2014-02-17
+ 修改文件清单： 
+    /busmgr/WebRoot/projectSymbol/js/editproSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/editproSymbolfs.js
+    /busmgr/WebRoot/projectSymbol/js/projectSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/proSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/quarysymbol.js
+    /busmgr/WebRoot/projectSymbol/js/quarysymbolorder.js
+   
+	
+    /busmgr/WebRoot/projectSymbol/editproSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/editproSymbolfs.jsp
+    /busmgr/WebRoot/projectSymbol/projectSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/selItem.jsp
+   /busmgr/WebRoot/projectSymbol/proSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/ZCprojectSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/quarysymbolorder.jsp
+    /busmgr/WebRoot/projectSymbol/js/projectSymbol.js
+    
+    /busmgr/src/com/spsoft/busmgr/web/WfApplySymbolAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfApplysymbolServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfapplysymbolDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfApplySymbolDao.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfApplySymbolService.java
+ 修改功能描述：
+ 	修改报告文号补录功能、调整文号功能、删除文号功能
+ 	增加空文号的发号和流程
+ 	修改浏览补录文号的功能
+ ************************************************** 
+ [模块版本号] 3.00#20140126-1
+   修改人员名称: 申俊波
+   最后修改时间：2014-01-26
+ 修改文件清单： 
+    /busmgr/src/com/spsoft/busmgr/web/WfApplySymbolAction.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfApplySymbolService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfApplysymbolServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/MatterBaseServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfApplySymbolDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfapplysymbolDaoImpl.java
+    /busmgr/WebRoot/projectSymbol/editproSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/projectSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/proSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/quarysymbol.jsp
+    /busmgr/WebRoot/projectSymbol/selItem.jsp
+    /busmgr/WebRoot/projectSymbol/symbolLX.jsp
+    /busmgr/WebRoot/projectSymbol/ZCprojectSymbol.jsp
+    /busmgr/WebRoot/projectSymbol/js/editproSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/projectSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/proSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/quarysymbol.js
+    /busmgr/WebRoot/projectSymbol/js/selItem.js
+    /busmgr/WebRoot/projectSymbol/js/symbolLX.js
+    /busmgr/WebRoot/projectSymbol/js/ZCprojectSymbol.js
+ 修改功能描述：
+ 	增加报告文号补录功能、调整文号功能、删除文号功能
+ 	增加再次申请报告文号功能
+ 	对于报告文号功能增加浏览补录文号的功能
+************************************************** 
+ [模块版本号] 3.00#20140115-1
+   修改人员名称: 苏文涛
+   最后修改时间：2014-01-15
+ 修改文件清单： 
+    /busmgr/src/com/spsoft/busmgr/dao/IMatterBaseDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/MatterBaseDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IMatterBaseService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/MatterBaseServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/MatterBaseAction.java
+    /busmgr/WebRoot/META-INF/appconfig.xml
+    /busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+    /busmgr/WebRoot/home/loadTaxOnTheWay.jsp
+ 修改功能描述：
+ 	优化首页待办查询效率
+ 	增加配置属性todoListMode用以配置首页查询用新方法还是旧方法，适用于测试比较新方法是否有问题，详见appconfig.xml
+ 	增加配置属性todoListLimit用以配置首页待办最大数，详见appconfig.xml
+ 	
+************************************************** 
+ [模块版本号] 3.00#20131121-1
+   修改人员名称: 张杲
+   最后修改时间：2013-11-21
+ 修改文件清单： 
+ 	/busmgr/WebRoot/projApplication/upFile.jsp
+    /busmgr/WebRoot/projAuditReport/projAuditReportSearch.jsp
+    /busmgr/WebRoot/projAuditReport/projAuditReport.jsp
+    /busmgr/WebRoot/projectImp/selItem.jsp
+    /busmgr/WebRoot/projectSymbol/projectSymbol.jsp
+    /busmgr/WebRoot/projBackup/backupSearch.jsp
+    /busmgr/WebRoot/projBackup/backup.jsp
+    /busmgr/WebRoot/projAuditReport/js/projAuditReport.js
+    /busmgr/WebRoot/projAuditReport/js/projAuditReportSearch.js
+    /busmgr/src/com/spsoft/busmgr/servlet/UpFileServlet.java
+修改功能描述：
+     1.附件上传描述，servlet类
+	 2.申请报告文号、签发报告、项目报备UI修改
+
+************************************************** 
+ [模块版本号] 3.00#20131031-1
+   修改人员名称: 司德加
+   最后修改时间：2013-10-31
+ 修改文件清单： 
+ 	/busmgr/WebRoot/common/project.jsp
+    /busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+    /busmgr/WebRoot/home/loadTaxOnTheWay.jsp
+    /busmgr/WebRoot/projectArchive/edit.jsp
+    /busmgr/WebRoot/projectArchive/js/control.js
+    /busmgr/WebRoot/projectArchive/js/history.js
+    /busmgr/WebRoot/projectArchive/js/index.js
+    /busmgr/WebRoot/projectArchive/menuPage.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/impl/MatterBaseDaoImpl.java
+修改功能描述：
+     1.调整归档界面
+	 2.首页待办事项调整
+
+************************************************** 
+
+ [模块版本号] 3.00#20131031-1
+   修改人员名称: 司德加
+   最后修改时间：2013-10-31
+修改文件清单：
+	/busmgr/WebRoot/proJPrivew/js/list.js
+	/busmgr/src/com/spsoft/busmgr/service/impl/ProjectWholeServiceImpl.java
+    
+修改功能描述：
+     1.调整总体查询页面
+	 2.修改总体查询无法显示承接合伙人的问题
+
+
+************************************************** 
+
+ [模块版本号] 3.00#20131020-1
+   修改人员名称: 司德加
+   最后修改时间：2013-10-20
+修改文件清单：
+    /busmgr/WebRoot/projApplication/projApplication.jsp
+    /busmgr/WebRoot/projectActive/edit.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectActiveDaoImpl.java
+    
+修改功能描述：
+     1.修改立项部门与委托部门一致且控制权限
+	 2.修改委托业务与立项业务类型不一致的问题、表单确认与业务类型不一致的问题
+	 3.修改初步业务活动表单与类型不一致的问题
+
+************************************************** 
+ [模块版本号] 3.00#20130927-1
+   修改人员名称: 司德加
+   最后修改时间：2013-09-27
+修改文件清单：
+    /busmgr/WebRoot/projAuditReport/js/projAuditReportSearch.js
+    /busmgr/WebRoot/projAuditReport/projAuditReportSearch.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IWfReportIssuedDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/IWfReportIssuedDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/WfReportIssuedAction.java
+    
+修改功能描述：
+         调整页面
+         修改查询参数
+
+************************************************** 
+[模块版本号] 3.00#20130926-1
+   修改人员名称: 司德加
+   最后修改时间：2013-09-26
+修改文件清单：
+  	/busmgr/src/com/spsoft/busmgr/dao/IWfReportIssuedDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/IWfReportIssuedDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfReportIssuedService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfReportIssuedServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/WfReportIssuedAction.java
+    /busmgr/WebRoot/matter/js/index.js
+    /busmgr/WebRoot/projAuditReport/js/projAuditReport.js
+    /busmgr/WebRoot/projAuditReport/js/projAuditReportSearch.js
+    /busmgr/WebRoot/projAuditReport/projAuditReportSearch.jsp
+    /busmgr/WebRoot/projectSymbol/projectSymbol.jsp
+    /cusmgr/WebRoot/archivesMgr/assetsInfoList.jsp
+    /cusmgr/WebRoot/archivesMgr/editVersionInfo.jsp
+    
+修改功能描述：
+         修改签发报告查询
+         修改客户管理部分命名
+
+**************************************************
+
+  
+[模块版本号] 3.00#20130925-2
+   修改人员名称: 司德加
+   最后修改时间：2013-09-25
+ 新增加文件清单：
+  /busmgr/WebRoot/projAuditReport/js/projAuditReport.js
+    /busmgr/WebRoot/projAuditReport/projAuditReport.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IWfReportIssuedDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/IWfReportIssuedDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfReportIssuedService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfReportIssuedServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/WfReportIssuedAction.java
+    
+修改功能描述：
+    增加签发报告加入业务类型、签字会计师等的保存
+
+**************************************************
+[模块版本号] 3.00#20130925-1
+   修改人员名称: 曾阳波
+   最后修改时间：2013-09-25
+ 新增加文件清单：
+  	/busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+    /busmgr/WebRoot/projectArchive/edit.jsp
+    /busmgr/WebRoot/projectArchive/js/edit.js
+    /busmgr/src/com/spsoft/busmgr/dao/IProjectArchiveDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectArchiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectArchiveService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectArchiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectArchiveAction.java
+    
+修改功能描述：
+    修改项目归档流程和保存信息
+**************************************************
+[模块版本号] 3.00#20130916-1
+   修改人员名称: 朱霏
+   最后修改时间：2013-09-16
+ 新增加文件清单：
+    /busmgr/WebRoot/common/js/project.js
+    /busmgr/WebRoot/common/project.jsp
+    /busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/WebRoot/projApplication/projApplication.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+    修改功能描述：
+    把委托业务的信息介绍人和洽谈人 带过来
+**************************************************    
+[模块版本号] 3.00#20130829-1
+   修改人员名称: 张杲
+   最后修改时间：2013-08-29
+ 新增加文件清单：
+ 	/busmgr/WebRoot/projAuditReport/projAuditReportSearch.jsp
+    /busmgr/WebRoot/projAuditReport/js/projAuditReportSearch.js
+    /busmgr/src/com/spsoft/busmgr/web/WfReportIssuedAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfReportIssuedServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfReportIssuedService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/IWfReportIssuedDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfReportIssuedDao.java
+   修改功能描述：
+   1、重做签发报告查询
+**************************************************
+[模块版本号] 3.00#20130824-1
+   修改人员名称: 张杲
+   最后修改时间：2013-08-24
+ 新增加文件清单：
+ 	/busmgr/WebRoot/projBackup/backupSearch.jsp
+    /busmgr/WebRoot/projBackup/js/select.js
+    /busmgr/WebRoot/projBackup/js/backupSearch.js
+    /busmgr/src/com/spsoft/busmgr/web/ProjBackupAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjBackupServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjBackupService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjBackupDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IProjBackupDao.java
+   修改功能描述：
+   1、重做项目报备查询
+**************************************************
+[模块版本号] 3.00#20130822-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-08-22
+ 新增加文件清单：
+ 	/busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/WebRoot/projApplication/projApplication.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+   修改功能描述：
+   1、修改项目立项申请业务列表查询的bug
+   2、调整项目立项申请的页面显示逻辑
+**************************************************
+[模块版本号] 3.00#20130820-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-08-20
+ 新增加文件清单：
+ 	/busmgr/WebRoot/common/js/project.js
+    /busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+    /busmgr/WebRoot/projApplication/js/list.js
+    /busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/WebRoot/projApplication/projApplication.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IProjAppDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjAppService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjAppAction.java
+   修改功能描述：
+   1、修改项目立项申请业务列表查询的bug
+   2、增加客户业务首次承接流程、客户重要信息变更流程在系统首页待办信息列表的连接
+**************************************************
+[模块版本号] 3.00#20130819-1
+   修改人员名称: 张杲
+   最后修改时间：2013-08-19
+ 新增加文件清单：
+	/busmgr/WebRoot/projBackup/backup.jsp
+    /busmgr/WebRoot/projBackup/backupSearch.jsp
+    /busmgr/WebRoot/projBackup/control.jsp
+    /busmgr/WebRoot/projBackup/dealMatter.jsp
+    /busmgr/WebRoot/projBackup/history.jsp
+    /busmgr/WebRoot/projBackup/proCapitalVerification.jsp
+    /busmgr/WebRoot/projBackup/proReportBackup.jsp
+    /busmgr/WebRoot/projBackup/proSpecial.jsp
+    /busmgr/WebRoot/projBackup/select.jsp
+    /busmgr/WebRoot/projBackup/js/backup.js
+    /busmgr/WebRoot/projBackup/js/backupSearch.js
+    /busmgr/WebRoot/projBackup/js/control.js
+    /busmgr/WebRoot/projBackup/js/history.js
+    /busmgr/WebRoot/projBackup/js/proCapitalVerification.js
+    /busmgr/WebRoot/projBackup/js/proReportBackup.js
+    /busmgr/WebRoot/projBackup/js/proSpecial.js
+    /busmgr/WebRoot/projBackup/js/select.js
+    /busmgr/src/com/spsoft/busmgr/web/ProjBackupAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjBackupServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjBackupService.java
+    /busmgr/src/com/spsoft/busmgr/log/BusmgrVersion.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjBackupDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IProjBackupDao.java
+   修改功能描述：    
+    1.重做项目报备
+**************************************************
+[模块版本号] 3.00#20130815-1
+   修改人员名称: 曾阳波
+   最后修改时间：2013-08-15
+ 新增加文件清单：
+	/busmgr/WebRoot/common/js/fileUpload.js
+    /busmgr/WebRoot/matter/js/index.js
+    /busmgr/WebRoot/projApplication/js/list.js
+    /busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/WebRoot/projAuditReport/js/projAuditReport.js
+    /busmgr/WebRoot/projAuditReport/js/projAuditReportSearch.js
+    /busmgr/WebRoot/projBackup/js/backup.js
+    /busmgr/WebRoot/projBackup/js/backupSearch.js
+    /busmgr/WebRoot/projBackup/js/proCapitalVerification.js
+    /busmgr/WebRoot/projBackup/js/proReportBackup.js
+    /busmgr/WebRoot/projBackup/js/proSpecial.js
+    /busmgr/WebRoot/projFiling/js/projFiling.js
+    /busmgr/WebRoot/projectActive/js/edit.js
+    /busmgr/WebRoot/projectActive/js/index.js
+    /busmgr/WebRoot/projectArchive/js/edit.js
+    /busmgr/WebRoot/projectArchive/js/index.js
+    /busmgr/WebRoot/projectImp/js/projApplication.js
+    /busmgr/WebRoot/projectImp/js/projectImp.js
+    /busmgr/WebRoot/projectImp/js/projectPlan.js
+    /busmgr/WebRoot/projectImp/js/selItem.js
+    /busmgr/WebRoot/projectPlan/js/addProjectPlan.js
+    /busmgr/WebRoot/projectPlan/js/projectPlan.js
+    /busmgr/WebRoot/projectScene/js/projScene.js
+    /busmgr/WebRoot/projectSymbol/js/projectSymbol.js
+    /busmgr/WebRoot/projectSymbol/js/selItem.js
+    /busmgr/WebRoot/wfmgr/actDeal/js/baseDeal.js
+   修改功能描述：    
+    1.统一alert弹出框
+**************************************************
+[模块版本号] 3.00#20130814-2
+   修改人员名称: 梁松生
+   最后修改时间：2013-08-14
+ 新增加文件清单：
+ 	/busmgr/WebRoot/META-INF/script/busmgr_oracle_install_2013-06-08.sql
+   修改功能描述：
+   1、修改项目信息和项目组成员对应关系表PJM_EMPLOYESS_R字段CUSBUSIPRJ_SIGN长度由NUMBER(2)为NUMBER(22)
+**************************************************
+[模块版本号] 3.00#20130814-1
+   修改人员名称: 冯洋
+   最后修改时间：2013-08-14
+ 新增加文件清单：
+	/busmgr/WebRoot/proJPrivew/js/list.js
+    /busmgr/WebRoot/projectActive/js/list.js
+    /busmgr/WebRoot/projectScene/js/list.js
+    
+   修改功能描述：
+   1、修改项目总体查询列表、
+   	     初步业务活动查询列表、
+   	     现场工作复核查询列表
+**************************************************
+[模块版本号] 3.00#20130812-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-08-12
+ 新增加文件清单：
+	/busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+   修改功能描述：
+   1、修改获取客户项目信息数据来源的表
+**************************************************
+[模块版本号] 3.00#20130803-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-08-03
+ 新增加文件清单：
+	/busmgr/WebRoot/META-INF/script/busmgr_oracle_install_2013-06-08.sql
+    /busmgr/WebRoot/common/js/project.js
+    /busmgr/WebRoot/common/project.jsp
+    /busmgr/WebRoot/projApplication/js/list.js
+    /busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjAppService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/CommonServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjAppAction.java
+   修改功能描述：
+   1、修改获取项目的条件
+   2、修改项目信息表脚本（在项目信息表中增加CUSID字段，即系客户客户基本信息表主键）
+   3、修改项目立项申请部分
+**************************************************
+[模块版本号] 3.00#20130706-2
+   修改人员名称: 吴俊
+   最后修改时间：2013-07-06
+ 新增加文件清单：
+	 /busmgr/WebRoot/projectArchive/getListInfo.jsp
+    /busmgr/WebRoot/projectArchive/js/getListInfo.js
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectArchiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectArchiveAction.java
+   修改功能描述：
+   1、完成项目申请 文号业务列表的开发
+   2、完成项目归档业务列表的开发
+**************************************************
+[模块版本号] 3.00#20130706-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-07-06
+ 新增加文件清单：
+	/busmgr/WebRoot/projApplication/js/list.js
+    /busmgr/WebRoot/projApplication/list.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+   修改功能描述：
+   1、完成项目立项申请业务列表的开发
+**************************************************
+[模块版本号] 3.00#20130703-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-07-03
+ 新增加文件清单：
+	/busmgr/WebRoot/images/WF_BUSMGR_PRIVEW.png
+    /busmgr/WebRoot/proJPrivew/projBackup.jsp
+    /busmgr/WebRoot/proJPrivew/projPrivew.jsp
+   修改功能描述：
+   1、项目总览图的更改
+**************************************************
+[模块版本号] 3.00#20130702-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-07-02
+ 新增加文件清单：
+	/busmgr/WebRoot/projApplication/projApplication.jsp
+   修改功能描述：
+   1、选择承做部门下拉高度的调整
+**************************************************
+[模块版本号] 3.00#20130628-1
+   修改人员名称: 梁松生
+   最后修改时间：2013-06-28
+ 新增加文件清单：
+	/busmgr/WebRoot/projApplication/js/list.js
+    /busmgr/WebRoot/projApplication/list.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IProjAppDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjAppService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjAppAction.java
+   修改功能描述：
+   1、增加项目立项申请业务列表的查询功能
+**************************************************
+[模块版本号] 3.00#20130627-4
+   修改人员名称: 张杲
+   最后修改时间：2013-06-27
+ 新增加文件清单：
+
+    /busmgr/WebRoot/projectImp/js/proImplList.js
+    /busmgr/WebRoot/projectImp/proImplList.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IWfUndertakeDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfUndertakeDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfUndertakeService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfUndertaleServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/WfUndertakeAction.java
+    
+   修改功能描述：
+   1、完善项目实施查询列表功能
+**************************************************
+[模块版本号] 3.00#20130627-3
+   修改人员名称: 吴俊
+   最后修改时间：2013-06-27
+ 新增加文件清单：
+/busmgr/WebRoot/projectArchive/getListInfo.jsp
+/busmgr/WebRoot/projectArchive/js/getListInfo.js
+/busmgr/src/com/spsoft/busmgr/dao/IProjectArchiveDao.java
+/busmgr/src/com/spsoft/busmgr/dao/impl/ProjectArchiveDaoImpl.java
+/busmgr/src/com/spsoft/busmgr/service/IProjectArchiveService.java
+/busmgr/src/com/spsoft/busmgr/service/impl/ProjectArchiveServiceImpl.java
+/busmgr/src/com/spsoft/busmgr/web/ProjectArchiveAction.java
+    
+   修改功能描述：
+   1、增加项目归档，申请报告文号查询业务列表
+    
+**************************************************
+[模块版本号] 3.00#20130627-2
+   修改人员名称: 冯洋
+   最后修改时间：2013-06-27
+ 新增加文件清单：
+    /busmgr/WebRoot/proJPrivew/js/list.js
+    /busmgr/WebRoot/proJPrivew/list.jsp
+    /busmgr/WebRoot/projectActive/js/list.js
+    /busmgr/WebRoot/projectScene/js/list.js
+    /busmgr/src/com/spsoft/busmgr/dao/IProjectWholeDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectActiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectWholeDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectWholeService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectWholeServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectWholeAction.java
+    
+   修改功能描述：
+   1、增加项目总体查询业务列表
+    
+**************************************************
+[模块版本号] 3.00#20130627-1
+   修改人员名称: 司德加
+   最后修改时间：2013-06-27
+ 新增加文件清单：
+
+    /busmgr/WebRoot/projectImp/js/proImplList.js
+    /busmgr/WebRoot/projectImp/proImplList.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IWfUndertakeDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfUndertakeDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfUndertakeService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfUndertaleServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/WfUndertakeAction.java
+    
+   修改功能描述：
+   1、增加项目实施业务列表
+   
+**************************************************
+[模块版本号] 3.00#20130626-1
+   修改人员名称: 张杲
+   最后修改时间：2013-06-26
+ 新增加文件清单：
+    /busmgr/WebRoot/projAuditReport/projAuditReportSearch.jsp
+    /busmgr/WebRoot/projAuditReport/js/projAuditReportSearch.js
+    /busmgr/src/com/spsoft/busmgr/web/WfReportIssuedAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfReportIssuedServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfReportIssuedService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/IWfReportIssuedDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfReportIssuedDao.java
+    
+   修改功能描述：
+   1、增加签发报告查询
+**************************************************
+[模块版本号] 3.00#20130625-2
+   修改人员名称: 张杲
+   最后修改时间：2013-06-25
+ 新增加文件清单：
+    /busmgr/WebRoot/projBackup/backupSearch.jsp
+    /busmgr/WebRoot/projBackup/js/backupSearch.js
+    /busmgr/src/com/spsoft/busmgr/web/ProjBackupAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjBackupServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjBackupService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjBackupDaoImpl.java
+    
+   修改功能描述：
+   1、增加项目报备查询
+**************************************************
+[模块版本号] 3.00#20130625-1
+   修改人员名称：冯洋
+   最后修改时间：2013-06-25
+ 新增加文件清单：
+ 	/busmgr/WebRoot/projectArchive/index.jsp
+    /busmgr/WebRoot/projectArchive/js/index.js
+    /busmgr/WebRoot/projectActive/index.jsp
+    /busmgr/WebRoot/projectActive/js/index.js
+    /busmgr/WebRoot/projectActive/js/list.js
+    /busmgr/WebRoot/projectActive/list.jsp
+    /busmgr/WebRoot/projectScene/js/list.js
+    /busmgr/WebRoot/projectScene/list.jsp
+    /busmgr/src/com/spsoft/busmgr/dao/IProjectActiveDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfScenelDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectActiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfSceneDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectActiveService.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfSceneService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectActiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectArchiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfSceneServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectActiveAction.java
+    /busmgr/src/com/spsoft/busmgr/web/WfSceneAction.java
+   修改功能描述：
+   1、项目初步业务活动查询。
+   2、项目现场工作复核查询。
+**************************************************
+[模块版本号] 3.00#20130619-2
+   修改人员名称: 吴俊
+   最后修改时间：2013-06-19
+ 新增加文件清单：
+/busmgr/WebRoot/projectArchive/getListInfo.jsp
+/busmgr/WebRoot/projectArchive/js/getListInfo.js
+/busmgr/src/com/spsoft/busmgr/web/ProjectArchiveAction.java
+    修改功能描述：
+   1、项目申请报告文号业务列表
+   2、项目归档业务列表
+**************************************************
+[模块版本号] 3.00#20130619-2
+   修改人员名称: 张杲
+   最后修改时间：2013-06-19
+ 新增加文件清单：
+    /busmgr/WebRoot/projBackup/proCapitalVerification.jsp
+    /busmgr/WebRoot/projBackup/proReportBackup.jsp
+    /busmgr/WebRoot/projBackup/js/proCapitalVerification.js
+    /busmgr/WebRoot/projBackup/js/proReportBackup.js
+    /busmgr/src/com/spsoft/busmgr/web/ProjBackupAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjBackupServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjBackupService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjBackupDaoImpl.java
+    
+   修改功能描述：
+   1、更新项目信息流程信息
+**************************************************
+[模块版本号] 3.00#20130619-1
+   修改人员名称：梁松生
+   最后修改时间：2013-06-19
+ 新增加文件清单：
+ 	/busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/WebRoot/projApplication/projApplication.jsp
+    /busmgr/WebRoot/wfmgr/actDeal/js/baseDeal.js
+   修改功能描述：
+   1、项目立项申请的修改
+**************************************************
+[模块版本号] 3.00#20130618-1
+   修改人员名称：梁松生
+   最后修改时间：2013-06-18
+ 新增加文件清单：
+ 	/busmgr/WebRoot/common/js/project.js
+    /busmgr/WebRoot/common/project.jsp
+    /busmgr/WebRoot/projApplication/js/projApplication.js
+    /busmgr/WebRoot/projApplication/projApplication.jsp
+    /busmgr/WebRoot/wfmgr/actDeal/baseDeal.jsp
+    /busmgr/WebRoot/wfmgr/actDeal/js/baseDeal.js
+    /busmgr/src/com/spsoft/busmgr/dao/IProjAppDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjAppService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfActDealServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjAppAction.java
+    /busmgr/src/com/spsoft/busmgr/web/WfActDealAction.java
+   修改功能描述：
+   1、公用项目选择的修改
+   2、项目立项申请风险类别的实现
+**************************************************
+[模块版本号] 3.00#20130615-1
+   修改人员名称：冯洋
+   最后修改时间：2013-06-15
+ 新增加文件清单：
+ 	/busmgr/WebRoot/projectActive/edit.jsp
+    /busmgr/WebRoot/projectActive/js/edit.js
+    /busmgr/WebRoot/projectArchive/edit.jsp
+    /busmgr/WebRoot/projectArchive/js/edit.js
+    /busmgr/src/com/spsoft/busmgr/dao/ICommonDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/ICommonService.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectActiveService.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectArchiveService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/CommonServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectActiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectArchiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectActiveAction.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectArchiveAction.java
+   修改功能描述：
+   1、初步业务活动与项目归档的流程关系与项目信息处理
+**************************************************
+[模块版本号] 3.00#20130614-2
+   修改人员名称：梁松生
+   最后修改时间：2013-06-14
+ 新增加文件清单：
+ 	/busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+   修改功能描述：
+   1、将项目立项申请添加到整体流程中
+**************************************************
+[模块版本号] 3.00#20130614-1
+   修改人员名称：梁松生
+   最后修改时间：2013-06-14
+ 新增加文件清单：
+    /busmgr/WebRoot/META-INF/script/busmgr_oracle_install_2013-06-08.sql
+   修改功能描述：
+   1、修改项目信息和项目组成员对应关系表PJM_EMPLOYESS_R 字段CUSBUSIPRJ_CODE为NUMBER(22)，对应客户业务关联表主键ID
+**************************************************
+[模块版本号] 3.00#20130613-2
+   修改人员名称：冯洋
+   最后修改时间：2013-06-13
+ 新增加文件清单：
+    /busmgr/WebRoot/projectActive/edit.jsp
+    /busmgr/WebRoot/projectActive/js/edit.js
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectActiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectActiveServiceImpl.java
+    
+   修改功能描述：
+   1、初步业务活动修改。
+**************************************************
+[模块版本号] 3.00#20130613-1
+   修改人员名称: 张杲
+   最后修改时间：2013-06-13
+ 新增加文件清单：
+    /busmgr/WebRoot/projBackup/backup.jsp
+    /busmgr/WebRoot/projBackup/proCapitalVerification.jsp
+    /busmgr/WebRoot/projBackup/proReportBackup.jsp
+    /busmgr/WebRoot/projBackup/js/backup.js
+    /busmgr/WebRoot/projBackup/js/control.js
+    /busmgr/WebRoot/projBackup/js/history.js
+    /busmgr/WebRoot/projBackup/js/proCapitalVerification.js
+    /busmgr/WebRoot/projBackup/js/proReportBackup.js
+    /busmgr/src/com/spsoft/busmgr/web/ProjBackupAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjBackupServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjBackupService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjBackupDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IProjBackupDao.java
+    
+   修改功能描述：
+   1、完善审计报备附件上传
+   2、验资报备全功能完成
+**************************************************
+[模块版本号] 3.00#20130608-1
+   修改人员名称：冯洋
+   最后修改时间：2013-06-08
+ 新增加文件清单：
+    /busmgr/WebRoot/META-INF/script/busmgr_oracle_install_2013-06-08.sql
+    /busmgr/WebRoot/META-INF/script/busmgr_oracle_uninstall_2013-06-08.sql
+    /busmgr/WebRoot/META-INF/ptx_application.xml
+    
+   修改功能描述：
+   1、数据库脚本更新。
+**************************************************
+[模块版本号] 3.00#20130603-1
+   修改人员名称：冯洋
+   最后修改时间：2013-06-03
+ 新增加文件清单：
+    /busmgr/WebRoot/common/js/project.js
+    /busmgr/WebRoot/common/project.jsp
+    /busmgr/WebRoot/projectArchive/edit.jsp
+    /busmgr/WebRoot/projectArchive/js/edit.js
+    /busmgr/src/com/spsoft/busmgr/dao/ICommonDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/ICommonService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/CommonServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/CommonAction.java
+    
+   修改功能描述：
+   1、公用项目选择。
+**************************************************
+[模块版本号] 3.00#20130530-1
+   修改人员名称：张杲
+   最后修改时间：2013-05-30
+ 新增加文件清单：
+    /busmgr/WebRoot/projBackup/backup.jsp
+    /busmgr/WebRoot/projBackup/control.jsp
+    /busmgr/WebRoot/projBackup/history.jsp
+    /busmgr/WebRoot/projBackup/proCapitalVerification.jsp
+    /busmgr/WebRoot/projBackup/proReportBackup.jsp
+    /busmgr/WebRoot/projBackup/proSpecial.jsp
+    /busmgr/WebRoot/projBackup/select.jsp
+    /busmgr/WebRoot/projBackup/js/backup.js
+    /busmgr/WebRoot/projBackup/js/control.js
+    /busmgr/WebRoot/projBackup/js/history.js
+    /busmgr/WebRoot/projBackup/js/proCapitalVerification.js
+    /busmgr/WebRoot/projBackup/js/proReportBackup.js
+    /busmgr/WebRoot/projBackup/js/proSpecial.js
+    /busmgr/WebRoot/projBackup/js/select.js
+    /busmgr/src/com/spsoft/busmgr/web/ProjBackupAction.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjBackupServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjBackupService.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjBackupDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/IProjBackupDao.java
+   修改功能描述：
+   1、项目报备审计全功能。
+**************************************************
+[模块版本号] 3.00#20130530-1
+   修改人员名称：冯洋
+   最后修改时间：2013-05-30
+ 新增加文件清单：
+    /busmgr/WebRoot/projectArchive/control.jsp
+    /busmgr/WebRoot/projectArchive/edit.jsp
+    /busmgr/WebRoot/projectArchive/history.jsp
+    /busmgr/WebRoot/projectArchive/index.jsp
+    /busmgr/WebRoot/projectArchive/js/control.js
+    /busmgr/WebRoot/projectArchive/js/edit.js
+    /busmgr/WebRoot/projectArchive/js/history.js
+    /busmgr/WebRoot/projectArchive/js/index.js
+    /busmgr/src/com/spsoft/busmgr/dao/IProjectActiveDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/IProjectArchiveDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectActiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectArchiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectArchiveService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectActiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectArchiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectArchiveAction.java
+    
+   修改功能描述：
+   1、新增项目归档处理。
+**************************************************
+[模块版本号] 3.00#20130529-2
+   修改人员名称：梁松生
+   最后修改时间：2013-05-29
+ 新增加文件清单：
+ 	/busmgr/WebRoot/proJPrivew/projPrivew.jsp
+   修改功能描述：
+   1、为项目总览图增加热点链接，同过点击图片可以链接到各个功能点
+**************************************************
+[模块版本号] 3.00#20130529-1
+   修改人员名称：申俊波
+   最后修改时间：2013-05-29
+ 新增加文件清单：
+   	/busmgr/src/com/spsoft/busmgr/web/WfUndertakeAction.java
+   	/busmgr/src/com/spsoft/busmgr/web/WfReportIssuedAction.java
+   	/busmgr/src/com/spsoft/busmgr/web/WfActDealAction.java
+   	/busmgr/src/com/spsoft/busmgr/service/IWfUndertakeService.java
+   	/busmgr/src/com/spsoft/busmgr/service/IWfReportIssuedService.java
+   	/busmgr/src/com/spsoft/busmgr/service/impl/WfUndertaleServiceImpl.java
+   	/busmgr/src/com/spsoft/busmgr/service/impl/WfReportIssuedServiceImpl.java
+   	/busmgr/src/com/spsoft/busmgr/dao/IWfUndertakeDao.java
+   	/busmgr/src/com/spsoft/busmgr/dao/IWfReportIssuedDao.java
+   	/busmgr/src/com/spsoft/busmgr/dao/impl/WfUndertakeDaoImpl.java
+   	/busmgr/src/com/spsoft/busmgr/dao/impl/IWfReportIssuedDaoImpl.java
+   	/busmgr/src/com/spsoft/busmgr/dao/impl/WorkMarksDaoImpl.java
+   	/busmgr/src/com/spsoft/busmgr/dao/IWorkMarksDao.java
+   	/busmgr/src/com/spsoft/busmgr/web/WfActDealAction.java
+   	/busmgr/WebRoot/projectImp/projectImp.jsp
+	/busmgr/WebRoot/projectImp/projectPlan.jsp
+	/busmgr/WebRoot/projectImp/selItem.jsp
+	/busmgr/WebRoot/projAuditReport/projAuditReport.jsp
+	/busmgr/WebRoot/projectImp/js/projApplication.js
+	/busmgr/WebRoot/projectImp/js/projectImp.js
+	/busmgr/WebRoot/projectImp/js/projectPlan.js
+	/busmgr/WebRoot/projectImp/js/selItem.js
+	/busmgr/WebRoot/wfmgr/actDeal/baseDeal.jsp
+	/busmgr/WebRoot/wfmgr/actDeal/js/baseDeal.js
+   修改功能描述：
+   1、增加项目实施的业务流程
+   2、增加项目签发报告的业务流程
+   3、增加项目独立性流程的处理
+**************************************************
+[模块版本号] 3.00#20130524-1
+   修改人员名称：冯洋
+   最后修改时间：2013-05-24
+ 新增加文件清单：
+    /busmgr/WebRoot/META-INF/appconfig.xml
+    /busmgr/WebRoot/common/fileUpload.jsp
+    /busmgr/WebRoot/common/js/fileUpload.js
+    /busmgr/WebRoot/projectActive/control.jsp
+    /busmgr/WebRoot/projectActive/deal.jsp
+    /busmgr/WebRoot/projectActive/edit.jsp
+    /busmgr/WebRoot/projectActive/history.jsp
+    /busmgr/WebRoot/projectActive/index.jsp
+    /busmgr/WebRoot/projectActive/js/control.js
+    /busmgr/WebRoot/projectActive/js/deal.js
+    /busmgr/WebRoot/projectActive/js/edit.js
+    /busmgr/WebRoot/projectActive/js/history.js
+    /busmgr/WebRoot/projectActive/js/index.js
+    /busmgr/src/com/spsoft/busmgr/dao/IFileDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/IProjectActiveDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/IWfActDealDao.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/FileDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/ProjectActiveDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/dao/impl/WfActDealDaoImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/IFileService.java
+    /busmgr/src/com/spsoft/busmgr/service/IProjectActiveService.java
+    /busmgr/src/com/spsoft/busmgr/service/IWfActDealService.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/FileServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/ProjectActiveServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/service/impl/WfActDealServiceImpl.java
+    /busmgr/src/com/spsoft/busmgr/servlet/FileUpload.java
+    /busmgr/src/com/spsoft/busmgr/util/CommonUtil.java
+    /busmgr/src/com/spsoft/busmgr/web/FileAction.java
+    /busmgr/src/com/spsoft/busmgr/web/ProjectActiveAction.java
+   修改功能描述：
+   1、公用方法、附件处理、流程处理。
+   2、新增初步业务活动功能。
+   
+**************************************************
+[模块版本号] 3.00#20130520-1
+   修改人员名称：梁松生
+   最后修改时间：2013-05-20
+ 新增加文件清单：
+   /busmgr/WebRoot/proJPrivew
+   /busmgr/WebRoot/proJPrivew/projPrivew.jsp
+   /busmgr/WebRoot/images/WF_BUSMGR_PRIVEW.png
+   修改功能描述：
+   1、增加项目流程总览视图，便于客户对项目整个流程一目了然
+   2、上传了项目流程总览图的图片
+**************************************************
+[模块版本号] 3.00#20130410-1
+   修改人员名称：梁松生
+   最后修改时间：2013-04-10
+ 新增加文件清单：
+ 	/busmgr/WebRoot/META-INF/script/busmgr_oracle_install_2013-03-07.sql
+ 	/busmgr/WebRoot/META-INF/script/busmgr_oracle_uninstall_2013-03-07.sql
+ 	/busmgr/WebRoot/META-INF/ptx_application.xml
+ 	/busmgr/readme.txt
+   修改功能描述：
+   1、修改数据库脚本
+   2、修改版本号
+**************************************************
+[模块版本号] 3.00#20130402-1
+   修改人员名称：梁松生
+   最后修改时间：2013-04-02
+ 新增加文件清单：
+ 	/busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+ 	/busmgr/src/com/spsoft/busmgr/dao/IProjAppDao.java
+ 	/busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+ 	/busmgr/src/com/spsoft/busmgr/service/IProjAppService.java
+ 	/busmgr/src/com/spsoft/busmgr/web/ProjAppAction.java
+ 	/busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+ 	/busmgr/WebRoot/projApplication/js/projApplication.js
+ 	/busmgr/WebRoot/projApplication/projApplication.jsp
+ 	/busmgr/WebRoot/matter/js/index.js
+ 	/busmgr/WebRoot/matter/index.jsp
+   修改功能描述：
+   1、实现项目申请业务流程
+   2、增加项目申请流程同整个流程的关联
+**************************************************
+[模块版本号] 3.00#20130328-2
+   修改人员名称：梁松生
+   最后修改时间：2013-03-28
+ 新增加文件清单：
+   /busmgr/src/com/spsoft/busmgr/dao/impl/ProjAppDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/IProjAppDao.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/ProjAppServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/IProjAppService.java
+   /busmgr/src/com/spsoft/busmgr/web/ProjAppAction.java
+   修改功能描述：
+   1、增加项目实施-项目申请的流程的实现
+   2、增加加载传附件明细公用方法
+**************************************************
+[模块版本号] 3.00#20130328-1
+   修改人员名称：梁松生
+   最后修改时间：2013-03-28
+ 新增加文件清单：
+   /busmgr/WebRoot/projApplication/upFile.jsp
+   /busmgr/WebRoot/projApplication/js/projApplication.js
+   /busmgr/WebRoot/projApplication/projApplication.jsp
+   修改功能描述：
+   1、增加项目实施-项目申请的流程
+   2、增加上传附件公用页面
+**************************************************
+[模块版本号] 3.00#20130327-1
+   修改人员名称：梁松生
+   最后修改时间：2013-03-27
+ 新增加文件清单：
+   /busmgr/src/com/spsoft/busmgr/dao/impl/WfRelationShipDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/WfRelationShipDao.java
+   修改功能描述：
+   1、增加操作流程关系独立表的公用方法
+**************************************************
+[模块版本号] 3.00#20130326-1
+   修改人员名称：梁松生
+   最后修改时间：2013-03-26
+ 新增加文件清单：
+   /busmgr/src/com/spsoft/busmgr/dao/impl/FileDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/IFileDao.java
+   /busmgr/src/com/spsoft/busmgr/model
+   /busmgr/src/com/spsoft/busmgr/model/FileModel.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/FileServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/IFileService.java
+   /busmgr/src/com/spsoft/busmgr/servlet/UpFileServlet.java
+   修改功能描述：
+   1、增加上传附件和操作附件的公用方法
+**************************************************
+[模块版本号] 3.00#20130306-1
+   修改人员名称：黄伟纪
+   最后修改时间：2013-03-06
+   修改文件清单：
+   /busmgr/src/com/spsoft/busmgr/service/IMatterBaseService.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/MatterBaseServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/JdbcTemplateSupport.java
+   /busmgr/src/com/spsoft/busmgr/web/MatterBaseAction.java
+   /busmgr/WebRoot/META-INF/ptx_application.xml
+ 新增加文件清单：
+   /busmgr/WebRoot/home/js/loadTaxOnTheWay.js
+   /busmgr/WebRoot/home/loadTaxOnTheWay.jsp
+   /busmgr/WebRoot/home/loadAlarmInfo.jsp
+   修改功能描述：
+   1、增加首页代办事项界面
+   2、模块版本号修改为3.00
+   3、修改获取数据库驱动类型方法
+**************************************************
+[模块版本号] 1.0#20130204
+   修改人员名称：梁松生
+   最后修改时间：2013-02-04
+   修改文件清单：
+   /busmgr/src/com/spsoft/busmgr/dao/ICommonDao.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/CommonDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/servlet/UpFileServlet.java
+   /busmgr/WebRoot/META-INF/appconfig.xml
+   /busmgr/WebRoot/projFiling/js/projFiling.js
+   /busmgr/WebRoot/projFiling/projFiling.jsp
+   /busmgr/WebRoot/WEB-INF/web.xml
+   修改功能描述：
+   1、调整页面。
+   2、增加导入报备附件的功能
+**************************************************
+[模块版本号] 1.0#20130131
+   修改人员名称：梁松生
+   最后修改时间：2013-01-31
+   修改文件清单：
+   /busmgr/src/com/spsoft/busmgr/dao/IProjFilingDao.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/ProjFilingDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/ICreateMatterService.java
+   /busmgr/src/com/spsoft/busmgr/service/IProjFilingService.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/CreateMatterServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/ProjFilingServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/web/ProjFilingAction.java
+   /busmgr/WebRoot/projFiling/js/projFiling.js
+   /busmgr/WebRoot/projFiling/projFiling.jsp
+   /busmgr/WebRoot/META-INF/script/pmmgr_oracle_install_2013-01-22.sql
+   /busmgr/WebRoot/META-INF/script/pmmgr_oracle_uninstall_2013-01-22.sql
+   修改功能描述：
+   1.增加项目报备基础流程的业务实现。
+   2、建立项目报备表
+**************************************************
+[模块版本号] 1.0#20130126
+   修改人员名称：赵建华
+   最后修改时间：2013-01-26
+   修改文件清单：
+   /busmgr/WebRoot/projFiling
+   /busmgr/WebRoot/adjust
+   /busmgr/src/com/spsoft/busmgr/web/AuditInfoAction.java
+   /busmgr/src/com/spsoft/busmgr/web/ProjFilingAction.java
+   /busmgr/src/com/spsoft/busmgr/web/WfActDealAction.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/AuditInfoServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/ProjFilingServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/WfActDealServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/IAuditInfoService.java
+   /busmgr/src/com/spsoft/busmgr/service/IProjFilingService.java
+   /busmgr/src/com/spsoft/busmgr/service/IWfActDealService.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/AuditInfoDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/ProjFilingDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/WfActDealDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/IAuditInfoDao.java
+   /busmgr/src/com/spsoft/busmgr/dao/IProjFilingDao.java
+   /busmgr/src/com/spsoft/busmgr/dao/IWfActDealDao.java
+   修改功能描述：1.流程通用推动方法。
+   				 2.重设环节执行者方法。
+   				 3.流程审核信息查询通用调用。
+   				 4.项目报备基础流程实现（不带业务）。
+
+**************************************************
+[模块版本号] 1.0#20130124
+   修改人员名称：赵建华
+   最后修改时间：2013-01-24
+   修改文件清单：
+   /busmgr/src/com/spsoft/busmgr/dao/impl/CreateMatterDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/MatterBaseDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/dao/impl/WorkFlowDaoImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/impl/MatterBaseServiceImpl.java
+   /busmgr/src/com/spsoft/busmgr/service/IMatterBaseService.java
+   /busmgr/src/com/spsoft/busmgr/web/MatterBaseAction.java
+   /busmgr/WebRoot/matter
+   修改功能描述：1.流程通用查询及不带业务信息的创建方法。
+
+
+**************************************************
+[模块版本号] 1.0#20130112
+   修改人员名称：赵建华
+   最后修改时间：2013-01-12
+   修改文件清单：
+   修改功能描述：初建

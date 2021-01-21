@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:c="http://www.springframework.org/schema/c" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<!-- 使用Annotation自动注册Bean,只扫描@Controller -->
+	<context:component-scan base-package="org.zhanghua.ssm" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<mvc:annotation-driven validator="validator" content-negotiation-manager="contentNegotiationManager">
+		<mvc:message-converters register-defaults="true">
+			<!-- StringHttpMessageConverter编码为UTF-8，防止乱码 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+				<property name="supportedMediaTypes">
+					<list>
+						<bean class="org.springframework.http.MediaType">
+							<constructor-arg index="0" value="text" />
+							<constructor-arg index="1" value="plain" />
+							<constructor-arg index="2" value="UTF-8" />
+						</bean>
+						<bean class="org.springframework.http.MediaType">
+							<constructor-arg index="0" value="*" />
+							<constructor-arg index="1" value="*" />
+							<constructor-arg index="2" value="UTF-8" />
+						</bean>
+					</list>
+				</property>
+			</bean>
+			<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<!-- <property name="prettyPrint" value="true"/> -->
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json;charset=UTF-8</value>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
+
+
+	<!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="fallbackToSystemLocale" value="true" />
+		<property name="useCodeAsDefaultMessage" value="false" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="cacheSeconds" value="60" />
+		<property name="basenames">
+			<list>
+				<!-- 国际化资源文件 -->
+				<value>classpath:messages/messages</value>
+				<!-- 验证消息资源文件 -->
+				<value>classpath:messages/ValidationMessages</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- REST中根据URL后缀自动判定Content-Type及相应的View -->
+	<bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+	    <property name="ignoreAcceptHeader" value="true" />
+            <property name="defaultContentType" value="application/json" />
+	    <property name="mediaTypes" >
+	        <value>
+	            json=application/json
+	            xml=application/xml
+	        </value>
+	    </property>
+	</bean>
+	
+	<!--对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="redirectHttp10Compatible" value="false" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<mvc:view-controller path="/" view-name="redirect:/index" />
+
+	<!-- 不推荐使用<mvc:default-servlet-handler/> 可能会造成静态资源泄漏，比如文件目录访问漏洞，推荐mvc:resources的方式 -->
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL(当在web.xml 中 DispatcherServlet使用 <url-pattern>/</url-pattern> 
+		映射时，能映射静态资源) -->
+	<!-- <mvc:default-servlet-handler/> -->
+
+	<!-- 静态资源映射 -->
+	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
+	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
+	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
+
+	<!-- 拦截器配置 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/**" />
+			<mvc:exclude-mapping path="/login" />
+			<mvc:exclude-mapping path="/logout"/>
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/images/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<bean class="org.zhanghua.ssm.common.interceptor.LogInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/**" />
+			<mvc:exclude-mapping path="/login"/>
+			<mvc:exclude-mapping path="/logout"/>
+			<mvc:exclude-mapping path="/js/**"/>
+			<mvc:exclude-mapping path="/images/**"/>
+			<mvc:exclude-mapping path="/css/**"/>
+			<bean class="org.zhanghua.ssm.common.interceptor.AuthInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 全局异常处理 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Throwable">error/500</prop>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 支持Shiro对Controller的方法级AOP安全控制 begin -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+	<!-- end -->
+	
+	<!-- 处理文件上传 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" /> <!-- 编码 -->
+		<!-- <property name="maxInMemorySize" value="10240" /> 上传时占用最大内存大小 (10240) <property name="uploadTempDir" value="/file/temp/" 
+			/> 上传临时保存目录名 ，带文件上传完成之后会自动删除保存的文件 <property name="maxUploadSize" value="-1" /> 最大文件大小，-1为无限止(-1) -->
+	</bean>
+	
+</beans>

@@ -1,0 +1,7 @@
+*.class
+*.war
+*.log
+*.chache
+/target/
+/out/
+/.idea/

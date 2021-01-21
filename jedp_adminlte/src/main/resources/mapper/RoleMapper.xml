@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nbclass.mapper.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.nbclass.model.Role" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    id, role_id, name, description, status, create_time, update_time
+  </sql>
+
+  <select id="findRoleByUserId" resultType="java.lang.String">
+    SELECT r.role_id FROM role r LEFT JOIN user_role ur ON r.role_id = ur.role_id
+    WHERE ur.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectRoles" parameterType="com.nbclass.model.Role" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List"/>
+    FROM role
+    WHERE status=1
+    <if test="name !=null and name != ''">
+        AND name like concat('%', #{name}, '%')
+    </if>
+  </select>
+
+  <update id="updateStatusBatch" parameterType="map">
+    UPDATE
+    role
+    SET
+    status=#{status}, update_time=now()
+    where
+    role_id in
+    <foreach collection="roleIds" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+
+  <update id="updateByRoleId" parameterType="map">
+     UPDATE
+      role
+      SET
+      name=#{name},description=#{description}, update_time=now()
+      where
+      role_id = #{role_id}
+  </update>
+
+</mapper>

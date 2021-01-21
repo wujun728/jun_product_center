@@ -1,0 +1,29 @@
+/**
+ * @author: ${author}
+ * @version: 1.0
+ * @since ${date}
+ */
+package ${packagePrefix}.dao;
+
+import java.util.List;
+import java.util.Collection;
+import ${packagePrefix}.domain.${className};
+
+#if($pkResult.size()>1)
+import ${packagePrefix}.domain.${className}.PK;
+#end
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+
+public interface ${className}Dao extends JpaRepository<${className} ,
+#if($pkResult.size()>1)
+ ${className}.PK
+#else
+ ${keyType}
+#end   > {
+
+
+}
+

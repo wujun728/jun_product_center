@@ -1,0 +1,102 @@
+﻿/* 文章归档 样式表
+ * @Author: Leo 
+ * @Date: 2019-10-09 11:32:15 
+ * @Last Modified by:   Leo 
+ * @Last Modified time: 2019-10-09 11:32:15 
+ */
+.article-record-title {
+    position: fixed;
+}
+
+    .article-record-title li a {
+        margin-bottom:8px;
+        padding:10px;
+        text-align: center;
+        background-color: #fff;
+        cursor: pointer;
+        font-size: 16px;
+        display: block;
+        border: 1px solid #ddd;
+    }
+
+        .article-record-title li a:hover {
+            color: initial;
+        }
+
+    .article-record-title li.selected a {
+        background-color: #1E9FFF;
+        color: #fff;
+        -moz-transition: all .2s;
+        -o-transition: all .2s;
+        -webkit-transition: all .2s;
+        transition: all .2s;
+    }
+
+.article-record-content {
+    padding: 10px 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.article-record-item h4 {
+    margin: 15px 0;
+}
+
+.article-record-item li {
+    padding: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-overflow: ellipsis; /* IE/Safari */
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis; /* Opera */
+}
+
+    .article-record-item li a {
+        color: #666;
+    }
+
+        .article-record-item li a:hover {
+            color: #1E9FFF;
+            -moz-transition: all .3s;
+            -o-transition: all .3s;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+        }
+
+.highlight {
+    color: #fff !important;
+    text-shadow: 0px 0px 2px #ff0000,0px 0px 2px #ff0000,0px 0px 2px #ff0000,0px 0px 2px #ff0000;
+}
+
+
+@media(max-width:767px) {
+    .article-record-content {
+        padding: 5px 10px;
+        margin-left: 10px;
+    }
+
+    .article-record-item h4 {
+        margin: 8px 0;
+    }
+}
+
+@media (min-width: 768px) {
+    .article-record-title {
+        top: 179px;
+        width: 112px;
+    }
+}
+
+@media (min-width: 992px) {
+    .article-record-title {
+        top: 164px;
+        width: 149.33px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .article-record-title {
+        width: 181px;
+    }
+}

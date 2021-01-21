@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.2.xsd"
+	default-lazy-init="false">
+
+	<!-- 去掉注释开启定时写日志入数据库  
+		配置application.properties中logImpLocation值
+		<task:annotation-driven /> 使用@Scheduled来标注任务执行频率不适合企业开发，任务执行频率要求可以配置调整
+	-->
+	<task:scheduled-tasks>  
+        <task:scheduled ref="taskMsgListener" method="popMsg"  
+            fixed-delay="5000000000" />  
+    </task:scheduled-tasks> 
+     
+   
+
+</beans>

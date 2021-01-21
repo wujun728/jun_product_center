@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zhanghua.ssm.mapper.sys.UserMapper">
+
+	<!-- <cache type="org.mybatis.caches.ehcache.LoggingEhcache" /> -->
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache" />
+	
+	<!-- 查询 -->
+	<select id="get" resultType="User">
+		SELECT u.* FROM sys_user u WHERE
+		u.is_delete=0 AND u.id=#{id}
+	</select>
+
+	<!-- 查询 -->
+	<select id="getByUsername" resultType="User">
+		SELECT u.* FROM sys_user u
+		WHERE u.is_delete=0 AND u.username = #{username}
+	</select>
+
+	<!-- 查询（分页） -->
+	<select id="queryList" resultType="User">
+		SELECT
+		u.*
+		FROM sys_user u
+		WHERE
+		u.is_delete=0
+		<if test="username != null and username != ''">
+			AND u.username LIKE CONCAT('%',#{username},'%')
+		</if>
+		<if test="nickname != null and nickname != ''">
+			AND u.nickname = #{nickname}
+		</if>
+		<if test="sex != null">
+			AND u.sex = #{sex}
+		</if>
+		<if test="email != null and email != ''">
+			AND u.email = #{email}
+		</if>
+		<if test="mobile != null and mobile != ''">
+			AND u.mobile = #{mobile}
+		</if>
+		ORDER BY u.create_time DESC
+	</select>
+
+	<!-- 保存 -->
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO sys_user (
+		id,
+		nickname,
+		username,
+		password,
+		salt,
+		sex,
+		email,
+		mobile,
+		remark,
+		create_time,
+		create_user_id
+		)
+		VALUES (
+		#{id},
+		#{nickname},
+		#{username},
+		#{password},
+		#{salt},
+		#{sex},
+		#{email},
+		#{mobile},
+		#{remark},
+		#{createTime},
+		#{createUser.id}
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE sys_user
+		SET nickname = #{nickname},
+		username =
+		#{username},
+		sex = #{sex},
+		email = #{email},
+		mobile = #{mobile},
+		remark =
+		#{remark},
+		update_time = #{updateTime},
+		update_user_id =
+		#{updateUser.id}
+		WHERE id = #{id}
+	</update>
+
+	<!-- 删除 -->
+	<update id="delete">
+		UPDATE sys_user SET
+		is_delete=1
+		WHERE id IN
+		<foreach collection="list" item="id" index="index" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
+	<!-- 更新用户密码 -->
+	<update id="resetPwd">
+		UPDATE sys_user
+		SET `password` = #{password},
+		salt =
+		#{salt}
+		WHERE id = #{id}
+	</update>
+
+	<!-- 保存用户与角色的关联关系 -->
+	<insert id="saveUserRole">
+		INSERT INTO sys_user_role(user_id, role_id)
+		<foreach collection="roles" item="role" separator=" UNION ALL ">
+			SELECT
+			#{id}, #{role.id} FROM DUAL
+		</foreach>
+	</insert>
+
+	<!-- 删除用户与角色的关联关系 -->
+	<delete id="deleteUserRole">
+		DELETE FROM sys_user_role WHERE user_id = #{id}
+	</delete>
+
+
+</mapper>

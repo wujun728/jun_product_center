@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+	<context:component-scan base-package="org.myframework" />
+
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+		<property name="suppressClose" value="true" />
+		<property name="driverClassName" value="org.sqlite.JDBC" />
+		<property name="url" value="jdbc:sqlite:E:\CodeMgr.db" />
+	</bean>
+
+	<!-- JPA实体管理工厂的配置 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="packagesToScan" value="org.myframework" /><!--待扫描的实体类包，不再需要persistence.xml了 -->
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.dialect">org.myframework.dao.orm.SQLiteDialect</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- Jpa 事务配置 -->
+	<bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="jpaTransactionManager" />
+
+
+	<jpa:repositories base-package="org.myframework.**.dao"
+		repository-impl-postfix="Impl" entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="jpaTransactionManager" />
+
+
+	<!-- JSR303 Validator(Hibernate Validator) -->
+	<bean name="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	</bean>
+
+</beans> 

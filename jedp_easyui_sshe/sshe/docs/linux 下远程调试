@@ -1,0 +1,12 @@
+使用Windows上的Eclipse 远程调试 linux下的Tomcat (2008-05-21 14:02:52)转载▼
+标签： 知识/探索 it	分类： J2EE开发
+ 1:修改Linux上Tomcat的catalina.sh,第一行添加declare -x CATALINA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000"
+2：在eclipse中， 点 "Run->Debug..."，选 "Remote Java Application"，按提示新建，"Project"一项选择需要调试代码的项目，"Host"选择远程Linux主机IP地址，"Port"选择上一行address配置的8000，注意这是一个独立的未占用端口与应用的端口不一样的。
+3：运行Linux上的tomcat\bin\catalina.sh启动tomcat，
+命令如下:当前tomcat\bin目录下
+输入：./catalina.sh run （这样可以看到Tomcat的信息运行信息）
+如果提示没有权限，以root身份设置权限：chmod +x *.*
+Listening for transport dt_socket at address: 8000" 这样的信息，说明调试端口已经被监听
+4:在windows上的eclipse中点 "Run->Debug..."选中刚才新建的，点"Debug"，如果一切正确就没有提示。此后你在代码中设置的断点就会执行。
+ 
+5：关于修改源代码，由于java本身的JPDA机制，远程代码运行效果会被及时更新，但是并不能更新远程服务器上的代码,这一点要注意.

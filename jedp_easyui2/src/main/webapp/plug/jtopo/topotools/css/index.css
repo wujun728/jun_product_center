@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#productsandservices2 {
+    position: static;
+}
+
+#productsandservices2 .yuimenuitemlabel {
+    _zoom: 1;
+}
+
+#productsandservices2 .yuimenu .yuimenuitemlabel {
+    _zoom: normal;
+}
+
+/*
+    Turn off the border on the top unit since Menu has it's own border
+*/
+.yui-skin-sam .yui-layout .yui-layout-unit-top div.yui-layout-bd {
+    border: none;
+}
+
+/*
+    Change some of the Menu colors
+*/
+.yui-skin-sam .yuimenu .bd {
+    background-color: #F2F2F2;
+}
+
+#productsandservices2 .bd {
+    border: none;
+}
+
+#productsandservices2 .bd .first-of-type .bd {
+    border: 1px solid #808080;
+}
+
+#examplecontainer {
+    padding: 2 0 0 5;
+}
+
+#resizablepanel .bd {
+    overflow: hidden;
+    background-color: #fff;
+
+}
+
+#resizablepanel .ft {
+    height: 15px;
+    padding: 0;
+}
+
+#resizablepanel .yui-resize-handle-br {
+    right: 0;
+    bottom: 0;
+    height: 8px;
+    width: 8px;
+    position: absolute;
+}
+
+/*
+    The following CSS is added to prevent scrollbar bleedthrough on
+    Gecko browsers (e.g. Firefox) on MacOS.
+*/
+
+/*
+    PLEASE NOTE: It is necessary to toggle the "overflow" property
+    of the body element between "hidden" and "auto" in order to
+    prevent the scrollbars from remaining visible after the the
+    Resizable Panel is hidden.  For more information on this issue,
+    read the comments in the "container-core.css" file.
+
+    We use the #reziablepanel_c id based specifier, so that the rule
+    is specific enough to over-ride the .bd overflow rule above.
+*/
+
+#resizablepanel_c.hide-scrollbars .yui-resize .bd {
+    overflow: hidden;
+}
+
+#resizablepanel_c.show-scrollbars .yui-resize .bd {
+    overflow: hidden;
+}
+
+#resizablepanel_c.show-scrollbars .underlay {
+    overflow: hidden;
+}

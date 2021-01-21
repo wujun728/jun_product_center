@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<properties resource="gen/generatorConfig.properties" />
+	<context id="MBG" targetRuntime="MyBatis3" defaultModelType="conditional">
+		<!--targetRuntime 此属性用于指定生成的代码的运行目标。 -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<!-- <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" 
+			/> <plugin type="org.mybatis.generator.plugins.MapperConfigPlugin" /> -->
+		<!-- 清除自动生成的注释 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!-- 数据库连接 -->
+		<jdbcConnection driverClass="${driverClass}"
+			connectionURL="${connectionURL}" userId="${userId}" password="${password}" />
+		<!-- 类型解析器 -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- 生成实体类 -->
+		<javaModelGenerator targetPackage="${modelPackage}"
+			targetProject="${targetProject}">
+			<property name="enableSubPackages" value="true" />
+		</javaModelGenerator>
+		<!-- 生成实体类SQL映射文件 -->
+		<sqlMapGenerator targetPackage="${sqlMapperPackage}"
+			targetProject="${targetProject}">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 生成Mapper接口 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="${daoMapperPackage}" targetProject="${targetProject}">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+		<!-- 生成表映射对应 -->
+		<table schema="db" tableName="sys_user" domainObjectName="User"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		<table schema="db" tableName="sys_org" domainObjectName="Org"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		<table schema="db" tableName="sys_role" domainObjectName="Role"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		<table schema="db" tableName="sys_menu" domainObjectName="Menu"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+		<table schema="db" tableName="sys_dict" domainObjectName="Dict"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+		</table>
+
+	</context>
+</generatorConfiguration>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.zhanghua.ssm.mapper.sys.ResourceMapper">
+	
+	<!-- resultMap用户 -->
+	<resultMap id="BaseResultMap" type="Resource">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="url" property="url" />
+		<result column="is_show" property="isShow" />
+		<result column="weight" property="weight" />
+		<result column="permission" property="permission" />
+		<result column="icon" property="icon" />
+		<result column="target" property="target" />
+		<result column="remark" property="remark" />
+		<!-- 查询子节点 -->
+     	<association property="childrens" column="id" select="org.zhanghua.ssm.mapper.sys.ResourceMapper.queryChildrens"/>
+	</resultMap>
+	
+	<!-- 查询子节点 -->
+	<select id="queryChildrens" resultType="Resource">
+		SELECT
+		t.*
+		FROM sys_resource t
+		LEFT JOIN sys_resource p ON p.id = t.parent_id
+		WHERE t.is_delete = 0 
+		AND t.is_show = 0
+		AND t.parent_id = #{id}
+		ORDER BY t.weight ASC
+	</select>
+	
+	<!-- 查询左侧菜单栏(根据用户查询) -->
+	<select id="queryMenus" resultMap="BaseResultMap">
+		SELECT
+		t.*  
+		FROM
+		sys_resource t
+		LEFT JOIN sys_resource p ON p.id = t.parent_id
+		LEFT JOIN sys_role_resource rr ON rr.resource_id = t.id
+		LEFT JOIN sys_role r ON r.id = rr.role_id
+		LEFT JOIN sys_user_role ur ON ur.role_id = r.id
+		LEFT　JOIN sys_user u ON u.id = ur.user_id
+		WHERE t.is_delete = 0
+		AND t.is_show = 0
+		AND t.parent_id = 1
+		AND u.username = #{username}
+	</select>
+	
+	<!-- 查询左侧菜单栏(admin) -->
+	<select id="queryAllMenus" resultMap="BaseResultMap">
+		SELECT
+		t.*  
+		FROM
+		sys_resource t
+		WHERE t.is_delete = 0
+		AND t.is_show = 0
+		AND t.parent_id IS NULL 
+	</select>
+	
+	<!-- 查询权限(根据用户名) -->
+	<select id="queryPermissions" resultType="Resource">
+		SELECT
+		t.*
+		FROM
+		sys_resource t
+		LEFT JOIN sys_role_resource rr ON rr.resource_id = t.id
+		LEFT JOIN sys_role r ON r.id = rr.role_id
+		LEFT JOIN sys_user_role ur ON ur.role_id = r.id
+		LEFT JOIN sys_user u ON u.id = ur.user_id
+		WHERE
+		t.is_delete = 0 
+		AND u.username = #{username}
+	</select>
+	
+	<!-- 查询权限(admin) -->
+	<select id="queryAllPermissions" resultType="Resource">
+		SELECT
+		t.*
+		FROM
+		sys_resource t 
+		WHERE  
+		t.is_delete = 0
+	</select>
+
+	<!-- 查询 -->
+	<select id="get" resultType="Resource">
+		SELECT r.* FROM sys_resource r WHERE
+		r.id=#{id}
+	</select>
+
+	<!-- 查询（分页） -->
+	<select id="queryList" resultType="Resource">
+		SELECT
+		r.*,
+		p.id AS "parent.id",
+		p.`name` AS "parent.name"
+		FROM sys_resource r
+		LEFT
+		JOIN sys_resource p ON p.id = r.parent_id
+		WHERE
+		r.is_delete=0 
+		ORDER BY r.weight ASC
+	</select>
+	
+	
+	<!-- 保存 -->
+	<insert id="save">
+		INSERT INTO sys_resource (
+		id, 
+		name,
+		url,
+		parent_id,
+		is_show,
+		weight,
+		permission,
+		icon,
+		target,
+		remark,
+		create_time, 
+		create_user_id
+		)
+		VALUES (
+		#{id}, 
+		#{name},
+		#{url},
+		#{parent.id},
+		#{isShow},
+		#{weight},
+		#{permission},
+		#{icon},
+		#{target},
+		#{remark},
+		#{createTime}, 
+		#{createUser.id}
+		)
+	</insert>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE sys_resource
+		SET name = #{name},
+		url = #{url},
+		parent_id = #{parent.id},
+		is_show = #{isShow},
+		weight = #{weight},
+		permission = #{permission},
+		icon = #{icon},
+		target = #{target},
+		remark = #{remark},
+		update_time = #{updateTime}, 
+		update_uesr_id = #{updateUesr.id}
+		WHERE id = #{id}
+	</update>
+
+	<!-- 删除 -->
+	<update id="delete">
+		UPDATE sys_resource
+		SET is_delete=1
+		WHERE id IN
+		<foreach collection="list" item="id" index="index" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
+</mapper>

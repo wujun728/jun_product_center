@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>智博科技-注册</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/font-awesome/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/iCheck/square/blue.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/validate/validate.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+</head>
+<body>
+<div th:replace="home/fragments/top :: top"></div>
+<div class="login-content">
+    <div class="login-bg"></div>
+    <div class="login-box">
+        <form id="registerForm" class="login-form">
+            <div class="login-title">用户注册</div>
+            <div class="form-group has-feedback">
+                <input type="text" name="username"  class="form-control" placeholder="Email"  max="14" min="3" require="必填项" >
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input  name="password"  type="password" class="form-control" placeholder="Password"  require="必填项" nochinese="密码不能包括中文" >
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input  name="confirmPassword"  type="password" placeholder="确认密码" class="form-control" require="必填项" nochinese="密码不能包括中文"  >
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback vcode">
+                <div class="vcode-content">
+                    <input type="text"  name="verification"  class="form-control vcode-input" placeholder="验证码" require="必填项" data-position="position-a">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <img src="/verificationCode" class="pointer vcode-img">
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label style="padding: 0">
+                            <input type="checkbox" id="agreeItems" checked  value="1"> 我同意<a href="#">用户注册条款</a>
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button id="registerBtn" type="button" class="btn btn-primary btn-block btn-flat">注册</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            <div class="mt-20">
+                已有账户？<a th:href="@{/login}">点此登录</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+<div th:replace="home/fragments/footer :: copyrightLight"></div>
+
+<script th:src="@{/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{/libs/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/libs/layer/layer.js}"></script>
+<script th:src="@{/libs/iCheck/icheck.min.js}"></script>
+<script th:src="@{/libs/validate/validate.js}"></script>
+<script>
+    $(function () {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+
+    });
+</script>
+
+<script>
+
+    $(function(){
+        $(".vcode-img").on('click', function () {
+            $(this).attr('src', '/verificationCode?' + Math.floor(Math.random() * 100));
+        });
+
+        $("#registerBtn").on('click', function () {
+            if (!doValidForm(registerForm)) {
+                //没有通过验证
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/register",
+                data: $("#registerForm").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 200) {
+                        layer.msg(data.msg, {
+                            offset:'30%',
+                            time:800
+                        }, function(){
+                            window.location.href = "/login";
+                        });
+                    }else {
+                        layer.msg(data.msg);
+                        $("#verificationCode").click();
+                    }
+                }
+            });
+        });
+
+        $(document).keyup(function(event){
+            if(event.keyCode ==13){
+                $("#registerBtn").click();
+            }
+        });
+    })
+</script>
+</body>
+</html>

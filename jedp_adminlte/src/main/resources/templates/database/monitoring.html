@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">系统工具</a></li>
+        <li class="active">SQL监控</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div>
+        <!-- Main content -->
+            <iframe scrolling="yes" frameborder="0"  style="width: 100%; min-height: 200px; overflow: visible; background: rgb(255, 255, 255); height: 567px;"  name="dataIframe" th:src="@{/druid/sql.html}"></iframe>
+    </div>
+</section>
+</body>
+</html>

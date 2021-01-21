@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.zhanghua.ssm.mapper.sys.DictMapper">
+	<!-- 查询 -->
+	<select id="get" resultType="Dict">
+		SELECT d.* FROM sys_dict d WHERE
+		d.id=#{id}
+	</select>
+
+	<!-- 查询（分页） -->
+	<select id="queryList" resultType="Dict">
+		SELECT
+		d.*
+		FROM sys_dict d
+		WHERE
+		d.is_delete=0
+		<if test="type != null and type != ''">
+			AND d.type = #{type}
+		</if>
+		<if test="key != null and key != ''">
+			AND d.key LIKE CONCAT('%',#{key},'%')
+		</if>
+		<if test="value != null and value !=''">
+			AND d.value LIKE CONCAT('%',#{value},'%')
+		</if>
+		ORDER BY d.create_time DESC
+	</select>
+	
+	<!-- 查询全部的类型 -->
+	<select id="queryTypeList" resultType="Dict">
+		SELECT
+			d.type
+		FROM
+			sys_dict d
+		WHERE
+			d.is_delete = 0
+		GROUP BY
+			d.type
+		ORDER BY
+			d.create_time DESC
+	</select>
+
+	<!-- 保存 -->
+	<insert id="save">
+		INSERT INTO sys_dict (
+		id,
+		`key`,
+		`value`,
+		type,
+		remark,
+		weight,
+		create_time,
+		create_user_id
+		)
+		VALUES (
+		#{id}, 
+		#{key},
+		#{value},
+		#{type},
+		#{remark},
+		#{weight},
+		#{createTime},
+		#{createUser.id}
+		)
+	</insert>
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE sys_dict
+		SET `key` = #{key},
+		`value` = #{value},
+		type = #{type},
+		remark = #{remark},
+		weight = #{weight},
+		update_time = #{updateTime},
+		update_uesr_id = #{updateUesr.id}
+		WHERE id = #{id}
+	</update>
+
+	<!-- 删除 -->
+	<update id="delete">
+		UPDATE sys_dict 
+		SET is_delete=1
+		WHERE id IN
+		<foreach collection="list" item="id" index="index" open="(" separator="," close=")">
+    	 #{id}
+    	</foreach>
+	</update>
+	
+</mapper>
