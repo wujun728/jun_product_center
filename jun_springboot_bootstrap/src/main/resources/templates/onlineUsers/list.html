@@ -1,0 +1,131 @@
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">权限管理</a></li>
+        <li class="active">在线用户管理</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="jax-box">
+        <form id="formSearch" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3 col-sm-6  col-xs-9">
+                    <label class="control-label  col-xs-4" for="username">用户名:</label>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                </div>
+                <shiro:hasPermission name="onlineUser:list">
+                <div class="col-md-1 col-sm-6 col-xs-2" style="text-align:left;">
+                    <button type="button" id="btn_query" class="btn btn-info">查询</button>
+                </div>
+                </shiro:hasPermission>
+            </div>
+        </form>
+    </div>
+    <div class="jax-box jax-box-table">
+        <div id="toolbar" class="btn-group">
+            <shiro:hasPermission name="onlineUser:batchKickout">
+                <button id="btn_batch_kickout" type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量踢出
+                </button>
+            </shiro:hasPermission>
+        </div>
+        <table id="table"></table>
+    </div>
+</section>
+<script>
+    var kickoutFlag = "[[${@perms.hasPerm('onlineUser:kickout')}]]";
+    var columns = [
+        {checkbox: true },
+        {
+            field: 'sessionId',
+            title: '会话id',
+            align : "center"
+        },
+        {
+            field: 'username',
+            title: '用户名',
+            align : "center"
+        },{
+            field: 'host',
+            title: '主机地址',
+            align : "center"
+        },
+        {
+            field: 'lastAccess',
+            title: '最后访问时间',
+            align : "center"
+        },
+        {
+            field : 'operation',
+            title : '操作',
+            align : "center",
+            formatter : function(value,
+                                 row, index) {
+                var kickout = kickoutFlag=="true" ?  '<a class="table-btn table-btn-danger" href="javascript:void(0)" onclick="kickoutUser(\''+row.sessionId+'\',\''+row.username+'\')">踢出</a>' : '';
+                return kickout;
+            }
+        }];
+    var options={
+        id:"#table",
+        url: '/online/user/list',
+        columns:columns,
+        toolbar: '#toolbar',
+        showRefresh: true,
+        queryParams : queryParams
+    }
+    Core.initTable(options);
+
+    /*查询用户参数*/
+    function queryParams(params) {
+        var temp = { //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+            limit : params.limit, //页面大小
+            offset : params.offset, //页码
+            username : $("#username").val()
+        };
+        return temp;
+    }
+
+    /*踢出用户*/
+    function  kickoutUser(sessionId,username) {
+        Core.confirm("确定踢除该用户？",function () {
+            Core.postAjax("/online/user/kickout",{"sessionId":sessionId,"username":username},function (data) {
+                if(data.status==200){
+                    Core.refreshTable("#table");
+                }
+                layer.msg(data.msg);
+            })
+        })
+    }
+
+    $(function () {
+        $("#btn_query").click(function(){
+            Core.refreshTable("#table");
+        });
+        $("#btn_batch_kickout").click(function(){
+            var checkedRows= Core.selectMutiData("#table");
+            if(checkedRows){
+                Core.confirm("确定踢出选中的"+checkedRows.length+"条记录？",function () {
+                    var sessions=[];
+                    $.each(checkedRows, function (i, item) {
+                        var session={};
+                        session.sessionId = item.sessionId;
+                        session.username = item.username;
+                        sessions.push(session);
+                    })
+                    var jsonStr = JSON.stringify(sessions)
+                    Core.postAjax("/online/user/batch/kickout", jsonStr, function (data) {
+                        if (data.status == 200) {
+                            Core.refreshTable("#table");
+                        }
+                        layer.msg(data.msg);
+                    },"POST","application/json; charset=UTF-8")
+                })
+            }
+        });
+
+    })
+
+</script>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--全局属性字段自动映射开启，不管是否嵌套-->
+        <setting name="autoMappingBehavior" value="FULL"/>
+        <!--开启数据库字段和实体字段的骆驼命名映射 A_COLUMN 到经典 Java 属性名 aColumn 的类似映射。-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <!--别名开启，在sql映射中不用再写实体类的全类名-->
+        <package name="com.zt.pojo" />
+    </typeAliases>
+
+</configuration>

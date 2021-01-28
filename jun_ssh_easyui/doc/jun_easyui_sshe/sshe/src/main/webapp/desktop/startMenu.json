@@ -1,0 +1,23 @@
+[{
+    "id":"startMenu1",
+    "text":"聊天工具",
+    "href":"http://localhost:8081/sshe_chat/",
+    "children":[{
+	    "id":"startMenu11",
+	    "text":"我的聊天",
+	    "href":"http://localhost:8081/sshe_chat",
+	"iconCls":"icon-ok"
+    }],
+	"iconCls":"icon-ok"
+},{
+    "id":"startMenu2",
+    "text":"复医凯泽信息管理系统",
+    "href":"http://localhost:8080/sshe",
+	"iconCls":"icon-ok"
+},
+{
+    "id":"startMenu3",
+    "text":"论坛",
+    "href":"http://localhost:8080/sshe",
+	"iconCls":"icon-ok"
+},"-"]

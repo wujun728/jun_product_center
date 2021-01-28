@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新博信息管理系统</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/font-awesome/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/adminlte/css/AdminLTE.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/adminlte/css/all-skins.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/pace/pace.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/validate/validate.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/bootstrap-table/css/bootstrap-table.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/treegrid/jquery.treegrid.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/ztree/css/ztree-bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/zplayer/css/zplayer.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/upload/css/webuploader.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <script th:src="@{/libs/jquery/jquery.min.js}"></script>
+    <script th:src="@{/libs/bootstrap/bootstrap.min.js}"></script>
+    <script th:src="@{/libs/pace/pace.js}"></script>
+    <script th:src="@{/libs/jquery/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{/libs/jquery/fastclick.min.js}"></script>
+    <script th:src="@{/libs/validate/validate.js}"></script>
+    <script th:src="@{/libs/layer/layer.js}"></script>
+    <script th:src="@{/libs/bootstrap-table/js/bootstrap-table.min.js}"></script>
+    <script th:src="@{/libs/bootstrap-table/js/bootstrap-table-zh-CN.min.js}"></script>
+    <script th:src="@{/libs/treegrid/jquery.treegrid.min.js}"></script>
+    <script th:src="@{/libs/treegrid/jquery.treegrid.extension.js}"></script>
+    <script th:src="@{/libs/treegrid/tree.table.js}"></script>
+    <script th:src="@{/libs/ztree/js/jquery.ztree.core.js}"></script>
+    <script th:src="@{/libs/ztree/js/jquery.ztree.excheck.js}"></script>
+    <script th:src="@{/libs/ztree/js/jquery.ztree.exedit.js}"></script>
+    <script th:src="@{/libs/upload/js/webuploader.js}"></script>
+    <script th:src="@{/libs/upload/js/jax.uploader.js}"></script>
+    <script th:src="@{/libs/upload/js/uploadCall.js}"></script>
+    <script th:src="@{/libs/zplayer/js/zplayer.min.js}"></script>
+    <script th:src="@{/js/core.js}"></script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini fixed" onhashchange="loadContent()">
+<div class="wrapper">
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <div th:replace="fragments/sidebar :: sidebar"></div>
+    <div id="content" class="content-wrapper" >
+    </div>
+    <aside class="control-sidebar control-sidebar-dark">
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="control-sidebar-home-tab">
+            </div>
+        </div>
+    </aside>
+</div>
+<div th:replace="fragments/musicPlayer :: musicPlayer"></div>
+<script th:src="@{/libs/adminlte/js/app.js}"></script>
+<script th:src="@{/libs/adminlte/js/settings-skins.js}"></script>
+<script th:src="@{/js/init.js}"></script>
+</body>
+</html>

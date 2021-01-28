@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data name="初始数据">
+
+	<resourcetypes name="资源类型">
+		<resourcetype id="0" name="菜单" description="菜单类型会显示在系统首页左侧菜单中" />
+		<resourcetype id="1" name="功能" description="功能类型不会显示在系统首页左侧菜单中" />
+	</resourcetypes>
+
+	<resources name="资源">
+		<resource id="xtgl" name="系统管理" url="/welcome.jsp" description="管理系统的资源、角色、机构、用户等信息" seq="0" iconCls="ext-icon-application_view_tile">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="zygl" name="资源管理" url="/securityJsp/base/Syresource.jsp" description="管理系统的资源" seq="1" iconCls="ext-icon-newspaper_link" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="zylb" name="资源列表" url="/base/syresource!treeGrid" description="查询资源" seq="0" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zytj" name="添加资源" url="/base/syresource!save" description="添加资源" seq="1" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zybj" name="编辑资源" url="/base/syresource!update" description="编辑资源" seq="2" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zysc" name="删除资源" url="/base/syresource!delete" description="删除资源" seq="3" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="zyck" name="查看资源" url="/base/syresource!getById" description="查看资源" seq="4" iconCls="ext-icon-bullet_wrench" pid="zygl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="jsgl" name="角色管理" url="/securityJsp/base/Syrole.jsp" description="管理系统中用户的角色" seq="2" iconCls="ext-icon-tux" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="jslb" name="角色列表" url="/base/syrole!grid" description="查询角色列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jstj" name="添加角色" url="/base/syrole!save" description="添加角色" seq="1" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jsbj" name="编辑角色" url="/base/syrole!update" description="编辑角色" seq="2" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jssc" name="删除角色" url="/base/syrole!delete" description="删除角色" seq="3" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jsck" name="查看角色" url="/base/syrole!getById" description="查看角色" seq="4" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jssq" name="角色授权" url="/base/syrole!grant" description="角色授权" seq="5" iconCls="ext-icon-bullet_wrench" pid="jsgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="jggl" name="机构管理" url="/securityJsp/base/Syorganization.jsp" description="管理系统中用户的机构" seq="3" iconCls="ext-icon-group_link" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="jglb" name="机构列表" url="/base/syorganization!treeGrid" description="查询机构列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgtj" name="添加机构" url="/base/syorganization!save" description="添加机构" seq="1" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgbj" name="编辑机构" url="/base/syorganization!update" description="编辑机构" seq="2" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgsc" name="删除机构" url="/base/syorganization!delete" description="删除机构" seq="3" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgck" name="查看机构" url="/base/syorganization!getById" description="查看机构" seq="4" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="jgsq" name="机构授权" url="/base/syorganization!grant" description="机构授权" seq="5" iconCls="ext-icon-bullet_wrench" pid="jggl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="yhgl" name="用户管理" url="/securityJsp/base/Syuser.jsp" description="管理系统中用户的用户" seq="4" iconCls="ext-icon-user_suit" pid="xtgl">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="yhlb" name="用户列表" url="/base/syuser!grid" description="查询用户列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhtj" name="添加用户" url="/base/syuser!save" description="添加用户" seq="1" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhbj" name="编辑用户" url="/base/syuser!update" description="编辑用户" seq="2" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhsc" name="删除用户" url="/base/syuser!delete" description="删除用户" seq="3" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhck" name="查看用户" url="/base/syuser!getById" description="查看用户" seq="4" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhjs" name="用户角色" url="/base/syuser!grantRole" description="编辑用户角色" seq="5" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+		<resource id="yhjg" name="用户机构" url="/base/syuser!grantOrganization" description="编辑用户机构" seq="6" iconCls="ext-icon-bullet_wrench" pid="yhgl">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="xtjk" name="系统监控" url="/welcome.jsp" description="监控系统运行情况等信息" seq="1" iconCls="ext-icon-monitor">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="monitoring" name="项目监控" url="/monitoring" description="监控项目" seq="1" iconCls="ext-icon-monitor_error" pid="xtjk">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="druid" name="数据源监控" url="/druid" description="监控数据源" seq="2" iconCls="ext-icon-monitor_link" pid="xtjk">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="actionConfigBrowser" name="Action映射监控" url="/config-browser/showConstants.sy" description="Action映射情况监控" seq="3" iconCls="ext-icon-monitor_lightning" pid="xtjk">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="online" name="用户登录历史监控" url="/securityJsp/base/Syonline.jsp" description="监控用户登录、注销" seq="4" iconCls="ext-icon-chart_line" pid="xtjk">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="onlineGrid" name="用户登录历史列表" url="/base/syonline!grid" description="用户登录、注销历史记录列表" seq="0" iconCls="ext-icon-bullet_wrench" pid="online">
+			<resourcetype id="1" name="功能" />
+		</resource>
+
+		<resource id="xtbb" name="系统报表" url="/welcome.jsp" description="查看系统相关报表图标" seq="2" iconCls="ext-icon-chart_curve">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="userCreateDatetimeChart" name="注册时间分布" url="/securityJsp/base/chart/userCreateDatetimeChart.jsp" description="用户注册时间分布报表" seq="1" iconCls="ext-icon-chart_bar" pid="xtbb">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="userRoleChart" name="用户角色分布" url="/securityJsp/base/chart/userRoleChart.jsp" description="用户角色分布" seq="2" iconCls="ext-icon-chart_pie" pid="xtbb">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="demo" name="其他示例" url="/welcome.jsp" description="EasyUI还能做到更多，只有你想不到，没有做不到！" seq="3" iconCls="ext-icon-asterisk_orange">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+		<resource id="lyDemo" name="流云的Demo" url="/demo/lyDemo.jsp" description="针对EasyUI二次开发的DEMO" seq="1" iconCls="ext-icon-award_star_bronze_1" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="syproDemo" name="SyProDemo" url="/demo/syproDemo.jsp" description="SpringMvc+Spring3+Hibernate4+Maven" seq="2" iconCls="ext-icon-award_star_bronze_2" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="phpDemo" name="phpDemo" url="/demo/phpDemo.jsp" description="夏悸的php demo" seq="3" iconCls="ext-icon-award_star_bronze_3" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="appDemo" name="桌面Demo" url="/demo/appDemo.jsp" description="桌面演示demo" seq="4" iconCls="ext-icon-award_star_gold_1" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="easyuiDemo" name="EasyUI官方Demo" url="http://jeasyui.com/demo/main/index.php" description="EasyUI官方Demo" seq="5" iconCls="ext-icon-medal_bronze_1" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="easyuiAPI" name="EasyUI官方API" url="http://jeasyui.com/documentation/index.php" description="EasyUI官方API" seq="6" iconCls="ext-icon-medal_bronze_2" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="easyuiTutorial" name="EasyUI进阶DEMO" url="http://jeasyui.com/tutorial/index.php" description="EasyUI辅导" seq="7" iconCls="ext-icon-medal_bronze_3" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="easyuiDownload" name="EasyUI官方下载" url="http://jeasyui.com/download/index.php" description="EasyUI官方下载" seq="8" iconCls="ext-icon-medal_gold_1" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="easyuiExtension" name="EasyUI其他扩展" url="http://jeasyui.com/extension/index.php" description="EasyUI其他扩展" seq="9" iconCls="ext-icon-medal_gold_2" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+		<resource id="easyuiForum" name="EasyUI官方论坛" url="http://www.jeasyui.com/forum/index.php" description="EasyUI官方论坛" seq="10" iconCls="ext-icon-medal_gold_3" pid="demo">
+			<resourcetype id="0" name="菜单" />
+		</resource>
+
+	</resources>
+
+	<roles name="角色">
+		<role id="0" name="超管" description="拥有系统所有权限" seq="0" />
+		<role id="1" name="Guest" description="只有查看权限" seq="1" />
+		<role id="2" name="admin1" description="只有资源管理权限" seq="2" />
+		<role id="3" name="admin2" description="只有角色管理权限" seq="3" />
+		<role id="4" name="admin3" description="只有机构管理权限" seq="4" />
+		<role id="5" name="admin4" description="只有用户管理权限" seq="5" />
+		<role id="6" name="admin5" description="只有系统监控权限" seq="6" />
+	</roles>
+
+	<roles_resources name="角色和资源对应关系">
+		<role id="1" name="Guest角色">
+			<resource id="xtgl" name="系统管理" />
+
+			<resource id="zygl" name="资源管理" />
+			<resource id="zylb" name="资源列表" />
+			<resource id="zyck" name="查看资源" />
+
+			<resource id="jsgl" name="角色管理" />
+			<resource id="jslb" name="角色列表" />
+			<resource id="jsck" name="查看角色" />
+
+			<resource id="jggl" name="机构管理" />
+			<resource id="jglb" name="机构列表" />
+			<resource id="jgck" name="查看机构" />
+
+			<resource id="yhgl" name="用户管理" />
+			<resource id="yhlb" name="用户列表" />
+			<resource id="yhck" name="查看用户" />
+
+			<resource id="demo" name="其他示例" />
+
+			<resource id="lyDemo" name="流云的Demo" />
+			<resource id="syproDemo" name="SyProDemo" />
+			<resource id="phpDemo" name="phpDemo" />
+			<resource id="appDemo" name="桌面Demo" />
+			<resource id="easyuiDemo" name="EasyUI官方Demo" />
+			<resource id="easyuiAPI" name="EasyUI官方API" />
+			<resource id="easyuiTutorial" name="EasyUI进阶DEMO" />
+			<resource id="easyuiDownload" name="EasyUI官方下载" />
+			<resource id="easyuiExtension" name="EasyUI其他扩展" />
+			<resource id="easyuiForum" name="EasyUI官方论坛" />
+		</role>
+
+		<role id="2" name="admin1">
+			<resource id="zygl" name="资源管理" />
+			<resource id="zylb" name="资源列表" />
+			<resource id="zytj" name="添加资源" />
+			<resource id="zybj" name="编辑资源" />
+			<resource id="zysc" name="删除资源" />
+			<resource id="zyck" name="查看资源" />
+		</role>
+
+		<role id="3" name="admin2">
+			<resource id="jsgl" name="角色管理" />
+			<resource id="jslb" name="角色列表" />
+			<resource id="jstj" name="添加角色" />
+			<resource id="jsbj" name="编辑角色" />
+			<resource id="jssc" name="删除角色" />
+			<resource id="jsck" name="查看角色" />
+			<resource id="jssq" name="角色授权" />
+		</role>
+
+		<role id="4" name="admin3">
+			<resource id="jggl" name="机构管理" />
+			<resource id="jglb" name="机构列表" />
+			<resource id="jgtj" name="添加机构" />
+			<resource id="jgbj" name="编辑机构" />
+			<resource id="jgsc" name="删除机构" />
+			<resource id="jgck" name="查看机构" />
+			<resource id="jgsq" name="机构授权" />
+		</role>
+
+		<role id="5" name="admin4">
+			<resource id="yhgl" name="用户管理" />
+			<resource id="yhlb" name="用户列表" />
+			<resource id="yhtj" name="添加用户" />
+			<resource id="yhbj" name="编辑用户" />
+			<resource id="yhsc" name="删除用户" />
+			<resource id="yhck" name="查看用户" />
+			<resource id="yhjs" name="用户角色" />
+			<resource id="yhjg" name="用户机构" />
+		</role>
+
+		<role id="6" name="admin5">
+			<resource id="xtjk" name="系统监控" />
+
+			<resource id="monitoring" name="项目监控" />
+			<resource id="druid" name="数据源监控" />
+			<resource id="actionConfigBrowser" name="Action映射监控" />
+			<resource id="online" name="用户登录历史监控" />
+			<resource id="onlineGrid" name="用户登录历史列表" />
+		</role>
+	</roles_resources>
+
+	<organizations name="机构">
+		<organization id="0" name="一级机构" address="机构地址" code="机构编号" iconCls="ext-icon-brick" seq="0" />
+	</organizations>
+
+	<organizations_resources name="机构和资源对应关系">
+		<organization id="0" name="一级机构">
+			<resource id="xtgl" name="系统管理" />
+
+			<resource id="zygl" name="资源管理" />
+			<resource id="zylb" name="资源列表" />
+			<resource id="zyck" name="查看资源" />
+
+			<resource id="jsgl" name="角色管理" />
+			<resource id="jslb" name="角色列表" />
+			<resource id="jsck" name="查看角色" />
+
+			<resource id="jggl" name="机构管理" />
+			<resource id="jglb" name="机构列表" />
+			<resource id="jgck" name="查看机构" />
+
+			<resource id="yhgl" name="用户管理" />
+			<resource id="yhlb" name="用户列表" />
+			<resource id="yhck" name="查看用户" />
+		</organization>
+	</organizations_resources>
+
+	<users name="用户">
+		<user id="0" loginname="孙宇" pwd="123456" name="孙宇" sex="1" age="30" />
+		<user id="1" loginname="guest" pwd="123456" name="guest" sex="1" age="30" />
+		<user id="2" loginname="admin1" pwd="123456" name="admin1" sex="0" age="30" />
+		<user id="3" loginname="admin2" pwd="123456" name="admin2" sex="0" age="30" />
+		<user id="4" loginname="admin3" pwd="123456" name="admin3" sex="0" age="30" />
+		<user id="5" loginname="admin4" pwd="123456" name="admin4" sex="0" age="30" />
+		<user id="6" loginname="admin5" pwd="123456" name="admin5" sex="0" age="30" />
+	</users>
+
+	<users_roles name="用户和角色对应关系">
+		<user id="1" loginname="guest">
+			<role id="1" name="Guest角色" />
+		</user>
+		<user id="2" loginname="admin1">
+			<role id="2" name="admin1" />
+		</user>
+		<user id="3" loginname="admin2">
+			<role id="3" name="admin2" />
+		</user>
+		<user id="4" loginname="admin3">
+			<role id="4" name="admin3" />
+		</user>
+		<user id="5" loginname="admin4">
+			<role id="5" name="admin4" />
+		</user>
+		<user id="6" loginname="admin5">
+			<role id="6" name="admin5" />
+		</user>
+	</users_roles>
+
+	<users_organizations name="用户和机构的关系">
+		<user id="1" loginname="guest">
+			<organization id="0" name="一级机构" />
+		</user>
+	</users_organizations>
+
+</data>

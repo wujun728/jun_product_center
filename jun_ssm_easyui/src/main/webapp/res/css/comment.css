@@ -1,0 +1,303 @@
+﻿/* 留言 样式表
+ * @Author: Leo 
+ * @Date: 2019-10-09 11:32:39 
+ * @Last Modified by:   Leo 
+ * @Last Modified time: 2019-10-09 11:32:39 
+ */
+.topdiv {
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.topdiv-figure {
+    display: inline-block;
+    margin: 20px auto;
+}
+
+    .topdiv-figure img {
+        border-radius: 50px;
+    }
+
+.topdiv-nickname {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0 0 15px 0;
+}
+
+.topdiv-introduce {
+    margin: 20px auto;
+    font-size: 18px;
+    width: 90%;
+}
+
+.topdiv-location {
+    color: #808080;
+    margin: 15px;
+}
+
+.topdiv-contact {
+    margin: 15px;
+}
+
+    .topdiv-contact > a {
+        padding: 0 10px;
+    }
+
+.chatroom {
+    border: 1px solid #ddd;
+    overflow: hidden;
+}
+
+    .chatroom .scroll {
+        overflow-y: auto;
+        height: 300px;
+    }
+
+    .chatroom .layui-card-header .status {
+        float: right;
+        color: #ADADAD;
+        width: 20px;
+        text-align: center;
+        line-height: 20px;
+        margin-top: 11px;
+        cursor: pointer;
+    }
+
+
+        .chatroom .layui-card-header .status.online {
+            color: #09F175;
+        }
+
+.chatroom-body {
+}
+
+.chatroom-editor,
+.chatroom-send {
+    border-top: 1px solid #eaeaea;
+}
+
+
+    .chatroom-editor .layui-layedit {
+        border: none;
+    }
+
+    .chatroom-editor .layui-layedit-tool .layui-icon {
+        width: 22px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 16px !important;
+    }
+
+.chatroom-send {
+    padding: 5px;
+    text-align: right;
+}
+
+    .chatroom-send .layui-btn {
+        border-radius: 0;
+    }
+
+.comment-editor {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+.comment-item,
+.comment-reply {
+    padding-left: 60px;
+    min-height: 100px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    position: relative;
+}
+
+.comment-item-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+}
+
+    .comment-item-left .useravator {
+        padding: 3px;
+        border: 1px solid #eaeaea;
+        display: inline-block;
+        margin: 6px;
+        margin-bottom: 3px;
+    }
+
+        .comment-item-left .useravator img {
+            width: 40px;
+            height: 40px;
+        }
+
+    .comment-item-left .reply {
+        text-align: center;
+        margin-top: 5px;
+        display: none;
+    }
+
+        .comment-item-left .reply .layui-btn {
+            border-radius: 0;
+        }
+
+.comment-item-right .content {
+    padding: 9px;
+    min-height: 60px;
+}
+
+.comment-item-right .createtime {
+    font-size: 12px;
+    color: #999;
+    height: 20px;
+    line-height: 20px;
+    text-align: right;
+    padding: 5px 10px;
+}
+
+
+.comment-item .layui-layedit {
+    margin-top: 10px;
+    margin-left: -50px;
+    margin-right: 10px;
+}
+
+.comment-item .layui-layedit-tool .layui-icon {
+    width: 18px;
+    height: 16px;
+    line-height: 16px;
+    font-size: 14px !important;
+}
+
+/*回复*/
+.comment-reply {
+    border: none;
+    min-height: 60px;
+}
+
+    .comment-reply:last-child {
+        margin-bottom: 10px;
+    }
+
+    .comment-reply .comment-item-right .content {
+        min-height: 30px;
+        font-size: 12px;
+        padding: 0 5px;
+        padding-top: 6px;
+    }
+
+    .comment-reply .comment-item-right .createtime {
+        text-align: left;
+        padding: 0 5px;
+    }
+
+.status-select {
+    padding: 10px 0;
+}
+
+    .status-select ul {
+        width: 130px;
+        font-size: 12px;
+    }
+
+        .status-select ul li {
+            line-height: 22px;
+            padding: 3px 10px;
+            cursor: pointer;
+        }
+
+            .status-select ul li:hover {
+                background-color: #eee;
+            }
+
+.systemmsg {
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+}
+
+
+.msg {
+    position: relative;
+    font-size: 12px;
+    margin: 10px 0;
+}
+
+    .msg .msg-user {
+        position: absolute;
+    }
+
+        .msg .msg-user img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+    .msg .msg-text .content {
+        margin-top: 5px;
+        padding: 2px 7px;
+        background-color: #f2f2f2;
+        border-radius: 3px;
+    }
+
+    .msg .msg-text .name {
+        color: #01aaed;
+        line-height: normal;
+    }
+
+.msg-other .msg-text {
+    padding-right: 10px;
+}
+
+.msg-other {
+    padding-left: 40px;
+}
+
+    .msg-other .msg-user {
+        left: 0;
+    }
+
+.msg-mine {
+    padding-right: 50px;
+}
+
+    .msg-mine .msg-user {
+        right: 10px;
+    }
+
+    .msg-mine .msg-text .name {
+        text-align: right;
+    }
+
+@media(max-width:767px) {
+}
+
+@media (max-width: 991px) {
+    .right-fixed {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .right-fixed {
+        position: fixed;
+        width: 303px;
+    }
+
+    .chatroom .scroll {
+        width: 313px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .right-fixed {
+        width: 370px;
+    }
+
+    .chatroom .scroll {
+        width: 380px;
+    }
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>智博科技</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{/libs/bootstrap/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/libs/font-awesome/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+</head>
+<body>
+<div th:replace="home/fragments/top :: top"></div>
+<div style="margin:150px 0 80px; text-align: center"><span>您已被踢出！ 点此<a th:href="@{/login}">重新登录</a></span></div>
+
+<div th:replace="home/fragments/footer :: copyrightLight"></div>
+
+<script th:src="@{/libs/jquery/jquery.min.js}"></script>
+<script th:src="@{/libs/bootstrap/bootstrap.min.js}"></script>
+<script th:src="@{/libs/layer/layer.js}"></script>
+</body>
+</html>

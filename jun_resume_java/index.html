@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="email=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>[简历]吴俊-Java高级架构师/武汉</title>
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/typo.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+	<link rel="stylesheet" href="assets/css/zplayer.min.css" />
+	<script type="text/javascript" src="assets/js/zplayer.min.js" ></script>
+    <script>
+        function loading() {
+            document.getElementsByClassName('avatar')[0].style.display = 'block';
+            document.getElementsByClassName('loading')[0].style.display = 'none';
+        }
+    </script>
+</head>
+
+<body>
+	<div id="player3"></div>
+    <header class="header"></header>
+
+    <article class="container">
+        <section class="side" id="side">
+
+            <!-- 左栏固定开关，记得及时删除这段代码 Start-->
+            <label class="switch" style="display: none;" onchange="switchFixed()">
+                <script type="text/javaScript">
+                    function switchFixed(){
+                        var value = document.getElementById('side').style.position === 'fixed' ? 'absolute' : 'fixed';
+                        document.getElementById('side').style.position = value;
+                    }
+                </script>
+                <input id="cb" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+            <style>
+                @media (min-width: 	750px){
+                    .switch{position:relative;display:inline-block!important;width:60px;height:34px;}
+                    .switch input{display:none;}
+                    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;-webkit-transition:.4s;transition:.4s;}
+                    .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background-color:white;-webkit-transition:.4s;transition:.4s;}
+                    input:checked + .slider{background-color:#1abc9c;}
+                    input:focus + .slider{box-shadow:0 0 1px #1abc9c;}
+                    input:checked + .slider:before{-webkit-transform:translateX(26px);-ms-transform:translateX(26px);transform:translateX(26px);}.slider.round{border-radius:34px;}
+                    .slider.round:before{border-radius:50%;}
+                }
+            </style>
+            <!-- 左侧固定开关，记得及时删除这段代码 End-->
+
+            <!-- 个人肖像 -->
+            <section class="me">
+                <section class="portrait">
+                    <div class="loading">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <!-- 头像照片 -->
+                    <img class="avatar" src="./assets/images/avatar.jpg" onload="loading()">
+                </section>
+
+                <h1 class="name">吴俊</h1>
+                <h4 class="info-job">Java高级架构师/项目经理/武汉</h4>
+
+            </section>
+
+            <!-- 基本信息 -->
+            <section class="profile info-unit">
+                <h2>
+                    <i class="fa fa-user" aria-hidden="true"></i>基本信息</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <label>姓名</label>
+                        <span>吴俊</span>
+                    </li>
+					<li>
+                        <label>生日</label>
+                        <span>1988.07.28</span>
+                    </li>
+                    <li>
+                        <label>性    别</label>
+                        <span>男</span>
+                    </li>
+                    <li>
+                        <label>婚否</label>
+                        <span>已婚</span>
+                    </li>
+					<li>
+                        <label>籍	 贯</label>
+                        <span>湖北黄冈</span>
+                    </li>
+					<li>
+                        <label>项目经验</label>
+                        <span>10年</span>
+                    </li>
+					<li>
+                        <label>管理经验</label>
+                        <span>5年，有PMP/CSM认证</span>
+                    </li>
+					
+                </ul>
+            </section>
+			
+			<!-- 教育经历 -->
+            <section class="profile info-unit">
+                <h2>
+                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>教育经历</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <label>院校</label>
+                        <span>华中师范大学汉口分校</span>
+                    </li>
+                    <li>
+                        <label>时间</label>
+                        <span>2008.9-2011.6</span>
+                    </li> 
+					<li>
+                        <label>专业</label>
+                        <span>计算机科学与技术</span>
+                    </li> 
+                </ul>
+            </section>
+
+            <!-- 联系方式 -->
+            <section class="contact info-unit">
+                <h2>
+                    <i class="fa fa-phone" aria-hidden="true"></i>联系方式</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <label>手机</label>
+                        <a href="tel:15168285219" target="_blank">171-3721-3616</a>
+                    </li>
+                    <li>
+                        <label>邮箱</label>
+                        <a href="mailto:ze.zh@hotmail.com" target="_blank">wujun728@hotmail.com</a>
+                    </li>
+                    <li>
+                        <label>个人网站</label>
+                        <a href="http://www.nb666.net/" target="_blank">www.nb666.net</a>
+                    </li>
+					<li>
+                        <label>个人博客</label>
+                        <a href="http://blog.nb666.net/" target="_blank">blog.nb666.net</a>
+                    </li>
+					<li>
+                        <label>Java架构师简历</label>
+                        <a href="http://resume.nb666.net/" target="_blank">java.nb666.net</a>
+                    </li>
+					<li>
+                        <label>项目经理简历</label>
+                        <a href="http://resume.nb666.net/" target="_blank">pm.nb666.net</a>
+                    </li>
+					<li>
+                        <label>作品</label>
+                        <a href="http://www.nb666.net/production.html" target="_blank">www.nb666.net/prod.html</a>
+                    </li>
+                    <li>
+                        <label>Github</label>
+                        <a href="https://github.com/wujun728" target="_blank">github.com/wujun728</a>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 技能点 -->
+            <section class="skill info-unit">
+                <h2>
+                    <i class="fa fa-code" aria-hidden="true"></i>技能点</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <label>JavaEE</label>
+                        <progress value="90" max="100"></progress>
+                    </li>
+                    <li>
+                        <label>微服务</label>
+                        <progress value="90" max="100"></progress>
+                    </li>
+                    <li>
+                        <label>大数据</label>
+                        <progress value="85" max="100"></progress>
+                    </li>
+                    <li>
+                        <label>小程序/微信</label>
+                        <progress value="80" max="100"></progress>
+                    </li>
+                    <li>
+                        <label>App开发</label>
+                        <progress value="70" max="100"></progress>
+                    </li>
+                    <li>
+                        <label>网站</label>
+                        <progress value="70" max="100"></progress>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="qrcode info-unit">
+                <h2><i class="fa fa-qrcode" aria-hidden="true"></i>二维码</h2>
+                <hr/>
+                <img src="#" style="width: 100%;" alt="">
+            </section>
+
+            <!-- 技术栈 -->
+            <div class="stack info-unit">
+                    <h2><i class="fa fa-code" aria-hidden="true"></i>技术栈</h2>
+                    <hr/>
+                    <ul>
+						<li>
+                            <label>前端</label>
+                            <span>jQuery、Vue、微信小程序、Bootstrap、NodeJS、APP开发</span>
+                        </li>
+						<li>
+                            <label>后端</label>
+                            <span>JavaEE、SSH/SSM、SpringBoot、SpringCloud微服务、Hadoop大数据</span>
+                        </li>
+                        
+                        <li>
+                            <label>数据</label>
+                            <span>Oracle、MongoDB、MySQL、Redis、Elasticsearch、Mycat</span>
+                        </li>
+                        <li>
+                            <label>其他</label>
+                            <span>Nginx、WordPress、Docker、Kubernetes、Gitlab、Jenkins</span>
+                        </li>
+                    </ul>
+                </div>
+        </section>
+
+        <section class="main">
+			<!-- 自我评价 -->
+            <section class="work info-unit">
+                <h2>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>自我评价</h2>
+                <hr/>
+                <p><mark>个人能力强</mark>、无论是技术能力还是组织协调管理能力，都能独当一面、有强烈的责任意识及交付意识；
+				本人有<mark>10年以上的一线项目经验及开发管理经验</mark>，5年项目团队管理经验（专业PMP及CSM），4年的华为工作经验， 6年的银行政企类项目开发实施经验；
+				参与华为、浦发银行和上海银行、长沙银行、武汉农商行、会计师事务所等中大型项目开发与实施，熟悉各种IT项目管理及开发；
+				技术上，以Java系为主，<mark>能拿下整个项目</mark>，并承担高级架构、高级开发等实施工作；
+				管理上，<mark>能hold住整个团队</mark>，有30人中大型团队的管理经验，有成体系的项目管理知识体系(及敏捷)；
+				有较强沟通能力、执行能力、具有较强的客户关系处理、业务分析能力、解决方案输出能力、问题解决能力、良好的专业技能及团队协作精神；
+				做事<mark>踏实</mark>，坚持本心与梦想，<mark>工作认真、负责</mark>； 
+				</p> 
+            </section>
+			
+            <!-- 技能专长 -->
+            <section class="edu info-unit">
+                <h2> 
+					<i class="fa fa-pencil" aria-hidden="true"></i>技能专长</h2>
+					<!-- <i class="fa fa-graduation-cap" aria-hidden="true"></i>教育经历</h2> -->
+                <hr/>
+                <ul>
+                    <li>
+                         
+                        <ul class="info-content">
+							
+                            <li>Java基础：手写23种Java
+								<span class="link"> <a href="https://github.com/wujun728/jun_plugin/tree/master/jun_designpattern" target="_blank" title="本人Github项目jun_designpattern">设计模式</a> </span> 
+								、熟悉常用算法数据结构，JVM调优，线程池、异步编程、NIO、高并发高可用分布式等； 
+							</li> 
+							<li>前端：熟练使用JS、Jquery、Vue、Ajax跨域表单处理及各种JQueryUI/EasyUI、Extjs、Bootstrap、VUI等框架组件； </li>
+                            <li>JavaWeb：熟悉Servlet3.0、DBUtil及SpringMVC、Spring、MyBatis、Struts1.x\ 2.x、Hibernate等框架技术 </li>
+                            <li>Linux：熟悉Linux操作系统、Shell脚本编写，熟悉各种操作命令及软件并安装部署调试等，能独立部署开发测试及生产环境 </li>
+							<li>中间件：熟练部署LVS/Keepalive/HaProxy/Nginx/Apache/Tomcat/JBoss/WebLogic等的配置、部署、调优等 </li>
+							<li>数据库：缓存：熟练使用SQL语言及操作Oracle、MySQL 数据库，手写存储过程、函数、SQL调优、PLSQL、PowerDesigner、Oracle RAC、MySql读写分离，分库分表等；熟悉Ehcache、 Memcache、Redis 、Mongodb等缓存及NoSQL技术 </li>
+							<li>分布式：熟悉
+								<span class="link"> <a href="https://github.com/wujun728/jun_plugin/tree/master/jun_distributed_lock" target="_blank" title="本人Github项目jun_distributed_lock" >分布式锁</a> </span> 
+								、分布式事务、分布式对象存储、分布式文件存储、分布式缓存等，具有项目及代码实施经验
+								
+							</li>
+							<li>高并发：熟悉大数据高并发分布式架构处理平台，能部署、实施、运维及项目开发 <a href="#" target="_blank"><i class="fa fa-link" aria-hidden="true"></i>博客文章</a> </li> 
+							<li>开发测试：部署SVN、Git服务器及Maven私服等、StartUML及LoadRunner压力测试等工具开发及测试 </li> 
+							<li>项目管理：<mark>PMP项目管理专业认证</mark>、<mark>CSM敏捷项目管理认证</mark>；华为DTP项目三年管理经验（任高级架构师及项目经理）、华为HTM项目项目经理、<br/>浦发参数管理系统项目经理、上海银行数据标准管理系统项目经理 </li>
+                        </ul>
+                    </li> 
+                </ul>
+ 
+					<!--
+                    <li>
+                        <h3>
+                            <span>华中师范大学汉口分校</span>
+                            <time>2008.9-2011.6</time>
+                        </h3>
+                        <p>专业排名
+                            <mark>X/XX</mark>，期间发表国际会议英文摘要X篇，国内核心期刊文章X篇（其中第一作者X篇），获XXX，XXX2次，XXX2次。(此处根据自身情况填写，可以突出自己的亮点，或者跟求职目标相关的内容)</p>
+                    </li> 
+                    <li>
+                        <h3>
+                            <span>XXXX大学 - XXX专业（本科）</span>
+                            <time>201X.9-201X.7</time>
+                        </h3>
+                        <p>专业排名
+                            <mark>X/XX</mark>，期间发表国内核心期刊文章X篇，三等奖学金X次。</p>
+                    </li>
+					 -->
+                </ul>
+            </section>
+
+            <!-- 工作经历 -->
+            <section class="work info-unit">
+                <h2>
+                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>工作经历</h2>
+                <hr/>
+                <ul>
+                    <li>
+                        <h3>
+                            <span>[经历1]<mark>中软国际</mark>服务有限公司－Java高级架构师、项目经理（华为外包）</span>
+                            <time>2018/3 ～ 至今</time>
+                        </h3>
+                        <ul class="info-content"> 
+							<li>公司简介：中软国际，公司很大，简介还没百度，待补充，武汉有四五千人，很多项目，主要是做华为外包，涉及华为的各个业务线及各个部门，有FP外包及TM外包两种模式；</li>
+							<li>部门：武汉配置综合交付部 &nbsp;&nbsp; 职位：Java高级架构师(对内是SE角色)、项目经理（PM1序列、公司认证）</li>
+							<li>职责：1、日常项目管理，负责业务需求把控、挖掘，核心功能开发、测试；2、负责项目的架构设计和核心模块设计及开发；
+								3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；
+								5、对接业务、分析需求，输出方案、完成相应的工作；6、负责公司软件项目开发并提供技术支持。</li> 
+                        </ul> 
+                    </li>
+					<!-- 
+						高级项目经理(普元官方网站)25000以上元/月分享收藏申请
+						
+						职位描述：
+						高级项目经理 工作职责描述： 1、根据项目范围，制订项目实施计划，并根据项目小组成员的职责和目标制订相关工作计划，监控计划的实施并及时进行调整，负责与项目各方进行有效的沟通和交流； 2、参与公司或者事业部项目管理制度和流程的制定，负责贯彻执行公司和事业部项目管理制度，参与过程改进和持续优化； 3、组织项目团队成员进行需求分析和项目资源管理，协调项目资源、控制项目成本、保证项目进度、监控项目质量、监控项目过程中的重大事顶（如范围、里程碑等） 4、确保项目组内部有效的沟通，同时负责对项目组成员的工作进行指导，保持与客户沟通、汇报，了解项目综合情况，对项目团队进行绩效考核，与客户保持密切沟通，建立良好的客户关系，保障良好的客户满意度和维系良好的客户关系； 5、负责项目组内部资源的调配和项目组人员的工作安排，并对项目组成员在项目执行过程中的绩效进行考核； 6、总结项目实施的经验教训，优化项目实施的流程、规范等，为公司其他项目的实施提供支持。 任职要求： 1、本科及以上学历，计算机及相关专业毕业； 2、具备银行类软件项目交付经验，7年以上软件行业工作经验，5年以上软件开发项目管理经验，3年以上大型顶目（项目团队10人以、工作量100人月以上）管理经验，独立负责过500万（项目总工作量150人月以上，项目团队15人以上）以上软件项目或者1000万以上系统集成项目（其中软件部分不低于300万），具备软件项目管理能力和技术团队管理能力，获得PMP或IPMP认证； 3、具备良好的交流沟通能力，出色的协调和解决问题能力，较强的文档撰写能力； 4、良好的组织规划能力和成本控制意识及计划执行能力，认真细致，有责任心，能承受一定的压力； 5、有云计算、分布式、微服务相关的技术知识，熟悉JAVA后端、前端开发； 6、有一定的开发能力，熟悉CMMI、敏捷等软件工程方法的人员优先； 7、本岗位偏向于项目管理，而非纯技术方向。
+					-->
+                    <li>
+                        <h3>
+                            <span>[经历2]<mark>软通动力</mark>技术股份有限公司(武汉分公司)－Java高级架构师、项目经理（华为外包）</span>
+                            <time>2017/4 ～ 2018.3</time>
+                        </h3>
+                        <ul class="info-content"> 
+							<li>公司简介：软通动力信息技术（集团）有限公司是中国领先的创新型软件及信息技术服务商。公司目前在全球61个城市设有120余个分支机构33个全球交付中心，员工总数近40000人.公司很大，武汉有四五千人，很多项目，主要是做华为外包，涉及华为的各个业务线及各个部门，有FP外包及TM外包两种模式；</li>
+							<li>部门：BPIT武汉业务二部 &nbsp;&nbsp; 职位：Java高级架构师、项目经理（PM1序列）</li>
+							<li>职责：1、日常项目管理，负责业务需求把控、挖掘，核心功能开发、测试；2、负责项目的架构设计和核心模块设计及开发；
+								3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；
+								5、配合BA及产品经理完成相应的工作；6、负责公司软件项目开发并提供技术支持。</li> 
+                        </ul> 
+                    </li>
+					<li>
+                        <h3>
+                            <span>[经历3]<mark>普元</mark>信息技术股份有限公司(武汉分公司)－Java高级架构师、项目经理（资深PM2序列入职，长期上海出差）</span>
+                            <time>2016/6 ～ 2017/3</time>
+                        </h3>
+                        <ul class="info-content"> 
+							<li>公司简介：普元是国内领先的软件基础平台与解决方案提供商，主要面向大中型企业、政府机构及软件开发商提供SOA、大数据、云计算三大领域的软件基础平台及解决方案；公司主要是卖软件的，开发平台的，主要是卖普元的EOS及EIP系统；EOS是基于Eclipse开发的可拖拽生成页面及表增删改查功能的快速开发平台，现在转了微服务跟K8S部署运维了，同时也接外包项目，之前只接银行项目，现在大小项目都接；</li>
+							<li>部门：<mark>华东金融业务一部</mark>  &nbsp;&nbsp;职位：Java高级架构师、项目经理（<mark>资深PM序列2</mark>）</li>
+							<li>职责：1、负责业务需求把控、挖掘，功能开发、测试；2、负责项目的架构设计和核心模块设计；
+							3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；
+							5、配合CTO完成相应的工作；6、负责公司软件项目开发并提供技术支持。</li> 
+                        </ul> 
+                    </li>
+					<li>
+                        <h3>
+                            <span>[经历4]北京<mark>宇信</mark>科技集团股份有限公司(武汉分公司)－Java高级软件工程师（武汉做了2年项目，没项目了，开始到处出差）</span>
+                            <time>2014/9 ～ 2016/6</time>
+                        </h3>
+                        <ul class="info-content"> 
+							<li>公司简介：北京宇信科技集团股份有限公司，是中国金融IT行业规模最大、最具影响力金融信息技术服务商之一。集团总部位于北京，员工人数超过5000名，已在十余个城市设立了分子公司和代表处，为客户构建了全国性的服务网络。宇信之前名字叫宇信易诚，主要是做金融及银行业务的，也只做银行项目，在这家公司全部都是做的银行项目、有汉口银行积分系统、武汉农商ECIF及CRM、长沙银行新报表平台</li>
+							<li>部门：<mark>南部数据业务二部</mark>  &nbsp;&nbsp;职位：Java高级软件工程师（<mark>高级开发</mark>）</li>
+							<li>职责：负责公司软件项目开发及技术支持，项目的核心主力，工作交付快，肯干，前端、数据ETL、Java开发、接口开发、测试压力测试、环境部署全包；而且，银行业务，代码bug少，基本没有。 </li> 
+                        </ul> 
+                    </li>
+					
+					<li>
+                        <h3>
+                            <span>[经历5]广州<mark>海闻软件</mark>技术有限公司(北京分公司)－Java软件工程师</span>
+                            <time>2011/8 ～ 2014/6 </time>
+                        </h3>
+                        <ul class="info-content"> 
+							<li>公司简介：广州海闻软件是一家开发企业税务风险管理软件、企业税务管理应用软件的高新技术公司，专注于提供大企业集团税务管理体系设计与搭建专业咨询、企业端税务管理系统定制化应用开发与系统集成、税务管理系统部署实施、等一站式整体解决方案。公司的老总出自众环海华会计师事务所(全国十佳)，成立的一家海闻软件公司，公司主要是做税务系统的，ERP跟OA是海闻给会计师事务所做的；</li>
+							<li>部门：<mark>北京研发部</mark>  &nbsp;&nbsp;职位：Java软件工程师（<mark>开发</mark>）</li>
+							<li>备注：北京入的职，之前做中航油税务系统，后来，武汉有项目了，长期到武汉出差、三年做了2项目，主营税务系统反倒给那下了，行政准备调回北京，就重新找了下家了，公司挺不错的，包吃包住还有出差补贴，挺人性化的，钱也给的足（相对而言）</li> 
+							<li>职责：负责公司软件项目开发及技术支持。 </li> 
+                        </ul> 
+                    </li>
+					
+					
+					
+                </ul>
+            </section>
+
+            
+				<!-- 项目经验 -->
+				<section class="project info-unit">
+					<h2>
+						<i class="fa fa-terminal" aria-hidden="true"></i>项目经验
+					</h2>
+					<hr />
+					<ul>
+						<li>
+							<h3>
+								<span>【项目名称】：华为DTP产品数据测试系统(2018.3~至今) ，项目经理（架构师）</span> <span
+									class="link"> <a href="#" target="_blank" title="无法预览">Demo</a>
+								</span>
+								<time>2018.03 - 至今</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Docker集群生产）+ Oracle</li>
+								<li>【使用架构】：SpringMVC + MyBatis + Spring + JQuery + SpringCloud
+									+ Redis + RocketMQ + Webservice +Git + FastDFS</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]华为HTM全球物流管理系统主要服务于华为全系产品及子系统的运输指令请求并管理监控运输流程，原存量HTM系统采购于Oracle
+									OTM运输中间件平台，后期日落计划主要剥除存量系统，向服务化转移的过程，服务化采用业绩主流前后端分离及微服务框架开发。该系统主要功能有路线、运费、订单、承运商、物流方案、采购、出入境、清关报税、供应链、跟踪、运费支付、历史分析等。项目运行有十几年了，采用迭代模式每月小版本开发，本人参与了大大小小十几个版本。项目根据业务分三大模块计划指令（本人作为PM管理），委托运输、存量、TTS清关
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]本人负责存量服务项目，项目共13人，由本人统一协调；共分三个团队，分别为测试团队6人、数据ETL团队2人、Java后端业务团队4人，前端1人；
+									<br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]1、HTM项目计划指令模块的日常管理 2、配合BA完成每月版本业务需求的开发及功能优化
+									。3、修复客户提出的Bug并处理生产问题。 4、制定项目开发计划及任务分配，指导并跟进项目开发进度。
+									5、对接SPM完成日常工作及风险成本监控；6、对接华为PM及华为SE合华为BA，完成计划输出、工作分解、代码检视等等； <br />
+									<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									[备注]系统功能运行稳定，基本没有现网问题，运营有条不紊，每月完成功能的开发测试上线即可，得到客户的良好评价；</li>
+							</ul>
+						</li>
+						<li>
+							<h3>
+								<span>【项目名称】：华为HTM全球物流管理系统(存量+服务化 2017.4~2018.3) ，项目经理（架构师）</span> <span
+									class="link"> <a href="#" target="_blank" title="无法预览">Demo</a>
+								</span>
+								<time>2017.04 - 2018.03</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Weblogic集群生产）+ Oracle</li>
+								<li>【使用架构】：SpringMVC + MyBatis + Spring + Webix + TypeScript+
+									NodeJS + Dubbo + Redis + RocketMQ + Webservice +Git+FastDFS</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]华为HTM全球物流管理系统主要服务于华为全系产品及子系统的运输指令请求并管理监控运输流程，原存量HTM系统采购于Oracle
+									OTM运输中间件平台，后期日落计划主要剥除存量系统，向服务化转移的过程，服务化采用业绩主流前后端分离及微服务框架开发。该系统主要功能有路线、运费、订单、承运商、物流方案、采购、出入境、清关报税、供应链、跟踪、运费支付、历史分析等。项目运行有十几年了，采用迭代模式每月小版本开发，本人参与了大大小小十几个版本。项目根据业务分三大模块计划指令（本人作为PM管理），委托运输、存量、TTS清关
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]本人负责存量服务项目，项目共13人，由本人统一协调；共分三个团队，分别为测试团队6人、数据ETL团队2人、Java后端业务团队4人，前端1人；
+									<br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]1、HTM项目计划指令模块的日常管理 2、配合BA完成每月版本业务需求的开发及功能优化
+									。3、修复客户提出的Bug并处理生产问题。 4、制定项目开发计划及任务分配，指导并跟进项目开发进度。
+									5、对接SPM完成日常工作及风险成本监控；6、对接华为PM及华为SE合华为BA，完成计划输出、工作分解、代码检视等等； <br />
+									<i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									[备注]系统功能运行稳定，基本没有现网问题，运营有条不紊，每月完成功能的开发测试上线即可，得到客户的良好评价；</li>
+							</ul>
+						</li>
+						<li>
+							<h3>
+								<span>【项目名称】：上海银行数据标准管理系统(2017.1-2017.3 上海) ，项目经理（架构师）</span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2017.01 - 2017.03</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Weblogic生产）+ SQLServer</li>
+								<li>【使用架构】：Struts2 + JPA + Spring+ Extjs</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]银行业务涉及应用系统繁多，同时缺少统一数据标准、操作风险难以管控等不足，需要逐步构建精简高效的参数管理体系。公共信息管理系统建设项目旨在建立一个参数设置流程规范、参数设置渠道与入口统一、风险控制手段丰富的公共信息系统，并具备灵活、可扩展的配置化的参数管理功能。
+									<br /> <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[背景]我的任务是为该项目提供上线支持，时间不到两个月。项目是一三年立的项，项目经理换了三个了，前面两个都已经离职了，现在是分管副总在挂名，代码都已经不知道是经过多少人的手了，我接手的时候好多功能都没开发完，流程都走不下去。整个项目所有文档一个手都数的出来，项目连续亏本好几年了，如果不是看在上海银行这个客户上的话，这个项目应该早就乱尾了。
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]项目开发了四五年了，一直没有上线成功，入项的时候，只有2个人，一个副总，一个开发，合计共3人，没有测试、没有前端，纯粹一坑，最坑的一个项目，然后本人就离职了；
+									<br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]1、负责业务需求把控、挖掘，功能开发、测试；2、负责项目的架构设计和核心模块设计；3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；5、配合业务完成相应的工作；6、负责公司软件项目开发并提供技术支持。
+									<br /> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									[备注]该项目本人作为项目经理，负责系统架构和关键功能的设计和开发，负责一些技术攻关和技术组件的设计开发，分配项目开发任务及各个人员的工作内容，控制项目进度，指导项目组其他项目组成员帮助其完成分配任务，目前项目已经上线。
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>
+								<span>【项目名称】：浦发银行公共信息管理系统(2016.8-2017.3 上海) ，项目经理（架构师）</span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2016.08 - 2017.01</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Weblogic生产）+ SQLServer</li>
+								<li>【使用架构】：Struts2 + Mybatis(SpringJdbc) +
+									Spring+JQueryEasyUI+WebService +Redis+JBPM</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]银行参数设置业务涉及应用系统繁多，同时缺少统一设置渠道、操作风险难以管控等不足，需要逐步构建精简高效的参数管理体系。公共信息管理系统建设项目旨在建立一个参数设置流程规范、参数设置渠道与入口统一、风险控制手段丰富的公共信息系统，并具备灵活、可扩展的配置化的参数管理功能。
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]项目共7人，本人负责一期，合计有七个开发一个前端投入，完成上线，测试是浦发行方提供的测试人员； <br /> <i
+									class="fa fa-bars" aria-hidden="true"></i>
+									[职责]1、负责业务需求把控、挖掘，功能开发、测试；2、负责项目的架构设计和核心模块设计；3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；5、配合业务完成相应的工作；6、负责公司软件项目开发并提供技术支持。
+									<br /> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									[备注]该项目本人作为项目经理，负责系统架构和关键功能的设计和开发，负责一些技术攻关和技术组件的设计开发，分配项目开发任务及各个人员的工作内容，控制项目进度，指导项目组其他项目组成员帮助其完成分配任务，目前项目已经上线。
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<h3>
+								<span>【项目名称】：银行内部统一业务管理平台（长期战略项目）(2016.6-2016.8 上海 )
+									，项目经理（架构师）</span> <span class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2016.06 - 2016.08</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Weblogic生产）+ Oracle</li>
+								<li>【使用架构】：EOS + BPS+NUI （普元中间件及开发平台）</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]针对中小银行内部业务管理系统众多，存在整合的需要，在流程方面有着统一管理和互联互通的要求，公司决定基于普元流程平台BPS和技术平台EOS研发适合众多小银行内部业务管理的业务平台，支撑客户内部协同类流程业务和部分分析类业务。
+									<br /> <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[背景]统一业务管理平台，UBMP，是由公司售前提出并结合各个项目通用的业务需求而定的一个通用模块化的管理信息系统平台，主要为各业务系统提供产品模块支持及投标演示所用
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]项目共7人，本人负责一期，合计有七个开发一个前端投入，完成上线，测试是浦发行方提供的测试人员； <br /> <i
+									class="fa fa-bars" aria-hidden="true"></i>
+									[职责]1、负责业务需求把控、挖掘，功能开发、测试；2、负责项目的架构设计和核心模块设计；3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；5、配合业务完成相应的工作；6、负责公司软件项目开发并提供技术支持。
+									<br /> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									[备注]前本项目正在进行中，该系统自去年立项，项目需求较为固定，本人进入项目组后担任技术经理，负责一些技术攻关和技术组件的设计开发，并指导项目组其他工程师进行开发。目前本人已经撤出该项目组，本人职责及开发任务已移交他人，目前这个项目主要为各个销售及售前提供产品基本的平台并定制化开发，完成投标所用；
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>
+								<span>【项目名称】：长沙银行新报表平台(2016.2-2016.6 长沙 )，项目经理（架构师）</span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2016.02-2016.06</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Tomcat生产）+ MySql+Hadoop</li>
+								<li>【使用架构】：SpringMVC+Hibernate(ibatis，jdbc)+Spring+JQuery+LigerUI+MySql+润乾报表+Hadoop
+								</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]长沙银行新报表平台项目是长沙银行对旧报表平台进行改造升级的项目，其中含有老报表数据迁移，新报表数据开发，第三方报表数据集成等。由于长沙银行核心改造，由Oracle迁移到Hadoop，故相关涉及到的系统均改造升级或者重新开发，本系统正在此背景下应运而生。项目前台使用Nginx+Tomcat作为负载均衡，其中数据库使用Mysql读写分离，数据处理使用Hadoop及Shell脚本
+									<br /> <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[背景]统一业务管理平台，UBMP，是由公司售前提出并结合各个项目通用的业务需求而定的一个通用模块化的管理信息系统平台，主要为各业务系统提供产品模块支持及投标演示所用
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]项目共12人，本人负责一期，合计有七个开发一个前端投入，完成上线，测试是浦发行方提供的测试人员； <br /> <i
+									class="fa fa-bars" aria-hidden="true"></i>
+									[职责]1、负责业务需求把控、挖掘，功能开发、测试；2、负责项目的架构设计和核心模块设计；3、负责信息化产品的研发与开发工作；4、主导技术难题攻关，重构系统，保证高性能处理和系统的稳定性；5、配合业务完成相应的工作；6、负责公司软件项目开发并提供技术支持。
+									<br /> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+									[备注]目前本项目正在进行中，该系统自去年年底立项，项目需求较为固定，由于行内各报表变化不大，表头及科目有调整但是整体来说并不大，项目整体划分为包人月，分四期上线，目前一期17张报表，二期44张报表均已上线，其中本人主导并协助相关开发人员进行报表平台的前台功能的开发测试及数据处理等事项。
+								</li>
+							</ul>
+						</li>
+						<li>
+							<h3>
+								<span>【项目名称】：武汉农商CRM系统(2015.8-2016.2 武汉)，Java高级开发（兼架构师）</span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2015.08-2016.02</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Weblogic生产） + Oracle</li>
+								<li>【使用架构】：Struts2 + JPA + Spring+ Extjs +USE+Oracle
+									+USE(统一调度平台)+Oracle+Shell</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]武汉农村商业银行CRM项目，搭建银行客户关系数据集市，建立CRM管理基础应用平台以及信息整合平台，系统建设按照对公、对私一体化建设的思路及对公、对私松耦合、模块化设计，主要实现客户视图统一展示与维护平台；统计客户综合贡献度，实现客户价值评级模型，实现基础的客户细分模型；产品信息展示以及差异化用户工作平台；客户经理认定与管理；实现差异化的客户管理体系、建立全面统一的营销服务体系，构建基础的业务综合应用处理平台；并实现客户维度统计分析的建设。
+									<br /> <i class="fa fa-users" aria-hidden="true"></i>
+									[团队]项目共12人，本人负责一期，合计有七个开发一个前端投入，完成上线，测试是浦发行方提供的测试人员； <br /> <i
+									class="fa fa-bars" aria-hidden="true"></i>
+									[职责]在该项目本人参与了需求调研，系统设计，代码开发，功能测试，系统联调，上线维护等整个项目周期，其中本人主导并协助相关开发人员负责客户视图模块，客户群视图模块，客户灵活查询模块，营销模块模块，产品模块模块，客户短信平台模块。指导并参与单元测试、集成测试、联调测试、压力测试等工作。
+
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<h3>
+								<span>【项目名称】：武汉农商ECIF系统(2014.10-2015.8 武汉 ) ，Java高级开发（兼架构师）</span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2014.10-2015.08</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Weblogic生产）+ Oracle</li>
+								<li>【使用架构】：SpringMVC + JPA + Spring+
+									JQuery+LIgerUI+USE(统一调度平台)+Oracle+Shell</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]武汉农商银行拟通过建设全行级客户管理系统，建设企业级“以客户为中心”的基础平台和架构，解决客户分散管理、各个系统信息不同、缺乏按客户视角管理的现状。我行对分散在各业务系统的客户信息进行整合与管理，为各业务系统提供必要的、统一的、标准的客户信息服务，从而帮助我行降低业务风险，提高服务水平和产品营销转化率。统一客户信息平台（ECIF）项目是武汉农商银行IT基础架构的重要项目，该项目的建设工作涉及到行里现有多个业务系统的改造工作，包括核心、信贷、国际结算、理财、中间业务、网银和手机银行、票据、客服中心、贷记卡等，按照“总体规划、分步实施、动态调整、逐步改进”的原则，计划统一客户信息平台（ECIF）项目分为两期建设工作。
+									<br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]在该项目本人参与了需求调研，系统设计，代码开发，功能测试，系统联调，上线维护等整个项目周期，其中本人负责理财、国结、核心得需求调研，参与数据处理中的数据清理调度脚本及存储过程的开发及测试，主导前台功能界面的开发及测试，参与对外接口服务的开发（含调用及被调用）。参与单元测试、集成测试、联调测试、并主导压力测试等工作。
+
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<h3>
+								<span>【项目名称】：达此APP接口交互平台 && 达此APP后台管理系统 (2014.8-2014.10 武汉)
+									，项目经理（兼架构师） </span> <span class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2014.08 - 2014.10</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Tomcat生产） + Mysql</li>
+								<li>【使用架构】：SpringMVC + Spring + Mybatis(SpringJDBC)+
+									Spring+JQuery+EasyUI</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]武汉达此网络科技致力于将“达
+									此”App打造成全球人民依赖的生活助手，首创了最具成长性的虚拟游戏和真实任务相结合，来引导消费行为的GGC模式 (Games
+									Guide
+									Consumption，即：游戏引导消费）。以最新颖的线上线下互动的方式深度优化用户体验，全面覆盖吃、喝、玩、乐、购等，将最具成长性的社会化分享
+									渗透到用户日常生活中，并为你带来额外的惊喜与无限乐趣。 <br /> <i class="fa fa-paper-plane-o"
+									aria-hidden="true"></i>[背景]本人一个人搞定一个项目系列，公司老板之前是做房地产行业的，见房地产式微，转战移动互联网行业。当时准备你吧，你，做Android客户端、ISO客户端、互联网网站平台、APP后台管理系统、APP后台接口交互系统、微信公众号等等，这个系统就是在这个背景下产生的。当时入职后我担任这个项目的项目经理，这个项目是一个从零开始开发的项目，同时也是对我之前积累和管理能力的一次考验。
+									<br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]本人主管该项目，在该项目中参与了整个需求调研，系统设计，技术架构及项目管理工作，代码开发，SIT测试,UAT测试。该项目本人担任项目经理，负责系统架构和关键功能的设计和开发，负责一些技术攻关和技术组件的设计开发，分配项目开发任务及各个人员的工作内容，控制项目进度，指导项目组其他项目组成员帮助其完成手头工作等。
+
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<h3>
+								<span>【项目名称】：众环海华ERP系统(2013.5-2014.8 武汉) ，Java高级软件工程师 </span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2013.05 - 2014.08</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：MyEclipse + Tomcat（JBoss生产） + Oracle</li>
+								<li>【使用架构】：SpringMVC + SpringJDBC + Spring+ JBPM+JQuery+EasyUI
+								</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]众环海华管理信息系统是一款基于会计师行业的准ERP系统，该集团及各分支机构具有不同的管理模式及信息系统，随着集团整合的推进，该系统应运而生。其目的是在集团内实现统一的信息业务办公管理，该系统含客户、管理信息、项目管理、计划工时、财务、考核、人事等模块
+									。 <br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]在该项目本人参与了整个需求调研，系统设计，代码开发，后期维护等所有环节(其他人员已离职或撤离)。前期本人主要负责财务管理模块、客户模块及项目管理三个模块的开发。后期负责整个项目的需求变更的开发及维护工作并积极修复各测试人员及客户提出的各种BUG。
+
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<h3>
+								<span>【项目名称】：中国航油税务管理信息系统(2012.8-2013.5 北京) ，Java高级软件工程师 </span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2012.08 - 2013.05</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：MyEclipse + Tomcat（JBoss生产） + Oracle</li>
+								<li>【使用架构】：SpringMVC + SpringJDBC + Spring+ JBPM+JQuery+EasyUI
+								</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]中国航油集团税务管理系统总体目标旨在搭建税务管理信息化工作平台，规范集团税款计算及纳税申报，减少人为计算差错及手工操作量，以提高工作效率；加强税务风险防范，明确岗位职责，规范审核及审批流程等，最终达到提升税务管理水平的目的。该项目含有基础设置、数据采集、纳税申报、风险管控、查询统计、发票、档案及其他等模块
+									。 <br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]在入职后即加入该项目组，当时该项目基本处于后开发阶段，拟上线试运行，在该项目中本人的工作主要是开发及维护现有代码等，并进行二次开发，主要负责附加税费的开发及其他小税种的处理，另本人协助其他开发人员完成各种开发任务及各种功能实现等等。
+
+								</li>
+							</ul>
+						</li>
+
+
+						<li>
+							<h3>
+								<span>【项目名称】：众环海华协同办公管理信息系统(2011.8-2012.8 武汉) ，Java软件工程师 </span> <span
+									class="link"> <a href="#" target="_blank">Demo</a>
+								</span>
+								<time>2011.08 - 2012.08</time>
+							</h3>
+							<ul class="info-content">
+								<li>【开发环境】：Eclipse + Tomcat（Tomcat生产）+ Oracle</li>
+								<li>【使用架构】：SpringMVC + Hibernate + Spring+JBPM+JQuery+EasyUI</li>
+								<li><i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+									[简介]协同办公系统（OA、MIS、HR、CRM等）本系统提供完善的各项资源档案保存方案，使管理者更加简洁、高效、准确的把握公司各项资源信息；
+									。 <br /> <i class="fa fa-bars" aria-hidden="true"></i>
+									[职责]该项目是本人参加的第一个项目，在项目中本人积极与各同仁沟通并协调各种工作，本项目为公司内部成熟产品，主要为完善并维护现有功能并实现新近需求等，在本项目中本人主要负责人事管理，员工信息模块及员工附属信息等功能的开发及维护工作等。
+
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+
+
+            
+        </section>
+    </article>
+
+
+
+    <footer class="footer">
+        <p>© 2020 吴俊.文档最后更新时间为
+            <time>2020年09月27日</time>.</p>   
+			<p><span>Powered by Wujun</span><span>&copy;2020 - 2025</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.nb666.net">www.nb666.net</a><span>版权所有</span><a href="http://beian.miit.gov.cn"
+            target="_blank">鄂ICP备2020017467号</a></p>
+    </footer>
+
+    <!-- 侧栏 -->
+    <aside>
+        <ul>
+            <li>
+                <a href="https://github.com/wujun728" target="_blank">源代码</a>
+            </li>
+            <li>
+                <a href="http://blog.nb666.net/" target="_blank">Blog</a>
+            </li>
+			<li>
+                <a href="http://www.nb666.net/" target="_blank">个人网站</a>
+            </li>
+			<li>
+                <a href="http://www.nb666.net/production.html" target="_blank">作品</a>
+            </li>
+        </ul>
+    </aside>
+
+    <script src="./assets/js/index.js"></script>
+</body>
+	<script>
+		 	 
+		
+	    	var zp3 = new zplayer({
+		        element: document.getElementById("player3"),
+		        autoPlay: 0,/*是否开启自动播放,默认false*/
+		        lrcStart: 1,/*是否开启歌词功能 ，默认false（为true时musics集合中需要传入lrc字段。）*/
+		        showLrc: 0,/*开启歌词功能后是否展示歌词内容 ，默认false*/
+		        fixed:1, /*是否固定在底部，默认false*/
+		        listFolded:1, /*列表是否折叠，默认false*/
+		        listMaxHeight:300, /*列表最大高度，默认240*/
+		        musics: [ 
+				{
+                    title: "Breath and Life",
+                    author: "Audiomachine",
+                    url: "http://music.163.com/song/media/outer/url?id=3935139.mp3",
+                    pic: "http://p2.music.126.net/dRBpkU9RDUtEu513XtG7Fw==/109951163818565831.jpg?param=130x130",
+	                lrc: ""
+                }, 
+				{
+                    title: "Victory",
+                    author: "Two Steps From Hell",
+                    url: "http://music.163.com/song/media/outer/url?id=31654455.mp3",
+                    pic: "http://p2.music.126.net/n41bSTrQwG_lQzkXz7cygg==/109951163892182787.jpg?param=130x130",
+	                lrc: ""
+                }
+				,{
+                    title: "Friendships",
+                    author: "Pascal Letoublon",
+                    url: "http://music.163.com/song/media/outer/url?id=505449407.mp3",
+                    pic: "http://p2.music.126.net/ejBqv__hHneHWQnMd1x00A==/18338754440252475.jpg?param=130x130",
+	                lrc: ""
+                }
+				,{
+                    title: "I wanted you",
+                    author: "Ina Wroldsen",
+                    url: "http://music.163.com/song/media/outer/url?id=2772113.mp3",
+                    pic: "http://p2.music.126.net/SOnMRzWCldq9E3RXClkv9g==/1696546441663730.jpg?param=130x130",
+	                lrc: ""
+                },
+				{
+                    title: "平凡之路 (Live版)",
+                    author: "朴树",
+                    url: "http://music.163.com/song/media/outer/url?id=553543175.mp3",
+                    pic: "http://p2.music.126.net/n41bSTrQwG_lQzkXz7cygg==/109951163892182787.jpg?param=130x130",
+	                lrc: ""
+                },
+				{
+	                title: "That Girl",
+	                author: "Olly Murs",
+	                url: "http://music.163.com/song/media/outer/url?id=440208476.mp3",
+	                pic: "http://p1.music.126.net/_dPhSlbDz23MjXUEYeBGRw==/18820340533734696.jpg?param=300x300",
+	                lrc: "[by:刺客辣条之法与鲨][00:00.00]There's a girl but I let her get away[00:05.40]It's all my fault cause pride got in the way[00:11.40]And I'd be lying if I said I was ok[00:16.00]About that girl the one I let get away[00:21.00]I keep saying no[00:23.00]This can't be the way we're supposed to be[00:26.00]I keep saying no[00:29.00]There's gotta be a way to get you close to me[00:31.00]Now I know you gotta[00:33.490]Speak up if you want somebody[00:36.490]Can't let him get away, oh no[00:38.490]You don't wanna end up sorry[00:41.490]The way that I'm feeling everyday[00:43.490](Don't you know)[00:44.00]No no no no[00:46.490]There's no home for the broken heart[00:50.490](Don't you know)[00:50.00]No no no no[00:52.490]There's no home for the broken[00:53.490]There's a girl but I let her get away[00:59.490]It's my fault cause I said I needed space[01:04.490]I've been torturing myself night and day[01:10.490]About that girl, the one I let get away[01:15.490]I keep saying no[01:17.490]This can't be the way it was supposed to be[01:20.490]I keep saying no[01:23.490]There's gotta be a way to get you[01:24.490]There's gotta be a way to get you[01:25.490]Close to me[00:26.490]You gotta[01:27.490]Speak up if you want somebody[01:30.490]Can't let him get away, oh no[01:32.490]You don't wanna end up sorry[01:35.490]The way that I'm feeling everyday[01:37.490](Don't you know)[01:38.490]No no no no[01:40.490]There's no home for the broken heart[01:42.490](Don't you know)[01:43.490]No no no no[01:45.490]There's no home for the broken[01:48.490]No home for me[01:51.490]No home cause I'm broken[01:53.490]No room to breathe[01:55.490]And I got no one to bla-ame[01:59.490]No home for me[02:02.490]No home cause I'm broken[02:03.490]About that girl[02:05.490]The one I let get away[02:09.490]So you better[02:10.490]Speak up if you want somebody[02:13.490]You can't let him get away oh no[02:16.490]You dont wanna end up sorry[02:18.490]The way that I'm feeling everyday[02:20.490](Don't you know)[02:21.490]No no no no[02:23.490]There's no home for the broken heart[02:26.00](Don't you know)[02:26.490]No no no no[02:29.00]There's no home for the broken[02:31.490]Oh[02:32.490]You don't wanna lose at love[02:34.490]It's only gonna hurt too much[02:37.00]I'm telling you[02:37.490]You don't wanna lose at love[02:40.00]It's only gonna hurt too much[02:42.490]I'm telling you[02:43.490]You don't wanna lose at love[02:45.490]Cause There's no home for the broken heart[02:47.490]About that girl[02:49.490]The one I let get away"
+	            },{
+		            title: "讲真的",
+		            author: "曾惜",
+		            url: "http://music.163.com/song/media/outer/url?id=30987293.mp3",
+		            pic: "http://p1.music.126.net/cd9tDyVMq7zzYFbkr0gZcw==/2885118513459477.jpg?param=300x300",
+		            lrc:"[by:却连一句我爱你都不能说出口]\n[ti:讲真的]\n[ar:曾惜]\n[al:不要你为难]\n[by:冰城离殇]\n[00:00] 作曲 : 何诗蒙\n[00:01] 作词 : 黄然\n[00:18]今夜特别漫长\n[00:21]有个号码一直被存放\n[00:25]源自某种倔强\n[00:30]不舍删去又不敢想\n[00:33]明明对你念念不忘\n[00:37]思前想后愈发紧张\n[00:41]无法深藏\n[00:43]爱没爱过想听你讲\n[00:48]讲真的\n[00:51]会不会是我 被鬼迷心窍了\n[00:54]敷衍了太多 我怎么不难过\n[00:58]要你亲口说 别只剩沉默\n[01:03]或许你早就回答了我\n[01:06]讲真的\n[01:08]想得不可得 是最难割舍的\n[01:11]各自好好过 也好过一直拖\n[01:15]自作多情了 好吧我认了\n[01:19]至少能换来释怀洒脱\n[01:23]没丢失掉自我\n[01:42]今夜特别漫长\n[01:44]有个号码一直被存放\n[01:49]源自某种倔强\n[01:53]不舍删去又不敢想\n[01:57]明明对你念念不忘\n[02:01]思前想后愈发紧张\n[02:05]无法深藏\n[02:08]爱没爱过想听你讲\n[02:13]讲真的\n[02:15]会不会是我 被鬼迷心窍了\n[02:19]敷衍了太多 我怎么不难过\n[02:23]要你亲口说 别只剩沉默\n[02:27]或许你早就回答了我\n[02:30]讲真的\n[02:32]想得不可得 是最难割舍的\n[02:35]各自好好过 也好过一直拖\n[02:40]自作多情了 好吧我认了\n[02:44]至少能换来释怀洒脱\n[02:47]没丢失掉自我\n[03:04]讲真的\n[03:05]会不会是我 被鬼迷心窍了\n[03:09]敷衍了太多 我怎么不难过\n[03:14]要你亲口说 别只剩沉默\n[03:18]或许你早就回答了我\n[03:21]讲真的\n[03:22]想得不可得 是最难割舍的\n[03:26]各自好好过 也好过一直拖\n[03:30]自作多情了 好吧我认了\n[03:35]至少能换来释怀洒脱\n[03:38]没丢失掉自我\n"
+		        },{
+	                title: "学猫叫",
+	                author: "小潘潘",
+	                url: "http://music.163.com/song/media/outer/url?id=554191055.mp3",
+	                pic: "http://p1.music.126.net/D1Ov-XMAwUzsr16mQk95fA==/109951163256119128.jpg?param=300x300",
+	                lrc: "[00:00.00] 作曲 : 小峰峰[00:01.00] 作词 : 小峰峰[00:05.03]编曲：吕宏斌&塞米七[00:05.28]和声：小峰峰[00:05.45]混音：陈秋洁[00:05.63]制作人：小峰峰[00:05.85]唱片：麦袭时代[00:06.40]OP：百纳娱乐[00:06.93][00:07.96]小潘潘：[00:08.31]我们一起学猫叫[00:10.58]一起喵喵喵喵喵[00:12.60]在你面前撒个娇[00:14.71]哎呦喵喵喵喵喵[00:16.77]我的心脏砰砰跳[00:18.85]迷恋上你的坏笑[00:21.31]你不说爱我我就喵喵喵[00:24.10][00:24.75]小峰峰：[00:26.17]每天都需要你的拥抱[00:29.08]珍惜在一起的每分每秒[00:33.35]你对我多重要[00:35.21]我想你比我更知道[00:38.00]你就是我的女主角[00:41.34][00:41.80]小潘潘：[00:42.80]有时候我懒的像只猫[00:45.69]脾气不好时又张牙舞爪[00:50.10]你总是温柔的[00:51.96]能把我的心融化掉[00:54.65]我想要当你的小猫猫[00:59.93][01:00.38]合：[01:00.70]我们一起学猫叫[01:02.69]一起喵喵喵喵喵[01:04.72]在你面前撒个娇[01:06.81]哎呦喵喵喵喵喵[01:08.82]我的心脏砰砰跳[01:10.79]迷恋上你的坏笑[01:13.42]你不说爱我我就喵喵喵[01:16.86][01:17.23]我们一起学猫叫[01:19.30]一起喵喵喵喵喵[01:21.45]我要穿你的外套[01:23.55]闻你身上的味道[01:25.62]想要变成你的猫[01:27.68]赖在你怀里睡着[01:30.17]每天都贪恋着你的好[01:33.85][01:50.67]小潘潘：[01:51.73]有时候我懒的像只猫[01:54.62]脾气不好时又张牙舞爪[01:58.95]你总是温柔的[02:01.07]能把我的心融化掉[02:03.62]我想要当你的小猫猫[02:07.97][02:09.19]合：[02:09.49]我们一起学猫叫[02:11.49]一起喵喵喵喵喵[02:13.55]在你面前撒个娇[02:15.55]哎呦喵喵喵喵喵[02:17.72]我的心脏砰砰跳[02:19.77]迷恋上你的坏笑[02:22.28]你不说爱我我就喵喵喵[02:26.01][02:26.21]我们一起学猫叫[02:28.30]一起喵喵喵喵喵[02:30.30]我要穿你的外套[02:32.38]闻你身上的味道[02:34.58]想要变成你的猫[02:36.56]赖在你怀里睡着[02:39.02]每天都贪恋着你的好[02:42.40][02:42.85]我们一起学猫叫[02:44.84]一起喵喵喵喵喵[02:46.89]在你面前撒个娇[02:49.02]哎呦喵喵喵喵喵[02:51.14]我的心脏砰砰跳[02:53.32]迷恋上你的坏笑[02:55.75]你不说爱我我就喵喵喵[02:59.12][02:59.47]我们一起学猫叫[03:01.59]一起喵喵喵喵喵[03:03.66]我要穿你的外套[03:05.82]闻你身上的味道[03:07.88]想要变成你的猫[03:09.98]赖在你怀里睡着[03:12.37]每天都贪恋着你的好"
+	            },{
+	                title: "暧昧",
+	                author: "薛之谦",
+	                url: "http://music.163.com/song/media/outer/url?id=471385043.mp3",
+	                pic: "http://p1.music.126.net/fNbj5uDwltSDLbETdnEYYQ==/109951163069265719.jpg?param=300x300",
+	                lrc: "[00:00.00] 作曲 : 薛之谦[00:01.00] 作词 : 薛之谦[00:14.800]反正现在的感情 都暧昧[00:20.130]你大可不必为难 找般配[00:24.820]付出过的人排队 谈体会[00:29.290]趁年轻别害怕一个人睡[00:34.170]可能是现在感情 太昂贵[00:39.080]让付出真心的人 好狼狈[00:43.950]还不如听首情歌 的机会 忘了谁[00:54.880]感情像牛奶一杯 越甜越让人生畏[01:04.320]都早有些防备 润色前的原味[01:13.350]所以人们都拿起咖啡 把试探放在两人位[01:23.860]距离感一对 就不必再赤裸相对[01:31.820]反正现在的感情 都暧昧[01:36.590]你大可不必为难 找般配[01:41.500]付出过的人排队 谈体会[01:46.150]弃之可惜 食而无味[01:51.080]可能是现在感情 太珍贵[01:55.630]让付出真心的人 好疲惫[02:00.600]谁不曾用过卑微的词汇 想留住谁[02:49.110]还贪恋着衣衫昂贵 却输给了廉价香水[02:59.080]他先诱你入位 还刻意放低了分贝[03:08.310]可感情越爱越妩媚 像烂掉的苹果一堆[03:17.980]连基因都不对 还在意什么鱼腥味[03:27.020]反正现在的感情 都暧昧[03:31.720]你大可不必为难 找般配[03:36.500]何必给自己沉迷 的机会[03:41.280]不如用误会来结尾[03:46.320]反正现在的我们 算暧昧[03:50.570]我愿意给的感情 请浪费[03:55.740]反正流过的眼泪 难收回[04:00.310]就别再安慰[04:05.450]看你入眠的侧脸 有多美[04:10.820]和你丢下的一切 好匹配[04:16.870]我还以为我能 多狼狈[04:23.090]我自以为[04:29.150]制作人：郑伟[04:30.160]编曲：薛之谦 郑伟[04:31.190]混音：郑伟[04:31.940]大提琴：周润青[04:32.730]女声：孟楠[04:33.430]合音：薛之谦 张石狄[04:34.190]录音：莫家伟[04:34.930]母带：Chris Gehringer"
+	            },{
+	                title: "云烟成雨",
+	                author: "房东的猫",
+	                url: "http://music.163.com/song/media/outer/url?id=513360721.mp3",
+	                pic: "http://p1.music.126.net/DSTg1dR7yKsyGq4IK3NL8A==/109951163046050093.jpg?param=300x300",
+	                lrc: "[00:00] 作曲 : 少年佩\n[00:01] 作词 : 墨鱼丝\n[00:11]制作人：黎偌天\n[00:12]编曲：黎偌天\n[00:13]监制：李纤橙\n[00:14]\n[00:18]你的晚安 是下意识的恻隐\n[00:24]我留至夜深 治疗失眠梦呓\n[00:30]那封手写信 留在行李箱底\n[00:36]来不及 赋予它旅途的意义\n[00:43]若一切 都已云烟成雨\n[00:49]我能否 变成淤泥\n[00:52]再一次 沾染你\n[00:55]若生命 如过场电影\n[01:01]Oh让我再一次 甜梦里惊醒\n[01:13]我多想再见你\n[01:15]哪怕匆匆一眼就别离\n[01:19]路灯下昏黄的剪影\n[01:22]越走越漫长的林径\n[01:25]我多想再见你\n[01:28]至少玩笑话还能说起\n[01:32]街巷初次落叶的秋分\n[01:35]渐行渐远去的我们\n[01:53]若一切 都已云烟成雨\n[01:59]我能否 变成淤泥\n[02:01]再一次 沾染你\n[02:05]若生命 如过场电影\n[02:10]Oh让我再一次 甜梦里惊醒\n[02:19]我多想再见你\n[02:21]哪怕匆匆一眼就别离\n[02:26]路灯下昏黄的剪影\n[02:28]越走越漫长的林径\n[02:32]我多想再见你\n[02:34]至少玩笑话还能说起\n[02:38]街巷初次落叶的秋分\n[02:41]渐行渐远去的我们\n[02:49]站台 汽笛响起\n[02:52]想念是你的声音\n[02:55]我们提着过去 走入人群\n[03:02]寻找着一个位置 安放自己\n[03:13]我多想再见你\n[03:15]哪怕匆匆一眼就别离\n[03:19]路灯下昏黄的剪影\n[03:22]越走越漫长的林径\n[03:25]我多想再见你\n[03:28]至少玩笑话还能说起\n[03:31]街巷初次落叶的秋分\n[03:35]渐行渐远去的我们\n[03:41]\n[03:43]主唱：红鼻子小黑\n[03:44]制作人：黎偌天\n[03:46]监制：李纤橙\n"
+	            },{
+	                title: "给陌生的你听 ",
+	                author: "G.G(张思源)",
+	                url: "http://music.163.com/song/media/outer/url?id=562594322.mp3",
+	                pic: "http://p1.music.126.net/LMPuItVrjn1Vi5c8vZZ90Q==/109951163309729098.jpg?param=300x300",
+	                lrc: "[00:00.00] 作曲 : G.G(张思源）[00:01.00] 作词 : G.G(张思源）[00:05.12]编曲：刘羽晟[00:21.02]这首歌写给你听[00:22.64]我想请你闭上眼睛[00:25.28]这首可能不太动听[00:27.71]但是我有足够的用心[00:30.80]这首歌写给你听[00:33.17]我想请你闭上眼睛[00:35.76]这首可能不太动听[00:38.29]但是我有足够的用心[00:41.06]OK 你我可能还没见过[00:43.49]那就先让这首把未曾听闻给打破[00:46.19]说实话我也没有什么十足的把握[00:48.86]能让你动心再次播放这首歌[00:51.65]我只是每天独自在家不知跟谁说说话[00:54.54]所以决定问问陌生的你过得还好吗[00:57.15]你还在上学读书或是毕业工作了[00:59.86]会不会跟我一样在外偶尔想想家[01:02.62]想问你今天早餐吃了没[01:04.82]会不会好吃的让我馋嘴流口水[01:07.12]你有没有养小猫小狗在你家里住[01:09.64]尽管让人头疼却又把你给守护[01:12.23]春天的风 微微的吹[01:15.33]吹过你的美[01:17.73]春天的风 微微的吹[01:20.58]我想这首能作陪[01:23.60]这首歌写给你听[01:25.71]我想请你闭上眼睛[01:28.40]这首可能不太动听[01:30.80]但是我有足够的用心[01:33.54]这首歌写给你听[01:35.94]我想请你闭上眼睛[01:38.62]这首可能不太动听[01:41.25]但是我有足够的用心[01:43.91]对了 你是什么星座[01:46.38]你最喜欢的颜色是彩虹里的哪个[01:48.76]你有没有在夜晚见过有流星划落[01:51.48]想问问你许下最傻的愿望是什么[01:54.11]突然好奇的想 我路过了街道[01:57.46]正好这首在你耳朵里播报[02:00.04]你认不得我 你在听我不知道[02:02.64]但这种缘分真的好好好奇妙[02:05.64]想一想 都觉得奇妙[02:07.82]想一想 该如何问好[02:10.72]尽管陌生  有你真好[02:13.22]我想你知道 我想你知道[02:15.91]想一想 都觉得奇妙[02:18.44]想一想 该如何问好[02:21.19]尽管陌生  有你真好[02:23.62]我想你知道 我想你知道[02:26.28]这首歌写给你听[02:28.08]我想请你闭上眼睛[02:30.71]这首可能不太动听[02:33.32]但是我有足够的用心[02:36.14]这首歌写给你听[02:38.67]我想请你闭上眼睛[02:41.51]这首可能不太动听[02:43.85]但是...[02:47.23]这首歌写给你听[02:49.48]我想请你闭上眼睛[02:51.67]这首可能不太动听[02:54.18]但是我有足够的用心[02:56.98]这首歌写给你听[02:59.87]我想请你闭上眼睛[03:02.59]这首可能不太动听[03:05.38]但是我有足够的用心[03:09.45]混音：王路遥"
+	            },{
+	                title: "喜欢",
+	                author: "阿肆",
+	                url: "http://music.163.com/song/media/outer/url?id=526464145.mp3",
+	                pic: "http://p1.music.126.net/BA0bFrD0cK4YDSYublCThA==/109951163093942268.jpg?param=300x300",
+	                lrc: "[00:00.00] 作曲 : 阿肆[00:00.33] 作词 : 阿肆[00:00.100]编曲：YOCHO／姚源[00:01.150]扛住了 柴米油盐的麻烦[00:04.150]扛住了 朋友聚会的调侃[00:07.640]扛住了 世俗生活的刁难[00:10.970]却扛不住[00:12.820]对你的喜欢[00:14.500][00:16.000]亦步亦趋随你至深不可测[00:18.680]患得患失唯恐你杳不可得[00:24.970]却只面不改色[00:27.110]为你我认了[00:27.970][00:29.220]一朝一夕使我已固不可彻[00:32.480]若即若离本应是罪不可赦[00:38.550]怎不忍心怪你[00:40.660]对我太独特[00:45.020]无时无刻[00:48.490]像是一首无法停止单曲循环的无名歌[00:54.860][00:55.200]扛住了[00:56.300]柴米油盐的麻烦[00:58.870]扛住了[00:59.570]朋友聚会的调侃[01:02.420]扛住了[01:02.680]世俗生活的刁难[01:05.760]却扛不住[01:07.660]对你的喜欢[01:08.850][01:09.360]躲过了[01:10.030]世界末日的灾难[01:12.670]明白了[01:13.200]生命是千金不换[01:16.260]躲过了[01:16.790]大悲狂喜的极端[01:19.640]却躲不过[01:21.430]对你的喜欢[01:27.110][01:29.330][01:37.890]亦步亦趋随你至深不可测[01:41.210]患得患失唯恐你杳不可得[01:47.140]却只面不改色[01:49.590]为你我认了[01:50.860][01:51.500]一朝一夕使我已固不可彻[01:54.760]若即若离本应是罪不可赦[02:00.920]怎不忍心怪你[02:02.960]对我太独特[02:05.630][02:07.440]无时无刻[02:10.910]像是一首无法停止单曲循环的无名歌[02:17.040][02:17.370]扛住了[02:18.600]柴米油盐的麻烦[02:21.230]扛住了[02:21.910]朋友聚会的调侃[02:24.760]扛住了[02:25.280]世俗生活的刁难[02:28.250]却扛不住[02:29.940]对你的喜欢[02:31.330][02:31.700]躲过了[02:33.020]世界末日的灾难[02:35.110]明白了[02:35.700]生命是千金不换[02:38.430]躲过了[02:39.090]大悲狂喜的极端[02:41.990]却躲不过[02:43.680]对你的喜欢[02:45.560][02:46.560]看累了喜新厌旧[02:47.890]看累了随波逐流[02:49.660]看累了长厢厮守[02:51.380]却还没把你看透[02:53.080]看破了恩怨情仇[02:54.810]看破了蓦然回首[02:56.430]看破了从今以后[02:58.230]却始终被你左右[03:00.410][03:05.530]扛住了[03:06.560]柴米油盐的麻烦[03:09.350]扛住了[03:09.800]朋友聚会的调侃[03:12.750]扛住了[03:13.400]世俗生活的刁难[03:16.060]却扛不住[03:17.950]对你的喜欢[03:19.370][03:19.680]躲过了[03:20.360]世界末日的灾难[03:23.090]明白了[03:23.700]真心是千金不换[03:26.510]躲过了[03:26.960]大悲狂喜的极端[03:29.940]却躲不过[03:31.800]对你的喜欢[03:33.130][03:35.500]对你的喜欢[03:38.680]对你的喜欢[03:42.050]对你的喜欢[03:45.520]对你的喜欢[03:46.870][03:48.960]对你越喜欢[03:52.410]让我越难堪[03:55.980]然而再难堪[03:59.240]我依然[04:00.580]喜欢[04:01.600][04:02.350]混音：YOCHO[04:03.190]键盘：张伟[04:04.040]"
+	            },{
+	                title: "爱你",
+	                author: "陈芳语",
+	                url: "http://music.163.com/song/media/outer/url?id=22852057.mp3",
+	                pic: "http://p1.music.126.net/0Xvz_4oS4YLCvWtQcXU05Q==/17867063951755098.jpg?param=300x300",
+	                lrc: "[00:00.00] 作曲 : Skot Suyama 陶山[00:01.00] 作词 : 黄祖荫[00:06.700]我闭上眼睛 贴着你心跳呼吸[00:13.130]而此刻地球 只剩我们而已[00:18.590][00:19.830]你微笑的唇型 总勾着我的心[00:26.460]每一秒初吻 我每一秒都想要吻你[00:34.660][00:35.670]就这样爱你 爱你 爱你 随时都要一起[00:42.300]我喜欢 爱你 外套 味道 还有你的怀里[00:48.960]把我们 衣服纽扣互扣 那就不用分离[00:55.180][00:56.480]美好爱情 我就爱这样贴近[01:02.440]因为你[01:05.910][01:16.990]有时没生气 故意闹脾气[01:23.180]你的紧张在意 让我觉得安心[01:29.110][01:29.830]从你某个角度 我总看见自己[01:36.550]到底你懂我 或其实我本来就像你[01:44.880][01:45.660]就这样爱你 爱你 爱你 随时都要一起[01:52.290]我喜欢 爱你 外套 味道 还有你的怀里[01:59.000]把我们 衣服纽扣互扣 那就不用分离[02:05.290][02:06.520]美好爱情 我就爱这样贴近[02:12.360]因为你[02:15.220][02:18.150]想变成你的氧气[02:22.580][02:24.830]溜进你身体里 好好看看在你心里[02:35.730][02:38.290]你有多么宝贝[02:41.410][02:42.700]就这样爱你 爱你 爱你 随时都要一起[02:49.050]我喜欢 爱你 外套 味道 还有你的怀里[02:55.650]把我们 衣服纽扣互扣 那就不用分离[03:02.790][03:03.320]美好爱情 我就爱这样贴近 因为你[03:10.320]我们爱情会一直没有距离 最美丽[03:19.980]"
+	            }, {
+	                title: "后来",
+	                author: "刘若英",
+	                url: "http://music.163.com/song/media/outer/url?id=254574.mp3",
+	                pic: "http://p1.music.126.net/eBF7bHnJYBUfOFrJ_7SUfw==/109951163351825356.jpg?param=300x300",
+	                lrc: "[by:立酱][00:00.00] 作曲 : 玉城千春[00:00.522] 作词 : 施人诚[00:01.567]编曲：王继康[00:02.671][00:02.681]录音工程师：周建平 & Peter Chong (MAL)[00:02.781]混音工程师：王晋溢[00:02.881]录音室：捷奏 & Synchrosound (MAL)[00:02.981]混音室：白金[00:03.111]吉他：Jamie Wilson[00:03.222]和声编写：光良[00:03.333]和声：梁静茹[00:03.444]OP: Victor Music Publishing Co., Ltd.[00:03.555]ISRC TW-A45-99-62502[00:04.666][00:05.777][00:08.998][00:12.571]后来 我总算学会了如何去爱[00:19.303]可惜你早已远去消失在人海[00:25.238]后来终于在眼泪中明白[00:32.064]有些人一旦错过就不再[00:39.800]桅子花 白花瓣[00:46.027]落在我蓝色百褶裙上[00:51.763]爱你 你轻声说[00:58.844]我低下头 闻见一阵芬芳[01:05.371]那个永恒的夜晚[01:09.341]十七岁仲夏[01:12.104]你吻我的那个夜晚[01:18.232]让我往后的时光[01:21.749]每当有感叹[01:24.862]总想起当天的星光[01:30.992]那时候的爱情[01:37.422]为什么就能那样简单[01:42.493]而又是为什么 人年少时[01:50.179]一定要让深爱的人受伤[01:56.301]在这相似的深夜里[02:00.566]你是否一样 也在静静追悔感伤[02:09.350]如果当时我们能[02:13.015]不那么倔强[02:16.079]现在也 不那么遗憾[02:21.053]你都如何回忆我[02:24.014]带着笑或是很沉默[02:27.231]这些年来[02:28.837]有没有人能让你不寂寞[02:33.455]后来 我总算学会了如何去爱[02:40.238]可惜你早已远去消失在人海[02:46.318]后来终于在眼泪中明白[02:53.042]有些人一旦错过就不再[02:59.120][03:25.379]你都如何回忆我[03:28.132]带着笑或是很沉默[03:31.296]这些年来[03:32.953]有没有人能让你不寂寞[03:37.523]后来[03:39.530]我总算学会了如何去爱[03:44.301]可惜你早已远去消失在人海[03:50.174]后来终于在眼泪中明白[03:57.104]有些人一旦错过就不再[04:03.136]后来 我总算学会了如何去爱[04:09.965]可惜你早已远去消失在人海[04:15.937]后来终于在眼泪中明白[04:22.771]有些人一旦错过就不再[04:29.598]永远不会再重来[04:35.510]有一个男孩爱着那个女孩"
+	            },{
+	                title: "夜空中最亮的星",
+	                author: "逃跑计划",
+	                url: "http://music.163.com/song/media/outer/url?id=25706282.mp3",
+	                pic: "http://p2.music.126.net/d541jx7SqoDzVkenhmtg6g==/19193074974743620.jpg?param=130x130",
+	                lrc: "[by:未渡已搁浅][00:00.00] 作曲 : 高进[00:01.00] 作词 : 高进[00:24.75]编曲：张亮[00:27.32]缩混：侯春阳[00:34.69]这么多年的兄弟[00:37.32]有谁比我更了解你[00:41.44]太多太多不容易[00:44.06]磨平了岁月和脾气[00:48.42]时间转眼就过去[00:50.79]这身后不散的筵席[00:54.40]只因为我们还在[00:57.16]心留在原地[01:01.28]张开手 需要多大的勇气[01:07.94]这片天 你我一起撑起[01:14.78]更努力 只为了我们想要的明天[01:21.49]好好的 这份情好好珍惜[01:28.33]我们不一样[01:31.10]每个人都有不同的境遇[01:35.31]我们在这里[01:37.47]在这里等你[01:42.00]我们不一样[01:44.86]虽然会经历不同的事情[01:48.83]我们都希望[01:51.04]来生还能相遇[01:57.11]这么多年的兄弟[01:59.63]有谁比我更了解你[02:03.82]太多太多不容易[02:05.99]磨平了岁月和脾气[02:10.83]时间转眼就过去[02:13.23]这身后不散的筵席[02:16.86]只因为我们还在[02:19.52]心留在原地[02:23.64]张开手 需要多大的勇气[02:30.30]这片天 你我一起撑起[02:37.14]更努力 只为了我们想要的明天[02:43.90]好好的 这份情好好珍惜[02:50.92]我们不一样[02:53.78]每个人都有不同的境遇[02:57.75]我们在这里[02:59.82]在这里等你[03:04.39]我们不一样[03:07.29]虽然会经历不同的事情[03:11.34]我们都希望[03:13.41]来生还能相遇[03:33.76]我们不一样[03:36.38]每个人都有不同的境遇[03:40.26]我们在这里[03:42.47]在这里等你[03:47.10]我们不一样[03:49.71]虽然会经历不同的事情[03:53.93]我们都希望[03:55.98]来生还能相遇[04:00.76]我们不一样[04:03.57]虽然会经历不同的事情[04:07.58]我们都希望[04:09.80]来生还能相遇[04:14.50]我们都希望[04:16.56]来生还能相遇"
+	            }, 
+                {
+                    title: "芒种",
+                    author: "赵方婧",
+                    url: "http://music.163.com/song/media/outer/url?id=1369798757.mp3",
+                    pic: "http://p1.music.126.net/KFWbxh1ZLyy9WR77Ca08tA==/109951164866828786.jpg?param=130x130",
+	                lrc: ""
+                }
+				,{
+                    title: "我曾",
+                    author: "隔壁老樊",
+                    url: "http://music.163.com/song/media/outer/url?id=1336856777.mp3",
+                    pic: "http://p1.music.126.net/gNbAlXamNjhR2j3aOukNhg==/109951164232796511.jpg?param=130x130",
+	                lrc: ""
+                } 
+				,{
+                    title: "成都",
+                    author: "赵雷",
+                    url: "http://music.163.com/song/media/outer/url?id=436514312.mp3",
+                    pic: "http://p1.music.126.net/34YW1QtKxJ_3YnX9ZzKhzw==/2946691234868155.jpg?param=130x130",
+	                lrc: ""
+                } 
+				
+				]
+		    });
+		    zp3.init();
+		</script>
+
+</html>

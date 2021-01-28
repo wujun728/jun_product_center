@@ -1,0 +1,98 @@
+    <form class="form-horizontal" id="permissionDetailForm">
+        <input class="hidden" name="permissionId" th:value="${permission.permissionId}">
+        <div class="box-body">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">类型 :</label>
+                <div class="col-sm-8">
+                    <label class="radio-inline pr-5"><input type="radio" th:field="*{permission.type}" name="type" value="0" disabled="disabled"> 目录</label>
+                    <label class="radio-inline pr-5"><input type="radio" th:field="*{permission.type}" name="type" value="1" disabled="disabled"> 菜单</label>
+                    <label class="radio-inline pr-5"><input type="radio" th:field="*{permission.type}" name="type" value="2" disabled="disabled"> 按钮</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">资源名称 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.name}" name="name" require="必填项"  placeholder="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">上级资源 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control cursor-pointer" id="detailParentMenu" th:value="${parentName}" onclick="showMenu(2)" readonly="readonly">
+                </div>
+            </div>
+            <div th:if="${permission.type} != 0" class="form-group">
+                <label class="col-sm-3 control-label">资源url :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.url}"  name="url" require="必填项" placeholder="">
+                </div>
+            </div>
+            <div th:if="${permission.type} != 0" class="form-group">
+                <label class="col-sm-3 control-label">资源标识 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.perms}"  name="perms" require="必填项" placeholder="">
+                </div>
+            </div>
+            <div th:if="${permission.type} != 2"  class="form-group">
+                <label class="col-sm-3 control-label">排序 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.orderNum}"   name="orderNum" require="必填项" max="3" plusinteger="" placeholder="">
+                </div>
+            </div>
+            <div th:if="${permission.type} == 2"  class="form-group hidden">
+                <label class="col-sm-3 control-label">排序 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control hidden" value="0"   name="orderNum" placeholder="">
+                </div>
+            </div>
+            <div th:if="${permission.type} != 2"  class="form-group">
+                <label class="col-sm-3 control-label">图标 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.icon}"  name="icon" require="必填项" placeholder="">
+                    <a target="_blank" th:href="@{/index#icons}"><i class="fa fa-star"></i>查看系统图标<i class="fa fa-star"></i></a>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">描述 :</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" th:value="${permission.description}"  name="description" id="description" placeholder="">
+                </div>
+            </div>
+            <input type="hidden" class="form-control" id="detailParentId" name="parentId" th:value="${permission.parentId}" >
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="pull-right">
+                <button type="button" id="saveDetailPermission" class="btn btn-info">确定</button>
+                <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+            </div>
+        </div>
+        <!-- /.box-footer -->
+    </form>
+    <script>
+        var detailMenuType = "[[${permission.type}]]";
+        $(function () {
+            $("#saveDetailPermission").on('click', function () {
+                if(doValidForm(permissionDetailForm)){
+                    if(detailMenuCheckedType!=null){
+                        if((detailMenuType=="0"||detailMenuType=="1")&&detailMenuCheckedType!=0){
+                            layer.msg("上级资源只能是目录类型！",function(){})
+                            return;
+                        }else if(detailMenuType=="2"&&detailMenuCheckedType!=1){
+                            layer.msg("上级资源只能是菜单类型！",function(){})
+                            return;
+                        }
+                    }
+                    Core.mask("#saveDetailPermission");
+                    Core.postAjax("/permission/edit",$("#permissionDetailForm").serialize(),function (data) {
+                        Core.unmask("#saveDetailPermission");
+                        if(data.status==200){
+                            $("#permissionDetailModal").modal("hide");
+                            Menu.table.refresh();
+                        }
+                        layer.msg(data.msg);
+                    })
+                }
+            })
+        });
+    </script>

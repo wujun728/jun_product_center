@@ -1,0 +1,110 @@
+<configuration>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder
+			by default -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>DEBUG</level>
+		</filter>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="RollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.home:-.}/logs/hollybeacon_msgserver.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.home:-.}/logs/hollybeacon_msgserver-%d{yyyy-MM-dd_HH}.%i.log
+			</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+	            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+		        <!-- or whenever the file size reaches 1MB -->
+		        <maxFileSize>1MB</maxFileSize>
+	      	</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="csvFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.home:-.}/logs/hollybeacon.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	      <!-- rollover daily -->
+	      <fileNamePattern>${catalina.home:-.}/logs/csvimp/hollybeacon-%d{yyyy-MM-dd_HH-mm}.%i.csv</fileNamePattern>
+	      <timeBasedFileNamingAndTriggeringPolicy
+	            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+	        <!-- or whenever the file size reaches 1MB -->
+	        <maxFileSize>1MB</maxFileSize>
+	      </timeBasedFileNamingAndTriggeringPolicy>
+	    </rollingPolicy>
+
+		<encoder>
+			<pattern>%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<Logger name="com.hollycrm.hollybeacon.basic.log.LoggerAop$CsvLogger"
+		level="INFO" additivity="false">
+		<appender-ref ref="csvFile" />
+	</Logger>
+
+	<logger name="org.myframework" level="debug">
+		<appender-ref ref="RollingFile" />
+	</logger>
+	
+
+	<!--springframework package level: WARN -->
+
+	<!-- <Logger name="org.springframework.web.servlet" level="DEBUG" /> -->
+	<Logger	name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"
+		level="WARN">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+
+	<Logger	name="com.hollycrm.hollybeacon.basic.core.annotations.bind.RestServiceHandlerMapping"
+		level="ERROR">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+
+	<Logger	name="com.hollycrm.hollybeacon.basic.csv.config.LoadPackageClasses"
+		level="ERROR">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+	
+	<Logger	name="com.hollycrm.hollybeacon.business.scheduler.job"
+		level="ERROR">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+	
+	<Logger name="org.springframework.messaging" level="DEBUG">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+	
+	<Logger name="org.springframework.web.socket" level="ERROR">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+	
+	<Logger name="org.springframework.jdbc.core" level="debug">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+	
+	<Logger name="org.hibernate" level="error">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+
+	<Logger name="org.quartz" level="INFO">
+		<appender-ref ref="RollingFile" />
+	</Logger>
+
+	<root level="ERROR">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

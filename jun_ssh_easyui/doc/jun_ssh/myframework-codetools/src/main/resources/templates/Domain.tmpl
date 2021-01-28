@@ -1,0 +1,105 @@
+
+
+/**
+ * @author: ${author}
+ * @version: 1.0
+ * @since ${date}
+ */
+package ${packagePrefix}.domain;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+#if($pkResult.size()>1)
+import javax.persistence.EmbeddedId;
+#else
+import javax.persistence.SequenceGenerator;
+#end
+
+#set ($TABLE_NAME = $tableName )
+
+
+@Entity
+@Table(name = "$TABLE_NAME")
+#if($pkResult.size()==1)
+@SequenceGenerator(name = "${TABLE_NAME}_SEQ", sequenceName = "SEQ_${TABLE_NAME}_ID" ,allocationSize=1)
+#end
+
+public  class ${className}    {
+
+     #if($pkResult.size()!=1)
+	     @EmbeddedId
+	     private PK  pk = new PK();
+     #else
+	     private ${keyType}  ${keyVar} ;
+     #end
+
+    #foreach($prop in $columnResult)
+    	#if($pkResult.size()!=1)
+    		@Column(name = "$prop.name"  )
+    	#end
+    	private ${prop.dataType}  ${prop.javaName} ;
+     #end
+
+
+	 #foreach($prop in $pkResult)
+	   #if($pkResult.size()==1)
+	     @Id
+	     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="${TABLE_NAME}_SEQ")
+	     @Column(name = "$prop.name"  )
+     	#end
+     	// "$prop.comments"
+		   public ${prop.dataType}  ${prop.getterMethod}  () {
+		   		#if($pkResult.size()>1)
+					return pk.${prop.javaName};
+				#else
+				    return this.${prop.javaName};
+				#end
+			 }
+	 #end
+
+    #foreach($prop in $columnResult)
+    	 #if($pkResult.size()==1)
+    		@Column(name = "${prop.name}" )
+    	#end
+         public ${prop.dataType}  ${prop.getterMethod}  () {
+				return ${prop.javaName};
+			 }
+	#end
+
+	 #foreach($prop in $pkResult)
+		 public void ${prop.setterMethod} (${prop.dataType}  ${prop.javaName}) {
+		 		#if($pkResult.size()>1)
+					this.pk.${prop.javaName} = ${prop.javaName};
+				#else
+				    this.${prop.javaName} = ${prop.javaName};
+				#end
+
+		 }
+	 #end
+
+    #foreach($prop in $columnResult)
+        public void ${prop.setterMethod} (${prop.dataType}  ${prop.javaName}) {
+			this.${prop.javaName} = ${prop.javaName};
+		 }
+	#end
+
+	#if($pkResult.size()>1)
+	     @Embeddable
+		public static class PK implements Serializable {
+
+			 #foreach($prop in $pkResult)
+					@Column(name = "${prop.name}" )
+					private ${prop.dataType}  ${prop.javaName} ;
+			  #end
+		}
+	#end
+
+}

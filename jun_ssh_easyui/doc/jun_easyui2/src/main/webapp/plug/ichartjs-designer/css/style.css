@@ -1,0 +1,269 @@
+@CHARSET "UTF-8";
+
+body {
+	padding-bottom: 40px;
+	padding-top: 50px;
+	transition: margin 500ms ease 0s;
+	background-repeat: repeat;
+	font-family: "微软雅黑",Arial,sans-serif;
+}
+body.preview {
+    margin-left: 0;
+    background-image: url("../images/ide_bg_h.png");
+}
+body.edit {
+    margin-left: 220px;
+    background-image: url("../images/ide_bg.png");
+}
+.navbar-shade{
+	height:40px;
+	left:-6px;
+	z-index: 1040;
+	transition: top 200ms ease 0s;
+	background-color: rgba(85,138,177,0.8);
+}
+.edit .navbar-shade{
+	top:-50px;
+}
+.preview .navbar-shade{
+	top:-6px;
+}
+
+.preview .ide-container {
+	background-color: rgba(254,254,254,0.1);
+	border: 0px;
+}
+
+.preview .ide-container:after {
+	content: "预览";
+	border: 0px;
+	border-radius: 10px 0px;
+}
+
+.navbar-shade .btn{
+	margin: 5px;
+}
+	
+.navbar-inverse .navbar-inner {
+	background-color: #5f8ab1;
+	filter:none;
+	background-image:url("../images/ide_t_bg.png");
+	background-repeat: repeat-x;
+	border-color: #394a5a;
+}
+
+.navbar-inverse .brand {
+	color: #dedede;
+	margin-left: -15px;
+	padding-bottom: 0;
+	width: 181px;
+	font-size: 18px;
+	font-family: "Bauhaus 93", "微软雅黑", sans-serif;
+}
+#ide-powered-by{
+	position: absolute;
+	right: 110px;
+	top: 8px;
+	color: #bcbcbc;
+	z-index: 9999;
+}
+.nav .dropdown-toggle .caret {
+	border-bottom-color: #ffffff;
+	border-top-color: #ffffff;
+	margin-top: 6px;
+}
+
+.brand img {
+	float: left;
+	margin: -1px 8px 0px 0px;
+}
+.navbar .divider-vertical {
+	height: 38px;
+}
+.navbar-inner .divider-vertical {
+	margin-top:2px;
+	border-left-color: #5881b3;
+	border-right-color: #4974a9;
+}
+.sidebar-nav-modal {
+	bottom: 0;
+	padding: 4px;
+	position: fixed;
+	left:0px;
+	top: 40px;
+	transition: all 300ms ease 0s;
+	width: 212px;
+	z-index: 11;
+	background-color: #666666;
+	opacity:0.4;
+}
+.editable .sidebar-nav-modal {
+	left: -220px;
+}
+
+.sidebar-nav {
+	bottom: 0;
+	padding: 4px;
+	position: fixed;
+	top: 40px;
+	transition: all 500ms ease 0s;
+	width: 212px;
+	z-index: 10;
+	border-right: 3px solid #6088b2;
+}
+#ichart-bootstrap{
+	position: absolute;
+	bottom: 10px;
+	left:14px;
+	color: #5a758f;
+	font-size: 18px;
+	font-family: "Bauhaus 93", "微软雅黑", sans-serif;
+	z-index: -99;
+}
+.edit .sidebar-nav {
+	left: 0;
+}
+.preview .sidebar-nav{
+	left: -220px;
+}
+.dropdown-menu {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 0px;
+	box-shadow: 0 5px 6px rgba(0, 0, 0, 0.2);
+	min-width: 120px;
+}
+
+.dropdown-menu .divider {
+	margin: 2px 1px;
+}
+
+.navbar-inner {
+	min-height: 40px;
+}
+
+.navbar-inner .container-fluid {
+	padding: 0 5px;
+}
+
+.accordion-group {
+	margin-bottom: 0px;
+}
+
+.accordion-toggle {
+	background-color: #415E79;
+	border-radius: 4px 4px 4px 4px;
+}
+
+.accordion-body {
+	background-color: #f9f9f9;
+}
+
+.accordion-inner {
+    padding: 6px 8px;
+    font-size:12px;
+}
+
+.accordion-heading a {
+	color: #ffffff;
+	font-weight: 600;
+	text-decoration: none;
+}
+.accordion-heading a:hover{
+	color: #89C7FF;
+	text-decoration: none;
+}
+.accordion-heading a:active{
+	color: #89C7FF;
+	text-decoration: none;
+}
+
+.accordion-heading .accordion-toggle {
+	display: block;
+	padding: 6px 12px;
+}
+
+.ide-container {
+	padding: 40px 15px 15px;
+	border-radius: 4px;
+	border: 1px solid rgb(221, 221, 221);
+	background-color: rgba(254,254,254,0.6);
+	transition: width 600ms ease 0s;
+	margin-top: 10px;
+	margin-left: 0px;
+	position: relative;
+	word-wrap: break-word;
+}
+
+.ide-container:after {
+	padding: 3px 7px;
+	border-radius: 4px 0px;
+	border: 1px solid rgb(221, 221, 221);
+	left: -1px;
+	top: -1px;
+	color: #314150;
+	font-weight: bold;
+	position: absolute;
+	content: "绘图区";
+	background-color: rgb(245, 245, 245);
+}
+
+.input-append .add-on, .input-prepend .add-on{
+	background-color: #DDE2E6;
+    border: 1px solid #CCCCCC;	
+	text-shadow: 0 1px 0 #eeeeee;
+}
+
+.input-append, .input-prepend{
+	margin-bottom: 6px;
+}
+.switch{
+	margin-bottom: 2px;
+}
+.ide-divider{
+	margin:2px 0px 6px 0px;
+	border-bottom:1px solid #DDDDDD;
+}
+.minicolors [disabled*="disabled"]{
+	color:#bcbcbc;
+}
+.minicolors{
+	margin-bottom: 6px;
+}
+.minicolors-input{
+	width:60px;
+}
+.minicolors-theme-bootstrap .minicolors-panel{
+	z-index: 999;
+}
+.minicolors-focus{
+	z-index: 999;
+}
+.ide-data{
+	margin-top: 10px;
+}
+.row-fluid .span12 {
+    margin-left: 0px;
+}
+#ide-data-table{
+	width: 560px;
+	margin-bottom: 10px;
+}
+#form_tbody input {
+    margin-bottom: 0px;
+}
+.blur_val{
+	width:120px;
+}
+
+.minicolors-focus {
+    z-index: 9999;
+}
+.float-left{
+	float: left;
+}
+.modal-body .add-on{
+	width: 50px;
+}
+.dropdown-menu > li > a {
+    padding: 3px 20px;
+}

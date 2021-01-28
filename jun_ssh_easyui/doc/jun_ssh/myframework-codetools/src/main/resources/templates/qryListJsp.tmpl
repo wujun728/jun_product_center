@@ -1,0 +1,49 @@
+<%@page language="java" errorPage="/common/error.jsp" contentType="text/html;charset=GBK" pageEncoding="GBK"%>
+<%@include file="/common/header.jsp"%>
+<html>
+<head>
+<title> </title>
+<meta name="Author" contect="${author}">
+<meta name="CreateDate" contect="${date}">
+<%@include file="/common/public.jsp"%>
+<!-- css -->
+<link rel="stylesheet"  type="text/css" href="${ctx}/theme/default/main.css" /> 
+<script type="text/javascript">
+var Action = {};
+
+Action.init = function(){
+    Table.onRowSelect(function(row){
+    });
+};
+
+$j(function(){		   
+   Action.init();
+});
+
+
+</script>
+</head>
+<body scroll="no" >
+<form action="${ctx}/${classVar}/qry${className}List.mvc" name="QryForm" >
+ <table class="frame_table" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td height="100%" align="center" background="${ctx}/images/mainbgline.gif">
+	 <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
+	 	<tr>
+			<td>
+				<grid:table dataSrc="resultList" var="Table" tableConfig="${servicePre}.qry${className}List">
+				   <grid:param name="style" value="height:100%;width:100%" />
+				   <grid:param name="page" value="true" />
+				   <grid:param name="action" value="/${classVar}/qry${className}List.mvc" />
+				   <grid:param name="toolbar" value="hide" />
+				</grid:table>
+			</td>
+		</tr>
+	  </table>
+	</td>
+  </tr>
+</table>
+</form>
+<%@include file="/common/footer.jsp"%>
+</body>
+</html>

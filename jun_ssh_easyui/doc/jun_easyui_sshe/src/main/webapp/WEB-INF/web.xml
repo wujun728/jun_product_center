@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="ssheWebApp" version="2.5">
+	<display-name>SSHE</display-name>
+	<description>Struts2+Spring3+Hibernate4+EasyUI1.3</description>
+
+	<!-- spring配置文件位置 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring.xml,classpath*:spring-hibernate.xml,classpath*:spring-druid.xml,classpath*:spring-tasks.xml,classpath*:spring-ehcache.xml,classpath*:spring-cxf.xml,classpath*:spring-javamelody.xml,classpath*:net/bull/javamelody/monitoring-spring.xml</param-value>
+	</context-param>
+
+	<!-- 添加javamelody监控 -->
+	<filter>
+		<filter-name>monitoring</filter-name>
+		<filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>monitoring</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<!-- druid数据源Web监控配置 -->
+	<filter>
+		<filter-name>druidWebStat</filter-name>
+		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+		<init-param>
+			<param-name>exclusions</param-name>
+			<param-value>/css/*,/style/*,/jslib/*,*.js,*.css,/druid*,/attached/*,/uploadFile/*,*.jsp</param-value>
+		</init-param>
+		<init-param>
+			<param-name>principalSessionName</param-name>
+			<param-value>sessionInfo</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>druidWebStat</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- openSessionInView配置 -->
+	<filter>
+		<filter-name>openSessionInView</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>openSessionInView</filter-name>
+		<url-pattern>*.sy</url-pattern>
+	</filter-mapping>
+
+	<!-- Struts2配置 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.sy</url-pattern>
+	</filter-mapping>
+
+	<!-- 字符集编码配置 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 需要拦截的JSP -->
+	<filter>
+		<filter-name>sessionFilter</filter-name>
+		<filter-class>sy.util.base.SessionFilter</filter-class>
+		<init-param>
+			<param-name>include</param-name>
+			<!-- 在securityJsp这个文件夹下面的所有JSP页面，都需要有session才能访问，可以配置多个，用英文半角逗号分割 -->
+			<param-value>securityJsp</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>sessionFilter</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+
+	<!-- 解决上传的文件或图片失效的情况下，默认返回一个图片给用户，一般用于提示 -->
+	<filter>
+		<filter-name>file404Filter</filter-name>
+		<filter-class>sy.util.base.File404Filter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>file404Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- javamelody监听器 -->
+	<listener>
+		<listener-class>net.bull.javamelody.SessionListener</listener-class>
+	</listener>
+	<!-- spring监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 防止spring内存溢出监听器 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- struts2安全监听器 -->
+	<listener>
+		<listener-class>sy.listener.base.OgnlSecurityListener</listener-class>
+	</listener>
+	<!-- 用户上下线监听器 -->
+	<listener>
+		<listener-class>sy.util.base.OnlineListener</listener-class>
+	</listener>
+
+	<!-- druid监控页面，使用${pageContext.request.contextPath}/druid/index.html访问 -->
+	<servlet>
+		<servlet-name>druidStatView</servlet-name>
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>druidStatView</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- plUpload上传 -->
+	<servlet>
+		<servlet-name>PlUpload</servlet-name>
+		<servlet-class>sy.util.base.PlUploadServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PlUpload</servlet-name>
+		<url-pattern>/plupload</url-pattern>
+	</servlet-mapping>
+
+	<!-- Highcharts下载图表工具类 -->
+	<servlet>
+		<servlet-name>Highcharts</servlet-name>
+		<servlet-class>sy.util.base.HighchartsUtil</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Highcharts</servlet-name>
+		<url-pattern>/downloadChart</url-pattern>
+	</servlet-mapping>
+
+	<!-- cxf WebService服务 -->
+	<servlet>
+		<servlet-name>cxfService</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cxfService</servlet-name>
+		<url-pattern>/ws/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- 配置session超时时间，单位分钟 -->
+	<session-config>
+		<session-timeout>15</session-timeout>
+	</session-config>
+
+	<!-- 配置错误页面 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500.jsp</location>
+	</error-page>
+
+	<!-- 项目起始页面 -->
+	<welcome-file-list>
+		<welcome-file>/index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

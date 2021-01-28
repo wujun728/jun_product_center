@@ -1,0 +1,62 @@
+/**
+ * @author: ${author}
+ * @version: 1.0
+ * @since ${date}
+ */
+
+package ${packagePrefix}.test;
+
+
+import ims.common.util.ParamUtil;
+import ims.common.util.ServiceUtil;
+import ims.sys.util.OnlineUser;
+
+import ims.common.test.ImsJunit4Test;
+import javax.annotation.Resource;
+import org.junit.Test;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+
+
+import ${packagePrefix}.service.${className}Manager;
+import ${packagePrefix}.model.${className};
+#if($pkResult.size()>1)
+import ${packagePrefix}.model.${className}PK;
+#end
+
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+@ContextConfiguration(
+		locations={"/testcontext/context-app-**.xml"
+				}
+) 
+@TransactionConfiguration(defaultRollback = false)
+public class ${className}Test extends ImsJunit4Test {
+	private transient final Log log = LogFactory.getLog(getClass());
+
+	@Resource (name="${classVar}Manager") 
+	private ${className}Manager ${classVar}Manager; 
+	/**
+	 * ��ȡһ����¼��Ϣ���������޸Ĳ���
+	 */
+	@Test
+	public void testSave${className}() {
+
+		System.out.println("=======================");
+		System.out.println("======================="+${classVar}Manager);
+
+	}
+
+
+	
+}
+
+
+

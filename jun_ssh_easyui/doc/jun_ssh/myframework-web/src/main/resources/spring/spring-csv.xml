@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task-4.2.xsd"
+	default-lazy-init="false">
+
+	 
+	<!-- CSV文件字段映射信息 -->
+	<bean id="csvConfig"
+		class="org.myframework.support.csv.config.CsvCompositeXmlConfig">
+		<property name="configLocation" value="csvconfig" />
+		<property name="inMemoryConfiguration" ref="csvAnnotationConfig" />
+	</bean>
+
+	<bean id="csvAnnotationConfig"
+		class="org.myframework.support.csv.config.CsvAnnotationConfig">
+		<property name="packagesToScan" value="com.hollycrm" />
+		<property name="jdbc" ref="simpleCrud" />
+	</bean>
+
+	<!-- CSV导入数据库实现类 -->
+	<bean id="csvImport"
+		class="org.myframework.support.csv.impl.CsvImportImpl">
+		<property name="jdbc" ref="configedJdbc" />
+		<property name="csvConfig" ref="csvConfig" />
+	</bean>
+
+	<!-- CSV导出文件实现类 -->
+	<bean id="csvExport"
+		class="org.myframework.support.csv.impl.CsvExportImpl">
+		<property name="jdbc" ref="configedJdbc" />
+		<property name="csvConfig" ref="csvConfig" />
+	</bean>
+
+	<!-- pdf导出文件实现类 -->
+	<bean id="pdfExport"
+		class="org.myframework.support.pdf.PdfExportImpl">
+		<property name="jdbc" ref="configedJdbc" />
+		<property name="csvConfig" ref="csvConfig" />
+	</bean>
+
+	<!-- UTF8日志文件导入 -->
+	<bean id="csvUtf8Import"
+		class="org.myframework.support.csv.impl.CsvImportImpl">
+		<property name="jdbc" ref="configedJdbc" />
+		<property name="csvConfig" ref="csvConfig" />
+		<property name="parser" ref="Utf8Parser" />
+	</bean>
+
+	<bean id="Utf8Parser"
+		class="org.myframework.support.csv.parser.UnivocityParser">
+		<property name="encoding" value="UTF-8" />
+	</bean>
+
+
+</beans>

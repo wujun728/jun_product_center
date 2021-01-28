@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/data/jpa
+    http://www.springframework.org/schema/data/jpa/spring-jpa-1.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+
+	<!-- 数据源URL，PASSWORD配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="org.myframework">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="connectionProperties" value="remarksReporting=true"/>
+		
+ 		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${dbcp.initialSize}" />
+		<property name="minIdle" value="${dbcp.minIdle}" />
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		
+		<!--validationInterval 检测数据库连接的时间间隔 毫秒单位 -->
+		<property name="validationQuery" value="${dbcp.validationQuery}"/> 
+		<property name="testOnBorrow" value="${dbcp.testOnBorrow}" />
+		<property name="testOnReturn" value="${dbcp.testOnReturn}" />
+		<property name="testWhileIdle" value="${dbcp.testWhileIdle}" />
+		
+		 <!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="stat" /> 
+	</bean>
+
+	<!-- JPA实体管理工厂的配置 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="org.myframework" /><!--待扫描的实体类包，不再需要persistence.xml了 -->
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Jpa 事务配置 -->
+	<bean id="jpaTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<!-- 方法前缀为find、get的为只读事务，其他为PROPAGATION_REQUIRED事务 -->
+	<!-- <tx:advice id="advice" transaction-manager="jpaTransactionManager"> 
+		<tx:attributes> <tx:method name="find*" read-only="true"/> <tx:method name="get*" 
+		read-only="true"/> <tx:method name="*" propagation="REQUIRED" /> </tx:attributes> 
+		</tx:advice> -->
+
+	<!--com.hollycrm.hollybeacon包下面后缀包含Service的所有方法 都进行事务拦截 -->
+	<!-- <aop:config proxy-target-class="true"> <aop:pointcut id="allMethod" 
+		expression="execution(* com.hollycrm.*..service.*Service*.*(..))"/> <aop:advisor 
+		advice-ref="advice" pointcut-ref="allMethod"/> </aop:config> -->
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="jpaTransactionManager" />
+
+	<jpa:repositories base-package="org.myframework.**.dao"
+		repository-impl-postfix="Impl" 
+		factory-class="org.myframework.dao.orm.MyRepositoryFactoryBean"
+		entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="jpaTransactionManager"    />
+
+	<!-- JSR303 Validator(Hibernate Validator) -->
+	<bean name="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+	</bean>
+
+	<bean class="org.myframework.support.beanvalidator.ValidateUtil">
+		<property name="validator" ref="validator" />
+	</bean>
+
+	<bean class="org.myframework.support.spring.SpringUtils" />
+
+</beans>

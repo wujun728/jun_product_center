@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+  <!-- <constant name="struts.multipart.maxSize" value="1073741824"/>  -->	
+    <constant name="struts.devMode" value="false" />
+	   <package name="sys" extends="struts-default" namespace="/sys">
+	  
+	    <interceptors>
+		<interceptor class="com.doroodo.base.interceptor.AuthorityInterceptor" name="authority"/>
+		 <!--定义一个包含权限检查的拦截器栈-->  
+            <interceptor-stack name="mydefault">  
+                <!--配置内建默认拦截器-->  
+                <interceptor-ref name="defaultStack"/>  
+                <!--配置自定义的拦截器-->  
+                <interceptor-ref name="authority"/>  
+            </interceptor-stack>  
+		</interceptors>
+		
+		</package>
+</struts>

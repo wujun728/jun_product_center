@@ -1,0 +1,158 @@
+<%@page language="java" errorPage="/common/error.jsp" contentType="text/html;charset=GBK" pageEncoding="GBK"%>
+<%@include file="/common/header.jsp"%>
+<%@ taglib uri="/WEB-INF/limit.tld" prefix="limit"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>中国电信云南公司针对性营销维系挽留系统</title>
+		<base target="_self"></base> 
+		<meta name="Author" contect="${author}">
+		<meta name="CreateDate" contect="${date}">
+		<!-- include-->
+		<%@include file="/common/public.jsp"%>
+		<!-- css -->
+		<link rel="stylesheet" type="text/css" href="${ctx}/theme/default/main.css" />
+		<link rel="stylesheet" type="text/css" href="${ctx}/theme/cms/public.css"/>		
+		<link rel="stylesheet" type="text/css" href="${ctx}/theme/report/report.css"> 
+		 	
+		<script type="text/javascript">
+		var Action = {};
+		Action.qry = function()
+		{
+			
+			document.forms[0].target = "resultIframe";
+			document.forms[0].action="${ctx}/${classVar}/qry${className}List.mvc";
+			if (checkAllParam(document.forms[0])) {
+				_loadProcess();
+				document.forms[0].submit();
+			}
+		};
+		
+		window.actionComplete = function()
+		{
+		     Win.succeedInfo({message:'操作完成',handler:function(){Action.qry();}});
+		};
+		
+		
+		Action.add = function()
+		{
+			
+		       var url = "${ctx}/${classVar}/init${className}Edit.mvc?doWhat=ADD";
+		       var feature = "dialogWidth=640px;dialogHeight=480px";  
+			var returnValue = showModalDialog (url,"",feature);
+			if(returnValue =="1"){
+			    this.qry();
+			} 
+			
+		};
+		
+		Action.del = function()
+		{
+			
+			var lsTable = resultIframe.Table;
+			var rows = lsTable.getCheckedRows('${keyVar}');
+		    if(rows.length==0){
+		       Win.alert("请选择信息");
+		      return;
+			}
+			
+			var idEditStr = resultIframe.Util.getCheckboxValues('${keyVar}',true);
+			var delRecord = function (tp) {
+				if(tp=='ok'){
+				    var url = "${ctx}/${classVar}/remove${className}.mvc?doWhat=DEL&idEdit="+idEditStr  ;
+				    document.forms[0].action=url;
+				    document.forms[0].target = "delResultPage";
+				    document.forms[0].submit();
+				}
+			};
+			Win.confirmInfo({message:'确定删除'+rows.length+'条数据?',handler:delRecord });
+			
+		};
+		
+		Action.mod = function(){
+		
+			var lsTable = resultIframe.Table;
+			var rows = lsTable.getCheckedRows('${keyVar}');
+			if(rows.length!=1){
+		      		Win.alert("请选择一条信息!");
+		      		return;
+			}
+		    var idEdit = resultIframe.Util.getCheckboxValues('${keyVar}',true);	
+		    var url = "${ctx}/${classVar}/init${className}Edit.mvc?doWhat=MOD&idEdit="+idEdit  ;
+		    var feature = "dialogWidth=640px;dialogHeight=480px";  
+		   
+ 		    var returnValue = showModalDialog (url,"",feature);
+			if(returnValue =="1"){
+			    this.qry();
+			} 
+			
+		};
+		//--------------页面私有js代码--------------
+		$j(function(){
+			 // Action.qry();
+		});
+		</script>
+	</head>
+	<body>
+	<form action="${ctx}/${classVar}/qry${className}List.mvc" name="QryForm" target="resultIframe" method="POST">
+			<input type="hidden" name="" value="" />
+			<table class="xtable">
+				<!-- 查询表单的TR -->
+				<tr>
+					<td>
+						<!-- 查询表单的TABLE -->
+						<table class="qry_bg">
+							<tr>
+								<td colspan="2">
+									<table class="qry_main QueryBuilder"> 
+										<!-- 显示的查询条件 -->
+										<thead class="queryShow">
+											<tr>
+												<td colspan="100%" class="QueryBuilderTop"><span class="Title">${title}</span></td>
+											</tr>
+											<tr>
+												<th><span class="SubTitle">**编码</span></th>
+									 			<td class="DefineWidth"><input type="text" name="hallId" datatype="number"  value=""/> </td>
+												<th>
+													<span class="SubTitle">***名称</span>
+												</th>
+											  <td class="DefineWidth"><input type="text" name="name" value=""/> </td>
+											<tr>
+										</thead>
+										<!-- 隐藏的查询条件 -->
+										<tbody class="queryHide"> 
+										</tbody> 
+									</table> 
+								</td>
+							</tr>
+							<!-- 按钮内容 -->
+							<tr class="qry_more">
+								<td><span class="qry_down" id="MoreQueryButton"><a href="#">显示更多查询条件</a></span></td>
+								<td class="qry_button">
+									<!-- 查询 获取 等按钮 -->
+									<input  name="Sreach" type="button" class="Sreach" onClick="Action.qry()" value="查找"/>
+									<!-- 增 删 改 按钮组 -->
+									<span id="btnOprGroup" name="btnOprGroup">
+			<input type="button" class="btn_4" value="新增" onClick="Action.add()" />
+			<input type="button" class="btn_4" value="修改" onClick="Action.mod()" />
+			<input type="button" class="btn_4" value="删除" onClick="Action.del()" />
+									</span>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<!-- 结果列表页面TR -->
+				<tr>
+					<td class="qry_frame">
+						<iframe src="${ctx}${jspDir}/qry${className}List.jsp" 
+													name="resultIframe" id="resultIframe" width="100%" height="100%"
+													 frameborder="0" scrolling="no">
+									</iframe>
+					</td>
+				</tr>
+			</table>
+		</form>
+	<iframe name="delResultPage"  style="display:none;" src=""></iframe>
+	<script type="text/javascript" src="${ctx}/js/util/footer.js"></script>
+	</body>
+</html>

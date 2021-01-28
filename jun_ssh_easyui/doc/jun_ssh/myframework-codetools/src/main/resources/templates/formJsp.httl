@@ -1,0 +1,11 @@
+ #set(List<Column> columnResult)
+     <tr class="defaultBGColor">
+     #foreach($prop in $columnResult)
+		<td align="center" width="15%" class="editLabel" >${prop.comments}</td>
+		<td width="35%"  ><input type="text" name="${prop.javaName}" id="${prop.javaName}" /></td>
+	 #end
+	</tr>
+
+	 #foreach($prop in $columnResult)
+	<th data-options="field:'$prop.name',width:80,align:'right'">$prop.comments</th>
+	 #end

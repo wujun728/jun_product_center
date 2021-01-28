@@ -1,0 +1,216 @@
+﻿/* 关于本站页面样式表
+ * @Author: Leo 
+ * @Date: 2019-10-09 11:30:08 
+ * @Last Modified by: Leo
+ * @Last Modified time: 2019-10-09 11:30:42
+ */
+.blog-about-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.blog-nav-follow {
+    text-align: center;
+    background-color: #393D49;
+    z-index: 1;
+}
+
+    .blog-nav-follow li {
+        display: inline-block;
+    }
+
+        .blog-nav-follow li a {
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 10px;
+            color: #fff;
+        }
+
+        .blog-nav-follow li.current a {
+            background-color: #fff;
+            color: #333;
+        }
+
+.section {
+    padding: 10px;
+}
+
+.anchor {
+    position: relative;
+    top: -50px;
+}
+
+.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.blog-nav-follow.fixed li a {
+    height: 50px;
+    line-height: 50px;
+}
+
+.author-bg {
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+}
+
+    .author-bg .bg {
+        width: 100%;
+        height: auto;
+    }
+
+.author-intro {
+    margin-top: 194px;
+    height: 100px;
+    left: 0;
+    right: 0;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    position: absolute;
+}
+
+    .author-intro img {
+        width: 90px;
+        height: 90px;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        padding: 2px;
+        background-color: #fff;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -moz-box-shadow: 0 0 20px #1e9fff;
+        -webkit-box-shadow: 0 0 20px #1e9fff;
+        box-shadow: 0 0 20px #1e9fff;
+        margin-top: -55px;
+        margin-bottom: 5px;
+    }
+
+    .author-intro h2,
+    .author-intro h4 {
+        position: relative;
+        margin: 5px 0;
+    }
+
+.text-content {
+    margin-top: 5px;
+}
+
+    .text-content p {
+        line-height: 20px;
+        margin-bottom: 5px;
+        text-indent: 2em;
+        color: #666;
+    }
+
+.bg-box {
+    position: relative;
+}
+
+    .bg-box .mask {
+        background-color: rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+.friendlink-item {
+    height: 52px;
+    position: relative;
+    padding-left: 80px;
+    text-align: center;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px solid #eee;
+    display: block;
+    color:#333;
+}
+
+    .friendlink-item:hover {
+        border: 1px solid #1e9fff;
+        -moz-transition: all .3s;
+        -o-transition: all .3s;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        color: #333;
+    }
+
+    .friendlink-item img {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        left: 20px;
+        top: 5px;
+    }
+
+    .friendlink-item h2 {
+        padding: 2px 0;
+    }
+
+@media (max-width: 767px) {
+    .author-bg {
+        height: 200px;
+    }
+
+    .bg-box {
+        height: 100px;
+        overflow: hidden;
+    }
+
+        .bg-box .bg {
+            height: 100%;
+            width: auto;
+        }
+
+
+    .author-bg .author-intro {
+        margin-top: 100px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .author-bg {
+        height: 183px;
+    }
+
+    .author-intro {
+        margin-top: 83px;
+    }
+
+    .text-content p {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 992px) {
+    .author-bg {
+        height: 242px;
+    }
+
+    .author-intro {
+        margin-top: 142px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .author-bg {
+        height: 294px;
+    }
+
+    .author-intro {
+        margin-top: 194px;
+    }
+}

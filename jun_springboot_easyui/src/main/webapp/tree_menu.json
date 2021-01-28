@@ -1,0 +1,34 @@
+[{
+	"text":"元数据",
+	"children":[{
+		"text":"实体元数据",
+		"url":"/admin/pages/fieldmeta/entitymeta.jsp"
+	},{
+		"text":"项目管理",
+		"url":"/admin/pages/config/project.jsp"
+	},{
+		"text":"模块管理",
+		"url":"/admin/pages/config/module.jsp"
+	}]
+},{
+	"text":"配置管理",
+	"children":[{
+		"text":"可选字段",
+		"url":"/admin/pages/fieldmeta/optionfield.jsp"
+	},{
+		"text":"实体基类",
+		"url":"/admin/pages/fieldmeta/baseentity.jsp"
+	},{
+		"text":"校验规则",
+		"url":"/admin/pages/config/validation.jsp"
+	},{
+		"text":"字段映射",
+		"url":"/admin/pages/config/typemapping.jsp"
+	},{
+		"text":"数据字典",
+		"url":"/admin/pages/dict/dict.jsp"
+	},{
+		"text":"模板文件",
+		"url" :"/admin/pages/config/templatefile.jsp"
+	}]
+}]

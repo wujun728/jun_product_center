@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data name="初始数据库业务表">
+
+
+	<!-- ============================以下部分是权限的配置========================================== -->
+
+
+	<PHYSICAL_TYPE_DEFs name="资源">
+		<PHYSICAL_TYPE_DEF phyId="0" name="血液" ext="血液"
+			phyType="0" parentId="" level="0" isLeaf="1">
+		</PHYSICAL_TYPE_DEF>
+	</PHYSICAL_TYPE_DEFs>
+	
+</data>

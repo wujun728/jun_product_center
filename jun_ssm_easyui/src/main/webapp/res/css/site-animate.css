@@ -1,0 +1,192 @@
+﻿/* 动画定义
+ * @Author: Leo 
+ * @Date: 2019-10-09 11:32:57 
+ * @Last Modified by:   Leo 
+ * @Last Modified time: 2019-10-09 11:32:57 
+ */
+ 
+/*左侧导航In动画*/
+@keyframes leftIn {
+    from {
+        left: -200px;
+    }
+
+    to {
+        left: 0;
+    }
+}
+
+@-moz-keyframes leftIn {
+    from {
+        left: -200px;
+    }
+
+    to {
+        left: 0;
+    }
+}
+
+@-webkit-keyframes leftIn {
+    from {
+        left: -200px;
+    }
+
+    to {
+        left: 0;
+    }
+}
+
+/*左侧导航Out动画*/
+@keyframes leftOut {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: -200px;
+    }
+}
+
+@-moz-keyframes leftOut {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: -200px;
+    }
+}
+
+@-webkit-keyframes leftOut {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: -200px;
+    }
+}
+
+/*分享In动画*/
+@keyframes shareIn {
+    from {
+        right: -200px;
+    }
+
+    to {
+        right: 80px;
+    }
+}
+
+@-moz-keyframes shareIn {
+    from {
+        right: -200px;
+    }
+
+    to {
+        right: 80px;
+    }
+}
+
+@-webkit-keyframes shareIn {
+    from {
+        right: -200px;
+    }
+
+    to {
+        right: 80px;
+    }
+}
+
+/*分享Out动画*/
+@keyframes shareOut {
+    from {
+        right: 80px;
+    }
+
+    to {
+        right: -200px;
+    }
+}
+
+@-moz-keyframes shareOut {
+    from {
+        right: 80px;
+    }
+
+    to {
+        right: -200px;
+    }
+}
+
+@-webkit-keyframes shareOut {
+    from {
+        right: 80px;
+    }
+
+    to {
+        right: -200px;
+    }
+}
+
+/*淡入动画*/
+@keyframes maskFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes maskFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes maskFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/*淡出动画*/
+@keyframes maskFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes maskFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes maskFadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
