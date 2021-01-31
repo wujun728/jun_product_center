@@ -219,7 +219,7 @@ public class Constants
 		if (!LOGS_TB_NAME.equals(o.getClass().getSimpleName()))
 		{
 			String ip = getIpAddrNew();
-			String mac=getMacAddr();
+			String mac="null";//getMacAddr();
 			String[] sdf = getFiledName(o);
 			String id = getFieldValueByName(sdf[1], o).toString();
 			Log l=new Log();
