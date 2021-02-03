@@ -1,0 +1,434 @@
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">权限管理</a></li>
+        <li class="active">用户管理</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="jax-box">
+        <form id="formSearch" class="form-horizontal form-search">
+            <div class="form-group">
+                <div class="col-md-4 col-sm-6">
+                    <label class="control-label  col-xs-4" for="username">用户名:</label>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" id="username">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="control-label  col-xs-4" for="email">邮箱:</label>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" id="email">
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <label class="control-label  col-xs-4" for="phone">电话:</label>
+                    <div class="col-xs-8">
+                        <input type="text" class="form-control" id="phone">
+                    </div>
+                </div>
+                <shiro:hasPermission name="user:list">
+                <div class="col-md-1 col-sm-6 " style="text-align:left;">
+                    <button type="button" id="btn_query" class="btn btn-info">查询</button>
+                </div>
+                </shiro:hasPermission>
+            </div>
+        </form>
+    </div>
+    <div class="jax-box jax-box-table">
+        <div id="toolbar" class="btn-group">
+            <shiro:hasPermission name="user:add">
+            <button id="btn_add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#userModal">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="user:batchDelete">
+            <button id="btn_batch_delete" type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>批量删除
+            </button>
+            </shiro:hasPermission>
+        </div>
+        <table id="table"></table>
+    </div>
+</section>
+<!-- 用户新增模态框 -->
+<div id="userModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog"  role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">新增用户</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="userForm">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">用户名 <span style="color: red">*</span>:</label>
+                            <div class="col-sm-8">
+                                <input  name="username" class="form-control" min="3" require="必填项"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">密码 <span style="color: red">*</span>:</label>
+                            <div class="col-sm-8">
+                                <input name="password" type="password" class="form-control"  min="3" require="必填项"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">确认密码 <span style="color: red">*</span>:</label>
+                            <div class="col-sm-8">
+                                <input name="confirmPassword" type="password" class="form-control"  min="3" require="必填项"  placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">邮箱 :</label>
+                            <div class="col-sm-8">
+                                <input name="email" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">电话 :</label>
+
+                            <div class="col-sm-8">
+                                <input name="phone" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">性别 :</label>
+                            <div class="col-sm-8">
+                                <select name="sex" class="form-control">
+                                    <option value="0">请选择</option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">年龄 :</label>
+                            <div class="col-sm-8">
+                                <input name="age" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button type="button" id="saveUser" class="btn btn-info">确定</button>
+                            <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 用户详情模态框 -->
+<div id="userDetailModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">用户信息</h4>
+            </div>
+            <div class="modal-body">
+                <div id="userOpenWindow">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 分配角色模态框 -->
+<div id="assignRoleModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">分配角色</h4>
+            </div>
+            <div class="modal-body">
+                <table id="assignRoleTable">
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="pull-right">
+                    <button type="button" id="saveAssign" class="btn btn-info">确定</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var editFlag = "[[${@perms.hasPerm('user:edit')}]]";
+    var deleteFlag = "[[${@perms.hasPerm('user:delete')}]]";
+    var assignRoleFlag="[[${@perms.hasPerm('user:assignRole')}]]";
+    var userIdStr;//批量用户id
+    var roleIdStr;//分配的角色
+    var selectRoleIds;
+    var userIdChecked;
+    var loadRoleCount=0;
+    var columns = [
+        {checkbox: true },
+        {
+            field: 'username',
+            title: '用户名',
+            align : "center"
+        },{
+            field: 'email',
+            title: '邮箱',
+            align : "center"
+        }, {
+            field: 'phone',
+            title: '电话',
+            align : "center",
+        },{
+            field: 'roles',
+            title: '角色',
+            align : "center",
+            formatter:function(value,row, index){
+                var roles="";
+                $.each(value,function (i,item) {
+                    roles+=item.name+",";
+                })
+                if (roles!=""){
+                    roles = roles.substr(0, roles.length - 1);
+                }
+                return roles;
+            }
+        },
+        {
+            field: 'status',
+            title: '用户状态',
+            align : "center",
+            formatter:function(value,row, index){
+                return row.status == '1' ? "启用" : "禁用";
+            }
+        },
+        {
+            field : 'operation',
+            title : '操作',
+            align : "center",
+            formatter : function(value,
+                                 row, index) {
+                var edit = editFlag=="true" ?  '<a class="table-btn table-btn-info" href="javascript:void(0)" onclick="editUser('+row.userId+')">编辑</a>' : '';
+                var assign = assignRoleFlag=="true"  ? '<a class="table-btn table-btn-info"  href="javascript:void(0)" onclick="assignRoleList('+row.userId+')">分配角色</a>':'';
+                var del = deleteFlag=="true"  ?  '<a  class="table-btn table-btn-danger" href="javascript:void(0)" onclick="deleteUser('+row.userId+')">删除</a>' : '';
+                return edit + assign + del;
+            }
+        }];
+    var options={
+        id:"#table",
+        url: '/user/list',
+        columns:columns,
+        toolbar: '#toolbar',
+        showRefresh: true,
+        queryParams : queryParams
+    }
+    Core.initTable(options);
+
+    /*查询用户参数*/
+    function queryParams(params) {
+        var temp = { //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+            limit : params.limit, //页面大小
+            offset : params.offset, //页码
+            username : $("#username").val(),
+            email: $("#email").val(),
+            phone: $("#phone").val()
+        };
+        return temp;
+    }
+
+    /*查询角色参数*/
+    function queryRoleParams(params){
+        var temp = {
+            userId :userIdChecked
+        };
+        return temp;
+    }
+
+    /*编辑*/
+    function editUser(userId) {
+        Core.load("#userOpenWindow","/user/edit?userId="+userId,function(){
+            $("#userDetailModal").modal("show");
+        },2);
+    }
+    /*删除*/
+    function deleteUser(userId) {
+        Core.confirm("确定删除该用户？",function () {
+            Core.postAjax("/user/delete",{"userId":userId},function (data) {
+                if(data.status==200){
+                    Core.refreshTable("#table");
+                }
+                layer.msg(data.msg);
+            },"get")
+        })
+    }
+    /*分配角色-列表查询*/
+    function assignRoleList(userId) {
+        userIdChecked=userId;
+        $("#assignRoleModal").modal("show");
+        if(loadRoleCount==0){
+            var roleColumns=[
+                {checkbox: true },
+                {
+                    field: 'roleId',
+                    title: '角色ID',
+                    align : "center"
+                }, {
+                    field: 'name',
+                    title: '角色名称',
+                    align : "center"
+                }, {
+                    field: 'description',
+                    title: '角色描述',
+                    align : "center"
+                },
+                {
+                    field: 'status',
+                    title: '角色状态',
+                    align : "center",
+                    formatter:function(value,row, index){
+                        return row.status == '1' ? "有效" : "删除";
+                    }
+                }];
+            var roleOptions={
+                id:"#assignRoleTable",
+                url: "/user/assign/role/list",
+                columns:roleColumns,
+                pagination : false,
+                queryParams : queryRoleParams,
+                onLoadSuccess: function(){  //加载成功时执行
+                    loadRoleCount=1;
+                    Core.checkTableBy("#assignRoleTable",{field:"roleId", values:selectRoleIds});
+                },
+                responseHandler : handleRoleData,
+            }
+            Core.initTable(roleOptions);
+        }
+        if(loadRoleCount==1){
+            Core.refreshTable("#assignRoleTable");
+        }
+    }
+
+    /*处理角色数据*/
+    function handleRoleData(res){
+        selectRoleIds = res.hasRoles;
+        return res.rows;
+    }
+
+
+
+    $(function () {
+        /*查询*/
+        $("#btn_query").click(function(){
+            Core.refreshTable("#table");
+        });
+        /*新增*/
+        $("#btn_add").click(function(){
+            Core.clearError("#userForm");
+        });
+        /*批量删除*/
+        $("#btn_batch_delete").click(function(){
+            var checkedRows= Core.selectMutiData("#table");
+            if(checkedRows){
+                Core.confirm("确定删除选中的"+checkedRows.length+"条记录？",function () {
+                    userIdStr = "";
+                    $.each(checkedRows, function (i, item) {
+                        userIdStr += (item.userId + ",");
+                    })
+                    userIdStr = userIdStr.substring(0, userIdStr.length - 1);
+                    Core.postAjax("/user/batch/delete", {"userIdStr": userIdStr}, function (data) {
+                        if (data.status == 200) {
+                            Core.refreshTable("#table");
+                        }
+                        layer.msg(data.msg);
+                    }, "get")
+                })
+            }
+        });
+        /*分配角色*/
+        $("#btn_assign_role").click(function(){
+            var result = Core.selectSingleData("#table");
+            if(result){
+                $("#assignRoleModal").modal("show");
+                if(loadRoleCount==0){
+                    var roleColumns=[
+                        {checkbox: true },
+                        {
+                            field: 'roleId',
+                            title: '角色ID',
+                            align : "center"
+                        }, {
+                            field: 'name',
+                            title: '角色名称',
+                            align : "center"
+                        }, {
+                            field: 'description',
+                            title: '角色描述',
+                            align : "center"
+                        },
+                        {
+                            field: 'status',
+                            title: '角色状态',
+                            align : "center",
+                            formatter:function(value,row, index){
+                                return row.status == '1' ? "有效" : "删除";
+                            }
+                        }];
+                    var roleOptions={
+                        id:"#assignRoleTable",
+                        url: "/user/assign/role/list",
+                        columns:roleColumns,
+                        pagination : false,
+                        queryParams : queryRoleParams,
+                        onLoadSuccess: function(){  //加载成功时执行
+                            loadRoleCount=1;
+                            Core.checkTableBy("#assignRoleTable",{field:"roleId", values:selectRoleIds});
+                        },
+                        responseHandler : handleRoleData,
+                    }
+                    Core.initTable(roleOptions);
+                }
+                if(loadRoleCount==1){
+                    Core.refreshTable("#assignRoleTable");
+                }
+            }
+        });
+        /*保存用戶*/
+        $("#saveUser").click(function(){
+            if(doValidForm(userForm)){
+                Core.mask("#saveUser");
+                Core.postAjax("/user/add",$("#userForm").serialize(),function (data) {
+                    Core.unmask("#saveUser");
+                    if(data.status==200){
+                        $("#userModal").modal("hide");
+                        $("#userForm")[0].reset();
+                        Core.refreshTable("#table")
+                    }
+                    layer.msg(data.msg);
+                })
+            };
+        });
+        /*分配角色保存*/
+        $("#saveAssign").click(function () {
+            var checkedRows= Core.selectMutiData("#assignRoleTable");
+            if(checkedRows){
+                Core.mask("#saveAssign");
+                roleIdStr="";
+                $.each(checkedRows, function (i, item) {
+                    roleIdStr+=(item.roleId+",");
+                })
+                roleIdStr=roleIdStr.substring(0,roleIdStr.length-1);
+                Core.postAjax('/user/assign/role',{userId:userIdChecked,roleIdStr:roleIdStr},function (data) {
+                    Core.unmask("#saveAssign");
+                    if(data.status==200){
+                        $("#assignRoleModal").modal("hide");
+                        Core.refreshTable("#table");
+                    }
+                    layer.msg(data.msg);
+                })
+            }
+        })
+    });
+
+</script>

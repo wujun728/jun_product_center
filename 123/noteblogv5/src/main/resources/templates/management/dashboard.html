@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+</head>
+<body>
+
+
+<div class="layui-fluid layui-anim layui-anim-upbit">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">快捷方式</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-carousel layadmin-carousel layadmin-shortcut">
+                                <ul class="layui-row layui-col-space5">
+                                    <li class="layui-col-xs4">
+                                        <a href="/" target="_blank">
+                                            <i class="layui-icon layui-icon-home"></i>
+                                            <cite>前端主站</cite>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs4">
+                                        <a href="https://wuwenbin.me" target="_blank">
+                                            <i class="layui-icon layui-icon-transfer"></i>
+                                            <cite>作者博客</cite>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs4">
+                                        <a lay-href="/management/article/add">
+                                            <i class="layui-icon layui-icon-survey"></i>
+                                            <cite>撰写文章</cite>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs4">
+                                        <a lay-href="/management/settings/website">
+                                            <i class="layui-icon layui-icon-set"></i>
+                                            <cite>偏好设置</cite>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs4">
+                                        <a lay-href="/management/message">
+                                            <i class="layui-icon layui-icon-dialogue"></i>
+                                            <cite>留言管理</cite>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs4">
+                                        <a lay-href="/management/note/page">
+                                            <i class="layui-icon layui-icon-file"></i>
+                                            <cite>笔记管理</cite>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md6">
+                    <div class="layui-card">
+                        <div class="layui-card-header">当日数据</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-carousel layadmin-carousel layadmin-backlog">
+                                <ul class="layui-row layui-col-space10">
+                                    <li class="layui-col-xs6">
+                                        <a href="javascript:;" class="layadmin-backlog-body">
+                                            <h3>今日评论</h3>
+                                            <p><cite>[[${todayComment}]]</cite></p>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs6">
+                                        <a href="javascript:;" class="layadmin-backlog-body">
+                                            <h3>今日留言</h3>
+                                            <p><cite>[[${todayMessage}]]</cite></p>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs6">
+                                        <a href="javascript:;" class="layadmin-backlog-body">
+                                            <h3>今日新增用户</h3>
+                                            <p><cite>[[${todayUser}]]</cite></p>
+                                        </a>
+                                    </li>
+                                    <li class="layui-col-xs6">
+                                        <a href="javascript:;" class="layadmin-backlog-body">
+                                            <h3>今日访问</h3>
+                                            <p><cite>[[${todayVisit}]]</cite></p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">数据概览</div>
+                        <div class="layui-card-body">
+
+                            <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade"
+                                 lay-filter="LAY-index-dataview">
+                                <div carousel-item id="LAY-index-dataview">
+                                    <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            作者留言
+                            <i class="layui-icon layui-icon-tips" lay-tips="感谢支持！" lay-offset="5"></i>
+                        </div>
+                        <div class="layui-card-body layui-text layadmin-text" style="display: inline-block;">
+                            <p>笔记博客从v1版本以来（虽然v3才算点样子，v4才正式和大家见面）就打算做一套易上手同时也简介美观的一款博客系统，
+                                也可作为一套让初学者学习接触的一套系统。笔记博客在易用的同时功能也在不断完善，目前基本上常用功能都能做到。</p>
+                            <p>笔记博客更新频率一般是1年1个大版本，在年中不定期有小版本（可能不会公布只是作者自己用 ￣ω￣=），
+                                但是大版本的更新一定会加上，版本的迭代中还需要各位多多提供建议和意见，我们的交流QQ群：
+                                <a href="https://jq.qq.com/?_wv=1027&amp;k=5FgsNj3" title="697053454"
+                                   target="_blank">697053454</a></p>
+                            <p class="pull-right layui-inline" style="margin-bottom: 10px;">—— 笔记博客大当家（<a
+                                    href="https://wuwenbin.me/"
+                                    target="_blank">wuwenbin.me</a>）</p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md4">
+            <div class="layui-card" style="height: 247px;">
+                <div class="layui-card-header">版本信息</div>
+                <div class="layui-card-body layui-text">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="100">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>当前版本</td>
+                            <td>
+                                v<span th:text="${nbv5version}"></span>
+                                <a href="javascript:void(0);" id="checkUpdate"
+                                   style="padding-left: 15px;">检查更新</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>基础框架</td>
+                            <td>
+                                springboot 2／layui 2.5 等
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>系统亮点</td>
+                            <td>多风格 / 响应式 / 易上手</td>
+                        </tr>
+                        <tr>
+                            <td>最新版本</td>
+                            <td>
+                                <a href="https://jq.qq.com/?_wv=1027&k=5ZEGGl8" target="_blank">立即获取（群：697053454）</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">最新评论</div>
+                <div class="layui-card-body layadmin-takerates">
+                    <p>
+                        <span class="layui-word-aux">文章：</span>
+                        <a th:href="${latestComment ne null ? '/article/'+latestComment.articleId : 'javascript:;'}"
+                           target="_blank">[[${latestComment ne null ? latestComment.title : '-'}]]</a>
+                    </p>
+                    <hr>
+                    <p>
+                        <span class="layui-word-aux">用户：</span>
+                        <img th:if="${latestComment ne null}"
+                             th:src="${latestComment ne null ? latestComment.avatar : 'javascript:;'}"
+                             style="width: 40px;" class="layui-circle">
+                        [[${latestComment ne null ? latestComment.nickname : '-'}]]
+                    </p>
+                    <hr>
+                    <p style="word-break: break-all;">
+                        <span class="layui-word-aux">评论：</span>
+                        [[${latestComment ne null
+                        ?latestComment.clearComment.substring(0,#strings.length(latestComment.clearComment)>100?100:#strings.length(latestComment.clearComment))
+                        : '-'}]]
+                    </p>
+                    <hr>
+                    <p th:inline="text">
+                        <span class="layui-word-aux">时间：</span>
+                        [[${latestComment ne null ? #temporals.format(latestComment.post, 'yyyy/MM/dd HH:mm') : '-'}]]
+                    </p>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">最新留言</div>
+                <div class="layui-card-body layadmin-takerates">
+                    <p>
+                        <span class="layui-word-aux">用户：</span>
+                        <img th:if="${latestMessage ne null}"
+                             th:src="${latestMessage ne null ? latestMessage.avatar : 'javascript:;'}"
+                             style="width: 40px;" class="layui-circle">
+                        [[${latestMessage ne null ? latestMessage.nickname : '-'}]]
+                    </p>
+                    <hr>
+                    <p style="word-break: break-all;">
+                        <span class="layui-word-aux">留言：</span>
+                        [[${latestMessage ne null ?
+                        latestMessage.clearComment.substring(0,#strings.length(latestMessage.clearComment)>100?100:#strings.length(latestMessage.comment))
+                        : '-'}]]
+                    </p>
+                    <hr>
+                    <p th:inline="text">
+                        <span class="layui-word-aux">时间：</span>
+                        [[${latestMessage ne null ?#temporals.format(latestMessage.post, 'yyyy/MM/dd HH:mm') : '-'}]]
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script th:inline="javascript">
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'dashboard']);
+
+    var ipSummary = [[${ipSummary}]];
+    var urlSummary = [[${urlSummary}]];
+    var browserSummary = [[${browserSummary}]];
+    var ver = [[${version}]]
+</script>
+
+
+</body>
+</html>

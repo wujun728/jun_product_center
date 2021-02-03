@@ -1,0 +1,50 @@
+${flag}layout("/common/_container.html",{bg:"bg-white",js:["/assets/modular/${modular}/${bizEnName}/update.js"]}){
+<form id="${bizEnName}Form" lay-filter="${bizEnName}Form" class="layui-form model-form">
+
+    <input name="id" value="\${obj.id!}" type="hidden"/>
+
+    @for(item in table.fields!){
+    @if(item.propertyName == 'state'){
+    <div class="layui-form-item">
+        <label class="layui-form-label">${item.comment!}<span style="color: red;">*</span></label>
+        <div class="layui-input-block">
+            <input type="radio" name="${item.propertyName!}" value="1" title="启用" \${obj.state! == 1 ? 'checked' : ''}>
+            <input type="radio" name="${item.propertyName!}" value="0" title="禁用" \${obj.state! == 0 ? 'checked' : ''}>
+        </div>
+    </div>
+    @}else if(item.propertyName == 'type'){
+    <div class="layui-form-item">
+        <label class="layui-form-label">${item.comment!}</label>
+        <div class="layui-input-inline">
+            <select name="${item.propertyName!}">
+                <option value="">请选择省</option>
+            </select>
+        </div>
+    </div>
+    @}else if(item.propertyName == 'description'){
+    <div class="layui-form-item">
+        <label class="layui-form-label">${item.comment!}</label>
+        <div class="layui-input-block">
+            <textarea class="layui-textarea" name="${item.propertyName!}">\${obj.descript!}</textarea>
+        </div>
+    </div>
+    @}else{
+    @if(item.propertyName != 'id'){
+    <div class="layui-form-item">
+       <label class="layui-form-label">${item.comment!}<span style="color: red;">*</span></label>
+       <div class="layui-input-block">
+           <input value='\${obj.${item.propertyName!}!}' name="${item.propertyName!}" placeholder="请输入${item.comment!}" type="text" class="layui-input" lay-verify="required" required/>
+       </div>
+    </div>
+    @}
+    @}
+
+    @}
+
+    <div class="layui-form-item text-right">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+    </div>
+
+</form>
+${flag}}

@@ -1,0 +1,18 @@
+package ${daoPackageName};
+
+import sy.dao.base.BaseDao;
+import ${modelPackageName}.${modelName};
+
+/**
+ * ${modelName}Dao接口
+ *
+ * http://git.oschina.net/sphsyv/sypro
+ *
+ * 由代码生成器生成
+ *
+ * @author 孙宇
+ *
+ */
+public interface ${modelName}Dao extends BaseDao<${modelName}, ${pkType}> {
+
+}

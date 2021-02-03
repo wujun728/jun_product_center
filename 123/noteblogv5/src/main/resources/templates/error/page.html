@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="/static/plugins/layui/css/layui.css">
+    <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+    <title th:text="'出错了 - '+${status}+'页面'"></title>
+    <style>
+        blockquote {border-left: 5px solid rgba(244, 67, 54, 1) !important;}
+    </style>
+</head>
+<body style="background: #f8f8f8;padding-top: 2rem;">
+<div class="layui-fluid layui-anim layui-anim-upbit">
+    <div class="layadmin-tips" style="text-align: center;">
+        <i class="layui-icon layui-icon-face-surprised" style="font-size: 10rem;"></i>
+        <div class="layui-text" style="font-size: 20px;margin-bottom: 2rem;">
+            好像出错了呢，<a target="_blank"
+                      href="//shang.qq.com/wpa/qunwpa?idkey=3782d0f3115c78efaa5dcf912566e2ac556f67a8014e0b68559ad10596654b51">点我反馈错误</a>
+        </div>
+        <p style="margin: 20px;"><a href="/" style="color: #1E9FFF;">点我</a>返回首页</p>
+        <div class="layui-container">
+            <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote"><b>代码</b>：<span th:text="${status}"></span></blockquote>
+            <!--/*@thymesVar id="timestamp" type="java.time.LocalDateTime"*/-->
+            <blockquote class="layui-elem-quote"><b>时间</b>：<span
+                    th:text="${#dates.format(timestamp,'yyyy-MM-dd HH:mm:ss')}"></span></blockquote>
+            <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote layui-elip"><b>错误</b>：<span th:text="${error}"></span></blockquote>
+            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote layui-elip"><b>信息</b>：<span style="color: #ff6464;font-weight: bold;"
+                                                                            th:text="${message eq null ? trace : message}"></span></blockquote>
+            <!--/*@thymesVar id="path" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote"><b>路径</b>：<span th:text="${path}"></span></blockquote>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+

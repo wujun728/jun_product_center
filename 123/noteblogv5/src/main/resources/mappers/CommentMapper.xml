@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.wuwenbin.noteblogv5.mapper.CommentMapper">
+
+    <select id="findCommentPage" resultType="me.wuwenbin.noteblogv5.model.bo.CommentBo">
+        select c.*, a.title, u.avatar, u.nickname, u.role
+        from nb_comment c
+        left join nb_article a on a.id = c.article_id
+        left join nb_user u on u.id = c.user_id
+        <where>
+            <if test="nickname != null and nickname != ''">
+                u.nickname like concat('%',#{nickname},'%')
+            </if>
+            <if test="userId != null">
+                and c.user_id = #{userId}
+            </if>
+            <if test="clearComment != null and clearComment != ''">
+                and c.clear_comment like concat('%',#{clearComment},'%')
+            </if>
+            <if test="articleIds != null ">
+                and c.article_id IN
+                <foreach collection="articleIds" index="index" item="articleId" open="(" separator="," close=")">
+                    #{articleId}
+                </foreach>
+            </if>
+            <if test="enable != null">
+                and c.enable = #{enable}
+            </if>
+        </where>
+    </select>
+
+    <select id="findLatestComment" resultType="me.wuwenbin.noteblogv5.model.bo.CommentBo">
+        select c.*, u.avatar, u.nickname, a.title, a.id as article_id
+        from nb_comment c
+                 left join nb_article a on a.id = c.article_id
+                 left join nb_user u on u.id = c.user_id
+        order by c.post desc
+        limit 1
+    </select>
+
+    <select id="findTodayComment" resultType="long">
+        SELECT count(1)
+        FROM nb_comment
+        WHERE DATE_FORMAT(post, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+    </select>
+
+    <select id="findReplyPage" resultType="me.wuwenbin.noteblogv5.model.bo.ReplyBo">
+        SELECT a.id                                                            AS article_id,
+               c.id                                                            AS floorId,
+               DATE_FORMAT(c.post, '%Y-%m-%d %H:%i:%s')                        AS reply_time,
+               a.title,
+               u.nickname                                                      AS user_desc,
+               SUBSTR(c.clear_comment FROM (LOCATE(':', c.clear_comment) + 1)) AS reply_content
+        FROM nb_comment c
+                 LEFT JOIN nb_article a ON a.id = c.article_id
+                 LEFT JOIN nb_user u ON u.id = c.user_id
+        WHERE c.reply_id IN (SELECT cc.id FROM nb_comment cc WHERE cc.user_id = #{userId})
+          AND c.user_id != #{userId}
+        ORDER BY reply_time DESC
+    </select>
+
+    <select id="findMaxFloorByArticleId" resultType="int">
+        select floor
+        from nb_comment
+        where article_id = #{articleId}
+        order by floor desc
+        limit 1
+    </select>
+</mapper>

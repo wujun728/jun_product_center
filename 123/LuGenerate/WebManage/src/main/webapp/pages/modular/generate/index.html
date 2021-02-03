@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>合肥信息技术服务有限公司</title>
+    <link rel="stylesheet" href="/assets/common/layui/css/layui.css"/>
+</head>
+<body>
+·
+<div  class="layui-fluid">
+
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <a href="javascript:{window.open('/jdzfgl/router')}" style="color: red">首页</a>
+                        &nbsp;/&nbsp;
+                    </div>
+                    <div class="layui-card-body" style="height: 100%;">
+                        <table class="layui-table" lay-size="sm" style="width: 40%">
+                            <colgroup>
+                                <col width="300">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>系统监控</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><a href="javascript:{window.open('/manager/status')}">模块构建</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/druid/jdwlgz')}">数据源监控</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/autoconfig')}">所有自动配置信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/auditevents')}">审计事件</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/beans')}">所有beans的信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/configprops')}">所有配置属性</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/dump')}">线程状态信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/env')}">当前环境信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/health')}">应用健康状况</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/info')}">当前应用信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/metrics')}">应用的各项指标</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/mappings')}">应用@RequestMapping映射路径</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/trace')}">追踪信息(最新的http请求)</a></td>
+                            </tr>
+
+                        </table >
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+
+<script type="text/javascript" src="/assets/common/layui/layui.js"></script>
+<script>
+    // 以下代码是配置layui扩展模块的目录，每个页面都需要引入
+    layui.config({
+        base: '/assets/common/module/'
+    }).extend({
+    }).use(['admin', 'form', 'table'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+
+    });
+</script>
+
+
+</html>

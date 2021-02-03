@@ -1,0 +1,222 @@
+<html class=""><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>${systemName!}</title>
+    <link rel="stylesheet" href="${ctxPath}/assets/common/layui/css/layui.css">
+    <!--其他插件css-->
+    <link id="layuicss-layer" rel="stylesheet" href="${ctxPath}/assets/common/layui/css/modules/layer/default/layer.css?v=3.1.1" media="all"></head>
+
+<body>
+
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">生成策略配置</div>
+                <div class="layui-card-body" style="height: 85%;">
+                    <form class="layui-form" style="margin-left: -30px;">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">项目名</label>
+                            <div class="layui-input-block">
+                                <input value="LuBoot" type="text" name="project" placeholder="可输入项目名" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">包路径<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input value="com.lu.manage.modular" type="text" name="packagePath" placeholder="请输入包路径" autocomplete="off" class="layui-input" required>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">模块名<span style="color: red;">*</span></label>
+                            <div class="layui-input-block">
+                                <input value="system" type="text" name="module" placeholder="请输入模块名" autocomplete="off" class="layui-input" required>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">作者</label>
+                            <div class="layui-input-block">
+                                <input value="zhanglu" type="text" name="author" placeholder="可输入作者" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">表前缀</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="prefix" placeholder="请输入表前缀" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="margin-left: 50%;">
+                            <div class="layui-input-block layui-btn-group">
+                                <button class="layui-btn layui-btn-sm layui-btn-primary" type="button" >取消</button>
+                                <button class="layui-btn layui-btn-sm" type="button" lay-submit lay-filter="execute">确认</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">数据库表信息</div>
+                <div class="layui-card-body" style="height: 85%;">
+                    <form class="layui-form" style="margin-left: -30px;">
+                        <div class="layui-form layui-form-item">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">驱动</label>
+                                <div class="layui-input-block">
+                                    <input value="${driver!}" type="text" id="driver" placeholder="数据源驱动" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">url<span style="color: red;">*</span></label>
+                                <div class="layui-input-block">
+                                    <input value="jdbc:mysql://127.0.0.1:3306/lu_boot?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT"
+                                           type="text" id="url" placeholder="数据源url" autocomplete="off" class="layui-input" required>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">用户名<span style="color: red;">*</span></label>
+                                    <div class="layui-input-block">
+                                        <input value="root" type="text" id="username" placeholder="数据源用户名" autocomplete="off" class="layui-input" required>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">密码</label>
+                                    <div class="layui-input-block">
+                                        <input value="111111" type="text" id="password" placeholder="数据源密码" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <div class="layui-input-block layui-btn-group">
+                                        <button class="layui-btn layui-btn-sm layui-btn-primary" type="button" id="checkConnection" >检查</button>
+                                        <button class="layui-btn layui-btn-sm" type="button" id="getTableInfoTable">获取</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table class="layui-table" id="codeTable" lay-filter="codeTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="${ctxPath}/assets/common/layui/layui.js"></script>
+<script>
+
+    // 以下代码是配置layui扩展模块的目录，每个页面都需要引入
+    layui.use(['form', 'table'], function () {
+        var $ = layui.$;
+        var form = layui.form;
+        var table = layui.table;
+        var layer = layui.layer;
+
+        $("#checkConnection").click(function () {
+            checkConnection($("#driver").val(), $("#url").val(), $("#username").val(), $("#password").val());
+        });
+
+        $("#getTableInfoTable").click(function () {
+            getTableInfoTable($("#driver").val(), $("#url").val(), $("#username").val(), $("#password").val());
+        });
+
+        var loadIndex;
+        function checkConnection(driver, url ,username, password) {
+            $.ajax({
+                url: '/generate/modular/check?driver=' + driver + '&url=' + url + '&username=' + username + '&password=' + password,
+                type: 'get',
+                async: true,
+                dataType: "json",
+                beforeSend:function(){
+                    loadIndex = layer.load(2, {
+                        shade: [0.3, 'gray'] //0.5透明度的灰色背景
+                        , content: "正在连接数据源，请稍等..."
+                        ,success: function(layero){
+                            layero.find('.layui-layer-content.layui-layer-loading2').css({
+                                'padding-top': '39px',
+                                'width': '200px',
+                                'margin-left': '8%',
+                                'margin-top': '-30%'
+                            });
+                        }
+                    });
+                },
+                success:function (res) {
+                    layer.close(loadIndex);
+                    if(res.code == 0){
+                        layer.msg('连接成功！', {icon: 1});
+                    }else {
+                        layer.msg('连接成功！' + res.message, {icon: 2});
+                    }
+                }
+            });
+        }
+
+        //查数据库表信息
+        function getTableInfoTable(driver, url ,username, password) {
+            //渲染表格
+            table.render({
+                elem: '#codeTable'
+                ,url: '/generate/modular/get?driver=' + driver + '&url=' + url + '&username=' + username + '&password=' + password
+                ,height: 'full-200'
+                ,cols: [[
+                    {type:'checkbox', },
+                    {title: '表名称', field: 'name', align:'left', width: '25%', sort:true},
+                    {title: '表注释', field: 'comment', align:'left', width: '30%'},
+                    {title: '表字段', field: 'fieldNames', align:'left', width: '40%'}
+                ]]
+                ,done: function (res, curr, count) {
+                    $(".layui-table-cell .layui-form-checkbox[lay-skin=primary]").css({'top': '1px'});
+                }
+                ,size: 'sm' //小尺寸的表格
+                ,id: 'codeTable'
+            });
+        }
+
+        form.on('submit(execute)', function(data){
+            var codeStrategyData = data.field;
+            var checkStatus = table.checkStatus("codeTable");
+            var checkData = checkStatus.data;
+            if(checkData == null || checkData.length == 0){
+                layer.msg("请至少选择一张表!");
+            }
+            var tableNames = [];
+            $.each(checkData, function (index, d) {
+                tableNames.push(d.name);
+            });
+            codeStrategyData.tableNames = tableNames;
+
+            var datasourceData = {
+                driver: $("#driver").val(),
+                url: $("#url").val(),
+                username: $("#username").val(),
+                password: $("#password").val(),
+            };
+
+            var a = document.createElement('a');//创建a标签
+            a.href = '/generate/modular/execute?&codeStrategyData=' + encodeURIComponent(JSON.stringify(codeStrategyData)) + '&datasourceData=' + encodeURIComponent(JSON.stringify(datasourceData))
+            a.click();
+
+            // $.ajax({
+            //     url: "/generate/code/execute",
+            //     data: {data: JSON.stringify(data), datasourceId: $("#dataSourceId").val()},
+            //     async: false,
+            //     type: 'post',
+            //     dataType: "json",
+            //     success:function (res) {
+            //         if(res.code == 0){
+            //             layer.msg('执行成功！', {icon: 1});
+            //         }else {
+            //             layer.msg(res.message, {icon: 2});
+            //         }
+            //     }
+            // });
+            return false;
+        });
+
+
+    });
+
+</script>

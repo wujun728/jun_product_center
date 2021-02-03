@@ -1,0 +1,161 @@
+/** Created By Wuwenbin https://wuwenbin.me
+ * mail to wuwenbinwork@163.com
+ * 欢迎加入我们，QQ群：697053454
+ * if you use the code,  please do not delete the comment
+ * 如果您使用了此代码，请勿删除此头部注释
+ * */
+.article-detail .article-title {
+    font-family: "PT Sans Caption", "Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif !important;
+    font-size: 21px;
+    color: #222;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.8;
+    text-align: center;
+}
+
+.article-detail .zhuanzai {
+    padding: 5px;
+    font-weight: lighter;
+    font-size: 12px;
+    background-color: #F44336;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    line-height: 12px;
+}
+
+.article-detail .yuanchuang {
+    padding: 5px;
+    font-weight: lighter;
+    font-size: 12px;
+    background-color: rgb(255, 168, 0);
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    line-height: 12px;
+}
+
+.article-detail {
+    margin-bottom: 30px;
+}
+
+.article-detail .layui-card-body.article-content {
+    padding: 30px;
+    word-break: break-word;
+    overflow: hidden;
+}
+
+.article-detail .article-meta {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.article-detail .article-meta > span {
+    margin-right: 15px;
+}
+
+div.hide-article-box {
+    width: 100%;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), color-stop(70%, #fff));
+    background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.39) 0%, #fff 70%);
+    padding-bottom: 26px;
+}
+
+.hide-article-pos {
+    position: relative;
+    z-index: 1998;
+    padding-top: 160px;
+    bottom: 2px;
+    margin-top: -200px;
+}
+
+.qrcode img:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .8);
+}
+
+.top-title > h2 {
+    font-weight: bolder;
+}
+
+.top0 {
+    top: 0 !important;
+    transition: .5s ease all;
+    -moz-transition: .5s ease all; /* Firefox 4 */
+    -webkit-transition: .5s ease all; /* Safari 和 Chrome */
+    -o-transition: .5s ease all; /* Opera */
+}
+
+.top-title {
+    position: fixed;
+    left: 0;
+    top: -62px;
+    width: 100% !important;
+    background-color: #ffffff;
+    line-height: 45px !important;
+    text-align: center;
+    -webkit-box-shadow: 0 1px 3px rgba(26, 26, 26, .15);
+    -moz-box-shadow: 0 1px 3px rgba(26, 26, 26, .15);
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.15);
+    z-index: 9999;
+    font-family: "Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif;
+    transition: .5s ease all;
+    -moz-transition: .5s ease all; /* Firefox 4 */
+    -webkit-transition: .5s ease all; /* Safari 和 Chrome */
+    -o-transition: .5s ease all; /* Opera */
+}
+
+.article-detail .content * {
+    max-width: 100%;
+    height: auto;
+}
+
+.layui-textarea.comment {
+    min-height: 40px;
+    height: 40px;
+    line-height: 20px;
+    padding: 10px 10px;
+    resize: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.layui-user-avatar {
+    text-align: center;
+    line-height: 40px;
+}
+
+.layui-user-avatar img {
+    width: 40px;
+    border: 1px solid #c0c4cc;
+    cursor: pointer;
+}
+
+.layui-row.comment-html {
+    margin-top: 20px;
+    border-bottom: 1px dotted #cccccc;
+    padding-bottom: 10px;
+}
+
+.comment-content {
+    line-height: 20px;
+    padding-top: 10px;
+}
+
+.reply {
+    color: #1E9FFF;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+blockquote[data-htype] a {
+    cursor: pointer;
+}
+
+.article-detail img:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0 1px 3px rgb(26, 26, 26);
+    -moz-box-shadow: 0 1px 3px rgba(26, 26, 26);
+    box-shadow: 0 1px 3px rgba(26, 26, 26);
+}

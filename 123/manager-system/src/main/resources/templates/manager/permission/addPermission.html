@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>添加权限</title>
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+</head>
+<body>
+<div class="layui-form" lay-filter="layuiadmin-form-admin" id="layuiadmin-form-admin" style="padding: 20px 30px 0 0;">
+    <input type="hidden" name="id" th:if="${treeMenu}" th:value="${treeMenu.id}">
+    <input type="hidden" name="pid" th:if="${pid}" th:value="${pid}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-inline">
+            <input th:value="${treeMenu != null}?${treeMenu.name}:''" type="text" name="name" lay-verify="required" placeholder="请输入名称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-inline">
+            <input th:if="${treeMenu != null && treeMenu.url != '-1'}" th:value="${treeMenu.url}" type="text" name="url" lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+            <input th:if="${treeMenu != null && treeMenu.url == '-1'}"  type="text" name="url" value="-1" placeholder="根目录无需地址" autocomplete="off" class="layui-input layui-disabled" disabled>
+            <input th:if="${treeMenu == null}" type="text" name="url" lay-verify="required" placeholder="请输入地址" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <th:block th:if="${treeMenu != null && treeMenu.url == '-1'}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-inline">
+                <select lay-filter="icon" name="icon" class="select">
+                    <option th:each="icon : ${session.icon}" th:value="${icon.url}" th:text="${icon.url}" th:selected="${icon.url==treeMenu.icon}?true:false"> </option>
+                </select>
+            </div>
+            <i id="icon" style="margin-top: 13px" th:attr="Class=| fa ${treeMenu.icon} |"></i>
+        </div>
+    </th:block>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button th:text="${treeMenu != null}?'立即修改':'立即添加'" class="layui-btn" lay-submit="" lay-filter="addpermission">立即添加</button>
+            <button th:if="${treeMenu == null}" type="reset" id="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/layuiadmin/layui/layui.js}"></script>
+<script>
+
+    layui.use(['form','jquery'], function () {
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.on('submit(addpermission)',function (data) {
+            $.ajax({
+                url:'/manager/addPermission',
+                data:data.field,
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+                    if (data.success){
+                        layer.msg(data.message);
+                        layer.alert(data.message,function(){
+                            window.parent.location.reload();//刷新父页面
+                            parent.layer.close(index);//关闭弹出层
+                        });
+                    }else{
+                        layer.msg(data.message);
+                    }
+                }
+            });
+            return false;
+        })
+
+        //重置
+        $("#reset").click(function () {
+            $("input").val("");
+        })
+
+        form.on('select(icon)', function(data){
+            $("#icon").removeClass();
+            $("#icon").addClass("fa").addClass(data.value);
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

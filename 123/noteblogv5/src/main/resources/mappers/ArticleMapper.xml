@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.wuwenbin.noteblogv5.mapper.ArticleMapper">
+
+    <update id="updateTopsByTop">
+        update nb_article a
+        set a.top = a.top - 1
+        where a.top > #{currentTop}
+    </update>
+
+    <select id="selectMaxTop" resultType="int">
+        select max(top)
+        from nb_article
+    </select>
+
+    <select id="sumArticleWords" resultType="long">
+        select sum(if(text_content is null, 0, length(text_content)))
+        from nb_article;
+    </select>
+
+    <select id="findRandomArticles" resultType="me.wuwenbin.noteblogv5.model.entity.Article">
+        select *
+        from nb_article
+        WHERE draft = 0
+        ORDER BY rand()
+        LIMIT #{limit}
+    </select>
+
+    <update id="updateViewsById">
+        UPDATE nb_article a
+        SET a.views = a.views + 1
+        WHERE a.id = #{articleId}
+    </update>
+
+    <update id="updateApproveCntById">
+        update nb_article
+        set approve_cnt = approve_cnt + 1
+        where id = #{articleId}
+    </update>
+
+    <select id="findIndexArticlePage" resultType="me.wuwenbin.noteblogv5.model.entity.Article">
+        select *
+        from nb_article a
+        where a.draft != 1
+        <if test="title !=null and title != ''">
+            and a.title like concat('%',#{title},'%')
+        </if>
+        and a.id in
+        (select rac.article_id from refer_article_cate rac where rac.cate_id in
+        <foreach collection="cateIds" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+    <select id="findAdminArticlePage" resultType="me.wuwenbin.noteblogv5.model.entity.Article">
+        select *
+        from nb_article a
+        where a.draft !=1
+        <if test="title !=null and title != ''">
+            and a.title like concat('%',#{title},'%')
+        </if>
+        and a.id not in(
+        select rac.article_id from refer_article_cate rac where rac.cate_id = #{productCateId}
+        );
+    </select>
+
+</mapper>

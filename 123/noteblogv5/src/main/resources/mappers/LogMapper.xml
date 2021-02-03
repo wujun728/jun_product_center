@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.wuwenbin.noteblogv5.mapper.LogMapper">
+
+    <select id="ipSummary" resultType="me.wuwenbin.noteblogv5.model.bo.EchartsBo">
+        SELECT ip_info AS name, COUNT(*) AS value
+        FROM nb_log
+        WHERE ip_info != '未知'
+          AND ip_info != ''
+        GROUP BY ip_info
+        LIMIT 10
+    </select>
+
+    <select id="urlSummary" resultType="me.wuwenbin.noteblogv5.model.bo.EchartsUrlBo">
+        SELECT DATE_FORMAT(l.time, '%Y-%m-%d') as item, COUNT(*) as cnt
+        FROM nb_log l
+        WHERE DATE_FORMAT(l.time, '%Y-%m-%d') >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+          AND l.url NOT LIKE CONCAT('%', '/management/', '%')
+          AND l.url NOT LIKE CONCAT('%', '/upfiles/', '%')
+        GROUP BY DATE_FORMAT(l.time, '%Y-%m-%d')
+        ORDER BY l.time DESC
+    </select>
+
+    <select id="browserSummary" resultType="me.wuwenbin.noteblogv5.model.bo.EchartsBo">
+        SELECT browser AS name, COUNT(1) as value
+        FROM nb_log
+        WHERE browser != 'Unknown'
+        GROUP BY browser
+    </select>
+
+    <select id="todayVisit" resultType="long">
+        select count(1)
+        from nb_log l
+        where DATE_FORMAT(l.time, '%Y-%m-%d') = DATE_FORMAT(curdate(), '%Y-%m-%d')
+    </select>
+
+    <delete id="removeLogBeyondMonth">
+        delete
+        from nb_log
+        where TIMESTAMPDIFF(DAY, time, DATE_FORMAT(NOW(), '%Y-%m-%d')) >= 31
+    </delete>
+
+</mapper>

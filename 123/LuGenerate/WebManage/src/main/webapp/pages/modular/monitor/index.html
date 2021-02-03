@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>${systemName!}</title>
+    <link rel="stylesheet" href="/assets/common/layui/css/layui.css"/>
+</head>
+<body>
+·
+<div  class="layui-fluid">
+
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <a href="javascript:{window.open('/jdzfgl/router')}" style="color: red">首页</a>
+                        &nbsp;/&nbsp;
+                    </div>
+                    <div class="layui-card-body" style="height: 100%;">
+                        <table class="layui-table" lay-size="sm" style="width: 40%">
+                            <colgroup>
+                                <col width="300">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>系统监控</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><a href="javascript:{window.open('/generate/modular')}">模块构建</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/generate/project')}">项目构建</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('/druid/jdwlgz')}">数据源监控</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/beans')}">所有beans的信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/caches')}">所有缓存信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/health')}">应用健康状况</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/info')}">当前应用信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/conditions')}">应用条件加载信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/configprops')}">所有配置属性</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/env')}">当前环境信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/loggers')}">所有日志信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/heapdump')}">堆转储信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/threaddump')}">线程转储信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/metrics')}">应用的各项指标</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/scheduledtasks')}">定时任务信息</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="javascript:{window.open('${monitorUrl!}/mappings')}">应用RequestMapping映射路径</a></td>
+                            </tr>
+                        </table >
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+
+<script type="text/javascript" src="/assets/common/layui/layui.js"></script>
+<script>
+    // 以下代码是配置layui扩展模块的目录，每个页面都需要引入
+    layui.config({
+        base: '/assets/common/module/'
+    }).extend({
+    }).use(['admin', 'form', 'table'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+
+    });
+</script>
+
+
+</html>

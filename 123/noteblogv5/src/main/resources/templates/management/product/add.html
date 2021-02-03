@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/formSelects-v4.css" media="all">
+    <style>
+        input[disabled] {
+            color: #cccccc;
+            background-color: rgba(194, 194, 194, 0.3);
+        }
+
+        .ke-container .ke-toolbar .ke-separator {
+            height: 20px !important;
+            margin: 8px 3px !important;
+        }
+
+        .ke-icon-hide4comment, .ke-icon-hide4login, .ke-icon-hide4purchase, .ke-icon-br {
+            width: 16px;
+            height: 16px;
+        }
+
+        .ke-icon-hide4comment {
+            background-image: url(/static/plugins/nkeditor/plugins/hide4comment/comment.png) !important;
+        }
+
+        .ke-icon-hide4login {
+            background-image: url(/static/plugins/nkeditor/plugins/hide4login/login.png) !important;
+        }
+
+        .ke-icon-hide4purchase {
+            background-image: url(/static/plugins/nkeditor/plugins/hide4purchase/purchase.png) !important;
+        }
+
+        .ke-icon-br {
+            background-image: url(/static/plugins/nkeditor/plugins/br/br.png) !important;
+        }
+
+        .layui-form-radio {
+            margin-top: 0 !important;
+        }
+    </style>
+</head>
+<body onscroll="isTop(this);">
+<div class="layui-fluid layui-anim layui-anim-upbit" id="LAY-product-add" style="padding-bottom: 50px;">
+    <div class="layui-row layui-col-space20 layui-form">
+        <div class="layui-col-md9">
+            <input type="hidden" name="generateNextArticleId" th:value="${generateNextArticleId}">
+            <div class="layui-card">
+                <div class="layui-card-header">标题和链接</div>
+                <div class="layui-card-body" style="padding-top: 25px;">
+                    <div class="layui-form-item">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入文章标题，不超过36个字符"
+                               maxlength="36" minlength="1"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-item layui-row layui-col-space20">
+                        <div class="layui-col-md10">
+                            <input type="text" name="urlSeq" disabled
+                                   placeholder="自定义文章链接，例如：/my-first-blog，支持系统生成的链接和自定义链接两个同时访问"
+                                   lay-filter="urlSeq" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-col-md2">
+                            <input type="checkbox" name="" title="自定义链接" lay-skin="primary" lay-filter="customUrl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">内容编辑</div>
+                <div class="layui-card-body">
+                    <div id="product-content-editor" style="max-width: 1366px;">
+                        <textarea id="product-editor" placeholder="输入内容" style="display: none;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3" id="right-card">
+            <div class="layui-card">
+                <div class="layui-card-header">分类（不超过3个）
+                    <a id="refreshProductCate" style="cursor:pointer;"><i class="fa fa-refresh"></i></a>
+                    <a lay-href="/management/dict/catetag" style="color: red;float:right;">新增字典</a>
+                </div>
+                <div class="layui-card-body">
+                    <label>
+                        <select name="cateId" xm-select="cateId" xm-select-search="" xm-select-max="3">
+                            <option value="">请选择分类，可多选</option>
+                            <option th:each="cate : ${cateList}"
+                                    th:value="${cate.id}"
+                                    th:text="${cate.name}"></option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    <p><span>封面</span>
+                        <button id="addRemoveCover" style="float: right;display: inline-block;margin-top: 10px;"
+                                class="layui-btn layui-btn-xs layui-btn-primary"><i class="fa fa-times"></i>
+                        </button>
+                    </p>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-upload-drag" id="productCoverImg"
+                         style="padding: 20px 5px 5px 5px;height: 120px;width: 100%;">
+                        <i class="layui-icon"></i>
+                        <p>点击上传博文封面，或将封面拖拽到此处</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    标签
+                </div>
+                <div class="layui-card-body">
+                    <div class="tags" id="tags">
+                        <input type="text" name="" id="inputTags" placeholder="输入标签名称，回车生成标签"
+                               autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">摘要</div>
+                <div class="layui-card-body">
+                    <textarea name="summary" placeholder="不填写摘要则系统自动生成" class="layui-textarea"
+                              style="min-height: 300px;"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">商品设置</div>
+                <div class="layui-card-body">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">评论</label>
+                        <div class="layui-inline">
+                            <input type="checkbox" name="commented" value="true" lay-skin="switch"
+                                   lay-text="开启|关闭"
+                                   title="评论">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-inline">
+                            <input type="hidden" name="appreciable" value="false">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-inline">
+                            <input type="hidden" name="reprinted" value="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">撰写完成</div>
+                <div class="layui-card-body">
+                    <button class="layui-btn" lay-submit lay-filter="postProductSubmit">立即发布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="/static/plugins/nkeditor/NKeditor-all-min.js"></script>
+<script src="/static/plugins/wangEditor/wangEditor.min.js"></script>
+<script src="/static/plugins/nkeditor/libs/JDialog/JDialog.min.js"></script>
+<script src="/static/assets/js/noteblogv5.js"></script>
+<script th:inline="javascript">
+    var generateNextArticleId = [[${generateNextArticleId}]];
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , formSelects: 'formSelects-v4'
+    }).use(['index', 'product_add', 'formSelects', 'inputTags']);
+
+    KindEditor.lang({
+        hide4comment: '回复可见',
+        hide4login: '登录可见',
+        hide4purchase: '购买可见',
+        br: '换行'
+    });
+
+
+    function isTop(iframeBody) {
+        var stop = $(iframeBody).scrollTop();
+        if (stop > 0) {
+            $("i[name=fullscreen]").parents("li").hide();
+        } else {
+            $("i[name=fullscreen]").parents("li").show();
+        }
+    }
+</script>
+</body>
+</html>

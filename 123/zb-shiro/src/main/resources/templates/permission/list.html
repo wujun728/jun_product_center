@@ -1,0 +1,395 @@
+<section class="content-header">
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+        <li><a href="#">权限管理</a></li>
+        <li class="active">资源管理</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="jax-box jax-box-table">
+        <div id="toolbar" class="btn-group grid-table-toolbar">
+            <shiro:hasPermission name="permission:add">
+            <button id="btn_add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#permissionModal">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            </shiro:hasPermission>
+        </div>
+        <!--<table id="table"></table>-->
+        <table id="menuTable" data-mobile-responsive="true" data-click-to-select="true">
+            <thead>
+            <tr>
+                <th data-field="selectItem" data-checkbox="true"></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <!-- 用户新增模态框 -->
+    <div id="permissionModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增权限</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form class="form-horizontal" id="permissionForm">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">类型 :</label>
+                                    <div class="col-sm-8">
+                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="0" id="type-category"> 目录</label>
+                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="1" checked="checked" id="type-menu"> 菜单</label>
+                                        <label class="radio-inline pr-5"><input type="radio" name="type" value="2" id="type-btn"> 按钮</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">资源名称 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="name" id="name" require="必填项"  placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">上级资源 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control cursor-pointer" id="parentMenu" value="顶层菜单" onclick="showMenu(1)" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group menuFlag btnFlag">
+                                    <label class="col-sm-3 control-label">资源url :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control menuFlag btnFlag"  name="url" id="url" require="必填项" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group menuFlag btnFlag">
+                                    <label class="col-sm-3 control-label">权限标识 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control menuFlag btnFlag"  name="perms" id="perms" require="必填项" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group menuFlag catalogFlag">
+                                    <label class="col-sm-3 control-label">排序 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control menuFlag catalogFlag"  name="orderNum" id="orderNum" require="必填项" max="3" plusinteger="" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group menuFlag catalogFlag">
+                                    <label class="col-sm-3 control-label">图标 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control menuFlag catalogFlag"  name="icon"  id="icon" require="必填项" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">描述 :</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control"  name="description" id="description" placeholder="">
+                                    </div>
+                                </div>
+                                <input type="hidden" class="form-control" id="parentId" name="parentId" value="0">
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <div class="pull-right">
+                                    <button type="button" id="savePermission" class="btn btn-info" >确定</button>
+                                    <button type="button" data-dismiss="modal" class="btn btn-default">取消</button>
+                                </div>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <!-- 资源详情modal -->
+    <div id="permissionDetailModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">资源信息</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="permissionOpenWindow">
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div id="menuLayer" style="display: none;padding-left: 20px;">
+        <ul id="permissionTree" class="ztree"></ul>
+    </div>
+</section>
+<script>
+    var editFlag = "[[${@perms.hasPerm('permission:edit')}]]";
+    var deleteFlag = "[[${@perms.hasPerm('permission:delete')}]]";
+    var menuType="1";/*默认选中菜单类型*/
+    var menuCheckedType=0;/*选中的上级的菜单类型*/
+    var detailMenuCheckedType;/*详情中选中的上级的菜单类型*/
+    var Menu = {
+        id: "menuTable",
+        table: null,
+        layerIndex: -1
+    };
+
+    /**
+     * 初始化表格的列
+     */
+    Menu.initColumn = function () {
+        var columns = [
+            {
+                field: 'selectItem',
+                radio: true
+            },
+            {
+                title: '菜单名称',
+                field: 'name',
+                align: 'left',
+            },
+            {title: '菜单URL',
+                field: 'url',
+                align: 'left',
+            },
+            {title: '权限标识',
+                field: 'perms',
+                align: 'center',
+            },
+            {
+                title: '类型',
+                field: 'type',
+                align: 'center',
+                width: '60px',
+                formatter:function(row,index){
+                    switch (row.type){
+                        case 0 : return '<span class="label label-primary">目录</span>';
+                        case 1 : return '<span class="label label-success">菜单</span>';
+                        case 2 : return '<span class="label label-warning">按钮</span>';
+                    }
+                }
+            },
+            {
+                title: '图标',
+                field: 'icon',
+                align: 'center',
+                width: '60px',
+                formatter:function(row,index){
+                    if(row.type!=2){
+                        return '<i class="'+row.icon+' fa-lg"></i>';
+                    }else{
+                        return "";
+                    }
+                }
+            },
+            {
+                title: '排序',
+                field: 'orderNum',
+                align: 'center',
+                width: '60px'
+            },
+            {
+                title: '权限描述',
+                field: 'description',
+                align: 'left',
+            },
+            {
+                field : 'operation',
+                title : '操作',
+                align : "center",
+                formatter : function(row, index) {
+                    var edit = editFlag=="true"  ?  '<a class="table-btn table-btn-info" href="javascript:void(0)" onclick="editPermission('+row.permissionId+')">编辑</a>' : '';
+                    var del = deleteFlag=="true"  ?  '<a  class="table-btn table-btn-danger" href="javascript:void(0)" onclick="deletePermission('+row.permissionId+')">删除</a>' : '';
+                    return edit + del;
+                }
+            }]
+        return columns;
+    };
+    /*编辑权限*/
+    function editPermission(permissionId) {
+        Core.load("#permissionOpenWindow","/permission/edit?permissionId="+permissionId, function(){
+            $("#permissionDetailModal").modal("show");
+        },2);
+    }
+    /*删除权限*/
+    function deletePermission(permissionId) {
+        Core.confirm("确认删除该权限？",function () {
+            Core.postAjax('/permission/delete',{"permissionId":permissionId},function (data) {
+                if(data.status==200){
+                    Menu.table.refresh();
+                }
+                layer.msg(data.msg);
+            });
+        })
+    }
+    /*加载权限列表*/
+    $(function () {
+        var colunms = Menu.initColumn();
+        var table = new TreeTable(Menu.id, "/permission/list", colunms,"permissionId");
+        table.setExpandColumn(1);
+        table.setIdField("permissionId");
+        table.setCodeField("id");
+        table.setParentCodeField("parentId");
+        /*table.setExpandAll(true);*/
+        table.setStriped(false);
+        table.init();
+        Menu.table = table;
+    });
+
+    $(function () {
+        $("#btn_add").on("click",function () {
+            var selections = getSelections();
+            if(selections.length==0||selections[0].type==2){
+                $("#type-menu").click();
+                $("#parentMenu").val("顶层菜单");
+                $("#parentId").val(0);
+                $(".menuFlag").show();
+                menuType="1";
+                menuCheckedType=0;
+            }else{
+                var parentMenuData=selections[0];
+                menuCheckedType=parentMenuData.type;
+                $("#parentMenu").val(parentMenuData.name);
+                $("#parentId").val(parentMenuData.id);
+                if(parentMenuData.type==0){
+                    $("#type-menu").click();
+                    menuType="1";
+                    $(".menuFlag").show();
+                }else if(parentMenuData.type==1){
+                    $("#type-btn").click();
+                    menuType="2";
+                    $(".menuFlag").hide();
+                    $(".btnFlag").show();
+                }
+
+            }
+
+        })
+        
+        /*类型选择事件*/
+        $('input:radio[name="type"]').on("click",function(){
+            initPermissionForm();
+            Core.clearError("#permissionForm");
+            menuType = $('input:radio[name="type"]:checked').val();
+            if(menuType=="0"){
+                $(".btnFlag").hide();
+                $(".menuFlag").hide();
+                $(".catalogFlag").show();
+            }
+            if(menuType=="1"){
+                $(".menuFlag").show();
+            }
+            if(menuType=="2"){
+                $(".catalogFlag").hide();
+                $(".menuFlag").hide();
+                $(".btnFlag").show();
+            }
+        })
+
+        /*新增权限保存事件*/
+        $("#savePermission").on("click",function(){
+            if((menuType=="0"||menuType=="1")&&menuCheckedType!=0){
+                layer.msg("上级资源只能是目录类型！",function(){})
+                return;
+            }else if(menuType=="2"&&menuCheckedType!=1){
+                layer.msg("上级资源只能是菜单类型！",function(){})
+                return;
+            }
+            if(doValidForm(permissionForm)){
+                if(menuType=="2"){
+                    $("#orderNum").val(0);
+                }
+                Core.mask("#savePermission");
+                Core.postAjax("/permission/add",$("#permissionForm").serialize(),function (data) {
+                    if(data.status==200){
+                        Core.unmask("#savePermission");
+                        $("#permissionModal").modal("hide");
+                        Menu.table.refresh();
+                    }
+                    layer.msg(data.msg);
+                });
+
+            }
+        })
+        /*新增权限modal框关闭后清空数据*/
+        $("#permissionModal").on('hidden.bs.modal',function(){
+            initPermissionForm();
+        })
+    })
+    
+    function  initPermissionForm() {
+        $("#name").val("");
+        $("#url").val("");
+        $("#perms").val("");
+        $("#orderNum").val("");
+        $("#icon").val("");
+        $("#description").val("");
+    }
+
+
+    function getSelections () {
+        var selected = $('#menuTable').bootstrapTreeTable('getSelections',{id:"permissionId"});
+        return selected;
+    }
+
+    /*选择上级菜单树*/
+    function showMenu(flag){
+        var ztree;
+        //树-初始化设置
+        var treeSetting = {
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "id",
+                    pIdKey: "parentId"
+                }
+            }
+        };
+        Core.postAjax('/permission/list',{flag:"2"},function (data) {
+            var topMenu = {
+                name:"顶层菜单",
+                id:0,
+                parentId:"",
+                type:0
+            }
+            data.unshift(topMenu);
+            $.each(data,function (i, item) {
+                item.open=true;
+            })
+            ztree=$.fn.zTree.init($("#permissionTree"), treeSetting, data);
+            layer.open({
+                type: 1,
+                offset: '50px',
+                skin: 'layui-layer-molv',
+                title: "选择菜单",
+                area: ['300px', '450px'],
+                /* shade: 0,
+                 shadeClose: false,*/
+                content: jQuery("#menuLayer"),
+                btn: ['确定', '取消'],
+                btn1: function (index) {
+                    var node = ztree.getSelectedNodes();
+                    if(node.length==0){
+                        layer.msg("请选择一个菜单！",function(){});
+                        return;
+                    }
+                    if(flag==1){
+                        menuCheckedType = node[0].type;
+                        //选择上级菜单
+                        $("#parentId").val(node[0].id);
+                        $("#parentMenu").val(node[0].name);
+                    }else if(flag==2){
+                        detailMenuCheckedType=node[0].type;
+                        //选择上级菜单
+                        $("#detailParentId").val(node[0].id);
+                        $("#detailParentMenu").val(node[0].name);
+                    }
+                    layer.close(index);
+                }
+            });
+        });
+    }
+
+
+</script>

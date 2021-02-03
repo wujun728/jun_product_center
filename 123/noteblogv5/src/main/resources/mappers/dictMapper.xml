@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.wuwenbin.noteblogv5.mapper.DictMapper">
+
+    <select id="findTagsTab" resultType="java.util.Map">
+        SELECT tt.id,
+               tt.`name`,
+               count(ttr.tag_id) AS cnt
+        FROM refer_article_tag ttr
+                 LEFT JOIN nb_dict tt ON tt.id = ttr.tag_id
+        GROUP BY ttr.tag_id
+        ORDER BY cnt DESC
+        LIMIT 30
+    </select>
+
+    <select id="findProductDict" resultType="me.wuwenbin.noteblogv5.model.entity.Dict">
+        select *
+        from nb_dict
+        where name = '商品'
+          and `group` = 'cate'
+        limit 1;
+    </select>
+</mapper>

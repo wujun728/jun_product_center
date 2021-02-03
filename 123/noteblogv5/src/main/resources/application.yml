@@ -1,0 +1,40 @@
+spring:
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+  profiles:
+    active: app
+  application:
+    name: NoteBlog
+  resources:
+    static-locations: classpath:/static/
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 20MB
+  cache:
+    #使用默认的ConcurrentMap
+    type: simple
+    cache-names: paramCache,defaultCache
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
+logging:
+  level:
+    me.wuwenbin.noteblogv5.mapper: DEBUG
+mybatis-plus:
+  global-config:
+    db-config:
+      table-prefix: nb_
+      id-type: auto
+  mapper-locations: classpath:/mappers/*.xml
+  type-enums-package: me.wuwenbin.noteblogv5.constant
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.extension.handlers.MybatisEnumTypeHandler
+server:
+  tomcat:
+    uri-encoding: UTF-8

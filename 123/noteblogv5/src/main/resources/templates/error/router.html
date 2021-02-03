@@ -1,0 +1,24 @@
+<div class="layui-container layui-anim layui-anim-upbit">
+    <div class="layadmin-tips" style="text-align: center;">
+        <i class="layui-icon layui-icon-face-surprised" style="font-size: 8rem;"></i>
+        <div class="layui-text" style="font-size: 20px;margin-bottom: 1rem;">
+            好像出错了呢
+        </div>
+        <div class="layui-container">
+            <!--/*@thymesVar id="status" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote layui-bg-white"><b>代码</b>：<span th:text="${status}"></span></blockquote>
+            <!--/*@thymesVar id="timestamp" type="java.time.LocalDateTime"*/-->
+            <blockquote class="layui-elem-quote"><b>时间</b>：<span
+                    th:text="${#dates.format(timestamp,'yyyy-MM-dd HH:mm:ss')}"></span></blockquote>
+            <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote layui-elip layui-bg-white"><b>错误</b>：<span th:text="${error}"></span>
+            </blockquote>
+            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote layui-elip"><b>信息</b>：<span style="color: #ff6464;font-weight: bold;"
+                                                                            th:text="${message eq null ? trace : message}"></span></blockquote>
+            <!--/*@thymesVar id="path" type="java.lang.String"*/-->
+            <blockquote class="layui-elem-quote layui-bg-white"><b>路径</b>：<span style="color: #FF5722;"
+                                                                                th:text="${path}"></span></blockquote>
+        </div>
+    </div>
+</div>

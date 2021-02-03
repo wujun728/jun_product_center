@@ -1,0 +1,90 @@
+/** Created By Wuwenbin https://wuwenbin.me
+ * mail to wuwenbinwork@163.com
+ * 欢迎加入我们，QQ群：697053454
+ * if you use the code,  please do not delete the comment
+ * 如果您使用了此代码，请勿删除此头部注释
+ * */
+.layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a {
+    background-color: #f44336cc !important
+}
+
+.left-nav > ul {
+    height: 600px !important;
+    padding-top: 15px !important;
+    width: 100% !important;
+    background-color: #fff !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .1) !important
+}
+
+.right-nav div.layui-card {
+    min-height: 600px !important
+}
+
+.layui-nav-tree .layui-nav-item a:hover {
+    background-color: #fff !important
+}
+
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-nav-itemed a.layui-this {
+    color: #f8f8f8 !important
+}
+
+.layui-nav .layui-nav-item a, .layui-nav .layui-this a {
+    color: #000 !important
+}
+
+.layui-nav-tree .layui-nav-item a:hover {
+    background-color: #f44336cc !important
+}
+
+#avatar {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+#recharge-dialog {
+    overflow: hidden;
+}
+
+#recharge-dialog .layui-tab-title {
+    border-bottom: none !important;
+}
+
+#recharge-dialog .layui-tab-title {
+    text-align: center;
+}
+
+#recharge-dialog .layui-tab-title > li:nth-child(2),
+#recharge-dialog .layui-tab-title > li:nth-child(3) {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#recharge-dialog .close-dialog {
+    display: inline-block;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+#recharge-dialog .avatar {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+#recharge-dialog .layui-container {
+    width: 100%;
+}
+
+#recharge-dialog .dialog-title {
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 25px;
+}
+
+.max-height450 {
+    max-height: 450px !important;
+}

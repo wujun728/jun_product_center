@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>sy.parent</groupId>
+	<artifactId>sy-parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>sy-parent</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<!-- 指定项目是JDK1.7版本 -->
+		<java-version>1.7</java-version>
+		<!--指定Maven用什么编码来读取源码及文档 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--指定Maven用什么编码来呈现 -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<!-- 配置一批maven仓库 -->
+	<repositories>
+		<repository>
+			<id>alfrescoRepository</id>
+			<url>https://maven.alfresco.com/nexus/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>intalioRepository</id>
+			<url>http://www.intalio.org/public/maven2/</url>
+		</repository>
+		<repository>
+			<id>javaRepository2</id>
+			<url>http://download.java.net/maven/2/</url>
+		</repository>
+		<repository>
+			<id>javaRepository1</id>
+			<url>http://download.java.net/maven/1/</url>
+		</repository>
+		<repository>
+			<id>artifactoryonlineRepository</id>
+			<url>http://gradle.artifactoryonline.com/gradle/libs/</url>
+		</repository>
+		<repository>
+			<id>jbossRepository2</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public-jboss</url>
+		</repository>
+		<repository>
+			<id>repoRepository</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>jbossRepository</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+		<repository>
+			<id>sonatypeRepository</id>
+			<url>http://repository.sonatype.org/content/groups/public/</url>
+		</repository>
+		<repository>
+			<id>ibiblioRepository</id>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/org/acegisecurity/</url>
+		</repository>
+		<repository>
+			<id>lbiblioRepository2</id>
+			<url>http://mirrors.ibiblio.org/maven2/</url>
+		</repository>
+		<!-- 使用oschina的maven仓库 -->
+		<repository>
+			<id>oschinaRepository</id>
+			<name>local private nexus</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- 插件仓库 -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repoPluginRepository</id>
+			<url>http://repo1.maven.org/maven2/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>jbossPluginRepository</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>sonatypePluginRepository</id>
+			<url>http://repository.sonatype.org/content/groups/public/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>ibiblioPluginRepository</id>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/org/acegisecurity/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>ibiblioPluginRepository2</id>
+			<url>http://mirrors.ibiblio.org/maven2/</url>
+		</pluginRepository>
+		<!-- 使用oschina的maven仓库 -->
+		<pluginRepository>
+			<id>oschinaPluginRepository</id>
+			<name>local private nexus</name>
+			<url>http://maven.oschina.net/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- 项目依赖配置 -->
+	<dependencies>
+
+		<!-- dependency标记的scope属性解释： -->
+		<!-- compile，缺省值，适用于所有阶段，会随着项目一起发布。 -->
+		<!-- provided，类似compile，期望JDK、容器或使用者会提供这个依赖。如servlet.jar。 -->
+		<!-- runtime，只在运行时使用，如JDBC驱动，适用运行和测试阶段。 -->
+		<!-- test，只在测试时使用，用于编译和运行测试代码。不会随项目发布。 -->
+		<!-- system，类似provided，需要显式提供包含依赖的jar，Maven不会在Repository中查找它。 -->
+
+		<!-- nutz,使用里面的一些工具类 -->
+		<dependency>
+			<groupId>org.nutz</groupId>
+			<artifactId>nutz</artifactId>
+			<version>1.b.51</version>
+		</dependency>
+
+		<!-- junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- 日志 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.8</version>
+		</dependency>
+
+		<!-- 一些常用工具类 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- 加密工具类 -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+
+		<!-- javamelody监控工具 -->
+		<dependency>
+			<groupId>net.bull.javamelody</groupId>
+			<artifactId>javamelody-core</artifactId>
+			<version>1.54.0</version>
+		</dependency>
+
+		<!-- web项目需要的jar -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.2.1-b03</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- jstl依赖包，jsp页面中引入<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>使用 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+
+		<!-- spring aop需要使用的jar -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.4</version>
+		</dependency>
+		<!-- spring mvc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+		<!-- spring orm -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+		<!-- spring test -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.1.3.RELEASE</version>
+		</dependency>
+
+		<!-- hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>4.3.7.Final</version>
+		</dependency>
+
+		<!-- mysql数据库驱动 -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.34</version>
+		</dependency>
+
+		<!-- H2数据库，用他做测试数据库比较方便，使用他的内存数据库模式 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.183</version>
+		</dependency>
+
+		<!-- 阿里巴巴数据源 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.0.11</version>
+		</dependency>
+
+		<!-- jackson工具类 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<version>2.5.0-rc1</version>
+		</dependency>
+
+		<!-- fastjson工具类 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
+		<!-- 文件操作需要用到的jar -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
+		<!-- java模板引擎 -->
+		<dependency>
+			<groupId>org.beetl</groupId>
+			<artifactId>beetl-core</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<finalName>sypro</finalName>
+
+		<plugins>
+			<!-- 编译的时候使用JDK7和UTF8编码 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+	<!-- 子模块配置 -->
+	<modules>
+		<module>sy-base</module>
+		<module>sy-web-demo</module>
+	</modules>
+
+</project>

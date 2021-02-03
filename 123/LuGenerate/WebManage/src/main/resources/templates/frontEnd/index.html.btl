@@ -1,0 +1,51 @@
+${flag}layout("/common/_container.html",{js:["/assets/modular/${modular}/${bizEnName}/index.js"]}){
+
+<div class="layui-body-header">
+    <span class="layui-body-header-title">${bizChName}管理</span>
+</div>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md12 layui-col-lg12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <input id="searchWords" class="layui-input" type="text" placeholder="搜索词"/>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="btnSearch" class="layui-btn icon-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="layui-table" id="${bizEnName}Table" lay-filter="${bizEnName}Table"></table>
+
+                    <script type="text/html" id="${bizEnName}TableToolbar">
+                        <div class="layui-btn-container">
+                            ${flag}if(shiro.hasPermission("/${modular}/${bizEnName}/toAdd")){
+                            <button class="layui-btn layui-btn-sm" lay-event="add"><i class="layui-icon layui-icon-add-circle"></i>添加</button>
+                            ${flag}}
+                            ${flag}if(shiro.hasPermission("/${modular}/${bizEnName}/delete")){
+                            <button class="layui-btn layui-btn-sm" lay-event="deleteBatch"><i class="layui-icon layui-icon-delete"></i>删除</button>
+                            ${flag}}
+                        </div>
+                    </script>
+
+                    <script type="text/html" id="task-table-toolbar">
+                        ${flag}if(shiro.hasPermission("/${modular}/${bizEnName}/toUpdate")){
+                        <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
+                        ${flag}}
+                        ${flag}if(shiro.hasPermission("/${modular}/${bizEnName}/delete")){
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                        ${flag}}
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+${flag}}

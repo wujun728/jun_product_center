@@ -1,0 +1,391 @@
+/** Created By Wuwenbin https://wuwenbin.me
+ * mail to wuwenbinwork@163.com
+ * 欢迎加入我们，QQ群：697053454
+ * if you use the code,  please do not delete the comment
+ * 如果您使用了此代码，请勿删除此头部注释
+ * */
+.logo, .logo:hover {
+    font-family: "Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif !important;
+    letter-spacing: .04em;
+    font-weight: lighter;
+}
+
+.logo + small {
+    display: none;
+    font-size: 12px;
+    margin-left: 10px;
+    letter-spacing: 3px;
+    color: #393D49;
+    cursor: text;
+    user-select: text;
+}
+
+.top-block {
+    margin-top: 90px;
+}
+
+
+.header.mini .nav-btn a {
+    margin-left: 5px !important;
+}
+
+.header.mini .nav-btn a > .layui-icon {
+    font-size: 18px !important;
+    font-weight: lighter !important;
+}
+
+.header.mini .right .layui-icon {
+    font-weight: bolder;
+}
+
+@media screen and (min-width: 996px) {
+    .logo + small {
+        display: inline-block;
+    }
+}
+
+/**
+col12
+ */
+#main-body .simple {
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.simple-article {
+    border-left: none;
+    padding-left: 2%;
+    padding-right: 2%;
+    background: inherit;
+}
+
+.simple-article .simple-article-cover {
+    width: 100%;
+    max-height: 150px;
+    display: block;
+    padding: 7px;
+    border: 1px solid #dedede;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .3);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.simple-article .article-title span {
+    margin-right: 5px;
+}
+
+.simple-article:not(:first-child) {
+    margin-top: 40px;
+}
+
+@media screen and (max-width: 425px) {
+    .simple-article:not(:first-child) {
+        margin-top: 10px;
+        border-top: 1px dashed #e3e3e3;
+    }
+
+    .simple-article {
+        height: 135px !important;
+    }
+}
+
+.layui-elem-quote.simple-article:hover {
+    border-left: 5px solid rgba(244, 67, 54, 1);
+    /*background-color: rgb(253, 253, 253);*/
+    /*transition: border-left-width .3s ease-in, .3s ease-out;*/
+    /*-moz-transition: border-left-width .3s ease-in, .3s ease-out;*/
+    /*-webkit-transition: border-left-width .3s ease-in, .3s ease-out;*/
+    box-shadow: 0 2px 5px rgba(26, 26, 26, 0.4);
+}
+
+.layui-elem-quote.simple-article {
+    /*border-left: 5px solid rgba(244, 67, 54, 1);*/
+    background-color: rgb(253, 253, 253);
+    transition: border-left-width .3s ease-in, .3s ease-out;
+    -moz-transition: border-left-width .3s ease-in, .3s ease-out;
+    -webkit-transition: border-left-width .3s ease-in, .3s ease-out;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.24);
+}
+
+.simple-article {
+    padding-bottom: 15px;
+    min-height: 155px;
+}
+
+.simple-article *:not(i), #article-list-col39 *:not(i) {
+    font-family: "Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif !important;
+}
+
+.simple-article .article-title {
+    font-size: 18px;
+    width: 100%;
+    display: inline;
+    font-weight: bolder;
+}
+
+.simple-article .article-title.sm {
+    display: none;
+}
+
+.simple-article .article-title a:hover {
+    color: #F44336;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    transition: color .2s ease, .3s ease;
+    -moz-transition: color .2s ease, .3s ease;
+    -webkit-transition: color .2s ease, .3s ease;
+}
+
+.simple-article .article-body {
+    margin-top: 10px;
+    color: #656D78;
+    font-size: 15px;
+    line-height: 32px;
+    word-wrap: break-word;
+    letter-spacing: .04em;
+}
+
+.simple-article .article-body.normal {
+    display: block;
+}
+
+.simple-article .article-body > a:hover {
+    color: #F44336;
+
+}
+
+.simple-article .article-body.sm {
+    display: none;
+}
+
+.simple-article .simple-date {
+    display: none;
+}
+
+.article-footer {
+    bottom: 10px;
+    display: inline-block;
+    color: #888;
+}
+
+.article-footer > span {
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 325px) {
+    blockquote.simple-article {
+        min-height: 155px !important;
+    }
+}
+
+@media screen and (min-width: 376px) and (max-width: 425px) {
+    .simple-article .article-body {
+        font-size: 14px !important;
+    }
+}
+
+@media screen and (min-width: 360px) and (max-width: 767px) {
+    blockquote.simple-article {
+        min-height: 145px !important;
+
+    }
+
+    .simple-article .article-body {
+        font-size: 14px !important;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    blockquote.simple-article {
+        min-height: 185px !important;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    #main-body .simple {
+        padding-top: 10px;
+    }
+
+    .simple-article .article-title {
+        font-size: 14px;
+    }
+
+    .simple-article .article-title.center-to-head {
+        display: none;
+    }
+
+    .simple-article .article-title.sm {
+        display: inline-block;
+    }
+
+    .simple-article .article-body {
+        margin-top: 5px;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .simple-article .article-body.sm {
+        display: block;
+    }
+
+    .simple-article .article-body.normal {
+        display: none;
+    }
+
+    .simple-article .detail-date {
+        display: none;
+    }
+
+    .simple-article .simple-date {
+        display: inline-block;
+    }
+
+    .simple-article .article-footer {
+        bottom: 5px;
+        font-size: 11px;
+    }
+}
+
+.card-media .card-line {
+    margin-top: 15px;
+}
+
+.card-media .nbv5-card .card-tags {
+    position: absolute;
+    bottom: 50px;
+}
+
+.card-media .nbv5-card .card-meta {
+    position: absolute;
+    bottom: 15px;
+}
+
+.card-media .nbv5-card .layui-card-body {
+    height: 400px;
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+    .card-media .nbv5-card .layui-card-body {
+        height: 360px;
+    }
+}
+
+.card-media .layui-card.nbv5-card:hover,
+.col39 .layui-col-md9 .layui-card:hover,
+.col93 .layui-col-md9 .layui-card:hover,
+.long-card .layui-col-xs12.layui-card:hover {
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .5) !important;
+    -webkit-box-sizing: border-box;
+    transition: box-shadow .3s linear;
+    -moz-transition: -webkit-box-shadow .3s linear;
+    -webkit-transition: -webkit-box-shadow .3s linear;
+}
+
+.card-media .nbv5-card .card-content {
+    position: absolute;
+    top: 60%;
+    left: 0;
+    padding: 10px;
+    color: #ffffff;
+    background-color: rgba(35, 35, 35, 0.53);
+    opacity: .3;
+    visibility: hidden;
+    height: 0;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.card-media .nbv5-card:hover .card-content {
+    visibility: visible;
+    opacity: 1;
+    height: 100%;
+    padding-top: 30px;
+    -webkit-animation: fade-in .5s;
+    animation: fade-in .5s;
+    word-break: break-word;
+}
+
+
+.card-media .nbv5-card .card-content::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 0;
+    border-width: 0 3px;
+    overflow: hidden;
+    box-sizing: border-box;
+    visibility: visible;
+    transition: all .8s;
+}
+
+.card-media .nbv5-card .card-content::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 0;
+    height: 100%;
+    overflow: hidden;
+    visibility: hidden;
+    transition: all .8s;
+}
+
+.card-media .nbv5-card .card-img, a > img {
+    -webkit-transition: -webkit-transform .5s ease, filter .5s ease;
+    -moz-transition: -moz-transform .5s ease, filter .5s ease;
+    -o-transition: -o-transform .5s ease, filter .5s ease;
+    transition: transform .5s ease, filter .5s ease;
+}
+
+.card-media .nbv5-card:hover .card-img {
+    filter: blur(3px);
+    transform: scale(1.1);
+    border: 1px solid #cccc
+}
+
+a:hover:not(.no-hover) > img {
+    transform: scale(1.02);
+}
+
+.nbv5-font {
+    font-family: "Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif !important;
+}
+
+@keyframes fade-in {
+    0% {
+        transform: translateY(-45%);
+        opacity: 0
+    }
+    100% {
+        transform: translateY(-50%);
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        -webkit-transform: translateY(-45%);
+        opacity: 0
+    }
+    100% {
+        -webkit-transform: translateY(-50%);
+        opacity: 1
+    }
+}
+
+.layui-card-body figure {
+    height: 150px;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1440px) {
+    .card-media .nbv5-card figure {
+        height: 130px !important;
+    }
+}

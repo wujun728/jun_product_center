@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="off">
+    <Properties>
+        <Property name="logdir">${sys:catalina.base}/logs</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%file] - %msg%n" />
+        </Console>
+        <RollingFile name="RollingFile"
+            fileName="${logdir}/shiro.log"
+            filePattern="${logdir}/shiro.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M] - %msg%n" />
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL" />
+                <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>  
+            </Policies>
+        </RollingFile>
+        <!-- 只显示error级别的信息 -->
+        <RollingFile name="RollingFileError"
+            fileName="${logdir}/error.log"
+            filePattern="${logdir}/error-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss.SSS} [%thread] %level [%C{36}.%M:%L] - %msg%xEx%n" />
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>  
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.wangzhixuan" level="info" />
+        <Root level="WARN" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="RollingFile" />
+            <AppenderRef ref="RollingFileError" />
+        </Root>
+    </Loggers>
+</configuration>

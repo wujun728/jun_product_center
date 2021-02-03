@@ -1,0 +1,16 @@
+<div class="layui-container layui-anim layui-anim-upbit" style="margin-top: 2rem;">
+    <div class="layadmin-tips" style="text-align: center;">
+        <i class="layui-icon layui-icon-face-surprised" style="font-size: 10rem;"></i>
+        <div class="layui-text" style="font-size: 20px;margin-bottom: 2rem;">
+            好像出错了呢，您未登录，<a href="/login">点我登录</a>
+        </div>
+    </div>
+</div>
+<script src="/static/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script>
+    $(function () {
+        setTimeout(function () {
+            location.href = "/login";
+        }, 2000)
+    })
+</script>

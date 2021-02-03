@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.wuwenbin.noteblogv5.mapper.HideMapper">
+
+    <select id="findMyPurchases" resultType="me.wuwenbin.noteblogv5.model.bo.HideBo">
+        select h.*, a.title, hup.purchase_time
+        from refer_hide_user_purchase hup
+                 left join nb_hide h on h.id = hup.hide_id
+                 left join nb_article a on a.id = hup.article_id
+        where hup.user_id = #{userId}
+          and h.hide_type = 'purchase'
+    </select>
+</mapper>

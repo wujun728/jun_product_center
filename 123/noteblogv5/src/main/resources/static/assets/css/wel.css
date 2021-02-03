@@ -1,0 +1,117 @@
+
+#main-body {
+    margin-top: 8% !important;
+    margin-bottom: 88px;
+}
+
+@media screen and (max-width: 555px) {
+    #main-body {
+        margin-top: 25% !important;
+    }
+}
+
+#main-body .layui-card {
+    min-height: 500px !important;
+    opacity: 0.8;
+}
+
+#main-body .layui-card:hover {
+    opacity: 1;
+    -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .8) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .8) !important;
+    -webkit-box-sizing: border-box;
+    transition: box-shadow .3s linear;
+    -moz-transition: -webkit-box-shadow .3s linear;
+    -webkit-transition: -webkit-box-shadow .3s linear;
+}
+
+#main-body .layui-card {
+    text-align: center;
+}
+
+#main-body .layui-card .layui-card-footer {
+    border-top: 1px solid #f6f6f6;
+    margin-top: 5px;
+}
+
+#main-body .layui-card .layui-card-footer .layui-text {
+    line-height: 40px !important;
+}
+
+.layui-elem-field legend {
+    color: #F44336 !important;
+    font-size: 18px !important;
+}
+
+.layui-field-box {
+    font-size: 15px !important;
+    padding: 15px 0 0 0;
+}
+
+.wel-card-logo {
+    margin-top: 25px;
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+    display: block;
+    text-align: center;
+}
+
+.layui-card:hover .wel-card-logo {
+    margin-top: 10px;
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.wel-card-logo img {
+    width: 45%;
+    border: 1px solid rgba(204, 204, 204, 0.42);
+    padding: 10px;
+}
+
+.wel-card-logo img.layui-square {
+    border-radius: 5px !important;
+}
+
+.wel-card-title {
+    padding: 20px 0 0 0;
+    color: #F44336;
+    font-weight: 700;
+    font-size: 20px;
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.layui-card:hover .wel-card-title {
+    padding-top: 0;
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.layui-card:hover .wel-card-title::before {
+    margin-bottom: 0;
+    opacity: 0;
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.wel-card-title:before {
+    display: block;
+    margin: 0 auto 20px;
+    width: 20px;
+    border-bottom: 2px solid #F44336;
+    content: "";
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.wel-card-content {
+    margin-top: 5px;
+    opacity: 1;
+    transition: all .4s cubic-bezier(.4, 0, .2, 1);
+}
+
+.wel-card-content p {
+    margin-bottom: 5px;
+    color: #000000;
+    font-size: 14px;
+}
+
+.layui-card:hover .wel-card-content {
+    display: block;
+    margin-top: 0;
+    opacity: 1;
+}

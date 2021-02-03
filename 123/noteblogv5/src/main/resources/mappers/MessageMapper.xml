@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.wuwenbin.noteblogv5.mapper.MessageMapper">
+
+    <select id="findMessagePage" resultType="me.wuwenbin.noteblogv5.model.bo.MessageBo">
+        select m.*, u.avatar, u.nickname, u.role
+        from nb_message m
+        left join nb_user u on u.id = m.user_id
+        <where>
+            <if test="nickname != null and nickname != ''">
+                u.nickname like concat('%',#{nickname},'%')
+            </if>
+            <if test="clearComment != null and clearComment != ''">
+                and m.clear_comment like concat('%',#{clearComment},'%')
+            </if>
+            <if test="enable != null">
+                and m.enable = #{enable}
+            </if>
+        </where>
+    </select>
+
+    <select id="findLatestMessage" resultType="me.wuwenbin.noteblogv5.model.bo.MessageBo">
+        select m.*, u.avatar, u.nickname
+        from nb_message m
+                 left join nb_user u on u.id = m.user_id
+        order by m.post desc
+        limit 1
+    </select>
+
+    <select id="findTodayMessage" resultType="long">
+        SELECT count(1)
+        FROM nb_message
+        WHERE DATE_FORMAT(post, '%Y-%m-%d') = DATE_FORMAT(CURDATE(), '%Y-%m-%d')
+    </select>
+
+    <select id="findMessageRankBoList" resultType="me.wuwenbin.noteblogv5.model.bo.MessageRankBo">
+        SELECT m.user_id,
+               u.avatar,
+               u.nickname,
+               count(m.user_id)                as msg_cnt,
+               DATE_FORMAT(m.post, '%Y-%m-%d') as latest_msg_date
+        FROM nb_message m
+                 LEFT JOIN nb_user u ON u.id = m.user_id
+        GROUP BY m.user_id
+        ORDER BY msg_cnt DESC
+        LIMIT 15
+    </select>
+</mapper>

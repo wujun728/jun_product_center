@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.system.mapper.TreeMenuMapper">
+    <resultMap id="BaseResultMap" type="com.zero.system.entity.TreeMenu">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="pid" jdbcType="INTEGER" property="pid" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="icon" jdbcType="VARCHAR" property="icon" />
+        <result column="url" jdbcType="VARCHAR" property="url" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,pid,name,icon,url
+    </sql>
+
+    <select id="selectByAdminId" parameterType="int" resultMap="BaseResultMap">
+        select treemenu.id,treemenu.pid,treemenu.name,treemenu.icon,treemenu.url
+        from admin,role,role_treemenu,treemenu
+        where admin.rid = role.id
+        and role.id = role_treemenu.rid
+        and treemenu.id = role_treemenu.tid
+        and admin.id = #{id}
+    </select>
+
+    <select id="selectByUserName" parameterType="String" resultType="java.lang.String">
+        select treemenu.url
+        from admin,role,role_treemenu,treemenu
+        where admin.rid = role.id
+        and role.id = role_treemenu.rid
+        and treemenu.id = role_treemenu.tid
+        and treemenu.pid &lt;&gt; -1
+        and admin.username = #{username}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select *
+        from treemenu
+    </select>
+
+    <select id="selectURLAll" resultType="java.lang.String">
+        select treemenu.url
+        from treemenu
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        select *
+        from treemenu where id = #{id}
+    </select>
+
+    <select id="selectByName" parameterType="String" resultType="TreeMenu">
+        select * from treemenu where name =#{name}
+    </select>
+
+    <select id="selectByUrl" parameterType="String" resultType="TreeMenu">
+        select * from treemenu where url =#{url}
+    </select>
+
+    <update id="editByPermission" parameterType="TreeMenu">
+        update treemenu
+        set name = #{name},url = #{url}
+        where id = #{id}
+    </update>
+
+    <insert id="insertPermission" parameterType="TreeMenu" >
+        insert into treemenu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="icon != null">
+                icon,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="pid != null">
+                #{pid},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="icon != null">
+                #{icon},
+            </if>
+            <if test="url != null">
+                #{url},
+            </if>
+        </trim>
+
+    </insert>
+
+    <delete id="delByPermissionIds" parameterType="java.util.List">
+        delete from treemenu where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!--    删除中间表-->
+    <delete id="delRolePermission" parameterType="java.util.List">
+        delete from role_treemenu where tid in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delRolePermissionByRid" parameterType="int">
+        delete from role_treemenu where rid = #{id}
+    </delete>
+
+    <select id="selectByPid" resultMap="BaseResultMap">
+        select *
+        from treemenu where pid = #{id}
+    </select>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        select treemenu.id,treemenu.pid,treemenu.name,treemenu.icon,treemenu.url
+        from role,role_treemenu,treemenu
+        where role.id = role_treemenu.rid and treemenu.id = role_treemenu.tid and role.id = #{id}
+    </select>
+
+    <insert id="updateRolePermission">
+        insert into role_treemenu(rid,tid) values
+        <foreach collection="ids" index="index" item="tid" separator=","  >
+            (#{id},#{tid})
+        </foreach>
+    </insert>
+
+
+</mapper>

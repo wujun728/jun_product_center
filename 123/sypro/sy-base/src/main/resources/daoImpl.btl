@@ -1,0 +1,22 @@
+package ${daoImplPackageName};
+
+import org.springframework.stereotype.Repository;
+
+import sy.dao.base.impl.BaseDaoImpl;
+import ${daoPackageName}.${modelName}Dao;
+import ${modelPackageName}.${modelName};
+
+/**
+ * ${modelName}DaoImpl
+ *
+ * http://git.oschina.net/sphsyv/sypro
+ *
+ * 由代码生成器生成
+ *
+ * @author 孙宇
+ *
+ */
+@Repository("${lowerModelName}Dao")
+public class ${modelName}DaoImpl extends BaseDaoImpl<${modelName}, ${pkType}> implements ${modelName}Dao {
+
+}

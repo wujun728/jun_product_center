@@ -1,0 +1,45 @@
+server:
+  port: 8001
+  #tomcat调优
+  tomcat:
+    protocol-header: org.apache.coyote.http11.Http11NioProtocol
+    max-threads: 800
+    accept-count: 1000
+    min-spare-threads: 100
+    max-connections: 10000
+    uri-encoding: UTF-8
+  connection-timeout: 20000
+  compression:
+    min-response-size: 2048
+    mime-types: text/html,text/xml,text/javascript,text/css,text/plain
+    enabled: true
+
+
+spring:
+  profiles:
+    active: 'dev'
+  mvc:
+    view:
+      prefix: /pages
+    devtools:
+      restart:
+        enabled: true
+
+#beetl模版配置
+beetl:
+  prefix: /pages
+
+##日志配置
+#log:
+#  path: /logs/web-manage
+
+#监控
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: '*'
+      cors:
+        allowed-methods: '*'
+        allow-credentials: true

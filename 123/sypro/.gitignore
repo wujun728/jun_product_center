@@ -1,0 +1,11 @@
+*.class
+*.jar
+*.war
+*.ear
+/target/
+/.settings/
+.classpath
+.project
+sypro.log*
+sypro_log*
+db.pdb

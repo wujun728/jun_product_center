@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- 父模块 -->
+	<parent>
+		<groupId>sy.parent</groupId>
+		<artifactId>sy-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>sy.base</groupId>
+	<artifactId>sy-base</artifactId>
+	<packaging>jar</packaging>
+	<name>sy-base</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<!-- 指定项目是JDK1.7版本 -->
+		<java-version>1.7</java-version>
+		<!--指定Maven用什么编码来读取源码及文档 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--指定Maven用什么编码来呈 -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+	<dependencies>
+	</dependencies>
+
+	<build>
+
+		<finalName>sy-base</finalName>
+
+		<plugins>
+			<!-- 编译的时候使用JDK7和UTF8编码 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+</project>

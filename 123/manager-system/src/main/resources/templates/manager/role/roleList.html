@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>角色列表</title>
+    <link rel="stylesheet" th:href="@{/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/layuiadmin/style/admin.css}" media="all">
+    <link rel="stylesheet" th:href="@{/font-awesome-4.7.0/css/font-awesome.min.css}">
+</head>
+<body>
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="width: 250px">
+                        <label class="layui-form-label">角色</label>
+                        <div class="layui-input-block">
+                            <select name="rid" class="select">
+                                <option value="0">请选择角色</option>
+                                <option th:each="role : ${session.role}" th:value="${role.id}" th:text="${role.name}"> </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn layuiadmin-btn-admin" data-type="search_table">
+                            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-card-body">
+                <div style="padding-bottom: 10px;">
+                    <button class="layui-btn layuiadmin-btn-admin" data-type="add">添加</button>
+                </div>
+
+                <table id="table" lay-filter="table"></table>
+
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/layuiadmin/layui/layui.js}"></script>
+    <script type="text/html" id="table_admin">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="fa fa-pencil"></i>编辑</a>
+        <a class="layui-btn layui-btn-success layui-btn-xs" lay-event="allot"><i class="fa fa-eye"></i>分配权限</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="fa fa-trash-o"></i>删除</a>
+    </script>
+    <script>
+
+        layui.use(['jquery','layer', 'table'], function(){
+            var table = layui.table;
+            var layer = layui.layer;
+            var $ = layui.jquery;
+            //执行一个 table 实例
+            table.render({
+                elem: '#table',
+                height: 450,
+                url: '/manager/roleList', //数据接口
+                title: '用户列表',
+                page: true,
+                limit: 5,
+                limits: [5,10,15,20],
+                cols: [
+                    [ //表头
+                    {type: 'checkbox', fixed: 'left'},
+                    {field: 'id', title: '编号', width:70},
+                    {field: 'name', title: '名称', width:200},
+                    {fixed: 'right',title:'操作', width: 240, toolbar: '#table_admin'}
+                    ]
+                ],
+                //用于搜索结果重载
+                id: 'sreload'
+            });
+
+            var active = {
+                search_table: function(){
+                    var rid = $(".select option:selected");
+                    //执行重载
+                    table.reload('sreload', {
+                        //一定要加不然乱码
+                        method: 'post'
+                        ,page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        ,where: {
+                            //表示传到后台的参数
+                            rid : rid.val()
+                        }
+                    });
+                },
+                add: function() {
+                    layer.open({
+                        type: 2,
+                        title: '添加角色',
+                        skin: 'layui-layer-demo', //加上边框
+                        area: ['500px', '450px'], //宽高
+                        content: '/manager/addRole'
+                    });
+                },
+            };
+
+            $('.layui-btn.layuiadmin-btn-admin').on('click', function(){
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+
+            table.on('tool(table)', function(obj){ //注：tool 是工具条事件名，table 是 table 原始容器的属性 lay-filter="对应的值"
+                var data = obj.data; //获得当前行数据
+                var layEvent = obj.event; //获得 lay-event 对应的值
+                if(layEvent === 'edit'){
+                    edit(data);
+                } else if(layEvent === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        del(data,obj,index);
+                    });
+                }else if(layEvent === 'allot'){
+                    allot(data);
+                }
+            });
+
+            function edit(data) {
+                layer.open({
+                    type: 2,
+                    title: '修改角色信息',
+                    skin: 'layui-layer-demo', //加上边框
+                    area: ['500px', '450px'], //宽高
+                    method: 'post',
+                    content: '/manager/addRole?type=edit&id='+data.id
+                });
+            }
+            //后边两个参数仅仅是因为要执行动态删除dom
+            function del(data,obj,index){
+                var jsonObj = {};
+                jsonObj["ids[0]"] = data.id;
+                $.ajax({
+                    url:'/manager/delRole',
+                    data:jsonObj,
+                    dataType:'json',
+                    type:'post',
+                    success:function (data) {
+                        if (data.success){
+                            obj.del(); //删除对应行（tr）的DOM结构
+                            layer.close(index);
+                        }else{
+                            layer.msg(data.message);
+                        }
+                    }
+                })
+            }
+
+            function allot(data) {
+                layer.open({
+                    type: 2,
+                    title: '分配权限',
+                    skin: 'layui-layer-demo', //加上边框
+                    area: ['700px', '450px'], //宽高
+                    content: '/manager/allotPer?id='+data.id
+                });
+            }
+
+        });
+
+
+    </script>
+</body>
+</html>

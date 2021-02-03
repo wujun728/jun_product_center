@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+    <style>
+        .link > .layui-btn:hover {
+            cursor: default !important;
+        }
+
+        .link > .layui-btn {
+            margin-bottom: 10px;
+            margin-left: 0;
+            margin-right: 5px;
+        }
+
+        .link > .layui-btn > .layui-badge:hover {
+            cursor: pointer;
+            background: #c4c4c4 !important;
+            color: #000000 !important;
+            border-color: #000000 !important;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid layui-anim layui-anim-upbit" id="LAY-link">
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md12">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend><i class="fa fa-navicon"></i> 友情链接管理</legend>
+            </fieldset>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 0;">
+                    <input type="text" name="linkName" lay-verify="required"
+                           th:placeholder="${#strings.isEmpty(searchLinkName)} ? '请输入链接名称' : ${searchLinkName}"
+                           autocomplete="off"
+                           class="layui-input">
+                    <input type="text" name="linkHref" lay-verify="required"
+                           placeholder="URL链接地址，以【http://】或【https://】开头"
+                           autocomplete="off" style="margin-top: 10px;"
+                           class="layui-input">
+                </div>
+                <div style="margin-top: 10px;">
+                    <button class="layui-btn layui-btn-primary" id="link-search"><i class="fa fa-search"></i> 搜索
+                    </button>
+                    <button class="layui-btn" id="link-add"><i class="fa fa-plus"></i> 添加</button>
+                </div>
+            </div>
+            <hr>
+            <div class="link">
+                <a th:href="${link.name.split('，')[1]}" target="_blank" th:each="link : ${links}"
+                   class="layui-btn layui-btn-primary layui-btn-radius" style="cursor: pointer !important;"><i
+                        class="fa fa-link"></i> <span
+                        th:text="${link.name}"></span><span
+                        class="layui-badge layui-bg-gray delete" th:data-lid="${link.id}">×</span></a>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'link']);
+</script>
+</body>
+</html>

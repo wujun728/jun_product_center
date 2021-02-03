@@ -1,0 +1,170 @@
+layui.use(['layer', 'form', 'table', 'admin', 'ax'], function () {
+    var $ = layui.$;
+    var layer = layui.layer;
+    var form = layui.form;
+    var table = layui.table;
+    var $ax = layui.ax;
+    var admin = layui.admin;
+
+    /**
+     * ${bizChName}管理初始化
+     */
+    var ${bizEnBigName} = {
+        tableId: "${bizEnName}Table",	//表格id
+        condition: {
+            searchWords: ""
+        }
+    };
+
+    /**
+     * 初始化表格的列
+     */
+    ${bizEnBigName}.initColumn = function () {
+        return [[
+            {type: 'checkbox'},
+            @for(item in table.fields!){
+            @if(item.propertyName != 'id'){
+            @if(item.propertyName == 'state'){
+            {title: '${item.comment!}', field: '${item.propertyName!}',align:'center', width: '7%', templet:function (d) {
+                var str = '<input value="'+d.id+'" type="checkbox" name="${item.propertyName!}" lay-skin="switch" lay-filter="${bizEnName}Switch" lay-text="启用|禁用">';
+                if(d.${item.propertyName!} == 1){
+                    str = '<input value="'+d.id+'" type="checkbox" name="${item.propertyName!}" lay-skin="switch" lay-filter="${bizEnName}Switch" lay-text="启用|禁用" checked>';
+                }
+                return str;
+            }},
+            @}else{
+            {title: '${item.comment!}', field: '${item.propertyName!}', visible: true, align: 'center', width: '10%'},
+            @}
+            @}
+            @}
+            {align: 'center', toolbar: '#task-table-toolbar', title: '操作', width: '10%', fixed:'right'}
+        ]];
+    };
+
+    /**
+     * 点击查询按钮
+     */
+    ${bizEnBigName}.search = function () {
+        var where = {searchWords: $("#searchWords").val()};
+        table.reload(${bizEnBigName}.tableId, {where: where});
+    };
+
+    /**
+     * ${bizChName}添加
+     */
+    ${bizEnBigName}.toAdd = function () {
+        admin.putTempData('formOk', false);
+        top.layui.admin.open({
+            type: 2,
+            title: '添加${bizChName}',
+            area: ['40%', '60%'],
+            content: Lu.ctxPath + '/${modular}/${bizEnName}/toAdd',
+            end: function () {
+                Lu.adminOpenEnd(admin, tableReload);
+            }
+        });
+     };
+
+    /**
+     * 修改${bizChName}
+     */
+    ${bizEnBigName}.toUpdate = function (data) {
+        admin.putTempData('formOk', false);
+        top.layui.admin.open({
+            type: 2,
+            title: '修改${bizChName}',
+            area: ['40%', '60%'],
+            content: Lu.ctxPath + '/${modular}/${bizEnName}/toUpdate?id=' + data.id,
+            end: function () {
+                Lu.adminOpenEnd(admin, tableReload);
+            }
+        });
+     };
+
+    /**
+     * 点击删除
+     */
+    ${bizEnBigName}.onDelete = function (ids) {
+        var operation = function () {
+            var ajax = new $ax(Lu.ctxPath + "/${modular}/${bizEnName}/delete", function (data) {
+                Lu.success("删除成功!");
+                table.reload(${bizEnBigName}.tableId);
+            }, function (data) {
+                Lu.error("删除失败!" + data.responseJSON.message + "!");
+            });
+            ajax.set("data", ids);
+            ajax.start();
+        };
+        Lu.confirm("是否刪除?", operation);
+    };
+
+   // 渲染表格
+   var tableResult = table.render({
+        elem: '#' + ${bizEnBigName}.tableId,
+        url: Lu.ctxPath + '/${modular}/${bizEnName}/listPage',
+        toolbar: '#${bizEnName}TableToolbar',
+        page: true,
+        height: "full-158",
+        cellMinWidth: 100,
+        id: ${bizEnBigName}.tableId,
+        cols: ${bizEnBigName}.initColumn()
+   });
+   
+    var tableReload = () => {
+       table.reload(${bizEnBigName}.tableId);
+    };
+
+   // 搜索按钮点击事件
+   $('#btnSearch').click(function () {
+        ${bizEnBigName}.search();
+   });
+
+   //头工具栏事件
+   table.on('toolbar('+${bizEnBigName}.tableId+')', function(obj){
+        var checkStatus = table.checkStatus(obj.config.id);
+        switch(obj.event){
+            case 'add':
+                //打开添加页面
+                ${bizEnBigName}.toAdd();
+                break;
+            case 'deleteBatch':
+                var data = checkStatus.data;
+                if(data == null || data.length == 0){
+                  layer.msg("请至少选择一个!");
+                }
+                var ids = [];
+                $.each(data, function (index, d) {
+                    ids.push({id: d.id});
+                });
+                ${bizEnBigName}.onDelete(JSON.stringify(ids));
+                break;
+        };
+   });
+
+   // 工具条点击事件
+   table.on('tool(' + ${bizEnBigName}.tableId + ')', function (obj) {
+        var data = obj.data;
+        var layEvent = obj.event;
+        if (layEvent === 'update') {
+            ${bizEnBigName}.toUpdate(data);
+        } else if (layEvent === 'del') {
+            ${bizEnBigName}.onDelete(JSON.stringify([{id: data.id}]));
+        }
+    });
+
+    //修改状态
+    form.on('switch(${bizEnName}Switch)', function(data){
+        var id = data.value;
+        var state = 0;
+        if(data.elem.checked){
+            state=1;
+        }
+        var ajax = new $ax(Lu.ctxPath + "/${modular}/${bizEnName}/update", function (data) {
+        }, function (data) {
+            Lu.error("操作失败！" + data.responseJSON.message)
+        });
+        ajax.set({id : id, state : state});
+        ajax.start();
+    });
+
+});

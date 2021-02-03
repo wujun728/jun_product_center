@@ -1,0 +1,15 @@
+
+spring:
+  profiles:
+    active: 'dev'
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+
+#mybatis-plus:
+#  mapper-locations: classpath*:com/lu/multiple/modular/**/mapper/**/*.xml
+#  configuration:
+#    cache-enabled: true
+server:
+  port: 8080

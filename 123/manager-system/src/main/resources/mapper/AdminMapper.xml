@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zero.system.mapper.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.zero.system.entity.Admin">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="rid" jdbcType="INTEGER" property="rid" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+
+        <!-- 添加元素 -->
+        <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,username,password,phone,email,rid,status,createtime
+    </sql>
+
+    <select id="login" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from admin
+        where username = #{username,jdbcType=VARCHAR} AND password=#{password,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryList" resultMap="BaseResultMap" >
+        <!-- 根据条件查询 所有信息 -->
+        select
+        admin.*,role.name as roleName
+        from admin,role
+        <where>
+            <if test="username!=null"> and admin.username LIKE concat("%",#{username},"%") </if>
+            <if test="email!=null"> and admin.email = #{email} </if>
+            <if test="phone!=null"> and admin.phone = #{phone} </if>
+            <if test="rid!=null"> and admin.rid = #{rid} </if>
+            and admin.rid = role.id
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from admin,role
+        <where>
+            <if test="username!=null"> and username LIKE concat("%",#{username},"%") </if>
+            <if test="email!=null"> and email = #{email} </if>
+            <if test="phone!=null"> and phone = #{phone} </if>
+            <if test="rid!=null"> and admin.rid = #{rid} </if>
+            and admin.rid = role.id
+        </where>
+    </select>
+
+    <insert id="insertAdmin" parameterType="Admin">
+        insert into admin(username,password,phone,email,rid,status,createtime)
+        values (#{username},#{password},#{phone},#{email},#{rid},#{status},#{createtime})
+    </insert>
+
+    <select id="selectById" parameterType="int" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from admin where id = #{id}
+    </select>
+
+    <delete id="delByAdminIds" parameterType="java.util.List">
+        delete from admin where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="editByAdmin" parameterType="Admin">
+        update admin
+        set username = #{username},email = #{email},phone = #{phone},rid = #{rid},status = #{status}
+        <if test="password != null"> ,password = #{password}</if>
+        where id = #{id}
+    </update>
+
+    <select id="selectByName" parameterType="String" resultType="Admin">
+        select <include refid="Base_Column_List" /> from admin where username = #{username}
+    </select>
+
+    <select id="selectByEmail" parameterType="String" resultType="Admin">
+        select <include refid="Base_Column_List" /> from admin where email = #{email}
+    </select>
+</mapper>

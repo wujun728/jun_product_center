@@ -1,0 +1,2 @@
+## 注意
+update_xxx.sql是提供给老用户无痛升级的，新用户直接使用shiro_mysql.sql！
