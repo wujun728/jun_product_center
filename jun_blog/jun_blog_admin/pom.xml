@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.jun.plugin</groupId>
-  <artifactId>jun_blog</artifactId>
+  <artifactId>jun_blog_admin</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>jun_blog</name>
+  <name>jun_blog_admin</name>
   <url>http://maven.apache.org</url>
   
   <dependencies>
@@ -257,8 +257,8 @@
 	            <artifactId>tomcat7-maven-plugin</artifactId>
 	            <version>2.2</version>
 	            <configuration>
-	              <path>/</path>
-	              <port>8080</port>
+	              <path>/admin</path>
+	              <port>8090</port>
 	              <uriEncoding>UTF-8</uriEncoding>
 	            </configuration>
          </plugin>
