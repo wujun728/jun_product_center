@@ -1,9 +1,0 @@
-##-------------------${classVar}----------------------------------
-#foreach($prop in $columnResult)
-        #set ($fieldName  = ${prop.javaName} )
-        #set ($fieldType  =  $prop.dataType )
-        #set ($innerFieldUpper  = $stringUtil.capitalize($fieldName) )
-$classVar.$fieldName=${prop.comments}
-#end
-
-  

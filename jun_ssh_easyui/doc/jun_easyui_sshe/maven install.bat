@@ -1,1 +1,0 @@
-mvn jetty:stop clean install -U

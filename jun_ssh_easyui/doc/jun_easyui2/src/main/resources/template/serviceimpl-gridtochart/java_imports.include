@@ -1,6 +1,0 @@
-import org.springframework.stereotype.Service;
-import com.doroodo.sys.model.*;
-import com.doroodo.sys.service.*;
-
-import com.doroodo.work.model.*;
-import com.doroodo.work.service.*;

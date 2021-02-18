@@ -1,1 +1,0 @@
-mvn jetty:stop jetty:run
