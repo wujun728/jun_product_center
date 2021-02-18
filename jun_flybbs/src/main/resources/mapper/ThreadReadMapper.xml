@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyu.flybbs.mapper.ThreadReadMapper">
+
+    <resultMap id="Thread_Map" type="Thread">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="category" property="category"/>
+        <result column="reward_kiss_count" property="rewardKissCount"/>
+        <result column="status" property="status"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="is_top" property="isTop"/>
+        <result column="is_star" property="isStar"/>
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="create_user" property="createUser"/>
+        <collection property="threadCommentList" column="id" ofType="ThreadComment"
+                    select="selectCommentByParentId"></collection>
+    </resultMap>
+
+    <select id="queryById" resultMap="Thread_Map">
+        select * from thread where id = #{id}
+    </select>
+
+    <select id="selectCommentByParentId" resultType="ThreadComment">
+        select * from thread_comment where parent_thread_id = #{id}
+    </select>
+
+    <select id="queryAll" resultType="Thread">
+        select * from thread
+    </select>
+</mapper>
