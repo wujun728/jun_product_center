@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改子库')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-subInventory-edit" th:object="${subInventory}">
+            <input id="subInventoryId" name="subInventoryId" th:field="*{subInventoryId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">子库名称：</label>
+				<div class="col-sm-8">
+					<input id="subInventoryName" name="subInventoryName" th:field="*{subInventoryName}" class="form-control" type="text" disabled="true">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">子库编码：</label>
+				<div class="col-sm-8">
+					<input id="subInventoryCode" name="subInventoryCode" th:field="*{subInventoryCode}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">货位Id:</label>
+				<div class="col-sm-8">
+					<input id="slotting" name="slotting" th:field="*{slotting}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group" v-if="th:field='*{subInventoryId}' == 1">
+				<label class="col-sm-3 control-label">库存组织Id:</label>
+				<div class="col-sm-8">
+					<input id="organizationId" name="organizationId" th:field="*{organizationId}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "subInventory";
+		$("#form-operator-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/update", $('#form-subInventory-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

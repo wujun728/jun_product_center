@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.WarnInformationMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.WarnInformation">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="warn_id" jdbcType="INTEGER" property="warnId" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+  </resultMap>
+</mapper>

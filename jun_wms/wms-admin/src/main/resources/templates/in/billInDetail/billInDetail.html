@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('入库单详情列表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								入库单ID：<input type="text" name="billId"/>
+							</li>
+
+							<li>
+								物料编码：<input type="text" name="itemCode"/>
+							</li>
+
+							<li>
+								供应商内部批次：<input type="text" name="supplierBatch"/>
+							</li>
+
+							<li>
+								供应商代码：<input type="text" name="supplierCode"/>
+							</li>
+
+							<li>
+								生产日期：<input type="text" name="pd"/>
+							</li>
+
+							<li>
+								失效日期：<input type="text" name="exp"/>
+							</li>
+
+							<li>
+								订单数量：<input type="text" name="quantity"/>
+							</li>
+
+							<li>
+								独立包装数量：<input type="text" name="packingQuantity"/>
+							</li>
+
+							<li>
+								条码号：<input type="text" name="barCode"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="in:billInDetail:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="in:billInDetail:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="in:billInDetail:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="in:billInDetail:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('in:billInDetail:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('in:billInDetail:remove')}]];
+        var prefix = ctx + "in/billInDetail";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "入库单详情",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'billInDetail', 
+					title : 'ID',
+					visible: false
+				},
+				{
+					field : 'billId', 
+					title : '入库单ID',
+					sortable: true
+				},
+				{
+					field : 'itemCode', 
+					title : '物料编码',
+					sortable: true
+				},
+				{
+					field : 'supplierBatch', 
+					title : '供应商内部批次',
+					sortable: true
+				},
+				{
+					field : 'supplierCode', 
+					title : '供应商代码',
+					sortable: true
+				},
+				{
+					field : 'pd', 
+					title : '生产日期',
+					sortable: true
+				},
+				{
+					field : 'exp', 
+					title : '失效日期',
+					sortable: true
+				},
+				{
+					field : 'quantity', 
+					title : '订单数量',
+					sortable: true
+				},
+				{
+					field : 'packingQuantity', 
+					title : '独立包装数量',
+					sortable: true
+				},
+				{
+					field : 'barCode', 
+					title : '条码号',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.billInDetail + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.billInDetail + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

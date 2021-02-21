@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('出入库口列表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<!--<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								编码：<input type="text" name="code"/>
+							</li>
+
+							<li>
+								名称：<input type="text" name="name"/>
+							</li>
+
+							<li>
+								类型：&lt;!&ndash;1-入库口 2-出库口：&ndash;&gt;
+								<select>
+									<option value="1">入库口</option>
+									<option value="2">出库口</option>
+								</select>
+							</li>
+
+							<li>
+								状态：<input type="text" name="state"/>
+							</li>
+
+							&lt;!&ndash;<li>
+								仓库ID：
+								<select>
+									<option value="1">你好</option>
+								</select>
+								&lt;!&ndash;<input type="text" name="wareId"/>&ndash;&gt;
+							</li>&ndash;&gt;
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:door:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:door:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:door:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:door:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>-->
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:door:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:door:remove')}]];
+        var prefix = ctx + "system/door";
+
+        $(function() {
+            var options = {
+                url: prefix + "/findList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "出入库口",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : 'ID',
+					visible: false
+				},
+				{
+					field : 'code', 
+					title : '编码',
+					sortable: true
+				},
+				{
+					field : 'addressCode',
+					title : 'AGV地址码',
+					sortable: true
+				},
+				{
+					field : 'name', 
+					title : '名称',
+					sortable: true
+				},
+				{
+					field : 'type', 
+					title : '类型',
+					sortable: true,
+					formatter(value,row,index){
+						if(value ==1){
+							return "入库口";
+						}else if(value == 2){
+							return "出库口";
+						}else {
+
+						}
+					}
+				},
+				{
+					field : 'state', 
+					title : '状态',
+					sortable: true
+				},
+				{
+					field : 'wareName',
+					title : '仓库',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+/*
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+*/
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

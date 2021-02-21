@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('库存报表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								箱号：<input type="text" name="boxCode"/>
+							</li>
+							<li>
+								物料编码：<input type="text" name="itemCode"/>
+							</li>
+							<li>
+								批次：<input type="text" name="batch"/>
+							</li>
+							<li>
+								供应商编码：<input type="text" name="supplierCode"/>
+							</li>
+							<li>
+								托盘状态：
+								<select name="boxState">
+									<option value="-1">不限</option>
+									<option value="0">不在货位上</option>
+									<option value="1">在货位上</option>
+									<option value="2">任务执行中(锁定)</option>
+								</select>
+							</li>
+							<li>
+								子库存组织：
+								<select name="subInventoryId">
+									<option value="-1"></option>
+									<option value="1">待检</option>
+									<option value="2">基板一厂板材库</option>
+									<option value="3">基板一厂板材过期库</option>
+									<option value="4">基板一厂板材延期库</option>
+									<option value="5">基板一厂不合格库</option>
+									<option value="6">基板一厂责任待确认材料库</option>
+									<option value="7">基板一厂预测备料库</option>
+								</select>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+<!--				<a class="btn btn-success" onclick="addBill()" shiro:hasPermission="in:billInMaster:add">-->
+<!--					<i class="fa fa-plus"></i> 添加-->
+<!--				</a>-->
+<!--&lt;!&ndash;				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="in:billInMaster:edit">&ndash;&gt;-->
+<!--&lt;!&ndash;					<i class="fa fa-edit"></i> 修改&ndash;&gt;-->
+<!--&lt;!&ndash;				</a>&ndash;&gt;-->
+<!--				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="in:billInMaster:remove">-->
+<!--					<i class="fa fa-remove"></i> 删除-->
+<!--				</a>-->
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="in:boxItem:export">
+						<i class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true" style="white-space:nowrap"></table>
+			</div>
+		</div>
+	</div>
+
+
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('in:boxItem:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('in:boxItem:remove')}]];
+        var prefix = ctx + "in/boxItem";
+
+
+        function addBill(){
+
+			var _url = prefix+"/add";
+
+			$.modal.openFull("新增",_url);
+		}
+
+        $(function() {
+            var options = {
+                url: prefix + "/findList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+				detailUrl:prefix + "/detail",
+                modalName: "库存报表",
+		        showExport: true,
+                columns: [
+                	/*{
+		            	checkbox: true
+		        	},*/
+					{
+						field : 'subInventoryCode',
+						title : '子库存号',
+						visible: true
+					},
+					{
+						field : 'itemCode',
+						title : '物料编码',
+						visible: true
+					},
+					{
+						field : 'itemName',
+						title : '物料描述',
+						visible: true
+					},
+					{
+						field: 'location',
+						title: '当前位置',
+						sortable: true
+					},
+					{
+						field: 'boxCode',
+						title: '箱号',
+						visible: true
+					},
+					{
+						field : 'batch',
+						title : '批次',
+						sortable: true
+					},
+					{
+						field : 'quantity',
+						title : '数量（张）',
+						sortable: true
+					},
+					{
+						field: 'exp',
+						title: '过期日期',
+						sortable: true
+					},
+					{
+						field:'totalThickness',
+						title:'铜箔厚度(毫米)',
+						sortable:true
+					},
+					{
+						field: 'subInventoryId',
+						title: '子库',
+						sortable: true,
+						formatter: function (value, row, index) {
+							var actions = [];
+							if (value === 1) {
+								actions.push("<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #F7F8FC;'><!--待检-->"+row.subInventoryName+"</span>");
+							}
+							if (value === 2) {
+								actions.push("<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #34ff3e;'><!--基板一厂板材库-->"+row.subInventoryName+"</span>");
+							}
+							if (value === 3) {
+								actions.push("<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #ff30ed;'><!--基板一厂板材过期库-->"+row.subInventoryName+"</span>");
+							}
+							if (value === 4) {
+								actions.push("" +
+										"<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #FFAD7E;'><!--基板一厂板材延期库-->"+row.subInventoryName+"</span>");
+							}
+							if (value === 5) {
+								actions.push("<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #fdff2d;'><!--基板一厂不合格库-->"+row.subInventoryName+"</span>");
+							}
+							if (value === 6) {
+								actions.push("<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #ff0e15;'><!--基板一厂责任待确认材料库-->"+row.subInventoryName+"</span>");
+							}
+							if (value === 7) {
+								actions.push("<span style='display: inline-block;line-height: 30px;padding: 0 10px;border: 1px solid #d9ecff;color: #434647;background-color: #598dff;'><!--基板一厂预测备料库-->"+row.subInventoryName+"</span>");
+							}
+							return actions.join('');
+						}
+					},
+
+		        // {
+		        //     title: '操作',
+		        //     align: 'center',
+				// 	events: {
+				// 		'click .detail': function (e, value, rowData, index) {
+				// 			var id = rowData.billId;
+				//
+				// 			var _url =$.table._option.detailUrl;
+				// 			localStorage.setItem(_url,id.toString());
+				// 			$.modal.openFull("详情",_url);
+				// 		},
+				// 		'click .edit': function (e, value, rowData, index) {
+				// 			$.operate.edit(rowData.billId)
+				//
+				// 		},
+				// 		'click .delete': function (e, value, rowData, index) {
+				// 			$.operate.remove(rowData.billId)
+				//
+				//
+				// 		}
+				// 	},
+		        //     formatter: function(value, row, index) {
+		        //     	var actions = [];
+				// 		actions.push('<a class="btn   btn-xs  detail"><i class="fa fa-remove"></i>查看</a>');
+				// 		actions.push('<a class="btn btn-success btn-xs edit "><i class="fa fa-edit"></i>编辑</a> ');
+                //         actions.push('<a class="btn btn-danger btn-xs  delete"><i class="fa fa-remove"></i>删除</a>');
+				// 		return actions.join('');
+		        //     }
+		        // }
+		        ]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

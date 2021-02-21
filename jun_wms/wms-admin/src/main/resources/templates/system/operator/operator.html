@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('操作员管理')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								<form class="form-horizontal m" id="form-cellInfo-add">
+									<div class="form-group">
+										<label class="col-sm-3 control-label" style="width: 90px;margin-top: 9px">关键字：</label>
+										<div class="col-sm-8" style="margin-left: -30px;">
+											<input type="text"  placeholder="姓名/工号/卡号" name="keyWords"/>
+										</div>
+									</div>
+								</form>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:operator:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:operator:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+<!--				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cellInfo:remove">-->
+<!--					<i class="fa fa-remove"></i> 删除-->
+<!--				</a>-->
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:operator:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true" style="white-space:nowrap"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:operator:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:operator:remove')}]];
+        var prefix = ctx + "system/operator";
+
+        $(function() {
+            var options = {
+                url: prefix + "/findList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove/{id}",
+				exportUrl: prefix + "/export",
+                modalName: "操作员",
+		        showExport: true,
+                columns: [
+                		{
+		            checkbox: true
+		        },
+					{
+						field : 'operatorId',
+						title : 'id',
+						visible: false
+					},
+					{
+						title: '操作',
+						align: 'center',
+						fixedRight: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							// actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.operatorId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.operatorId + '\')"><i class="fa fa-remove"></i>删除</a>');
+							return actions.join('');
+						}
+					},
+				{
+					field : 'operatorName',
+					title : '姓名',
+					visible: true
+				},
+				{
+					field : 'operatorCard',
+					title : '卡号',
+					sortable: true
+				},
+				{
+					field : 'empNo',
+					title : '员工号',
+					sortable: true
+				},
+				{
+					field : 'autoverifyPermission',
+					title : '初始化权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+				{
+					field : 'checkPermission',
+					title : 'IQC检验权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+				{
+					field : 'combinePermission',
+					title : '合框权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+				{
+					field : 'returnItemPermission',
+					title : '退货权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+				{
+					field : 'qualityCheckPermission',
+					title : '品质异常检验权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+				{
+					field : 'scrapPermission',
+					title : '报废权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+				{
+					field : 'manualOutPermission',
+					title : '非工单出库权限',
+					sortable: true,
+					formatter:function(value){
+						if(value === 1){
+							return "无"
+						}else if(value === 2){
+							return "有";
+						}
+					}
+				},
+					{
+						field : 'transferWarehousePermission',
+						title : '子库转移权限',
+						sortable: true,
+						formatter:function(value){
+							if(value === 1){
+								return "无"
+							}else if(value === 2){
+								return "有";
+							}
+						}
+					},
+		        ]
+            };
+            $.table.init(options);
+        });
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

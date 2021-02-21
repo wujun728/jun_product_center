@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.InventoryCheckMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.InventoryCheck">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="inventory_check_id" jdbcType="INTEGER" property="inventoryCheckId" />
+    <result column="box_code" jdbcType="VARCHAR" property="boxCode" />
+    <result column="to_box_code" jdbcType="VARCHAR" property="toBoxCode" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="after_check_quantity" jdbcType="INTEGER" property="afterCheckQuantity" />
+    <result column="check_quantity" jdbcType="INTEGER" property="checkQuantity" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="bill_out_detail_id" jdbcType="VARCHAR" property="billOutDetailId" />
+  </resultMap>
+
+  <select id="findByBillOutDetailAndType" parameterType="com.deer.wms.base.system.model.InventoryCheckCriteria" resultMap="BaseResultMap">
+    SELECT
+    	sum(check_quantity) as check_quantity,
+    	item_code
+    FROM
+    	`inventory_check`
+    where 1=1
+        <if test="billOutDetailId != null">
+          bill_out_detail_id = #{billOutDetailId}
+        </if>
+        <if test="type != null">
+          type = #{type}
+        </if>
+    GROUP BY
+    	bill_out_detail_id,
+    	type
+  </select>
+</mapper>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('容器列表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<!--搜索框-->
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								箱号：<input type="text" name="boxCode"/>
+							</li>
+
+							<!--<li>
+								类型：1-料箱  2-托盘：<input type="text" name="boxType"/>
+							</li>-->
+
+							<li>
+								备注：<input type="text" name="boxMemo"/>
+							</li>
+
+							<!--<li>
+								位置：<input type="text" name="boxCellId"/>
+							</li>-->
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<!--按钮组-->
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<!--<a class="btn btn-success"  shiro:hasPermission="in:boxInfo:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:boxInfo:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:boxInfo:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="in:boxInfo:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>-->
+			</div>
+			<!--表格-->
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+		 <!--上架模态框-->
+		 <el-dialog title="上架" label-width="100px" size="mini" :visible.sync="dialogFormVisible">
+
+
+			 <el-form>
+				 <el-form-item label="容器编码"  >
+
+					 <el-input v-model="boxInfo.boxCode"  ></el-input>
+
+				 </el-form-item>
+				 <el-form-item label="货位"  >
+					 <el-input v-model="boxInfo.boxCellId" ></el-input>
+				 </el-form-item>
+
+			 </el-form>
+
+			 <div slot="footer" class="dialog-footer">
+				 <el-button  @click="dialogFormVisible = false">取 消</el-button>
+				 <el-button type="primary" @click="upCell()">确 定</el-button>
+			 </div>
+		 </el-dialog>
+
+		 <!--添加模态框-->
+		 <el-dialog title="添加" :visible.sync="addDialogVisible" width="30%">
+			 <el-form :model="addBoxInfo" label-width="80px">
+				 <el-form-item label="托盘编码">
+					 <el-input v-model="addBoxInfo.boxCode"></el-input>
+				 </el-form-item>
+
+				 <el-form-item label="类型">
+					 <el-select  v-model="addBoxInfo.boxType" >
+						 <el-option value="1">料箱</el-option>
+						 <el-option value="2">托盘</el-option>
+					 </el-select>
+				 </el-form-item>
+
+				 <el-form-item label="备注">
+					 <el-input v-model="addBoxInfo.box_memo"></el-input>
+				 </el-form-item>
+			 </el-form>
+
+			 <span slot="footer" class="dialog-footer">
+                <el-button @click="addDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="save()">确 定</el-button>
+            </span>
+		 </el-dialog>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:boxInfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:boxInfo:remove')}]];
+        var prefix = ctx + "boxInfo";
+
+        var app = new Vue({
+            el: '.container-div',
+            data: {
+                dialogFormVisible:false,
+                addDialogVisible:false,
+				boxInfo:{
+
+				},
+                addBoxInfo:{
+                    boxCode:'',
+                    boxType:'',
+                    box_memo:'',
+				}
+
+            },
+            methods:{
+                save(){
+                    var that =this;
+                    var boxInfo = that.addBoxInfo;
+
+                    var result = $.getServerData(prefix+"/add","POST",boxInfo);
+                    if(result.code ==200){
+                        that.$message({
+                            type: 'success',
+                            message: '保存成功!'
+                        });
+                        that.addDialogVisible = false;
+                        $.table.refresh();
+                        that.boxInfo = {
+                            boxCode:'',
+                            type:'',
+                            box_memo:'',
+                        }
+                    }else {
+                        that.$message({
+                            type: 'error',
+                            message: result.msg
+                        });
+                    }
+				},
+                upCell(boxInfo){
+                    var that =this;
+                     var boxInfo = that.boxInfo;
+                     that.boxInfo = {};
+                    var result = $.getServerData(prefix+"/upCell","POST",boxInfo);
+                    if(result.code ==200){
+                        that.$message({
+                            type: 'success',
+                            message: '上架成功!'
+                        });
+                        that.dialogFormVisible = false;
+                        $.table.refresh();
+                    }else {
+                        that.$message({
+                            type: 'error',
+                            message: result.msg
+                        });
+                    }
+
+				}
+
+            },
+			mounted:function(){
+                var that = this;
+                var options = {
+                    url: prefix + "/findList",
+                    createUrl: prefix + "/add",
+                    updateUrl: prefix + "/edit/{id}",
+                    removeUrl: prefix + "/delete/{id}",
+                    exportUrl: prefix + "/export",
+                    modalName: "容器",
+                    showExport: true,
+                    columns: [{
+                        checkbox: true
+                    },
+                        {
+                            field : 'boxId',
+                            title : 'ID',
+                            visible: false
+                        },
+                        {
+                            field : 'boxCode',
+                            title : '箱号',
+                            sortable: true
+                        },
+                        /*{
+                            field : 'boxType',
+                            title : '类型：1-料箱  2-托盘',
+                            sortable: true
+                        },*/
+                        {
+                            field : 'boxMemo',
+                            title : '备注',
+                            sortable: true
+                        },
+
+                        {
+                            field : 'hasGoods',
+                            title : '是否有货',
+                            sortable: true,
+                            formatter: function(value, row, index) {
+                                 if(value==0){
+                                     return "有货";
+								 }else if(value==1){
+                                     return "无货"
+								}
+                            }
+                        },
+                        {
+                            field : 'boxState',
+                            title : '位置状态',
+                            sortable: true,
+                            formatter: function(value, row, index) {
+                                if(value==0){
+                                    return "无位置";
+                                }else if(value==1){
+                                    return "货位上"
+                                }else if(value==2){
+                                    return "任务中"
+                                }
+                            }
+                        },
+                        {
+                            field : 'location',
+                            title : '位置',
+                            sortable: true
+                        },
+                        {
+                            title: '操作',
+                            align: 'center',
+                            formatter: function(value, row, index) {
+                                var actions = [];
+                                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.boxId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.boxId + '\')"><i class="fa fa-remove"></i>删除</a>');                                /*actions.push('<a class="btn btn-success  btn-xs upCell ' + removeFlag + '"  href="#"   ><i class="fa fa-remove"></i>上架</a>');*/
+
+                                return actions.join('');
+                            }
+                        }]
+                };
+                $.table.init(options);
+			},
+            created:function(){
+
+            },
+        })
+
+    </script>
+</body>
+</html>

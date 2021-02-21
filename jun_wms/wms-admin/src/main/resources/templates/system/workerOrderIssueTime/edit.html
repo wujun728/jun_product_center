@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('修改服务地址')"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal m" id="form-workerOrderIssueTime-edit" th:object="${workerOrderIssueTime}">
+        <input id="id" name="id" th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">Id：</label>
+            <div class="col-sm-8">
+                <input id="id" name="id" th:field="*{id}" class="form-control" type="text" disabled="disabled">
+            </div>
+        </div>
+
+        <input type="text" id="oldValue1" style="display: none">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间点一：</label>
+            <div class="col-sm-8">
+                <!--                    oninput="value=value.replace(/([0-1]?[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])/g,'')"-->
+                <input onblur="blurValue1()" oninput="value1Change()" id="firstTime" name="firstTime"
+                       th:field="*{firstTime}" class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间点二：</label>
+            <div class="col-sm-8">
+                <input disabled="disabled" id="secondTime" name="secondTime" th:field="*{secondTime}"
+                       class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间点三：</label>
+            <div class="col-sm-8">
+                <input disabled="disabled" id="thirdTime" name="thirdTime" th:field="*{thirdTime}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间点四：</label>
+            <div class="col-sm-8">
+                <input disabled="disabled" id="fourthTime" name="fourthTime" th:field="*{fourthTime}"
+                       class="form-control" type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间点五：</label>
+            <div class="col-sm-8">
+                <input disabled="disabled" id="fifthTime" name="fifthTime" th:field="*{fifthTime}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">时间点六：</label>
+            <div class="col-sm-8">
+                <input disabled="disabled" id="sixthTime" name="sixthTime" th:field="*{sixthTime}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group draggable">
+            <label class="col-sm-3 control-label">是否执行工单任务：</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="autoExecute" name="autoExecute" th:field="*{autoExecute}">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">工序号：</label>
+            <div class="col-sm-8">
+                <input id="operationSeqnum" name="operationSeqnum" th:field="*{operationSeqnum}" class="form-control"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">锁定时间(单位:分钟)：</label>
+            <div class="col-sm-8">
+                <input id="lockTime" name="lockTime" th:field="*{lockTime}" class="form-control" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                       type="text">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">呆滞过期查询周期：</label>
+            <div class="col-sm-8">
+                <input id="sluggishExportDate"  name="sluggishExportDate" th:field="*{sluggishExportDate}" class="form-control"
+                       type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"
+                        onchange="replaceDate()">
+            </div>
+        </div>
+        <div class="form-group draggable">
+            <label class="col-sm-3 control-label">呆滞过期查询条件：</label>
+            <div class="col-sm-8">
+                <select class="form-control" id="sluggishExportParam" name="sluggishExportParam" th:field="*{sluggishExportParam}">
+                    <option value="1">到货四个月未使用</option>
+                    <option value="2">有效期少于180天</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include::footer"></div>
+<script>
+    var data = {}
+
+    function getValues() {
+        data = {
+            value1: document.querySelector('#firstTime').value,
+            value2: document.querySelector('#secondTime').value,
+            value3: document.querySelector('#thirdTime').value,
+            value4: document.querySelector('#fourthTime').value,
+            value5: document.querySelector('#fifthTime').value,
+            value6: document.querySelector('#sixthTime').value,
+            oldValue1: document.querySelector('#oldValue1').value,
+        }
+    }
+
+    getValues()
+
+    function changeValues() {
+        var value1 = data.value1
+        if (value1 === '') {
+            return false
+        }
+        var str = value1.split(':');
+        var testValue = ''
+        for (var i = 1; i < str.length; i++) {
+            testValue += ':' + str[i]
+        }
+        // 时间二
+        var val2 = String(Number(str[0]) + 4)
+        if (val2.length === 1) {
+            val2 = '0' + val2
+        }
+        data.value2 = val2 + testValue
+        // 时间三
+        var val3 = String(Number(str[0]) + 8)
+        if (val3.length === 1) {
+            val3 = '0' + val3
+        }
+        data.value3 = val3 + testValue
+        // 时间四
+        var val4 = String(Number(str[0]) + 12)
+        if (val4.length === 1) {
+            val4 = '0' + val4
+        }
+        data.value4 = val4 + testValue
+        // 时间五
+        var val5 = String(Number(str[0]) + 16)
+        if (val5.length === 1) {
+            val5 = '0' + val5
+        }
+        data.value5 = val5 + testValue
+        // 时间六
+        var val6 = String(Number(str[0]) + 20)
+        if (val6.length === 1) {
+            val6 = '0' + val6
+        }
+        data.value6 = val6 + testValue
+        setValues()
+    }
+
+    function blurValue1() {
+        getValues()
+        var value1 = data.value1
+        var str = value1.split(':');
+        if (str.length === 3 && str[0].length === 2 && str[1].length === 2 && str[2].length === 2) {
+
+        } else if (str.length === 2 && str[0].length === 2 && str[1].length === 1) {
+            str[1] = '0' + str[1]
+            data.value1 = ''
+            for (var i = 0; i < str.length; i++) {
+                data.value1 += str[i] + ':'
+            }
+            data.value1 = data.value1 + '00'
+        } else {
+            document.querySelector('#firstTime').style.color = 'red'
+            alert('请检查输入格式')
+        }
+        changeValues()
+    }
+
+    function value1Change() {
+        getValues()
+        if (data.value1 === '') {
+            return false
+        }
+        var str = data.value1.split(':');
+        var strLast = str[str.length - 1];
+        if (str.length === 1) {
+            if (strLast >= 4) {
+                data.value1 = '03:';
+            } else if (strLast < 4 && strLast >= 0) {
+                if (strLast.length === 1) {
+                    data.value1 = '0' + strLast + ':';
+                }
+            }
+        } else {
+            if (strLast >= 59) {
+                str[str.length - 1] = '59'
+                data.value1 = ''
+                for (var i = 0; i < str.length; i++) {
+                    if (i < str.length - 1) {
+                        data.value1 += str[i] + ':'
+                    } else {
+                        data.value1 += str[i]
+                    }
+                }
+            }
+        }
+        if (str.length === 3) {
+            if (strLast.length > 2) {
+                data.value1 = data.oldValue1;
+            }
+        } else {
+            if (strLast.length === 2) {
+                if (str.length === 2) {
+                    data.value1 += ':00';
+                } else {
+                    data.value1 += ':';
+                }
+
+            }
+        }
+        data.oldValue1 = data.value1;
+        setValues()
+    }
+
+    function setValues() {
+        document.querySelector('#firstTime').value = data.value1
+        document.querySelector('#secondTime').value = data.value2
+        document.querySelector('#thirdTime').value = data.value3
+        document.querySelector('#fourthTime').value = data.value4
+        document.querySelector('#fifthTime').value = data.value5
+        document.querySelector('#sixthTime').value = data.value6
+        document.querySelector('#oldValue1').value = data.oldValue1
+    }
+
+    function replaceDate(){
+        debugger
+        var date = document.querySelector('#sluggishExportDate').value;
+        if(date>28){
+            document.getElementById('sluggishExportDate').value = '';
+        }
+    }
+</script>
+<script type="text/javascript">
+    var prefix = ctx + "workerOrderIssueTime";
+    $("#form-workerOrderIssueTime-edit").validate({
+        rules: {
+            xxxx: {
+                required: true,
+            },
+        },
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            let getbox = {
+                id:document.querySelector('#id').value,
+                firstTime:document.querySelector('#firstTime').value,
+                secondTime:document.querySelector('#secondTime').value,
+                thirdTime:document.querySelector('#thirdTime').value,
+                fourthTime:document.querySelector('#fourthTime').value,
+                fifthTime:document.querySelector('#fifthTime').value,
+                sixthTime:document.querySelector('#sixthTime').value,
+                autoExecute:document.querySelector('#autoExecute').value,
+                sluggishExportDate:document.querySelector('#sluggishExportDate').value,
+                sluggishExportParam:document.querySelector('#sluggishExportParam').value,
+                operationSeqnum:document.querySelector("#operationSeqnum").value,
+                lockTime:document.querySelector("#lockTime").value,
+            };
+            var config = {
+                url: "/workerOrderIssueTime/update",
+                type: "post",
+                data : JSON.stringify(getbox),
+                dataType:"json",
+                contentType: "application/json;charset-UTF-8",
+                async : false,
+                beforeSend: function () {
+                    $.modal.loading("正在处理中，请稍后...");
+                    $.modal.disable();
+                },
+                success: function(result) {
+                    $.operate.successCallback(result);
+                }
+            };
+            $.ajax(config);
+                /*{
+                type: "post",
+                url: "/workerOrderIssueTime/update",
+                data : JSON.stringify(getbox),
+                dataType:"json",
+                contentType: "application/json;charset-UTF-8",
+                async : false,
+                error : function(data) {
+                    $.modal.msgError("系统错误，请联系管理员!")
+                },
+                success : function(data) {
+                    $.modal.msgSuccess("修改成功!");
+                },
+            });*/
+            // $.operate.save(prefix + "/update", $('#form-workerOrderIssueTime-edit').serialize());
+        }
+    }
+</script>
+</body>
+</html>

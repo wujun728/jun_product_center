@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.AccountAliasMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.AccountAlias">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="alias_id" jdbcType="INTEGER" property="aliasId" />
+    <result column="account_alias" jdbcType="VARCHAR" property="accountAlias" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="disposition_id" jdbcType="INTEGER" property="dispositionId" />
+    <result column="effective_date" jdbcType="VARCHAR" property="effectiveDate" />
+    <result column="disable_date" jdbcType="VARCHAR" property="disableDate" />
+    <result column="enabled_flag" jdbcType="VARCHAR" property="enabledFlag" />
+    <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.AccountAliasCriteria" resultMap="BaseResultMap">
+    select *
+    from account_alias
+    where 1=1
+    <if test="keyWordList != null">
+      and
+      <foreach collection="keyWordList" item="keyWord" index="index" open="(" separator="and" close=")">
+        (account_alias LIKE binary CONCAT('%', #{keyWord}, '%')
+        or description LIKE binary CONCAT('%', #{keyWord}, '%')
+        or type LIKE binary CONCAT('%', #{keyWord}, '%')
+        )
+      </foreach>
+    </if>
+  </select>
+
+  <select id="findByDispositionId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from account_alias
+    where disposition_id = #{dispositionId}
+  </select>
+</mapper>

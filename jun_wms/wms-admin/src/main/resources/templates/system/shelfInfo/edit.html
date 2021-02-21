@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改货架设置')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-shelfInfo-edit" th:object="${shelfInfo}">
+            <input id="shelfId" name="shelfId" th:field="*{shelfId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">货区编码：</label>
+				<div class="col-sm-8">
+					<input id="areaId" name="areaId" th:field="*{areaId}" class="form-control" disabled type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">货架编码：</label>
+				<div class="col-sm-8">
+					<input id="shelfCode" name="shelfCode" th:field="*{shelfCode}" disabled class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">货架名：</label>
+				<div class="col-sm-8">
+					<input id="shelfName" name="shelfName" th:field="*{shelfName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">行：</label>
+				<div class="col-sm-8">
+					<input id="shelfRow" name="shelfRow" th:field="*{shelfRow}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">列：</label>
+				<div class="col-sm-8">
+					<input id="shelfColumn" name="shelfColumn" th:field="*{shelfColumn}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="memo" name="memo" th:field="*{memo}" class="form-control" type="text">
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/shelfInfo";
+		$("#form-shelfInfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-shelfInfo-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

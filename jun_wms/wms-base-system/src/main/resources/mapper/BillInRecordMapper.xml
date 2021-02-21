@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.BillInRecordMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.BillInRecord">
+      <!--
+        WARNING - @mbg.generated
+      -->
+      <id column="bill_in_record_id" jdbcType="INTEGER" property="billInRecordId" />
+      <result column="bill_in_detail_id" jdbcType="INTEGER" property="billInDetailId" />
+      <result column="accept_quantity" jdbcType="INTEGER" property="acceptQuantity" />
+      <result column="accept_time" jdbcType="VARCHAR" property="acceptTime" />
+      <result column="box_code" jdbcType="VARCHAR" property="boxCode" />
+      <result column="bar_code" jdbcType="VARCHAR" property="barCode" />
+      <result property="pd" jdbcType="VARCHAR" column="pd"/>
+      <result property="exp" jdbcType="VARCHAR" column="exp"/>
+      <result property="batch" jdbcType="VARCHAR" column="batch"/>
+      <result property="state" jdbcType="INTEGER" column="state"/>
+        <result property="receipt_num" jdbcType="VARCHAR" column="receiptNum"/>
+    </resultMap>
+
+    <resultMap id="toEBSDto" type="com.deer.wms.base.system.model.BillInRecordDto" extends="BaseResultMap">
+      <result column="po_header_id" jdbcType="INTEGER" property="poHeaderId" />
+      <result column="po_line_id" jdbcType="INTEGER" property="poLineId" />
+      <result column="line_location_id" jdbcType="INTEGER" property="lineLocationId" />
+      <result column="po_distribution_id" jdbcType="INTEGER" property="poDistributionId" />
+      <result column="item_id" jdbcType="INTEGER" property="itemId" />
+      <result column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+        <result column="shipment_num" jdbcType="VARCHAR" property="shipmentNum" />
+        <result column="slotting" jdbcType="VARCHAR" property="slotting"/>
+        <result column="organization_id" jdbcType="INTEGER" property="organizationId"/>
+        <result column="sub_inventory_code" jdbcType="VARCHAR" property="subInventoryCode"/>
+        <result column="segment" jdbcType="VARCHAR" property="segment"/>
+        <result column="expected_arrival_date" jdbcType="VARCHAR" property="expectedArrivalDate"/>
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+        <result column="vendor_code" jdbcType="VARCHAR" property="vendorCode"/>
+        <result column="vendor_name" jdbcType="VARCHAR" property="vendorName"/>
+        <result column="order_quantity" jdbcType="INTEGER" property="orderQuantity"/>
+        <result column="line_num" jdbcType="VARCHAR" property="lineNum"/>
+    </resultMap>
+
+    <select id="findListToEBS" parameterType="com.deer.wms.base.system.model.BillInRecordCriteria" resultMap="toEBSDto">
+        SELECT
+        sum(bir.accept_quantity) as accept_quantity,
+        bir.batch,
+        si.slotting,
+        bi.sub_inventory_id,
+        bid.shipment_num
+        FROM `bill_in_record` bir
+        left join bill_in_detail bid on bir.bill_in_detail_id = bid.bill_in_detail_id
+        left join box_item bi on bi.box_code = bir.box_code
+        left join sub_inventory si on si.sub_inventory_id = bi.sub_inventory_id
+        where 1=1
+        <if test="state != null and state != ''">
+          and bir.state = #{state}
+        </if>
+        <if test="billInDetailIds != null">
+            and bid.bill_in_detail_id in
+            <foreach collection="billInDetailIds" item="billInDetailId" index="index" open="(" separator="," close=")">
+                #{billInDetailId}
+            </foreach>
+        </if>
+        group by bid.shipment_num
+    </select>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.BillInRecordCriteria" resultMap="toEBSDto">
+        SELECT
+        bir.*,
+        bid.po_header_id,
+        bid.po_line_id,
+        bid.segment,
+        bid.expected_arrival_date,
+        ii.item_code,
+        ii.item_name,
+        bid.vendor_code,
+        bid.vendor_name,
+        bid.quantity as order_quantity,
+        bid.line_num
+        FROM `bill_in_record` bir
+        left join bill_in_detail bid on bir.bill_in_detail_id = bid.bill_in_detail_id
+        left join item_info ii on ii.inventory_item_id = bid.item_id
+        where 1=1
+        <if test="state != null">
+            and bir.state = #{state}
+        </if>
+        <if test="poDistributionId != null and poDistributionId != ''">
+            and bid.po_distribution_id = #{poDistributionId}
+        </if>
+        <if test="itemCode != null and itemCode != ''">
+            and ii.item_code = #{itemCode}
+        </if>
+        <if test="batch != null and batch != ''">
+            and bir.batch = #{batch}
+        </if>
+        <if test="segment != null and segment != ''">
+            and bid.segment = #{segment}
+        </if>
+        <if test="receiptNum != null and receiptNum != ''">
+            and bir.receipt_num = #{receiptNum}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and date(bir.accept_time) &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and date(bir.accept_time) &lt;= #{endTime}
+        </if>
+        order by accept_time desc
+    </select>
+
+    <select id="findCheckRecordFromEBS" parameterType="com.deer.wms.base.system.model.BillInRecordCriteria" resultMap="toEBSDto">
+        SELECT
+        bir.bill_in_record_id,
+        bir.box_code,
+        bir.batch,
+        bir.accept_time,
+        bid.bill_in_detail_id,
+        bid.po_header_id,
+        bid.po_line_id,
+        bid.line_location_id,
+        bid.po_distribution_id,
+        bid.item_id,
+        bid.shipment_num,
+        sum(bir.accept_quantity) as accept_quantity,
+        si.sub_inventory_code,
+        si.slotting,
+        bir.state
+
+        FROM `bill_in_record` bir
+        left join bill_in_detail bid on bir.bill_in_detail_id = bid.bill_in_detail_id
+        left join box_item bi on bi.box_code = bir.box_code
+        left join sub_inventory si on si.sub_inventory_id = bi.sub_inventory_id
+        where 1=1
+        <if test="state != null and state != ''">
+            and bir.state = #{state}
+        </if>
+        <if test="billInDetailIds != null">
+            and bid.bill_in_detail_id in
+            <foreach collection="billInDetailIds" item="billInDetailId" index="index" open="(" separator="," close=")">
+                #{billInDetailId}
+            </foreach>
+        </if>
+        <if test="billInRecordIds != null">
+            and bir.bill_in_record_id in
+            <foreach collection="billInRecordIds" item="billInRecordId" index="index" open="(" separator="," close=")">
+                #{billInRecordId}
+            </foreach>
+        </if>
+        <if test="boxCode != null and boxCode != ''">
+            and bir.box_code = #{boxCode}
+        </if>
+        <if test="barCode != null and barCode != ''">
+            and bir.bar_code = #{barCode}
+        </if>
+        <if test="orderParam != null and orderParam == 1006">
+            group by bid.line_location_id
+        </if>
+        <if test="orderParam != null and orderParam == 1007">
+            group by bir.box_code
+        </if>
+        <if test="orderParam != null and orderParam == 1008">
+            group by bir.box_code,bir.state
+        </if>
+        <if test="orderParam != null and orderParam == 1009">
+            group by bir.batch,bir.bill_in_detail_id
+        </if>
+    </select>
+</mapper>

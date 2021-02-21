@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增出库单')" />
+    <style>
+        .deer-cell{
+            border-color: #d3dce6;
+            min-height: 46px;
+            border-style:solid;
+            z-index:200000;
+            text-align:center;
+            min-width:100px
+        }
+        .deer-cell .deer-cell-title{
+            line-height: 44px;
+            font-weight:bold;
+            color:  #99a9bf;
+            width:auto
+        }
+        .deer-cell .el-input--suffix .el-input__inner {
+            padding-right: 3px;
+            border-radius: 0px;
+            padding: 0 3px;
+        }
+        .deer-cell .el-date-editor.el-input, .deer-cell .el-date-editor.el-input__inner {
+            width: auto;
+        }
+        .deer-cell .el-input{
+            color:  #99a9bf;
+        }
+    </style>
+</head>
+<body  >
+<div class="container-div" onmousemove="parent.updateTimeOut()">
+
+    <el-divider content-position="left" style="margin-bottom: 20px">出库单信息</el-divider>
+    <el-form  :inline="true" :label-position="left"  :model="insert.billOutMaster.info" ref="insertForm"   label-width="100px" :rules="insert.billOutMaster.rules"  class="demo-ruleForm">
+        <el-form-item size="small " label="单据号" prop="billNo" >
+            <el-input v-model="insert.billOutMaster.info.billNo"></el-input>
+        </el-form-item>
+        <el-form-item size="small " label="仓库"   prop="wareId" >
+            <el-select v-model="insert.billOutMaster.info.wareId" placeholder="请选择仓库">
+                <el-option v-for="ware in wares" v-bind:label="ware.wareName" v-bind:value="ware.wareId"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item size="small " label="合同号" >
+            <el-input v-model="insert.billOutMaster.info.contractNo"></el-input>
+        </el-form-item>
+        <el-form-item size="small " label="备注"  prop="memo"  >
+            <el-input v-model="insert.billOutMaster.info.memo"></el-input>
+        </el-form-item>
+
+        <!--					<el-form-item size="small " label="供应商"   prop="supplierId" >-->
+        <!--						<el-select v-model="insert.billOutMaster.info.supplierId" placeholder="请选择供应商">-->
+        <!--							<el-option v-for="supplier in suppliers" v-bind:label="supplier.supplierName" v-bind:value="supplier.supplierId"></el-option>-->
+        <!--						</el-select>-->
+        <!--					</el-form-item>-->
+
+    </el-form>
+    <el-divider content-position="left" style="margin-bottom: 20px">物料详情</el-divider>
+
+    <div style="margin-left: 20px;margin-top: 20px">
+        <el-row  >
+            <el-col :span="3" class=" deer-cell ">
+				  <span class="deer-cell-title">
+				  料号
+				  </span>
+            </el-col>
+            <el-col :span="3" class=" deer-cell ">
+				  <span class="deer-cell-title">
+				  物料名称
+				  </span>
+            </el-col>
+            <el-col :span="3" class=" deer-cell ">
+				  <span class="deer-cell-title">
+					生产日期
+				  </span>
+            </el-col>
+            <!--				<el-col :span="3" class=" deer-cell ">-->
+            <!--				  <span class="deer-cell-title">-->
+            <!--				   厂家-->
+            <!--				  </span>-->
+            <!--				</el-col>-->
+            <!--				<el-col :span="3" class=" deer-cell ">-->
+            <!--				  <span class="deer-cell-title">-->
+            <!--				  厂家批次-->
+            <!--				  </span>-->
+            <!--				</el-col>-->
+            <el-col :span="4" class=" deer-cell ">
+				  <span class="deer-cell-title">
+				  数量
+				  </span>
+            </el-col>
+            <el-col :span="2"  >
+                <el-button    style="margin-left:10px" @click="addDetail()" type="success" icon="el-icon-plus" circle></el-button>
+            </el-col>
+
+        </el-row>
+        <el-row v-for="(detail,index) in insert.billDetails">
+            <el-col :span="3" class=" deer-cell ">
+                <el-input
+                        :disabled="true"
+                        placeholder=" "
+                        v-model="detail.itemCode"
+                        clearable>
+                </el-input>
+            </el-col>
+            <el-col :span="3" class=" deer-cell ">
+                <el-input
+                        v-model="detail.itemName"
+                        :disabled="true"
+                        clearable
+                        placeholder=" ">
+                </el-input>
+            </el-col>
+            <el-col :span="3" class=" deer-cell ">
+                <el-date-picker
+                        v-model="detail.pd"
+                        type="date"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd"
+                        placeholder="选择日期"
+                >
+                </el-date-picker>
+            </el-col>
+
+            <!--				<el-col :span="3" class=" deer-cell ">-->
+            <!--					<el-select v-model="detail.supplierCode" filterable  placeholder=" 选择供应商">-->
+            <!--						<el-option label="区域一" value="shanghai"></el-option>-->
+            <!--						<el-option label="区域二" value="beijing"></el-option>-->
+            <!--					</el-select>-->
+            <!--				</el-col>-->
+            <!--				<el-col :span="3" class=" deer-cell ">-->
+            <!--					<el-input-->
+            <!--							placeholder=""-->
+            <!--							v-model="detail.supplierBatch"-->
+            <!--							clearable>-->
+            <!--					</el-input>-->
+            <!--				</el-col>-->
+
+            <el-col :span="4" class=" deer-cell ">
+                <el-input-number v-model="detail.quantity" :precision="2" :step="1" :min="1" :max="1000000"></el-input-number>
+
+            </el-col>
+            <el-col :span="2" >
+                <el-button  style="margin-left:10px" @click="removeDetail(index)" type="danger" icon="el-icon-delete" circle></el-button>
+
+            </el-col>
+
+
+        </el-row>
+    </div>
+    <el-divider content-position="left" style="margin-bottom: 20px"></el-divider>
+    <div style="margin-left: 40%">
+
+
+        <el-button type="primary" @click="save()">保存</el-button>
+
+        <el-button type="info" @click="closeModal()">返回</el-button>
+
+
+
+
+
+    </div>
+
+    <el-dialog
+            title="物料列表"
+            width="80%"
+            :visible.sync="dialogTableVisible">
+        <el-row>
+            <el-col :span="6">
+                <el-tree :data="itemTypes" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+            </el-col>
+            <el-col :span="18">
+                <el-form style="margin-left:10px" :inline="true" :model="item.param" class="demo-form-inline">
+                    <el-form-item size="mini" label="关键字">
+                        <el-input size="mini" v-model="item.param.keyWords" placeholder="关键字"></el-input>
+                    </el-form-item>
+                    <el-form-item size="mini">
+                        <el-button size="mini" type="primary" @click="getItems()">查询</el-button>
+                    </el-form-item>
+                </el-form>
+                <el-table border size="small " ref="multipleTable" height="300" @selection-change="handleSelectionChange" :data="item.list">
+                    <el-table-column
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column property="itemCode" label="料号"  ></el-table-column>
+                    <el-table-column property="itemName" label="物料名"  ></el-table-column>
+                    <el-table-column property="spec" label="规格"  ></el-table-column>
+                    <el-table-column property="model" label="型号"  ></el-table-column>
+                </el-table>
+                <el-pagination
+                        @current-change="chengCurrentPage"
+                        :current-page="item.currentPage"
+                        :page-size="item.pageSize"
+                        layout="prev, pager, next"
+                        :total="item.total">
+                </el-pagination>
+
+            </el-col>
+        </el-row>
+        <el-row style="margin-top:10px;margin-left:40%">
+            <el-button size="mini" type="primary" @click="commitItems()">确定</el-button>
+            <el-button size="mini" type="info" @click="toggleSelection">取消</el-button>
+        </el-row>
+    </el-dialog>
+
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" charset="UTF-8">
+    var prefix = ctx + "out/billOutMaster"
+    var app = new Vue({
+        el: '.container-div',
+        data: {
+            itemTypes:[],
+            defaultProps:{
+                children: 'children',
+                label: 'itemTypeName'
+            },
+            dialogTableVisible:false,
+            item:{
+                currentPage:1,
+                pageSize:6,
+                total:'',
+                param:{
+                    keyWords:'',
+                    itemTypeId:'',
+                },
+                list:[],
+                selectItems:[],
+            },
+            groupBox:{
+                boxNo:''
+
+            },
+
+            wares:[],
+            insert:{
+                billOutMaster:{
+                    info:{
+
+                    },
+                    rules:{
+                        billNo: [
+                            { required: true, message: '请输入活动名称', trigger: 'blur' },
+                            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                        ],
+                        memo: [
+                            { required: true, message: '请输入备注', trigger: 'change' }
+                        ],
+
+                        wareId: [
+                            { required: true, message: '请选择仓库', trigger: 'change' }
+                        ],
+
+                    }
+                },
+                billDetails: []
+            }
+
+
+
+        },
+        methods:{
+            /*关闭此页面*/
+            closeModal:function(){
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+                //	parent.$.modal.msgSuccess("保存成功");
+                //parent.$.table.refresh();
+            },
+            /*将list格式装换成适用于树状结构的*/
+            format: function (json) {
+                var ret = [], o = {};
+
+                function add(arr, data) {
+                    var obj = {
+                        "itemTypeName": data.itemTypeName,
+                        "itemTypeCode": data.itemTypeCode,
+                        "itemTypeId": data.itemTypeId,
+                        "parentId": data.parentId,
+                        "children": []
+                    };
+                    o[data.itemTypeId] = obj;
+                    arr.push(obj);
+                }
+
+                json.forEach(x => {
+                    if (o[x.parentId]) {
+                        add(o[x.parentId].children, x);
+                    } else {
+                        add(ret, x);
+                    }
+                });
+
+                return ret;
+            },
+            handleNodeClick(data){
+                var itemTypeId = itemTypeId;
+            },
+            //取消选择
+            toggleSelection(rows) {
+                this.$refs.multipleTable.clearSelection();
+                this.dialogTableVisible = false;
+                this.selectItems = [];
+            },
+            //选择
+            handleSelectionChange(items) {
+                this.selectItems = items;
+
+            },
+            commitItems:function(){
+                var billDetails = this.insert.billDetails;
+                this.selectItems.forEach(item => {
+
+                    var detail = {
+                        itemCode:item.itemCode,
+                        itemName:item.itemName,
+                        pd:'',
+                        supplierCode:'',
+                        supplierBatch:'',
+                        quantity:1
+
+                    };
+                    var flag = true;
+                    billDetails.forEach(detail => {
+                        if(detail.itemCode == item.itemCode){
+                            flag = false;
+                        }
+                    });
+                    if(flag){
+                        this.insert.billDetails.push(detail);
+                    }
+                });
+                this.toggleSelection();
+            },
+            /*添加出库详情*/
+            addDetail:function(index){
+                this.dialogTableVisible = true;
+                this.getItems(null);
+            },
+
+            save:function(){
+                var that = this;
+                var insert = that.insert;
+                var master = insert.billOutMaster;
+                var billdetais  = insert.billDetails;
+                /*校验billMaster数据*/
+                this.$refs['insertForm'].validate((valid) => {
+                    if (valid) {
+                        $.ajax({
+                            cache : true,
+                            type : "POST",
+                            url :  "/out/billOutMaster/insert",
+                            data :JSON.stringify({
+                                    billOutMaster:that.insert.billOutMaster.info,
+                                    billOutDetailList:that.insert.billDetails
+                                }
+                            ),
+                            dataType:"json",
+                            contentType: "application/json;charset-UTF-8",
+                            async : false,
+                            // beforeSend: function () {
+                            // 	$.modal.loading("正在处理中，请稍后...");
+                            // },
+                            error : function(request) {
+                                $.modal.alertError("系统错误");
+                            },
+                            success : function(data) {
+                                debugger
+                                if(data.data == "false"){
+
+                                    $.modal.alertError("仓库中的数量不足,请修改数量！");
+                                }else{
+
+                                    $.modal.alertSuccess("保存成功！");
+                                    that.closeModal();
+                                }
+
+                            }
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+
+
+
+            },
+            removeDetail:function(index){
+                this.insert.billDetails.splice(index,1);
+            },
+
+            getWares:function(){
+                var that = this;
+                $.ajax({
+                    cache : true,
+                    type : "POST",
+                    url :  "/system/wareInfo/list",
+                    data : {
+                    },
+                    async : false,
+                    error : function(request) {
+                        $.modal.alertError("系统错误");
+                    },
+                    success : function(data) {
+                        that.wares = data.rows;
+                    }
+                });
+            },
+
+
+            chengCurrentPage:function(currentPage){
+                this.item.currentPage  = currentPage;
+                this.getItems(null);
+            },
+            getItems:function(itemTypeId){
+                var that = this;
+                var item = that.item;
+                $.ajax({
+                    cache : true,
+                    type : "POST",
+                    url :  "/system/itemInfo/findList",
+                    data : {
+                        itemTypeId:itemTypeId,
+                        keyWords: item.param.keyWords,
+                        pageSize: item.pageSize,
+                        pageNum: item.currentPage,
+                    },
+                    async : false,
+                    error : function(request) {
+                        $.modal.alertError("系统错误");
+                    },
+                    success : function(data) {
+                        that.item.list = data.rows;
+                        that.item.total = data.total;
+                    }
+                });
+            },
+            getTypes:function(){
+                var that = this;
+                $.ajax({
+                    cache : true,
+                    type : "GET",
+                    url :  "/system/itemType/list",
+                    data : {
+                    },
+                    async : false,
+                    error : function(request) {
+                        $.modal.alertError("系统错误");
+                    },
+                    success : function(data) {
+                        var itemTypes = data.data;
+                        that.itemTypes = that.format(itemTypes);
+                    }
+                });
+            },
+        },
+        created:function(){
+            this.getWares();
+            this.getTypes();
+        },
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.DoorMapper">
+    
+    <resultMap type="Door" id="DoorResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="state"    column="state"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="addressCode"    column="address_code"    />
+    </resultMap>
+
+    <resultMap type="DoorDto" id="Dto" extends="DoorResult">
+
+        <result property="wareName"    column="ware_name"    />
+
+    </resultMap>
+	
+	<sql id="selectDoorVo">
+        select id, code, name, type, state, ware_id, address_code from door
+    </sql>
+	
+    <select id="selectDoorList" parameterType="Door" resultMap="DoorResult">
+        <include refid="selectDoorVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="code != null  and code != '' "> and code = #{code}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="type != null "> and type = #{type}</if>
+             <if test="state != null "> and state = #{state}</if>
+             <if test="wareId != null "> and ware_id = #{wareId}</if>
+         </where>
+    </select>
+
+    <select id="findList" parameterType="Door" resultMap="Dto">
+       select
+        d.id, d.code, d.name, d.type, d.state, d.ware_id,d.address_code,
+        ware.ware_name
+       from door d
+       left join  ware_info ware on d.ware_id = ware.ware_id
+
+        <where>
+
+            <if test="type != null "> and type = #{type}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+        </where>
+    </select>
+    
+    <select id="selectDoorById" parameterType="Integer" resultMap="DoorResult">
+        <include refid="selectDoorVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertDoor" parameterType="Door" useGeneratedKeys="true" keyProperty="id">
+        insert into door
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="code != null  and code != ''  ">code,</if>
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="type != null  ">type,</if>
+			<if test="state != null  ">state,</if>
+			<if test="wareId != null  ">ware_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="code != null  and code != ''  ">#{code},</if>
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="type != null  ">#{type},</if>
+			<if test="state != null  ">#{state},</if>
+			<if test="wareId != null  ">#{wareId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateDoor" parameterType="Door">
+        update door
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null  and code != ''  ">code = #{code},</if>
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="type != null  ">type = #{type},</if>
+            <if test="state != null  ">state = #{state},</if>
+            <if test="wareId != null  ">ware_id = #{wareId},</if>
+            <if test="addressCode != null  ">address_code = #{addressCode},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteDoorById" parameterType="Integer">
+        delete from door where id = #{id}
+    </delete>
+	
+    <delete id="deleteDoorByIds" parameterType="String">
+        delete from door where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

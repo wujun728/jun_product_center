@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>wms-parent</artifactId>
+        <groupId>com.deer</groupId>
+        <version>3.3</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>wms-quartz</artifactId>
+	
+	<description>
+	    quartz定时任务
+	</description>
+
+    <dependencies>
+    
+    	<!--Shiro核心框架 -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+		</dependency>
+    
+		<!-- 定时任务 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.mchange</groupId>
+					<artifactId>c3p0</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>com.deer</groupId>
+            <artifactId>wms-common</artifactId>
+			<version>3.3</version>
+			<scope>compile</scope>
+
+        </dependency>
+        <dependency>
+            <groupId>com.deer</groupId>
+            <artifactId>wms-base-system</artifactId>
+            <version>3.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+	
+</project>

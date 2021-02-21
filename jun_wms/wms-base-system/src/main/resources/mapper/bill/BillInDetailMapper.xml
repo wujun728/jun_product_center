@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.bill.BillInDetailMapper">
+    
+    <resultMap type="BillInDetail" id="BillInDetailResult">
+        <result property="billInDetailId" jdbcType="INTEGER"  column="bill_in_detail_id"    />
+        <result property="billId"  jdbcType="INTEGER"  column="bill_id"    />
+        <result property="itemId"  jdbcType="VARCHAR"  column="item_id"    />
+        <result property="poDistributionId"  jdbcType="INTEGER"  column="po_distribution_id"    />
+        <result property="distributionNum"  jdbcType="VARCHAR"  column="distribution_num"    />
+        <result property="segment" jdbcType="VARCHAR" column="segment"/>
+        <result property="poHeaderId" jdbcType="INTEGER" column="po_header_id"/>
+        <result property="lineNum" jdbcType="VARCHAR" column="line_num"/>
+        <result property="poLineId" jdbcType="INTEGER" column="po_line_id"/>
+        <result property="shipmentNum" jdbcType="VARCHAR" column="shipment_num"/>
+        <result property="lineLocationId" jdbcType="INTEGER" column="line_location_id"/>
+        <result property="orgId" jdbcType="INTEGER" column="org_id"/>
+        <result property="shipToOrganizationId" jdbcType="INTEGER" column="ship_to_organization_id"/>
+        <result property="itemDescription" jdbcType="VARCHAR" column="item_description"/>
+        <result property="unitMeasLookupCode" jdbcType="VARCHAR" column="unit_meas_lookup_code"/>
+        <result property="unitPrice" jdbcType="DECIMAL" column="unit_price"/>
+        <result property="quantity" jdbcType="INTEGER" column="quantity"/>
+        <result property="quantityReceived" jdbcType="VARCHAR" column="quantity_received"/>
+        <result property="closedCode" jdbcType="VARCHAR" column="closed_code"/>
+        <result property="supplyTypeCode" jdbcType="VARCHAR" column="supply_type_code"/>
+        <result property="surplusReceivedQuantity" jdbcType="INTEGER" column="surplus_received_quantity"/>
+        <result property="vendorId" jdbcType="INTEGER" column="vendor_id"/>
+        <result property="vendorCode" jdbcType="VARCHAR" column="vendor_code"/>
+        <result property="vendorName" jdbcType="VARCHAR" column="vendor_name"/>
+        <result property="billInState" jdbcType="VARCHAR" column="bill_in_state"/>
+        <result property="expectedArrivalDate" jdbcType="VARCHAR" column="expected_arrival_date"/>
+    </resultMap>
+
+    <resultMap type="BillInDetailDto" id="Dto" extends="BillInDetailResult">
+        <result property="itemName"    column="item_name"    />
+    </resultMap>
+	
+	<sql id="selectBillInDetailVo">
+        select * from bill_in_detail
+    </sql>
+
+    <select id="findList" resultMap="Dto"  parameterType="com.deer.wms.base.system.model.bill.BillInDetailCriteria">
+        select
+        detail.*
+        from bill_in_detail detail
+        left join bill_in_record bir on bir.bill_in_detail_id = detail.bill_in_detail_id
+        where 1=1
+        <if test="billInState != null and billInState != ''">
+            and detail.bill_in_state = #{billInState}
+        </if>
+        <if test="billNo != null and billNo != ''">
+            and detail.segment = #{billNo}
+        </if>
+        <if test="itemId != null and itemId != ''">
+            and detail.item_id= #{itemId}
+        </if>
+        <if test="batch != null and batch != ''">
+            and bir.batch= #{batch}
+        </if>
+
+    </select>
+	
+    <select id="selectBillInDetailList" parameterType="BillInDetail" resultMap="BillInDetailResult">
+        <include refid="selectBillInDetailVo"/>
+        <where>  
+            <if test="billInDetailId != null "> and bill_in_detail_id = #{billInDetailId}</if>
+             <if test="billId != null "> and bill_id = #{billId}</if>
+
+            <if test="segment != null and segment != ''">
+                and segment = #{segment}
+            </if>
+            <if test="itemId != null and itemId != ''">
+                and item_id= #{itemId}
+            </if>
+         </where>
+         order by expected_arrival_date asc
+    </select>
+    
+    <select id="selectBillInDetailById" parameterType="Integer" resultMap="BillInDetailResult">
+        <include refid="selectBillInDetailVo"/>
+        where bill_in_detail_id = #{billInDetail}
+    </select>
+
+	<delete id="deleteBillInDetailById" parameterType="Integer">
+        delete from bill_in_detail where bill_in_detail_id = #{billInDetail}
+    </delete>
+	
+    <delete id="deleteBillInDetailByIds" parameterType="String">
+        delete from bill_in_detail where bill_in_detail_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.item.ItemInfoMapper">
+    
+    <resultMap type="ItemInfo" id="ItemInfoResult">
+        <result property="itemId"    column="item_id"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="itemName"    column="item_name"    />
+        <result property="unit"    column="unit"    />
+        <result property="spec"    column="spec"    />
+        <result property="model"    column="model"    />
+        <result property="thickness"    column="thickness"    />
+        <result property="maxPackQty"    column="max_pack_qty"    />
+        <result property="dateWarning"    column="date_warning"    />
+        <result property="itemTypeId"    column="item_type_id"    />
+        <result property="inventoryItemId"    column="inventory_item_id"    />
+        <result property="cardNoOne"    column="card_no_one"    />
+        <result property="cardNoTwo"    column="card_no_two"    />
+    </resultMap>
+
+    <resultMap type="ItemInfoDto" id="Dto" extends="ItemInfoResult">
+        <result property="itemTypeName"    column="item_type_name"    />
+        <result property="operatorNameOne"    column="operator_name_one"    />
+        <result property="empNoOne"    column="emp_no_one"    />
+        <result property="operatorNameTwo"    column="operator_name_two"    />
+        <result property="empNoTwo"    column="emp_no_two"    />
+    </resultMap>
+	
+	<sql id="selectItemInfoVo">
+        select item_id, item_code,unit, item_name, spec, model, thickness, max_pack_qty,date_warning,item_type_id,inventory_item_id,card_no_one,card_no_two from item_info
+    </sql>
+	
+    <select id="selectItemInfoList" parameterType="ItemInfo" resultMap="ItemInfoResult">
+        <include refid="selectItemInfoVo"/>
+        <where>  
+            <if test="itemId != null "> and item_id = #{itemId}</if>
+             <if test="itemCode != null  and itemCode != '' "> and item_code = #{itemCode}</if>
+             <if test="itemName != null  and itemName != '' "> and item_name = #{itemName}</if>
+             <if test="spec != null  and spec != '' "> and spec = #{spec}</if>
+             <if test="model != null  and model != '' "> and model = #{model}</if>
+             <if test="thickness != null "> and thickness = #{thickness}</if>
+         </where>
+    </select>
+    
+    <select id="selectItemInfoById" parameterType="Integer" resultMap="ItemInfoResult">
+        <include refid="selectItemInfoVo"/>
+        where item_id = #{itemId}
+    </select>
+
+    <select id="findList" parameterType="itemInfoParam" resultMap="Dto">
+        select
+        item.item_id,
+        item.item_code,
+        item.item_name,
+        item.unit,
+        item.spec,
+        item.model,
+        item.card_no_one,
+        item.card_no_two,
+        item.thickness,
+        opone.operator_name as operator_name_one,
+        opone.emp_no as emp_no_one,
+        optwo.operator_name as operator_name_two,
+        optwo.emp_no as emp_no_two,
+        t.item_type_name,
+        item.max_pack_qty
+        from item_info item
+        left join item_type t on item.item_type_id  = t.item_type_id
+        left join operator opone on opone.operator_card = item.card_no_one
+        left join operator optwo on optwo.operator_card = item.card_no_two
+        <where>
+            <if test="keyWordList != null">
+                <foreach collection="keyWordList" item="keyWord" index="index" open="(" separator="and" close=")">
+                    (item.item_name LIKE binary CONCAT('%', #{keyWord}, '%'))
+                </foreach>
+            </if>
+            <if test="itemCode != null and itemCode != ''">
+                and item.item_code = #{itemCode}
+            </if>
+            <if test="itemTypeId != null">
+                and item.item_type_id = #{itemTypeId}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertItemInfo" parameterType="ItemInfo">
+        insert into item_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="itemId != null  ">item_id,</if>
+			<if test="itemCode != null  and itemCode != ''  ">item_code,</if>
+			<if test="itemName != null  and itemName != ''  ">item_name,</if>
+			<if test="spec != null  and spec != ''  ">spec,</if>
+			<if test="model != null  and model != ''  ">model,</if>
+			<if test="thickness != null  ">thickness,</if>
+            <if test="itemTypeId != null  ">item_type_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="itemId != null  ">#{itemId},</if>
+			<if test="itemCode != null  and itemCode != ''  ">#{itemCode},</if>
+			<if test="itemName != null  and itemName != ''  ">#{itemName},</if>
+			<if test="spec != null  and spec != ''  ">#{spec},</if>
+			<if test="model != null  and model != ''  ">#{model},</if>
+			<if test="thickness != null  ">#{thickness},</if>
+            <if test="itemTypeId != null  ">#{itemTypeId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateItemInfo" parameterType="ItemInfo">
+        update item_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemCode != null  and itemCode != ''  ">item_code = #{itemCode},</if>
+            <if test="itemName != null  and itemName != ''  ">item_name = #{itemName},</if>
+            <if test="spec != null  and spec != ''  ">spec = #{spec},</if>
+            <if test="model != null  and model != ''  ">model = #{model},</if>
+            <if test="thickness != null  ">thickness = #{thickness},</if>
+            <if test="itemTypeId != null  ">item_type_id = #{itemTypeId},</if>
+        </trim>
+        where item_id = #{itemId}
+    </update>
+
+	<delete id="deleteItemInfoById" parameterType="Integer">
+        delete from item_info where item_id = #{itemId}
+    </delete>
+	
+    <delete id="deleteItemInfoByIds" parameterType="String">
+        delete from item_info where item_id in 
+        <foreach item="itemId" collection="array" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </delete>
+
+    <select id="findByItemCode" parameterType="java.lang.String" resultMap="ItemInfoResult">
+        <include refid="selectItemInfoVo"/>
+        where 1=1
+        and item_code = #{itemCode}
+    </select>
+    <select id="findByItemInfo" parameterType="com.deer.wms.base.system.model.item.ItemInfo" resultMap="ItemInfoResult">
+        <include refid="selectItemInfoVo"/>
+        where 1=1
+        and item_code = #{itemCode}
+        and item_id &lt;&gt; #{itemId}
+    </select>
+
+    <select id="findByInventoryItemId" parameterType="java.lang.Integer" resultMap="ItemInfoResult">
+        <include refid="selectItemInfoVo"/>
+        where inventory_item_id = #{inventoryItemId}
+    </select>
+
+    <select id="checkItemCode" parameterType="String" resultType="int">
+		select count(1) from item_info where item_code = #{itemCode}
+	</select>
+</mapper>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.bill.BillOutMasterMapper">
+    
+    <resultMap type="BillOutMaster" id="BillOutMasterResult">
+        <result property="billId"    column="bill_id"    />
+        <result property="billNo"    column="bill_no"    />
+        <result property="contractNo"    column="contract_no"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUserName"    column="create_user_name"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="accountAliasId"    column="account_alias_id"    />
+        <result property="state"    column="state"    />
+        <result property="memo"    column="memo"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <resultMap type="com.deer.wms.base.system.model.bill.BillOutMasterDto"   id="BillOutMasterDtoResult"  extends="BillOutMasterResult">
+        <result property="wareName"    column="ware_name"    />
+        <result property="accountAlias" jdbcType="VARCHAR" column="account_alias"/>
+        <result property="itemCode" jdbcType="VARCHAR" column="item_code"/>
+        <result property="quantity" jdbcType="INTEGER" column="quantity"/>
+        <result property="priority" jdbcType="VARCHAR" column="priority"/>
+    </resultMap>
+
+	<sql id="selectBillOutMasterVo">
+        select bill_id, bill_no, contract_no, create_time, create_user_name,create_user_id, state, memo,ware_id from bill_out_master
+    </sql>
+
+    <select id="findBillOutMasterDtoByBillId" parameterType="Integer" resultMap="BillOutMasterDtoResult">
+        select bom.bill_id,
+             bom.bill_no,
+             bom.contract_no,
+             bom.create_time,
+             bom.create_user_name,
+             bom.create_user_id,
+             bom.state,
+             bom.memo,
+            bom.ware_id,
+            wi.ware_name
+        from bill_out_master bom join ware_info wi
+        on bom.ware_id = wi.ware_id
+        where bom.bill_id = #{billId}
+    </select>
+
+    <delete id="deleteBillOutMasterById" parameterType="Integer">
+        delete from bill_out_master where bill_id = #{billId}
+    </delete>
+
+    <delete id="deleteBillOutMasterByIds" parameterType="String">
+        delete from bill_out_master where bill_id in
+        <foreach item="billId" collection="array" open="(" separator="," close=")">
+            #{billId}
+        </foreach>
+    </delete>
+
+    <update id="updateBillOutMaster" parameterType="BillOutMaster">
+        update bill_out_master
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billNo != null  ">bill_no = #{billNo},</if>
+            <if test="contractNo != null  and contractNo != ''  ">contract_no = #{contractNo},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="createUserId != null  ">create_user_id = #{createUserId},</if>
+            <if test="createUserName != null  ">create_user_name=#{createUserName},</if>
+            <if test="wareId != null  ">ware_id=#{wareId},</if>
+            <if test="state != null  ">state = #{state},</if>
+            <if test="memo != null  and memo != ''  ">memo = #{memo},</if>
+        </trim>
+        where bill_id = #{billId}
+    </update>
+
+    <select id="selectBillOutMasterById" parameterType="Integer" resultMap="BillOutMasterResult">
+        <include refid="selectBillOutMasterVo"/>
+        where bill_id = #{billId}
+    </select>
+
+    <insert id="saveBillOutMaster" parameterType="billOutMaster" useGeneratedKeys="true" keyColumn="bill_id" keyProperty="billId">
+
+        insert into bill_out_master values
+          (null, #{billOutMaster.billNo}, #{billOutMaster.contractNo}, #{billOutMaster.createTime},
+            #{billOutMaster.createUserName}, #{billOutMaster.createUserId}, #{billOutMaster.state},
+              #{billOutMaster.memo}, #{billOutMaster.wareId})
+
+    </insert>
+
+    <select id="selectBillOutMasterList" resultMap="BillOutMasterDtoResult">
+        select
+        bom.bill_no,
+        bom.create_time,
+        bom.create_user_name,
+        bom.memo,
+        bom.state,
+        bom.type,
+        aa.account_alias,
+        bod.item_code,
+        bod.quantity,
+        bod.priority
+        from bill_out_master bom
+        join bill_out_detail bod on bod.bill_id = bom.bill_id
+        left join account_alias aa on aa.disposition_id = bom.account_alias_id
+        where 1=1
+    </select>
+
+    <select id="selectBillOutMasterByBillOutDetailId" parameterType="Integer" resultMap="BillOutMasterResult">
+        SELECT
+        	bom.*
+        FROM
+        	bill_out_master bom
+        INNER JOIN bill_out_detail bod ON bod.bill_id = bom.bill_id
+        WHERE
+        	bod.bill_out_detail_id = #{billOutDetailId}
+    </select>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.bill.BillOutMasterCriteria" resultMap="BillOutMasterDtoResult">
+        select * from bill_out_master
+        where 1=1
+        <if test="billNo != null and billNo != ''">
+            and bill_no = #{billNo}
+        </if>
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

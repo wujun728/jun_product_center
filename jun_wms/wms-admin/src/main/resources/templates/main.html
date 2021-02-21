@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>wms</title>
+    <link rel="shortcut icon" href="logo.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+
+    <style>
+        .contain{
+            width:95%;
+            margin-left: 2%;
+        }
+
+        .deer-cell{
+            height:150px;
+        }
+
+        .cell{
+            width:95%;
+            height:80%;
+            margin-top:10px;
+            margin-left:5px;
+
+            border-radius:5px;
+            padding: 16px 20px;
+        }
+
+        .cell > .leftBox {
+            float:left;
+        }
+        .cell > .leftBox > div.headTitle {
+            font-size: 28px;
+            color: #fff;
+            font-weight:bold;
+        }
+
+        .cell > .leftBox>div.footConst {
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .cell>div.rightIcon {
+            right: ;
+            font-size:75px;
+            float:right;
+            color:rgba(0,0,0,.3);
+        }
+
+        @media screen and (max-width: 980px) {
+            .cell>div.rightIcon {
+                display:none;
+            }
+
+            #tongji{
+                display:none;
+            }
+
+            #huowei{
+                height: 250px;
+            }
+            .
+
+        }
+
+        .deer-cell2{
+            height:380px;
+        }
+        .cell2{
+            width:98%;
+            height:90%;
+            margin-top:10px;
+            margin-left:0px;
+
+            border-radius:5px;
+            border-color: #eacf02;
+        }
+        .cell3{
+            width:98%;
+            height:80%;
+            margin-top:0px;
+            margin-left:5px;
+            border-style: solid;
+            border-radius:5px;
+            border-color: #eacf02;
+        }
+
+
+        .text {
+            font-size: 14px;
+        }
+
+        .item {
+            margin-bottom: 18px;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            content: "";
+        }
+        .clearfix:after {
+            clear: both
+        }
+
+        .box-card {
+            width: 480px;
+        }
+    </style>
+    <th:block th:include="include :: header('首页')" />
+</head>
+
+<body class="gray-bg" style="background-color: white;height: auto">
+<div class="contain" onmousemove="parent.updateTimeOut()">
+    <div class="row" >
+        <div class="col-xs-6 col-sm-3 deer-cell"
+        >
+            <div class="cell" style="background-color: #eacf02;">
+                <div class="leftBox">
+                    <div class="headTitle">入库单据</div>
+                    <div class="footConst">
+                        <span class="const">总数</span>&nbsp;:&nbsp;
+                        <span class="const">7</span>
+                    </div>
+                    <div class="footConst">
+                        <span>未处理</span>&nbsp;:&nbsp;
+                        <span>7</span>
+                    </div>
+                </div>
+                <div class="rightIcon">
+                    <span class="glyphicon glyphicon-barcode"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-3 deer-cell"  >
+            <div class="cell" style="background-color: #5ed5d1;">
+                <div class="leftBox">
+                    <div class="headTitle">出库单据</div>
+                    <div class="footConst">
+                        <span class="const">总数</span>&nbsp;:&nbsp;
+                        <span class="const">7</span>
+                    </div>
+                    <div class="footConst">
+                        <span>未处理</span>&nbsp;:&nbsp;
+                        <span>7</span>
+                    </div>
+                </div>
+                <div class="rightIcon">
+                    <span class="glyphicon glyphicon-list"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 deer-cell"  >
+            <div class="cell" style="background-color: #abc327;">
+                <div class="leftBox">
+                    <div class="headTitle">仓库货位</div>
+                    <div class="footConst">
+                        <span class="const">总数</span>&nbsp;:&nbsp;
+                        <span class="const">7</span>
+                    </div>
+                    <div class="footConst">
+                        <span>未处理</span>&nbsp;:&nbsp;
+                        <span>7</span>
+                    </div>
+                </div>
+                <div class="rightIcon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 deer-cell" >
+            <div class="cell" style="background-color: #dfb5b7;">
+                <div class="leftBox">
+                    <div class="headTitle">库存管理</div>
+                    <div class="footConst">
+                        <span class="const">总数</span>&nbsp;:&nbsp;
+                        <span class="const">7</span>
+                    </div>
+                    <div class="footConst">
+                        <span>未处理</span>&nbsp;:&nbsp;
+                        <span>7</span>
+                    </div>
+                </div>
+                <div class="rightIcon">
+                    <span class="glyphicon glyphicon-stats"></span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+   <!-- <div class="row" >
+        <div class="col-xs-6 col-sm-3 deer-cell"  >
+            <div class="cell" style="background-color: #7f1874;">
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 deer-cell" >
+            <div class="cell" style="background-color: #6c890b;">
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 deer-cell"  >
+            <div class="cell" style="background-color: #ff6e97;">
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-3 deer-cell"  >
+            <div class="cell" style="background-color: #db9019;">
+            </div>
+        </div>
+
+
+    </div>-->
+    <div class="row" >
+        <div class="col-xs-12 col-sm-10 deer-cell2 "  id="tongji" >
+            <!--<div class="cell2" id="tongji" style="">
+            </div>-->
+        </div>
+        <div class="col-xs-12 col-sm-2 deer-cell2" id="huowei"  >
+           <!-- <div class="cell2"  id="huowei" >
+            </div>-->
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-xs-12 col-sm-4 deer-cell2 "   >
+            <div class="cell3" style="">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>辅助程序状态</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            <a class="close-link"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                            <tr>
+                                <th>程序</th>
+                                <th>状态</th>
+                                <th>更新时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>WCS设备控制系统</td>
+                                <td>正常</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>EBS对接程序</td>
+                                <td>正常</td>
+
+
+                            </tr>
+                            <tr>
+                                <td>MES对接程序</td>
+                                <td>非正常</td>
+
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 deer-cell2 "   >
+            <div class="cell3" style="">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>数据对接列表</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        <a class="close-link"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-hover no-margins">
+                        <thead>
+                        <tr>
+                            <th>程序</th>
+                            <th>状态</th>
+                            <th>更新时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>WCS设备控制系统</td>
+                            <td>正常</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>EBS对接程序</td>
+                            <td>正常</td>
+
+
+                        </tr>
+                        <tr>
+                            <td>MES对接程序</td>
+                            <td>非正常</td>
+
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 deer-cell2 "   >
+            <div class="cell3" style="">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>设备运行状态</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            <a class="close-link"><i class="fa fa-times"></i></a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <table class="table table-hover no-margins">
+                            <thead>
+                            <tr>
+                                <th>设备</th>
+                                <th>状态</th>
+                                <th>更新时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>堆垛机</td>
+                                <td>堆垛机</td>
+                                <td>堆垛机</td>
+
+                            </tr>
+                            <tr>
+                                <td>堆垛机</td>
+                                <td>堆垛机</td>
+                                <td>堆垛机</td>
+
+                            </tr>
+                            <tr>
+                                <td>堆垛机</td>
+                                <td>堆垛机</td>
+                                <td>堆垛机</td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:include="include::footer"></div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script type="text/javascript">
+	    $('#pay-qrcode').click(function(){
+	        var html=$(this).html();
+	        parent.layer.open({
+	            title: false,
+	            type: 1,
+	            closeBtn:false,
+	            shadeClose:true,
+	            area: ['600px', 'auto'],
+	            content: html
+	        });
+	    });
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('tongji'));
+
+        // 指定图表的配置项和数据
+
+
+
+        option = {
+            title: {
+                text: '操作统计图'
+            },
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data:['入库','出库','盘点','合框']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'入库',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'出库',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'盘点',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {},
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'合框',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                },
+
+            ]
+        };
+
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+
+        var myChart2 = echarts.init(document.getElementById('huowei'));
+        option = {
+            title: {
+                text: '货位利用率'
+            },
+            tooltip : {
+                formatter: "{a} <br/>{b} : {c}%"
+            },
+            toolbox: {
+                feature: {
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            series: [
+                {
+                    name: '业务指标',
+                    type: 'gauge',
+                    detail: {formatter:'{value}%'},
+                    data: [{value: 60, name: ''}]
+                }
+            ]
+        };
+        myChart2.setOption(option, true);
+    </script>
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('接口调用记录')"/>
+    <style type="text/css">
+        #guapi {
+            border: 1px solid gray;
+            box-shadow: 2px 4px 6px gray;
+            border-radius: 10px;
+        }
+
+        .guapi {
+            border: 1px solid gray;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        #inside {
+            margin: 20px
+        }
+
+        #billin {
+            font-size: 30px;
+            color: #4499FF
+        }
+
+        .div-inline1 {
+            display: inline-block;
+            margin: 30px;
+            width: 1000px
+        }
+
+        .div-inline {
+            display: inline-block;
+            margin: 30px;
+        }
+
+        .div-inline2 {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        #inline-font {
+            margin-right: 5px;
+            font-size: 30px;
+        }
+
+        .element_container {
+            width: 200px;
+            display: inline-block;
+        }
+
+        .buttonFont {
+            font-size: 40px;
+            width: 66px;
+            height: 35px;
+            vertical-align: middle;
+            text-align: center;
+            color: white;
+        }
+
+        #buttonStyle {
+            height: 80px;
+            width: 200px;
+            background: #1E90FF;
+            border-radius: 15px;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .buttonFont1 {
+            font-size: 35px;
+            width: 55px;
+            height: 28px;
+            vertical-align: middle;
+            text-align: center;
+            color: white;
+        }
+
+        .buttonFont1 {
+            font-size: 35px;
+            width: 55px;
+            height: 28px;
+            vertical-align: middle;
+            text-align: center;
+            color: white;
+        }
+
+        #buttonStyle1 {
+            height: 60px;
+            width: 170px;
+            background: #999;
+            border-radius: 15px;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #buttonStyle2 {
+            height: 200px;
+            width: 300px;
+            background: #D3D3D3;
+            border-radius: 15px;
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .div-inline-two: {
+            margin-top: 20px;
+        }
+
+        .div-inline-three: {
+            margin-top: 20px;
+        }
+
+        .el-button--primary {
+            color: #FFF;
+            background-color: #409EFF;
+            border-color: #409EFF00;
+        }
+
+        div.popContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="gray-bg">
+<div id="myVue">
+    <div class="container-div" onmousemove="parent.updateTimeOut()">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                类型：
+                                <select name="type">
+                                    <option value="-1"></option>
+                                    <option value="1">采购接收接口</option>
+                                    <option value="2">交货接口</option>
+                                    <option value="3">WIP工单发料接口</option>
+                                    <option value="4">账户别名事务处理接口</option>
+                                    <option value="5">子库存转移接口</option>
+                                </select>
+                            </li>
+                            <li>
+                                状态：
+                                <select name="state">
+                                    <option value="-1"></option>
+                                    <option value="1">调用成功</option>
+                                    <option value="2">失败需处理</option>
+                                    <option value="3">失败无需处理</option>
+                                    <option value="4">EBS处理中</option>
+                                    <option value="5">已重新推送数据</option>
+                                </select>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                        class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                        class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-danger"  @click="refresh()" shiro:hasPermission="requestId:refresh" style="background-color: #409EFF;border-color: #409EFF;">
+                    <i class="glyphicon glyphicon-refresh" ></i> 刷新处理结果
+                </a>
+                <a class="btn btn-danger"  @click="sendEBS()" shiro:hasPermission="requestId:sendEbs" style="background-color: orange;border-color: #orange;">
+                    <i class="glyphicon glyphicon-cloud-upload" ></i> 处理失败数据推送至EBS
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true" style="white-space:nowrap"></table>
+            </div>
+        </div>
+    </div>
+    <!-- 刷卡验证 -->
+    <div class='popContainer'>
+        <div style="margin: 10px;width:400px;margin:0 auto;height: 160px;text-align:center;
+				background:white;margin-top:200px;border-radius: 10px;">
+            <div style="width:400px;height: 30px;margin-top:10px">
+                <span style="font-size:20px;margin-top:20px">登录</span>
+            </div>
+            <hr/>
+            <div style="margin-top:20px;">
+                <span id="inline-font">卡号:</span>
+                <div class="element_container" style="width:200px;height:50px;">
+                    <el-input placeholder="请输入卡号" @change="qwe" id="card" type="password" v-model="card"></el-input>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+</div>
+<script th:inline="javascript">
+    // var editFlag = [[${@permission.hasPermi('in:boxItem:edit')}]];
+    var prefix = ctx + "requestId";
+
+    /*function addBill() {
+        var _url = prefix + "/add";
+        $.modal.openFull("新增", _url);
+    }*/
+
+    $(function () {
+        var options = {
+            url: prefix + "/findList",
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            detailUrl: prefix + "/detail",
+            modalName: "调用接口记录",
+            showExport: true,
+            columns: [
+                // {
+                // checkbox: false
+                // },
+                {
+                    field: 'requestId',
+                    title: '请求Id',
+                    visible: true
+                },
+                {
+                    field: 'processStatus',
+                    title: '处理状态',
+                    visible: true
+                },
+                {
+                    field: 'errorMsg',
+                    title: '错误信息',
+                    sortable: true
+                },
+                {
+                    field: 'lastUpdateDate',
+                    title: '最后更新时间',
+                    visible: true
+                },
+                {
+                    field: 'lastUpdatedBy',
+                    title: '最后更新人',
+                    visible: true
+                },
+                {
+                    field: 'creationDate',
+                    title: '创建时间',
+                    visible: true
+                },
+                {
+                    field: 'createdBy',
+                    title: '创建人',
+                    visible: true
+                },
+                {
+                    field: 'itemId',
+                    title: '物料编码',
+                    visible: true
+                },
+                {
+                    field: 'quantity',
+                    title: '数量',
+                    visible: true
+                },
+                {
+                    field: 'lotNumber',
+                    title: '批次',
+                    visible: true
+                },
+                {
+                    field: 'poHeaderId',
+                    title: '订单头',
+                    visible: true
+                },
+                {
+                    field: 'poLineId',
+                    title: '订单行',
+                    sortable: true
+                },
+                {
+                    field: 'poLineLocationId',
+                    title: '发运行Id',
+                    sortable: true
+                },
+                {
+                    field: 'poDistributionId',
+                    title: '分配行Id',
+                    sortable: true
+                },
+                {
+                    field: 'receiptDate',
+                    title: '接收日期',
+                    sortable: true
+                },
+                {
+                    field: 'id',
+                    title: 'id',
+                    sortable: true
+                },
+                {
+                    field: 'transactionDate',
+                    title: '处理日期',
+                    sortable: true
+                },
+                {
+                    field: 'shipmentNum',
+                    title: '接收单号',
+                    sortable: true
+                },
+                {
+                    field: 'subInventory',
+                    title: '子库',
+                    sortable: true
+                },
+                {
+                    field: 'locatorId',
+                    title: '子库货位Id',
+                    sortable: true
+                },
+                {
+                    field: 'organizationId',
+                    title: '库存组织Id',
+                    sortable: true
+                },
+                {
+                    field: 'transactionId',
+                    title: '事务处理Id',
+                    sortable: true
+                },
+                {
+                    field: 'type',
+                    title: '接口类型',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if (value === 1) {
+                            return "采购接收接口"
+                        }
+                        if (value === 2) {
+                            return "交货接口"
+                        }
+                        if (value === 3) {
+                            return "WIP工单发料接口"
+                        }
+                        if (value === 4) {
+                            return "账户别名事务处理接口"
+                        }
+                        if (value === 5) {
+                            return "子库存转移接口"
+                        }
+                    }
+                },
+                {
+                    field: 'state',
+                    title: '状态',
+                    sortable: true,
+                    formatter: function (value, row, index) {
+                        if (value === 1) {
+                            return "调用成功"
+                        }
+                        if (value === 2) {
+                            return "失败需处理"
+                        }
+                        if (value === 3) {
+                            return "失败无需处理"
+                        }
+                        if (value === 4) {
+                            return "EBS处理中"
+                        }
+                        if (value === 5) {
+                            return "已重新推送数据"
+                        }
+                    }
+                },
+                {
+                    field: 'transactionTypeId',
+                    title: '事务处理类型Id',
+                    sortable: true
+                },
+                {
+                    field: 'wipEntityId',
+                    title: '工单Id',
+                    sortable: true
+                },
+                {
+                    field: 'operationSeqnum',
+                    title: '工序号',
+                    sortable: true
+                },
+                {
+                    field: 'transactionUom',
+                    title: '单位',
+                    sortable: true
+                },
+                {
+                    field: 'transSubInventory',
+                    title: '目标子库',
+                    sortable: true
+                },
+                {
+                    field: 'transLocatorId',
+                    title: '目标子库货位Id',
+                    sortable: true
+                },
+                {
+                    field: 'sourceHeaderId',
+                    title: '来源头Id',
+                    sortable: true
+                },
+                {
+                    field: 'sourceLineId',
+                    title: '来源行Id',
+                    sortable: true
+                },
+                {
+                    field: 'transSourceName',
+                    title: '账户别名',
+                    sortable: true
+                },
+                {
+                    field: 'transSourceId',
+                    title: '账户别名Id',
+                    sortable: true,
+                },
+                {
+                    field: 'dueDate',
+                    title: '到货日期',
+                    sortable: true,
+                }
+            ]
+        };
+        $.table.init(options);
+    });
+    var app = new Vue({
+        el: '#myVue',
+        data: {
+            operator:'',
+            card: '',
+            loginPerson: '',
+            loginPersonCardNo: '',
+            taskStartTime: '',
+
+        },
+        methods: {
+            //退出
+            refresh:function(){
+                $.modal.confirm("确定刷新吗？",function(){
+                    $.operate.get("requestId/refresh");
+                });
+            },
+
+            sendEBS:function(){
+                $.modal.confirm("是否重新推送错误数据至EBS？",function(){
+                    $.operate.get("requestId/sendToEbs");
+                });
+            },
+
+            //刷卡验证
+            qwe: function () {
+                let that = this;
+                if (that.card == '' || that.card == null) {
+                    alert("请刷卡登陆！");
+                    return false
+                }
+                let card = {
+                    card: that.card,
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/system/operator/findByCard",
+                    data: JSON.stringify(card),
+                    dataType: "json",
+                    contentType: "application/json;charset-UTF-8",
+                    async: false,
+                    error: function (data) {
+                        $.modal.msgError("系统错误");
+                    },
+                    success: function (data) {
+                        if (data.code === 200) {
+                            that.taskStartTime = that.date;
+                            that.loginPerson = data.data.operatorName + data.data.empNo;
+                            that.loginPersonCardNo = data.data.operatorCard;
+                            that.card = '';
+                            that.operator = data.data;
+                            document.querySelector('.popContainer').style.display = 'none';
+                        } else {
+                            $.modal.msgWarning("系统无此账户,请联系管理员！");
+                        }
+                    },
+                });
+            },
+
+        },
+        created:function(){
+            let that = this;
+            /*$.ajax({
+                type: "post",
+                url: "/accountAlias/findAccountAliasList",
+                data: JSON.stringify(),
+                dataType: "json",
+                contentType: "application/json;charset-UTF-8",
+                async: false,
+                error: function (data) {
+                    $.modal.msgError("系统错误");
+                },
+                success: function (data) {
+
+                },
+            });*/
+        },
+        mounted: function () {
+            $('#card').focus();
+        }
+    })
+</script>
+</body>
+</html>

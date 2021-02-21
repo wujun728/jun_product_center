@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.BillInCheckRecordMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.BillInCheckRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="check_id" jdbcType="INTEGER" property="checkId" />
+    <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="receipt_num" jdbcType="VARCHAR" property="receiptNum" />
+    <result column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+    <result column="po_header_id" jdbcType="INTEGER" property="poHeaderId" />
+    <result column="po_line_id" jdbcType="INTEGER" property="poLineId" />
+    <result column="po_line_location_id" jdbcType="INTEGER" property="poLineLocationId" />
+    <result column="po_distribution_id" jdbcType="INTEGER" property="poDistributionId" />
+    <result column="item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="transaction" jdbcType="VARCHAR" property="transaction" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+
+  <select id="findByPoDistributionId" parameterType="com.deer.wms.base.system.model.BillInCheckRecordCriteria" resultMap="BaseResultMap">
+    SELECT
+    	transaction_id,
+    	organization_id
+    FROM
+    	`bill_in_check_record`
+    WHERE
+    	po_distribution_id = #{poDistributionId}
+    	and batch = #{batch}
+    order by
+        check_id desc
+    limit 1
+  </select>
+  <select id="findByBillInDetailIds" parameterType="com.deer.wms.base.system.model.BillInCheckRecordCriteria" resultMap="BaseResultMap">
+    SELECT
+        bicr.transaction_id,
+        bicr.organization_id,
+        bicr.po_distribution_id,
+        bicr.transaction,
+        bicr.batch
+    FROM
+    	`bill_in_check_record` bicr
+    left join
+        bill_in_detail bid on bid.po_distribution_id = bicr.po_distribution_id
+    WHERE 1=1
+      <if test="checkIds != null">
+        and bicr.check_id in
+        <foreach collection="checkIds" item="checkId" index="index" open="(" separator="," close=")">
+          #{checkId}
+        </foreach>
+      </if>
+      <if test="poDistributionId !=null and poDistributionId != ''">
+        and bicr.po_distribution_id = #{poDistributionId}
+      </if>
+    GROUP by
+        bicr.po_distribution_id,bicr.batch
+  </select>
+
+  <select id="findByTransactionId" parameterType="com.deer.wms.base.system.model.BillInCheckRecordCriteria" resultMap="BaseResultMap">
+    SELECT
+    	transaction_id,
+    	organization_id
+    FROM
+    	`bill_in_check_record`
+    WHERE
+    	transaction_id = #{transactionId}
+    and receipt_num = #{receiptNum}
+  </select>
+</mapper>
+

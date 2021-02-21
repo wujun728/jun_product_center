@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.item.ItemTypeMapper">
+    
+    <resultMap type="ItemType" id="ItemTypeResult">
+        <result property="itemTypeId"    column="item_type_id"    />
+        <result property="itemTypeCode"    column="item_type_code"    />
+        <result property="itemTypeName"    column="item_type_name"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="parentName"    column="parent_name"    />
+        <result property="orderNum"    column="order_num"    />
+    </resultMap>
+	
+	<sql id="selectItemTypeVo">
+        select item_type_id, item_type_code, item_type_name, parent_id, order_num from item_type
+    </sql>
+
+    <select id="selectItemTypeByParentId" parameterType="Long" resultMap="ItemTypeResult">
+
+        select * from item_type where parent_id = #{parentId}
+    </select>
+
+
+
+    <select id="selectItemTypeList" parameterType="ItemType" resultMap="ItemTypeResult">
+        select it.item_type_id, it.item_type_code, it.item_type_name, it.parent_id , it.order_num,
+        parentType.item_type_name as parent_name
+        from item_type it
+        left join item_type parentType on it.parent_id = parentType.item_type_id
+
+        <where>  
+            <if test="itemTypeId != null "> and it.item_type_id = #{itemTypeId}</if>
+             <if test="itemTypeCode != null  and itemTypeCode != '' "> and it.item_type_code = #{itemTypeCode}</if>
+             <if test="itemTypeName != null  and itemTypeName != '' "> and it.item_type_name = #{itemTypeName}</if>
+             <if test="parentId != null "> and it.parent_id = #{parentId}</if>
+            <if test="orderNum != null "> and it.order_num = #{orderNum}</if>
+         </where>
+         order by order_num
+    </select>
+    
+    <select id="selectItemTypeById" parameterType="Long" resultMap="ItemTypeResult">
+         select it.item_type_id, it.item_type_code, it.item_type_name, it.parent_id , it.order_num,
+         parentType.item_type_name as parent_name
+         from item_type it
+         left join item_type parentType on it.parent_id = parentType.item_type_id
+        where it.item_type_id = #{itemTypeId}
+    </select>
+        
+    <insert id="insertItemType" parameterType="ItemType" useGeneratedKeys="true" keyProperty="itemTypeId">
+        insert into item_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="itemTypeCode != null  and itemTypeCode != ''  ">item_type_code,</if>
+			<if test="itemTypeName != null  and itemTypeName != ''  ">item_type_name,</if>
+			<if test="parentId != null  ">parent_id,</if>
+            <if test="orderNum != null  ">order_num,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="itemTypeCode != null  and itemTypeCode != ''  ">#{itemTypeCode},</if>
+			<if test="itemTypeName != null  and itemTypeName != ''  ">#{itemTypeName},</if>
+			<if test="parentId != null  ">#{parentId},</if>
+            <if test="orderNum != null  ">#{orderNum},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateItemType" parameterType="ItemType">
+        update item_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="itemTypeCode != null  and itemTypeCode != ''  ">item_type_code = #{itemTypeCode},</if>
+            <if test="itemTypeName != null  and itemTypeName != ''  ">item_type_name = #{itemTypeName},</if>
+            <if test="parentId != null  ">parent_id = #{parentId},</if>
+            <if test="orderNum != null  ">order_num = #{orderNum},</if>
+        </trim>
+        where item_type_id = #{itemTypeId}
+    </update>
+
+	<delete id="deleteItemTypeById" parameterType="Long">
+        delete from item_type where item_type_id = #{itemTypeId}
+    </delete>
+	
+    <delete id="deleteItemTypeByIds" parameterType="String">
+        delete from item_type where item_type_id in 
+        <foreach item="itemTypeId" collection="array" open="(" separator="," close=")">
+            #{itemTypeId}
+        </foreach>
+    </delete>
+    
+</mapper>

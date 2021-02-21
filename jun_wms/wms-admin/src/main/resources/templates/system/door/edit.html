@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改出入库口')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-door-edit" th:object="${door}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">编码：</label>
+				<div class="col-sm-8">
+					<input id="code" name="code" th:field="*{code}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">AGV地址码：</label>
+				<div class="col-sm-8">
+					<input id="addressCode" name="addressCode" th:field="*{addressCode}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">名称：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">类型：</label>
+				<div class="col-sm-8">
+<!--					<input id="type" name="type" th:field="*{type}" class="form-control" type="text">-->
+					<select id="type" name="type" th:field="*{type}" class="form-control" >
+						<option value="1">入库口</option>
+						<option value="2">出库口</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">状态：</label>
+				<div class="col-sm-8">
+					<input id="state" name="state" th:field="*{state}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">仓库 ：</label>
+				<div class="col-sm-8">
+					<select id="wareId" name="wareId" class="form-control" >
+						<option v-for="ware in wares" v-bind:value="ware.wareId">{{ware.wareName}}</option>
+					</select>
+				</div>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/door";
+		$("#form-door-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-door-edit').serialize());
+	        }
+	    }
+
+		var app = new Vue({
+			el: '.wrapper',
+			data: {
+				message: 'Hello Vue!',
+				wares:[],
+			},
+			methods:{
+				getWares:function(){
+					var that = this;
+					$.ajax({
+						cache : true,
+						type : "POST",
+						url :  "/system/wareInfo/list",
+						data : {
+						},
+						async : false,
+						error : function(request) {
+							$.modal.alertError("系统错误");
+						},
+						success : function(data) {
+							debugger
+							that.wares = data.rows;
+						}
+					});
+				}
+			},
+			created:function(){
+				this.getWares();
+			},
+
+		})
+	</script>
+</body>
+</html>

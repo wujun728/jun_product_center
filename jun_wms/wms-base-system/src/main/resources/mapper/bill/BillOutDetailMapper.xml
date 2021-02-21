@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.bill.BillOutDetailMapper">
+    
+    <resultMap type="BillOutDetail" id="BillOutDetailResult">
+        <result property="billOutDetailId"    column="bill_out_detail_id"    />
+        <result property="billId"    column="bill_id"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="finishedCode"    column="finished_code"    />
+        <result property="priority"    column="priority"    />
+    </resultMap>
+
+    <resultMap type="BillOutDetailDto" id="BillOutDetailDtoResult" extends="BillOutDetailResult">
+        <result property="itemName"    column="item_name"    />
+    </resultMap>
+
+	<sql id="selectBillOutMasterVo">
+        select bill_out_detail_id, bill_id, item_code, quantity,task_id,finished_code,priority from bill_out_detail
+    </sql>
+
+    <delete id="deleteBillOutDetailByBillOutDetailId" parameterType="Integer">
+
+        delete from bill_out_detail
+        where bill_out_detail_id = #{billOutDetailId}
+
+    </delete>
+
+    <select id="findListByBillId" parameterType="Integer" resultMap="BillOutDetailDtoResult">
+
+        select bod.*,ii.item_name
+        from bill_out_detail bod join item_info ii
+        on bod.item_code = ii.item_code
+        where bod.bill_id = #{billId}
+
+    </select>
+
+    <insert id="saveBillOutDetail" parameterType="com.deer.wms.base.system.model.bill.BillOutDetail">
+
+        insert into bill_out_detail values (null, #{billId}, #{itemCode}, #{quantity}
+            , #{taskId}, #{finishedCode}, #{priority})
+
+    </insert>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.bill.BillOutDetailCriteria" resultMap="BillOutDetailResult">
+        SELECT
+        bod.bill_id,
+        bod.item_code,
+        bod.quantity,
+        bod.priority
+        FROM bill_out_detail bod
+        INNER JOIN bill_out_master bom ON bod.bill_id = bom.bill_id
+        WHERE 1=1
+        <if test="startTime != null and startTime != ''">
+            and bom.create_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND bom.create_time &lt; #{endTime}
+        </if>
+        <if test="state != null">
+            AND bom.state = #{state}
+        </if>
+        order by bod.priority
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.WareInfoMapper">
+    
+    <resultMap type="WareInfo" id="WareInfoResult">
+        <result property="wareId"    column="ware_id"    />
+        <result property="wareCode"    column="ware_code"    />
+        <result property="wareName"    column="ware_name"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createUserName"    column="create_user_name"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="memo"    column="memo"    />
+        <result property="expectedWaring"    column="expected_waring"    />
+        <result property="alarm"    column="alarm"    />
+        <result property="stockWaring"    column="stock_waring"    />
+        <result property="boxParam"    column="box_param"    />
+        <result property="boxHeight"    column="box_height"    />
+        <result property="unqualifiedStorageDay" column="unqualified_storage_day" />
+    </resultMap>
+	
+	<sql id="selectWareInfoVo">
+        select
+        ware_id,
+        ware_code,
+        ware_name,
+        create_user_id,
+        create_user_name,
+        create_time,
+        memo,
+        expected_waring,
+        alarm,
+        stock_waring,
+        box_param,
+        box_height,
+        unqualified_storage_day
+         from ware_info
+    </sql>
+
+    <!--根据仓库名查找仓库(对象)-->
+    <select id="selectWareInfoByName" parameterType="String" resultMap="WareInfoResult">
+
+        select * from ware_info where ware_name = #{wareName}
+
+    </select>
+
+
+    <select id="selectWareInfoList" parameterType="WareInfo" resultMap="WareInfoResult">
+        <include refid="selectWareInfoVo"/>
+        <where>  
+            <if test="wareId != null "> and ware_id = #{wareId}</if>
+             <if test="wareCode != null  and wareCode != '' "> and ware_code = #{wareCode}</if>
+             <if test="wareName != null  and wareName != '' "> and ware_name = #{wareName}</if>
+             <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="memo != null "> and memo = #{memo}</if>
+         </where>
+    </select>
+    
+    <select id="selectWareInfoById" parameterType="Integer" resultMap="WareInfoResult">
+        <include refid="selectWareInfoVo"/>
+        where ware_id = #{wareId}
+    </select>
+        
+    <insert id="insertWareInfo" parameterType="WareInfo" useGeneratedKeys="true" keyProperty="wareId">
+        insert into ware_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="wareCode != null  and wareCode != ''  ">ware_code,</if>
+			<if test="wareName != null  and wareName != ''  ">ware_name,</if>
+			<if test="createUserId != null  ">create_user_id,</if>
+            <if test="createUserName != null  ">create_user_name,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="memo != null  ">memo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="wareCode != null  and wareCode != ''  ">#{wareCode},</if>
+			<if test="wareName != null  and wareName != ''  ">#{wareName},</if>
+			<if test="createUserId != null  ">#{createUserId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="memo != null  ">#{memo},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateWareInfo" parameterType="WareInfo">
+        update ware_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="wareCode != null  and wareCode != ''  ">ware_code = #{wareCode},</if>
+            <if test="wareName != null  and wareName != ''  ">ware_name = #{wareName},</if>
+            <if test="createUserId != null  ">create_user_id = #{createUserId},</if>
+            <if test="createUserName != null  ">create_user_name = #{createUserName},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="memo != null  ">memo = #{memo},</if>
+            <if test="expectedWaring != null  ">expected_waring = #{expectedWaring},</if>
+            <if test="alarm != null  ">alarm = #{alarm},</if>
+            <if test="stockWaring != null  ">stock_waring = #{stockWaring},</if>
+            <if test="boxParam != null  ">box_param = #{boxParam},</if>
+            <if test="boxHeight != null  ">box_height = #{boxHeight},</if>
+            <if test="unqualifiedStorageDay != null">unqualified_storage_day = #{unqualifiedStorageDay}</if>
+        </trim>
+        where ware_id = #{wareId}
+    </update>
+
+	<delete id="deleteWareInfoById" parameterType="Integer">
+        delete from ware_info where ware_id = #{wareId}
+    </delete>
+	
+    <delete id="deleteWareInfoByIds" parameterType="String">
+        delete from ware_info where ware_id in 
+        <foreach item="wareId" collection="array" open="(" separator="," close=")">
+            #{wareId}
+        </foreach>
+    </delete>
+    <select id="findWareInfoList" parameterType="WareInfo" resultMap="WareInfoResult">
+        <include refid="selectWareInfoVo"/>
+        <where>
+            1=1
+            <if test="wareId != null and wareId != ''">
+                and ware_id &lt;&gt; #{wareId}
+            </if>
+                <if test="wareCode != null  and wareCode != '' ">
+                    and (ware_code = #{wareCode}
+                </if>
+                <if test="wareName != null  and wareName != '' ">
+                    or ware_name = #{wareName})
+                </if>
+        </where>
+    </select>
+</mapper>

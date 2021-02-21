@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.CarrierMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.Carrier">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="carrier_id" jdbcType="INTEGER" property="carrierId" />
+    <result column="carrier_code" jdbcType="VARCHAR" property="carrierCode" />
+    <result column="carrier_state" jdbcType="INTEGER" property="carrierState" />
+    <result column="carrier_task_id" jdbcType="VARCHAR" property="carrierTaskId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+
+  <select id="findFirstCarrier" resultMap="BaseResultMap">
+    select * from carrier
+    where 1=1
+    and carrier_state = 1
+    order by carrier_id
+    limit 1
+  </select>
+
+  <select id="inValidate" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from carrier
+    where carrier_code = #{carrierCode}
+    and carrier_state = 1
+  </select>
+</mapper>

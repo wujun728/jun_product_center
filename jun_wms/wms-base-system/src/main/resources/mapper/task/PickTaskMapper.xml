@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.task.PickTaskMapper">
+
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.task.PickTask">
+    <id column="pick_task_id" jdbcType="INTEGER" property="pickTaskId" />
+    <result column="box_code" jdbcType="VARCHAR" property="boxCode" />
+    <result column="pick_quantity" jdbcType="INTEGER" property="pickQuantity" />
+    <result column="bill_out_detail_id" jdbcType="VARCHAR" property="billOutDetailId" />
+      <result column="pick_state" jdbcType="INTEGER" property="pickState" />
+      <result column="batch" jdbcType="VARCHAR" property="batch"/>
+      <result column="sub_inventory_id" jdbcType="INTEGER" property="subInventoryId"/>
+      <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+      <result column="out_time" jdbcType="VARCHAR" property="outTime"/>
+  </resultMap>
+
+    <resultMap id="Dto" type="com.deer.wms.base.system.model.task.PickTaskDto" extends="BaseResultMap">
+        <result column="shelf_name" jdbcType="VARCHAR" property="shelfName"/>
+        <result column="cell_id" jdbcType="INTEGER" property="cellId"/>
+        <result column="s_column" jdbcType="INTEGER" property="sColumn"/>
+        <result column="s_row" jdbcType="INTEGER" property="sRow"/>
+        <result column="quantity" jdbcType="INTEGER" property="quantity"/>
+        <result column="priority" jdbcType="VARCHAR" property="priority"/>
+        <result column="bill_no" jdbcType="VARCHAR" property="billNo"/>
+        <result column="bill_id" jdbcType="INTEGER" property="billId"/>
+        <result column="slotting" jdbcType="VARCHAR" property="slotting"/>
+        <result column="sub_inventory_code" jdbcType="VARCHAR" property="subInventoryCode"/>
+        <result column="box_quantity" jdbcType="INTEGER" property="boxQuantity"/>
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode"/>
+        <result column="batch" jdbcType="VARCHAR" property="batch"/>
+    </resultMap>
+
+    <select id="getPickTaskByBoxItemId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select pick_quantity
+        from pick_task
+        where box_item_id = #{boxItemId}
+    </select>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.task.PickTaskCriteria" resultMap="Dto">
+        SELECT
+        si.shelf_name,
+        ci.s_column,
+        ci.s_row,
+        ci.cell_id,
+        bod.quantity,
+        pt.*,
+        bod.priority,
+        bom.bill_id,
+        bom.bill_no,
+        bite.quantity as box_quantity,
+        bite.item_code,
+        bite.batch,
+        sin.sub_inventory_code,
+        sin.slotting
+        FROM
+        	pick_task pt
+        LEFT JOIN bill_out_detail bod ON bod.bill_out_detail_id = pt.bill_out_detail_id
+        LEFT JOIN bill_out_master bom ON bom.bill_id = bod.bill_id
+        LEFT JOIN box_item bite ON bite.box_code = pt.box_code
+        INNER JOIN box_info bin ON bin.box_code = bite.box_code
+        INNER JOIN cell_info ci ON ci.cell_id = bin.box_cell_id
+        LEFT JOIN shelf_info si ON si.shelf_id = ci.shelf_id
+        left join sub_inventory sin on sin.sub_inventory_id = pt.sub_inventory_id
+        where 1=1
+        <if test="billNo != null and billNo != ''">
+            and bom.bill_no = #{billNo}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and bom.create_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND bom.create_time &lt; #{endTime}
+        </if>
+        <if test="state != null">
+            AND bom.state = #{state}
+        </if>
+        <if test="workOrderStockState != null">
+            and bite.work_order_stock_state = #{workOrderStockState}
+        </if>
+        <if test="pickState != null">
+            and pt.pick_state = #{pickState}
+        </if>
+        <if test="billOutDetailId != null and billOutDetailId != ''">
+            and pt.bill_out_detail_id = #{billOutDetailId}
+        </if>
+        <if test="boxCode != null and boxCode != ''">
+            and pt.box_code = #{boxCode}
+        </if>
+        <if test="billOutMasterType != null and billOutMasterType != ''">
+            and bom.type = #{billOutMasterType}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and date(pt.out_time) &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and date(pt.out_time) &lt;= #{endTime}
+        </if>
+        order by bod.priority,pt.pick_task_id
+    </select>
+
+    <select id="findByState" parameterType="com.deer.wms.base.system.model.task.PickTaskCriteria" resultMap="Dto">
+        SELECT
+        bin.box_cell_id,
+        bod.quantity,
+        pt.*,
+        bod.priority,
+        bom.bill_id,
+        bite.quantity as box_quantity,
+        bite.item_code,
+        bite.batch,
+        sin.sub_inventory_code,
+        sin.slotting
+        FROM
+        pick_task pt
+        LEFT JOIN bill_out_detail bod ON bod.bill_out_detail_id = pt.bill_out_detail_id
+        LEFT JOIN bill_out_master bom ON bom.bill_id = bod.bill_id
+        LEFT JOIN box_item bite ON bite.box_code = pt.box_code
+        INNER JOIN box_info bin ON bin.box_code = bite.box_code
+
+        left join sub_inventory sin on sin.sub_inventory_id = pt.sub_inventory_id
+        where 1=1
+        <if test="startTime != null and startTime != ''">
+            and bom.create_time >= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND bom.create_time &lt; #{endTime}
+        </if>
+        <if test="state != null">
+            AND bom.state = #{state}
+        </if>
+        <if test="workOrderStockState != null">
+            and bite.work_order_stock_state = #{workOrderStockState}
+        </if>
+        <if test="pickState != null">
+            and pt.pick_state = #{pickState}
+        </if>
+        <if test="billOutDetailId != null and billOutDetailId != ''">
+            and pt.bill_out_detail_id = #{billOutDetailId}
+        </if>
+        <if test="boxCode != null and boxCode != ''">
+            and pt.box_code = #{boxCode}
+        </if>
+        <if test="billOutMasterType != null and billOutMasterType != ''">
+            and bom.type = #{billOutMasterType}
+        </if>
+        order by bod.priority,pt.pick_task_id
+    </select>
+
+    <!--<select id="totalQuantity" parameterType=""-->
+</mapper>

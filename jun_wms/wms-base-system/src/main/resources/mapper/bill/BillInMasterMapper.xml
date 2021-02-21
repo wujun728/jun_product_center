@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.bill.BillInMasterMapper">
+    
+    <resultMap type="BillInMaster" id="BillInMasterResult">
+        <result property="billId"    column="bill_id"    />
+        <result property="billNo"    column="bill_no"    />
+        <result property="contractNo"    column="contract_no"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="createUserName"    column="create_user_name"    />
+        <result property="state"    column="state"    />
+        <result property="memo"    column="memo"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="supplierCode"    column="supplier_code"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <resultMap type="BillInMasterDto" id="Dto" extends="BillInMasterResult">
+        <result property="wareName"    column="ware_name"    />
+        <result property="supplierName"    column="supplier_name"    />
+        <result property="quantity" jdbcType="INTEGER" column="quantity"/>
+        <result property="inStorageQuantity" jdbcType="INTEGER" column="in_storage_quantity"/>
+        <result property="billInDetailId" jdbcType="INTEGER" column="bill_in_detail_id"/>
+        <result property="itemCode" jdbcType="VARCHAR" column="item_code"/>
+        <result property="itemId"  jdbcType="VARCHAR"  column="item_id"    />
+        <result property="poDistributionId"  jdbcType="INTEGER"  column="po_distribution_id"    />
+        <result property="distributionNum"  jdbcType="VARCHAR"  column="distribution_num"    />
+        <result property="segment" jdbcType="VARCHAR" column="segment"/>
+        <result property="poHeaderId" jdbcType="INTEGER" column="po_header_id"/>
+        <result property="lineNum" jdbcType="VARCHAR" column="line_num"/>
+        <result property="poLineId" jdbcType="INTEGER" column="po_line_id"/>
+        <result property="shipmentNum" jdbcType="VARCHAR" column="shipment_num"/>
+        <result property="lineLocationId" jdbcType="INTEGER" column="line_location_id"/>
+        <result property="orgId" jdbcType="INTEGER" column="org_id"/>
+        <result property="shipToOrganizationId" jdbcType="INTEGER" column="ship_to_organization_id"/>
+        <result property="itemDescription" jdbcType="VARCHAR" column="item_description"/>
+        <result property="unitMeasLookupCode" jdbcType="VARCHAR" column="unit_meas_lookup_code"/>
+        <result property="quantityReceived" jdbcType="VARCHAR" column="quantity_received"/>
+        <result property="surplusReceivedQuantity" jdbcType="INTEGER" column="surplus_received_quantity"/>
+        <result property="vendorCode" jdbcType="VARCHAR" column="vendor_code"/>
+        <result property="vendorName" jdbcType="VARCHAR" column="vendor_name"/>
+        <result property="expectedArrivalDate" jdbcType="VARCHAR" column="expected_arrival_date"/>
+    </resultMap>
+
+    <resultMap type="BoxItem" id="BoxItemResult">
+        <result property="id"    column="id"    />
+        <result property="boxCode"    column="box_code"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="batch"    column="batch"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="positionNo"    column="position_no"    />
+        <result property="billInDetailId"    column="bill_in_detail_id"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+
+    <resultMap type="BillInDetail" id="BillInDetailResult">
+        <result property="billInDetailId"    column="bill_in_detail_id"    />
+        <result property="billId"    column="bill_id"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="supplierBatch"    column="supplier_batch"    />
+        <result property="pd"    column="pd"    />
+        <result property="exp"    column="exp"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="packingQuantity"    column="packing_quantity"    />
+        <result property="barCode"    column="bar_code"    />
+    </resultMap>
+
+	<sql id="selectBillInMasterVo">
+        select bill_id, bill_no, contract_no, create_time, create_user_id, state, memo,ware_id,supplier_code,type from bill_in_master
+    </sql>
+    <!--查询bill_in_detail表-->
+    <select id="selectBillInDetail" resultType="BillInDetail" resultMap="BillInDetailResult">
+
+        select * from bill_in_detail
+
+    </select>
+    <!--查询box_item表 根据bill_id-->
+    <select id="selectBoxItem" parameterType="Integer" resultMap="BoxItemResult">
+
+        select bi.*
+        from box_item bi
+        left join bill_in_master bim on bi.bill_no = bim.bill_no
+        /*left join bill_in_detail bid on bi.bill_in_detail_id = bid.bill_in_detail_id*/
+        where bim.bill_id = #{billId}
+
+
+    </select>
+    <!--保存组盘-->
+    <insert id="saveBox" parameterType="BoxItem">
+
+        insert into box_item values(null,#{boxCode},#{itemCode},null,#{quantity},null,#{billInDetailId},null)
+
+    </insert>
+
+    <select id="findList" resultMap="Dto" parameterType="com.deer.wms.base.system.model.bill.BillInMasterCriteria">
+        select
+        master.bill_id,
+        master.bill_no,
+        master.contract_no,
+        master.create_time,
+        master.create_user_id,
+        master.create_user_name,
+        master.state,
+        master.memo,
+        master.ware_id,
+        master.supplier_code,
+        ii.item_code,
+        detail.*
+
+        from bill_in_master master
+        right join bill_in_detail detail on detail.bill_id = master.bill_id
+        left join item_info ii on ii.inventory_item_id = detail.item_id
+
+        where 1=1
+        <if test="itemId !=null and itemId != ''">
+            and detail.itemId = #{itemId}
+        </if>
+        <if test="createUserName != null and createUserName != ''">
+            and master.create_user_name = #{createUserName}
+        </if>
+        <if test="billNo != null and billNo != ''">
+            and detail.segment = #{billNo}
+        </if>
+    </select>
+
+	
+    <select id="selectBillInMasterList" parameterType="BillInMaster" resultMap="BillInMasterResult">
+        <include refid="selectBillInMasterVo"/>
+        <where>  
+            <if test="billId != null "> and bill_id = #{billId}</if>
+             <if test="billNo != null "> and bill_no = #{billNo}</if>
+             <if test="contractNo != null  and contractNo != '' "> and contract_no = #{contractNo}</if>
+             <if test="createTime != null "> and create_time = #{createTime}</if>
+             <if test="createUserId != null "> and create_user_id = #{createUserId}</if>
+             <if test="state != null "> and state = #{state}</if>
+            <if test="supplierCode != null "> and supplier_code = #{supplierCode}</if>
+             <if test="memo != null  and memo != '' "> and memo = #{memo}</if>
+         </where>
+    </select>
+    
+    <select id="selectBillInMasterById" parameterType="Integer" resultMap="BillInMasterResult">
+        <include refid="selectBillInMasterVo"/>
+        where bill_id = #{billId}
+    </select>
+        
+    <insert id="insertBillInMaster" parameterType="BillInMaster" useGeneratedKeys="true" keyProperty="billId">
+        insert into bill_in_master
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="billNo != null  ">bill_no,</if>
+			<if test="contractNo != null  and contractNo != ''  ">contract_no,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="createUserId != null  ">create_user_id,</if>
+            <if test="createUserName != null  ">create_user_name,</if>
+            <if test="wareId != null  ">ware_id,</if>
+			<if test="state != null  ">state,</if>
+            <if test="supplierId != null  ">supplier_id,</if>
+			<if test="memo != null  and memo != ''  ">memo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="billNo != null  ">#{billNo},</if>
+			<if test="contractNo != null  and contractNo != ''  ">#{contractNo},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="createUserId != null  ">#{createUserId},</if>
+            <if test="createUserName != null  ">#{createUserName},</if>
+            <if test="wareId != null  ">#{wareId},</if>
+			<if test="state != null  ">#{state},</if>
+			<if test="supplierId != null  ">#{supplierId},</if>
+			<if test="memo != null  and memo != ''  ">#{memo},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBillInMaster" parameterType="BillInMaster">
+        update bill_in_master
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="billNo != null  ">bill_no = #{billNo},</if>
+            <if test="contractNo != null  and contractNo != ''  ">contract_no = #{contractNo},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="createUserId != null  ">create_user_id = #{createUserId},</if>
+            <if test="createUserName != null  ">create_user_name=#{createUserName},</if>
+            <if test="wareId != null  ">ware_id=#{wareId},</if>
+            <if test="state != null  ">state = #{state},</if>
+            <if test="supplierCode != null  ">supplier_code = #{supplierCode},</if>
+            <if test="memo != null  and memo != ''  ">memo = #{memo},</if>
+        </trim>
+        where bill_id = #{billId}
+    </update>
+
+	<delete id="deleteBillInMasterById" parameterType="Integer">
+        delete from bill_in_master where bill_id = #{billId}
+    </delete>
+	
+    <delete id="deleteBillInMasterByIds" parameterType="String">
+        delete from bill_in_master where bill_id in 
+        <foreach item="billId" collection="array" open="(" separator="," close=")">
+            #{billId}
+        </foreach>
+    </delete>
+    
+</mapper>

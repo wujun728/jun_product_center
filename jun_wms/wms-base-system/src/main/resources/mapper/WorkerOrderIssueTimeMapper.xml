@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.WorkerOrderIssueTimeMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.WorkerOrderIssueTime">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="first_time" jdbcType="TIME" property="firstTime" />
+    <result column="second_time" jdbcType="TIME" property="secondTime" />
+    <result column="third_time" jdbcType="TIME" property="thirdTime" />
+    <result column="fourth_time" jdbcType="TIME" property="fourthTime" />
+    <result column="fifth_time" jdbcType="TIME" property="fifthTime" />
+    <result column="sixth_time" jdbcType="TIME" property="sixthTime" />
+    <result column="auto_execute" jdbcType="INTEGER" property="autoExecute" />
+    <result column="sluggish_export_date" jdbcType="INTEGER" property="sluggishExportDate" />
+    <result column="sluggish_export_param" jdbcType="INTEGER" property="sluggishExportParam" />
+    <result column="operation_seqnum" jdbcType="VARCHAR" property="operationSeqnum"/>
+    <result column="lock_time" jdbcType="INTEGER" property="lockTime"/>
+  </resultMap>
+</mapper>

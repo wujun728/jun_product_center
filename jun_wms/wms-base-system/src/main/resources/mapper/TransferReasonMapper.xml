@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.TransferReasonMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.transferReason.TransferReason">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="transfer_reason_id" jdbcType="INTEGER" property="transferReasonId" />
+    <result column="transfer_reason" jdbcType="VARCHAR" property="transferReason" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_user_no" jdbcType="VARCHAR" property="createUserNo" />
+  </resultMap>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.transferReason.TransferReasonCriteria" resultMap="BaseResultMap">
+    select
+    transfer_reason
+    from transfer_reason
+    where 1=1
+    <if test="transferReason != null and transferReason != ''">
+      and transfer_reason = #{transferReason}
+    </if>
+  </select>
+</mapper>

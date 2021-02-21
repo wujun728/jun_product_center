@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.SubInventoryMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.SubInventory">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="sub_inventory_id" jdbcType="INTEGER" property="subInventoryId" />
+    <result column="sub_inventory_name" jdbcType="VARCHAR" property="subInventoryName" />
+    <result column="sub_inventory_code" jdbcType="VARCHAR" property="subInventoryCode" />
+    <result column="slotting" jdbcType="VARCHAR" property="slotting" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="update_user_id" jdbcType="INTEGER" property="updateUserId" />
+      <result column="organization_id" jdbcType="INTEGER" property="organizationId"/>
+  </resultMap>
+
+  <resultMap id="Dto" type="com.deer.wms.base.system.model.SubInventoryDto" extends="BaseResultMap">
+    <result column="update_user_name" jdbcType="VARCHAR" property="updateUserName" />
+  </resultMap>
+
+  <update id="updateSubInventory" parameterType="com.deer.wms.base.system.model.SubInventory">
+    update sub_inventory
+    <set>
+      <if test="subInventoryName != null and subInventoryName != ''">sub_inventory_name = #{subInventoryName},</if>
+      <if test="subInventoryCode != null and subInventoryCode != ''">sub_inventory_code = #{subInventoryCode},</if>
+      slotting = #{slotting},
+      <if test="updateTime != null and updateTime != ''">update_time = #{updateTime},</if>
+      <if test="updateUserId != null and updateUserId != ''">update_user_id = #{updateUserId},</if>
+    </set>
+    where sub_inventory_id = #{subInventoryId}
+  </update>
+
+  <select id="findList" parameterType="com.deer.wms.base.system.model.SubInventoryCriteria" resultMap="Dto">
+        SELECT
+        si.*,
+        su.user_name as update_user_name
+        FROM sub_inventory si
+        left join sys_user su on su.user_id = si.update_user_id
+        where 1=1
+        <if test="subInventoryCode != null and subInventoryCode != ''">
+          and si.sub_inventory_code = #{subInventoryCode}
+        </if>
+        <if test="subInventoryName != null and subInventoryName != ''">
+          and si.sub_inventory_name = #{subInventoryName}
+        </if>
+        order by si.sub_inventory_id
+    </select>
+
+    <select id="findIdNotEqualOne"  resultMap="BaseResultMap">
+        SELECT
+        si.sub_inventory_id,
+        si.sub_inventory_name,
+        si.sub_inventory_code
+        FROM sub_inventory si
+        where si.sub_inventory_id in (2,4,5,7)
+        order by si.sub_inventory_id
+    </select>
+</mapper>
+
+
+
+
+
+
+

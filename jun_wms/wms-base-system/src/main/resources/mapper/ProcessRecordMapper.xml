@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ProcessRecordMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.ProcessRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="process_id" jdbcType="INTEGER" property="processId" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="exp" jdbcType="VARCHAR" property="exp" />
+    <result column="sub_inventory_id" jdbcType="INTEGER" property="sub_inventory_id" />
+    <result column="flow_code" jdbcType="VARCHAR" property="flowCode" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+</mapper>

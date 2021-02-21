@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>wms-parent</artifactId>
+        <groupId>com.deer</groupId>
+        <version>3.3</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <artifactId>wms-system</artifactId>
+    
+    <description>
+	    system系统模块
+	</description>
+	
+    <dependencies>
+    
+    	 <!-- Mysql驱动包 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>com.deer</groupId>
+            <artifactId>wms-common</artifactId>
+            <version>3.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+    </dependencies>
+	
+</project>

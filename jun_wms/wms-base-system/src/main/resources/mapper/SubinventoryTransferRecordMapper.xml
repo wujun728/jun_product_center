@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.SubinventoryTransferRecordMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.SubinventoryTransferRecord">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="transfer_id" jdbcType="INTEGER" property="transferId" />
+    <result column="box_code" jdbcType="VARCHAR" property="boxCode" />
+    <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+    <result column="batch" jdbcType="VARCHAR" property="batch" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="transfer_card_no" jdbcType="VARCHAR" property="transferCardNo" />
+    <result column="for_subinventory" jdbcType="INTEGER" property="forSubinventory" />
+    <result column="to_subinventory" jdbcType="INTEGER" property="toSubinventory" />
+    <result column="transfer_memo" jdbcType="VARCHAR" property="transferMemo" />
+  </resultMap>
+
+  <resultMap id="SubinventoryTransferRecordDto" type="com.deer.wms.base.system.model.SubinventoryTransferRecordDto" extends="BaseResultMap">
+    <result column="item_name" jdbcType="VARCHAR" property="itemName"/>
+    <result column="operator_name" jdbcType="VARCHAR" property="operatorName"/>
+    <result column="for_sub_inventory_name" jdbcType="VARCHAR" property="forSubInventoryName"/>
+    <result column="for_sub_inventory_code" jdbcType="VARCHAR" property="forSubInventoryCode"/>
+    <result column="to_sub_inventory_name" jdbcType="VARCHAR" property="toSubInventoryName"/>
+    <result column="to_sub_inventory_code" jdbcType="VARCHAR" property="toSubInventoryCode"/>
+  </resultMap>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.SubinventoryTransferRecordCriteria" resultMap="SubinventoryTransferRecordDto">
+        select
+        transfer.box_code,
+        transfer.item_code,
+        transfer.batch,
+        transfer.quantity,
+        transfer.create_time,
+        transfer.transfer_card_no,
+        transfer.for_subinventory,
+        transfer.to_subinventory,
+        ii.item_name,
+        op.operator_name,
+        forsub.sub_inventory_name as for_sub_inventory_name,
+        forsub.sub_inventory_code as for_sub_inventory_code,
+        tosub.sub_inventory_name as to_sub_inventory_name,
+        tosub.sub_inventory_code as to_sub_inventory_code,
+        transfer.transfer_memo
+        from subinventory_transfer_record transfer
+        left join item_info ii on ii.item_code = transfer.item_code
+        left join operator op on op.operator_card = transfer.transfer_card_no
+        left join sub_inventory forsub on forsub.sub_inventory_id = for_subinventory
+        left join sub_inventory tosub on tosub.sub_inventory_id = to_subinventory
+        where 1=1
+        <if test="startTime != null and startTime != ''">
+          and date(bir.create_time) &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and date(bir.create_time) &lt;= #{endTime}
+        </if>
+        <if test="boxCode != null and boxCode != ''">
+          and transfer.box_code = #{boxCode}
+        </if>
+        <if test="itemCode != null and itemCode != ''">
+          and transfer.itemCode = #{itemCode}
+        </if>
+    </select>
+</mapper>

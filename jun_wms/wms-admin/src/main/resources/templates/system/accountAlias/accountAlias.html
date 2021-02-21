@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('账户别名')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								<form class="form-horizontal m" id="form-cellInfo-add">
+									<div class="form-group">
+										<label class="col-sm-3 control-label" style="width: 90px;margin-top: 9px">关键字：</label>
+										<div class="col-sm-8" style="margin-left: -30px;">
+											<input type="text"  placeholder="关键字" name="keyWords"/>
+										</div>
+									</div>
+								</form>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<!--<a class="btn btn-success" onclick="$.operate.add()">
+					<i class="fa fa-plus"></i> 添加
+				</a>-->
+<!--				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:cellInfo:edit">-->
+<!--					<i class="fa fa-edit"></i> 修改-->
+<!--				</a>-->
+<!--				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cellInfo:remove">-->
+<!--					<i class="fa fa-remove"></i> 删除-->
+<!--				</a>-->
+				<a class="btn btn-warning" @click="synchronizedAccountAlias()">
+						<i class="fa fa-download"></i> 同步EBS账户别名
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:accountAlias:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:accountAlias:remove')}]];
+        var prefix = ctx + "accountAlias";
+
+        $(function() {
+            var options = {
+                url: prefix + "/findList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove/{id}",
+				exportUrl: prefix + "/export",
+                modalName: "账户别名",
+		        showExport: true,
+                columns: [
+                	// 		{
+		        	//     checkbox: true
+		        	// },
+					{
+						field : 'accountAlias',
+						title : '账号别名',
+						visible: true
+					},
+					{
+						field : 'description',
+						title : '描述',
+						sortable: true
+					},
+					/*{
+						field : 'type',
+						title : '类型',
+						sortable: true
+					},*/
+					{
+                        field : 'effectiveDate',
+                        title : '有效时间',
+                        sortable: true
+                    },
+					{
+						field : 'disableDate',
+						title : '失效时间',
+						sortable: true
+					},
+					{
+						field : 'enabledFlag',
+						title : '生效标识',
+						sortable: true
+					},
+		        	/*{
+		        	    title: '操作',
+		        	    align: 'center',
+		        	    formatter: function(value, row, index) {
+		        	    	var actions = [];
+		        	    	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.aliasId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                	        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.aliasId + '\')"><i class="fa fa-remove"></i>删除</a>');
+							return actions.join('');
+		        	    }
+		        	}*/
+		        ]
+            };
+            $.table.init(options);
+        });
+		var app = new Vue({
+			el: '.container-div',
+			data: {
+				message: 'Hello Vue!',
+			},
+			methods: {
+				synchronizedAccountAlias:function(){
+					$.modal.confirm("是否确定同步?",function(){
+						$.operate.get("/accountAlias/synchronizedAccountAlias");
+					});
+				}
+			},
+			created: function () {
+			},
+		})
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

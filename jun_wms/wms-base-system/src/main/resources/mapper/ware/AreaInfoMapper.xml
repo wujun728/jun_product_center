@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.AreaInfoMapper">
+    
+    <resultMap type="AreaInfo" id="AreaInfoResult">
+        <result property="areaId"    column="area_id"    />
+        <result property="areaCode"    column="area_code"    />
+        <result property="areaName"    column="area_name"    />
+        <result property="wareId"    column="ware_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createUserId"    column="create_user_id"    />
+        <result property="memo"    column="memo"    />
+    </resultMap>
+
+    <resultMap id="Dto" type="AreaInfoDto" extends="AreaInfoResult">
+        <result property="wareName"    column="ware_name"    />
+    </resultMap>
+	
+	<sql id="selectAreaInfoVo">
+        select area_id, area_code, area_name, ware_id, create_time, create_user_id, memo from area_info
+    </sql>
+
+    <select id="selectAreaInfoByName" parameterType="String" resultMap="AreaInfoResult">
+
+        <include refid="selectAreaInfoVo"/>
+        where area_name = #{areaName}
+
+    </select>
+
+	
+    <select id="selectAreaInfoList" parameterType="AreaInfo" resultMap="Dto">
+       select
+       area.area_id,
+       area.area_code,
+       area.area_name,
+       area.ware_id,
+       area.create_time,
+       area.create_user_id,
+       area.memo,
+       ware.ware_name
+
+       from area_info area
+       left join ware_info ware on area.ware_id = ware.ware_id
+
+        <where>  
+
+
+             <if test="wareId != null "> and area.ware_id = #{wareId}</if>
+
+
+         </where>
+    </select>
+    
+    <select id="selectAreaInfoById" parameterType="Integer" resultMap="AreaInfoResult">
+        <include refid="selectAreaInfoVo"/>
+        where area_id = #{areaId}
+    </select>
+        
+    <insert id="insertAreaInfo" parameterType="AreaInfo" useGeneratedKeys="true" keyProperty="areaId">
+        insert into area_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="areaCode != null  and areaCode != ''  ">area_code,</if>
+			<if test="areaName != null  and areaName != ''  ">area_name,</if>
+			<if test="wareId != null  ">ware_id,</if>
+			<if test="createTime != null  ">create_time,</if>
+			<if test="createUserId != null  ">create_user_id,</if>
+			<if test="memo != null  and memo != ''  ">memo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="areaCode != null  and areaCode != ''  ">#{areaCode},</if>
+			<if test="areaName != null  and areaName != ''  ">#{areaName},</if>
+			<if test="wareId != null  ">#{wareId},</if>
+			<if test="createTime != null  ">#{createTime},</if>
+			<if test="createUserId != null  ">#{createUserId},</if>
+			<if test="memo != null  and memo != ''  ">#{memo},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateAreaInfo" parameterType="AreaInfo">
+        update area_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaCode != null  and areaCode != ''  ">area_code = #{areaCode},</if>
+            <if test="areaName != null  and areaName != ''  ">area_name = #{areaName},</if>
+            <if test="wareId != null  ">ware_id = #{wareId},</if>
+            <if test="createTime != null  ">create_time = #{createTime},</if>
+            <if test="createUserId != null  ">create_user_id = #{createUserId},</if>
+            <if test="memo != null  and memo != ''  ">memo = #{memo},</if>
+        </trim>
+        where area_id = #{areaId}
+    </update>
+
+	<delete id="deleteAreaInfoById" parameterType="Integer">
+        delete from area_info where area_id = #{areaId}
+    </delete>
+	
+    <delete id="deleteAreaInfoByIds" parameterType="String">
+        delete from area_info where area_id in 
+        <foreach item="areaId" collection="array" open="(" separator="," close=")">
+            #{areaId}
+        </foreach>
+    </delete>
+    
+</mapper>

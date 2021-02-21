@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.box.BoxInfoMapper">
+
+
+  <resultMap id="BoxInfoResult" type="BoxInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="box_id" jdbcType="BIGINT" property="boxId" />
+    <result column="box_code" jdbcType="VARCHAR" property="boxCode" />
+    <result column="box_type" jdbcType="INTEGER" property="boxType" />
+    <result column="box_memo" jdbcType="VARCHAR" property="boxMemo" />
+    <result column="box_unit" jdbcType="VARCHAR" property="boxUnit" />
+    <result column="box_cell_id" jdbcType="INTEGER" property="boxCellId" />
+    <result column="box_state" jdbcType="INTEGER" property="boxState" />
+      <result column="has_goods" jdbcType="INTEGER" property="hasGoods" />
+  </resultMap>
+
+
+
+  <resultMap id="BoxInfoDtoResult" type="BoxInfoDto" extends="BoxInfoResult">
+
+    <result column="s_row" jdbcType="INTEGER" property="sRow" />
+    <result column="s_column" jdbcType="INTEGER" property="sColumn" />
+    <result column="shelf_name" jdbcType="VARCHAR" property="shelfName" />
+      <result column="location" jdbcType="VARCHAR" property="location"/>
+  </resultMap>
+
+    <update id="updateBoxInfo" parameterType="com.deer.wms.base.system.model.box.BoxInfo">
+        update box_info
+        set
+        box_code = #{boxCode},
+        box_type = #{boxType},
+        box_memo = #{boxMemo},
+        box_unit = #{boxUnit},
+        box_cell_id = #{boxCellId},
+        box_state = #{boxState},
+        has_goods = #{hasGoods}
+        where box_id = #{boxId}
+    </update>
+
+    <select id="getBoxInfoDtoByboxItemId" parameterType="java.lang.Integer" resultMap="BoxInfoDtoResult">
+        select si.shelf_name,ci.s_row,ci.s_column,binf.box_code
+          from box_item bi join box_info binf
+           on bi.box_code = binf.box_code join cell_info ci
+            on binf.box_cell_id = ci.cell_id join shelf_info si
+             on ci.shelf_id = si.shelf_id
+              where bi.id = #{boxItemId}
+    </select>
+
+    <select id="getBoxInfoByTaskId" parameterType="String" resultMap="BoxInfoResult">
+        select bi.*
+          from box_info bi join task_info ti
+            on bi.box_code = ti.box_code
+             where ti.task_id = #{taskId}
+    </select>
+
+    <select id="getBoxInfoByBoxCode" parameterType="java.lang.String" resultMap="BoxInfoResult">
+        select * from box_info
+        where box_code = #{boxCode}
+    </select>
+
+    <select id="getFreeCellInfoForBack" resultMap="BoxInfoDtoResult">
+
+    </select>
+
+    <select id="getFreeCellInfoForBillIn" resultMap="BoxInfoDtoResult">
+       select box.*,cell.s_row,cell.s_column,shelf.shelf_name
+        from box_info box
+        left join cell_info cell   on box.box_cell_id = cell.cell_id
+        left join shelf_info shelf on cell.shelf_id = shelf.shelf_id
+        where
+        cell.state = 1 and box.has_goods =0 and box.box_state=1
+        order by box.box_cell_id limit 1
+    </select>
+
+
+
+  <select id="getHalfCellInfoForBillIn"  resultMap="BoxInfoDtoResult" >
+
+        select bin.*,cin.s_row,cin.s_column,si.shelf_name
+        from box_item bt join box_info bin
+        on 	bt.box_code = bin.box_code join cell_info cin
+        on bin.box_cell_id = cin.cell_id join shelf_info si
+		on cin.shelf_id = si.shelf_id
+        where bt.item_code = #{itemCode} and bt.batch = #{batch}
+        and 100-bt.quantity > #{quantity}
+        order by bt.quantity desc limit 1
+
+    </select>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.box.BoxInfoCriteria" resultMap="BoxInfoDtoResult" >
+        select bi.*,
+        CONCAT(si.shelf_name,'排',ci.s_column,'列',ci.s_row,'层') as location
+        from box_info bi
+        inner join cell_info ci on ci.cell_id = bi.box_cell_id
+		left join shelf_info si on si.shelf_id = ci.shelf_id
+		where 1=1
+		<if test="boxCode != null and boxCode != ''">
+            and bi.box_code = #{boxCode}
+        </if>
+        <if test="boxMemo != null and boxMemo != ''">
+            and bi.box_memo = #{boxMemo}
+        </if>
+    </select>
+
+</mapper>

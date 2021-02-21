@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('入库记录')"/>
+</head>
+<body class="gray-bg">
+<div id="myVue">
+    <div class="container-div" onmousemove="parent.updateTimeOut()">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                订单：<input type="text" name="billNo"/>
+                            </li>
+                            <li>
+                                料号：<input type="text" name="itemCode"/>
+                            </li>
+                            <li>
+                                <input type="hidden" id="pickState" name="pickState" value="4"/>
+                            </li>
+                            <li class="select-time">
+                                <label>入库时间： </label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="startTime"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="endTime"/>
+                            </li>
+<!--                            <li>-->
+<!--                                类型：-->
+<!--                                <select name="type">-->
+<!--                                    <option value="-1"></option>-->
+<!--                                    <option value="1">采购接收接口</option>-->
+<!--                                    <option value="2">交货接口</option>-->
+<!--                                    <option value="3">WIP工单发料接口</option>-->
+<!--                                    <option value="4">账户别名事务处理接口</option>-->
+<!--                                    <option value="5">子库存转移接口</option>-->
+<!--                                </select>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                状态：-->
+<!--                                <select name="state">-->
+<!--                                    <option value="-1"></option>-->
+<!--                                    <option value="1">调用成功</option>-->
+<!--                                    <option value="2">失败需处理</option>-->
+<!--                                    <option value="3">失败无需处理</option>-->
+<!--                                    <option value="4">EBS处理中</option>-->
+<!--                                    <option value="5">已处理</option>-->
+<!--                                </select>-->
+<!--                            </li>-->
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                        class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                        class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <!--<div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-danger"  @click="refresh()" shiro:hasPermission="requestId:refresh" style="background-color: #409EFF;border-color: #409EFF;">
+                    <i class="glyphicon glyphicon-refresh" ></i> 刷新处理结果
+                </a>
+            </div>-->
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table" data-mobile-responsive="true" style="white-space:nowrap"></table>
+            </div>
+        </div>
+    </div>
+    <!-- 刷卡验证 -->
+    <!--<div class='popContainer'>
+        <div style="margin: 10px;width:400px;margin:0 auto;height: 160px;text-align:center;
+				background:white;margin-top:200px;border-radius: 10px;">
+            <div style="width:400px;height: 30px;margin-top:10px">
+                <span style="font-size:20px;margin-top:20px">登录</span>
+            </div>
+            <hr/>
+            <div style="margin-top:20px;">
+                <span id="inline-font">卡号:</span>
+                <div class="element_container" style="width:200px;height:50px;">
+                    <el-input placeholder="请输入卡号" @change="qwe" id="card" v-model="card"></el-input>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div th:include="include :: footer"></div>
+</div>
+<script th:inline="javascript">
+    // var editFlag = [[${@permission.hasPermi('in:boxItem:edit')}]];
+    var prefix = ctx + "pickTask";
+
+    /*function addBill() {
+        var _url = prefix + "/add";
+        $.modal.openFull("新增", _url);
+    }*/
+
+
+    $(function () {
+        var options = {
+            url: prefix + "/findList",
+            queryParams: queryParams,
+            createUrl: prefix + "/add",
+            updateUrl: prefix + "/edit/{id}",
+            removeUrl: prefix + "/remove",
+            exportUrl: prefix + "/export",
+            detailUrl: prefix + "/detail",
+            modalName: "入库记录",
+            showExport: true,
+            columns: [
+                // {
+                // checkbox: false
+                // },
+                {
+                    field: 'outTime',
+                    title: '出库时间',
+                    sortable: true
+                },
+                {
+                    field: 'billNo',
+                    title: '工单号',
+                    visible: true
+                },
+                {
+                    field: 'itemCode',
+                    title: '物料编码',
+                    sortable: true
+                },
+                {
+                    field: 'quantity',
+                    title: '工单需求',
+                    sortable: true
+                },
+                {
+                    field: 'pickQuantity',
+                    title: '实发',
+                    sortable: true
+                },
+                {
+                    field: 'boxCode',
+                    title: '箱号',
+                    sortable: true
+                },
+                {
+                    field: 'batch',
+                    title: '批次',
+                    sortable: true
+                },
+            ]
+        };
+        $.table.init(options);
+        function queryParams(params) {
+            var search = $.table.queryParams(params);
+            search.pickState = 4;
+            return search;
+        }
+    });
+    var app = new Vue({
+        el: '#myVue',
+        data: {
+            operator:'',
+            card: '',
+            loginPerson: '',
+            loginPersonCardNo: '',
+            taskStartTime: '',
+
+        },
+        methods: {
+            //退出
+            refresh:function(){
+                $.modal.confirm("确定刷新吗？",function(){
+                    $.operate.get("requestId/refresh");
+                });
+            },
+
+            //刷卡验证
+            qwe: function () {
+                let that = this;
+                if (that.card == '' || that.card == null) {
+                    alert("请刷卡登陆！");
+                    return false
+                }
+                let card = {
+                    card: that.card,
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/system/operator/findByCard",
+                    data: JSON.stringify(card),
+                    dataType: "json",
+                    contentType: "application/json;charset-UTF-8",
+                    async: false,
+                    error: function (data) {
+                        $.modal.msgError("系统错误");
+                    },
+                    success: function (data) {
+                        if (data.code === 200) {
+                            that.taskStartTime = that.date;
+                            that.loginPerson = data.data.operatorName + data.data.empNo;
+                            that.loginPersonCardNo = data.data.operatorCard;
+                            that.card = '';
+                            that.operator = data.data;
+                            document.querySelector('.popContainer').style.display = 'none';
+                        } else {
+                            $.modal.msgWarning("系统无此账户,请联系管理员！");
+                        }
+                    },
+                });
+            },
+
+        },
+        created:function(){
+            let that = this;
+            /*$.ajax({
+                type: "post",
+                url: "/accountAlias/findAccountAliasList",
+                data: JSON.stringify(),
+                dataType: "json",
+                contentType: "application/json;charset-UTF-8",
+                async: false,
+                error: function (data) {
+                    $.modal.msgError("系统错误");
+                },
+                success: function (data) {
+
+                },
+            });*/
+        },
+        mounted: function () {
+            $('#card').focus();
+        }
+    })
+</script>
+</body>
+</html>

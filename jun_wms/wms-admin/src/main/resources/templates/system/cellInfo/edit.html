@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改货位设置')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-cellInfo-edit" th:object="${cellInfo}">
+            <input id="cellId" name="cellId" th:field="*{cellId}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">货架编码：</label>
+				<div class="col-sm-8">
+					<input id="shelfId" name="shelfId" th:field="*{shelfId}" class="form-control" type="text" disabled="disabled">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">货物编码：</label>
+				<div class="col-sm-8">
+					<input id="cellCode" name="cellCode" th:field="*{cellCode}" class="form-control" type="text" disabled="disabled">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="memo" name="memo" th:field="*{memo}" class="form-control" type="text">
+				</div>
+			</div>
+
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">状态:</label>
+				<div class="col-sm-8">
+<!--					<input id="state" name="state" th:field="*{state}" class="form-control" type="text">-->
+					<select name="state"  th:field="*{state}" class="form-control">
+						<option value="0">无货</option>
+						<option value="1">有货</option>
+						<option value="2">禁用</option>
+						<option value="3">故障</option>
+					</select>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/cellInfo";
+		$("#form-cellInfo-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-cellInfo-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

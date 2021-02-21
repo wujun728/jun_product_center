@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<th:block th:include="include :: header('详情')"/>
+	<title>入库操作台</title>
+	<!--<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>-->
+	<!-- bootstrap-table 表格插件样式 -->
+	<link th:href="@{/ajax/libs/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet"/>
+	<!-- 引入element样式 -->
+	<!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    &lt;!&ndash; 引入组件库 &ndash;&gt;
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
+	<script src="/js/vue.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<link th:href="@{/css/element.css}" rel="stylesheet"/>
+	<script th:src="@{/js/element.js}"></script>
+	<script th:src="@{/ruoyi/js/ry-ui.js}"></script>
+	<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+	<style type="text/css">
+		#guapi{
+			border:1px solid gray;
+			box-shadow: 2px 4px 6px gray;
+			border-radius: 10px;
+		}
+		.guapi{
+			border:1px solid gray;
+			margin:20px;
+			border-radius: 10px;
+		}
+		#inside{
+			margin:20px
+		}
+		#billin{
+			font-size:30px;
+			color:#4499FF
+		}
+		.div-inline1{
+			display:inline-block;
+			margin:30px;
+
+		}
+		.div-inline{
+			display:inline-block;
+			margin:30px;
+		}
+		.div-inline2{
+			display:inline-block;
+			margin:10px;
+		}
+		#inline-font{
+			margin-right:5px;
+			font-size:30px;
+		}
+		#inline-font3{
+			font-size:20px;
+		}
+		.element_container{
+			width: 200px;
+			display: inline-block;
+		}
+		.buttonFont{
+			font-size:40px;
+			width: 66px;
+			height: 35px;
+			vertical-align:middle;
+			text-align: center;
+			color:white;
+		}
+		#buttonStyle{
+			height:80px;
+			width:200px;
+			background:#1E90FF;
+			border-radius:15px;
+			text-align:center;
+			display:block;
+			margin:0 auto;
+		}
+		.buttonFont1{
+			font-size:35px;
+			width: 55px;
+			height: 28px;
+			vertical-align:middle;
+			text-align: center;
+			color:white;
+		}
+		.buttonFont1{
+			font-size:35px;
+			width: 55px;
+			height: 28px;
+			vertical-align:middle;
+			text-align: center;
+			color:white;
+		}
+		#buttonStyle1{
+			height:60px;
+			width:140px;
+			background:#999;
+			border-radius:15px;
+			text-align:center;
+			display:block;
+			margin:0 auto;
+		}
+		#buttonStyle3{
+			height:60px;
+			width:170px;
+			background:#999;
+			border-radius:15px;
+			text-align:center;
+			display:block;
+			margin:0 auto;
+		}
+		#buttonStyle2{
+			height:200px;
+			width:300px;
+			background:#D3D3D3;
+			border-radius:15px;
+			text-align:center;
+			display:block;
+			margin:0 auto;
+		}
+		.div-inline-two:{
+			margin-top:20px;
+		}
+		.div-inline-three:{
+			margin-top:20px;
+		}
+		.el-button--primary {
+			color: #FFF;
+			background-color: #409EFF;
+			border-color: #409EFF00;
+		}
+		div.popContainer{
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(0,0,0,0.3);
+			text-align: center;
+		}
+		.div-inline1 .el_switch *{
+			font-size: 28px;
+		}
+		.clearfloat:after {
+			display: block;
+			clear: both;
+			content: "";
+			visibility: hidden;
+			height: 0
+		}
+		.clearfloat {
+			zoom: 1
+		}
+	</style>
+</head>
+<body>
+<div id="guapi">
+	<div id="inside">
+		<div><span id="billin">入库操作台</span></div>
+		<hr/>
+		<div>
+			<div class="div-inline1" style="width:69%">
+				<div>
+					<div>
+						<div class="div-inline2">
+							<span id="inline-font">编码:</span>
+							<div class="element_container" style="width:300px">
+								<el-input placeholder="扫码枪扫描来料的二维码" clearable="true" id="itemCode" size="small" v-model="theInput.itemCode" @change="spilteString()"/>
+							</div>
+
+						</div>
+						<div class="div-inline2" >
+							<span id="inline-font">数量:</span>
+							<div class="element_container" style="width:300px">
+								<el-input placeholder="可以手动输入/可以累加" size="small" v-model="theInput.quantity"/>
+							</div>
+						</div>
+					</div>
+					<div >
+						<div class="div-inline2">
+							<span id="inline-font">箱号:</span>
+							<div class="element_container" style="width:300px">
+								<el-input placeholder="扫码枪扫描箱子上的编码" id="cartonNo" clearable="true" size="small" v-model="theInput.cartonNo" @change="cursorJump()"/>
+							</div>
+						</div>
+						<div class="div-inline2">
+							<span id="inline-font">上限:</span>
+							<div class="element_container" style="width:300px">
+								<el-input clearable="true" size="small" v-model="theInput.maxQuantity" disabled="true"/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="guapi clearfloat" style="padding:20px">
+					<div  style="width:40%;float: left;">
+						<div style="margin-top:10px;position: relative;left: 90px;">
+							<span id="inline-font">料号:</span>
+							<span id="inline-font3">{{theInput.code}}</span>
+						</div>
+						<div  style="margin-top:10px" >
+							<span id="inline-font">供应商编码:</span>
+							<span id="inline-font3">{{theInput.supplierCode}}</span>
+						</div>
+						<div style="margin-top:10px;position: relative;left: 78px;">
+							<span id="inline-font">PO码:</span>
+							<span id="inline-font3">{{theInput.POCode}}</span>
+						</div>
+						<div class="clearfloat" style="margin-top:10px;position: relative;left: 30px;">
+							<div style="float: left;width：37%">
+								<span  id="inline-font">物料描述:</span>
+							</div>
+							<div style="float: right;width:63%">
+								<span id="inline-font3">{{theInput.itemName}}</span>
+							</div>
+						</div>
+					</div>
+					<div  style="width:40%;margin-left:5%;float:right;">
+						<div style="margin-top:10px;position: relative;left: 70px;">
+							<span id="inline-font">批次:</span>
+							<span id="inline-font3">{{theInput.batch}}</span>
+						</div>
+						<div style="margin-top:10px;position: relative;left: 40px;">
+							<span id="inline-font">有效期:</span>
+							<span id="inline-font3">{{theInput.endDate}}</span>
+						</div>
+						<div style="margin-top:10px;position: relative;left: 10px;">
+							<span id="inline-font">生产日期:</span>
+							<span id="inline-font3">{{theInput.productionDate}}</span>
+						</div>
+						<div style="margin-top:10px;position: relative;left: -20px;">
+							<span id="inline-font">可接收数量:</span>
+							<span id="inline-font3">{{theInput.canReceiveQuantity}}</span>
+						</div>
+					</div>
+				</div>
+				<div>
+					<div style="text-align: center;">
+						<el-button type="primary" style="display: inline-block;height:80px;width:200px;background:#1E90FF;
+							border-radius:15px;text-align:center;display:block;margin:0 auto;" size="small" id="billInVerify" class="buttonFont initializeButton" @click="billInWare()">入库</el-button>
+						<el-button type="primary" size="small" style="height:80px;width:200px;background:#1E90FF;border-radius:15px;
+						text-align:center;display:block;margin:0 auto;" id="initializeButton"  @click="billInWare()" display="none">
+							<span style="font-size:35px;width: 66px;height: 35px;vertical-align:middle;text-align: center;color:white;">初始化入库</span>
+						</el-button>
+					</div>
+				</div>
+			</div>
+			<div class="div-inline" style="width: 21%;">
+				<div class="div-inline-three" style="margin-top:20px;position: relative;">
+					<el-button type="primary" size="small" id="buttonStyle2" class="buttonFont1" style="white-space:normal;">{{warningMessage}}</el-button>
+				</div>
+				<div>
+					<div style="margin-left: 10px;">
+						<div class="div-inline-three" style="margin-top:20px;display: inline-block;">
+							<el-button type="primary" size="small" id="buttonStyle1" style="background:#1E90FF" class="buttonFont1" @click="clearParams()">清空</el-button>
+						</div>
+						<div class="div-inline-three" style="margin-top:20px;display: inline-block;">
+							<el-button type="primary" size="small" id="buttonStyle1" style="background:#1E90FF" class="buttonFont1" @click="billInNullBox()">入空框</el-button>
+						</div>
+					</div>
+					<div style="margin-left: 10px;">
+						<div class="div-inline-three" style="margin-top:20px;display: inline-block;">
+							<el-button type="primary" size="small" id="buttonStyle1" style="background:#1E90FF" class="buttonFont1" @click="exit()">退出</el-button>
+						</div>
+						<div class="div-inline-three" style="margin-top:20px;display: inline-block;">
+							<el-button type="primary" size="small" id="buttonStyle1" style="background:#1E90FF" class="buttonFont1" @click="backToHistory()">
+								返回</el-button>
+						</div>
+					</div>
+					<div style="margin-left: 10px;">
+						<div class="div-inline-three" style="margin-top:20px;display: inline-block;">
+							<el-button type="primary" size="small" id="buttonStyle1" style="background:#1E90FF" class="buttonFont1" @click="getBox()">出空框</el-button>
+						</div>
+<!--						<div class="div-inline-three" style="margin-top:20px;display: inline-block;">-->
+<!--							<el-button type="primary" size="small" id="buttonStyle1" style="background:#1E90FF" class="buttonFont1" @click="getHalfFrame()">出半框</el-button>-->
+<!--						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="inside">
+			<span id="inline-font">操作员:</span><span id="inline-font">{{loginPerson}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+			<span id="inline-font">时间:</span><span id="inline-font">{{date}}</span>
+		</div>
+	</div>
+	<div class='popContainer' style="z-index: 9;">
+		<div style="margin: 10px;width:400px;margin:0 auto;height: 300px;text-align:center;
+				background:white;margin-top:200px;border-radius: 10px;">
+			<div style="width:400px;height: 30px;">
+				<span style="font-size:30px;">登录</span>
+			</div>
+			<hr/>
+			<div style="margin-top:35px;">
+				<span id="inline-font">卡号:</span>
+				<div class="element_container" style="width:200px;height:50px;">
+					<el-input  placeholder="请输入卡号" @change="qwe" id="card" type="password" v-model="card"></el-input>
+				</div>
+			</div>
+			<div class="div-inline-three" style="margin-top:20px">
+				<el-button type="primary" size="small" id="buttonStyle3" style="background:#1E90FF" class="buttonFont1" @click="backToHistory()">
+					返回主页</el-button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script th:inline="javascript">
+	var ctx = [[@{/}]];
+</script>
+<script>
+	new Vue({
+		el:'#guapi',
+		data:{
+			date:'',
+			card:'',
+			theInput:{
+				cartonNo:'',
+				quantity:'',
+				itemCode:'',
+				code:'',
+				supplierCode:'',
+				POCode:'',
+				batch:'',
+				endDate:'',
+				productionDate:'',
+				maxQuantity:'',
+				itemName:'',
+				canReceiveQuantity:'',
+				turnoverCode:'',
+				lastBarCode:'',
+			},
+			loginPerson:'',
+			loginPersonCardNo:'',
+			autoverifyPermission:'',
+			warningMessage:'',
+			taskStartTime:'',
+			taskEndTime:'',
+			selectButton:2,
+		},
+		methods:{
+			/** 清空提示信息*/
+			clearWarningMessage:function(){
+				let that = this;
+				that.warningMessage = "";
+				document.querySelector('#buttonStyle2').style.background = '#D3D3D3';
+			},
+			/** 灰色区域显示错误信息*/
+			showWarningMessage:function(data){
+				let that = this;
+				that.warningMessage = data;
+				document.querySelector('#buttonStyle2').style.background = 'red';
+			},
+			/** 灰色区域显示正确信息信息*/
+			showSuccessMessage:function(data){
+				let that = this;
+				that.warningMessage = data;
+				document.querySelector('#buttonStyle2').style.background = '#67C23A';
+			},
+			showWaitMessage:function(data){
+				let that = this;
+				that.warningMessage = data;
+				document.querySelector('#buttonStyle2').style.background = '#f9ff52';
+			},
+			/** 入空框*/
+			billInNullBox:function() {
+				let that = this;
+				if (that.warningMessage != "") {
+					that.warningMessage = "";
+					document.querySelector('#buttonStyle2').style.background = '#D3D3D3';
+				}
+				if(that.theInput.cartonNo == "" || that.theInput.cartonNo == null){
+					that.warningMessage = "请扫描载具箱号！";
+					document.querySelector('#buttonStyle2').style.background = 'red';
+					return false;
+				}
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url :  "/in/taskInfo/inNullBox",
+					data : {
+						boxCode:that.theInput.cartonNo,
+						loginPersonCardNo:that.loginPersonCardNo,
+					},
+					async : false,
+					error : function(request) {
+					},
+					success : function(data) {
+						if(data.code == 200){
+							that.theInput.cartonNo = "";
+                            that.warningMessage = "任务下发成功";
+                            document.querySelector('#buttonStyle2').style.background = '#67C23A';
+						}else{
+							that.warningMessage = data.msg;
+							document.querySelector('#buttonStyle2').style.background = 'red';
+						}
+					}
+				});
+			},
+			/**叫半框*/
+			getHalfFrame:function(){
+				let that = this;
+				that.clearWarningMessage();
+				if(that.theInput.code == "" || that.theInput.code == null){
+					alert("请扫物料二维码！");
+					return false;
+				}
+				let getbox = {
+					itemCode:that.theInput.code,
+					batch:that.theInput.batch,
+					whetherNullBox:2,
+					exp:that.theInput.endDate,
+					loginPersonCardNo:that.loginPersonCardNo,
+				}
+				$.ajax({
+					type: "post",
+					url: "/in/taskInfo/getBox",
+					data : JSON.stringify(getbox),
+					dataType:"json",
+					contentType: "application/json;charset-UTF-8",
+					async : false,
+					error : function(data) {
+						alert("系统错误");
+					},
+					success : function(data) {
+						if(data.code === 200){
+							that.theInput.quantity = parseFloat(that.theInput.quantity)+parseFloat(data.data);
+							that.showSuccessMessage("任务下发成功!")
+						}else{
+							that.showWarningMessage("无可用半框!");
+						}
+					},
+				});
+			},
+			/** 叫空框 */
+			getBox:function(){
+				let that = this;
+				that.clearWarningMessage();
+				let getbox = {
+					whetherNullBox:1,
+					loginPersonCardNo:that.loginPersonCardNo,
+				}
+				$.ajax({
+					type: "post",
+					url: "/in/taskInfo/getBox",
+					data : JSON.stringify(getbox),
+					dataType:"json",
+					contentType: "application/json;charset-UTF-8",
+					async : false,
+					error : function(data) {
+						alert("系统错误");
+					},
+					success : function(data) {
+						if(data.code === 200){
+							that.showSuccessMessage("任务下发成功!");
+						}else{
+							that.showWarningMessage("无可用空框!");
+						}
+					},
+				});
+			},
+			cursorJump:function(){
+				let that = this;
+				that.clearWarningMessage();
+				$('#itemCode').focus();
+			},
+			/** 刷卡登录验证*/
+			qwe:function(){
+				let that = this;
+				if(that.card == '' || that.card == null){
+					alert("请刷卡登陆！");
+					return false
+				}
+				let card = {
+					card:that.card,
+				}
+				$.ajax({
+					type: "post",
+					url: "/system/operator/findByCard",
+					data : JSON.stringify(card),
+					dataType:"json",
+					contentType: "application/json;charset-UTF-8",
+					async : false,
+					error : function(data) {
+						alert("系统错误");
+					},
+					success : function(data) {
+						if (data.data != null) {
+							that.taskStartTime = that.date;
+							that.loginPerson = data.data.operatorName + data.data.empNo;
+							that.loginPersonCardNo = data.data.operatorCard;
+							that.autoverifyPermission = data.data.autoverifyPermission;
+							if(data.data.autoverifyPermission == 2){
+								$("#initializeButton").show();
+								$(".initializeButton").hide();
+							}
+							that.card = '';
+							document.querySelector('.popContainer').style.display = 'none';
+							document.querySelector('body').style.overflow = 'auto';
+							$('#cartonNo').focus();
+						}else{
+							alert("系统无此账户！");
+						}
+					},
+				});
+			},
+			/** 退出登录 */
+			exit:function(){
+				let that = this;
+				that.clearParams();
+				that.loginPerson='';
+				that.loginPersonCardNo='';
+				that.autoverifyPermission='';
+				$("#initializeButton").hide();
+				$(".initializeButton").show();
+				document.querySelector('.popContainer').style.display = 'block';
+				debugger
+				document.querySelector('body').style.overflow = 'hidden';
+				$('#card').focus();
+			},
+			/**返回上一页*/
+			backToHistory:function(){
+				window.history.go(-1);
+				// history.back(-1);
+			},
+			/** 入库按钮 */
+			billInWare:function(){
+				let that = this;
+				that.clearWarningMessage();
+				let input = that.theInput;
+				if(input.code == ''){
+					that.showWarningMessage("请扫描物料二维码")
+					return false;
+				}
+				if(input.cartonNo == ''){
+					that.showWarningMessage("请扫箱号二维码");
+					return false;
+				}
+				that.showWaitMessage("数据处理中,请稍等！");
+				let billinInformation = {
+					operatorCard:that.loginPersonCardNo,
+					supplierCode:input.supplierCode,
+					itemCode:input.code,
+					endDate:input.endDate,
+					productionDate:input.productionDate,
+					quantity:input.quantity,
+					batch:input.batch,
+					boxCode:input.cartonNo,
+					billNo:input.POCode,
+					taskStartTime:that.taskStartTime,
+					taskEndTime:that.date,
+					lastBarCode:that.theInput.lastBarCode,
+					autoverifyPermission:that.autoverifyPermission,
+				}
+				debugger
+				$.modal.loading("正在处理中，请稍后...");
+				$.ajax({
+					cache : true,
+					type : "POST",
+					url :  "/in/billInMaster/billInTaskInfo",
+					data : JSON.stringify(billinInformation),
+					dataType:"json",
+					contentType: "application/json;charset-UTF-8",
+					// async : false,
+					// beforeSend: function () {
+					// 	$.modal.loading("正在处理中，请稍后...");
+					// },
+					error : function(request) {
+						debugger
+						$.modal.alertError("系统错误");
+						$.modal.closeLoading();
+					},
+					success : function(data) {
+						$.modal.closeLoading();
+						if(data.code === 200){
+							that.showSuccessMessage(data.data);
+							that.exit();
+							$.modal.msgSuccess("任务下发成功")
+							// alert("任务下发成功！");
+						}
+						else if(data.code === 100008){
+							that.showWarningMessage(data.data)
+						}
+						else{
+							that.showWarningMessage(data.msg);
+						}
+					},
+				});
+
+			},
+			/** 二维码解析并发送请求 */
+			spilteString:function(){
+				let that = this;
+				that.clearWarningMessage();
+				let longString = that.theInput.itemCode;
+				let information = longString.substring(2, longString.length-2);
+				let array = information.split(" ");
+				let quantity = that.theInput.quantity;
+				if(that.theInput.cartonNo == ''){
+					that.theInput.itemCode = '';
+					that.showWarningMessage("请扫描箱号");
+					return false;
+				}
+				if(longString != '' && longString != null){
+					if(that.theInput.code != '' && that.theInput.code != array[0]){
+						that.showWarningMessage("料号不一致");
+						return false;
+					}
+					if(that.theInput.supplierCode != '' && that.theInput.supplierCode != array[1]){
+						that.showWarningMessage("供应商不一致");
+						return false;
+					}
+					if(that.theInput.batch != '' && that.theInput.batch != array[2]){
+						that.showWarningMessage("批次不一致");
+						return false;
+					}
+					if(that.theInput.POCode != '' && that.theInput.POCode != array[5]){
+						that.showWarningMessage("订单号不一致");
+						return false;
+					}
+					if(that.theInput.turnoverCode != '' && that.theInput.turnoverCode == array[7]){
+						that.theInput.itemCode = '';
+						that.showWarningMessage("流水码相同！请重新扫描！");
+						return false;
+					}
+					if(that.theInput.endDate != '' && that.theInput.endDate != array[4]){
+						that.theInput.itemCode = '';
+						that.showWarningMessage("有效期不同，请重新扫描");
+						return false;
+					}
+					$.modal.loading("正在处理中，请稍后...");
+					that.showWaitMessage("数据处理中,请稍等！");
+					let billinInformation = {
+						itemCode:array[0],
+						supplierCode:array[1],
+						batch:array[2],
+						productionDate:array[3],
+						endDate:array[4],
+						billNo:array[5],
+						quantity:array[6],
+						barCode:that.theInput.itemCode,
+						lastBarCode:that.theInput.lastBarCode,
+						operatorCard:that.loginPersonCardNo,
+						boxCode:that.theInput.cartonNo,
+						quantitys:that.theInput.quantity,
+						autoverifyPermission:that.autoverifyPermission,
+					}
+					// that.showWaitMessage("数据处理中,请稍等！")
+					$.ajax({
+						cache: true,
+						type: "POST",
+						url: "/in/billInMaster/billInValidation",
+						data: JSON.stringify(billinInformation),
+						dataType: "json",
+						contentType: "application/json;charset-UTF-8",
+						// async: false,
+						/*beforeSend: function () {
+							$.modal.loading("正在处理中，请稍后...");
+						},*/
+						error: function (request) {
+							$.modal.alertError("系统错误");
+							$.modal.closeLoading();
+						},
+						success: function (data) {
+							$.modal.closeLoading();
+							if (data.code === 200) {
+								that.theInput.code = array[0];
+                                that.theInput.supplierCode = array[1];
+                                that.theInput.batch = array[2];
+                                that.theInput.productionDate = array[3];
+                                that.theInput.endDate = array[4];
+                                that.theInput.POCode = array[5];
+								if(quantity != ''){
+									quantity = parseFloat(quantity) + parseFloat(array[6]);
+								}else{
+									quantity = array[6];
+								}
+                                that.theInput.quantity = quantity;
+								that.theInput.turnoverCode = array[7];
+								that.theInput.lastBarCode = that.theInput.itemCode;
+								debugger
+								that.theInput.itemName = data.data.itemName;
+								that.theInput.canReceiveQuantity = data.data.dateWarning;
+								that.theInput.maxQuantity = data.data.maxPackQty;
+								that.showSuccessMessage(data.data.unit);
+                                that.theInput.itemCode = "";
+                                $('#itemCode').focus();
+							}
+							else if(data.code == 100008){
+								that.theInput.itemCode = '';
+								that.showWarningMessage(data.data);
+							}
+							else{
+								that.theInput.itemCode = '';
+								that.showWarningMessage(data.msg);
+							}
+						},
+					});
+				}
+			},
+			/** 清除信息 */
+			clearParams:function(){
+				var that = this;
+				that.theInput = {
+					cartonNo:'',
+					quantity:'',
+					itemCode:'',
+					code:'',
+					supplierCode:'',
+					POCode:'',
+					batch:'',
+					endDate:'',
+					productionDate:'',
+					maxQuantity:'',
+					canReceiveQuantity:'',
+					itemName:'',
+					turnoverCode:'',
+					lastBarCode:'',
+				}
+				that.clearWarningMessage();
+			},
+		},
+		created:function(){
+			$("#initializeButton").hide();
+		},
+		mounted:function(){
+			/*$.ajax({
+                type: "post",
+                url: "/system/cellInfo/cellOccupyRatio",
+                success : function(data) {
+
+                },
+            });*/
+			//创建定时器更新时间
+			var _this = this;
+			const timers = setInterval(() => {
+				var that = this;
+				var date = new Date();
+				var year=date.getFullYear();
+				var month= date.getMonth()+1<10 ? "0"+(date.getMonth()+1) : date.getMonth()+1;
+				var day=date.getDate()<10 ? "0"+date.getDate() : date.getDate();
+				var hours=date.getHours()<10 ? "0"+date.getHours() : date.getHours();
+				var minutes=date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes();
+				var seconds=date.getSeconds()<10 ? "0"+date.getSeconds() : date.getSeconds();
+				that.date = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+			}, 1000)
+			this.$once('hook:beforeDestroy', () => {
+				clearInterval(timers);
+			});
+			$('#card').focus();
+			/*var socket;
+			if(typeof(WebSocket) == "undefined") {
+				console.log("您的浏览器不支持WebSocket");
+			}else{
+				console.log("您的浏览器支持WebSocket");
+				//实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+				//等同于socket = new WebSocket("ws://localhost:8083/checkcentersys/websocket/20");
+				var ip = window.location.host;
+				socket = new WebSocket("ws://"+ip+"/websocket");
+				//打开事件
+				socket.onopen = function() {
+					console.log("Socket 已打开");
+					//socket.send("这是来自客户端的消息" + location.href + new Date());
+				};
+				//获得消息事件
+				socket.onmessage = function(msg) {
+					if(msg.data !== "连接成功"){
+						alert(msg.data);
+					}
+					console.log(msg.data);
+					//发现消息进入    开始处理前端触发逻辑
+				};
+				//关闭事件
+				socket.onclose = function() {
+					console.log("Socket已关闭");
+				};
+				//发生了错误事件
+				socket.onerror = function() {
+					alert("Socket发生了错误");
+					//此时可以尝试刷新页面
+				}
+				//离开页面时，关闭socket
+				//jquery1.8中已经被废弃，3.0中已经移除
+				// $(window).unload(function(){
+				//     socket.close();
+				//});
+			}*/
+		},
+	})
+</script>
+
+</html>
+

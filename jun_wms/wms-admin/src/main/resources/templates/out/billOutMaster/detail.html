@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('详情')"/>
+
+</head>
+<body>
+
+
+<div class="container-div" onmousemove="parent.updateTimeOut()">
+    <div style="width: 100%;height: 50px">
+        <el-button style="float:right " type="info" @click="closeModal()">返回</el-button>
+    </div>
+
+
+
+
+    <el-dialog title="选择出库" :visible.sync="dialogVisibleForGetBox" width="60%">
+       料号： <el-tag>{{itemCode}}</el-tag>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       物料名称： <el-tag>{{itemName}}</el-tag>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        预约出库数量：<el-tag style="color:blue">{{quantity}}</el-tag>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       已选择出库数量： <el-tag style="color:red">{{selectedQuantity}}</el-tag><br><br>
+
+        <el-row>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button type="primary" plain @click="changeHowToBillOut(0)">先进先出(默认)</el-button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button type="primary" plain>待处理</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button type="primary" plain>待处理</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button type="primary" plain>待处理</el-button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-button type="warning" plain @click="setAllPickQuantityTo0()">归零</el-button>
+        </el-row><br><br>
+
+            <el-table
+                    :data="pickTasks"
+                    style="width: 100%">
+                <el-table-column
+                        prop="itemCode"
+                        label="料号"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="boxCode"
+                        label="托盘编码"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="batch"
+                        label="批次"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        prop="quantity"
+                        label="数量"
+                        width="180">
+                </el-table-column>
+                <el-table-column
+                        label="已选择数量"
+                        width="180"
+                        >
+                    <template slot-scope="scope">
+                        <el-input type="number"  v-model="scope.row.pickQuantity" :min="0" @change="changeSelectedQuantity(scope.$index,scope.row.pickQuantity)" placeholder="请输入数量"></el-input>
+                    </template>
+                </el-table-column>
+            </el-table>
+            <br><br>
+            是否优先执行该任务：
+            <el-switch
+                    v-model="isTop"
+                    active-color="#13ce66"
+                    inactive-color="#ff4949"
+                    active-value="1"
+                    inactive-value="0">
+            </el-switch>
+
+        <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisibleForGetBox = false">取 消</el-button>
+                <el-button type="primary" @click="saveTaskinfoForBillOut()">确 定</el-button>
+        </span>
+    </el-dialog>
+
+
+    <el-row class="deer-panel">
+
+        <span style="color:#409EFF;">出库单信息</span>
+        <el-divider style="margin-top: 10px"></el-divider>
+        <el-col :span="6">
+            <div class="deer-ky">
+                <div class="deer-key">单据号：</div>
+                <div class="deer-value">{{billOutMaster.billId}}</div>
+            </div>
+            <div class="deer-ky">
+                <div class="deer-key">创建人：</div>
+                <div class="deer-value">{{billOutMaster.createUserName}}</div>
+            </div>
+            <div class="deer-ky">
+                <div class="deer-key">创建时间：</div>
+                <div class="deer-value">{{billOutMaster.createTime}}</div>
+            </div>
+
+
+        </el-col>
+        <el-col :span="6">
+
+            <div class="deer-ky">
+                <div class="deer-key">仓库：</div>
+                <div class="deer-value">{{billOutMaster.wareName}}</div>
+            </div>
+            <div class="deer-ky">
+                <div class="deer-key">状态：</div>
+                <div class="deer-value">{{billOutMaster.state}}</div>
+            </div>
+            <div class="deer-ky">
+                <div class="deer-key">备注：</div>
+                <div class="deer-value">{{billOutMaster.memo}}</div>
+            </div>
+<!--            <div class="deer-ky">-->
+<!--                <div class="deer-key">供应商：</div>-->
+<!--                <div class="deer-value">{{billOutMaster.supplierName}}</div>-->
+<!--            </div>-->
+
+
+        </el-col>
+
+<!--        <el-col span="12"></el-col>-->
+
+    </el-row>
+
+
+    <el-row :gutter="20">
+        <el-col :span="24">
+            <el-tabs type="border-card" class="deer-panel" style="margin-top: 15px;padding-top: 0px">
+                <el-tab-pane>
+                    <span slot="label"><i class="el-icon-date"></i> 物料详情</span>
+                    <el-table
+                            :data="billOutDetails"
+                            border
+                    >
+                        <el-table-column
+                                fixed
+                                prop="itemCode"
+                                label="料号"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                fixed
+                                prop="itemName"
+                                label="物料名称"
+                        >
+                        </el-table-column>
+                        <el-table-column
+                                fixed
+                                prop="quantity"
+                                label="数量"
+                        >
+                        </el-table-column>
+
+<!--                        <el-table-column-->
+<!--                                fixed-->
+<!--                                prop="supplierBatch"-->
+<!--                                label="供应商批次"-->
+<!--                        >-->
+<!--                        </el-table-column>-->
+
+                        <el-table-column
+
+                                label="操作"
+                        >
+                            <template slot-scope="scope">
+
+<!--                                <el-button-->
+<!--                                        size="mini"-->
+<!--                                        @click="deleteBillDetail(scope.row.billOutDetailId)" type="danger" plain>删除-->
+<!--                                </el-button>-->
+
+<!--                                <el-button size="mini" type="info" plain>编辑</el-button>-->
+
+
+                                <el-button size="mini" @click="getBoxItemInCellInfoByItemCode(scope.$index)" type="primary" plain>叫合适的托盘
+                                </el-button>
+
+                            </template>
+                        </el-table-column>
+
+                    </el-table>
+
+
+                </el-tab-pane>
+               
+                <el-tab-pane>
+                    <span slot="label"><i class="el-icon-date"></i> 任务列表</span>
+
+                    <el-table
+                            :data="taskInfos"
+                            border
+                    >
+                        <el-table-column
+                                fixed
+                                prop="boxCode"
+                                label="托盘编码"
+                                width="150">
+                        </el-table-column>
+                        <el-table-column
+                                fixed
+                                prop="startPosition"
+                                label="起始位置"
+                                width="150">
+                        </el-table-column>
+
+                        <el-table-column
+                                fixed
+                                prop="endPosition"
+                                label="末尾位置"
+                                width="150">
+                        </el-table-column>
+
+                        <el-table-column
+                                fixed
+
+                                label="任务类型"
+                                width="150">
+                            <template slot-scope="scope">
+
+
+                                <el-tag v-if="scope.row.type==1">叫托盘</el-tag>
+                                <el-tag   v-if="scope.row.type==2">入库</el-tag>
+                                <el-tag   v-if="scope.row.type==3">出库</el-tag>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column
+                                fixed
+
+                                label="状态"
+                                width="150">
+
+                            <template slot-scope="scope">
+
+                                <el-tag type="info" v-if="scope.row.state==0">初始化</el-tag>
+                                <el-tag v-if="scope.row.state==1">已下发</el-tag>
+                                <el-tag type="danger" v-if="scope.row.state==2">执行错误</el-tag>
+                                <el-tag type="success" v-if="scope.row.state==3">已完成</el-tag>
+                            </template>
+
+                        </el-table-column>
+
+                        <!--                                <el-table-column-->
+
+                        <!--                                        label="操作"-->
+                        <!--                                        width="150">-->
+                        <!--                                    <template slot-scope="scope">-->
+                        <!--                                        <el-button size="mini" type="success" plain>查看</el-button>-->
+                        <!--                                        <el-button size="mini" type="info" plain>编辑</el-button>-->
+                        <!--                                    </template>-->
+                        <!--                                </el-table-column>-->
+                    </el-table>
+
+                </el-tab-pane>
+
+            </el-tabs>
+        </el-col>
+        <!--<el-col :span="6" >
+            <el-tabs type="border-card" class="deer-panel" style="margin-top: 15px;padding-top: 0px">
+                <el-tab-pane>
+                    <span slot="label"><i class="el-icon-date"></i> 物料详情</span>
+                    <el-form :inline="true"   class="demo-form-inline">
+                        <el-form-item label="箱码">
+                            <el-input size="mini" st v-model="groupBox.boxNo" placeholder="箱码"></el-input>
+                        </el-form-item>
+
+                        <el-form-item>
+&lt;!&ndash;                                    <el-button size="mini" type="primary" @click="onSubmit">查询</el-button>&ndash;&gt;
+                        </el-form-item>
+                    </el-form>
+                </el-tab-pane>
+
+
+            </el-tabs>
+
+        </el-col>-->
+    </el-row>
+
+
+</div>
+
+<div th:include="include::footer"></div>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('out:billOutMaster:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('out:billOutMaster:remove')}]];
+    var prefix = ctx + "out/billOutMaster";
+    var detailPrefix = ctx + "out/billOutDetail";
+
+
+</script>
+
+<script th:src="@{/ruoyi/out/outDetail.js}"></script>
+
+
+</body>
+</html>

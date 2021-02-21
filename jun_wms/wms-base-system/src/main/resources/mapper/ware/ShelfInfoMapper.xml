@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.ShelfInfoMapper">
+    
+    <resultMap type="ShelfInfo" id="ShelfInfoResult">
+        <result property="shelfId"    column="shelf_id"    />
+        <result property="areaId"    column="area_id"    />
+        <result property="shelfCode"    column="shelf_code"    />
+        <result property="shelfName"    column="shelf_name"    />
+        <result property="shelfRow"    column="shelf_row"    />
+        <result property="shelfColumn"    column="shelf_column"    />
+        <result property="memo"    column="memo"    />
+    </resultMap>
+	
+	<sql id="selectShelfInfoVo">
+        select shelf_id, area_id, shelf_code, shelf_name, shelf_row, shelf_column, memo from shelf_info
+    </sql>
+
+    <!--根据货区ID查找所有货架信息-->
+    <select id="selectShelfInfoByAreaId" parameterType="Integer" resultMap="ShelfInfoResult">
+
+        <include refid="selectShelfInfoVo"/>
+        where area_id = #{areaId}
+
+    </select>
+
+
+    <!--根据货位名查找货位-->
+    <select id="selectShelfInfoByName" parameterType="String" resultMap="ShelfInfoResult">
+
+        <include refid="selectShelfInfoVo"/>
+        where shelf_name = #{shelfName}
+
+    </select>
+
+
+    <select id="selectShelfInfoList" parameterType="ShelfInfo" resultMap="ShelfInfoResult">
+        <include refid="selectShelfInfoVo"/>
+        <where>  
+            <if test="shelfId != null "> and shelf_id = #{shelfId}</if>
+             <if test="areaId != null "> and area_id = #{areaId}</if>
+             <if test="shelfCode != null  and shelfCode != '' "> and shelf_code = #{shelfCode}</if>
+             <if test="shelfName != null  and shelfName != '' "> and shelf_name = #{shelfName}</if>
+             <if test="shelfRow != null "> and shelf_row = #{shelfRow}</if>
+             <if test="shelfColumn != null "> and shelf_column = #{shelfColumn}</if>
+             <if test="memo != null  and memo != '' "> and memo = #{memo}</if>
+         </where>
+    </select>
+    
+    <select id="selectShelfInfoById" parameterType="Integer" resultMap="ShelfInfoResult">
+        <include refid="selectShelfInfoVo"/>
+        where shelf_id = #{shelfId}
+    </select>
+        
+    <insert id="insertShelfInfo" parameterType="ShelfInfo" useGeneratedKeys="true" keyProperty="shelfId">
+        insert into shelf_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="areaId != null  ">area_id,</if>
+			<if test="shelfCode != null  and shelfCode != ''  ">shelf_code,</if>
+			<if test="shelfName != null  and shelfName != ''  ">shelf_name,</if>
+			<if test="shelfRow != null  ">shelf_row,</if>
+			<if test="shelfColumn != null  ">shelf_column,</if>
+			<if test="memo != null  and memo != ''  ">memo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="areaId != null  ">#{areaId},</if>
+			<if test="shelfCode != null  and shelfCode != ''  ">#{shelfCode},</if>
+			<if test="shelfName != null  and shelfName != ''  ">#{shelfName},</if>
+			<if test="shelfRow != null  ">#{shelfRow},</if>
+			<if test="shelfColumn != null  ">#{shelfColumn},</if>
+			<if test="memo != null  and memo != ''  ">#{memo},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateShelfInfo" parameterType="ShelfInfo">
+        update shelf_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="areaId != null  ">area_id = #{areaId},</if>
+            <if test="shelfCode != null  and shelfCode != ''  ">shelf_code = #{shelfCode},</if>
+            <if test="shelfName != null  and shelfName != ''  ">shelf_name = #{shelfName},</if>
+            <if test="shelfRow != null  ">shelf_row = #{shelfRow},</if>
+            <if test="shelfColumn != null  ">shelf_column = #{shelfColumn},</if>
+            <if test="memo != null  and memo != ''  ">memo = #{memo},</if>
+        </trim>
+        where shelf_id = #{shelfId}
+    </update>
+
+	<delete id="deleteShelfInfoById" parameterType="Integer">
+        delete from shelf_info where shelf_id = #{shelfId}
+    </delete>
+	
+    <delete id="deleteShelfInfoByIds" parameterType="String">
+        delete from shelf_info where shelf_id in 
+        <foreach item="shelfId" collection="array" open="(" separator="," close=")">
+            #{shelfId}
+        </foreach>
+    </delete>
+
+    <!--根据货架名与货位ID查找货架-->
+    <select id="selectShelfInfo" parameterType="com.deer.wms.base.system.model.ware.ShelfInfo" resultMap="ShelfInfoResult">
+
+        <include refid="selectShelfInfoVo"/>
+        where shelf_name = #{shelfName}
+        AND shelf_id &lt;&gt; #{shelfId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.RequestIdMapper">
+  <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.RequestId">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="auto_growing_id" jdbcType="BIGINT" property="autoGrowingId" />
+    <result column="request_id" jdbcType="INTEGER" property="requestId" />
+    <result column="process_status" jdbcType="VARCHAR" property="processStatus" />
+    <result column="last_update_date" jdbcType="VARCHAR" property="lastUpdateDate" />
+    <result column="last_updated_by" jdbcType="VARCHAR" property="lastUpdatedBy" />
+    <result column="creation_date" jdbcType="VARCHAR" property="creationDate" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="lot_number" jdbcType="VARCHAR" property="lotNumber" />
+    <result column="po_header_id" jdbcType="INTEGER" property="poHeaderId" />
+    <result column="po_line_id" jdbcType="INTEGER" property="poLineId" />
+    <result column="po_line_location_id" jdbcType="INTEGER" property="poLineLocationId" />
+    <result column="po_distribution_id" jdbcType="INTEGER" property="poDistributionId" />
+    <result column="receipt_date" jdbcType="VARCHAR" property="receiptDate" />
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="transaction_date" jdbcType="VARCHAR" property="transactionDate" />
+    <result column="shipment_num" jdbcType="VARCHAR" property="shipmentNum" />
+    <result column="error_msg" jdbcType="VARCHAR" property="errorMsg" />
+    <result column="sub_inventory" jdbcType="VARCHAR" property="subInventory" />
+    <result column="locator_id" jdbcType="INTEGER" property="locatorId" />
+    <result column="organization_id" jdbcType="INTEGER" property="organizationId" />
+    <result column="transaction_id" jdbcType="INTEGER" property="transactionId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="transaction_type_id" jdbcType="VARCHAR" property="transactionTypeId" />
+    <result column="wip_entity_id" jdbcType="VARCHAR" property="wipEntityId" />
+    <result column="operation_seqnum" jdbcType="VARCHAR" property="operationSeqnum" />
+    <result column="transaction_uom" jdbcType="VARCHAR" property="transactionUom" />
+    <result column="trans_sub_inventory" jdbcType="VARCHAR" property="transSubInventory"/>
+    <result column="trans_locator_id" jdbcType="INTEGER" property="transLocatorId" />
+    <result column="source_header_id" jdbcType="INTEGER" property="sourceHeaderId" />
+    <result column="source_line_id" jdbcType="INTEGER" property="transactionUom" />
+    <result column="trans_source_name" jdbcType="VARCHAR" property="transSourceName" />
+    <result column="trans_source_id" jdbcType="INTEGER" property="transSourceId" />
+    <result column="due_date" jdbcType="VARCHAR" property="dueDate"/>
+  </resultMap>
+
+    <resultMap id="Dto" type="com.deer.wms.base.system.model.RequestIdDto" extends="BaseResultMap">
+
+    </resultMap>
+
+    <select id="selectList" parameterType="com.deer.wms.base.system.model.RequestIdCriteria" resultMap="Dto">
+        SELECT
+        	ri.*
+        FROM
+        	`request_id` ri
+        where 1=1
+        <if test="type != null and type != -1">
+          and ri.type = #{type}
+        </if>
+        <if test="state != null and state != -1">
+          and ri.state = #{state}
+        </if>
+        <if test="requestId != null and requestId != -1">
+          and ri.request_id = #{requestId}
+        </if>
+        <if test="id != null and id != -1">
+          and ri.id = #{id}
+        </if>
+        order by id desc
+    </select>
+
+    <select id="findProcessing" parameterType="com.deer.wms.base.system.model.RequestIdCriteria" resultMap="Dto">
+      SELECT
+      ri.*
+      FROM
+      `request_id` ri
+      where 1=1
+      <if test="type != null and type != -1">
+        and ri.type = #{type}
+      </if>
+      <if test="state != null and state != -1">
+        and ri.state = #{state}
+      </if>
+      group by ri.request_id
+    </select>
+</mapper>

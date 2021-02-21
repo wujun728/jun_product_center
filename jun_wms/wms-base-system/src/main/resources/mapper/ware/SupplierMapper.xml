@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.SupplierMapper">
+    
+    <resultMap type="Supplier" id="SupplierResult">
+        <result property="supplierId"    column="supplier_id"    />
+        <result property="supplierName"    column="supplier_name"    />
+        <result property="supplierCode"    column="supplier_code"    />
+        <result property="linkMan"    column="link_man"    />
+        <result property="linkPhone"    column="link_phone"    />
+        <result property="email"    column="email"    />
+        <result property="address"    column="address"    />
+        <result property="vendorId" column="vendor_id"/>
+    </resultMap>
+	
+	<sql id="selectSupplierVo">
+        select supplier_id, supplier_name,supplier_code, link_man, link_phone, email, address,vendor_id from supplier
+    </sql>
+	
+    <select id="selectSupplierList" parameterType="Supplier" resultMap="SupplierResult">
+        <include refid="selectSupplierVo"/>
+        <where>  
+            <if test="supplierId != null "> and supplier_id = #{supplierId}</if>
+             <if test="supplierName != null  and supplierName != '' "> and supplier_name LIKE binary CONCAT('%', #{supplierName}, '%')</if>
+             <if test="supplierCode != null and supplierCode != ''">and supplier_code = #{supplierCode}</if>
+             <if test="linkMan != null  and linkMan != '' "> and link_man = #{linkMan}</if>
+             <if test="linkPhone != null  and linkPhone != '' "> and link_phone = #{linkPhone}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="address != null  and address != '' "> and address = #{address}</if>
+            <if test="vendorId != null  and vendorId != '' "> and vendor_id = #{vendorId}</if>
+         </where>
+    </select>
+    
+    <select id="selectSupplierById" parameterType="Long" resultMap="SupplierResult">
+        <include refid="selectSupplierVo"/>
+        where supplier_id = #{supplierId}
+    </select>
+        
+    <insert id="insertSupplier" parameterType="Supplier" useGeneratedKeys="true" keyProperty="supplierId">
+        insert into supplier
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="supplierName != null  and supplierName != ''  ">supplier_name,</if>
+            <if test="supplierCode != null  and supplierCode != ''  ">supplier_code,</if>
+			<if test="linkMan != null  and linkMan != ''  ">link_man,</if>
+			<if test="linkPhone != null  and linkPhone != ''  ">link_phone,</if>
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="address != null  and address != ''  ">address,</if>
+			<if test="vendorId != null and vendorId != ''">vendor_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="supplierName != null  and supplierName != ''  ">#{supplierName},</if>
+            <if test="supplierCode != null  and supplierCode != ''  ">#{supplierCode},</if>
+			<if test="linkMan != null  and linkMan != ''  ">#{linkMan},</if>
+			<if test="linkPhone != null  and linkPhone != ''  ">#{linkPhone},</if>
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="address != null  and address != ''  ">#{address},</if>
+            <if test="vendorId != null  and vendorId != ''  ">#{vendorId},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateSupplier" parameterType="Supplier">
+        update supplier
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="supplierName != null  and supplierName != ''  ">supplier_name = #{supplierName},</if>
+            <if test="supplierCode != null  and supplierCode != ''  ">supplier_code = #{supplierCode},</if>
+            <if test="linkMan != null  and linkMan != ''  ">link_man = #{linkMan},</if>
+            <if test="linkPhone != null  and linkPhone != ''  ">link_phone = #{linkPhone},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="address != null  and address != ''  ">address = #{address},</if>
+            <if test="vendorId != null  and vendorId != ''  ">vendor_id = #{vendorId},</if>
+        </trim>
+        where supplier_id = #{supplierId}
+    </update>
+
+	<delete id="deleteSupplierById" parameterType="Long">
+        delete from supplier where supplier_id = #{supplierId}
+    </delete>
+	
+    <delete id="deleteSupplierByIds" parameterType="String">
+        delete from supplier where supplier_id in 
+        <foreach item="supplierId" collection="array" open="(" separator="," close=")">
+            #{supplierId}
+        </foreach>
+    </delete>
+
+    <select id="findBySupplierCode" parameterType="java.lang.String" resultMap="SupplierResult">
+        select * from supplier
+        where supplier_code = #{supplierCode}
+    </select>
+    
+</mapper>

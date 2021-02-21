@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改操作员')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-operator-edit" th:object="${operator}">
+            <input id="operatorId" name="operatorId" th:field="*{operatorId}"  type="hidden">
+<!--			<div class="form-group">	-->
+<!--				<label class="col-sm-3 control-label">操作员Id：</label>-->
+<!--				<div class="col-sm-8">-->
+<!--					<input id="operatorId" name="operatorId" th:field="*{operatorId}" class="form-control" type="text" disabled="disabled">-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">操作员姓名：</label>
+				<div class="col-sm-8">
+					<input id="operatorName" name="operatorName" th:field="*{operatorName}" class="form-control" type="text" required>
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">卡号：</label>
+				<div class="col-sm-8">
+					<input id="operatorCard" name="operatorCard" th:field="*{operatorCard}" class="form-control" type="text" required>
+				</div>
+			</div>
+
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">工号:</label>
+				<div class="col-sm-8">
+					<input id="empNo" name="empNo" th:field="*{empNo}" class="form-control" type="text" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">初始化权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="autoverifyPermission" name="autoverifyPermission" th:field="*{autoverifyPermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">IQC检验权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="checkPermission" name="checkPermission" th:field="*{checkPermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">合框权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="combinePermission" name="combinePermission" th:field="*{combinePermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">退货权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="returnItemPermission" name="returnItemPermission" th:field="*{returnItemPermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">品质异常检验权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="qualityCheckPermission" name="qualityCheckPermission" th:field="*{qualityCheckPermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">报废权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="scrapPermission" name="scrapPermission" th:field="*{scrapPermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">非工单出库权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="manualOutPermission" name="manualOutPermission" th:field="*{manualOutPermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">子库转移权限：</label>
+				<div class="col-sm-8">
+					<select class="form-control" id="transferWarehousePermission" name="transferWarehousePermission" th:field="*{transferWarehousePermission}">
+						<option value="1">无</option>
+						<option value="2">有</option>
+					</select>
+				</div>
+			</div>
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/operator";
+		$("#form-operator-edit").validate({
+			onkeyup: false,
+			rules:{
+				operatorCard:{
+					// operatorCard:true,
+					remote: {
+						url: prefix + "/checkOperatorCardUnique",
+						type: "post",
+						dataType: "json",
+						data: {
+							"operatorId": function() {
+								return $("#operatorId").val();
+							},
+							"operatorCard": function() {
+								return $.common.trim($("#operatorCard").val());
+							}
+						},
+						dataFilter: function (data, type) {
+							debugger
+							return $.validate.unique(data);
+						}
+					}
+				},
+			},
+			messages: {
+				"operatorCard": {
+					remote: "当前卡号已存在"
+				},
+
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-operator-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

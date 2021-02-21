@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.CellInfoMapper">
+
+    <resultMap type="CellInfo" id="CellInfoResult">
+        <result property="cellId" column="cell_id"/>
+        <result property="shelfId" column="shelf_id"/>
+        <result property="cellCode" column="cell_code"/>
+        <result property="memo" column="memo"/>
+        <result property="sRow" column="s_row"/>
+        <result property="sColumn" column="s_column"/>
+        <result property="state" column="state"/>
+    </resultMap>
+
+    <resultMap type="CellInfoDto" id="CellInfoDtoResult" extends="CellInfoResult">
+        <result property="shelfName" column="shelf_name"/>
+        <result property="itemName" column="item_name"/>
+        <result property="itemCode" column="item_code"/>
+        <result property="batch" column="batch"/>
+        <result property="boxCode" column="box_code"/>
+    </resultMap>
+
+    <resultMap type="CellInfoDto" id="quantityDto">
+        <result property="shelfName" column="shelf_name"/>
+        <result property="itemName" column="item_name"/>
+    </resultMap>
+
+    <sql id="selectCellInfoVo">
+        select cell_id, shelf_id, cell_code, memo, s_row, s_column, state from cell_info
+    </sql>
+
+    <select id="getCellInfoByTaskId" parameterType="String" resultMap="CellInfoResult">
+        select ci.*
+        from cell_info ci
+        join box_info bi on ci.cell_id = bi.box_cell_id
+        join task_info ti on bi.box_code = ti.box_code
+        where ti.task_id = #{taskId}
+    </select>
+
+    <select id="getCellInfoHasNoBoxInfo" resultMap="CellInfoResult">
+        <include refid="selectCellInfoVo"/>
+        where state = 0
+        order by cell_id
+    </select>
+
+    <select id="findCellInfoDtoByItemNameAndItemCodeAndBatch" resultMap="CellInfoDtoResult">
+        select ci.*,si.shelf_name,ii.item_name,ii.item_code,bi.batch
+        from item_info ii join box_item bi
+        on ii.item_code = bi.item_code join box_info boi
+        on bi.box_code = boi.box_code join cell_info ci
+        on boi.box_cell_id = ci.cell_id join shelf_info si
+        on ci.shelf_id = si.shelf_id
+        <where>
+            <if test="itemName != null and itemName != '' ">and ii.item_name = #{itemName}</if>
+            <if test="itemCode != null and itemCode != '' ">and ii.item_code = #{itemCode}</if>
+            <if test="batch != null  and batch != '' ">and bi.batch = #{batch}</if>
+
+        </where>
+    </select>
+
+    <select id="selectMaxCellInfoId" resultType="Integer">
+        select max(cell_id) from cell_info
+    </select>
+
+    <!--根据货架ID查询所有货位信息-->
+    <select id="selectCellInfoByShelfId" parameterType="Integer" resultMap="CellInfoResult">
+        <include refid="selectCellInfoVo"/>
+        where shelf_id = #{shelfId}
+    </select>
+
+    <select id="selectCellInfoListByAreaId" parameterType="java.lang.Integer" resultMap="CellInfoResult">
+        SELECT
+        	ci.*
+        FROM
+        	cell_info ci
+        LEFT JOIN shelf_info si ON si.shelf_id = ci.shelf_id
+        LEFT JOIN area_info ai ON ai.area_id = si.area_id
+        where ai.area_id = #{areaId};
+    </select>
+
+    <select id="selectCellInfoList" parameterType="CellInfo" resultMap="CellInfoResult">
+        <include refid="selectCellInfoVo"/>
+        <where>
+            <if test="cellId != null ">and cell_id = #{cellId}</if>
+            <if test="shelfId != null ">and shelf_id = #{shelfId}</if>
+            <if test="cellCode != null  and cellCode != '' ">and cell_code = #{cellCode}</if>
+            <if test="memo != null  and memo != '' ">and memo = #{memo}</if>
+            <if test="sRow != null ">and s_row = #{sRow}</if>
+            <if test="sColumn != null ">and s_column = #{sColumn}</if>
+            <if test="state != null ">and state = #{state}</if>
+        </where>
+    </select>
+
+    <select id="selectCellInfoById" parameterType="Integer" resultMap="CellInfoResult">
+        <include refid="selectCellInfoVo"/>
+        where cell_id = #{cellId}
+    </select>
+
+    <insert id="insertCellInfo" parameterType="CellInfo" useGeneratedKeys="true" keyProperty="cellId">
+        insert into cell_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shelfId != null  ">shelf_id,</if>
+            <if test="cellCode != null  and cellCode != ''  ">cell_code,</if>
+            <if test="memo != null  and memo != ''  ">memo,</if>
+            <if test="sRow != null  ">s_row,</if>
+            <if test="sColumn != null  ">s_column,</if>
+            <if test="state != null  ">state,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shelfId != null  ">#{shelfId},</if>
+            <if test="cellCode != null  and cellCode != ''  ">#{cellCode},</if>
+            <if test="memo != null  and memo != ''  ">#{memo},</if>
+            <if test="sRow != null  ">#{sRow},</if>
+            <if test="sColumn != null  ">#{sColumn},</if>
+            <if test="state != null  ">#{state},</if>
+        </trim>
+    </insert>
+
+    <update id="updateCellInfo" parameterType="CellInfo">
+        update cell_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shelfId != null  ">shelf_id = #{shelfId},</if>
+            <if test="cellCode != null  and cellCode != ''  ">cell_code = #{cellCode},</if>
+            <if test="memo != null  and memo != ''  ">memo = #{memo},</if>
+            <if test="sRow != null  ">s_row = #{sRow},</if>
+            <if test="sColumn != null  ">s_column = #{sColumn},</if>
+            <if test="state != null">state = #{state},</if>
+        </trim>
+        where cell_id = #{cellId}
+    </update>
+
+    <delete id="deleteCellInfoById" parameterType="Integer">
+        delete from cell_info where cell_id = #{cellId}
+    </delete>
+
+    <delete id="deleteCellInfoByIds" parameterType="String">
+        delete from cell_info where cell_id in
+        <foreach item="cellId" collection="array" open="(" separator="," close=")">
+            #{cellId}
+        </foreach>
+    </delete>
+
+    <select id="deleteByShelfId" parameterType="java.lang.Integer">
+        delete from cell_info
+        where shelf_id = #{shelfId}
+    </select>
+
+    <select id="cellOccupyRatio" resultType="java.lang.Double">
+        SELECT
+        	(
+        		SELECT
+        			count(*)
+        		FROM
+        			cell_info ci
+        		LEFT JOIN box_info bi ON bi.box_cell_id = ci.cell_id
+        		WHERE
+        			(
+        				bi.has_goods = 1
+        				AND ci.state = 1
+        			)
+        		OR ci.state IN (2, 3)
+        	) / (count(*))
+        FROM
+        	cell_info;
+    </select>
+    <select id="notItemCell" resultType="java.lang.Integer">
+        SELECT
+        	count(*) - 6 -(
+        		SELECT
+        			count(*)
+        		FROM
+        			cell_info ci
+        		LEFT JOIN box_info bi ON bi.box_cell_id = ci.cell_id
+        		WHERE
+        			bi.has_goods = 1
+        	)
+        FROM
+	        cell_info
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)-5 from cell_info
+    </select>
+    <select id="available" resultType="java.lang.Integer">
+        select count(*)
+        from cell_info ci
+        left join box_info bi on bi.box_cell_id = ci.cell_id
+        where bi.has_goods= 1 and ci.state not in(2,3)
+    </select>
+
+    <select id="getBestCell" resultMap="CellInfoDtoResult">
+        select
+        ci.*,
+        si.shelf_name
+        from cell_info ci
+        left join shelf_info si on si.shelf_id = ci.shelf_id
+        where ci.state = 0
+        order by s_row,shelf_id,s_column
+        limit 1
+    </select>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.ware.CellInfoCriteria" resultMap="CellInfoDtoResult">
+        SELECT
+        ci.*,
+        si.shelf_name,
+        bi.box_code
+        FROM
+        cell_info ci
+        LEFT JOIN shelf_info si ON si.shelf_id = ci.shelf_id
+        LEFT JOIN area_info ai ON ai.area_id = si.area_id
+        LEFT JOIN ware_info wi ON wi.ware_id = ai.ware_id
+        LEFT JOIN box_info bi ON bi.box_cell_id = ci.cell_id
+        LEFT JOIN box_item bitem ON bitem.box_code = bi.box_code
+        LEFT JOIN item_info ii ON ii.item_code = bitem.item_code
+        WHERE 1=1
+        <if test="typeAndState != null and typeAndState == 1001">
+            and bitem.item_code = #{itemCode}
+            AND bitem.batch = #{batch}
+            AND bitem.quantity &lt; ii.max_pack_qty * (wi.box_param / 100)
+            and ci.state = 1
+            and bi.box_state = 1
+            and bi.has_goods = 1
+            and bitem.exp = #{exp}
+        </if>
+        <if test="typeAndState != null and typeAndState == 1002">
+            and ci.state = 1
+            and bi.box_state = 1
+            and bi.has_goods = 0
+        </if>
+        order by s_row,shelf_id,s_column
+    </select>
+
+    <select id="findByCellId" parameterType="java.lang.Integer" resultMap="CellInfoDtoResult">
+        SELECT
+        ci.*,
+        si.shelf_name
+        FROM
+        cell_info ci
+        LEFT JOIN shelf_info si ON si.shelf_id = ci.shelf_id
+        where 1=1
+        <if test="cellId != null">
+            and ci.cell_id = #{cellId}
+        </if>
+    </select>
+</mapper>

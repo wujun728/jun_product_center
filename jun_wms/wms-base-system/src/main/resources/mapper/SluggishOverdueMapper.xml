@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.SluggishOverdueMapper">
+    <resultMap id="BaseResultMap" type="com.deer.wms.base.system.model.SluggishOverdue">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="sluggish_id" jdbcType="INTEGER" property="sluggishId" />
+        <result column="item_code" jdbcType="VARCHAR" property="itemCode" />
+        <result column="batch" jdbcType="VARCHAR" property="batch" />
+        <result column="last_quantity" jdbcType="INTEGER" property="lastQuantity" />
+        <result column="quantity" jdbcType="INTEGER" property="quantity" />
+        <result column="production_date" jdbcType="VARCHAR" property="productionDate" />
+        <result column="exp" jdbcType="VARCHAR" property="exp" />
+        <result column="last_time" jdbcType="VARCHAR" property="lastTime" />
+        <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+        <result column="last_out_time" jdbcType="VARCHAR" property="lastOutTime" />
+        <result column="sluggish_type" jdbcType="INTEGER" property="sluggishType" />
+        <result column="first_declare_time" jdbcType="VARCHAR" property="firstDeclareTime" />
+        <result column="first_declare_quantity" jdbcType="INTEGER" property="firstDeclareQuantity" />
+    </resultMap>
+
+    <resultMap id="SluggishOverdueDto" type="com.deer.wms.base.system.model.SluggishOverdueDto" extends="BaseResultMap">
+        <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+        <result column="save_day" jdbcType="INTEGER" property="saveDay" />
+        <result column="surplus_valid_day" jdbcType="INTEGER" property="surplusValidDay" />
+        <result column="consume_quantity" jdbcType="INTEGER" property="consumeQuantity" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+    </resultMap>
+
+    <select id="findList" parameterType="com.deer.wms.base.system.model.SluggishOverdueCriteria" resultMap="SluggishOverdueDto">
+        SELECT
+        sov.item_code,
+        ii.item_name,
+        ii.unit,
+        sov.batch,
+        sov.production_date,
+        sov.exp,
+        sov.quantity,
+        TIMESTAMPDIFF(DAY,sov.production_date,sov.exp) as save_day,
+        TIMESTAMPDIFF(DAY,curdate(),sov.exp) as surplus_valid_day,
+        sov.last_time,
+        sov.last_out_time,
+        sov.sluggish_type,
+        sov.first_declare_time,
+        sov.first_declare_quantity,
+        if(sov.last_quantity>0,sov.last_quantity - sov.quantity,0) as consume_quantity
+        FROM `sluggish_overdue` sov
+        left join item_info ii on ii.item_code = sov.item_code
+        where 1=1
+        <if test="sluggishExportParam != null and sluggishExportParam != ''">
+            and sov.sluggish_type = #{sluggishExportParam}
+        </if>
+        <if test="itemCode != null and itemCode != ''">
+            and sov.item_code = #{itemCode}
+        </if>
+        <if test="batch!= null and batch != ''">
+            and sov.batch = #{batch}
+        </if>
+        <if test="createTime!= null and createTime != ''">
+            and date(sov.create_time) = #{createTime}
+        </if>
+        order by sov.create_time
+    </select>
+
+    <select id="findSluggishByParam" parameterType="com.deer.wms.base.system.model.SluggishOverdueCriteria" resultMap="BaseResultMap">
+        select
+        quantity,
+        create_time
+        from sluggish_overdue
+        where 1=1
+        <if test="itemCode != null and itemCode != ''">
+            and item_code = #{itemCode}
+        </if>
+        <if test="batch != null and batch != ''">
+            and batch = #{batch}
+        </if>
+        <if test="exp != null and exp != ''">
+            and exp = #{exp}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('货架设置列表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+
+
+<!--							<li>-->
+<!--								货架名：<input type="text" name="shelfName"/>-->
+<!--							</li>-->
+
+							<li>
+								<form class="form-horizontal m" id="form-shelfInfo-add">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">货区：</label>
+										<div class="col-sm-8">
+											<select id="areaId" name="areaId" class="form-control" >
+												<option v-for="area in areas" v-bind:value="area.areaId">{{area.areaName}}</option>
+											</select>
+										</div>
+									</div>
+								</form>
+							</li>
+
+
+
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:shelfInfo:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+<!--				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:shelfInfo:edit">-->
+<!--					<i class="fa fa-edit"></i> 修改-->
+<!--				</a>-->
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:shelfInfo:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:shelfInfo:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:shelfInfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:shelfInfo:remove')}]];
+        var prefix = ctx + "system/shelfInfo";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "货架设置",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'shelfId', 
+					title : '货架ID',
+					visible: false
+				},
+				{
+					field : 'areaId', 
+					title : '货区编码',
+					sortable: true
+				},
+				{
+					field : 'shelfCode', 
+					title : '货架编码',
+					sortable: true
+				},
+				{
+					field : 'shelfName', 
+					title : '货架名',
+					sortable: true
+				},
+				{
+					field : 'shelfRow', 
+					title : '行',
+					sortable: true
+				},
+				{
+					field : 'shelfColumn', 
+					title : '列',
+					sortable: true
+				},
+
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.shelfId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.shelfId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+
+
+		var app = new Vue({
+			el: '.container-div',
+			data: {
+				message: 'Hello Vue!',
+				areas:[]
+			},
+			methods:{
+
+
+				getAreas:function(){
+
+					var that = this;
+					$.ajax({
+						cache : true,
+						type : "POST",
+						url :  "/system/areaInfo/list",
+						data : {
+
+						},
+						async : false,
+						error : function(request) {
+							$.modal.alertError("系统错误");
+						},
+						success : function(data) {
+
+							that.areas = data.rows;
+						}
+					});
+
+				}
+			},
+			created:function(){
+				this.getAreas();
+
+			},
+
+		})
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

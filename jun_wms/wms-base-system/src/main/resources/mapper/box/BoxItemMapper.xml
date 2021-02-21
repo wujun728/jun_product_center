@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.box.BoxItemMapper">
+    
+    <resultMap type="BoxItem" id="BoxItemResult">
+        <result property="id"    column="id"    />
+        <result property="boxCode"    column="box_code"    />
+        <result property="itemCode"    column="item_code"    />
+        <result property="batch"    column="batch"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="workOrderStockState"    column="work_order_stock_state"    />
+        <result property="billInDetailId"    column="bill_in_detail_id"    />
+        <result property="subInventoryId"  jdbcType="INTEGER"  column="sub_inventory_id"    />
+        <result property="forecastStockQuantity" column="forecast_stock_quantity" />
+        <result property="pd" column="pd" />
+        <result property="exp" column="exp" />
+        <result property="inTime" column="in_time" />
+    </resultMap>
+
+    <resultMap type="BoxItemDto" id="BoxItemDtoResult" extends="BoxItemResult">
+        <result property="sRow"    column="s_row"    />
+        <result property="sColumn"    column="s_column"    />
+        <result property="shelfName"     column="shelf_name" />
+        <result property="boxCellId"     column="box_cell_id" />
+        <result property="itemName"     column="item_name" />
+        <result property="boxState"     column="box_state" />
+        <result column="max_pack_qty" property="maxPackQty"/>
+        <result column="location" property="location"/>
+        <result column="supplier_code" property="supplierCode"/>
+        <result column="supplier_name" property="supplierName"/>
+        <result column="cell_state" property="cellState"/>
+        <result column="unit" property="unit"/>
+        <result column="type" property="type"/>
+        <result column="surplus_day" property="surplusDay"/>
+        <result column="inventory_item_id" jdbcType="INTEGER" property="inventoryItemId"/>
+        <result column="sub_inventory_code" jdbcType="VARCHAR" property="subInventoryCode"/>
+        <result column="sub_inventory_name" jdbcType="VARCHAR" property="subInventoryName"/>
+        <result column="slotting" jdbcType="VARCHAR" property="slotting"/>
+        <result column="total_thickness" jdbcType="DOUBLE" property="totalThickness"/>
+        <result column="bill_id" jdbcType="INTEGER" property="billId"/>
+    </resultMap>
+
+    <resultMap type="com.deer.wms.base.system.model.box.UnqualifiedOverTakeCanDelayDays" id="unqualifiedOverTakeCanDelayDays">
+        <result property="boxCode" jdbcType="VARCHAR" column="box_code"    />
+        <result property="itemCode" jdbcType="VARCHAR"  column="item_code"    />
+        <result property="batch" jdbcType="VARCHAR" column="batch"    />
+        <result property="quantity" jdbcType="INTEGER" column="quantity"    />
+        <result property="pd" jdbcType="VARCHAR" column="pd" />
+        <result property="exp" jdbcType="VARCHAR" column="exp" />
+        <result property="inTime" jdbcType="VARCHAR" column="in_time" />
+        <result property="createTime" jdbcType="VARCHAR" column="create_time" />
+        <result property="transferMemo" jdbcType="VARCHAR" column="transfer_memo" />
+        <result property="subInventoryCode" jdbcType="VARCHAR" column="sub_inventory_code" />
+        <result property="subInventoryName" jdbcType="VARCHAR" column="sub_inventory_name" />
+    </resultMap>
+
+	<sql id="selectBoxItemVo">
+        select id, box_code, item_code, batch, quantity, work_order_stock_state, bill_in_detail_id, sub_inventory_id, forecast_stock_quantity,pd,exp from box_item
+    </sql>
+
+    <select id="selectBoxItemDtoList" parameterType="BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select
+        bi.*,
+        CONCAT(si.shelf_name,'排',ci.s_column,'列',ci.s_row,'层') as location,
+        ii.item_name,
+        binf.box_state,
+        binf.box_cell_id,
+        ii.max_pack_qty,
+        bid.vendor_code as supplier_code,
+        bid.vendor_name as supplier_name,
+        sii.sub_inventory_code,
+        sii.sub_inventory_name,
+        (ii.thickness*bi.quantity) as total_thickness
+        from box_item bi
+        join box_info binf on bi.box_code = binf.box_code
+        join cell_info ci on binf.box_cell_id = ci.cell_id
+        left join shelf_info si on ci.shelf_id = si.shelf_id
+        left join item_info ii on bi.item_code = ii.item_code
+        left join bill_in_detail bid on bid.bill_in_detail_id = bi.bill_in_detail_id
+        left join sub_inventory sii on sii.sub_inventory_id = bi.sub_inventory_id
+        <where>
+            <if test="boxCode != null  and boxCode != '' "> and bi.box_code = #{boxCode}</if>
+            <if test="itemCode != null  and itemCode != '' "> and bi.item_code = #{itemCode}</if>
+            <if test="batch != null  and batch != '' "> and bi.batch = #{batch}</if>
+            <if test="sRow != null "> and ci.s_row = #{sRow}</if>
+            <if test="sColumn != null "> and ci.s_column = #{sColumn}</if>
+            <if test="shelfName != null and shelfName != '' "> and si.shelf_name = #{shelfName}</if>
+            <if test="itemName != null and itemName != '' "> and ii.item_name = #{itemName}</if>
+            <if test="boxState != null and boxState != -1 "> and binf.box_state = #{boxState}</if>
+            <if test="subInventoryId != null and subInventoryId != '-1'"> and bi.sub_inventory_id = #{subInventoryId}</if>
+            <if test="supplierCode != null and supplierCode != '-1' and supplierCode != ''">
+                and bid.vendor_code = #{supplierCode}
+            </if>
+        </where>
+        having bi.quantity > 0
+        order by bi.exp,bi.box_code
+    </select>
+
+    <select id="getBoxItemDtoByitemCode" parameterType="String" resultMap="BoxItemDtoResult">
+        select bi.*,ii.item_name
+        from box_item bi join box_info bin
+        on bi.box_code = bin.box_code join item_info ii
+        on bi.item_code = ii.item_code
+        where bin.box_cell_id is not null and bin.box_state = 1 and ii.item_code = #{itemCode}
+        order by bi.batch
+    </select>
+    <!--根据任务id查询托盘信息-->
+    <select id="getBoxItemByTaskId" parameterType="String" resultMap="BoxItemResult">
+        select bi.*
+        from box_item bi
+        join task_info ti on bi.box_code = ti.box_code
+        where ti.task_id = #{taskId}
+    </select>
+    <!--根据货物编码查询货位(托盘)信息   返回值用于生成任务列表-->
+    <select id="getFullCellInfoForOutOfStock" parameterType="String" resultMap="BoxItemDtoResult">
+        select
+        bi.*,
+        ci.s_row,
+        ci.s_column,
+        si.shelf_name,
+        ci.cell_id as box_cell_id
+        from box_item bi
+        join box_info binf on bi.box_code = binf.box_code
+        join cell_info ci on binf.box_cell_id = ci.cell_id
+        join shelf_info si on ci.shelf_id = si.shelf_id
+        /*join bill_in_detail bid on bid.bill_in_detail_id = bi.bill_in_detail_id*/
+        where
+        bi.item_code = #{itemCode}
+        and (ci.state  2)
+        and binf.box_state in (1,2)
+        and binf.has_goods = 1
+        and bi.sub_inventory_id in (2,4)
+        and (bi.quantity - bi.forecast_stock_quantity) > 0
+        order by
+        (case
+        when bi.sub_inventory_id = 4 then 1
+        when bi.sub_inventory_id = 2 then 2
+        end) asc,
+        bi.pd
+    </select>
+    <!--根据托盘编码查找托盘信息-->
+    <select id="getBoxItemByBoxCode" parameterType="String" resultMap="BoxItemResult">
+        <include refid="selectBoxItemVo"/>
+        where box_code = #{boxCode}
+    </select>
+
+    <!--<select id="selectBoxItemList" parameterType="BoxItem" resultMap="BoxItemResult">
+        <include refid="selectBoxItemVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="boxCode != null  and boxCode != '' "> and box_code = #{boxCode}</if>
+             <if test="itemCode != null  and itemCode != '' "> and item_code = #{itemCode}</if>
+             <if test="batch != null  and batch != '' "> and batch = #{batch}</if>
+             <if test="quantity != null "> and quantity = #{quantity}</if>
+             <if test="positionNo != null  and positionNo != '' "> and position_no = #{positionNo}</if>
+             <if test="billInDetailId != null "> and bill_in_detail_id = #{billInDetailId}</if>
+             <if test="state != null "> and state = #{state}</if>
+         </where>
+    </select>-->
+    
+    <select id="selectBoxItemById" parameterType="java.lang.Integer" resultMap="BoxItemResult">
+        <include refid="selectBoxItemVo"/>
+        where id = #{id}
+    </select>
+        
+    <!--<insert id="insertBoxItem" parameterType="BoxItem" useGeneratedKeys="true" keyProperty="id">
+        insert into box_item
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="boxCode != null  and boxCode != ''  ">box_code,</if>
+			<if test="itemCode != null  and itemCode != ''  ">item_code,</if>
+			<if test="batch != null  and batch != ''  ">batch,</if>
+			<if test="quantity != null  ">quantity,</if>
+			<if test="positionNo != null  and positionNo != ''  ">position_no,</if>
+			<if test="billInDetailId != null  ">bill_in_detail_id,</if>
+			<if test="state != null  ">state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="boxCode != null  and boxCode != ''  ">#{boxCode},</if>
+			<if test="itemCode != null  and itemCode != ''  ">#{itemCode},</if>
+			<if test="batch != null  and batch != ''  ">#{batch},</if>
+			<if test="quantity != null  ">#{quantity},</if>
+			<if test="positionNo != null  and positionNo != ''  ">#{positionNo},</if>
+			<if test="billInDetailId != null  ">#{billInDetailId},</if>
+			<if test="state != null  ">#{state},</if>
+         </trim>
+    </insert>-->
+	 
+    <!--<update id="updateBoxItem" parameterType="BoxItem">
+        update box_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="boxCode != null  and boxCode != ''  ">box_code = #{boxCode},</if>
+            <if test="itemCode != null  and itemCode != ''  ">item_code = #{itemCode},</if>
+            <if test="batch != null  and batch != ''  ">batch = #{batch},</if>
+            <if test="quantity != null  ">quantity = #{quantity},</if>
+            <if test="positionNo != null  and positionNo != ''  ">position_no = #{positionNo},</if>
+            <if test="billInDetailId != null  ">bill_in_detail_id = #{billInDetailId},</if>
+            <if test="state != null  ">state = #{state},</if>
+        </trim>
+        where id = #{id}
+    </update>-->
+
+	<delete id="deleteBoxItemById" parameterType="Long">
+        delete from box_item where id = #{id}
+    </delete>
+	
+    <delete id="deleteBoxItemByIds" parameterType="String">
+        delete from box_item where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByBoxCode" parameterType="java.lang.String">
+        delete from box_item where box_code = #{boxCode}
+    </delete>
+
+    <select id="findOneCombineBoxGroupByItemCodeAndBatch" resultMap="BoxItemResult">
+        select id,item_code,batch
+        from box_item
+        group by item_code,batch
+        having count(*)>1
+        order by id
+        limit 1
+    </select>
+
+    <select id="findMoreCombineBoxByItemCodeAndBatch" parameterType="com.deer.wms.base.system.model.box.BoxItem" resultMap="BoxItemDtoResult">
+        select bi.*,ci.s_column,ci.s_row,si.shelf_name,ii.max_pack_qty,ci.cell_id as box_cell_idgetBoxItemDtoByitemCode
+        from box_item bi
+        inner join box_info bii on bii.box_code = bi.box_code
+        inner join cell_info ci on ci.cell_id = bii.box_cell_id
+        left join shelf_info si on si.shelf_id = ci.shelf_id
+        left join item_info ii on ii.item_code = bi.item_code
+        where bi.item_code = #{item_code} and bi.batch = #{batch} and bi.quantity &gt; 0 and bii.box_state = 1
+        order by quantity,id
+    </select>
+    <select id="findByWorkerOrder" parameterType="com.deer.wms.base.system.model.box.BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select
+        bi.*,
+        ci.s_row,
+        ci.s_column,
+        si.shelf_name,
+        ci.cell_id as box_cell_id
+        from box_item bi
+        join box_info binf on bi.box_code = binf.box_code
+        join cell_info ci on binf.box_cell_id = ci.cell_id
+        join shelf_info si on ci.shelf_id = si.shelf_id
+        where 1=1
+        <if test="itemCode != null and itemCode != ''">
+        and bi.item_code = #{itemCode}
+        </if>
+        <if test="cellState != null">
+        and ci.state = #{cellState}
+        </if>
+        <if test="subInventoryId != null">
+        and bi.sub_inventory_id = #{subInventoryId}
+        </if>
+        order by bi.exp
+    </select>
+
+    <select id="findList" parameterType="BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select
+        bi.*,
+        si.shelf_name,
+        ci.s_column,
+        ci.s_row,
+        ci.state as cell_state,
+        ii.item_name,
+        ii.unit,
+        binf.box_state,
+        binf.box_cell_id,
+        ii.max_pack_qty,
+
+        bid.vendor_code as supplier_code,
+        bid.vendor_name as supplier_name,
+        bid.bill_id,
+
+        sii.sub_inventory_code,
+        sii.slotting,
+        sii.sub_inventory_name,
+        ii.inventory_item_id
+        from box_item bi
+        join box_info binf on bi.box_code = binf.box_code
+        join cell_info ci on binf.box_cell_id = ci.cell_id
+        left join shelf_info si on ci.shelf_id = si.shelf_id
+        left join item_info ii on bi.item_code = ii.item_code
+        left join bill_in_detail bid on bid.bill_in_detail_id = bi.bill_in_detail_id
+        left join sub_inventory sii on sii.sub_inventory_id = bi.sub_inventory_id
+        where 1=1
+        <if test="boxCode != null  and boxCode != '' "> and bi.box_code = #{boxCode}</if>
+        <if test="itemCode != null  and itemCode != '' "> and bi.item_code = #{itemCode}</if>
+        <if test="batch != null  and batch != '' "> and bi.batch = #{batch}</if>
+        <if test="sRow != null "> and bi.s_row = #{sRow}</if>
+        <if test="sColumn != null "> and bi.s_column = #{sColumn}</if>
+        <if test="shelfName != null and shelfName != '' "> and si.shelf_name = #{shelfName}</if>
+        <if test="itemName != null and itemName != '' "> and ii.item_name = #{itemName}</if>
+        <if test="boxState != null and boxState != -1 "> and binf.box_state = #{boxState}</if>
+        <if test="subInventoryId != null and subInventoryId != '-1'"> and bi.sub_inventory_id = #{subInventoryId}</if>
+        <if test="boxState != null and boxState != '-1'"> and binf.box_state = #{boxState}</if>
+        <if test="cellState != null and cellState != '-1'"> and ci.state = #{cellState}</if>
+        <if test="workOrderStockState != null and workOrderStockState != '-1'"> and bi.work_order_stock_state = #{workOrderStockState}</if>
+        <if test="supplierCode != null and supplierCode != '-1'"> and bid.vendor_code = #{supplierCode}</if>
+        <if test="ids != null">
+            and bi.id in
+            <foreach item="id" collection="ids" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        and bi.quantity > 0
+        <if test="orderByState != null and orderByState == 1003">
+            order by bi.quantity
+        </if>
+        <if test="orderByState != null and orderByState == 1004">
+            and bi.sub_inventory_id in (1,4)
+            order by
+            (case
+            when bi.sub_inventory_id = 4 then 1
+            when bi.sub_inventory_id = 2 then 2
+            end) asc,
+            bi.exp
+        </if>
+        <if test="orderByState != null and orderByState == 1005">
+            and bi.sub_inventory_id in (2,4)
+            and bi.exp &lt; curdate()
+            order by bi.exp
+        </if>
+        <if test="orderByState == null">
+            order by bi.exp
+        </if>
+    </select>
+
+    <select id="findBoxItemList" parameterType="com.deer.wms.base.system.model.box.BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select bi.*,
+
+        ci.s_column,
+        ci.s_row,
+        ci.state as cell_state,
+        ii.item_name,
+        ii.unit,
+        binf.box_state,
+        binf.box_cell_id,
+        ii.max_pack_qty,
+
+        bid.vendor_code as supplier_code,
+        bid.vendor_name as supplier_name,
+        bid.bill_id,
+
+        sii.sub_inventory_code,
+        sii.slotting,
+        sii.sub_inventory_name,
+        ii.inventory_item_id
+        from box_item bi
+        join box_info binf on bi.box_code = binf.box_code
+        join cell_info ci on binf.box_cell_id = ci.cell_id
+        left join item_info ii on bi.item_code = ii.item_code
+        left join bill_in_detail bid on bid.bill_in_detail_id = bi.bill_in_detail_id
+        left join sub_inventory sii on sii.sub_inventory_id = bi.sub_inventory_id
+        where 1=1
+        <if test="itemCode != null and itemCode != ''">
+            and bi.item_code = #{itemCode}
+        </if>
+        <if test="batch != null and batch != ''">
+            and bi.batch = #{batch}
+        </if>
+        <if test="exp != null and exp != ''">
+            and bi.exp = #{exp}
+        </if>
+        <if test="ids != null">
+            and bi.id in
+            <foreach item="id" collection="ids" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="findWillOverdue" parameterType="BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select * from (
+            SELECT
+            bi.item_code,
+            ii.item_name,
+            bid.vendor_code as supplier_code,
+            bid.vendor_name as supplier_name,
+            bi.pd,
+            bi.exp,
+            bi.batch,
+            bi.sub_inventory_id,
+            ii.unit,
+            sum(bi.quantity) as quantity,
+            TIMESTAMPDIFF(DAY,curdate(),bi.exp) as surplus_day,
+            IFNULL(pr.type,0) as type
+            FROM box_item bi
+            left join process_record pr on pr.item_code = bi.item_code and pr.batch = bi.batch
+            and pr.exp = bi.exp and pr.sub_inventory_id = bi.sub_inventory_id
+            join box_info binf on bi.box_code = binf.box_code
+            join cell_info ci on binf.box_cell_id = ci.cell_id
+            left join item_info ii on bi.item_code = ii.item_code
+            left join bill_in_detail bid on bid.bill_in_detail_id = bi.bill_in_detail_id
+            left join sub_inventory sii on sii. = bi.sub_inventory_id
+            where bi.sub_inventory_id in(2,4)
+            group by bi.item_code,bi.batch,bi.exp
+            having sum(bi.quantity)>0
+        ) as h
+        where h.type = 0
+        <if test="willOverdueDay != null and willOverdueDay != ''">
+            and TIMESTAMPDIFF(DAY,curdate(),h.exp) &lt;= #{willOverdueDay}
+        </if>
+    </select>
+
+    <select id="findSluggishOverdue" parameterType="com.deer.wms.base.system.model.box.BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select
+        bi.item_code,
+        bi.batch,
+        sum(bi.quantity) as quantity,
+        bi.sub_inventory_id,
+        bi.pd,
+        bi.exp,
+        max(bi.in_time) as in_time,
+        ii.item_name,
+        ii.unit
+        from box_item bi
+        left join item_info ii on ii.item_code = bi.item_code
+        where 1=1
+        <if test="sluggishExportParam != null and sluggishExportParam == 1">
+            and TIMESTAMPDIFF(MONTH,in_time,curdate()) &gt; 4
+        </if>
+        <if test="sluggishExportParam != null and sluggishExportParam == 2">
+            and TIMESTAMPDIFF(DAY,curdate(),exp) &lt; 180
+        </if>
+        group by item_code,batch,exp
+        having sum(quantity) > 0
+        order by exp
+    </select>
+
+    <select id="workerOrderLackOut" parameterType="com.deer.wms.base.system.model.box.BoxItemCriteria" resultMap="BoxItemDtoResult">
+        select
+        si.shelf_name,
+        ci.s_column,
+        ci.s_row,
+        binf.box_cell_id,
+        bi.item_code,
+        bi.batch,
+        bi.quantity),
+        bi.sub_inventory_id,
+        bi.pd,
+        bi.exp,
+        bi.box_code,
+        ii.item_name,
+        ii.unit
+        from box_item bi
+        left join item_info ii on ii.item_code = bi.item_code
+        join box_info binf on bi.box_code = binf.box_code
+        join cell_info ci on binf.box_cell_id = ci.cell_id
+        left join shelf_info si on ci.shelf_id = si.shelf_id
+        where 1=1
+        <if test="quantity != null">
+            and bi.quantity &gt; #{quantity}
+        </if>
+        <if test="hasGood != null">
+            and binf.has_goods = #{hasGood}
+        </if>
+        <if test="itemCode != null and itemCode == ''">
+            and bi.item_code = #{itemCode}
+        </if>
+        <if test="boxState != null and boxState != '-1'"> and binf.box_state = #{boxState}</if>
+        <if test="cellState != null and cellState != '-1'"> and ci.state = #{cellState}</if>
+        <if test="workOrderStockState != null and workOrderStockState != '-1'"> and bi.work_order_stock_state = #{workOrderStockState}</if>
+        and bi.sub_inventory_id in (1,4)
+        order by
+        (case
+        when bi.sub_inventory_id = 4 then 1
+        when bi.sub_inventory_id = 2 then 2
+        end) asc,
+        bi.exp
+    </select>
+
+    <select id="findUnqualifiedOverTakeCanDelayDays" parameterType="BoxItemCriteria" resultMap="unqualifiedOverTakeCanDelayDays">
+        SELECT
+        box.box_code,
+        box.item_code,
+        box.batch,
+        box.quantity,
+        box.pd,
+        box.exp,
+        box.in_time,
+        c.create_time,
+        c.transfer_memo,
+        sii.sub_inventory_code,
+        sii.sub_inventory_name
+
+        FROM
+        box_item box
+        INNER JOIN (
+        SELECT
+        b.box_code,
+        b.create_time,
+        b.transfer_memo
+        FROM
+        ( SELECT max( str.transfer_id ) AS transfer_id FROM subinventory_transfer_record str GROUP BY str.box_code ) a
+        INNER JOIN subinventory_transfer_record b ON b.transfer_id = a.transfer_id
+        ) c ON c.box_code = box.box_code
+        LEFT JOIN sub_inventory sii ON sii.sub_inventory_id = box.sub_inventory_id
+        WHERE 1=1
+        <if test="subInventoryId != null and subInventoryId != '-1'">
+            AND box.sub_inventory_id = #{subInventoryId}
+        </if>
+        <if test="unqualifiedStorageDay != null">
+            AND DATE_ADD( c.create_time, INTERVAL #{unqualifiedStorageDay} DAY ) &lt; NOW()
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('呆滞过期报表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								物料编码：<input type="text" name="itemCode"/>
+							</li>
+							<li>
+								批次：<input type="text" name="batch"/>
+							</li>
+							<li>
+								查询条件：
+								<select name="sluggishExportParam">
+									<option value="0"></option>
+									<option value="1">到货四个月未使用</option>
+									<option value="2">有效期小于180天</option>
+								</select>
+							</li>
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<!--<a class="btn btn-success" onclick="$.operate.add()">
+					<i class="fa fa-plus"></i> 添加
+				</a>-->
+<!--				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:cellInfo:edit">-->
+<!--					<i class="fa fa-edit"></i> 修改-->
+<!--				</a>-->
+<!--				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cellInfo:remove">-->
+<!--					<i class="fa fa-remove"></i> 删除-->
+<!--				</a>-->
+<!--				<a class="btn btn-warning" @click="synchronizedAccountAlias()">-->
+<!--						<i class="fa fa-download"></i> 同步EBS账户别名-->
+<!--				</a>-->
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="in:boxItem:export">
+					<i class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true" style="white-space:nowrap"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var prefix = ctx + "sluggishOverdue";
+
+        $(function() {
+            var options = {
+                url: prefix + "/findList",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove/{id}",
+				exportUrl: prefix + "/export",
+                modalName: "呆滞过期报表",
+		        showExport: true,
+                columns: [
+                // 		{
+		        //     checkbox: true
+		        // },
+					{
+						field : 'itemCode',
+						title : '物料编码',
+						visible: true
+					},
+					{
+						field : 'itemName',
+						title : '物料描述',
+						visible: true
+					},
+					{
+						field : 'unit',
+						title : '单位',
+						visible: true
+					},
+					{
+						field : 'batch',
+						title : '批次',
+						visible: true,
+					},
+					{
+						field : 'productionDate',
+						title : '生产日期',
+						visible: true,
+					},
+					{
+						field : 'exp',
+						title : '有效日期',
+						sortable: true
+					},
+					{
+						field : 'quantity',
+						title : '库存数量',
+						sortable: true
+					},
+					{
+						field : 'saveDay',
+						title : '存储天数',
+						sortable: true
+					},
+					{
+						field : 'surplusValidDay',
+						title : '剩余有效期天数',
+						sortable: true
+					},
+					{
+						field : 'lastTime',
+						title : '最后入库日期',
+						sortable: true
+					},
+					{
+						field : 'lastOutTime',
+						title : '最后出库日期',
+						sortable: true
+					},
+					{
+						field : 'sluggishType',
+						title : '呆滞类型',
+						sortable: true,
+						formatter:function(value,row,index){
+							if(value === 1){
+								return "到货四个月未使用";
+							}else if(value === 2){
+								return "有效期少于180天";
+							}
+						}
+					},
+					{
+						field : 'firstDeclareTime',
+						title : '第一次申报日期',
+						sortable: true
+					},
+					{
+						field : 'firstDeclareQuantity',
+						title : '第一次申报数量',
+						sortable: true
+					},
+					{
+						field : 'consumeQuantity',
+						title : '消耗数量',
+						sortable: true
+					},
+		        ]
+            };
+            $.table.init(options);
+        });
+		var app = new Vue({
+			el: '.container-div',
+			data: {
+				message: 'Hello Vue!',
+			},
+			methods: {
+
+			},
+			created: function () {
+			},
+		})
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

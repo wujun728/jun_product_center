@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('货位设置列表')" />
+</head>
+<body class="gray-bg">
+    
+     <div class="container-div" onmousemove="parent.updateTimeOut()">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+
+							<li>
+								<form class="form-horizontal m" id="form-cellInfo-add">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">货架：</label>
+										<div class="col-sm-8">
+											<select id="shelfId" name="shelfId" class="form-control"  >
+												<option v-for="shelf in shelfs" v-bind:value="shelf.shelfId" >{{shelf.shelfName}}</option>
+											</select>
+										</div>
+									</div>
+								</form>
+							</li>
+
+							<li>
+								状态：<!--<input type="text" list="states" name="state" placeholder="0-无货；1-有货；2-锁定；3-故障"/>
+								<datalist id="states">
+									<option value="无货">0</option>
+									<option value="有货">1</option>
+									<option value="禁用">2</option>
+									<option value="故障">3</option>
+								</datalist>-->
+								<select name="state">
+									<option value="">全部</option>
+									<option value="0">无货</option>
+									<option value="1">有货</option>
+									<option value="2">禁用</option>
+									<option value="3">故障</option>
+								</select>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+<!--				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:cellInfo:add">-->
+<!--					<i class="fa fa-plus"></i> 添加-->
+<!--				</a>-->
+<!--				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:cellInfo:edit">-->
+<!--					<i class="fa fa-edit"></i> 修改-->
+<!--				</a>-->
+<!--				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:cellInfo:remove">-->
+<!--					<i class="fa fa-remove"></i> 删除-->
+<!--				</a>-->
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:cellInfo:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:cellInfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:cellInfo:remove')}]];
+        var prefix = ctx + "system/cellInfo";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "货位设置",
+		        showExport: true,
+                columns: [
+                		{
+		            checkbox: true
+		        },
+				{
+					field : 'cellId', 
+					title : '货位ID',
+					visible: false
+				},
+				{
+					field : 'shelfId',
+					title : '货架编码',
+					sortable: true,
+					formatter:function (value,row,index) {
+						if(value === 39){
+							return "1号货架";
+						}else if(value === 40){
+							return "2号货架";
+						}
+					}
+				},
+				// {
+				// 	field : 'cellCode',
+				// 	title : '货物编码',
+				// 	sortable: true
+				// },
+				{
+					field : 'srow',
+					title : '行',
+					sortable: true
+				},
+				{
+					field : 'scolumn',
+					title : '列',
+					sortable: true
+				},
+				{
+					field : 'state', 
+					title : '状态',
+					sortable: true,
+					formatter:function (value,row,index) {
+						if(value === 0){
+							return "无货";
+						}else if(value == 1){
+							return "有货";
+						}else if(value == 2){
+							return "禁用";
+						}else if(value == 3){
+							return "故障";
+						}
+					}
+				},
+				{
+					field : 'memo',
+					title : '备注',
+					sortable: true
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	if(row.cellId === 2179 || row.cellId === 2183 || row.cellId === 2185 || row.cellId === 2187 || row.cellId === 2195 || row.cellId === 2197){
+						}else{
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.cellId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.cellId + '\')"><i class="fa fa-remove"></i>删除</a>');
+						}
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+
+		var app = new Vue({
+			el: '.container-div',
+			data: {
+				message: 'Hello Vue!',
+				shelfs:[],
+
+			},
+
+			methods:{
+
+
+				getShelfs:function(){
+
+					var that = this;
+					$.ajax({
+						cache : true,
+						type : "POST",
+						url :  "/system/shelfInfo/list",
+						data : {
+
+						},
+						async : false,
+						error : function(request) {
+							$.modal.alertError("系统错误");
+						},
+						success : function(data) {
+
+							that.shelfs = data.rows;
+						}
+					});
+
+				}
+			},
+			created:function(){
+				this.getShelfs();
+
+			},
+
+		})
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

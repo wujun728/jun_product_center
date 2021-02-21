@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.deer.wms.base.system.dao.ware.BoxInfoMapper">
+    
+    <resultMap type="BoxInfo" id="BoxInfoResult">
+        <result property="boxId"    column="box_id"    />
+        <result property="boxCode"    column="box_code"    />
+        <result property="boxType"    column="box_type"    />
+        <result property="boxMemo"    column="box_memo"    />
+    </resultMap>
+	
+	<sql id="selectBoxInfoVo">
+        select box_id, box_code, box_type, box_memo from box_info
+    </sql>
+	
+    <select id="selectBoxInfoList" parameterType="BoxInfo" resultMap="BoxInfoResult">
+        <include refid="selectBoxInfoVo"/>
+        <where>  
+            <if test="boxId != null "> and box_id = #{boxId}</if>
+             <if test="boxCode != null  and boxCode != '' "> and box_code = #{boxCode}</if>
+             <if test="boxType != null "> and box_type = #{boxType}</if>
+            <if test="boxMemo != null  and boxMemo != '' "> and box_memo = #{boxMemo}</if>
+         </where>
+    </select>
+    
+    <select id="selectBoxInfoById" parameterType="Integer" resultMap="BoxInfoResult">
+        <include refid="selectBoxInfoVo"/>
+        where box_id = #{boxId}
+    </select>
+        
+    <insert id="insertBoxInfo" parameterType="BoxInfo" useGeneratedKeys="true" keyProperty="boxId">
+        insert into box_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="boxCode != null  and boxCode != ''  ">box_code,</if>
+			<if test="boxType != null  ">box_type,</if>
+            <if test="boxMemo != null   ">box_memo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="boxCode != null  and boxCode != ''  ">#{boxCode},</if>
+			<if test="boxType != null  ">#{boxType},</if>
+            <if test="boxMemo != null   ">#{boxMemo},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateBoxInfo" parameterType="BoxInfo">
+        update box_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="boxCode != null  and boxCode != ''  ">box_code = #{boxCode},</if>
+            <if test="boxType != null  ">box_type = #{boxType},</if>
+            <if test="boxMemo != null  ">box_memo= #{boxMemo},</if>
+        </trim>
+        where box_id = #{boxId}
+    </update>
+
+	<delete id="deleteBoxInfoById" parameterType="Integer">
+        delete from box_info where box_id = #{boxId}
+    </delete>
+	
+    <delete id="deleteBoxInfoByIds" parameterType="String">
+        delete from box_info where box_id in 
+        <foreach item="boxId" collection="array" open="(" separator="," close=")">
+            #{boxId}
+        </foreach>
+    </delete>
+    
+</mapper>
