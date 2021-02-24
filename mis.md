@@ -500,3 +500,95 @@ IT外包：是将组织中与信息相关的活动，部分或全部交给组织
 白盒测试：也称结构测试，它将被测程序看作透明的白盒子。该方法按照程序的内部结构和处理逻辑来选定测试用例，对程序的逻辑路径及过程进行测试。
 
 水波效应：指一个模块的修改而导致隐含缺陷、错误的放大以及一连串的新错误的出现。
+
+
+
+jun_product
+123\
+	BlogHtTemplate\  迁移到jun_frontend/jun_layui
+	blogv20180113\  干掉 ，代码
+	inspinia_admin_java_ssm\    干掉，代码
+	layuiAdmin\   迁移到jun_frontend/jun_layui
+	LuGenerate\   干掉，代码搞spring_plugin
+	manager-system\  迁移到jun_boot rename jun_boot_layadmin
+	noteblogv5\   干掉，源码迁移，没有脚本
+	simple-spring-jdbc\  迁移到spring_jdbc
+	snaker-springmvc\  干掉，代码
+	spring-Boot_templates_layui-Admin\   直接干掉
+	spring-shiro-training\  迁移到easyui
+	sypro\  迁移到ssh里面
+	zb-shiro\   合并到ruoyi
+	
+jun_administrative\
+jun_ask_discuss\
+jun_blog\
+jun_bos\
+jun_crm\
+jun_edu\  外网调试
+jun_erp\
+jun_finance\
+jun_flybbs\
+jun_hr\
+jun_itselfservice\
+jun_mis\
+jun_music\
+jun_oa\
+jun_op\
+jun_portal\
+jun_prj\
+jun_resume_java\
+jun_resume_pm\
+jun_spring\
+jun_wms\
+项目1111111\
+	Jar包下载网视频教程\
+	百度云爬虫视频教程\
+	百度云搜索视频教程\
+	博客采集系统视频教程\
+	博客系统视频教程\
+	客户关系视频教程\
+	请假系统视频教程\
+	设备系统视频教程\
+	实用cms系统视频教程\
+	支付系统视频教程\
+	mindskip-uexam-master.zip
+	project.zip
+	project(1).zip
+	project(1)(1).zip
+	
+pom.xml
+
+
+1、父pom.xml jun_system --> jun_product
+https://github.com/xuxueli/xxl-deep
+https://github.com/oneboat/ssm-lay
+https://github.com/search?q=lay++ssm&type=Repositories
+https://github.com/lcw2004/one
+https://github.com/thinkgem/jeesite
+https://github.com/thinkgem/jeesite4
+https://github.com/thinkgem/jeesite4-cloud
+
+
+https://github.com/febsteam/FEBS-Cloud
+https://github.com/febsteam/FEBS-Shiro
+
+ssm
+https://github.com/Mandelo/ssm_shiro_blog
+
+
+boot
+https://github.com/yzcheng90/X-SpringBoot
+https://github.com/Heeexy/SpringBoot-Shiro-Vue
+
+cloud
+https://github.com/yzcheng90/ms
+https://github.com/yzcheng90/ms-ui
+
+
+CMS
+https://github.com/xujeff/tianti
+
+*****
+https://github.com/hope-for/hope-boot  
+
+https://github.com/moshowgame/SpringBootCMS
