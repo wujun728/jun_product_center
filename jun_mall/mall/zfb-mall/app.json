@@ -1,0 +1,83 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/catalog/catalog",
+    "pages/newGoods/newGoods",
+    "pages/hotGoods/hotGoods",
+    "pages/ucenter/address/address",
+    "pages/ucenter/addressAdd/addressAdd",
+    "pages/ucenter/footprint/footprint",
+    "pages/ucenter/order/order",
+    "pages/ucenter/orderDetail/orderDetail",
+    "pages/ucenter/feedback/feedback",
+    "pages/ucenter/coupon/coupon",
+    "pages/ucenter/collect/collect",
+    "pages/auth/login/login",
+    "pages/auth/register/register",
+    "pages/auth/reset/reset",
+    "pages/pay/pay",
+    "pages/payResult/payResult",
+    "pages/ucenter/index/index",
+    "pages/topic/topic",
+    "pages/comment/comment",
+    "pages/commentPost/commentPost",
+    "pages/topicComment/topicComment",
+    "pages/brand/brand",
+    "pages/brandDetail/brandDetail",
+    "pages/search/search",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/shopping/checkout/checkout",
+    "pages/shopping/address/address",
+    "pages/shopping/addressAdd/addressAdd",
+    "pages/goods/goods",
+    "pages/topicDetail/topicDetail",
+    "pages/auth/mobile/mobile",
+    "pages/shopping/selCoupon/selCoupon",
+    "pages/ucenter/help/help",
+    "pages/ucenter/helpInfo/helpInfo",
+    "pages/auth/btnAuth/btnAuth"
+  ],
+  "window": {
+    "defaultTitle": "微同商城",
+    "pullRefresh": true,
+    "titleBarColor": "#fff"
+  },
+  "tabBar": {
+    "textColor": "#666",
+    "selectedColor": "#b4282d",
+    "backgroundColor": "#fafafa",
+    "items": [
+      {
+        "pagePath": "pages/index/index",
+        "name": "首页",
+        "icon": "/static/ic_menu_choice_nor.png",
+        "activeIcon": "/static/ic_menu_choice_pressed.png"
+      },
+      {
+        "pagePath": "pages/topic/topic",
+        "name": "专题",
+        "icon": "./static/ic_menu_topic_nor.png",
+        "activeIcon": "./static/ic_menu_topic_pressed.png"
+      },
+      {
+        "pagePath": "pages/catalog/catalog",
+        "name": "分类",
+        "icon": "./static/ic_menu_sort_nor.png",
+        "activeIcon": "./static/ic_menu_sort_pressed.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "name": "购物车",
+        "icon": "./static/ic_menu_shoping_nor.png",
+        "activeIcon": "./static/ic_menu_shoping_pressed.png"
+      },
+      {
+        "pagePath": "pages/ucenter/index/index",
+        "name": "我的",
+        "icon": "./static/ic_menu_me_nor.png",
+        "activeIcon": "./static/ic_menu_me_pressed.png"
+      }
+    ]
+  }
+}

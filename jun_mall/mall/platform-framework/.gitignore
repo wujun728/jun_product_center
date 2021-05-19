@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+/.idea/
+/platform-admin/target/
+/platform-common/target/
+/platform-framework/target/
+/platform-gen/target/
+/platform-restful/target/
+/platform-schedule/target/

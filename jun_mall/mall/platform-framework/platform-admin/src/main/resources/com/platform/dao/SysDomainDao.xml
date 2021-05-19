@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.platform.dao.SysDomainDao">
+
+    <resultMap type="com.platform.entity.SysDomainEntity" id="domainMap">
+        <result property="id" column="id"/>
+        <result property="domainCode" column="domain_code"/>
+        <result property="domainName" column="domain_name"/>
+        <result property="domainUrl" column="domain_url"/>
+        <result property="domainStatus" column="domain_status"/>
+        <result property="createUser" column="create_user"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="remark" column="remark"/>
+        <result property="icon" column="icon"/>
+    </resultMap>
+
+    <select id="queryObject" resultType="com.platform.entity.SysDomainEntity">
+		select
+			`id`,
+			`domain_code`,
+			`domain_name`,
+			`domain_url`,
+			`domain_status`,
+			`create_user`,
+			`create_time`,
+			`update_user`,
+			`update_time`,
+			`remark`,
+			`icon`
+		from sys_domain
+		where id = #{id}
+	</select>
+
+    <select id="queryList" resultType="com.platform.entity.SysDomainEntity">
+        select
+        `id`,
+        `domain_code`,
+        `domain_name`,
+        `domain_url`,
+        `domain_status`,
+        `create_user`,
+        `create_time`,
+        `update_user`,
+        `update_time`,
+        `remark`,
+        `icon`
+        from sys_domain
+        WHERE 1=1
+        <if test="domainName != null and domainName.trim() != ''">
+            AND domain_name LIKE concat('%',#{domainName},'%')
+        </if>
+        <if test="domain_status != null">
+            AND domain_status = #{domainStatus}
+        </if>
+        <if test="userId != null and userId.trim() != ''">
+            AND id IN (SELECT DISTINCT domain_id FROM sys_menu WHERE menu_id IN (
+                SELECT DISTINCT menu_id FROM sys_role_menu WHERE role_id IN (
+                  SELECT DISTINCT role_id FROM sys_user_role WHERE user_id = #{userId})))
+        </if>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from sys_domain
+        WHERE 1=1
+        <if test="domainName != null and domainName.trim() != ''">
+            AND domain_name LIKE concat('%',#{domainName},'%')
+        </if>
+        <if test="domain_status != null">
+            AND domain_status = #{domainStatus}
+        </if>
+        <if test="ids != null and ids.trim() != ''">
+            AND id IN (#{ids})
+        </if>
+    </select>
+
+    <insert id="save" parameterType="com.platform.entity.SysDomainEntity">
+		insert into sys_domain(
+			`id`,
+			`domain_code`,
+			`domain_name`,
+			`domain_url`,
+			`domain_status`,
+			`create_user`,
+			`create_time`,
+			`update_user`,
+			`update_time`,
+			`remark`,
+			`icon`)
+		values(
+			#{id},
+			#{domainCode},
+			#{domainName},
+			#{domainUrl},
+			#{domainStatus},
+			#{createUser},
+			#{createTime},
+			#{updateUser},
+			#{updateTime},
+			#{remark},
+			#{icon})
+	</insert>
+
+    <update id="update" parameterType="com.platform.entity.SysDomainEntity">
+        update sys_domain
+        <set>
+            <if test="domainCode != null">`domain_code` = #{domainCode},</if>
+            <if test="domainName != null">`domain_name` = #{domainName},</if>
+            <if test="domainUrl != null">`domain_url` = #{domainUrl},</if>
+            <if test="domainStatus != null">`domain_status` = #{domainStatus},</if>
+            <if test="createUser != null">`create_user` = #{createUser},</if>
+            <if test="createTime != null">`create_time` = #{createTime},</if>
+            <if test="updateUser != null">`update_user` = #{updateUser},</if>
+            <if test="updateTime != null">`update_time` = #{updateTime},</if>
+            <if test="remark != null">`remark` = #{remark},</if>
+            <if test="icon != null">`icon` = #{icon}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		delete from sys_domain where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from sys_domain where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

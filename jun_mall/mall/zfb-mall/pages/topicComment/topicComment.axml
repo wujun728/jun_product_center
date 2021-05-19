@@ -1,0 +1,22 @@
+<view class="comments">
+  <view class="b">
+    <view class="item" a:for="{{comments}}" a:key="{{item.id}}">
+      <view class="info">
+        <view class="user">
+          <image src="{{item.user_info.avatar}}"></image>
+          <text>{{item.user_info.nickname}}</text>
+        </view>
+        <view class="time">{{item.add_time}}</view>
+      </view>
+      <view class="comment">{{item.content}}</view>
+      <view class="imgs" a:if="{{item.pic_list.length > 0}}">
+        <image class="img" a:for="{{item.pic_list}}" a:key="{{pitem.id}}" a:for-item="pitem" src="{{pitem.pic_url}}"></image>
+      </view>
+      <!--<view class="customer-service" a:if="{{item.commentReplyVO}}">
+        <text class="u">小选回复：</text>
+        <text class="c">{{item.commentReplyVO.replyContent}}</text>
+      </view>-->
+    </view>
+
+  </view>
+</view>

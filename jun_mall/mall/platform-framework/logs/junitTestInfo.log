@@ -1,0 +1,11 @@
+2018-07-09 12:39:34 025| INFO|AbstractTestContextBootstrapper.java.getTestExecutionListeners:187|Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@4b14c583, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@65466a6a, org.springframework.test.context.support.DependencyInjectionTestExecutionListener@4ddced80, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1534f01b]
+2018-07-09 12:39:34 248| INFO|XmlBeanDefinitionReader.java.loadBeanDefinitions:317|Loading XML bean definitions from class path resource [applicationContext-test.xml]
+2018-07-09 12:39:35 023| INFO|AbstractApplicationContext.java.prepareRefresh:582|Refreshing org.springframework.context.support.GenericApplicationContext@229f66ed: startup date [Mon Jul 09 12:39:35 GMT+08:00 2018]; root of context hierarchy
+2018-07-09 12:39:36 858| INFO|DruidDataSource.java.init:785|{dataSource-1} inited
+2018-07-09 12:39:37 998| INFO|AbstractUrlHandlerMapping.java.registerHandler:362|Mapped URL path [/**] onto handler 'org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler#0'
+2018-07-09 12:39:38 131| INFO|Version.java.<clinit>:30|HV000001: Hibernate Validator 5.4.1.Final
+2018-07-09 12:39:38 862| INFO|RequestMappingHandlerAdapter.java.initControllerAdviceCache:534|Looking for @ControllerAdvice: org.springframework.context.support.GenericApplicationContext@229f66ed: startup date [Mon Jul 09 12:39:35 GMT+08:00 2018]; root of context hierarchy
+2018-07-09 12:39:38 959| INFO|RequestMappingHandlerAdapter.java.initControllerAdviceCache:534|Looking for @ControllerAdvice: org.springframework.context.support.GenericApplicationContext@229f66ed: startup date [Mon Jul 09 12:39:35 GMT+08:00 2018]; root of context hierarchy
+2018-07-09 12:39:39 729| INFO|TestSysUserController.java.querySysUserList:44|userId：1；userName：admin；mobile：15209831990
+2018-07-09 12:39:39 733| INFO|AbstractApplicationContext.java.doClose:987|Closing org.springframework.context.support.GenericApplicationContext@229f66ed: startup date [Mon Jul 09 12:39:35 GMT+08:00 2018]; root of context hierarchy
+2018-07-09 12:39:39 743| INFO|DruidDataSource.java.close:1514|{dataSource-1} closed

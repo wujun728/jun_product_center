@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="help-container" a:for="{{helpList}}" a:key="{{index}}">
+    <view class="help-box">
+      <view class="help-title">{{item.question}}</view>
+      <view class="help-content">{{item.answer}}</view>
+    </view>
+  </view>
+</view>
