@@ -1,0 +1,10 @@
+body{font-size:9pt;background:#5A7080;color:#FFFFFF;}
+table{border:1px #000000 solid;border-collapse:collapse;}
+form(padding:0px;margin:0px;)
+b{font-size:10pt;}
+tr.img_field{background-color:#266192;border:1px #000000 solid;}
+tr.login_field{color:#000000;background:#ECECEC url("login_field_bg.png")/*tpa=http://ics.chinasoftinc.com:8888/templates/default/login_field_bg.png*/ repeat-x;}
+input.text{border:1px #404040 solid;color:#212121;font-size:9pt;background:url("input_bg.png")/*tpa=http://ics.chinasoftinc.com:8888/templates/default/input_bg.png*/ repeat-x;padding:2px 0px 2px 5px;}
+input.submit{width:74px;height:21px;color:#FFFFFF;background:url("login_btn.png")/*tpa=http://ics.chinasoftinc.com:8888/templates/default/login_btn.png*/ no-repeat;border:0px;cursor:pointer;}
+input.submit:hover{background-position:0 -21px;}
+a{color:#FFFF00;}

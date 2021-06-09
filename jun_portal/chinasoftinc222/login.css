@@ -1,0 +1,145 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0px; padding:0px;}
+body{ background-color:#31ac90;
+      font-family:"微软雅黑"; 
+	}
+/*body{
+ background-color: #ccc;
+ font-family: "微软雅黑";
+ -webkit-filter: grayscale(100%);
+}*/
+.main{
+	position:absolute;
+	width:1026px;
+	height:514px;
+	left:50%;
+	top:50%;
+	margin-left:-513px;
+	margin-top:-264px;
+	z-index:1;
+	background-image:url("bg1.jpg")/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/login/bg1.jpg*/;
+    }
+#logo{
+	position:absolute;
+	z-index: 2;
+	left: 26px;
+	top: 11px;
+   }
+#zr{
+	float:left;
+	margin-left:157px;
+	margin-top:126px;
+	font-size: 30px;
+	color: #31ac90;
+	z-index: 2;
+	height: 51px;
+	
+	}
+.form2{
+	border:0;
+	margin-right:155px;
+	margin-top:17px;
+	float:right;
+	width:249px;
+	height:41px;
+	background-color:#dbede9;
+	color:#31ac90;
+	font-size:14px;
+	text-indent:10px;
+	vertical-align:middle; 
+	line-height:41px;
+	}
+.form1{
+	border:0;
+	margin-right:155px;
+	margin-top:87px;
+	float:right;
+	width:249px;
+	height:41px;
+	background-color:#dbede9;
+	cursor:text;
+	color:#31ac90;
+	font-size:14px;
+	text-indent:10px;
+	vertical-align:middle;
+	line-height:41px; 
+	}
+
+.button_en{
+	border:0;
+	margin-right:-249px;
+	margin-top:100px;
+	float:right;
+	width:249px;
+	height:54px;
+	background-image:url("bnt_en.png")/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/login/bnt_en.png*/;
+	background-color:#eefcfd;
+	border:hidden;
+	cursor:pointer;
+	}
+.button_en:hover{
+background-image:url("bnt1_en.png")/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/login/bnt1_en.png*/
+	}
+.button_en:focus{
+	outline:0;
+	}
+
+.button{
+	border:0;
+	margin-right:-249px;
+	margin-top:100px;
+	float:right;
+	width:249px;
+	height:54px;
+	background-image:url("bnt.png")/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/login/bnt.png*/;
+	background-color:#eefcfd;
+	border:hidden;
+	cursor:pointer;
+	}
+.button:hover{
+background-image:url("bnt1.png")/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/login/bnt1.png*/
+	}
+.button:focus{
+	outline:0;
+	}
+.wj{
+	float:right;
+	font-size:14px;
+	color:#31ac90;
+	margin-right:-340px;
+	margin-top:110px;
+	text-decoration:none;
+	}
+.to_english{
+	float:right;
+	font-size:14px;
+	color:#31ac90;
+	margin-right:-380px;
+	margin-top:-110px;
+	text-decoration:none;
+	}
+.banquan{
+	position:relative;
+	width:500px;
+	text-align:center;
+	top: 740px;
+	margin-left:auto;
+	margin-right:auto;
+	font-size:12px;
+	line-height:20px;
+	}
+#errorBox{
+	position:relative;
+	margin-top:290px;
+	margin-left:541px;
+	width:400px;
+	border:#0CF solid 1px;
+	border-radius:5px;
+	font-size:14px;
+	text-indent:20px;
+	line-height:20px;
+	padding:5px;
+	background-color:#f0f7ff;
+	color:#F90;
+   }

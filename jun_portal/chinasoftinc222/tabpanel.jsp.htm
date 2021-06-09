@@ -1,0 +1,97 @@
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+var icon = "<img src=\"warning.gif\"/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/common/warning.gif*/ width=\"14\" height=\"14\" border=\"0\" align=\"absmiddle\">";
+var okicon = "<img src=\"check_right.gif\"/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/common/check_right.gif*/ width=\"14\" height=\"14\" border=\"0\" align=\"absmiddle\">";
+var pagesize = 20;
+var land = "zh_CN";
+var imagePath = "pointer.gif"/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/common/pointer.gif*/;
+var tabpath="tabpanel.jsp.htm"/*tpa=http://ics.chinasoftinc.com/portal/layout/standard/tabpanel.jsp*/;
+var tabpathr1="";
+function correctPNG(){ 
+ var arVersion = navigator.appVersion.split("MSIE") 
+ var version = parseFloat(arVersion[1]) 
+ if ((version >= 5.5 && version <7) && (document.body.filters)) 
+ { 
+ for(var j=0; j<document.images.length; j++) 
+ { 
+ var img = document.images[j] 
+ var imgName = img.src.toUpperCase() 
+ if (imgName.substring(imgName.length-3, imgName.length) == "PNG") 
+ { 
+ var imgID = (img.id) ? "id='" + img.id + "' " : "" 
+ var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+ var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+ var imgStyle = "display:inline-block;" + img.style.cssText 
+ if (img.align == "left") imgStyle = "float:left;" + imgStyle 
+ if (img.align == "right") imgStyle = "float:right;" + imgStyle 
+ if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle 
+ var strNewHTML = "<span " + imgID + imgClass + imgTitle 
+ + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+ + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" 
+ + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" 
+ img.outerHTML = strNewHTML 
+ j = j-1 
+ } 
+ } 
+ } 
+} 
+window.onload =correctPNG; 
+</script>
+<link rel="stylesheet" href="scroll.css" tppabs="http://ics.chinasoftinc.com/console/skin/default/rone/style/scroll.css">
+
+<link rel="stylesheet" href="ext-all.css" tppabs="http://ics.chinasoftinc.com/skin/yui-ext/css/ext2/css/ext-all.css">
+<link rel="stylesheet" href="ronetabs.css" tppabs="http://ics.chinasoftinc.com/portal/layout/standard/skins/default/rone/style/ronetabs.css">
+<script type="text/javascript" src="ext-tab.js" tppabs="http://ics.chinasoftinc.com/includes/ext-min/ext-tab.js"></script>
+<script type="text/javascript" src="ronetab.js" tppabs="http://ics.chinasoftinc.com/includes/rone-ext/ronetab.js"></script>
+<style>
+.x-tab-panel-footer .x-tab-strip-bottom .x-tab-right{
+padding-left:0px;/*解决标签页在底部时背景重叠的bug  汤超 2008-7-15 */
+}
+</style>
+</head>
+<body style="padding-left:0px;" class="tabpanel-body" onResize="setTabContentBox()">
+<div id="tabcontent" style="height:100%;"></div>
+</body>
+
+<script language="javascript">
+//openV3Main();
+try{window.top.setIframeHeight();}catch(e){};
+var timer=null;
+function readyOpen(){
+	if(window.top.isReady && window.top.isReady.leftLoaded===true && window.top.isReady.topLoaded===true && window.top.isReady.functionTreeLoaded===true){
+		window.top.setIframeHeight();
+		clearInterval(timer);
+		window.top.masker.unmask();
+		window.top.openHomePage();
+		// window.top.activeDefult();
+		if(typeof(window.top.footFrame.main.syncSize) == "function" ){
+			window.top.footFrame.main.syncSize();
+	    }
+	}
+}
+setTimeout("timer=setInterval('readyOpen();',300);",500); 
+window.top.isReady.tabPanleLoaded=true;
+</script>
+</html>
+
+
+

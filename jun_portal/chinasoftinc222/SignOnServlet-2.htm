@@ -1,0 +1,222 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>‰∏≠ËΩØÂõΩÈôÖTPGÈó®Êà∑Á≥ªÁªü</title>
+<link rel="stylesheet" href="login-2.css" tppabs="http://ics.chinasoftinc.com/en/console/skin/default/rone/style/login.css" type="text/css" />
+<!--<style type="text/css">
+body{
+ background-color: #ccc;
+ font-family: "ÂæÆËΩØÈõÖÈªë";
+ -webkit-filter: grayscale(100%);
+}
+</style>-->
+<script type="text/javascript" src="jquery-1.8.0.min-2.js" tppabs="http://ics.chinasoftinc.com/en/console/skin/default/rone/style/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+	var defaultValue = "Case Sensitive";
+  
+  function submitForm(usedVerifyCode,isJsecurity){
+	var name = loginFrm.userName.value;
+	var pass = loginFrm.password.value;
+
+	name = name.replace(/\b(0+)/gi,"");
+	
+	if(name==null || name=="" || name=="LobNumber"){
+		alert("Login ID cannnot be empty!");
+		return false;
+	}
+	
+	if(pass==null || pass=="" || pass=="Password"){
+		alert("Password must not be empty!");
+		return false;
+	}
+	 
+	 var userName = getCookie("RoneUserName");
+	 if(!userName || userName!= name){
+	    setCookie("RoneUserName", name);
+	 }
+	 
+	 loginFrm.userName.value = name; //add
+	loginFrm.userid.value = name;
+	document.getElementById("j_username").value=name;
+	document.getElementById("j_password").value=pass;
+
+	
+	var vcode = "";
+	if(usedVerifyCode){
+		vcode = loginFrm.verifycode.value;
+		if(vcode==null || vcode=="" || vcode==defaultValue){
+			alert("Code must not be empty!");
+			return false;
+		}
+	}
+	if(isJsecurity){
+		loginFrm.action="j_security_check";
+		document.cookie = "WASReqURL=null; path=/";
+	}
+		
+   	document.loginFrm.submit();
+  }
+
+  function canSubmit(){
+		var name = loginFrm.userName.value;
+		var pass = loginFrm.password.value;
+		
+		name = name.replace(/\b(0+)/gi,"");
+		
+		if(name!="" && pass!=""){
+			return true;
+		}else{
+			return false;
+		}
+  }
+  
+  
+  function keyDownEvent(evt){      
+        var e = evt;  
+	    if(e.keyCode==13 && canSubmit()){
+			submitForm(false,false);
+		}
+  }
+  
+  function rebuild(){
+  	document.getElementById('vimage').src = "image-2.jpg"/*tpa=http://ics.chinasoftinc.com/en/image*/;
+  }
+  
+  //logout from top or app server 2008-11-27 tangchao
+  function refreshTop(){
+    var userName = getCookie("RoneUserName");
+	
+	if(getCookie("logOutServer")=="true"){
+		delCookie("logOutServer");//‰ªéwebsphereÊúçÂä°Âô®ÈÄÄÂá∫		
+		document.getElementById("logoutServerForm").submit();
+	}else if(window.top.location.href!=window.location.href){
+		window.top.location.href=window.location.href;
+	}else if(userName){
+	     loginFrm.userName.value= userName;	  
+		 loginFrm.password.focus();
+		}else{
+		 loginFrm.userName.focus();
+		}
+  }
+  
+function setCookie(name,value)//‰∏§‰∏™ÂèÇÊï∞Ôºå‰∏Ä‰∏™ÊòØcookieÁöÑÂêçÂ≠êÔºå‰∏Ä‰∏™ÊòØÂÄº
+{
+    var Days = 1000; 
+    var exp  = new Date();    //new Date("December 31, 9998");
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+  
+function getCookie(name){//ÂèñcookiesÂáΩÊï∞
+    var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+     if(arr != null) return unescape(arr[2]); return null;
+}
+
+function delCookie(name){//Âà†Èô§cookie
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(name);
+    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+function pwdFocus(){
+		$('#password').remove();
+		$('#pwd').append('<input id="password" name="password" type="password" value="" onblur="pwdBlur();" onKeyDown="keyDownEvent(event)" class="form2"/>');	
+		$('#password').focus();
+	}
+function pwdBlur(){
+	if(!$('#password').val()){
+		$('#password').remove();
+		$('#pwd').append('<input id="password" type="text" value="Password" onfocus="pwdFocus();" class="form2"/>');
+		}
+	}
+</script>
+</head>
+<body onLoad="refreshTop();animateBrowserTip();">
+<form name="loginFrm" action="http://ics.chinasoftinc.com/en/login" method=post target="_top" >
+<input type="hidden" name="userid" id="userid"/>
+<input type="hidden" name="linkpage" id="linkpage" value=""/>
+<div class="main">
+  <div id="logo"><img src="logo-1.jpg" tppabs="http://ics.chinasoftinc.com/en/console/skin/default/rone/images/login/logo.jpg" width="102" height="69" /></div>
+  <div id="zr">Chinasoft TPG Portal </div>
+  <div id="dl">
+  <input type="text" name="userName" onFocus="if(value==defaultValue){value='';}"
+onBlur="if(!value){value=defaultValue;}"  value="User Name(Employee ID)" class="form1" onKeyDown="keyDownEvent(event)"  size="26" />
+<input name="j_username" id="j_username" type="hidden" value="" />
+
+<div id="pwd"><input id="password"  type="text" value="Password" onfocus="pwdFocus();" class="form2"/></div>
+<input name="j_password" id="j_password" type="hidden"  />
+
+
+   
+
+ <input type="button" class= button_en onClick="return submitForm(false,false)" />
+ <a href="index-6.htm#!/person/password" tppabs="http://ics.chinasoftinc.com:8001/#!/person/password" class="wj"></a>
+ <a href="index-1.htm" tppabs="http://ics.chinasoftinc.com/" class="to_english">ÁÆÄ‰Ωì‰∏≠Êñá</a>
+ 
+  </div>
+  <div id="errorBox" style="display:none;"></div>
+</div>
+<div class="banquan">Chinasoft International Technology Services Ltd. 2003-2018 All rights reserved.  </br>
+	<a target="_blank"href="javascript:if(confirm('http://www.miitbeian.gov.cn/  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ À¸ «“ª∏ˆ”ÚªÚ¬∑æ∂Õ‚≤ø±ª…Ë÷√Œ™À¸µƒ∆Ù ºµÿ÷∑µƒµÿ÷∑°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://www.miitbeian.gov.cn/'" tppabs="http://www.miitbeian.gov.cn/" >
+		<!--i18n:message key='login.license' /-->
+		ÈôïICPÂ§á15008492Âè∑-4
+	</a>
+</div>
+
+</form>
+<form action="javascript:if(confirm('http://ics.chinasoftinc.com/en/ibm_security_logout?logoutExitPage=SignOnServlet  \n\n∏√Œƒº˛Œﬁ∑®”√ Teleport Ultra œ¬‘ÿ, “ÚŒ™ ∑˛ŒÒ∆˜±®∏Ê∏√Œƒº˛Œ¥’“µΩ°£  \n\nƒ„œÎ‘⁄∑˛ŒÒ∆˜…œ¥Úø™À¸?'))window.location='http://ics.chinasoftinc.com/en/ibm_security_logout?logoutExitPage=SignOnServlet'" tppabs="http://ics.chinasoftinc.com/en/ibm_security_logout?logoutExitPage=SignOnServlet" method="post" id="logoutServerForm" target="_top">
+<input type="hidden" name="logoutExitPage" value="SignOnServlet">
+</form>
+
+
+
+
+
+
+<div id="browser_tip" style="width: 100%; position: fixed; left: 0px; bottom: 0px; height: 0px; text-align: center; 
+	background:rgba(0,0,0,0.4);line-height: 100px;z-indexÔºö999999999;">
+	<span style="font-size:18px;color:#fff;">
+		Please use Google Chrome to view this page
+		<a href="Chrome_XP.exe" tppabs="http://ics.chinasoftinc.com/console/default/common/Chrome_XP.exe" style="margin-left:30px;color:#fff;text-decoration: underline;cursor: pointer;">Click to download version for XP</a>
+		<a href="ChromeWin7.exe" tppabs="http://ics.chinasoftinc.com/console/default/common/ChromeWin7.exe" style="margin-left:30px;color:#fff;text-decoration: underline;cursor: pointer;">Click to download version for Win7</a>
+	</span> 
+</div>
+<script>
+	var erroMsg = document.getElementById("errorfield");
+	var erroBox = document.getElementById("errorBox");
+
+	if(erroMsg != null){
+		$(erroBox).text($(erroMsg).text());
+		erroBox.style.display = "block";
+		setTimeout(function(){
+			erroBox.style.display = "none";
+		},10000);
+	};
+	var animateBrowserTip = function(){
+	
+		$('#browser_tip').animate({
+			height:'+=100px',
+		},'slow');
+	};
+</script>
+
+
+</body>
+</html>

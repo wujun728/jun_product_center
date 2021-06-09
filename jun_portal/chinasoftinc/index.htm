@@ -1,0 +1,80 @@
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript">
+var icon = "<img src=\"warning.gif\"/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/common/warning.gif*/ width=\"14\" height=\"14\" border=\"0\" align=\"absmiddle\">";
+var okicon = "<img src=\"check_right.gif\"/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/common/check_right.gif*/ width=\"14\" height=\"14\" border=\"0\" align=\"absmiddle\">";
+var pagesize = 20;
+var land = "zh_CN";
+var imagePath = "pointer.gif"/*tpa=http://ics.chinasoftinc.com/console/skin/default/rone/images/common/pointer.gif*/;
+var tabpath="tabpanel.jsp.htm"/*tpa=http://ics.chinasoftinc.com/portal/layout/standard/tabpanel.jsp*/;
+var tabpathr1="";
+function correctPNG(){ 
+ var arVersion = navigator.appVersion.split("MSIE") 
+ var version = parseFloat(arVersion[1]) 
+ if ((version >= 5.5 && version <7) && (document.body.filters)) 
+ { 
+ for(var j=0; j<document.images.length; j++) 
+ { 
+ var img = document.images[j] 
+ var imgName = img.src.toUpperCase() 
+ if (imgName.substring(imgName.length-3, imgName.length) == "PNG") 
+ { 
+ var imgID = (img.id) ? "id='" + img.id + "' " : "" 
+ var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+ var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+ var imgStyle = "display:inline-block;" + img.style.cssText 
+ if (img.align == "left") imgStyle = "float:left;" + imgStyle 
+ if (img.align == "right") imgStyle = "float:right;" + imgStyle 
+ if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle 
+ var strNewHTML = "<span " + imgID + imgClass + imgTitle 
+ + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+ + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader" 
+ + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" 
+ img.outerHTML = strNewHTML 
+ j = j-1 
+ } 
+ } 
+ } 
+} 
+window.onload =correctPNG; 
+</script>
+<link rel="stylesheet" href="scroll.css" tppabs="http://ics.chinasoftinc.com/console/skin/default/rone/style/scroll.css">
+</head>
+<font size="2">请稍等，程序正在加载... ... ...</font>
+
+<script language=javascript>
+ function init(){
+    var ua = navigator.userAgent;
+    var msieOffset = ua.indexOf("MSIE ");
+	if(msieOffset>=0){
+	  var msieVersion = parseFloat(ua.substring(msieOffset + 5, ua.indexOf(";", msieOffset)));
+	  if(msieVersion < 6){
+	     alert("请将您的IE升级到6.0或以上，否则会无法正常使用系统。");
+	  }
+	}	
+	window.location.replace("SignOnServlet.htm"/*tpa=http://ics.chinasoftinc.com/SignOnServlet*/);
+ } 
+ init();
+</script>
+<body>
+</body>
+</html>

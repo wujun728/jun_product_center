@@ -1,0 +1,71 @@
+var bcgIp = document.getElementById('bcg').getAttribute('serviceurl');
+//var bcgIp = "http://xa.chinasoftinc.com/";
+$(document).ready(function(){
+	getloginUser();
+});
+
+function getloginUser() 
+{
+	var cookieValue = getCookieValue();
+	var ssoToken = cookieValue.ROLTPAToken;
+	var host=window.location.host;
+	var scheme=window.location.protocol;
+	var urlstr="http://ics.chinasoftinc.com/services/BAS_PLF_SSO_UserFetcher/getUserInfo?dd=date()&ssoToken=" + ssoToken;
+	
+	if (ssoToken.length > 0)
+	{
+		$.ajax({
+			type: "get",
+			url: urlstr,
+			dataType: "xml",
+			timeout: 1000,
+			cache: false,
+			success: function (data) {
+				var userInfo = $.trim($(data).text());
+				var userId = '';
+				$(userInfo).find("DATASET").each(function(i, item) {
+					userId = $.trim($(item).find("USERID").text());
+				});
+				queryCurrentUserIsBcg(userId);
+			},
+			error:function() {
+			}
+		});
+	}
+}
+
+function queryCurrentUserIsBcg(lobNum){
+	if(lobNum != null && lobNum != ''){
+		$.ajax({
+			url : bcgIp + "/bcg/bcgQianshuServlet",
+			type : "POST",
+			dataType : 'json',
+			async: false,
+			data: {"loginNum":lobNum},
+			success: function(res){
+				if(res.status){
+					var flag = confirm("您还没有BCG签署,请前往BCG系统进行签署!");
+					if(flag){
+						//window.open(bcgIp + "/bcg/login", "_blank", "");
+                        window.location.href = bcgIp + "/bcg/login";
+					}
+				}
+			},
+			error: function(){
+				console.log("查询用户信息错误");
+			}
+		});
+	}else{
+	}
+}
+
+function getCookieValue() {
+	var regex = /([^=]+)=([^;]+);?\s*/g;
+	var cookieValue = document.cookie;
+	var result;
+	var value = {};
+	while((result = regex.exec(cookieValue)) != null){
+		value[result[1]] = result[2];
+	}
+	return value;
+}

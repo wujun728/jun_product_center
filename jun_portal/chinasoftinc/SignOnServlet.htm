@@ -1,0 +1,253 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>中软国际TPG门户系统</title>
+<link rel="stylesheet" href="login.css" tppabs="http://ics.chinasoftinc.com/console/skin/default/rone/style/login.css" type="text/css" />
+	<!--<style type="text/css">
+	body{
+	 background-color: #ccc;
+	 font-family: "微软雅黑";
+	 -webkit-filter: grayscale(100%);
+	}
+	</style>-->
+<script type="text/javascript" src="jquery-1.8.0.min.js" tppabs="http://ics.chinasoftinc.com/console/skin/default/rone/style/jquery-1.8.0.min.js"></script>
+ <script type="text/javascript">
+ //如果能访问开放区域名，就跳转到https域名上去。
+ var httpsurl="https://ics.chinasoftinc.com";
+  function get_resp_status(url) {
+    $.ajax({
+      url: url,
+      success: function(data, textStatus, xhr) {
+        console.log(xhr.status);
+	    if (xhr.status==200) {//根据返回值进行跳转
+            window.location.href = url;}
+		else
+		  {window.location.href = "index.htm"/*tpa=http://ics.chinasoftinc.com/*/;}
+    },
+    complete: function(xhr, textStatus) {
+        console.log(xhr.status);
+    } 
+    });
+  }
+  get_resp_status(httpsurl);
+  </script>
+
+<script type="text/javascript">
+	var defaultValue = "区分大小写";
+  
+  function submitForm(usedVerifyCode,isJsecurity){
+	var name = loginFrm.userName.value;
+	var pass = loginFrm.password.value;
+
+	name = name.replace(/\b(0+)/gi,"");
+	
+	if(name==null || name=="" || name=="工号"){
+		alert("用户名不能为空");
+		return false;
+	}
+	
+	if(pass==null || pass=="" || pass=="密 码"){
+		alert("密码不能为空");
+		return false;
+	}
+	if (!((/\d/).test(pass) && (/[a-zA-Z]/).test(pass) && pass.length >= 8))
+	{ // 密码长度大于等于8位且要同时包含数字和字母
+		document.cookie = "ispass=true;"; //将是否修改密码的标识存入cookie
+	} else {
+		document.cookie = "ispass=false;";
+	} 
+	 var userName = getCookie("RoneUserName");
+	 if(!userName || userName!= name){
+	    setCookie("RoneUserName", name);
+	 }
+	 
+	 loginFrm.userName.value = name; //add
+	loginFrm.userid.value = name;
+	document.getElementById("j_username").value=name;
+	document.getElementById("j_password").value=pass;
+
+	
+	var vcode = "";
+	if(usedVerifyCode){
+		vcode = loginFrm.verifycode.value;
+		if(vcode==null || vcode=="" || vcode==defaultValue){
+			alert("验证码不能为空");
+			return false;
+		}
+	}
+	if(isJsecurity){
+		loginFrm.action="j_security_check";
+		document.cookie = "WASReqURL=null; path=/";
+	}
+		
+   	document.loginFrm.submit();
+  }
+
+  function canSubmit(){
+		var name = loginFrm.userName.value;
+		var pass = loginFrm.password.value;
+		
+		name = name.replace(/\b(0+)/gi,"");
+		
+		if(name!="" && pass!=""){
+			return true;
+		}else{
+			return false;
+		}
+  }
+  
+  
+  function keyDownEvent(evt){      
+        var e = evt;  
+	    if(e.keyCode==13 && canSubmit()){
+			submitForm(false,false);
+		}
+  }
+  
+  function rebuild(){
+  	document.getElementById('vimage').src = "image.jpg"/*tpa=http://ics.chinasoftinc.com/image*/;
+  }
+  
+  //logout from top or app server 2008-11-27 tangchao
+  function refreshTop(){
+    var userName = getCookie("RoneUserName");
+	
+	if(getCookie("logOutServer")=="true"){
+		delCookie("logOutServer");//从websphere服务器退出		
+		document.getElementById("logoutServerForm").submit();
+	}else if(window.top.location.href!=window.location.href){
+		window.top.location.href=window.location.href;
+	}else if(userName){
+	     loginFrm.userName.value= userName;	  
+		 loginFrm.password.focus();
+		}else{
+		 loginFrm.userName.focus();
+		}
+  }
+  
+function setCookie(name,value)//两个参数，一个是cookie的名子，一个是值
+{
+    var Days = 1000; 
+    var exp  = new Date();    //new Date("December 31, 9998");
+    exp.setTime(exp.getTime() + Days*24*60*60*1000);
+    document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+}
+  
+function getCookie(name){//取cookies函数
+    var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+     if(arr != null) return unescape(arr[2]); return null;
+}
+
+function delCookie(name){//删除cookie
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval=getCookie(name);
+    if(cval!=null) document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+}
+function pwdFocus(){
+		$('#password').remove();
+		$('#pwd').append('<input id="password" name="password" type="password" value="" onblur="pwdBlur();" onKeyDown="keyDownEvent(event)" class="form2"/>');	
+		$('#password').focus();
+	}
+function pwdBlur(){
+	if(!$('#password').val()){
+		$('#password').remove();
+		$('#pwd').append('<input id="password" type="text" value="密 码" onfocus="pwdFocus();" class="form2"/>');
+		}
+	}
+</script>
+</head>
+<body onLoad="refreshTop();animateBrowserTip();">
+
+<form name="loginFrm" action="http://ics.chinasoftinc.com/login" method=post target="_top" >
+<input type="hidden" name="userid" id="userid"/>
+<input type="hidden" name="linkpage" id="linkpage" value=""/>
+<div class="main">
+  <div id="logo"><img src="logo.png" tppabs="http://ics.chinasoftinc.com/console/skin/default/rone/images/login/logo.png" width="642" height="50" /></div>
+  <div id="zr">中软国际TPG门户系统</div>
+  <div id="dl">
+  <input type="text" name="userName" onFocus="if(value==defaultValue){value='';}"
+onBlur="if(!value){value=defaultValue;}"  value="用户名(0开头的LOB工号)" class="form1" onKeyDown="keyDownEvent(event)"  size="26" />
+<input name="j_username" id="j_username" type="hidden" value="" />
+
+<div id="pwd"><input id="password"  type="text" value="密 码" onfocus="pwdFocus();" class="form2"/></div>
+<input name="j_password" id="j_password" type="hidden"  />
+
+
+   
+
+ <input type="button" class= button onClick="return submitForm(false,false)" />
+ <a href="index-1.htm#!/person/password" tppabs="http://ics.chinasoftinc.com:8001/#!/person/password" class="wj">忘记密码</a>
+ <a href="index-2.htm" tppabs="http://ics.chinasoftinc.com/en" class="to_english">To English</a>
+ 
+  </div>
+  <div id="errorBox" style="display:none;"></div>
+</div>
+<div class="banquan">版权所有&#169; 2013-2018 中软国际科技服务有限公司  </br>
+	<a target="_blank"href="javascript:if(confirm('http://www.miitbeian.gov.cn/  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ����һ�����·���ⲿ������Ϊ������ʼ��ַ�ĵ�ַ��  \n\n�����ڷ������ϴ���?'))window.location='http://www.miitbeian.gov.cn/'" tppabs="http://www.miitbeian.gov.cn/" >
+		<!--i18n:message key='login.license' /-->
+		陕ICP备15008492号-4
+	</a>
+</div>
+
+</form>
+<form action="javascript:if(confirm('http://ics.chinasoftinc.com/ibm_security_logout?logoutExitPage=SignOnServlet  \n\n���ļ��޷��� Teleport Ultra ����, ��Ϊ ������������ļ�δ�ҵ���  \n\n�����ڷ������ϴ���?'))window.location='http://ics.chinasoftinc.com/ibm_security_logout?logoutExitPage=SignOnServlet'" tppabs="http://ics.chinasoftinc.com/ibm_security_logout?logoutExitPage=SignOnServlet" method="post" id="logoutServerForm" target="_top">
+<input type="hidden" name="logoutExitPage" value="SignOnServlet">
+</form>
+
+
+
+
+
+
+<div id="browser_tip" style="width: 100%; position: fixed; left: 0px; bottom: 0px; height: 0px; text-align: center; 
+	background:rgba(0,0,0,0.4);line-height: 100px;z-index：999999999;">
+	<span style="font-size:18px;color:#fff;">
+		请使用谷歌Chrome浏览器浏览该网页
+
+		<a href="Chrome_XP.exe" tppabs="http://ics.chinasoftinc.com/console/default/common/Chrome_XP.exe" style="margin-left:30px;color:#fff;text-decoration: underline;cursor: pointer;">点击下载XP版
+</a>
+		<a href="ChromeWin7.exe" tppabs="http://ics.chinasoftinc.com/console/default/common/ChromeWin7.exe" style="margin-left:30px;color:#fff;text-decoration: underline;cursor: pointer;">点击下载版Win7版
+
+</a>
+	</span> 
+</div>
+<script>
+	var erroMsg = document.getElementById("errorfield");
+	var erroBox = document.getElementById("errorBox");
+
+	if(erroMsg != null){
+		$(erroBox).text($(erroMsg).text());
+		erroBox.style.display = "block";
+		setTimeout(function(){
+			erroBox.style.display = "none";
+		},10000);
+	};
+	var animateBrowserTip = function(){
+	
+		$('#browser_tip').animate({
+			height:'+=100px',
+		},'slow');
+	};
+</script>
+
+
+</body>
+</html>

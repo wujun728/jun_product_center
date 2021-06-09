@@ -1,0 +1,122 @@
+/**
+ * Created by bailinan on 2018/5/10.
+ */
+
+var $modal,$confirmPhoneModel, $container, userProperty, RoneUserName,$portalsUserInfo,$portalsTodayDate;
+
+var v_emp_book = "10";//缓存版本号，修改版本号v后刷新缓存
+
+var pdfWindow = 'https://ics.chinasoftinc.com/pptemplate/default/spage/Employee_handbook.html?v=19';
+
+// portals地址不同环境需更改
+var portalsAddr = 'https://ics.chinasoftinc.com:18001';
+//var portalsAddr = 'http://10.100.19.25:8080/';
+
+// 员工手册pdf地址不同环境需更改
+var pdfAddr = 'https://ics.chinasoftinc.com/pptemplate/default/Employee_handbook.pdf?v=18';
+//var pdfAddr = 'https://ics.chinasoftinc.com/pptemplate/default/Employee_handbook.pdf';
+
+var camAddress = 'login-targetUrl=index&targetUrlType=2.htm'/*tpa=http://ics.chinasoftinc.com:8083/sso/login?targetUrl=index&targetUrlType=2*/;
+
+var html = "<div class=\"modal fade \" id=\"myModal1\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" style=\"width: 750px;\">\n        <div class=\"modal-content\">\n            <div class=\"modal-header\">\n                <h4 class=\"modal-title\" id=\"myModalLabel\"></h4>\n            </div>\n            <div class=\"modal-body\" >\n                <div id=\"my-pdf\"></div>\n         </div>\n            <div class=\"modal-footer\">\n                <button type=\"button\" class=\"btn btn-default\" onclick=\"closeModal()\">\u7A0D\u540E\u518D\u770B\n                </button>\n                <button type=\"button\" class=\"btn btn-primary\" onclick=\"readed()\">\n                    \u5DF2\u770B\u8FC7\n                </button>\n            </div>\n        </div>\n    </div>\n</div>";
+
+var confirmHtml = "\n<div class=\"modal fade\" id=\"confirmPhoneModel\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"gridSystemModalLabel\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\" id=\"gridSystemModalLabel\">\u91CD\u8981\u63D0\u793A</h4>\n      </div>\n      <div class=\"modal-body\">\n        <p>\u60A8\u597D\uFF01</p>\n        <p>\u4E2A\u7A0E\u65B0\u653F\u81EA2019\u5E741\u67081\u65E5\u8D77\u5B9E\u65BD\uFF0C\u6B64\u6B21\u4E2A\u7A0E\u53D8\u9769\u6D89\u53CA\u7684\u516D\u9879\u4E13\u9879\u9644\u52A0\u6263\u9664\uFF0C\u9664\u5927\u75C5\u533B\u7597\u5916\uFF0C\u5176\u4F59\u4E94\u9879\u53EF\u4EE5\u7531\u516C\u53F8\u6309\u6708\u5728\u5DE5\u8D44\u7A0E\u524D\u6263\u9664\uFF0C\u4E5F\u53EF\u4EE5\u4E2A\u4EBA\u4E8E\u6B21\u5E743-6\u6708\u81EA\u884C\u53BB\u7A0E\u52A1\u5C40\u529E\u7406\u9000\u7A0E\u3002\n        \u8BF7\u60A8\u4E8E12\u670831\u65E5\u524D\u4E0B\u8F7D\u5B89\u88C5\u56FD\u7A0E\u5C40\u7684\u4E2A\u4EBA\u6240\u5F97\u7A0EAPP\uFF0C\u5E76\u5B8C\u6210\u5B9E\u540D\u8BA4\u8BC1 \u30022019\u5E741\u67081\u65E5\u540E\uFF0C\u901A\u8FC7\u8BE5\u5E73\u53F0\u586B\u62A5\u4E13\u9879\u9644\u52A0\u6263\u9664\u7684\u4FE1\u606F\uFF0C\u7ECF\u7A0E\u52A1\u5C40\u5BA1\u6838\u901A\u8FC7\u540E\u63A8\u9001\u81F3\u516C\u53F8\uFF0C\u516C\u53F8\u4ECE\u5458\u5DE5\u5DE5\u8D44\u7A0E\u524D\u6263\u9664\u3002</p>\n         \n        <p>\u5B9E\u540D\u8BA4\u8BC1\u64CD\u4F5C\u6B65\u9AA4\uFF1A</p>\n        <p>1\u3001\u4E0B\u8F7D\u8DEF\u5F84\uFF1A\u8FDB\u5165\u624B\u673A\u5E94\u7528\u5E02\u573A\uFF0C\u641C\u7D22\u201C\u4E2A\u4EBA\u6240\u5F97\u7A0E\u201D\uFF0C\u70B9\u51FB\u201C\u5B89\u88C5\u201D\u5373\u53EF\u3002</p>\n        <p>2\u3001\u6253\u5F00\u4E2A\u4EBA\u6240\u5F97\u7A0EAPP\uFF0C\u70B9\u51FB\u201C\u6CE8\u518C\u201D\uFF0C\u9009\u62E9\u201C\u4EBA\u8138\u8BC6\u522B\u8BA4\u8BC1\u6CE8\u518C\u201D\u65B9\u5F0F\uFF0C\u5982\u5B9E\u586B\u5199\u8EAB\u4EFD\u76F8\u5173\u4FE1\u606F\uFF08\u59D3\u540D\u3001\u8BC1\u4EF6\u7C7B\u578B\u3001\u8BC1\u4EF6\u53F7\u7801\uFF09\uFF0C\u70B9\u51FB\u201C\u5F00\u59CB\u4EBA\u8138\u8BC6\u522B\u201D\u6309\u94AE\u540E\u8FDB\u884C\u62CD\u6444\uFF0C\u4E0E\u540E\u53F0\u516C\u5B89\u63A5\u53E3\u6BD4\u5BF9\u4F1A\u8DF3\u8F6C\u5230\u767B\u5F55\u8BBE\u7F6E\u754C\u9762\uFF1B</p>\n        <p>3\u3001\u8BBE\u7F6E\u767B\u5F55\u540D\u3001\u5BC6\u7801\u3001\u624B\u673A\u53F7\uFF08\u9700\u77ED\u4FE1\u6821\u9A8C\uFF09\u5B8C\u6210\u6CE8\u518C\uFF1B</p>\n        <p>4\u3001\u8BBE\u7F6E\u5B8C\u6210\u540E\u5373\u53EF\u901A\u8FC7\u624B\u673A\u53F7/\u8BC1\u4EF6\u53F7\u7801/\u767B\u5F55\u540D\u767B\u5F55\uFF0C\u5E76\u8FDB\u884C\u76F8\u5173\u4E1A\u52A1\u64CD\u4F5C\u3002</p>\n        <p>\u3010\u6CE8\u610F\u4E8B\u9879\u3011</p>\n        <p>1) \u767B\u5F55\u540D\u957F\u5EA6\u662F2-16\u4F4D\u5B57\u7B26\uFF0C\u53EF\u7531\u5927\u5C0F\u5199\u5B57\u6BCD\u3001\u6570\u5B57\u3001\u4E2D\u6587\uFF08\u4E2D\u6587\u53602\u4E2A\u5B57\u7B26\uFF09\u4E0E\u4E0B\u5212\u7EBF\u7EC4\u6210\uFF0C\u4E0D\u652F\u6301\u7EAF\u6570\u5B57\uFF1B</p>\n        <p>2) \u5BC6\u7801\u4E3A8\u523015\u4F4D\u5B57\u7B26\uFF0C\u81F3\u5C11\u5305\u542B\u5B57\u6BCD(\u5927\u5C0F\u5199\uFF09\u3001\u6570\u5B57\u4E0E\u7B26\u53F7\u4E2D\u7684\u4E24\u79CD\uFF0C\u4E0D\u5141\u8BB8\u6709\u7A7A\u683C\uFF0C\u5B57\u6BCD\u9700\u533A\u5206\u5927\u5C0F\u5199\uFF1B</p>\n        <p>3) \u8BF7\u52A1\u5FC5\u5982\u5B9E\u586B\u5199\u4FE1\u606F\uFF0C\u4E00\u65E6\u88AB\u7A0E\u52A1\u673A\u5173\u6838\u67E5\u51FA\u865A\u5047\u4FE1\u606F\uFF0C\u5C06\u4F1A\u5F71\u54CD\u4E2A\u4EBA\u5F81\u4FE1\u3002</p>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-primary\"  data-dismiss=\"modal\">\u4E0B\u6B21\u63D0\u9192</button>\n        <span  style=\"float: left;padding-top: 15px;cursor: pointer;font-size: smaller;color: lightgray\" onclick=\"confirmGeshui()\">\u4E0D\u518D\u63D0\u9192</span>\n      </div>\n    </div><!-- /.modal-content -->\n  </div><!-- /.modal-dialog -->\n</div><!-- /.modal -->\n";
+
+
+
+var windowHtml="<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n <div class=\"modal-dialog\">\n <div class=\"modal-content\">\n"+
+				"<div class=\"modal-header\">\n <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">\n </button>\n"+
+				"<h4 class=\"modal-title\" id=\"myModalLabel\">\n 标题 \n </h4>\n </div> \n"+
+				"<div class=\"modal-body\">\n 阅读中软国际学习手册\n  </div>\n"+
+				"<div class=\"modal-footer\">\n <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">稍后阅读</button>\n"+
+				"<button type=\"button\" class=\"btn btn-primary\">\n 即刻阅读\n </button>\n"+
+				"</div>\n </div>\n </div>\n </div>";
+
+//打开个税模态框
+function openConfirmPhoneModel(){
+	//是否已确认个税、没有确认弹出提示
+    if (!userProperty.isConfirmGeshui){
+        $confirmPhoneModel = $("#confirmPhoneModel");
+        $confirmPhoneModel.modal({backdrop: 'static', keyboard: false});
+    }
+}
+
+//打开员工手册模态框
+function confirmAll(){
+    if (userProperty.handbookReaded){
+		//打开个税模态框
+        openConfirmPhoneModel();
+        return;
+    }
+	//员工手册版本号
+    var bookname = userProperty.handbookName.split('@')[0];
+	//员工手册发布时间
+    var booktime = userProperty.handbookName.split('@')[1];
+	//弹窗
+	$(".modal-title").html(bookname);
+	$(".modal-body").html('《'+bookname+'》已于12月2日公示，请及时阅读。');
+	$("#myModal").modal('show');
+}
+
+
+//入口
+function openModel(){
+	$modal = $("#myModal1");
+    $container = $("#my-pdf");
+	var $jike_coolie = document.cookie;
+	/**发送请求*/
+	if ($jike_coolie.indexOf('RoneUserName')>-1){
+		RoneUserName = $jike_coolie.substr($jike_coolie.indexOf('RoneUserName')).split(';')[0].split('=')[1].trim();
+		localStorage.setItem("RoneUserName",RoneUserName);
+		localStorage.setItem("portalsAddr",portalsAddr);
+		jQuery.ajax({
+		url: portalsAddr+'/person/direct/userProperty/queryUserProperty',
+		headers:{'RoneUserName': RoneUserName}
+		}).then(function (resp) {
+		if (!resp){
+			return;
+		}
+		userProperty = resp;
+		confirmAll();
+	})
+	}else{
+		 console.log("员工手册确认弹窗无法获取工号信息!");
+	}
+}
+//入口函数
+$(document).ready(function () {
+    //$(document.body).append(html);
+    //$(document.body).append(confirmHtml);
+	$(document.body).append(windowHtml);
+    try{
+        openModel();
+    }catch(e){
+        console.log(e);
+    }
+	
+	$(".btn-primary").click(function () {
+		$("#myModal").modal('hide');
+        window.open(pdfWindow)
+    })
+});
+
+//确认个税请求
+function confirmGeshui(){
+    $confirmPhoneModel.modal('hide');
+    jQuery.ajax({
+        url: portalsAddr +　'/person/direct/userProperty/confirmGeshui',
+        type: "post",
+        headers: {'RoneUserName': RoneUserName}
+    }).then(function () {
+        // 更新localStorage
+        userProperty.isConfirmGeshui = '1';
+        resetLocalStorage();
+    });
+}
+
+//关闭模态框
+function closeModal() {
+    $modal.modal('hide');
+    openConfirmPhoneModel();
+}
+

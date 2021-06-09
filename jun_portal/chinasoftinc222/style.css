@@ -1,0 +1,47 @@
+
+html,body,h1,h2,h3,h4,h5,div,p,ul,ol,dl,dt,dd,fieldset,img,q,i,em,sub,sup,strong,form{margin:0;padding:0;list-style:none;font-style: normal;font-weight:normal;border:0 none;}
+body{font-family:"Helvetica Neue",Helvetica,"STheiti","Microsoft Yahei","SimHei",Arial,Tahoma,sans-serif,serif;font-size:90%;-webkit-text-size-adjust:none;color:#131313;background:#eee;line-height:1.5;margin:0 auto;min-width:320px;}
+html{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+table{border-spacing:0; border-collapse:collapse;width:100%;}
+a{text-decoration:none;}
+a:focus,input:focus,textarea:focus{outline:none;}
+a{color:#131313;}
+/*clear fix*/
+.cf:before,.cf:after{content:"";display:table}
+.cf:after{clear:both}
+.cf{*zoom:1}
+
+#pop_wrapper{width:238px;background:#fff;border:solid 2px #004ea2;position:fixed;z-index:999;_position:absolute;right:0px;bottom:0px;height:40%;overflow:auto}
+.title_h1{position:relative;height:44px;background:#004ea2;}
+.title_h1 img{height:44px;vertical-align:middle}
+.title_h1 em{font-size:14px;color:#fff;font-family:"Microsoft Yahei";display:inline-block;vertical-align:middle;font-weight:bold}
+.title_h1 span{width:20px;height:20px; background:url("close.png")/*tpa=https://ics.chinasoftinc.com/pptemplate/default/theme/default/images/icons/close.png*/ no-repeat left -2px;top:2px;right:2px;position:absolute;}
+.title_h1 span:hover{background-color:#f00;}
+.main_wrapper{padding:18px;}
+.main_wrapper .title_t{font-weight:bold;margin-top:6px;line-height:18px}
+.detail_p{font-size:12px;padding:8px 0 8px 0;color:#727171;}
+
+.session_dl dt,.session_dl dd{float:left;font-size:12px;}
+.session_dl dt{width:52px;margin-top:3px}
+.session_dl dd{width:146px;line-height:18px;font-weight:bold}
+.session_dl dd a{color: black;text-decoration: none;font-weight: normal;}
+
+.session_dl{border-bottom:solid 1px #ccc;padding:4px 0px;}
+.no_top_border{border-top:none;}
+.more_wrapper{text-align:right;padding-top:10px;font-size:12px}
+.more_wrapper a{color:#3885c5;}
+.more_wrapper a:hover{color:red;}
+
+.main_wrapper img{width:200px;height:150px;overflow:hidden}
+.session_dl dt img{width:40px;height:30px;overflow:hidden}
+.detail_p{border-bottom:solid 1px #ccc;}
+.bottomInfo{
+	padding:18px;
+	font-size:.85em;
+	color:#5d9cd0;
+	padding-top:0px;
+}
+.bottomInfo a{
+	text-decoration: none;
+	color:#5d9cd0;
+}

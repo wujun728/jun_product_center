@@ -1,0 +1,142 @@
+
+@charset "utf-8";
+.button {
+    border: 1px solid #DEDEDE;
+    border-radius: 3px;
+    color: #555555;
+    cursor: pointer;
+    display: inline-block;
+    font: bold 12px/12px HelveticaNeue,Arial;
+    padding: 8px 11px;
+    text-decoration: none;
+}
+.button.white {
+    background: -moz-linear-gradient(center top , #F9F9F9, #F0F0F0) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #DEDEDE #D8D8D8 #D3D3D3;
+    box-shadow: 0 1px 1px #EAEAEA, 0 1px 0 #FBFBFB inset;
+    color: #555555;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.button.white:hover {
+    background: -moz-linear-gradient(center top , #EFEFEF, #F8F8F8) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #C7C7C7 #C3C3C3 #BEBEBE;
+    box-shadow: 0 1px 1px #EBEBEB, 0 1px 0 #F3F3F3 inset;
+    text-shadow: 0 1px 0 #FDFDFD;
+}
+.button.grey {
+    background: -moz-linear-gradient(center top , #CACACA, #AEAEAE) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #B5B5B5 #A1A1A1 #8F8F8F;
+    box-shadow: 0 1px 1px #C9C9C9, 0 1px 0 #D7D7D7 inset;
+    color: #555555;
+    text-shadow: 0 1px 0 #D4D4D4;
+}
+.button.grey:hover {
+    background: -moz-linear-gradient(center top , #BCBCBC, #C2C2C2) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #989898 #8E8E8E #878787;
+    box-shadow: 0 1px 1px #CDCDCD, 0 1px 0 #CCCCCC inset;
+    text-shadow: 0 1px 0 #DADADA;
+}
+.button.pink {
+    background: -moz-linear-gradient(center top , #F78297, #F56778) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #DF6F8B #DA5F75 #D55061;
+    box-shadow: 0 1px 1px #C1C1C1, 0 1px 0 #F9A1B1 inset;
+    color: #913944;
+    text-shadow: 0 1px 0 #F89CA9;
+}
+.button.pink:hover {
+    background: -moz-linear-gradient(center top , #F56C7E, #F78297) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #C36079 #C25669 #C14E5C;
+    box-shadow: 0 1px 1px #C3C3C3, 0 1px 0 #F8909E inset;
+    text-shadow: 0 1px 0 #F9A6B4;
+}
+.button.orange {
+    background: -moz-linear-gradient(center top , #FEDA71, #FEBB4A) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #F5B74E #E5A73E #D6982F;
+    box-shadow: 0 1px 1px #D3D3D3, 0 1px 0 #FEE395 inset;
+    color: #996633;
+    text-shadow: 0 1px 0 #FEDD9B;
+}
+.button.orange:hover {
+    background: -moz-linear-gradient(center top , #FEC354, #FECD61) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #D29A3A #CC9436 #C89133;
+    box-shadow: 0 1px 1px #D4D4D4, 0 1px 0 #FED17E inset;
+    text-shadow: 0 1px 0 #FEE1A0;
+}
+.button.green {
+    background: -moz-linear-gradient(center top , #CAE285, #9FCB57) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #ADC671 #98B65B #87AA4A;
+    box-shadow: 0 1px 1px #D3D3D3, 0 1px 0 #D7E9A4 inset;
+    color: #5D7731;
+    text-shadow: 0 1px 0 #CFE5A4;
+}
+.button.green:hover {
+    background: -moz-linear-gradient(center top , #B8D872, #B9D972) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #8BB14D #83A648 #7D9E45;
+    box-shadow: 0 1px 1px #D5D5D5, 0 1px 0 #CAE295 inset;
+    text-shadow: 0 1px 0 #D5E8AA;
+}
+.button.blue {
+    background: -moz-linear-gradient(center top , #ABE4F8, #6FCEF3) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #8DC5DA #76B7CF #63ABC7;
+    box-shadow: 0 1px 1px #D6D6D6, 0 1px 0 #C0EBFA inset;
+    color: #42788E;
+    text-shadow: 0 1px 0 #B6E6F9;
+}
+.button.blue:hover {
+    background: none repeat scroll 0 0 #92DBF6;
+    border-color: #7CAEC0 #68A3BA #5A9CB5;
+    box-shadow: 0 1px 1px #D6D6D6, 0 1px 0 #ADE4F8 inset;
+    text-shadow: 0 1px 0 #BEE9FA;
+}
+.button.purple {
+    background: -moz-linear-gradient(center top , #E8C4E4, #D494CE) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #BC9DB9 #AD89AA #A1799D;
+    box-shadow: 0 1px 1px #D5D5D5, 0 1px 0 #EED3EB inset;
+    color: #7B5777;
+    text-shadow: 0 1px 0 #EACAE6;
+}
+.button.purple:hover {
+    background: -moz-linear-gradient(center top , #DEABD9, #E0B1DB) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #A482A0 #9B7897 #947090;
+    box-shadow: 0 1px 1px #CDCDCD, 0 1px 0 #CCCCCC inset;
+    text-shadow: 0 1px 0 #ECD0E9;
+}
+.button.teal {
+    background: -moz-linear-gradient(center top , #B7F2F4, #7CE7EA) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #90C6C8 #78BDC0 #65B6BA;
+    box-shadow: 0 1px 1px #D5D5D5, 0 1px 0 #C9F5F7 inset;
+    color: #437B7D;
+    text-shadow: 0 1px 0 #BEF3F5;
+}
+.button.teal:hover {
+    background: none repeat scroll 0 0 #9FEDF0;
+    border-color: #7DB9BB #6BB2B5 #5DACAF;
+    box-shadow: 0 1px 1px #D5D5D5, 0 1px 0 #B7F2F4 inset;
+    text-shadow: 0 1px 0 #C5F4F6;
+}
+.button.darkblue {
+    background: -moz-linear-gradient(center top , #BECBD6, #88A1B4) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #A2AFB8 #8696A1 #6F818F;
+    box-shadow: 0 1px 1px #D3D3D3, 0 1px 0 #CED8E0 inset;
+    color: #515F6A;
+    text-shadow: 0 1px 0 #C4D0D9;
+}
+.button.darkblue:hover {
+    background: none repeat scroll 0 0 #ADBFCB;
+    border-color: #8996A0 #798791 #6C7A85;
+    box-shadow: 0 1px 1px #D3D3D3, 0 1px 0 #C2CFD8 inset;
+    text-shadow: 0 1px 0 #CED9E0;
+}
+.button.black {
+    background: -moz-linear-gradient(center top , #5E5E5E, #434343) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: #4C4C4C #313131 #1F1F1F;
+    box-shadow: 0 1px 1px #AFAFAF, 0 1px 0 #868686 inset;
+    color: #FFFFFF;
+    text-shadow: 0 1px 0 #2E2E2E;
+}
+.button.black:hover {
+    background: none repeat scroll 0 0 #5A5A5A;
+    border-color: #2C2C2C #1C1C1C #101010;
+    box-shadow: 0 1px 1px #B1B1B1, 0 1px 0 #838383 inset;
+    text-shadow: 0 1px 0 #363636;
+}

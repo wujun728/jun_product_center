@@ -94,4 +94,26 @@ jun_calendar.zip 迁移到jun_clendar
 Easyui+SSM   --API
 Bootstrap+Boot ---MIS
 LayUI+SSM --blog
+
+TODO
+jun_project
+1、@author  注解删掉；
+2、jun_utils提出出来；
+3、jun_lucene lib .gitignore 没提交
+4、jun_httpclient  --> HttpClientTest  挪到测试文件夹下面
+	HttpGetTest
+5、jun_apache_commons  没有指定JDK类型
+6、修改所有的package及类描述
+7、所有添加maven-compiler-plugin
+7、04-ApacheCamel-CXF-WebService 修改项目名称
+book01-ch00-basic
+dbtracer_core
+fastdfs_core
+jun_springboot_server
+netty.http.server
+redis-proxy-monitor
+tcc-transaction-bom
+8、所有共享jar包版本
+9、删除全部项目重新导入；
+10、补充每个项目的测试用例及readme.md
  

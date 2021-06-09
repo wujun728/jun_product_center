@@ -1,0 +1,206 @@
+/**
+ * Created by zlw on 2020/12/14.
+ */
+
+function getCookie(cookieName) {
+  var strCookie = document.cookie;
+  var arrCookie = strCookie.split("; ");
+  for (var i = 0; i < arrCookie.length; i++) {
+    var arr = arrCookie[i].split("=");
+    if (cookieName == arr[0]) {
+      return arr[1];
+    }
+  }
+  return "";
+}
+ 
+ 
+var menhuAddr = 'https://ics.chinasoftinc.com';
+
+//入口函数
+$(document).ready(function () {
+	var  ROLTPAToken=getCookie("ROLTPAToken");
+	if("" == ROLTPAToken){
+		alert("获取用户信息异常，请重新登录门户再试!")
+		return false;
+	}
+    var data={
+    		"tacticsStatus":2
+    }
+    jQuery.ajax({
+        url: menhuAddr +　'/elp/getUserProtocol',
+        type: "post",
+        dataType:"JSON",
+        headers:{'ROLTPAToken': ROLTPAToken},
+        data:JSON.stringify(data),
+        contentType:"application/json;charset=UTF-8"
+    }).then(function (resp) {
+       console.log(resp);
+       localStorage.setItem("elp_fileParam",JSON.stringify(resp.data));
+      if(resp.success){
+    	  var str = '';
+    	  var t = '';
+    	  for(var i=0;i<resp.data.length;i++){
+    		  t = JSON.stringify(resp.data[i].protocolId);
+			  hotPints=JSON.stringify(resp.data[i].hotPints);
+			 var titles =resp.data[i].title;
+			 var temp_title =titles.substring(0,50);
+			  if(hotPints==0){
+					str +="<li protocolId="+t+" title="+titles+"  style='text-indent: 20px;border-bottom:1px solid #eeeeee;line-height:30px;font-size:14px;margin: 13px;'>"+(i+1)+"、"+temp_title+"&nbsp;&nbsp;&nbsp;&nbsp;<img style='width:18px;height:18px;vertical-align:text-bottom;' src="+menhuAddr+"/elp/img/hot.png alt=''> " +
+							"<button id='openFile_elp' onclick='openFile_elp("+t+",this)' style='background: #2b7de1;border:none;color:#ffffff;line-height:25px; float: right;border-radius:3px;cursor:pointer;'>前去查阅</button>" +"</li>"				  
+			  }else{
+					str +="<li protocolId="+t+" title="+titles+"    style='text-indent: 20px;border-bottom:1px solid #eeeeee;line-height:30px;font-size:14px;margin: 13px;'>"+(i+1)+"、"+temp_title+"<button id='openFile_elp' onclick='openFile_elp("+t+",this)' style='background: #2b7de1;border:none;color:#ffffff;line-height:25px; float: right;border-radius:3px;cursor:pointer;'>前去查阅</button></li>"  
+			  }  
+    		  
+    	  }  
+    	  var testTeml="<div id='modelElp' style='width:100%;height:100%;position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 999;margin: auto;background: rgba(0,0,0,.5);'>" +
+    		"<div id='box_popul' style='width:50%;height:70%;background: white;margin: 6% auto;border-radius:10px;'>" +
+    		"<h2 style='text-indent: 20px;line-height:60px;background:#e9f5ff;font-size:18px;border-top-left-radius:10px;border-top-right-radius:10px;'>阅读/签署列表</h2>"+
+			"<ul id='uls_box' style='height: 70%;overflow-x:hidden;overflow-y:scroll;font-size:14px;'>" +str+
+    		"</ul>" +
+    		"<button style='line-height: 40px;background: #2b7de1;color:#ffffff;border: none;width: 30%;font-size: 24px;margin: 0 auto;display: block;border-radius: 40px;font-size:18px;' id='closeBtnElp' onclick='closeBtnElp()'>稍后处理</button>"+
+    		"</div>" + 
+    		"</div>";
+    	  $(document.body).append(testTeml); 
+      }
+      
+    }); 
+});
+
+
+function openFile_elp(protocolId,e){
+	var elp_fileParam =JSON.parse(localStorage.getItem("elp_fileParam"));
+	var title ="";
+	var content="";  
+	var tacticsType=0;
+	var imageStatus=0;
+	var fileUrl="";
+	var explain="";
+	var storageStatus = '';
+	var titles ='';
+	var temp_title ='';
+	if(elp_fileParam.length>0){
+		var uls_boxs=$("#uls_box").children();
+		for(var i in  elp_fileParam){  
+			if(elp_fileParam[i].protocolId==protocolId){
+				 title=elp_fileParam[i].title;
+				 content=elp_fileParam[i].content;
+				 titles =elp_fileParam[i].title;
+				 temp_title =titles.substring(0,50);
+				  console.log("temp_title",temp_title);
+				  console.log("titles",titles);
+				 tacticsType=elp_fileParam[i].tacticsType;
+				 imageStatus=elp_fileParam[i].imageStatus;
+				 fileUrl=elp_fileParam[i].fileUrl;
+				 explain=elp_fileParam[i].explain;
+				 storageStatus = elp_fileParam[i].storageStatus;
+				 
+				 elp_fileParam.splice(i,1);
+				 localStorage.setItem("elp_fileParam",JSON.stringify(elp_fileParam));
+				 
+				 console.log(uls_boxs)
+				 
+				 console.log("--->",e)
+				 for(var j=0 ;j< uls_boxs.length ;j++ ){
+					 var tempid=uls_boxs[j].attributes.protocolid.value;
+				 console.log("j.getAttribute(protocolid)--->",uls_boxs[j].attributes.protocolid.value);
+				 if(tempid==protocolId){
+					 uls_boxs[j].style.display = 'none';
+				 }
+					 
+				 }
+				 
+			}
+		}  
+	}
+	
+	if(tacticsType==0){
+		var  ROLTPAToken=getCookie("ROLTPAToken");
+		if("" == ROLTPAToken){ 
+			alert("获取用户信息异常，请重新登录门户再试!")
+			return false;
+		}
+		var elp_fileParam =JSON.parse(localStorage.getItem("elp_fileParam"));
+		if(elp_fileParam.length==0){
+			closeBtnElp()
+		}
+		window.open(menhuAddr+"/elp/pdfOne.html?protocolId="+protocolId+"&ROLTPAToken="+ROLTPAToken)
+	}else{
+		if(imageStatus==0){
+			var testTemlChild="<div id='modelElpChild' style='width:100%;height:100%;position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 999;margin: auto;'>" +
+			"<div id='box_popul' style='width:50%;height: 70%;background: white;margin: 6% auto;border-radius:10px;'>" +
+			"<h2  style='text-indent: 20px;line-height:60px;background:#e9f5ff;font-size:16px;border-top-left-radius:10px;border-top-right-radius:10px;' title="+titles+">"+temp_title  +"</h2>"+
+			"<div style='height:70%;margin:10px auto;line-height:30px;padding:0 20px;overflow-x:hidden;overflow-y:scroll;font-size:14px;'>"+content+"</div>"+
+			"<div style='display:bolck;line-height: 40px;text-align:center;background: #2b7de1;color:#ffffff;border: none;outline: none;width: 30%;font-size: 18px;margin: 20px auto 0 auto;display: block;border-radius: 40px;'  onclick='closeBtnElpName("+protocolId+","+storageStatus+")'>我已知晓</div>"+
+			"</div>" +
+			"</div>";
+			$(document.body).append(testTemlChild); 	
+		}else if(imageStatus==1){
+			var testTemlChild="<div id='modelElpChild' style='width:100%;height:100%;position: fixed;top:0;left: 0;right: 0;bottom: 0;z-index: 999;margin: auto;'>" +
+			"<div id='box_popul' style='width:50%;height: 70%;background: white;margin: 6% auto;border-radius:10px;'>" +
+			"<h2  style='text-indent: 20px;line-height:60px;background:#e9f5ff;font-size:16px;border-top-left-radius:10px;border-top-right-radius:10px;'title="+titles+">"+temp_title +"</h2>"+
+			"<div style='font-size:14px;height:70%;overflow-x:hidden;overflow-y:scroll;margin:10px auto;padding:0 20px;'>"+
+			"<div style='font-size:14px'>"+content+"</div>"+
+			"<div style='font-size:16px;text-align: center;'><span type='text-align: center;'><img alt='image' src="+fileUrl+" ></span></div>"+
+			"</div>" +
+			"<div style='display:bolck;line-height: 40px;text-align:center;background: #2b7de1;color:#ffffff;border: none;outline: none;width: 30%;font-size: 18px;margin: 20px auto 0 auto;display: block;border-radius: 40px;'  onclick='closeBtnElpName("+protocolId+","+storageStatus+")'>我已知晓</div>"+
+			"</div>" +
+			"</div>"; 
+			$(document.body).append(testTemlChild); 	
+		}
+		var elp_fileParam =JSON.parse(localStorage.getItem("elp_fileParam"));
+		if(elp_fileParam.length==0){
+			closeBtnElp()
+		}
+	}
+}  
+
+function clickmouseover(title,index){
+	console.log(title);	
+}
+
+function clickmouseout(title,index){
+	console.log(title);
+}
+
+function closeBtnElp(){
+	$("#modelElp").css('display','none')
+}
+function closeBtnElpName(protocolId,storageStatus){
+	$("#modelElpChild").css('display','none')
+	if(storageStatus ==0){
+			var  ROLTPAToken=getCookie("ROLTPAToken");
+	if("" == ROLTPAToken){
+		alert("获取用户信息异常，请重新登录门户再试!")
+		return false;
+	}
+	
+	
+	 var param =
+	 	{
+			 "protocolId":protocolId,
+			 "extendAttribute":JSON.stringify({}),
+		 }
+	
+	jQuery.ajax({
+        url: menhuAddr+'/elp/insertUserSign',
+        type: "post",
+        dataType:"JSON",
+        data:JSON.stringify(param),
+        headers:{'ROLTPAToken': ROLTPAToken},
+        contentType:"application/json;charset=UTF-8"
+    }).then(function (resp) {
+       console.log(resp);
+      if(resp.success){
+   	  	alert('感谢您的阅读');
+  		window.close();
+      }  
+    });
+	}else{
+		alert('感谢您的阅读');
+  		window.close();
+	}
+
+}
+
+
