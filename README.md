@@ -11,12 +11,88 @@ Maven构建项目的结构模板
 2. 修改pom.xml文件，把groupId, artifactId,name 修改掉
 3. 修改pom.xml文件，把本项目所需要的依赖添加进去
 
-#### 基础篇(工具)：项目模板（mvn_template）
-- 【mvn_javaproject】[maven单体Java项目](https://github.com/wujun728/mvn_template)
-- 【mvn_webproject】[maven单体JavaWeb项目](https://github.com/wujun728/mvn_template)
-- 【mvn_spring4_multi_modules】[maven模块化Spring4的JavaWeb项目](https://github.com/wujun728/mvn_template)
-- 【mvn_spring5_multi_modules】[maven模块化Spring5的JavaWeb项目](https://github.com/wujun728/mvn_template)
-- 【mvn_spring5template】[maven单体Spring5的JavaWeb项目](https://github.com/wujun728/mvn_template)
+财务系统
+HR人事系统
+行政服务系统(设备、资产)
+公司官网
+权限配置系统
+IT服务系统
+学习平台知识库
+差旅服务系统
+项目管理系统
+OA办公管理
+ 
+
+发件人: wujun (I)
+发送时间: 2021年6月30日 16:00
+收件人: wujun (I) <wujun60@h-partners.com>
+主题: note_chinasoft
+
+ 
+ 
+1、财务管理
+财务服务
+支付报销
+发薪账户
+内控风险
+ 
+2、HR服务
+考勤系统
+员工手册
+EM系统
+招聘专区
+个人信息
+HRBP专区
+商保政策
+员工行为规范
+ 
+3、行政服务
+差旅服务
+资产管理
+保修服务
+更多服务
+ 
+ 
+ 
+3、公司平台
+公司官网
+权限配置
+公告消息
+ 
+6、IT服务
+常见问题解答
+员工有问必答
+IT问题自助处理
+公司论坛
+IT服务
+企业邮箱
+密码取回
+权限申请
+设备进出
+ 
+7、知识库赋能
+知识学习
+学习平台
+解决方案库
+公司知识库
+ 
+7、项目运营
+运营管理
+运营平台
+项目预算管理
+项目管理系统
+项目成果归档
+BCG签署
+销售专区
+ 
+ 
+1、OA办公
+OA办公
+工作待办
+流程审批
+电子流待办
+办公审批
+OA工作台
 
 
 https://blog.csdn.net/u010938610/article/details/79282624
