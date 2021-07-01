@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.du.lin.dao.LoginLogMapper" >
+  <resultMap id="BaseResultMap" type="com.du.lin.bean.LoginLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="logname" property="logname" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.du.lin.bean.LoginLog" extends="BaseResultMap" >
+    <result column="message" property="message" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, logname, userid, createtime, state, ip
+  </sql>
+  <sql id="Blob_Column_List" >
+    message
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from login_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="ResultMapWithBLOBs"  >
+    select * from login_log order by createtime desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from login_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteAll"  >
+    delete from login_log
+  </delete>
+  <insert id="insert" parameterType="com.du.lin.bean.LoginLog" >
+    insert into login_log (id, logname, userid, 
+      createtime, state, ip, 
+      message)
+    values (#{id,jdbcType=INTEGER}, #{logname,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{message,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.du.lin.bean.LoginLog" >
+    insert into login_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="logname != null" >
+        logname,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="logname != null" >
+        #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.du.lin.bean.LoginLog" >
+    update login_log
+    <set >
+      <if test="logname != null" >
+        logname = #{logname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.du.lin.bean.LoginLog" >
+    update login_log
+    set logname = #{logname,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      message = #{message,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.du.lin.bean.LoginLog" >
+    update login_log
+    set logname = #{logname,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

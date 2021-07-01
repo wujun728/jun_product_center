@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>发送</title>
+
+<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet" />
+<link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet" />
+<link href="css/animate.css" rel="stylesheet" />
+<link href="css/style.css?v=4.1.0" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{static/css/lin/easyui.css}" />
+	
+<link href="static/css/jquery-ui.css" rel="stylesheet" />
+<link href="css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet" />
+<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<!-- jqgrid-->
+
+
+
+
+
+
+
+
+
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+<!-- jqGrid -->
+<script src="js/plugins/jqgrid/i18n/grid.locale-cn.js?0820"></script>
+<script src="js/plugins/jqgrid/jquery.jqGrid.min.js?0820"></script>  
+
+<script src="static/js/jquery-ui-1.10.4.min.js"></script>
+<script src="static/js/jquery-ui.custom.min.js"></script>
+<script th:src="@{static/js/lin/leave.js}">   </script>
+<script th:src="@{static/js/lin/dialog.js}">   </script>
+
+
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+
+<!-- Sweet alert -->
+
+<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+
+<!-- Toastr script -->
+<script src="js/plugins/toastr/toastr.min.js"></script>
+<!-- laydate -->
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+/* Additional style to fix warning dialog position */
+#alertmod_table_list_2 {
+	top: 900px !important;
+}
+</style>
+
+</head>
+
+<body class="gray-bg">
+	 
+	 <div style="text-align: center;" >
+	  <button id="btnform" onclick="toform()" type="button" class="btn btn-w-m btn-danger">我要请假</button> 
+	   <button id="btntable" onclick="totable()" type="button"  class="btn btn-w-m btn-default">请假记录</button>
+	 </div>
+
+	<div id="leaveformdiv" style="margin: 0px">
+		<form id="leaveform" class="form-horizontal m-t">
+			<div class="form-group">
+				<label class="col-sm-1 control-label">类型：</label>
+				<div class="col-sm-3">
+					<label class="radio-inline"> <input checked="true"
+						value="1" id="leavetype" name="type" type="radio" />事假
+					</label> <label class="radio-inline"> <input value="2"
+						id="leavetype" name="type" type="radio" />病假
+					</label> <label class="radio-inline"> <input value="3"
+						id="leavetype" name="type" type="radio" />其他
+					</label>
+				</div>
+				<br /> <br />
+				<div id="otherdiv" style="display: none">
+					<label class="col-sm-1 control-label">其他：</label>
+					<div class="col-sm-2">
+						<input id="othertext" name="othertext" class="form-control"
+							placeholder="请输入文本" type="text" />
+
+					</div>
+					<br /> <br /> <br />
+				</div>
+
+				<label class="col-sm-1 control-label">时间：</label>
+				<div class="col-sm-2">
+					<input name="starttime" placeholder="开始日期"
+						class="form-control layer-date" id="start" /> <input
+						name="endtime" placeholder="结束日期" class="form-control layer-date"
+						id="end" />
+				</div>
+				<br /> <br /> <br /> <br /> <br /> <label
+					class="col-sm-1 control-label">事由：</label>
+				<div class="col-sm-5">
+					<textarea id="reason" name="reason" class="form-control"
+						placeholder="请输入文本" />
+
+				</div>
+			</div>
+
+		</form>
+		<div  class="col-sm-7 control-label"  style="text-align: center;">
+		
+		<button class="btn btn-w-m btn-success" type="submit" onclick="submitleave()" >提交</button>
+	</div>
+	</div>
+
+
+<div id="leavetable" style="display: none" class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="jqGrid_wrapper">
+                <table id="table_list_2"></table>
+                <div id="pager_list_2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

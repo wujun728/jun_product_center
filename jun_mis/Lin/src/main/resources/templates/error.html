@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+    <title>Lin错误页面</title>
+   
+    <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link href="static/css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="static/css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+	
+    <link href="static/css/animate.css" rel="stylesheet"/>
+    <link href="static/css/style.css?v=4.1.0" rel="stylesheet"/>
+ 	<!-- 全局js -->
+    <script src="static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="static/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+    <script th:src="@{static/js/lin/jquery-1.3.1.js}">   </script>
+	<script th:src="@{static/js/lin/error.js}"></script>
+</head>
+
+<body class="gray-bg">
+
+
+    <div class="middle-box text-center animated fadeInDown">
+        <h1 th:text="${status}" ></h1>
+        <h1 th:if="${status} == null " >999</h1>
+        <h3 class="font-bold">出错啦！</h3>
+        <h3 class="font-bold" th:text="${msg}"></h3>
+        <h3 class="font-bold" th:if="${msg}==null ">未知错误</h3>
+        <h3 class="font-bold" > <span id="second" ></span>
+    <span> <a th:href="@{/login2}" > 返回登录 </a> </span>  </h3>
+        <h3 class="font-bold" th:text="${'error:' + error}"></h3>
+        <h3 class="font-bold" th:text="${'message:' + message}"></h3>
+        <h3 class="font-bold" th:text="${'trace:' + trace}"></h3>
+        <h3 class="font-bold" th:text="${'path:' + path}"></h3>
+
+
+  
+    </div>
+
+   
+</body>
+
+</html>

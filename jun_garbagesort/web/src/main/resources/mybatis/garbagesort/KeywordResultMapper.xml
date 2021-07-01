@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.keywordResult.mapper.KeywordResultMapper">
+    
+    <resultMap type="KeywordResult" id="KeywordResultResult">
+        <result property="id"    column="id"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="result"    column="result"    />
+        <result property="times"    column="times"    />
+    </resultMap>
+
+    <sql id="selectKeywordResultVo">
+        select id, keyword, result, times from keyword_result
+    </sql>
+
+    <select id="selectKeywordResultList" parameterType="KeywordResult" resultMap="KeywordResultResult">
+        <include refid="selectKeywordResultVo"/>
+        <where>  
+            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
+            <if test="result != null  and result != ''"> and result = #{result}</if>
+            <if test="times != null "> and times = #{times}</if>
+        </where>
+    </select>
+    
+    <select id="selectKeywordResultById" parameterType="Long" resultMap="KeywordResultResult">
+        <include refid="selectKeywordResultVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertKeywordResult" parameterType="KeywordResult" useGeneratedKeys="true" keyProperty="id">
+        insert into keyword_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="keyword != null">keyword,</if>
+            <if test="result != null">result,</if>
+            <if test="times != null">times,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="keyword != null">#{keyword},</if>
+            <if test="result != null">#{result},</if>
+            <if test="times != null">#{times},</if>
+         </trim>
+    </insert>
+
+    <update id="updateKeywordResult" parameterType="KeywordResult">
+        update keyword_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="keyword != null">keyword = #{keyword},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="times != null">times = #{times},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKeywordResultById" parameterType="Long">
+        delete from keyword_result where id = #{id}
+    </delete>
+
+    <delete id="deleteKeywordResultByIds" parameterType="String">
+        delete from keyword_result where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

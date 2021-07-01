@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kakarote.crm.mapper.CustomerStatsMapper">
+
+    <select id="selectCustomerStats" resultType="com.kakarote.core.feign.crm.entity.CustomerStats">
+        SELECT
+            COUNT(1) AS customer_num,
+            DATE_FORMAT( a.create_time, '%Y%m%d' ) AS create_date,
+            DATE_FORMAT( a.deal_time, '%Y%m%d' ) AS deal_date,
+            a.deal_status,
+            a.owner_user_id
+        FROM
+            wk_crm_customer AS a
+            JOIN (
+	          SELECT customer_id FROM wk_crm_customer WHERE customer_id > #{startId} order by customer_id asc LIMIT 50000
+	        ) as b on a.customer_id = b.customer_id
+        GROUP BY
+            create_date,
+            deal_date,
+            a.deal_status,
+            a.owner_user_id
+        ORDER BY
+            create_date DESC
+    </select>
+
+    <select id="queryStartCustomerId" resultType="java.lang.Integer">
+        SELECT IFNULL(last_customer_id,0) as lastCustomerId FROM wk_crm_customer_stats_info ORDER BY id desc limit 1
+    </select>
+
+    <select id="queryLastCustomerId" resultType="java.lang.Integer">
+        SELECT customer_id FROM (
+          SELECT customer_id FROM wk_crm_customer WHERE customer_id > #{startId} order by customer_id asc LIMIT 50000
+        ) as a order by customer_id desc limit 1
+    </select>
+
+    <update id="createTableForCustomerStats">
+        CREATE TABLE if not exists ${tableName}  (
+        `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+        `customer_num` bigint(20) NULL DEFAULT NULL COMMENT '客户数量',
+        `deal_status` int(2) NULL DEFAULT NULL COMMENT '成交状态 0 未成交 1 已成交',
+        `owner_user_id` int(11) NULL DEFAULT NULL COMMENT '负责人ID',
+        `create_date` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间 年月日',
+        `deal_date` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建时间 年月日',
+        PRIMARY KEY (`id`) USING BTREE,
+        UNIQUE INDEX `id`(`customer_num`, `deal_status`, `owner_user_id`, `create_date`, `deal_date`) USING BTREE,
+        INDEX `create_date`(`create_date`) USING BTREE
+        ) ENGINE = InnoDB AUTO_INCREMENT = 0 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+    </update>
+
+    <insert id="saveStatsInfo">
+        INSERT INTO `wk_crm_customer_stats_info` ( `last_customer_id`, `create_time`, `sync_num` )
+        VALUES (#{lastCustomerId},now(),#{num})
+    </insert>
+
+    <insert id="saveBatchByCustomerStats" parameterType="java.util.Map">
+        INSERT IGNORE INTO ${map.tableName} (`customer_num`, `deal_status`, `owner_user_id`, `create_date`,`deal_date`)
+        VALUES
+        <foreach collection="map.customerStatsList" separator="," item="customerStats">
+            ( #{customerStats.customerNum}, #{customerStats.dealStatus},#{customerStats.ownerUserId},
+            #{customerStats.createDate},#{customerStats.dealDate})
+        </foreach>
+    </insert>
+</mapper>

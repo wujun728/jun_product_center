@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyu.flybbs.mapper.UserReadMapper">
+
+    <select id="queryUserById" resultType="User">
+        select * from user where id = #{id}
+    </select>
+
+    <select id="queryUserByParams" resultType="User">
+        select * from user
+        <where>
+            <if test="params.containsKey('email')">
+                and email = #{params.email}
+            </if>
+            <if test="params.containsKey('nameLike')">
+                and user_name like concat('%', #{params.nameLike}, '%')
+            </if>
+        </where>
+    </select>
+    
+</mapper>

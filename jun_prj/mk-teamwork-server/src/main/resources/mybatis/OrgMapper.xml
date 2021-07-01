@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectm.org.mapper.OrgMapper">
+
+	<select id="selectOrgByMemCode" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_organization WHERE  code = #{params.memberCode} LIMIT 1
+	</select>
+
+	<select id="selectDepByMemCode" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_department WHERE  code = #{params.memberCode} LIMIT 1
+	</select>
+	<select id="_getOrgList" resultType="java.util.Map">
+		select * from team_organization
+	</select>
+
+</mapper> 

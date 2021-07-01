@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.pms.root</groupId>
+  <artifactId>pms-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>pms-common-util</module>
+    <module>pms-service</module>
+    <module>pms-web</module>
+  </modules>
+  <properties>
+  	<pms.version>0.0.1-SNAPSHOT</pms.version>
+  </properties>
+  <dependencyManagement>
+		<dependencies>
+		    <dependency>
+		      <groupId>junit</groupId>
+		      <artifactId>junit</artifactId>
+		      <version>3.8.1</version>
+		      <scope>test</scope>
+		    </dependency>
+		    <dependency>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-dependencies</artifactId>
+			    <version>1.5.6.RELEASE</version>
+			    <type>pom</type>
+			    <scope>import</scope>
+			</dependency>
+		 </dependencies>
+  </dependencyManagement>
+  <build>
+  	<finalName>pms-web</finalName>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.apache.maven.plugins</groupId>
+  			<artifactId>maven-compiler-plugin</artifactId>
+  			<configuration>
+  				<source>1.8</source>
+  				<target>1.8</target>
+  				<encode>utf-8</encode>
+  			</configuration>
+  		</plugin>
+  	</plugins>
+  </build>
+</project>

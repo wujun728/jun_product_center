@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.challengeResult.mapper.ChallengeResultMapper">
+    
+    <resultMap type="ChallengeResult" id="ChallengeResultResult">
+        <result property="id"    column="id"    />
+        <result property="score"    column="score"    />
+        <result property="result"    column="result"    />
+        <result property="times"    column="times"    />
+        <result property="userName"    column="user_name"    />
+    </resultMap>
+
+    <sql id="selectChallengeResultVo">
+        select id, score, result, times, user_name from challenge_result
+    </sql>
+
+    <select id="selectChallengeResultList" parameterType="ChallengeResult" resultMap="ChallengeResultResult">
+        <include refid="selectChallengeResultVo"/>
+        <where>  
+            <if test="score != null "> and score = #{score}</if>
+            <if test="result != null  and result != ''"> and result = #{result}</if>
+            <if test="times != null "> and times = #{times}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectChallengeResultById" parameterType="Long" resultMap="ChallengeResultResult">
+        <include refid="selectChallengeResultVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChallengeResult" parameterType="ChallengeResult" useGeneratedKeys="true" keyProperty="id">
+        insert into challenge_result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="score != null">score,</if>
+            <if test="result != null">result,</if>
+            <if test="times != null">times,</if>
+            <if test="userName != null">user_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="score != null">#{score},</if>
+            <if test="result != null">#{result},</if>
+            <if test="times != null">#{times},</if>
+            <if test="userName != null">#{userName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChallengeResult" parameterType="ChallengeResult">
+        update challenge_result
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="score != null">score = #{score},</if>
+            <if test="result != null">result = #{result},</if>
+            <if test="times != null">times = #{times},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChallengeResultById" parameterType="Long">
+        delete from challenge_result where id = #{id}
+    </delete>
+
+    <delete id="deleteChallengeResultByIds" parameterType="String">
+        delete from challenge_result where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

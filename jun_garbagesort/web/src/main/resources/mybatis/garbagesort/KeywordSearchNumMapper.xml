@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.keywordSearchNum.mapper.KeywordSearchNumMapper">
+
+    <resultMap type="KeywordSearchNum" id="KeywordSearchNumResult">
+        <result property="id"    column="id"    />
+        <result property="keyword"    column="keyword"    />
+        <result property="num"    column="num"    />
+        <result property="times"    column="times"    />
+    </resultMap>
+
+    <sql id="selectKeywordSearchNumVo">
+        select id, keyword, num, times from keyword_search_num
+    </sql>
+
+    <select id="selectKeywordSearchNumList" parameterType="KeywordSearchNum" resultMap="KeywordSearchNumResult">
+        <include refid="selectKeywordSearchNumVo"/>
+        <where>
+            <if test="keyword != null  and keyword != ''"> and keyword = #{keyword}</if>
+            <if test="num != null "> and num = #{num}</if>
+            <if test="times != null "> and times = #{times}</if>
+        </where>
+        order by num desc
+    </select>
+
+    <select id="selectKeywordSearchNumById" parameterType="Long" resultMap="KeywordSearchNumResult">
+        <include refid="selectKeywordSearchNumVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertKeywordSearchNum" parameterType="KeywordSearchNum" useGeneratedKeys="true" keyProperty="id">
+        insert into keyword_search_num
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="keyword != null and keyword != ''">keyword,</if>
+            <if test="num != null">num,</if>
+            <if test="times != null">times,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="keyword != null and keyword != ''">#{keyword},</if>
+            <if test="num != null">#{num},</if>
+            <if test="times != null">#{times},</if>
+         </trim>
+    </insert>
+
+    <update id="updateKeywordSearchNum" parameterType="KeywordSearchNum">
+        update keyword_search_num
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="keyword != null and keyword != ''">keyword = #{keyword},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="times != null">times = #{times},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKeywordSearchNumById" parameterType="Long">
+        delete from keyword_search_num where id = #{id}
+    </delete>
+
+    <delete id="deleteKeywordSearchNumByIds" parameterType="String">
+        delete from keyword_search_num where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

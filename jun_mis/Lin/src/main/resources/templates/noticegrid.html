@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script th:src="@{static/js/lin/jquery-1.3.1.js}">   </script>
+<script th:src="@{static/js/lin/notice.js}"></script>
+
+<title>发送</title>
+
+<link rel="shortcut icon" href="static/favicon.ico" />
+<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet" />
+<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet" />
+
+<!-- jqgrid-->
+<link href="css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet" />
+
+<link href="css/animate.css" rel="stylesheet" />
+<link href="css/style.css?v=4.1.0" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{static/css/lin/easyui.css}" />
+<script th:src="@{static/js/lin/jquery.min.js}">   </script>
+<script th:src="@{static/js/lin/jquery.easyui.min.js}">   </script>
+<style>
+/* Additional style to fix warning dialog position */
+#alertmod_table_list_2 {
+	top: 900px !important;
+}
+</style>
+
+</head>
+
+<body class="gray-bg">
+
+
+
+
+	<div id="loading" style="text-align: center;display: none">
+		<img alt="alt" th:src="@{img/loading.gif}" />
+	</div>
+
+
+
+
+	<!-- 主体 -->
+
+	<br />
+	<br />
+
+
+	<div class="col-md-8">
+		<form id="noticform" action="">
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">消息类型：</label>
+				<div class="col-sm-9">
+					<select id="messagetype" class="form-control" name="messagetype">
+						<option value="0">系统消息</option>
+					</select> <br /> <br />
+				</div>
+			</div>
+
+
+	<!--  	<div id="treeview" class="form-group">
+				<label class="col-sm-3 control-label">接受者：</label>
+				<div class="col-sm-9">
+					<div class="easyui-panel" style="padding:5px">
+						<ul id="tt" class="easyui-tree"
+							data-options="url:'/noticetreedata',method:'get',animate:true,checkbox:true"></ul>
+					</div>
+					<br /> <br />
+				</div>
+			</div>        -->	
+
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">文本框：</label>
+				<div class="col-sm-9">
+					<textarea id="body" name="body" class="form-control"
+						placeholder="请输入文本"></textarea>
+					<br />
+				</div>
+			</div>
+
+
+		</form>
+
+		<div class="col-sm-9 col-sm-offset-3">
+			<button id="submit" class="btn btn-primary btn-block" type="submit">发送通知</button>
+		</div>
+
+	</div>
+
+
+	<!-- 全局js -->
+
+	<script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+
+	<!-- Peity -->
+	<script src="js/plugins/peity/jquery.peity.min.js"></script>
+
+
+
+
+</body>
+
+</html>

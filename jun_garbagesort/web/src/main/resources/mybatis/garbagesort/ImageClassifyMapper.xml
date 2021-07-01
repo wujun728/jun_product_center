@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.imageClassify.mapper.ImageClassifyMapper">
+    
+    <resultMap type="ImageClassify" id="ImageClassifyResult">
+        <result property="id"    column="id"    />
+        <result property="filepath"    column="filepath"    />
+        <result property="oneKeyword"    column="one_keyword"    />
+        <result property="oneResult"    column="one_result"    />
+        <result property="allKeyword"    column="all_keyword"    />
+        <result property="allResult"    column="all_result"    />
+        <result property="userName"    column="user_name"    />
+        <result property="times"    column="times"    />
+    </resultMap>
+
+    <sql id="selectImageClassifyVo">
+        select id, filepath, one_keyword, one_result, all_keyword, all_result, user_name, times from image_classify
+    </sql>
+
+    <select id="selectImageClassifyList" parameterType="ImageClassify" resultMap="ImageClassifyResult">
+        <include refid="selectImageClassifyVo"/>
+        <where>  
+            <if test="filepath != null  and filepath != ''"> and filepath = #{filepath}</if>
+            <if test="oneKeyword != null  and oneKeyword != ''"> and one_keyword = #{oneKeyword}</if>
+            <if test="oneResult != null  and oneResult != ''"> and one_result = #{oneResult}</if>
+            <if test="allKeyword != null  and allKeyword != ''"> and all_keyword = #{allKeyword}</if>
+            <if test="allResult != null  and allResult != ''"> and all_result = #{allResult}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="times != null "> and times = #{times}</if>
+        </where>
+    </select>
+    
+    <select id="selectImageClassifyById" parameterType="Long" resultMap="ImageClassifyResult">
+        <include refid="selectImageClassifyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertImageClassify" parameterType="ImageClassify" useGeneratedKeys="true" keyProperty="id">
+        insert into image_classify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="filepath != null">filepath,</if>
+            <if test="oneKeyword != null">one_keyword,</if>
+            <if test="oneResult != null">one_result,</if>
+            <if test="allKeyword != null">all_keyword,</if>
+            <if test="allResult != null">all_result,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="times != null">times,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="filepath != null">#{filepath},</if>
+            <if test="oneKeyword != null">#{oneKeyword},</if>
+            <if test="oneResult != null">#{oneResult},</if>
+            <if test="allKeyword != null">#{allKeyword},</if>
+            <if test="allResult != null">#{allResult},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="times != null">#{times},</if>
+         </trim>
+    </insert>
+
+    <update id="updateImageClassify" parameterType="ImageClassify">
+        update image_classify
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="filepath != null">filepath = #{filepath},</if>
+            <if test="oneKeyword != null">one_keyword = #{oneKeyword},</if>
+            <if test="oneResult != null">one_result = #{oneResult},</if>
+            <if test="allKeyword != null">all_keyword = #{allKeyword},</if>
+            <if test="allResult != null">all_result = #{allResult},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="times != null">times = #{times},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteImageClassifyById" parameterType="Long">
+        delete from image_classify where id = #{id}
+    </delete>
+
+    <delete id="deleteImageClassifyByIds" parameterType="String">
+        delete from image_classify where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

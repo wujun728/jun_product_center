@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.du.lin.dao.OperationLeaveUserMapper" >
+  <resultMap id="BaseResultMap" type="com.du.lin.bean.OperationLeaveUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="leaveid" property="leaveid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, leaveid, userid, username
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_leave_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByLeaveid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operation_leave_user
+    where leaveid = #{leaveid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operation_leave_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.du.lin.bean.OperationLeaveUser" >
+    insert into operation_leave_user (id, leaveid, userid, 
+      username)
+    values (#{id,jdbcType=INTEGER}, #{leaveid,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.du.lin.bean.OperationLeaveUser" >
+    insert into operation_leave_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="leaveid != null" >
+        leaveid,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="leaveid != null" >
+        #{leaveid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.du.lin.bean.OperationLeaveUser" >
+    update operation_leave_user
+    <set >
+      <if test="leaveid != null" >
+        leaveid = #{leaveid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.du.lin.bean.OperationLeaveUser" >
+    update operation_leave_user
+    set leaveid = #{leaveid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

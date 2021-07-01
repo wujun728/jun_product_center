@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectm.task.mapper.TaskMapper">
+
+	<select id="selectTaskListByParam" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_task a WHERE  1=1
+		<if test="params.stageCode != null and params.stageCode != ''">
+			AND a.stage_code = #{params.stageCode}
+		</if>
+		<if test="params.pcode != null and params.pcode != ''">
+			AND a.pcode = #{params.pcode}
+		</if>
+		<if test="params.keyword != null and params.keyword != ''">
+			AND a.name like concat('%',#{params.keyword},'%')
+		</if>
+		<if test="params.projectCode != null and params.projectCode != ''">
+			AND a.project_code = #{params.projectCode}
+		</if>
+		<if test="params.deleted != null and params.deleted != ''">
+			AND a.deleted = #{params.deleted}
+		</if>
+		order by a.sort asc,a.id asc
+	</select>
+
+
+</mapper> 

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectm.project.mapper.ProjectMapper">
+
+
+
+	<select id="selectLogBySelfProject" resultType="java.util.Map" parameterType="java.util.Map">
+		select tl.type as type,tl.action_type as action_type,tl.source_code as source_code,tl.remark as remark,tl.content as content,tl.is_comment as is_comment,tl.create_time as create_time,p.name as project_name,p.code as project_code,m.avatar as member_avatar,m.name as member_name from team_project_log as tl join team_project as p on tl.project_code = p.code join team_member as m on tl.member_code = m.code where p.code = #{params.memberCode} and p.deleted = 0 order by tl.id desc
+	</select>
+
+	<select id="selectOrgByMemCode" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_organization WHERE  code = #{params.memberCode} LIMIT 1
+	</select>
+
+	<select id="selectDepByMemCode" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_department WHERE  code = #{params.memberCode} LIMIT 1
+	</select>
+
+
+	<select id="selectProAuthNode" resultType="java.lang.String">
+		select a.node from team_project_auth_node a where a.auth in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="selectProjectCodesByMemberAndOrg" resultType="java.lang.String">
+		select pp.code from team_project as pp join team_project_member as pm on pm.project_code = pp.code
+		where pp.organization_code = #{params.orgCode} and (pm.member_code = #{params.memberCode}) and
+		pp.deleted = 0 group by pp.`code`
+	</select>
+
+	<select id="selectTaskLogByProjectCode" resultType="java.util.Map" parameterType="java.util.Map">
+		select tl.remark as remark,tl.content as content,tl.is_comment as is_comment,
+		tl.create_time as create_time,p.name as project_name,t.name as task_name,
+		t.code as source_code,p.code as project_code,m.avatar as member_avatar,
+		m.name as member_name from team_project_log as tl join team_task as t
+		on tl.source_code = t.code join team_project as p on t.project_code = p.code
+		join team_member as m on tl.member_code = m.code
+		where tl.action_type = 'task' and p.code in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and p.deleted = 0
+
+		order by tl.id desc
+
+	</select>
+
+	<delete id="delProjectMember" >
+        DELETE FROM team_project_member WHERE project_code IN
+		<foreach collection="proCodeList" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		AND member_code = #{memCode}
+    </delete>
+
+	<select id="getProjectInfoByMemCodeOrgCode" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT
+			pp.cover,pp.name,pp.code,pp.description,pp.access_control_type,pp.white_list,pp.order,pp.deleted,pp.template_code,pp.schedule,pp.create_time,pp.organization_code,pp.deleted_time,pp.private,pp.prefix,pp.open_prefix,pp.archive,pp.archive_time,pp.open_begin_time,pp.open_task_private,pp.task_board_theme,pp.begin_time,pp.end_time,pp.auto_update_schedule,
+			pm.id,pm.project_code,pm.member_code,pm.join_time,pm.is_owner,pm.authorize,
+			pmem.name owner_name
+		FROM
+			team_project AS pp
+		LEFT JOIN team_project_member AS pm ON pm.project_code = pp.CODE
+		LEFT JOIN team_member AS pmem ON pm.member_code = pmem.code
+		WHERE
+			pp.organization_code = #{params.orgCode}
+		AND (
+			pm.member_code = #{params.memberCode}
+			OR pp.private = 0
+		)
+		<if test="params.archive!=null"> AND pp.archive <![CDATA[ = ]]> #{params.archive}</if>
+		<if test="params.deleted!=null"> AND pp.deleted <![CDATA[ = ]]>  #{params.deleted}</if>
+
+		GROUP BY
+			pp.code
+		ORDER BY
+			pp.id DESC
+	</select>
+
+	<select id="getProjectInfoByMemCodeOrgCodeCollection" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT	pp.cover,	pp.NAME,	pp.CODE,	pp.description,	pp.access_control_type,	pp.white_list,	pp.ORDER,	pp.deleted,	pp.template_code,	pp.SCHEDULE,	pp.create_time,
+			pp.organization_code,	pp.deleted_time,	pp.private,	pp.prefix,	pp.open_prefix,	pp.archive,	pp.archive_time,	pp.open_begin_time,	pp.open_task_private,
+			pp.task_board_theme,	pp.begin_time,	pp.end_time,	pp.auto_update_schedule,	pm.id,	pm.project_code,ppm.join_time,	ppm.is_owner,ppm.authorize,	pm.member_code,	pmem.NAME owner_name
+		FROM	team_project AS pp LEFT JOIN team_project_collection AS pm ON pm.project_code = pp.CODE LEFT JOIN team_member AS pmem ON pm.member_code = pmem.CODE
+		LEFT JOIN team_project_member ppm ON ppm.member_code = pm.member_code AND ppm.project_code = pp.code
+		WHERE	pp.organization_code = #{params.orgCode}  AND pm.member_code = #{params.memberCode}
+		AND pp.deleted = 0 GROUP BY	pp. CODE ORDER BY	pp.id DESC
+	</select>
+
+
+	<select id="getTaskStageTempNameByTemplateCode" resultType="java.lang.String">
+		SELECT name FROM	team_task_stages_template WHERE	project_template_code = #{templateCode} ORDER BY sort DESC,id ASC
+	</select>
+
+</mapper> 

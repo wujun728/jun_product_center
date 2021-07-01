@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://www.72crm.com/mybatis-3.5.3-mapper.dtd">
+<mapper namespace="com.kakarote.crm.mapper.CrmFieldMapper">
+    <select id="verifyFixedField" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM wk_crm_${tableName} WHERE ${fieldName}=#{value}
+        <if test="label==2||label==5||label==4">
+            and status != 3
+        </if>
+        <if test="label==6||label==7">
+            and check_status != 7
+        </if>
+        <if test="batchId!=null and batchId!=''">
+            and batch_id!=#{batchId}
+        </if>
+    </select>
+
+    <select id="verifyField" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM wk_crm_${tableName}_data WHERE field_id = #{fieldId} and value = #{value}
+        <if test="batchId!=null and batchId!=''">
+            and batch_id!=#{batchId}
+        </if>
+    </select>
+    <select id="initData" resultType="java.util.HashMap">
+        SELECT * FROM wk_crm_${tableName} WHERE ${table}_id &gt; #{lastId}
+        <if test="label==2||label==5||label==4">
+            and status != 3
+        </if>
+        <if test="label==6||label==7">
+            and check_status != 7
+        </if>
+        limit 2000
+    </select>
+
+    <select id="initFieldData" resultType="com.kakarote.crm.entity.BO.CrmFieldDataBO">
+        SELECT
+        a.id,
+        a.batch_id,
+        a.field_id,
+        a.`name`,
+        a.`value`,
+        b.${table}_id as typeId,
+        c.type
+        FROM
+        wk_crm_${tableName}_data AS a
+        JOIN wk_crm_${tableName} AS b ON a.batch_id = b.batch_id
+        JOIN wk_crm_field as c on a.field_id = c.field_id
+        WHERE
+        a.id &gt; #{lastId}  and value is not null
+        LIMIT 10000
+    </select>
+    <select id="queryCustomerFieldDuplicateByFixed" resultType="java.lang.Integer">
+        select count(1) from `wk_crm_customer` where ${name} = #{value} and status != 3
+    </select>
+</mapper>

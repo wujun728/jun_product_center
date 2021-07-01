@@ -1,0 +1,136 @@
+.title {
+	text-align: center;
+	margin: 20upx auto;
+	font-size: 40upx;
+}
+
+.level {
+	text-align: center;
+	margin-bottom: 20upx;
+	font-size: 40upx;
+}
+
+.summary {
+	text-align: center;
+	margin-bottom: 20upx;
+	margin: 10rpx 5%;
+
+}
+
+/* 表格列表 start */
+.table {
+	padding: 0 5%;
+	font-size: 30upx;
+}
+
+.table-item {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding: 6upx;
+	height: 50upx;
+}
+
+
+.icon-img {
+	width: 50upx;
+	height: 50upx;
+	/* padding: 4upx; */
+}
+
+.table-item-icon {
+	width: 10%;
+	text-align: center;
+
+}
+
+.garbage-name {
+	width: 50%;
+	line-height: 50upx;
+	margin-left: 20upx;
+}
+
+.through {
+	text-decoration: line-through;
+}
+
+.selected {
+	width: 25%;
+	line-height: 50upx;
+	text-align: center;
+
+}
+
+.result {
+	width: 25%;
+	text-align: center;
+	line-height: 50upx;
+}
+
+.gray {
+	background-color: #f0f0f0;
+}
+
+.garbage-gan-item {
+	color: rgb(44, 43, 39);
+}
+
+.garbage-shi-item {
+	color: rgb(102, 63, 52);
+}
+
+.garbage-huishou-item {
+	color: rgb(36, 71, 131);
+}
+
+.garbage-youhai-item {
+	color: rgb(229, 49, 34);
+}
+
+/* 表格列表 end */
+.button-show {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-top: 20upx;
+}
+
+.goonButton {
+	padding: 0 60upx;
+}
+
+.button-left {
+	margin-right: 60upx;
+}
+
+.level {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.text-left{
+	font-weight: bold;
+	font-size: 44upx;
+}
+
+.text-right {
+	margin-left: 20upx;
+	color: #FF6600;
+	border-bottom: 4rpx solid #FF6600;
+
+}
+.level1{
+	color: red;
+}
+.level2{
+	color: #737373;
+}
+.level3{
+	color: #e96900;
+}
+.level4{
+	color: #1296DB;
+}
+.level5{
+	color: #72C69C;
+}

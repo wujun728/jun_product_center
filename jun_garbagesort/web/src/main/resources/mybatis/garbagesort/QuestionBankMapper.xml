@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.questionBank.mapper.QuestionBankMapper">
+    
+    <resultMap type="QuestionBank" id="QuestionBankResult">
+        <result property="garbageType"    column="garbage_type"    />
+        <result property="questionId"    column="question_id"    />
+        <result property="garbageName"    column="garbage_name"    />
+        <result property="analysis"    column="analysis"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectQuestionBankVo">
+        select garbage_type, question_id, garbage_name, analysis, remark from question_bank
+    </sql>
+
+    <select id="selectQuestionBankList" parameterType="QuestionBank" resultMap="QuestionBankResult">
+        <include refid="selectQuestionBankVo"/>
+        <where>  
+            <if test="garbageType != null "> and garbage_type = #{garbageType}</if>
+            <if test="garbageName != null  and garbageName != ''"> and garbage_name like concat('%', #{garbageName}, '%')</if>
+            <if test="analysis != null  and analysis != ''"> and analysis = #{analysis}</if>
+        </where>
+    </select>
+    
+    <select id="selectQuestionBankById" parameterType="Long" resultMap="QuestionBankResult">
+        <include refid="selectQuestionBankVo"/>
+        where question_id = #{questionId}
+    </select>
+        
+    <insert id="insertQuestionBank" parameterType="QuestionBank" useGeneratedKeys="true" keyProperty="questionId">
+        insert into question_bank
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="garbageType != null">garbage_type,</if>
+            <if test="garbageName != null">garbage_name,</if>
+            <if test="analysis != null">analysis,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="garbageType != null">#{garbageType},</if>
+            <if test="garbageName != null">#{garbageName},</if>
+            <if test="analysis != null">#{analysis},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateQuestionBank" parameterType="QuestionBank">
+        update question_bank
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="garbageType != null">garbage_type = #{garbageType},</if>
+            <if test="garbageName != null">garbage_name = #{garbageName},</if>
+            <if test="analysis != null">analysis = #{analysis},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where question_id = #{questionId}
+    </update>
+
+    <delete id="deleteQuestionBankById" parameterType="Long">
+        delete from question_bank where question_id = #{questionId}
+    </delete>
+
+    <delete id="deleteQuestionBankByIds" parameterType="String">
+        delete from question_bank where question_id in 
+        <foreach item="questionId" collection="array" open="(" separator="," close=")">
+            #{questionId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.du.lin.dao.RoleMenuRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.du.lin.bean.RoleMenuRelation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="roleid" property="roleid" jdbcType="INTEGER" />
+    <result column="menuid" property="menuid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, roleid, menuid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role_menu_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role_menu_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByRoleid" parameterType="java.lang.Integer" >
+    delete from role_menu_relation
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.du.lin.bean.RoleMenuRelation" >
+    insert into role_menu_relation (id, roleid, menuid
+      )
+    values (#{id,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER}, #{menuid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.du.lin.bean.RoleMenuRelation" >
+    insert into role_menu_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="menuid != null" >
+        menuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="menuid != null" >
+        #{menuid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.du.lin.bean.RoleMenuRelation" >
+    update role_menu_relation
+    <set >
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="menuid != null" >
+        menuid = #{menuid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.du.lin.bean.RoleMenuRelation" >
+    update role_menu_relation
+    set roleid = #{roleid,jdbcType=INTEGER},
+      menuid = #{menuid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

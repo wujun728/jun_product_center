@@ -1,0 +1,88 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  mvc:
+    throw-exception-if-no-handler-found: true
+    favicon:
+      enabled: false
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  resources:
+    add-mappings: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+mybatis-plus:
+  configuration:
+    default-scripting-language: com.kakarote.core.mybatis.MybatisXMLDriver
+    call-setters-on-nulls: true
+  mapper-locations: classpath:/mapper/xml/*.xml
+
+ribbon:
+  okhttp:
+    enabled: true
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 60000
+        read-timeout: 60000
+
+  sentinel:
+    enabled: true
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+jetcache:
+  statIntervalMinutes: 0
+  areaInCacheName: false
+  remote:
+    default:
+      type: redis
+      keyConvertor: fastjson
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${spring.redis.host}
+      port: ${spring.redis.port}
+      password: ${spring.redis.password}
+      expireAfterWriteInMillis: 1800000
+
+crm:
+  upload:
+    # 1 本地 2 阿里云OSS
+    config: 1
+    oss:
+      endpoint:
+      accessKeyId:
+      accessKeySecret:
+      publicUrl:
+      bucketName:
+        0:
+        1:
+    local:
+      publicUrl:
+      uploadPath:
+        0: D:/upload/private
+        1: D:/upload/public
+    cos:
+      region:
+      secretId:
+      secretKey:
+      publicUrl:
+      bucketName:
+        0:
+        1:
+    qnc:
+      accessKey:
+      secretKey:
+      publicUrl:
+      bucketName:
+        0:
+        1:
+

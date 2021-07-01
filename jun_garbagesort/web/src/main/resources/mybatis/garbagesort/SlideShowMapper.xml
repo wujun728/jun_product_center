@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.slideShow.mapper.SlideShowMapper">
+    
+    <resultMap type="SlideShow" id="SlideShowResult">
+        <result property="slide"    column="slide"    />
+        <result property="userId"    column="user_id"    />
+        <result property="sortId"    column="sort_id"    />
+        <result property="imageUrl"    column="image_url"    />
+        <result property="skipUrl"    column="skip_url"    />
+    </resultMap>
+
+    <sql id="selectSlideShowVo">
+        select slide, user_id, sort_id, image_url, skip_url from slide_show
+    </sql>
+
+    <select id="selectSlideShowList" parameterType="SlideShow" resultMap="SlideShowResult">
+        <include refid="selectSlideShowVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="sortId != null "> and sort_id = #{sortId}</if>
+            <if test="imageUrl != null  and imageUrl != ''"> and image_url = #{imageUrl}</if>
+            <if test="skipUrl != null  and skipUrl != ''"> and skip_url = #{skipUrl}</if>
+        </where>
+    </select>
+    
+    <select id="selectSlideShowById" parameterType="Long" resultMap="SlideShowResult">
+        <include refid="selectSlideShowVo"/>
+        where slide = #{slide}
+    </select>
+        
+    <insert id="insertSlideShow" parameterType="SlideShow" useGeneratedKeys="true" keyProperty="slide">
+        insert into slide_show
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="sortId != null">sort_id,</if>
+            <if test="imageUrl != null">image_url,</if>
+            <if test="skipUrl != null">skip_url,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="sortId != null">#{sortId},</if>
+            <if test="imageUrl != null">#{imageUrl},</if>
+            <if test="skipUrl != null">#{skipUrl},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSlideShow" parameterType="SlideShow">
+        update slide_show
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="sortId != null">sort_id = #{sortId},</if>
+            <if test="imageUrl != null">image_url = #{imageUrl},</if>
+            <if test="skipUrl != null">skip_url = #{skipUrl},</if>
+        </trim>
+        where slide = #{slide}
+    </update>
+
+    <delete id="deleteSlideShowById" parameterType="Long">
+        delete from slide_show where slide = #{slide}
+    </delete>
+
+    <delete id="deleteSlideShowByIds" parameterType="String">
+        delete from slide_show where slide in 
+        <foreach item="slide" collection="array" open="(" separator="," close=")">
+            #{slide}
+        </foreach>
+    </delete>
+
+</mapper>

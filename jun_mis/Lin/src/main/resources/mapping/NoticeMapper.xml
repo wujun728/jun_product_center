@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.du.lin.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.du.lin.bean.Notice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="body" property="body" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="senduserid" property="senduserid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="recivedeptid" property="recivedeptid" jdbcType="INTEGER" />
+    <result column="reciveuserid" property="reciveuserid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, body, message, senduserid, type, createtime, recivedeptid, reciveuserid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getAllNotice" resultMap="BaseResultMap" >
+    select 
+    
+    <include refid="Base_Column_List" />
+    
+    from notice
+  </select>
+  
+  <select id="getTop15Notices" resultMap="BaseResultMap" >
+    select 
+    
+    <include refid="Base_Column_List" />
+    
+    from notice order by createtime desc limit 0,15
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.du.lin.bean.Notice" >
+    insert into notice (id, title, body, 
+      message, senduserid, type, 
+      createtime, recivedeptid, reciveuserid
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, 
+      #{message,jdbcType=VARCHAR}, #{senduserid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{recivedeptid,jdbcType=INTEGER}, #{reciveuserid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.du.lin.bean.Notice" >
+    insert into notice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="senduserid != null" >
+        senduserid,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="recivedeptid != null" >
+        recivedeptid,
+      </if>
+      <if test="reciveuserid != null" >
+        reciveuserid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="senduserid != null" >
+        #{senduserid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recivedeptid != null" >
+        #{recivedeptid,jdbcType=INTEGER},
+      </if>
+      <if test="reciveuserid != null" >
+        #{reciveuserid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.du.lin.bean.Notice" >
+    update notice
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="senduserid != null" >
+        senduserid = #{senduserid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recivedeptid != null" >
+        recivedeptid = #{recivedeptid,jdbcType=INTEGER},
+      </if>
+      <if test="reciveuserid != null" >
+        reciveuserid = #{reciveuserid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.du.lin.bean.Notice" >
+    update notice
+    set title = #{title,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      senduserid = #{senduserid,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      recivedeptid = #{recivedeptid,jdbcType=INTEGER},
+      reciveuserid = #{reciveuserid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

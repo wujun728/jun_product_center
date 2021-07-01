@@ -1,0 +1,131 @@
+/* 幻灯片 滑块 */
+.swiper-img {
+	width: 750upx;
+	height: 300upx;
+}
+
+.swiper-flex {
+	display: flex;
+	justify-content: center;
+}
+
+.swiper-item {
+	display: flex;
+	justify-content: center;
+}
+
+/* 搜索框 start */
+.tip-text {
+	text-align: center;
+	font-size: 32rpx;
+	color: #4d4d4d;
+	margin-top: 10rpx;
+
+}
+
+.input-view {
+	display: flex;
+	direction: row;
+	justify-content: center;
+	align-items: center;
+	margin: 10upx 20upx 20upx 20upx;
+	/* height: 80upx; */
+	border: 1px solid #72c69c;
+	border-radius: 50upx;
+	box-shadow: 10upx 10upx 20upx #c5c5c5;
+	/* box-shadow: 10upx 10upx 12upx #888888; */
+	/* box-shadow: 0 0 30upx #888888; */
+}
+
+.input-view-camera,
+.input-view-speech,
+.input-view-search {
+	/* border: 1px solid red; */
+	/* border-radius: 20upx; */
+}
+
+.input-view-camera {}
+
+.input-view-item {
+	height: 80upx;
+	align-items: center;
+	padding: 10upx;
+}
+
+.input-search {
+	height: 80upx;
+	width: 320upx;
+	text-align:center;
+}
+
+.search-img {
+	width: 80upx;
+	height: 80upx;
+}
+
+.font-search {
+	/* border: 2px solid red; */
+	width: 80upx;
+	padding: 10upx;
+	color: #72c69c;
+	font-weight: bold;
+}
+
+/* 搜索框 end */
+
+
+/*  主要分类 面板  start*/
+.main-classify {
+	display: flex;
+	direction: center;
+	justify-content: center;
+}
+
+.main-img {
+	width: 200upx;
+	height: 200upx;
+	padding: 20upx;
+}
+
+/* 主要分类 面板 end */
+
+/* 录音 start */
+.recording-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+#canvas {
+	/* border: 2upx solid red; */
+	position: relative;
+	width: 300upx;
+	height: 300upx;
+	z-index: 10;
+}
+
+.recording-button {
+	position: absolute;
+	box-sizing: border-box;
+	top: 50upx;
+	left: 50upx;
+	display: inline-block;
+	width: 200upx;
+	height: 200upx;
+	border: 1px dashed #1296DB;
+	border-radius: 200upx;
+	background: url(../../static/icos/record.png) no-repeat 50% 50%;
+	background-size: 80% 80%;
+	z-index: 100;
+}
+
+/* 录音 end */
+.simpleTips{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	font-size: 28upx;
+	/* color: #72c69c; */
+	color: #666666;
+	/* text-decoration: underline; */
+}

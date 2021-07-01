@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增挑战明细记录')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-challengeDetail-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否正确；1:正确；0:错误：</label>
+                <div class="col-sm-8">
+                    <input name="whether" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">问题id：</label>
+                <div class="col-sm-8">
+                    <input name="questionId" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">：</label>
+                <div class="col-sm-8">
+                    <input name="garbageName" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">：</label>
+                <div class="col-sm-8">
+                    <select name="garbageType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">：</label>
+                <div class="col-sm-8">
+                    <select name="selectedType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "garbagesort/challengeDetail"
+        $("#form-challengeDetail-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-challengeDetail-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

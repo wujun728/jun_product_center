@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.du.lin.dao.RoleMapper" >
+  <resultMap id="BaseResultMap" type="com.du.lin.bean.Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="roles" property="roles" jdbcType="VARCHAR" />
+    <result column="tips" property="tips" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, roles, tips
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByRoleTip" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where tips = #{tips}
+  </select>
+  <select id="selectByRoles" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where roles = #{roles}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="id"  parameterType="com.du.lin.bean.Role" >
+    insert into role (id, roles, tips
+      )
+    values (#{id,jdbcType=INTEGER}, #{roles,jdbcType=VARCHAR}, #{tips,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.du.lin.bean.Role" >
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roles != null" >
+        roles,
+      </if>
+      <if test="tips != null" >
+        tips,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roles != null" >
+        #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        #{tips,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.du.lin.bean.Role" >
+    update role
+    <set >
+      <if test="roles != null" >
+        roles = #{roles,jdbcType=VARCHAR},
+      </if>
+      <if test="tips != null" >
+        tips = #{tips,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.du.lin.bean.Role" >
+    update role
+    set roles = #{roles,jdbcType=VARCHAR},
+      tips = #{tips,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

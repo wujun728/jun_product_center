@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+    <title>jqGird</title>
+  
+     <link rel="shortcut icon" href="static/favicon.ico"/>
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet"/>
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet"/>
+
+    <!-- jqgrid-->
+    <link href="css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet"/>
+
+    <link href="css/animate.css" rel="stylesheet"/>
+    <link href="css/style.css?v=4.1.0" rel="stylesheet"/>
+
+
+    <!-- 全局js -->
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- jqGrid -->
+    <script src="js/plugins/jqgrid/i18n/grid.locale-cn.js?0820"></script>
+    <script src="js/plugins/jqgrid/jquery.jqGrid.min.js?0820"></script>
+
+    <!-- 自定义js -->
+    <script src="js/content.js?v=1.0.0"></script>
+    <link th:href="@{static/css/jquery-ui.css}" rel="stylesheet"/>
+    <script src="static/js/jquery-ui-1.10.4.min.js"></script>
+    <script th:src="@{static/js/jquery-ui.custom.min.js}"></script>
+    
+    	   	    <!-- Sweet alert -->
+	<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+    <script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+    
+    <script th:src="@{static/js/lin/dialog.js}"></script>
+    <script th:src="@{static/js/lin/operationlog.js}"></script>
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+
+
+<div id="loading"  style="text-align: center;">
+	<img  alt="alt" th:src="@{img/loading.gif}"/>
+	</div>
+
+
+
+
+
+
+
+	<!-- 主体 -->
+    <div class="wrapper wrapper-content  animated fadeInRight">
+    <button id="btnclear" type="button" style="float: right; margin: 1% ;display: none" class="btn btn-w-m btn-danger">清除日志</button>
+	<button id="btndown" type="button" style="float: right; margin: 1% ; display: none " class="btn btn-w-m btn-success">下载近期日志</button>
+    
+        <div class="row">
+            <div class="col-sm-12">
+                        <div class="jqGrid_wrapper">
+                            <table id="table_list_2"></table>
+                            <div id="pager_list_2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+</body>
+
+</html>

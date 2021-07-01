@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.du.lin.dao.MenuMapper">
+	<resultMap id="BaseResultMap" type="com.du.lin.bean.Menu">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="parentid" property="parentid" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="num" property="num" jdbcType="INTEGER" />
+		<result column="levels" property="levels" jdbcType="INTEGER" />
+		<result column="tips" property="tips" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, code, parentid, name, icon, url, num, levels, tips
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from menu
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from menu
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from menu
+	</select>
+	<select id="selectMenuByRoleid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		SELECT
+		code, parentid, name, icon, url, num, levels, tips
+		FROM
+		role_menu_relation
+		RIGHT JOIN menu ON role_menu_relation.menuid = menu.id
+		WHERE
+		roleid = #{roleid}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from menu
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.du.lin.bean.Menu">
+		insert into menu (id, code, parentid,
+		name, icon, url, num,
+		levels, tips)
+		values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR},
+		#{parentid,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+		#{num,jdbcType=INTEGER},
+		#{levels,jdbcType=INTEGER}, #{tips,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.du.lin.bean.Menu">
+		insert into menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="code != null">
+				code,
+			</if>
+			<if test="parentid != null">
+				parentid,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="url != null">
+				url,
+			</if>
+			<if test="num != null">
+				num,
+			</if>
+			<if test="levels != null">
+				levels,
+			</if>
+			<if test="tips != null">
+				tips,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="parentid != null">
+				#{parentid,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				#{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="num != null">
+				#{num,jdbcType=INTEGER},
+			</if>
+			<if test="levels != null">
+				#{levels,jdbcType=INTEGER},
+			</if>
+			<if test="tips != null">
+				#{tips,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.du.lin.bean.Menu">
+		update menu
+		<set>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="parentid != null">
+				parentid = #{parentid,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="num != null">
+				num = #{num,jdbcType=INTEGER},
+			</if>
+			<if test="levels != null">
+				levels = #{levels,jdbcType=INTEGER},
+			</if>
+			<if test="tips != null">
+				tips = #{tips,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.du.lin.bean.Menu">
+		update menu
+		set code = #{code,jdbcType=VARCHAR},
+		parentid = #{parentid,jdbcType=INTEGER},
+		name = #{name,jdbcType=VARCHAR},
+		icon = #{icon,jdbcType=VARCHAR},
+		url = #{url,jdbcType=VARCHAR},
+		num = #{num,jdbcType=INTEGER},
+		levels = #{levels,jdbcType=INTEGER},
+		tips = #{tips,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

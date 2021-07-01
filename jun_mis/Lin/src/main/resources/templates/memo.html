@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<title>我的便签</title>
+
+<link rel="shortcut icon" href="favicon.ico" />
+<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet" />
+<link href="css/font-awesome.css?v=4.4.0" rel="stylesheet" />
+
+<link href="css/animate.css" rel="stylesheet" />
+<link href="css/style.css?v=4.1.0" rel="stylesheet" />
+<link th:href="@{static/css/jquery-ui.css}" rel="stylesheet" />
+
+<!-- 全局js -->
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+<script src="static/js/jquery-ui-1.10.4.min.js"></script>
+<script th:src="@{static/js/jquery-ui.custom.min.js}"></script>
+
+<!-- Sweet alert -->
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script th:src="@{static/js/lin/dialog.js}"></script>
+<script th:src="@{static/js/lin/memo.js}"></script>
+
+</head>
+
+<body class="gray-bg">
+
+	<div id="adddialog"
+		style="width:40%;padding-top: 20px; padding-bottom:20px;background-color: #dbc59e;display:none">
+
+		<div class="form-group">
+			<label class="col-sm-2 control-label">标题：</label>
+			<div class="col-sm-9">
+				<input id="title" class="form-control" placeholder="请输入文本"
+					type="text" />
+			</div>
+		</div>
+		<br />
+		<br />
+		<div class="form-group">
+			<label class="col-sm-2 control-label">内容：</label>
+			<div class="col-sm-9">
+				<textarea id="text" class="form-control" placeholder="请输入文本"
+					type="textarea"></textarea>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+		<br />
+		<div style="text-align:center">
+			<button id="submit" type="button" class="btn btn-w-m btn-primary">保存</button>
+			<button id="cancel" type="button" class="btn btn-w-m btn-default">取消</button>
+
+		</div>
+	</div>
+
+
+
+	<div class="row">
+
+		<div class="col-sm-12">
+			<div class="wrapper wrapper-content animated fadeInUp">
+				<button id="btnaddmemo" class="btn btn-primary dim" type="button"
+					style="float:right">
+					<i class="glyphicon glyphicon-pencil"></i>
+				</button>
+				<ul class="notes">
+
+
+					<li th:if="${listsize} == 0">
+						<div>
+							<small></small>
+							<h4></h4>
+							<p>还有没标签哦！</p>
+
+						</div>
+					</li>
+					<li th:each="memo,memoStat:${memolist}">
+						<div>
+
+							<small th:text="${memo.time}"></small> <small
+								th:text="${memo.time}"></small>
+							<h4 th:text="${memo.title}"></h4>
+							<p th:text="${memo.text}"></p>
+							<a th:id="${memo.id}" onclick="deletememodialog(this)"><i
+								class="fa fa-trash-o "></i></a>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- 自定义js -->
+	<script src="js/content.js?v=1.0.0"></script>
+
+
+
+</body>
+
+</html>

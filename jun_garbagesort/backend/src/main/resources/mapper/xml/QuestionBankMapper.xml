@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.lxsir.uniapp.mapper.QuestionBankMapper">
+    <select id="qbRandOne" resultType="cn.lxsir.uniapp.entity.QuestionBank">
+        SELECT * FROM question_bank
+        WHERE question_id >= (SELECT floor(RAND() * (SELECT MAX(question_id) FROM question_bank)))
+        ORDER BY question_id LIMIT #{num}
+    </select>
+</mapper>

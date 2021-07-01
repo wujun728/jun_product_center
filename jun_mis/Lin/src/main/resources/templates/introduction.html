@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="renderer" content="webkit" />
+
+<title>Lin - 主页</title>
+
+
+<link rel="shortcut icon" href="static/favicon.ico" />
+<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet" />
+<link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet" />
+<link href="css/animate.css" rel="stylesheet" />
+<link href="css/style.css?v=4.1.0" rel="stylesheet" />
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg">
+	
+	<div style="margin-left: 5%;margin-top: 5%">
+	
+    <h1>1.用户管理模块</h1>
+   <h2>  &nbsp;&nbsp;&nbsp;①添加用户 </h2>
+	<h2>  &nbsp;&nbsp;&nbsp;②修改用户信息   </h2>
+	<h2>  &nbsp;&nbsp;&nbsp;③删除用户  </h2>
+	<h2> &nbsp;&nbsp;&nbsp;④用户密码重置 </h2>
+★添加用户后，密码默认为111111 <br/>
+★用户密码重置后，密码默认为111111 <br/>
+
+<h1>2.部门管理模块</h1>
+	<h2> &nbsp;&nbsp;&nbsp; ①添加部门 </h2>
+<h2> &nbsp;&nbsp;&nbsp;	②修改部门信息 </h2>
+<h2> &nbsp;&nbsp;&nbsp;	③解散部门 </h2>
+★部门信息变化后（包括所有部门操作），信息会同步到用户管理中，需要关闭用户管理页面后，重新打开。<br/>
+★部门解散后，此部门用户自动设置部门为 未分配<br/>
+<h1>3.通知管理</h1>
+	<h2> &nbsp;&nbsp;&nbsp;①发送通知 </h2>
+	<h2> &nbsp;&nbsp;&nbsp;②查看通知 </h2>
+<h1>4.修改密码</h1>
+	<h2> &nbsp;&nbsp;&nbsp;①用户自行修改密码 </h2>
+<h1>5.日志</h1>
+	<h2> &nbsp;&nbsp;&nbsp;①登陆日志 </h2>
+	<h2> &nbsp;&nbsp;&nbsp;②操作日志 </h2>
+		<h2>  &nbsp;&nbsp;&nbsp;③清空日志  </h2>
+		<h2> &nbsp;&nbsp;&nbsp;④excel格式日志下载 </h2>
+<h1>6.便签</h1>
+	<h2> &nbsp;&nbsp;&nbsp;①添加便签 </h2>
+	<h2> &nbsp;&nbsp;&nbsp;②删除便签 </h2>
+<h1>7.角色管理</h1>
+	<h2> &nbsp;&nbsp;&nbsp;①添加角色 </h2>
+	<h2> &nbsp;&nbsp;&nbsp;②修改角色信息 </h2>
+		<h2>  &nbsp;&nbsp;&nbsp;③配置菜单  </h2>
+		<h2> &nbsp;&nbsp;&nbsp;④excel格式日志下载 </h2>
+		★删除角色后，之前此角色用户自动配置为 用户。<br/>
+</div>
+  </body>
+</html>

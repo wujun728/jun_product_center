@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectm.org.mapper.OrganizationMapper">
+	<resultMap type="com.projectm.org.domain.Organization" id="organizationResult">
+		<result property="id"    column="id"    />
+		<result property="name"    column="name"    />
+		<result property="avatar"    column="avatar"    />
+		<result property="description"    column="description"    />
+		<result property="owner_code"    column="owner_code"    />
+		<result property="create_time"    column="create_time"    />
+		<result property="personal"    column="personal"    />
+		<result property="code"    column="code"    />
+		<result property="address"    column="address"    />
+		<result property="province"    column="province"    />
+		<result property="city"    column="city"    />
+		<result property="area"    column="area"    />
+	</resultMap>
+
+	<select id="selectOrganizationByMemberCode" resultMap="organizationResult" >
+		select c.*
+		from team_member a,team_member_account b,team_organization c
+		where a.code = b.member_code and b.organization_code = c.code
+		and a.code = #{memberCode}
+	</select>
+
+
+</mapper> 

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.pms.root</groupId>
+    <artifactId>pms-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>pms-service</artifactId>
+  <version>${pms.version}</version>
+  <name>pms-service</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+     	<dependency>
+			<groupId>com.pms.root</groupId>
+			<artifactId>pms-common-util</artifactId>
+			<version>${pms.version}</version>
+		</dependency>
+		<!-- 数据库驱动 -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>1.0.19</version>
+		</dependency>
+		<!--最新版本，匹配spring Boot1.5 or higher-->
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.3.0</version>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+		
+		<!--方式1  热部署自动启动，只需要加入下面依赖即可
+		<dependency>  
+		    <groupId>org.springframework.boot</groupId>  
+		    <artifactId>spring-boot-devtools</artifactId>  
+		    <optional>true</optional>
+		     optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入
+		</dependency> 
+		 -->
+		 <!--方式2 热启动  -->
+		<dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>springloaded</artifactId>  
+        </dependency>
+        <!-- 表单验证 -->
+        <dependency>  
+          <groupId>org.hibernate</groupId>  
+          <artifactId>hibernate-validator</artifactId>  
+      	</dependency>
+      	<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+  </dependencies>
+  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

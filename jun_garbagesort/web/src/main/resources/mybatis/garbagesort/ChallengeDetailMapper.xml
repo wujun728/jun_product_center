@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.garbagesort.challengeDetail.mapper.ChallengeDetailMapper">
+    
+    <resultMap type="ChallengeDetail" id="ChallengeDetailResult">
+        <result property="id"    column="id"    />
+        <result property="whether"    column="whether"    />
+        <result property="questionId"    column="question_id"    />
+        <result property="garbageName"    column="garbage_name"    />
+        <result property="garbageType"    column="garbage_type"    />
+        <result property="selectedType"    column="selected_type"    />
+    </resultMap>
+
+    <sql id="selectChallengeDetailVo">
+        select id, whether, question_id, garbage_name, garbage_type, selected_type from challenge_detail
+    </sql>
+
+    <select id="selectChallengeDetailList" parameterType="ChallengeDetail" resultMap="ChallengeDetailResult">
+        <include refid="selectChallengeDetailVo"/>
+        <where>  
+            <if test="whether != null "> and whether = #{whether}</if>
+            <if test="questionId != null "> and question_id = #{questionId}</if>
+            <if test="garbageName != null  and garbageName != ''"> and garbage_name like concat('%', #{garbageName}, '%')</if>
+            <if test="garbageType != null "> and garbage_type = #{garbageType}</if>
+            <if test="selectedType != null "> and selected_type = #{selectedType}</if>
+        </where>
+    </select>
+    
+    <select id="selectChallengeDetailById" parameterType="Long" resultMap="ChallengeDetailResult">
+        <include refid="selectChallengeDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertChallengeDetail" parameterType="ChallengeDetail" useGeneratedKeys="true" keyProperty="id">
+        insert into challenge_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="whether != null">whether,</if>
+            <if test="questionId != null">question_id,</if>
+            <if test="garbageName != null">garbage_name,</if>
+            <if test="garbageType != null">garbage_type,</if>
+            <if test="selectedType != null">selected_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="whether != null">#{whether},</if>
+            <if test="questionId != null">#{questionId},</if>
+            <if test="garbageName != null">#{garbageName},</if>
+            <if test="garbageType != null">#{garbageType},</if>
+            <if test="selectedType != null">#{selectedType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateChallengeDetail" parameterType="ChallengeDetail">
+        update challenge_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="whether != null">whether = #{whether},</if>
+            <if test="questionId != null">question_id = #{questionId},</if>
+            <if test="garbageName != null">garbage_name = #{garbageName},</if>
+            <if test="garbageType != null">garbage_type = #{garbageType},</if>
+            <if test="selectedType != null">selected_type = #{selectedType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteChallengeDetailById" parameterType="Long">
+        delete from challenge_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteChallengeDetailByIds" parameterType="String">
+        delete from challenge_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

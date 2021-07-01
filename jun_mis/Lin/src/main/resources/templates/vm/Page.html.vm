@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>${model1}</title>
+
+<link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet" />
+<link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet" />
+<link href="css/animate.css" rel="stylesheet" />
+<link href="css/style.css?v=4.1.0" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" th:href="@{static/css/lin/easyui.css}" />
+<link href="static/css/jquery-ui.css" rel="stylesheet" />
+<link href="css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet" />
+<link href="css/plugins/toastr/toastr.min.css" rel="stylesheet" />
+<link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
+<script src="js/jquery.min.js?v=2.1.4"></script>
+<script src="js/bootstrap.min.js?v=3.3.6"></script>
+            <!-- jqGrid -->
+<script src="js/plugins/jqgrid/i18n/grid.locale-cn.js?0820"></script>
+<script src="js/plugins/jqgrid/jquery.jqGrid.min.js?0820"></script>  
+<script src="static/js/jquery-ui-1.10.4.min.js"></script>
+<script src="static/js/jquery-ui.custom.min.js"></script>
+<!-- 自定义js -->
+<script th:src="@{static/js/lin/${model}.js}">   </script>
+<!-- 封装过的Sweet alert js -->
+<script th:src="@{static/js/lin/dialog.js}">   </script>
+
+<script src="js/content.js?v=1.0.0"></script>
+<!-- Sweet alert -->
+<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- Toastr script -->
+<script src="js/plugins/toastr/toastr.min.js"></script>
+<!-- laydate -->
+<script src="js/plugins/layer/laydate/laydate.js"></script>
+
+<style>
+/* Additional style to fix warning dialog position */
+#alertmod_table_list_2 {
+	top: 900px !important;
+}
+</style>
+
+</head>
+
+<body class="gray-bg">
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="jqGrid_wrapper">
+                <table id="table_list_2"></table>
+                <div id="pager_list_2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

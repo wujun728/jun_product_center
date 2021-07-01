@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.projectm.member.mapper.ProjectMemberMapper">
+
+	<!--<resultMap type="Member" id="Member">
+
+		<result property="id"  column="id"    />
+		<result property="account"  column="account"    />
+		<result property="password"  column="password"    />
+		<result property="name"  column="name"    />
+		<result property="mobile"  column="mobile"    />
+		<result property="realname"  column="realname"    />
+		<result property="create_time"  column="create_time"    />
+		<result property="status"  column="status"    />
+		<result property="last_login_time"  column="last_login_time"    />
+		<result property="sex"  column="sex"    />
+		<result property="avatar"  column="avatar"    />
+		<result property="idcard"  column="idcard"    />
+		<result property="province"  column="province"    />
+		<result property="city"  column="city"    />
+		<result property="area"  column="area"    />
+		<result property="address"  column="address"    />
+		<result property="description"  column="description"    />
+		<result property="email"  column="email"    />
+		<result property="code"  column="code"    />
+		<result property="dingtalk_openid"  column="dingtalk_openid"    />
+		<result property="dingtalk_unionid"  column="dingtalk_unionid"    />
+		<result property="dingtalk_userid"  column="dingtalk_userid"    />
+		<result property="account_id"  column="account_id"    />
+		<result property="is_owner"  column="is_owner"    />
+		<result property="authorize"  column="authorize"    />
+		<result property="position"  column="position"    />
+		<result property="department"  column="department"    />
+	</resultMap>-->
+
+	<select id="selectMemberByLoginParam" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_member WHERE  account = #{params.account} OR email = #{params.account}  OR mobile = #{params.account} ORDER BY id ASC LIMIT 1
+	</select>
+
+	<select id="selectMemberCountByMemberCode" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT * FROM team_member_account WHERE  member_code = #{params.memberCode} ORDER BY id ASC
+	</select>
+
+	<select id="getMemberById" resultType="java.util.Map" >
+		SELECT * FROM team_member WHERE code = #{userCode}
+	</select>
+
+
+</mapper> 
