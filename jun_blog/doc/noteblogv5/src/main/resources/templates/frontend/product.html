@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" th:content="${settings.info_label_nickname}" />
+    <meta name="description" th:content="${settings.seo_description}" />
+    <meta name="keywords" th:content="${settings.seo_keyword}" />
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/animate/animate.min.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="/static/assets/css/layui-theme-nbv5.css">
+    <link rel="stylesheet" href="/static/plugins/pushbar/pushbar.css">
+    <link rel="stylesheet" href="/static/assets/css/simple.css">
+    <title th:text="${'商城 | '+settings.website_title}"></title>
+</head>
+<body class="layui-anim layui-anim-fadein simple">
+<!--顶部导航栏-->
+<div th:replace="frontend/fragment/header (cur='product')"></div>
+<!--顶部文字-->
+<div class="layui-container top-block">
+    <blockquote class="layui-elem-quote">
+        商品：总【<span class="sum-font" th:text="${#numbers.formatDecimal(productCount,1,'COMMA',0,'POINT')}"></span>】个，
+        运营【<span class="sum-font" th:text="${#numbers.formatDecimal(runningDays,1,'COMMA',0,'POINT')}"></span>】天；
+        <span th:utext="${settings.index_top_text}"></span>
+        <div class="clock layui-show-md-inline-block layui-show-lg-inline-block layui-hide-xs layui-hide-sm">
+            <span class="clock-font">当前日期</span>：<span id="current-datetime"></span>
+        </div>
+    </blockquote>
+</div>
+<!--内容文章正体-->
+<div id="main-body" class="layui-container">
+
+</div>
+<!--底部导航栏-->
+<div th:replace="frontend/fragment/footer"></div>
+<!--移动设备菜单导航-->
+<div th:replace="frontend/fragment/mobile_nav"></div>
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/jquery/jquery-2.1.4.min.js"></script>
+<script src="/static/assets/js/script.js"></script>
+<script src="/static/assets/js/nbv5.js"></script>
+<script src="/static/plugins/hc-sticky/hc-sticky.min.js"></script>
+<script src="/static/plugins/pushbar/pushbar.js"></script>
+<script th:inline="javascript">
+    $(function () {
+        window.addEventListener("scroll", nbv5front.headerScroll());
+        nbv5front.miniHeader("main-body");
+        new Pushbar({
+            blur: true,
+            overlay: true
+        });
+
+
+        layui.use(['layer', 'element', 'card_media'], function () {
+            var layer = layui.layer,
+                element = layui.element,
+                card_media = layui.card_media;
+
+            var pageObj = [[${indexPage}]];
+            var settings = [[${settings}]];
+            var articleCatesMap = [[${articleCatesMap}]];
+            var articleTagsMap = [[${articleTagsMap}]];
+            var articleCommentCountMap = [[${articleCommentCountMap}]];
+            var articleAuthors = [[${articleAuthors}]];
+            var typesetting = [[${settings.typesetting}]];
+            var cateList = [[${cateList}]];
+            var tagList = [[${tagList}]];
+            var linkList = [[${linkList}]];
+            var randomArticles = [[${randomArticles}]];
+            var nbv5su = [[${nbv5su}]];
+
+            nbv5front.miniHeaderNavBtn(layer);
+
+            element.render();
+
+            card_media('layui-col-xs4', pageObj, articleAuthors, articleTagsMap, articleCatesMap, articleCommentCountMap);
+
+
+            if (pageObj.total === 0) {
+                nbv5front.footerFixed($(".bottom-nav"), 980);
+                $(window).resize(function () {
+                    nbv5front.footerFixed($(".bottom-nav"), 980);
+                });
+            }
+
+
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

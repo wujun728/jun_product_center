@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itcqm.cake21.mapper.GoodsMapper">
+    <!--配置goods的映射-->
+    <resultMap id="goodsMap" type="com.itcqm.cake21.entity.Goods">
+        <id property="id" column="g_id"/>
+        <result property="name" column="g_name"/>
+        <result property="ename" column="g_ename"/>
+        <result property="title" column="g_title"/>
+        <result property="titleImg" column="g_title_img"/>
+        <result property="newImg" column="g_new_img"/>
+        <result property="detail" column="g_detail"/>
+        <result property="tag" column="g_tag"/>
+        <result property="type" column="g_type"/>
+        <result property="defaultSize" column="g_default_size"/>
+        <result property="state" column="g_state"/>
+    </resultMap>
+    <!--配置goodsSlide的映射-->
+    <resultMap id="goodsSlideMap" type="com.itcqm.cake21.entity.GoodsSlide">
+        <id property="id" column="gsl_id"/>
+        <result property="goodsId" column="gsl_goods_id"/>
+        <result property="slideOrder" column="gsl_slide_order"/>
+        <result property="slideImg" column="gsl_slide_img"/>
+    </resultMap>
+    <!--配置goodsImg的映射-->
+    <resultMap id="goodsImgMap" type="com.itcqm.cake21.entity.GoodsImg">
+        <id property="id" column="gi_id"/>
+        <result property="goodsId" column="gi_goods_id"/>
+        <result property="imgOrder" column="gi_img_order"/>
+        <result property="img" column="gi_img"/>
+    </resultMap>
+    <!--配置goodsRemark的映射-->
+    <resultMap id="goodsRemarkMap" type="com.itcqm.cake21.entity.GoodsRemark">
+        <id property="id" column="gr_id"/>
+        <result property="goodsId" column="gr_goods_id"/>
+        <result property="remarkKey" column="gr_remark_key"/>
+        <result property="remarkVal" column="gr_remark_val"/>
+    </resultMap>
+    <!--配置goodsSpec的映射-->
+    <resultMap id="goodsSpecMap" type="com.itcqm.cake21.entity.GoodsSpec">
+        <id property="id" column="gsp_id"/>
+        <result property="goodsId" column="gsp_goods_id"/>
+        <result property="goodsSizeB" column="gsp_goods_size_b"/>
+        <result property="goodsSizeG" column="gsp_goods_size_g"/>
+        <result property="goodsSize" column="gsp_goods_size"/>
+        <result property="goodsParts" column="gsp_goods_parts"/>
+        <result property="goodsPrice" column="gsp_goods_price"/>
+    </resultMap>
+    <!--定义一对多关系-->
+    <resultMap id="goodsDetails" type="com.itcqm.cake21.entity.Goods" extends="goodsMap">
+        <collection property="goodsSlideList" resultMap="goodsSlideMap" ofType="com.itcqm.cake21.entity.GoodsSlide"/>
+        <collection property="goodsImgList" resultMap="goodsImgMap" ofType="com.itcqm.cake21.entity.GoodsImg"/>
+        <collection property="goodsRemarkList" resultMap="goodsRemarkMap" ofType="com.itcqm.cake21.entity.GoodsRemark"/>
+        <collection property="goodsSpecList" resultMap="goodsSpecMap" ofType="com.itcqm.cake21.entity.GoodsSpec"/>
+    </resultMap>
+    <select id="findOneByDetail" resultMap="goodsDetails" parameterType="java.lang.Integer">
+        SELECT g.`id`             g_id,
+               g.`name`           g_name,
+               g.`ename`          g_ename,
+               g.`title`          g_title,
+               g.`title_img`      g_title_img,
+               g.`new_img`        g_new_img,
+               g.`detail`         g_detail,
+               g.`tag`            g_tag,
+               g.`type`           g_type,
+               g.`default_size`   g_default_size,
+               g.`state`          g_state,
+               gsl.id             gsl_id,
+               gsl.goods_id       gsl_goods_id,
+               gsl.`slide_order`  gsl_slide_order,
+               gsl.`slide_img`    gsl_slide_img,
+               gi.id              gi_id,
+               gi.goods_id        gi_goods_id,
+               gi.`img_order`     gi_img_order,
+               gi.`img`           gi_img,
+               gr.`id`            gr_id,
+               gr.goods_id        gr_goods_id,
+               gr.`remark_key`    gr_remark_key,
+               gr.`remark_val`    gr_remark_val,
+               gsp.`id`           gsp_id,
+               gsp.goods_id       gsp_goods_id,
+               gsp.`goods_size_b` gsp_goods_size_b,
+               gsp.`goods_size_g` gsp_goods_size_g,
+               gsp.`goods_size`   gsp_goods_size,
+               gsp.`goods_parts`  gsp_goods_parts,
+               gsp.`goods_price`  gsp_goods_price
+        FROM `goods` AS g
+                 LEFT JOIN goods_slide gsl
+                           ON g.id = gsl.goods_id
+                 LEFT JOIN goods_img gi
+                           ON g.id = gi.goods_id
+                 LEFT JOIN goods_remark gr
+                           ON g.id = gr.goods_id
+                 LEFT JOIN goods_spec gsp
+                           ON g.id = gsp.goods_id
+        WHERE g.id = #{id}
+          AND g.state != -1
+    </select>
+    <select id="findAll" resultMap="goodsDetails">
+        SELECT g.`id`             g_id,
+               g.`name`           g_name,
+               g.`ename`          g_ename,
+               g.`title_img`      g_title_img,
+               g.`new_img`        g_new_img,
+               g.`title`          g_title,
+               g.`type`           g_type,
+               gsp.`goods_size_g` gsp_goods_size_g,
+               gsp.`goods_size_b` gsp_goods_size_b,
+               gsp.`goods_price`  gsp_goods_price
+        FROM goods g
+                 LEFT JOIN goods_spec gsp
+                           ON g.default_size = gsp.id
+        WHERE g.state != -1
+        ORDER BY g_type,g.id DESC
+    </select>
+    <select id="findAllByType" resultMap="goodsDetails">
+        SELECT g.`id`             g_id,
+               g.`name`           g_name,
+               g.`ename`          g_ename,
+               g.`title_img`      g_title_img,
+               g.`new_img`        g_new_img,
+               g.`detail`         g_detail,
+               g.`type`           g_type,
+               gsp.`goods_size_g` gsp_goods_size_g,
+               gsp.`goods_size_b` gsp_goods_size_b,
+               gsp.`goods_price`  gsp_goods_price
+        FROM goods g
+                 LEFT JOIN goods_spec gsp
+                           ON g.default_size = gsp.id
+        WHERE g.state != -1
+          AND type = #{typeId}
+        ORDER BY g.id DESC
+    </select>
+</mapper>

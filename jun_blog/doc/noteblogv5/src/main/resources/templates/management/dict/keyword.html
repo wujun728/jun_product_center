@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+    <style>
+        .keyword > .layui-btn:hover {
+            cursor: default !important;
+        }
+
+        .keyword > .layui-btn {
+            margin-bottom: 10px;
+            margin-left: 0;
+            margin-right: 5px;
+        }
+
+        .keyword > .layui-btn > .layui-badge:hover{
+            cursor: pointer;
+            background: #c4c4c4 !important;
+            color: #000000 !important;
+            border-color: #000000 !important;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid layui-anim layui-anim-upbit" id="LAY-keyword">
+    <div class="layui-row layui-col-space20">
+        <div class="layui-col-md12">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend><i class="fa fa-navicon"></i> 敏感字词管理</legend>
+            </fieldset>
+            <blockquote class="layui-elem-quote">此功能将用于评论和留言的关键词过滤</blockquote>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 0;">
+                    <input type="text" name="keyword" lay-verify="required"
+                           th:placeholder="${#strings.isEmpty(searchKeyword)} ? '请输入关键字' : ${searchKeyword}"
+                           autocomplete="off"
+                           class="layui-input">
+                </div>
+                <div style="margin-top: 10px;">
+                    <button class="layui-btn layui-btn-primary" id="keyword-search"><i class="fa fa-search"></i> 搜索
+                    </button>
+                    <button class="layui-btn" id="keyword-add"><i class="fa fa-plus"></i> 添加</button>
+                </div>
+            </div>
+            <hr>
+            <div class="keyword">
+                <button th:each="keyword : ${keywords}" class="layui-btn layui-btn-primary layui-btn-radius"><i
+                        class="fa fa-file-text-o"></i> <span
+                        th:text="${keyword.name}"></span><span
+                        class="layui-badge layui-bg-gray delete" th:data-kid="${keyword.id}">×</span></button>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'keyword']);
+</script>
+</body>
+</html>

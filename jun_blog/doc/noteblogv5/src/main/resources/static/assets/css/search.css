@@ -1,0 +1,43 @@
+/** Created By Wuwenbin https://wuwenbin.me
+ * mail to wuwenbinwork@163.com
+ * 欢迎加入我们，QQ群：697053454
+ * if you use the code,  please do not delete the comment
+ * 如果您使用了此代码，请勿删除此头部注释
+ * */
+.search {
+    padding: 20px;
+}
+
+.search-title {
+    font-size: 18px !important;
+    font-family:"Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif !important;
+    letter-spacing: .04em;
+}
+
+.search .article {
+    background: #1E9FFF;
+    color: #fff;
+    padding: 5px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 14px;
+    margin-right: 10px;
+}
+
+.search .note {
+    background: #f44336;
+    color: #fff;
+    padding: 5px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+    display: inline-block;
+    line-height: 14px;
+    margin-right: 10px;
+}
+
+.search .search-content {
+    text-indent: 25px;
+    letter-spacing: .06em;
+    font-family: "Exo 2", "Trebuchet MS", "Helvetica", "Arial", 'PingFang SC', 'Hiragino Sans GB', 'STHeiti Light', 'Microsoft YaHei', 'SimHei', 'WenQuanYi Micro Hei', sans-serif !important;
+}

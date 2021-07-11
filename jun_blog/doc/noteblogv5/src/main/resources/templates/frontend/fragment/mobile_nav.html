@@ -1,0 +1,46 @@
+<div data-pushbar-id="bottomNav" class="pushbar from_bottom">
+    <div class="layui-container" style="padding-top: 20px;padding-bottom: 15px;">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend style="text-align: center;font-size: 16px;" align="center">导航按钮</legend>
+        </fieldset>
+        <p class="layui-breadcrumb" lay-separator="|" style="text-align: center;margin-top: 10px;">
+            <a href="/index" th:text="${settings.menu_home}"></a>
+            <a href="/note" th:text="${settings.menu_note}"></a>
+            <a href="/message" th:text="${settings.menu_message}"></a>
+            <a href="/login?redirectUrl=/ubs/token/index">用户</a>
+            <a th:if="${settings.is_show_download_page eq '1'}" href="/dl">下载</a>
+            <a th:if="${settings.is_show_product_page eq '1'}" href="/product/index">商城</a>
+            <a href="/s/w">搜索</a>
+        </p>
+        <ul class="layui-timeline"
+            style="margin-top: 10px;padding-top: 15px;margin-bottom: 30px;border-top: 1px dotted #EEEEEE;">
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title" style="font-size: 16px;">博客信息</h3>
+                    <p style="padding-bottom: 5px;" th:utext="${settings.info_label_text}"></p>
+                    <p style="border-top: 1px solid #f5f5f5;padding-top: 5px;padding-bottom: 5px;">
+                        交流讨论：<i class="fa fa-qq"></i>
+                        <a target="_blank"
+                           href="//shang.qq.com/wpa/qunwpa?idkey=7bd7c01acf4e6124bfaab5a6d10504b917d5292f029b66887d00006a16a00930">
+                            697053454
+                        </a>。
+                    </p>
+                    <p style="border-top:1px solid #F5F5F5;padding-top: 5px;">
+                        项目v5.0源码：<i class="fa fa-github-alt"></i>
+                        <a target="_blank" href="https://github.com/miyakowork/noteblogv5">miyakowork/noteblogv5</a>。
+                    </p>
+                </div>
+            </li>
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title" style="font-size: 16px;">产品 & 作者 </h3>
+                    <p>联系作者：<i class="fa fa-envelope"></i> <a href="#">wuwenbinwork#163.com</a></p>
+                    <p>产品网站：<i class="fa fa-link"></i> <a href="https://wuwenbin.me/article/u/noteblogv5_updates">NoteBlog v5.0</a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

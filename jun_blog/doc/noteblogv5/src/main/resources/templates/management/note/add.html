@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/plugins/editormd/css/editormd.min.css">
+</head>
+<body>
+<div class="layui-fluid layui-anim layui-anim-upbit" id="LAY-note-add" style="padding-bottom: 50px;">
+    <div class="layui-row layui-col-space20 layui-form">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">标题</div>
+                <div class="layui-card-body" style="padding-top: 25px;">
+                    <div class="layui-form-item">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入笔记标题"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">内容编辑</div>
+                <div class="layui-card-body">
+                    <div id="content-editor-note-add" style="max-width: 1366px;">
+                        <textarea id="editormd-markdown-doc" name="editormd-markdown-doc"
+                                  style="display:none;"></textarea>
+                        <textarea id="editormd-html-code" name="editormd-html-code"
+                                  style="display:none;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">撰写完成</div>
+                <div class="layui-card-body">
+                    <button class="layui-btn" lay-submit lay-filter="noteSubmit">立即发布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="/static/plugins/nkeditor/libs/JDialog/JDialog.min.js"></script>
+<script src="/static/assets/js/noteblogv5.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'note_add']);
+</script>
+</body>
+</html>

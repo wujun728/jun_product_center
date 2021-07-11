@@ -1,0 +1,40 @@
+<div class="layui-fluid bottom-nav">
+    <div class="layui-row bottom-logo">
+        <div class="layui-col-md4 layui-col-md-offset4 text-center">
+            <img th:src="${settings.bottom_logo}" alt="笔记博客">
+        </div>
+    </div>
+    <hr style="background: rgba(230, 230, 230, 0.54);">
+    <div class="layui-row layui-col-space30" style="padding-top: 20px;">
+        <div class="layui-col-md4 copyright">
+            <p style="text-align: center;">
+                <i class="fa fa-copyright"></i>&nbsp;[[${settings.footer_words}]] powered by
+                <a href="//wuwenbin.me" target="_blank" style="color: #1E9FFF;">NoteBlog</a> in 2019 v5.
+            </p>
+        </div>
+        <div class="layui-col-md4 cates">
+            <p>分类</p>
+            <span class="layui-badge-rim no-select" th:each="cate :${cateList}"><a
+                    th:href="${'/s/c?q='+cate.name}" th:text="${cate.name}"></a>
+            </span>
+        </div>
+        <div class="layui-col-md4 manage">
+            <p style="margin-bottom: 10px;">数据・用户</p>
+            <p class="data">
+                <span>[[${#numbers.formatDecimal(blogCount,1,'COMMA',0,'POINT')}]] <b>文章</b></span>
+                <span>[[${#numbers.formatDecimal(commentCount,1,'COMMA',0,'POINT')}]] <b>评论</b></span>
+                <span>[[${#numbers.formatDecimal(runningDays,1,'COMMA',0,'POINT')}]] <b>天</b></span>
+                <span>[[${#numbers.formatDecimal(blogWords,1,'COMMA',0,'POINT')}]] <b>字数</b></span>
+            </p>
+            <p>
+                <a th:if="${nbv5su ==null}" onclick="nbv5front.bottomLogin();"
+                   class="layui-btn layui-btn-sm layui-btn-primary">登录</a>
+                <span th:if="${nbv5su !=null}" class="layui-mr15">
+                    <img th:src="${nbv5su.avatar}" class="layui-circle" style="width: 30px;"/>
+                    <a th:text="${nbv5su.nickname}" class="layui-text layui-word-aux"
+                       href="/login?redirectUrl=/ubs/token/index"></a>
+                </span> <a onclick="nbv5front.tokenLogout();" class="layui-btn layui-btn-sm layui-btn-primary">退出</a>
+            </p>
+        </div>
+    </div>
+</div>

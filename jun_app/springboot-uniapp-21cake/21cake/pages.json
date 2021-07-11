@@ -1,0 +1,68 @@
+{
+	"easycom": {
+		// 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
+		// 下载安装方式
+		//"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		// npm安装方式
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+		"path": "pages/index/index",
+		"style": {
+			// "navigationStyle": "custom", // 隐藏系统导航栏
+			// "navigationBarTextStyle": "white" // 状态栏字体为白色，只能为 white-白色，black-黑色 二选一
+		}
+	}, {
+		"path": "pages/detail/detail",
+		"style": {
+
+		}
+	}, {
+		"path": "pages/user/user",
+		"style": {
+
+		}
+	}, {
+		"path": "pages/choose/choose",
+		"style": {
+
+		}
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"backgroundTextStyle": "dark",
+		"navigationBarTitleText": "21cake++",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#B2B2B2",
+		"selectedColor": "#000000",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/index/index",
+			"iconPath": "static/images/home.png",
+			"selectedIconPath": "static/images/home-1.png",
+			"text": "首页"
+		}, {
+			"pagePath": "pages/choose/choose",
+			"iconPath": "static/images/choose.png",
+			"selectedIconPath": "static/images/choose-1.png",
+			"text": "选购"
+		}, {
+			"pagePath": "pages/user/user",
+			"iconPath": "static/images/user.png",
+			"selectedIconPath": "static/images/user-1.png",
+			"text": "我的"
+		}]
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}

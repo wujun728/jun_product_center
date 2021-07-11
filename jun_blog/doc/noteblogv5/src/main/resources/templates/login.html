@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="author" th:content="${settings.info_label_nickname}" />
+    <meta name="description" th:content="${settings.seo_description}" />
+    <meta name="keywords" th:content="${settings.seo_keyword}" />
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>笔记博客 - 登录</title>
+    <link rel="stylesheet" type="text/css" href="/static/plugins/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/css/login-registration.css">
+</head>
+<body>
+<div class="layui-row user-login">
+    <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+        <form class="login-form layui-form">
+            <div class="login-header">
+                <h2 style="font-style: italic;">[[${settings.website_logo_words}]]
+                    <small style="font-size: 14px;color: #e3303e;">v5</small>
+                </h2>
+                <p>笔记博客&copy;&nbsp;<small>v5</small>
+                </p>
+            </div>
+            <div class="login-body">
+                <div class="layui-form-item">
+                    <label><i class="layui-icon layui-icon-username"></i> </label>
+                    <input type="text" name="nbv5name" lay-verify="username"
+                           placeholder="用户名" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label><i class="layui-icon layui-icon-password"></i> </label>
+                    <input type="password" name="nbv5pass" lay-verify="pass"
+                           placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-xs7">
+                            <label for="NB-user-vercode" style="margin-top: 8px;margin-left: 7px;"><i
+                                    class="layadmin-user-login-icon layui-icon layui-icon-vercode"></i> </label>
+                            <input type="text" name="nbv5code" id="LAY-user-login-vercode" lay-verify="required"
+                                   placeholder="验证码" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div>
+                                <img src="/image/code" class="layadmin-user-login-codeimg" id="NB-user-vercode"
+                                     onclick="captchaRefresh(this)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div id="slider"></div>
+                </div>
+                <div class="layui-form-item layui-hide">
+                    <button id="v5Login" class="layui-btn layui-btn-fluid" lay-submit lay-filter="nbv5LoginSubmit">登 入
+                    </button>
+                </div>
+                <div class="layui-form-item login-footer">
+                    <label th:if="${isOpenQqLogin||isOpenGithubLogin}">社交账号登入</label>
+                    <a id="fromQqLogin" href="javascript:doQqLogin();" title="qq登录" th:if="${isOpenQqLogin}"
+                       onclick="layer.msg('正在通过QQ登入', {icon:16, shade: 0.1, time:0})"
+                       style="border: none;"><i class="fa fa-qq" style="font-size: 18px;"></i></a>
+
+                    <a id="fromGithubLogin" href="javascript:doGithubLogin();" th:if="${isOpenGithubLogin}"
+                       onclick="layer.msg('正在通过GITHUB登入', {icon:16, shade: 0.1, time:0})"
+                       style="border: none;margin-left: 10px;" title="github登录"><i class="fa fa-github"
+                                                                                   style="font-size: 20px;"></i></a>
+                    <a th:if="${isOpenRegister}" href="/reg" style="color:#f44336;float: right;">前往注册</a>
+                    <a href="/" style="color:#f44336;float: right;margin-right: 5px;">前往主页</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-trans layadmin-user-login-footer footer-login" style="z-index: -100;">
+
+    <p><i class="fa fa-graduation-cap"></i> 2019 <a href="https://github.com/miyakowork/noteblogv5" target="_blank">笔记博客&copy;
+        <span style="font-style: italic;">v5</span></a></p>
+    <p>
+        <span><a href="//wuwenbin.me" target="_blank">作者博客</a></span>
+        <span><a href="https://github.com/miyakowork/noteblogv5" target="_blank">获取源码</a></span>
+        <span><a target="_blank"
+                 href="//shang.qq.com/wpa/qunwpa?idkey=40c11d21b7369a629d987dbe15410bc69e65a17abb2b7f9f1e591b2490bf5621">加入QQ群</a></span>
+    </p>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="/static/plugins/md5/md5.min.js"></script>
+<script src="/static/assets/js/noteblogv5.js"></script>
+<script th:inline="javascript">
+    var isOpenQqLogin = [[${isOpenQqLogin}]];
+    var isOpenGithubLogin = [[${isOpenGithubLogin}]];
+    if (self !== top) {
+        parent.window.location.replace(window.location.href);
+    }
+</script>
+<script>
+    layui.config({
+        base: '/static/plugins/layui/lay/modules/'
+    }).extend({
+        sliderVerify: 'sliderVerify'
+    });
+</script>
+<script src="/static/assets/js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5100495",
+      "name": "ali-pay",
+      "font_class": "ali-pay",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "6559674",
+      "name": "点卡",
+      "font_class": "card",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "10884758",
+      "name": "changge wechat",
+      "font_class": "changgewechat",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    }
+  ]
+}

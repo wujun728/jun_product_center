@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/formSelects-v4.css" media="all">
+</head>
+<body>
+<div class="layui-fluid layui-anim layui-anim-upbit" id="LAY-download-add" style="padding-bottom: 50px;">
+    <div class="layui-row layui-col-space20 layui-form">
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">标题</div>
+                <div class="layui-card-body" style="padding-top: 25px;">
+
+                    <div class="layui-form-item">
+                        <input type="text" name="title" required lay-verify="required" placeholder="请输入资源标题，长度不超过80个字符" maxlength="80"
+                               autocomplete="off" class="layui-input">
+                    </div>
+
+                    <div class="layui-form-item">
+                        <input type="text" name="downloadUrl" required lay-verify="required" placeholder="请输入资源链接地址"
+                               autocomplete="off" class="layui-input">
+                    </div>
+
+                    <div class="layui-form-item">
+                        <input type="text" name="downloadKey" placeholder="请输入资源提取码/密码"
+                               autocomplete="off" class="layui-input">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">提交</div>
+                <div class="layui-card-body">
+                    <button class="layui-btn" lay-submit lay-filter="downloadSubmit">提交</button>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card">
+                    <div class="layui-card-header">分类（不超过3个）
+                        <a id="refreshDownloadCate" style="cursor:pointer;"><i class="fa fa-refresh"></i></a>
+                        <a lay-href="/management/dict/catetag" style="color: red;float:right;">新增字典</a>
+                    </div>
+                    <div class="layui-card-body">
+                        <label>
+                            <select name="downloadCateId" xm-select="downloadCateId" xm-select-search="" xm-select-max="3">
+                                <option value="">请选择分类，可多选</option>
+                                <option th:each="downloadCate : ${downloadCateList}"
+                                        th:value="${downloadCate.id}"
+                                        th:text="${downloadCate.name}"></option>
+                            </select>
+                        </label>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="/static/assets/js/noteblogv5.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        , formSelects: 'formSelects-v4'
+    }).use(['index', 'download_add','formSelects']);
+</script>
+</body>
+</html>

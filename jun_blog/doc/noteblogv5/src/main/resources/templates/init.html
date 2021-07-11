@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>笔记博客初始化设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/assets/css/init.css">
+    <link rel="stylesheet" href="/static/assets/css/layui-theme-nbv5.css">
+</head>
+<body class="layui-fluid">
+<div class="layui-init-container">
+    <blockquote class="layui-elem-quote layui-text">
+        <p class="layui-slogan"><span>笔记博客</span>&nbsp;初始化设置</p>
+        注：带红色[<span class="layui-danger-star">*</span>]的为必填项目，
+        带红色[<span class="layui-danger-attention">!</span>]的为提交不可更改项目。
+    </blockquote>
+    <hr class="hr layui-bg-gray">
+    <form class="layui-form" onkeydown="if (event.keyCode === 13) {layer.msg('请不要回车键键操作！', {icon: 2});return false;}">
+        <div id="base-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    站点标题
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="website_title" required lay-verify="required"
+                           placeholder="网站标题"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    浏览器选项卡处的标题
+                    <span class="layui-danger-star">*</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    LOGO文字
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="website_logo_words" required lay-verify="required"
+                           placeholder="LOGO处文字，不宜过多，4个汉字以内"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    LOGO处显示的文字
+                    <span class="layui-danger-star">*</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    您的用户名
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required lay-verify="required|username"
+                           placeholder="登录账号"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    您的后台登录账号
+                    <span class="layui-danger-star">*</span><span class="layui-danger-attention">!</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    登录密码
+                </label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" required lay-verify="required|pass"
+                           placeholder="登录密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    您的后台登录账号的密码
+                    <span class="layui-danger-star">*</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    重录密码
+                </label>
+                <div class="layui-input-inline">
+                    <input type="password" name="repeatPass" required lay-verify="required|repeatPass"
+                           placeholder="重复输入上面的密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    重复上面输入的密码
+                    <span class="layui-danger-star">*</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="advance-form" style="display: none;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    电子邮件
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" required lay-verify="required|mail"
+                           placeholder="输入您的电子邮件"
+                           autocomplete="email" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    填写以便后续开启更多功能（接收消息等）
+                    <span class="layui-danger-star">*</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">上传方式</label>
+                <div class="layui-input-inline">
+                    <select name="upload_type" required lay-verify="required" lay-filter="uploadMethod">
+                        <option value="LOCAL">本地服务器</option>
+                        <option value="QINIU">七牛云方式</option>
+                    </select>
+                </div>
+                <div class="layui-form-mid layui-word-aux">
+                    选择上传文件/图片的模式
+                    <span class="layui-danger-star">*</span>
+                </div>
+            </div>
+
+            <div id="local" style="display: none;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        配置路径
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" disabled readonly name="local_server"
+                               th:value="${#strings.isEmpty(uploadPathInEnv)?'未配置路径，请配置之后重启项目':uploadPathInEnv}"
+                               style="background: rgba(214,214,214,0.52);"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        在配置文件中配置的值
+                    </div>
+                </div>
+            </div>
+
+            <div id="qiniu" style="display: none;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        AccessKey
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="qiniu_accessKey" placeholder="accessKey" autocomplete="off"
+                               lay-verify="qiniu"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        您的七牛云的AccessKey
+                        <span class="layui-danger-star">*</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        SecretKey
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="qiniu_secretKey" placeholder="secretKey" autocomplete="off"
+                               lay-verify="qiniu"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        您的七牛云的SecretKey
+                        <span class="layui-danger-star">*</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        Bucket
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="qiniu_bucket" lay-verify="qiniu"
+                               placeholder="bucket"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        您的七牛云Bucket
+                        <span class="layui-danger-star">*</span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        访问域名
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="qiniu_domain" lay-verify="qiniu"
+                               placeholder="bucket"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        访问您的七牛云存储的域名
+                        <span class="layui-danger-star">*</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <hr class="hr layui-bg-gray">
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" type="button" id="next">下一步&nbsp;&gt;&gt;</button>
+                <button class="layui-btn" type="button" id="prev" style="display: none;">&lt;&lt;&nbsp;上一步</button>
+                <button class="layui-btn" id="submit" type="submit" lay-submit lay-filter="nbInit"
+                        style="display: none;">提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/md5/md5.min.js"></script>
+<script src="/static/assets/js/init.js"></script>
+
+</body>
+</html>

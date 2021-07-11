@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>笔记博客后台管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/static/plugins/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/assets/css/admin-nbv5.css" media="all">
+    <style>
+        .layui-form-label {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 5px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-fluid layui-anim layui-anim-upbit" id="LAY-settings-profile" style="padding-bottom: 50px;">
+    <div class="layui-row layui-col-space20 layui-form">
+        <div class="layui-col-md8">
+
+            <div class="layui-card">
+                <div class="layui-card-header">管理员资料设置</div>
+                <div class="layui-card-body">
+
+                    <div class="layui-form">
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">用户名</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <label class="layui-form-label layui-blue" style="text-align: left;"
+                                           th:text="${nbv5su.username}"></label>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-mid layui-word-aux layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    修改结果需重新登录生效
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">昵称</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="text" name="nickname" required lay-verify="required"
+                                           placeholder="请输入昵称" th:value="${nbv5su.nickname}"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-row">
+                                    <div class="layui-form-mid layui-word-aux layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                        修改结果需重新登录生效
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">邮箱</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="text" name="email" required lay-verify="required"
+                                           placeholder="请输入昵称" th:value="${nbv5su.email}"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-mid layui-word-aux layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    修改结果需重新登录生效
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">头像</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <p id="avatar" style="cursor: pointer;">
+                                        <img th:src="${nbv5su.avatar}" style="width: 70px;height: 70px;"
+                                             class="layui-circle"/>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-mid layui-word-aux layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    修改结果需重新登录生效
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">密码</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="password" name="password1" placeholder="请输入密码，留空则不做修改"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-mid layui-word-aux layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    6~16位密码长度
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">确认密码</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="password" name="password2" placeholder="请重复输入密码" autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-row">
+                                <div class="layui-form-mid layui-word-aux layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    请重复上面输入的
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    <button type="button" class="layui-btn" lay-submit lay-filter="profileForm">提交更改
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">发送邮件服务器设置</div>
+                <div class="layui-card-body">
+
+
+                    <div class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">SMTP服务器</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="text" name="mail_smpt_server_addr"
+                                           th:value="${settings.mail_smpt_server_addr}"
+                                           class="layui-input">
+                                    <div class="layui-row">
+                                        <div class="layui-col-xs12">
+                                            <div class="layui-form-mid layui-word-aux">如：smtp.163.com</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">SMTP端口号</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="number" name="mail_smpt_server_port"
+                                           th:value="${settings.mail_smpt_server_port}"
+                                           class="layui-input">
+                                    <div class="layui-row">
+                                        <div class="layui-col-xs12">
+                                            <div class="layui-form-mid layui-word-aux">一般为 25 或 465</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">发件人邮箱</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="text" name="mail_server_account"
+                                           th:value="${settings.mail_server_account}"
+                                           lay-verify="email"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">发件人账号</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="text" name="mail_sender_name" th:value="${settings.mail_sender_name}"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                    <div class="layui-row">
+                                        <div class="layui-col-xs12">
+                                            <div class="layui-form-mid layui-word-aux">一般为邮箱前缀</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs4 layui-col-sm3">
+                                    <label class="layui-form-label">邮箱登入密码</label>
+                                </div>
+                                <div class="layui-col-xs7 layui-col-sm8">
+                                    <input type="text" name="mail_server_password"
+                                           th:value="${settings.mail_server_password}"
+                                           autocomplete="off"
+                                           class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-xs7 layui-col-sm8 layui-col-xs-offset4 layui-col-sm-offset3">
+                                    <button type="button" class="layui-btn" lay-submit lay-filter="set_system_email">
+                                        确认保存
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">赞赏二维码设置</div>
+                <div class="layui-card-body">
+
+                    <div class="layui-row">
+                        <div class="layui-col-md12" style="margin-bottom: 20px;">
+
+
+                        </div>
+
+                        <div class="layui-col-md12">
+                            <button type="button" class="layui-btn" id="wechat">
+                                <i class="layui-icon">&#xe67c;</i>微信
+                            </button>
+                            <p id="w" style="margin-top: 15px;">
+                                <img th:src="${wechat}" style="width: 150px;height: 150px;"/>
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="layui-card">
+                <div class="layui-card-header">邮件通知</div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-xs5">
+                                <p class="layui-form-label">评论邮件通知</p>
+                            </div>
+                            <div class="layui-col-xs7">
+                                <input type="checkbox" name="comment_mail_notice_onoff" lay-skin="switch"
+                                       lay-text="开启|关闭"
+                                       lay-filter="switchFilter"
+                                       th:checked="${settings.comment_mail_notice_onoff eq '1'}">
+                            </div>
+                            <div class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
+                                <div class="layui-form-mid layui-word-aux">开启则每当文章有新评论，则会邮件通知您（发送到您初始化时设置的账号）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-xs5">
+                                <p class="layui-form-label">留言邮件通知</p>
+                            </div>
+                            <div class="layui-col-xs7">
+                                <input type="checkbox" name="message_mail_notice_onoff" lay-skin="switch"
+                                       lay-text="开启|关闭"
+                                       lay-filter="switchFilter"
+                                       th:checked="${settings.message_mail_notice_onoff eq '1'}">
+                            </div>
+                            <div class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
+                                <div class="layui-form-mid layui-word-aux">开启则每当站点有新留言，则会邮件通知您（发送到您初始化时设置的账号）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-xs5">
+                                <p class="layui-form-label">开启用户注册</p>
+                            </div>
+                            <div class="layui-col-xs7">
+                                <input type="checkbox" name="user_simple_reg_onoff" lay-skin="switch"
+                                       lay-text="开启|关闭"
+                                       lay-filter="switchFilter"
+                                       th:checked="${settings.user_simple_reg_onoff eq '1'}">
+                            </div>
+                            <div class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
+                                <div class="layui-form-mid layui-word-aux">让用户自定义用户名注册</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/plugins/jquery/jquery-1.11.3.min.js"></script>
+<script src="/static/assets/js/noteblogv5.js"></script>
+<script src="/static/plugins/md5/md5.min.js"></script>
+<script>
+    layui.config({
+        base: '/static/plugins/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'profile']);
+</script>
+</body>
+</html>

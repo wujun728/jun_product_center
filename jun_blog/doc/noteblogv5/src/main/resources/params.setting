@@ -1,0 +1,71 @@
+[-1]
+init_status = 是否初始化,0
+admin_init_status = 是否设置了管理员账号,0
+system_started_datetime = 系统最近一次的启动时间
+system_init_datetime = 系统初始化时间
+
+[0]
+mail_smpt_server_addr = SMTP服务器
+mail_smpt_server_port = SMTP端口号
+mail_server_account = 发件人邮箱
+mail_sender_name = 发件人邮箱帐号（一般为@前面部分）
+mail_server_password = 邮箱登入密码
+
+qq_login_onoff = 是否开放qq登录,0
+qq_app_id = qq登录API的app_id
+qq_app_key = qq登录API的app_key
+
+github_login_onoff = 开启github登录,0
+github_client_id = github登录API Client ID
+github_client_secret = github登录API Client Secret
+
+qiniu_accessKey = 七牛云AccessKey
+qiniu_secretKey = 七牛云SecretKey
+qiniu_bucket = 七牛云bucket
+qiniu_domain = 七牛云文件服务器域名
+
+[1]
+article_page_size = 文章页面显示条数,12
+upload_type = 上传方式类型（七牛或本地），默认本地local，本地上传,local
+summary_length = 文章摘要文字长度,243
+comment_length = 评论文字长度,100
+global_comment_onoff = 是否全局开放评论,0
+message_onoff = 是否开启留言功能,0
+statistics_onoff = 是否开启统计，开启可能会消耗服务器资源（统计很粗糙、暴力）,0
+is_open_oss_upload = 是否开启云存储,0
+comment_mail_notice_onoff = 是否开启新评论邮件通知,0
+message_mail_notice_onoff = 是否开启新留言通知,0
+user_simple_reg_onoff = 是否开启用户注册,0
+is_show_download_page = 是否显示下载页面按钮,0
+is_show_product_page = 是否显示商城页面按钮,0
+
+[2]
+website_fontawesome = 网站的字体logo图标,fa fa-graduation-cap
+website_title = 网站标题,笔记博客
+website_logo_words = 网站的LOGO文字,笔记博客noteblogv5
+website_logo_small_words = 网站LOGO旁的小字,noteblogv5
+footer_words = 页脚的文字,欢迎加入QQ群：697053454
+menu_home = 导航菜单_首页名称,首页
+menu_note = 导航菜单_笔记名称,笔记
+menu_message = 导航菜单_留言名称,留言
+info_label_text = 信息板内容
+info_label_logo = 信息板的logo图标,/static/assets/img/nblogo.png
+info_label_nickname = 信息板上的名称
+index_top_text = 首页顶部的一些文字,欢迎加入QQ群：697053454
+comment_top_text = 评论面板上方的公告,欢迎加入QQ群：697053454
+message_top_notice = 留言页面顶部的文字,欢迎加入QQ群：697053454
+ubs_top_notice = 用户中心页面顶部的文字,欢迎加入QQ群：697053454
+link_apply_words = 友链申请提示信息文本,请联系站长QQ：876686736
+qrcode_alipay = 支付宝二维码,/static/assets/img/noqrcode.jpg
+qrcode_wechat = 微信支付二维码,/static/assets/img/noqrcode.jpg
+typesetting = 网站排版设置,left3right9
+article_page_style = 文章详细页面的风格，有无侧边栏,0
+bottom_logo = 网站底部LOGO图片,/static/assets/img/nblogo.png
+sign_check_coin = 每天签到加的硬币数量,0
+cash_recharge_url = 充值卡购买地址,[]
+seo_description = seo描述,
+seo_keyword = seo关键字,
+
+
+
+

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" th:content="${settings.info_label_nickname}" />
+    <meta name="description" th:content="${settings.seo_description}" />
+    <meta name="keywords" th:content="${settings.seo_keyword}" />
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/animate/animate.min.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="/static/assets/css/layui-theme-nbv5.css">
+    <link rel="stylesheet" href="/static/plugins/pushbar/pushbar.css">
+    <link rel="stylesheet" href="/static/assets/css/simple.css">
+    <link rel="stylesheet" href="/static/assets/css/article.css">
+    <link rel="stylesheet" href="/static/plugins/editormd/css/editormd.preview.min.css">
+    <title th:text="${article.title}"></title>
+</head>
+<body class="layui-anim layui-anim-fadein simple">
+<!--顶部导航栏-->
+<div th:replace="frontend/fragment/header"></div>
+<!--顶部文字-->
+<div class="layui-container top-block">
+    <blockquote class="layui-elem-quote">
+        <span class="layui-breadcrumb">
+            <a href="/">网站首页</a>
+            <a href="">[[${article.title}]]</a>
+            <a><cite>正文</cite></a>
+        </span>
+        <div class="clock layui-show-md-inline-block layui-show-lg-inline-block layui-hide-xs layui-hide-sm">
+            <span class="clock-font">当前日期</span>：<span id="current-datetime"></span>
+        </div>
+    </blockquote>
+</div>
+<!--内容文章正体-->
+<div id="main-body" class="layui-container">
+
+</div>
+<!--底部导航栏-->
+<div th:replace="frontend/fragment/footer"></div>
+<!--移动设备菜单导航-->
+<div th:replace="frontend/fragment/mobile_nav"></div>
+
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/assets/js/svg.js"></script>
+<script src="/static/plugins/jquery/jquery-2.1.4.min.js"></script>
+<script src="/static/assets/js/script.js"></script>
+<script src="/static/assets/js/nbv5.js"></script>
+<script src="/static/plugins/hc-sticky/hc-sticky.min.js"></script>
+<script src="/static/plugins/pushbar/pushbar.js"></script>
+<script src="/static/plugins/editormd/lib/marked.min.js"></script>
+<script src="/static/plugins/editormd/lib/prettify.min.js"></script>
+<script src="/static/plugins/editormd/lib/raphael.min.js"></script>
+<script src="/static/plugins/editormd/lib/underscore.min.js"></script>
+<script src="/static/plugins/editormd/lib/flowchart.min.js"></script>
+<script src="/static/plugins/editormd/lib/jquery.flowchart.min.js"></script>
+<script src="/static/plugins/editormd/lib/sequence-diagram.min.js"></script>
+<script src="/static/plugins/editormd/editormd.min.js"></script>
+<script th:inline="javascript">
+    $(function () {
+        window.addEventListener("scroll", nbv5front.headerScroll());
+        nbv5front.miniHeader("main-body");
+        nbv5front.miniTitle("main-body");
+        new Pushbar({
+            blur: true,
+            overlay: true
+        });
+
+
+        layui.use(['layer', 'element', 'article'], function () {
+            var layer = layui.layer,
+                element = layui.element,
+                article = layui.article;
+
+            var settings = [[${settings}]];
+            var articleObj = [[${article}]];
+            var author = [[${author}]];
+            var articlePageStyle = [[${settings.article_page_style}]];
+            var cateList = [[${cateList}]];
+            var tagList = [[${tagList}]];
+            var linkList = [[${linkList}]];
+            var randomArticles = [[${randomArticles}]];
+            var nbv5su = [[${nbv5su}]];
+            var tags = [[${tags}]];
+            var comments = [[${comments}]];
+
+            nbv5front.miniHeaderNavBtn(layer);
+
+            element.render();
+
+            if (articlePageStyle === '0' || articlePageStyle === '-1' || articlePageStyle === "1") {
+                article(settings, author, articleObj, cateList, tagList, linkList, randomArticles, nbv5su, tags, comments);
+            } else {
+                layer.msg('文章风格设置出错！');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

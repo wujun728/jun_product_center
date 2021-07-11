@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" th:content="${settings.info_label_nickname}" />
+    <meta name="description" th:content="${settings.seo_description}" />
+    <meta name="keywords" th:content="${settings.seo_keyword}" />
+    <link rel="shortcut icon" href="/static/assets/img/favicon.png">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/plugins/animate/animate.min.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="/static/assets/css/layui-theme-nbv5.css">
+    <link rel="stylesheet" href="/static/plugins/pushbar/pushbar.css">
+    <link rel="stylesheet" href="/static/assets/css/simple.css">
+    <link rel="stylesheet" href="/static/plugins/ubs-font/iconfont.css">
+    <link rel="stylesheet" href="/static/assets/css/ubs.css">
+    <title th:text="${nbv5su!=null?nbv5su.nickname:'用户中心'}"></title>
+</head>
+<body class="layui-anim layui-anim-fadein simple">
+<!--顶部导航栏-->
+<div th:replace="frontend/fragment/header (cur='ubs')"></div>
+
+<!--顶部文字-->
+<div class="layui-container top-block">
+    <blockquote class="layui-elem-quote">
+        <span class="layui-breadcrumb">
+            <a href="/">网站首页</a>
+            <a href="/login?redirectUrl=/ubs/token/index">用户中心</a>
+        </span>
+        <div class="clock layui-show-md-inline-block layui-show-lg-inline-block layui-hide-xs layui-hide-sm">
+            <span class="clock-font">当前日期</span>：<span id="current-datetime"></span>
+        </div>
+    </blockquote>
+</div>
+
+<!--内容文章正体-->
+<div id="main-body" class="layui-container layui-mt20" style="margin-bottom: 30px;">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md2 layui-hide-sm layui-hide-xs layui-show-md-inline-block left-nav">
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="/login?redirectUrl=/ubs/token/index" class="layui-this"><i class="fa fa-user-secret"></i>
+                        用户中心</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/ubs/token/message"><i class="fa fa-envelope"></i> 我的消息</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/ubs/token/comment"><i class="fa fa-comment"></i> 我的评论</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/ubs/token/purchase"><i class="fa fa-shopping-cart"></i> 我的购买</a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="layui-col-md10 right-nav animated fadeInUp">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding: 30px;">
+                    <blockquote class="layui-elem-quote"
+                                th:text="'Hi!,'+${nbv5su.nickname}+'。'+${settings.ubs_top_notice}"></blockquote>
+                    <hr>
+                    <div class="layui-row layui-mt20">
+                        <img th:src="${nbv5su.avatar}" id="avatar" class="layui-circle">
+                        <label th:text="${nbv5su.nickname}" style="margin-left: 5px;"></label>
+                        <label style="color: #F44336;" th:if="${nbv5su.role == 1}"><b>[管理员]</b></label>
+                        <label th:if="${nbv5su.role == 2}"><b>[注册用户]</b></label>
+                        <label th:if="${nbv5su.role == 3}"><b>[QQ用户]</b></label>
+                        <label th:if="${nbv5su.role == 4}"><b>[Github用户]</b></label>
+                        <a href="/token/logout" class="layui-btn layui-btn-primary layui-btn-sm"><i
+                                class="fa fa-sign-out"></i> 退出</a>
+                    </div>
+                    <div class="layui-row layui-mt20">
+                        <a th:if="${signed eq 0}" class="layui-btn-sm layui-btn layui-bg-black" id="sign">
+                            <i class="fa fa-check"></i> 签到
+                        </a>
+                        <span th:if="${signed eq 1}" style="border: 1px solid #cccccc;padding: 5px 10px;"><i
+                                class="fa fa-check"></i> 已签到</span>
+                        <small class="layui-text layui-word-aux">每日一次，一次 [[${settings.sign_check_coin}]]
+                            个</small>
+                    </div>
+                    <div class="layui-row layui-mt20">
+                        <label style="font-size: 16px;margin-top: 15px;">你所持有的硬币个数为：<img
+                                src="/static/assets/img/coin.png"
+                                style="width: 15px;margin-top: -2px;">
+                            <span style="color: #ff262e;" id="remainCoin">loading...</span>
+                        </label>
+                    </div>
+                    <div class="layui-row layui-mt10">
+                        <p class="layui-word-aux layui-text layui-show-sm-inline-block layui-hide-md">请使用PC浏览器进行充值</p>
+                        <button id="recharge" type="button"
+                                class="layui-btn layui-btn-sm layui-show-md-inline-block layui-hide-sm layui-hide-xs">充值
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="layui-row layui-mt10">
+                        <label for="nickname">
+                            <input type="text" id="nickname" th:value="${nbv5su.nickname}" class="layui-input"
+                                   style="max-width: 200px;display: inline-block;">
+                        </label>
+                        <button type="button" class="layui-btn layui-btn-primary" id="nickname-change">修改</button>
+                    </div>
+                    <hr>
+                    <div class="layui-row layui-mt20" th:if="${nbv5su.role == 2}">
+                        <p style="max-width: 200px;">
+                            <input class="layui-input" type="password" name="password" placeholder="输入新密码（至少6位）"
+                                   minlength="6">
+                        </p>
+                        <p style="max-width: 200px;margin-top: 20px;">
+                            <input class="layui-input" type="text" name="mailCode" placeholder="输入邮箱中的验证码">
+                        </p>
+                        <p class="layui-mt20">
+                            <button id="sendMailCode" class="layui-btn layui-btn-primary layui-btn-sm"
+                                    type="button">
+                                <span id="sendCode">点击发送</span><span id="sendSeconds"></span>
+                            </button>
+                            <button type="button" class="layui-btn  layui-btn-sm" id="pass-change">提交修改</button>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--底部导航栏-->
+<div th:replace="frontend/fragment/footer"></div>
+<!--移动设备菜单导航-->
+<div th:replace="frontend/fragment/mobile_nav"></div>
+
+<div style="display: none;" id="dialog">
+    <div class="layui-container dialog-title">
+        <p style="width: 500px;"><img src="/static/assets/img/noavatar.png" class="layui-circle avatar"><label style="margin-left: 10px;">啦啦啦2.1</label><a
+                class="pull-right close-dialog" id="closeDialog">x</a></p>
+    </div>
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this"><i class="iconfont icon-card"></i> 充值卡充值</li>
+            <li><i class="iconfont icon-changgewechat"></i> 微信扫码</li>
+            <li><i class="iconfont icon-ali-pay"></i> 支付宝扫码</li>
+            <li><i class="fa fa-user-md"></i> 购买会员</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;padding: 30px;">
+            <div class="layui-tab-item layui-show animated fadeIn">
+                <p class="layui-elem-quote">充值卡购买地址：<a th:each="recharge:${settings.recharges}"
+                                                       th:href="${recharge.url}" target="_blank"
+                                                       style="margin-left: 10px;text-decoration: underline;">[[${recharge.name}]]</a>
+                </p>
+                <p class="layui-text layui-word-aux">卡密充值即时到账，但是卡密数量有限，且没有充值奖励。</p>
+                <p class="layui-mt20">
+                    <label style="width: 10%;display: inline-block;">卡密：</label>
+                    <input class="layui-input layui-input-inline" style="width: 80%;" name="cashNo"
+                           placeholder="输入16位卡密，如：ABCD-EFGH-IJKL-MNOP">
+                </p>
+                <p class="layui-mt20 text-center layui-row">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-col-xs3"
+                            id="cash-cancel">取消
+                    </button>
+                    <button type="button" class="layui-btn layui-btn-sm layui-col-xs8" id="cash-recharge">点我充值</button>
+                </p>
+                <p class="layui-mt20">
+                    <span class="layui-text layui-word-aux"
+                          style="font-style: italic;">注：1. 此商品为虚拟商品，一经售出恕不退换。</span><br>
+                    <span class="layui-text layui-word-aux" style="font-style: italic;">2. 充值卡充值的硬币兑换比为 1RMB = 10硬币，没有任何充值奖励。</span>
+                </p>
+            </div>
+            <div class="layui-tab-item animated fadeIn">
+                <div class="layui-row">
+                    <div class="layui-col-xs4">
+                        <img style="width: 150px;" th:src="${settings.qrcode_wechat}">
+                    </div>
+                    <div class="layui-col-xs8">请使用<span style="color: #F44336;">【<b>微信</b>】</span>扫码。
+                        <p class="layui-mt15"><b>注：微信扫码付款需要等待确认（最快30秒，最慢不会超过2分钟）。</b></p>
+                        <p class="layui-mt15">待确认完毕30秒之内硬币就会到账。</p>
+                    </div>
+                </div>
+                <div class="layui-row layui-mt20" style="font-style: italic;">
+                    <p class="layui-text layui-word-aux">1. 特别注意：此付款方式为直接转账，请悉知。</p>
+                    <p class="layui-text layui-word-aux">2. 硬币兑换比：1 RMB = 18(10+8) 硬币，8硬币为微信充值额外奖励。</p>
+                    <p class="layui-text layui-word-aux">3. 转账中出现的小数一律视为舍去，如：29.3取29，30.8取30。</p>
+                    <p class="layui-text layui-word-aux">4. 若充值当中出现任何疑问，请联系QQ：<a target="_blank"
+                                                                                 href="http://wpa.qq.com/msgrd?v=3&amp;uin=876686736&amp;site=qq&amp;menu=yes">876686736</a>。
+                    </p>
+                </div>
+            </div>
+            <div class="layui-tab-item animated fadeIn">
+                <div class="layui-row">
+                    <div class="layui-col-xs4">
+                        <img style="width: 150px;" th:src="${settings.qrcode_alipay}">
+                    </div>
+                    <div class="layui-col-xs8">请使用<span style="color: #F44336;">【<b>支付宝</b>】</span>扫码。
+                        <p class="layui-mt15"><b>注：支付宝扫码付款需要等待确认（最快30秒，最慢不会超过2分钟）。</b></p>
+                        <p class="layui-mt15">待确认完毕30秒之内硬币就会到账。</p>
+                    </div>
+                </div>
+                <div class="layui-row layui-mt20" style="font-style: italic;">
+                    <p class="layui-text layui-word-aux">1. 特别注意：此付款方式为直接转账，请悉知。</p>
+                    <p class="layui-text layui-word-aux">2. 硬币兑换比：1 RMB = 20(10+10) 硬币，10硬币为微信充值额外奖励。</p>
+                    <p class="layui-text layui-word-aux">3. 转账中出现的小数一律视为舍去，如：29.3取29，30.8取30。</p>
+                    <p class="layui-text layui-word-aux">4. 若充值当中出现任何疑问，请联系QQ：<a target="_blank"
+                                                                                 href="http://wpa.qq.com/msgrd?v=3&amp;uin=876686736&amp;site=qq&amp;menu=yes">876686736</a>。
+                    </p>
+                </div>
+            </div>
+            <div class="layui-tab-item animated fadeIn"><b>即将开放...</b></div>
+        </div>
+    </div>
+
+</div>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="/static/plugins/layui/layui.js"></script>
+<script src="/static/assets/js/svg.js"></script>
+<script src="/static/plugins/jquery/jquery-2.1.4.min.js"></script>
+<script src="/static/plugins/inputmask/inputmask.min.js"></script>
+<script src="/static/plugins/inputmask/jquery.inputmask.min.js"></script>
+<script src="/static/plugins/inputmask/inputmask.binding.js"></script>
+<script src="/static/assets/js/script.js"></script>
+<script src="/static/assets/js/nbv5.js"></script>
+<script src="/static/plugins/md5/md5.min.js"></script>
+<script src="/static/plugins/hc-sticky/hc-sticky.min.js"></script>
+<script src="/static/plugins/pushbar/pushbar.js"></script>
+<script th:inline="javascript">
+    $(function () {
+        window.addEventListener("scroll", nbv5front.headerScroll());
+        nbv5front.miniHeader("main-body");
+        new Pushbar({
+            blur: true,
+            overlay: true
+        });
+
+
+        layui.use('ubs', function () {
+            var ubs = layui.ubs;
+            $.post("/ubs/token/getUserRemainCoin", {
+                userId: [[${nbv5su.id}]]
+            }, function (resp) {
+                $("#remainCoin").text(resp.data)
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

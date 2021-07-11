@@ -1,0 +1,48 @@
+<div class="header mini">
+    <div class="layui-container header-content">
+        <div class="layui-row nav-header">
+            <div class="layui-col-xs9 layui-col-sm4">
+                <a class="logo" href="/">
+                    <i th:class="${settings.website_fontawesome}"></i>&nbsp;[[${settings.website_logo_words}]]</a>
+                <small th:text="${settings.website_logo_small_words}"></small>
+            </div>
+            <div class="layui-col-xs3 layui-col-sm-offset2 layui-col-sm4 layui-hide-md layui-hide-lg nav-btn">
+                <a href="javascript:nbv5front.hideOpen();" id="side-nav-open"
+                   data-pushbar-target="bottomNav"><i class="fa fa-navicon"></i> </a>
+                <a href="javascript:nbv5front.hideClose();" id="side-nav-close" style="display: none;"
+                   data-pushbar-close><i class="fa fa-times" style="font-size: 18px;"></i> </a>
+            </div>
+            <div class="layui-col-sm5 layui-hide layui-show-lg-inline-block layui-show-md-inline-block nav-btn right">
+                <a href="/index" th:data-title="${settings.menu_home}" th:class="${cur eq 'index' ?'active':''}">
+                    <i class="layui-icon layui-icon-home"></i>
+                    <span th:text="${settings.menu_home}"></span>
+                </a>
+                <a href="/note" th:data-title="${settings.menu_note}" th:class="${cur eq 'note' ?'active':''}">
+                    <i class="layui-icon layui-icon-form"></i>
+                    <span th:text="${settings.menu_note}"></span>
+                </a>
+                <a href="/message" th:data-title="${settings.menu_message}" th:class="${cur eq 'message' ?'active':''}">
+                    <i class="layui-icon layui-icon-chat"></i>
+                    <span th:text="${settings.menu_message}"></span>
+                </a>
+                <a href="/login?redirectUrl=/ubs/token/index" data-title="用户" th:class="${cur eq 'ubs' ?'active':''}">
+                    <i class="layui-icon layui-icon-user"></i>
+                    <span>用户</span>
+                </a>
+                <a th:if="${settings.is_show_download_page eq '1'}" href="/dl" data-title="下载" th:class="${cur eq 'dl' ?'active':''}">
+                    <i class="layui-icon layui-icon-chart"></i>
+                    <span>下载</span>
+                </a>
+                <a th:if="${settings.is_show_product_page eq '1'}" href="/product/index" data-title="商城" th:class="${cur eq 'product' ?'active':''}">
+                    <i class="layui-icon layui-icon-cart"></i>
+                    <span>商城</span>
+                </a>
+                <a href="javascript:nbv5front.searchDialog();" data-title="搜索">
+                    <i class="layui-icon layui-icon-search"></i>
+                    <span>搜索</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="header-hr">
