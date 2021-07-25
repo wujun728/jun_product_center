@@ -4,7 +4,7 @@
   <groupId>com.jun.biz</groupId>
   <artifactId>jepp_music</artifactId>
   <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>jun_music Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.pms.root</groupId>
   <artifactId>pms-parent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>pom</packaging>
   <modules>
     <module>pms-common-util</module>
@@ -11,7 +11,7 @@
     <module>pms-web</module>
   </modules>
   <properties>
-  	<pms.version>0.0.1-SNAPSHOT</pms.version>
+  	<pms.version>1.0</pms.version>
   </properties>
   <dependencyManagement>
 		<dependencies>

@@ -5,7 +5,7 @@
 
     <groupId>com.kakarote</groupId>
     <artifactId>wkcrm</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>pom</packaging>
 
     <name>wkcrm</name>

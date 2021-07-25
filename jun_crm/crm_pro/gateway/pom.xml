@@ -6,11 +6,11 @@
     <parent>
         <groupId>com.kakarote</groupId>
         <artifactId>wkcrm</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>wk_gateway</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>gateway</name>
     <description>gateway网关</description>
     <dependencies>

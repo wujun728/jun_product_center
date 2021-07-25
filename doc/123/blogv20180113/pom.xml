@@ -5,7 +5,7 @@
 
     <groupId>me.wuwenbin</groupId>
     <artifactId>blogv20180113</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>NoteBlog</name>

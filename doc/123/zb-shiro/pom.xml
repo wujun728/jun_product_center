@@ -5,7 +5,7 @@
 
 	<groupId>com.nbclass</groupId>
 	<artifactId>zb-shiro</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>zb-shiro</name>

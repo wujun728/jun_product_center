@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>com.kakarote</groupId>
 		<artifactId>wkcrm</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0</version>
 
 	</parent>
 
 	<artifactId>wk_crm</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>crm</name>
 	<description>客户关系管理</description>
 
