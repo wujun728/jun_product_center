@@ -4,7 +4,7 @@
   <groupId>com.itstyle.quartz</groupId>
   <artifactId>spring-data-quartz</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>spring-data-quartz</name>
   <url>http://maven.apache.org</url>
    <properties>

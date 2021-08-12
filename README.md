@@ -1,15 +1,39 @@
 ### `jun_product` 项目
 
 #### 介绍
-Maven构建项目的结构模板
+1. jun_product_center   ->产品中心，企业信息化产品孵化中心、功能模块化、等等
+   product_center_image_manage
+   product_center_pay
+   product_center_orderfood
+   product_center_park
+   product_center_portal
+   product_center_app
+   product_center_edu
+   product_center_garbagesort
+   product_center_music
+   product_center_quartz
+   product_center_resume_java
+   product_center_resume_pm
+   product_center_spring
+   product_center_task
+   product_center_wms
+   product_center_exam
 
-#### 软件架构
-软件架构说明
+   product_center_website   -> 企业网站系统，基于WordPress的网站系统、支持博客、企业官网及各种网站模板
+   product_center_wordpress  -> WordPress网站系统，基于WordPress的网站系统、支持博客、企业官网及各种网站模板
+   product_center_official_website   -> 官网网站系统
+   product_center_navigation   -> 导航网站
+   product_center_blog  ->博客管理系统
 
-#### 安装教程
-1. clone此项目到本地
-2. 修改pom.xml文件，把groupId, artifactId,name 修改掉
-3. 修改pom.xml文件，把本项目所需要的依赖添加进去
+   product_center_oa   ->企业办公自动化OA系统
+   product_center_hr  ->企业人力资源管理系统
+   product_center_erp  ->企业资源管理系统
+   product_center_crm   ->企业客户关系管理系统
+   product_center_finance   ->企业财务管理系统
+   product_center_flybbs   ->企业BBS论坛
+   product_center_mall   ->企业网上商城
+   product_center_mis   ->企业管理資訊系統
+   wujun728.github.io  ->个人博客
 
 财务系统
 HR人事系统
@@ -21,7 +45,7 @@ IT服务系统
 差旅服务系统
 项目管理系统
 OA办公管理
- 
+
 
 发件人: wujun (I)
 发送时间: 2021年6月30日 16:00
@@ -29,13 +53,13 @@ OA办公管理
 主题: note_chinasoft
 
  
- 
+
 1、财务管理
 财务服务
 支付报销
 发薪账户
 内控风险
- 
+
 2、HR服务
 考勤系统
 员工手册
@@ -45,20 +69,20 @@ EM系统
 HRBP专区
 商保政策
 员工行为规范
- 
+
 3、行政服务
 差旅服务
 资产管理
 保修服务
 更多服务
+
  
- 
- 
+
 3、公司平台
 公司官网
 权限配置
 公告消息
- 
+
 6、IT服务
 常见问题解答
 员工有问必答
@@ -69,13 +93,13 @@ IT服务
 密码取回
 权限申请
 设备进出
- 
+
 7、知识库赋能
 知识学习
 学习平台
 解决方案库
 公司知识库
- 
+
 7、项目运营
 运营管理
 运营平台
@@ -84,8 +108,7 @@ IT服务
 项目成果归档
 BCG签署
 销售专区
- 
- 
+
 1、OA办公
 OA办公
 工作待办
@@ -122,7 +145,7 @@ spring-Boot_templates_layui-Admin\   干掉，layamdin到layui
 spring-shiro-training\   干掉，迁移到ssm里面
 sypro\   保留，迁移到ssh里面
 zb-shiro\   保留，迁移到jun_boot里面
- 
+
 jun_administrative\   干掉
 jun_ask_discuss\   干掉
 jun_blog\   博客系统
@@ -140,9 +163,9 @@ jun_oa\
 jun_op\
 jun_portal\
 jun_prj\
- 
+
 jun_filemanage
- 
+
 jun_resume_java\
 jun_resume_pm\
 jun_spring\   迁移到ssm里面
@@ -166,7 +189,7 @@ graphviz-2.30.1-22.el7.x86_64.rpm 干掉
 graphviz-2.39.20150710.2019-1.el7.x86_64.rpm 干掉
 jun_baiduyun.zip   迁移到baiduyun
 jun_calendar.zip 迁移到jun_clendar
- 
+
 Easyui+SSM   --API
 Bootstrap+Boot ---MIS
 LayUI+SSM --blog
@@ -200,7 +223,7 @@ tcc-transaction-bom
 分布式锁
 https://www.cnblogs.com/zhili/p/redisdistributelock.html
 流程引擎
- 
+
 权限管理
 https://hub.fastgit.org/Mandelo/ssm_shiro_blog
 https://hub.fastgit.org/Heeexy/SpringBoot-Shiro-Vue
@@ -492,13 +515,13 @@ https://hub.fastgit.org/qq283335746/Asset
 https://hub.fastgit.org/h-yazhe/device-manager
 
 
- 
+
 1、财务管理
 财务服务
 支付报销
 发薪账户
 内控风险
- 
+
 2、HR服务
 考勤系统
 员工手册
@@ -508,18 +531,18 @@ EM系统
 HRBP专区
 商保政策
 员工行为规范
- 
+
 3、行政服务
 差旅服务
 资产管理
 保修服务
 更多服务
- 
+
 0、公司平台
 公司官网
 权限配置
 公告消息
- 
+
 6、IT服务
 常见问题解答
 员工有问必答
@@ -530,13 +553,13 @@ IT服务
 密码取回
 权限申请
 设备进出
- 
+
 5、知识库赋能
 知识学习
 学习平台
 解决方案库
 公司知识库
- 
+
 4、项目运营
 运营管理
 运营平台
@@ -545,7 +568,7 @@ IT服务
 项目成果归档
 BCG签署
 销售专区
- 
+
 1、OA办公
 OA办公
 工作待办
@@ -553,5 +576,5 @@ OA办公
 电子流待办
 办公审批
 OA工作台
- 
+
  

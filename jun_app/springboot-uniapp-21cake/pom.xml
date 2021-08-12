@@ -4,7 +4,7 @@
     <parent>
         <artifactId>boot</artifactId>
         <groupId>com.itcqm.springboot</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <groupId>com.itcqm</groupId>
     <artifactId>spring-boot-uniapp-21cake</artifactId>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>com.itcqm.springboot</groupId>
             <artifactId>spring-boot-commons</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <dependency>

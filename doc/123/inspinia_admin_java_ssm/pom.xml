@@ -6,7 +6,7 @@
 
   <groupId>com.wys</groupId>
   <artifactId>inspinia_admin_java_ssm</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <packaging>war</packaging>
 
   <name>inspinia_admin_java_ssm Maven Webapp</name>

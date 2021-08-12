@@ -7,7 +7,7 @@
     <groupId>com.lu</groupId>
     <artifactId>lu-generate</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <modules>
         <module>WebManage</module>
         <module>LuCore</module>
