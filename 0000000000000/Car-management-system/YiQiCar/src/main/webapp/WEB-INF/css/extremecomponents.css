@@ -1,0 +1,49 @@
+/*eXtremeTable样式调整 2010-4-23 by Hugo*/
+.eXtremeTable              { background:#7BB5D7; margin:0; padding: 0; }
+.eXtremeTable td           { border:1px solid #7BB5D7; *border:none; height:22px; line-height:22px; padding:2px;}
+*+html .eXtremeTable td    { border:none;}
+.eXtremeTable .tableRegion { padding:2px; margin-top:7px; } /*表格主体*/
+
+/*分页样式*/
+.eXtremeTable select         { font-size:9px; border: solid 1px #EEE; width:40px; } /*页面选择*/
+
+.eXtremeTable .title         { color: #444; font-weight: bold; font-size: 15px; vertical-align: middle; }
+.eXtremeTable .title span    { margin-left: 7px; }
+.eXtremeTable .titleRow      { background-color: #F4F4F4; }
+.eXtremeTable .titleRow td   { border-bottom: 1px solid #308dbb; padding-top: 2px; padding-bottom: 2px; vertical-align: middle; text-align: center; }
+.eXtremeTable .titleRow span { color: #444; font-weight: bold; font-size: 14px; }
+
+/*表头*/
+.eXtremeTable .tableHeader,
+.eXtremeTable .tableHeaderSort { font-weight: bold; text-align:center;} /*共有样式*/
+.eXtremeTable .tableHeader     { background:#f8fcfc url(../images/bg-table-th.gif) repeat-x 0 0;}/*默认样式*/
+.eXtremeTable .tableHeaderSort { background:#f8fcfc url(../images/bg-table-th-hover.gif) repeat-x 0 0;}/*鼠标悬停时样式*/
+
+/*奇偶行样式*/
+.eXtremeTable .odd a,
+.even a { color:black; } /*Rows链接样式*/
+.eXtremeTable .odd td,
+.eXtremeTable .even td { padding:2px 3px 2px 3px; vertical-align: middle;}
+.eXtremeTable .odd     { background-color:#FFF;} /*Rows默认奇数行样式*/
+.eXtremeTable .even    { background-color:#f5fafc;} /*Rows默认偶数行样式*/
+
+.eXtremeTable .highlight td { color:black; padding:2px 3px; vertical-align: middle; background-color:#D2EEF4; } /*Rows鼠标悬停样式*/
+.eXtremeTable .highlight a,
+.highlight a { color:black; } /*链接样式*/
+
+/*分页页面选择外框*/
+.eXtremeTable .compactToolbar  { background-color:#fff;}
+
+.eXtremeTable .toolbar         { font-size: 9px; margin-right: 1px; border: 1px solid silver; }
+.eXtremeTable .toolbar a:hover { background-color: transparent; }
+.eXtremeTable .toolbar td      { color: #444; padding:0px 3px; text-align: center; }
+
+/*分页列表数据信息概览*/
+.eXtremeTable .statusBar     { background-color:#fff;}
+
+.eXtremeTable .formButtons   { display: block; margin-top: 12px; margin-left: 5px; }
+.eXtremeTable .formButton    { cursor: pointer; font-weight: bold; background-color: #308dbb; color: white; margin-top: 5px; border: outset 1px #333; vertical-align: middle; }
+
+.eXtremeTable .calcRow    { background-color: #F4F4F4; }
+.eXtremeTable .calcTitle  { background-color: #F4F4F4; color: black; font-weight: bold; }
+.eXtremeTable .calcResult { background-color: #F4F4F4; color: black; }

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysDictDataMapper">
+
+    <resultMap id="SysDictDataMap" type="SysDictData">
+        <id column="data_id" property="dataId"></id>
+        <result column="data_label" property="dataLabel"></result>
+        <result column="data_value" property="dataValue"></result>
+        <result column="type_code" property="typeCode"></result>
+        <result column="is_default" property="isDefault"></result>
+        <result column="enable" property="enable"></result>
+        <result column="update_by" property="updateBy"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="remark" property="remark"></result>
+    </resultMap>
+
+    <select id="selectList" parameterType="SysDictData" resultMap="SysDictDataMap">
+        select * from sys_dict_data
+        <where>
+            <if test="typeCode!=null and typeCode!=''">
+                and type_code = #{typeCode}
+            </if>
+        </where>
+        order by data_value asc
+    </select>
+
+    <select id="selectById" parameterType="string" resultMap="SysDictDataMap">
+        select * from sys_dict_data where data_id = #{dataId}
+    </select>
+
+    <select id="selectByCode"  resultMap="SysDictDataMap">
+       select * from sys_dict_data s
+       where s.type_code = #{typeCode}
+       order by s.data_value asc
+    </select>
+
+    <select id="queryTableDictItemsByCode" parameterType="string" resultMap="SysDictDataMap">
+         select ${text} as "data_label", ${code} as "data_value" from ${table}
+    </select>
+
+    <select id="queryTableDictItemsByCodeAndFilter" resultMap="SysDictDataMap">
+         select ${text} as "data_label", ${code} as "data_value" from ${table}
+        <if test="filterSql != null and filterSql != ''">
+            where ${filterSql}
+        </if>
+    </select>
+
+    <select id="queryTableDictByKeys" resultMap="SysDictDataMap">
+         select ${text} as "data_label", ${code} as "data_value" from ${table} where ${code} in
+        <foreach item="key" collection="keyArray" open="(" separator="," close=")">
+            #{key}
+        </foreach>
+    </select>
+
+    <insert id="insert" parameterType="SysDictData">
+        insert into sys_dict_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dataId!=null and dataId!=''">
+                data_id,
+            </if>
+            <if test="dataLabel!=null and dataLabel!=''">
+                data_label,
+            </if>
+            <if test="dataValue!=null and dataValue!=''">
+                data_value,
+            </if>
+            <if test="typeCode!=null and typeCode!=''">
+                type_code,
+            </if>
+            <if test="isDefault!=null and isDefault!=''">
+                is_default,
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark,
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="dataId!=null and dataId!=''">
+                #{dataId},
+            </if>
+            <if test="dataLabel!=null and dataLabel!=''">
+                #{dataLabel},
+            </if>
+            <if test="dataValue!=null and dataValue!=''">
+                #{dataValue},
+            </if>
+            <if test="typeCode!=null and typeCode!=''">
+                #{typeCode},
+            </if>
+            <if test="isDefault!=null and isDefault!=''">
+                #{isDefault},
+            </if>
+            <if test="remark!=null and remark!=''">
+                #{remark},
+            </if>
+            <if test="enable!=null and enable!=''">
+                #{enable},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="SysDictData">
+        update sys_dict_data
+        <set>
+            <if test="dataLabel!=null and dataLabel!=''">
+                data_label = #{dataLabel},
+            </if>
+            <if test="dataValue!=null and dataValue!=''">
+                data_value = #{dataValue},
+            </if>
+            <if test="typeCode!=null and typeCode!=''">
+                type_code = #{typeCode},
+            </if>
+            <if test="isDefault!=null and isDefault!=''">
+                is_default = #{isDefault},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable = #{enable},
+            </if>
+        </set>
+        where data_id =  #{dataId}
+    </update>
+
+    <delete id="deleteById" parameterType="string">
+          delete from sys_dict_data where data_id = #{id}
+    </delete>
+
+    <delete id="deleteByCode" parameterType="string">
+          delete from sys_dict_data where type_code = #{code}
+    </delete>
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.citylife.mapper.CActivityMapper">
+
+
+  <select id="getSwiperActivity" resultType="com.ruoyi.citylife.domain.CActivity">
+    select id,img
+    from c_activity
+    where deleted=0
+    and checked=1
+    and likes+5>unlikes
+    order by views/10+collections+likes+comments-5*unlikes desc
+    limit 5
+  </select>
+  <select id="getActivityList" resultType="com.ruoyi.citylife.domain.CActivity">
+    select *
+    from c_activity
+    where deleted=0
+    and checked=1
+    and likes+5>unlikes
+    order by id desc
+    limit #{param1},#{param2}
+  </select>
+</mapper>

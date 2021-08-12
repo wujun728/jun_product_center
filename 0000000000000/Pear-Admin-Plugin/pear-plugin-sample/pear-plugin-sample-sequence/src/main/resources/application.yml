@@ -1,0 +1,14 @@
+# Pear Plugin
+pear:
+  # 组 件 列 表
+  plugin:
+    # 分 布 式 ID 组件
+    sequence:
+      # 机 器 ID
+      worker-id: 1
+      # 数 据 中 心
+      data-center-id: 1
+      # 最 小 闲 置
+      min-idle: 100
+      # 初 始 化 数 量
+      init-size: 70000

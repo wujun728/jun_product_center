@@ -1,0 +1,50 @@
+#=spring:
+#  datasource:
+#      driver-class-name: com.mysql.cj.jdbc.Driver
+#      url: jdbc:mysql://129.211.188.xxxx:xxxx/passjava_qms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#      username: xxxx
+#      password: xxxx
+#
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#  application:
+#    name: passjava-question
+#
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#  global-config:
+#    db-config:
+#      id-type: auto
+#      logic-delete-field: delFlag  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+#      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+#      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+#
+#server:
+#  port: 11000
+logging:
+  level:
+    com.jackson0714.passjava: debug
+
+
+#spring:
+#  cloud:
+#    alicloud:
+#      access-key: xxxx
+#      secret-key: xxxx
+#      oss:
+#        endpoint: oss-cn-beijing.aliyuncs.com
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/passjava_qms?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+#    username: root
+#    password: huangz01

@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: managed-nfs-storage # StorageClass名称，随你定义
+provisioner: mrbird.cc/nfs # 和client-provisioner-deployment.yml里定义的一致
+parameters:
+  archiveOnDelete: "false"

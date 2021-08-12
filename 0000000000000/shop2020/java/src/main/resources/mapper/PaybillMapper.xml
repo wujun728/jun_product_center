@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.PaybillDao"> 
+    <resultMap type="com.shuogesha.platform.entity.Paybill" id="PaybillResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="orderNo" column="order_no"/>  
+ 		<result property="subject" column="subject"/>  
+ 		<result property="body" column="body"/>  
+ 		<result property="payType" column="pay_type"/>  
+ 		<result property="createTime" column="create_time"/>  
+ 		<result property="payTime" column="pay_time"/>  
+ 		<result property="state" column="state"/>  
+ 		<result property="status" column="status"/>  
+ 		<result property="tranAmount" column="tran_amount"/>  
+ 		<result property="payeerId" column="payeer_id"/>  
+ 		<result property="payeerUsername" column="payeer_username"/>   
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.Paybill"  useGeneratedKeys="true" keyProperty="id" >
+		insert into t_paybill(id,name,order_no,subject,body,pay_type,create_time,pay_time,state,status,tran_amount,payeer_id,payeer_username) 
+		values(#{id},#{name},#{orderNo},#{subject},#{body},#{payType},#{createTime},#{payTime},#{state},#{status},#{tranAmount},#{payeerId},#{payeerUsername})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="PaybillResult">
+		select * from t_paybill where 1=1
+		<if test="name!=null"> and name =#{name}</if>
+		<if test="payeer_id!=null"> and payeer_id=#{payeer_id}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_paybill where 1=1
+		<if test="name!=null"> and name =#{name}</if>
+		<if test="payeer_id!=null"> and payeer_id=#{payeer_id}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="String" resultMap="PaybillResult">
+		select * from t_paybill where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="String" resultMap="PaybillResult">
+		delete from t_paybill where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.Paybill"> 
+ 		update t_paybill set name=#{name},subject=#{subject},body=#{body},pay_type=#{payType},pay_time=#{payTime},state=#{state},status=#{status},tran_amount=#{tranAmount}
+ 		 where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findByOrderNo" parameterType="String" resultMap="PaybillResult">
+		select * from t_paybill where order_no=#{orderNo};
+	</select>
+</mapper>  

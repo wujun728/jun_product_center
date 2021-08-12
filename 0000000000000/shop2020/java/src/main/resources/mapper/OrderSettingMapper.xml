@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.OrderSettingDao"> 
+    <resultMap type="com.shuogesha.cms.entity.OrderSetting" id="OrderSettingResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="orderTimeout" column="order_timeout"/>  
+ 		<result property="payTimeout" column="pay_timeout"/>  
+ 		<result property="shippingTimeout" column="shipping_timeout"/>  
+ 		<result property="commentTimeout" column="comment_timeout"/>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.OrderSetting"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_order_setting(id,name,order_timeout,pay_timeout,shipping_timeout,comment_timeout) 
+		values(null,#{name},#{orderTimeout},#{payTimeout},#{shippingTimeout},#{commentTimeout})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="OrderSettingResult">
+		select * from e_order_setting where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_order_setting where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="OrderSettingResult">
+		select * from e_order_setting where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="OrderSettingResult">
+		delete from e_order_setting where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.OrderSetting"> 
+ 		update e_order_setting set name=#{name},order_timeout=#{orderTimeout},pay_timeout=#{payTimeout},shipping_timeout=#{shippingTimeout},comment_timeout=#{commentTimeout} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findOne" parameterType="Long" resultMap="OrderSettingResult">
+		select * from e_order_setting where id='1'
+	</select>
+</mapper>  

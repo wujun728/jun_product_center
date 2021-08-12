@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.ProductAttrDao"> 
+    <resultMap type="com.shuogesha.cms.entity.ProductAttr" id="ProductAttrResult">
+		<result property="id" column="id"/> 
+		<result property="productId" column="product_id"/> 
+ 		<result property="name" column="name"/>  
+ 		<result property="attributes" column="attributes"/>  
+ 		<result property="price" column="price"/>  
+ 		<result property="stock" column="stock"/>  
+ 		<result property="status" column="status"/>  
+ 		<result property="icon" column="icon"/>   
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.ProductAttr"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_product_attr(id,name,product_id,attributes,price,stock,status,icon) 
+		values(null,#{name},#{productId},#{attributes},#{price},#{stock},#{status},#{icon})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="ProductAttrResult">
+		select * from e_product_attr where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_product_attr where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="ProductAttrResult">
+		select * from e_product_attr where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="ProductAttrResult">
+		delete from e_product_attr where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.ProductAttr"> 
+ 		update e_product_attr set name=#{name} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="removeAll" parameterType="Map">
+		delete from e_product_attr where product_id=#{productId}; 
+	</select>
+	
+ 	<insert id="addAll" parameterType="Map">
+		insert into e_product_attr(name,product_id,attributes,price,stock,status,icon,img)
+ 		values
+		<foreach collection="productAttrList" item="item"  separator=",">
+		(#{item.name},#{productId},#{item.attributes},#{item.price},#{item.stock},#{item.status},#{item.icon},#{item.img})
+		</foreach>; 
+	</insert> 
+</mapper>  

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.AddressDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Address" id="AddressResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="phone" column="phone"/>  
+ 		<result property="address" column="address"/>  
+ 		<result property="addressName" column="address_name"/>  
+ 		<result property="area" column="area"/>  
+ 		<result property="def" column="def"/>  
+ 		<result property="userId" column="user_id"/>  
+ 	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Address"  useGeneratedKeys="true" keyProperty="id" >
+		<if test="def!=null and def==true">
+ 			update e_address set def=0 where user_id=#{userId};
+ 		</if> 
+		insert into e_address(id,name,phone,address,address_name,area,def,user_id) 
+		values(null,#{name},#{phone},#{address},#{addressName},#{area},#{def},#{userId})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="AddressResult">
+		select * from e_address where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="userId!=null"> and user_id=#{userId}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_address where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="userId!=null"> and user_id=#{userId}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="AddressResult">
+		select * from e_address where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="AddressResult">
+		delete from e_address where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Address">
+ 		<if test="def!=null and def==true">
+ 			update e_address set def=0 where user_id=#{userId};
+ 		</if> 
+ 		update e_address set name=#{name},phone=#{phone},address=#{address},address_name=#{addressName},area=#{area},def=#{def} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findByDefault" parameterType="Long" resultMap="AddressResult">
+		select * from e_address where 1=1 and user_id=#{userId} order by def desc limit 1; 
+	</select>
+ 	
+</mapper>  

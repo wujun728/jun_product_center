@@ -1,0 +1,74 @@
+spring:
+  redis:
+    # 主 机 地 址
+    host: 127.0.0.1
+    # 端 口
+    port: 6379
+    # 认 证
+    password:
+    # 选 择 数 据 库
+    database: 0
+    # 连 接 池 配 置
+    lettuce:
+      pool:
+        # 连接池中的最大空闲连接
+        max-active: 20
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 4
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 超时时间
+    timeout: 1000
+  # 数据源配置
+  datasource:
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #设置严格模式,默认false不启动. 启动后在未匹配到指定数据源时候会抛出异常,不启动则使用默认数据源.
+      datasource:
+        # 主 库 配 置
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/pear-admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+          username: root
+          password: root
+          druid:
+            # 初始连接数
+            initialSize: 5
+            # 最小连接池数量
+            minIdle: 10
+            # 最大连接池数量
+            maxActive: 20
+            # 配置获取连接等待超时的时间
+            maxWait: 60000
+            # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+            timeBetweenEvictionRunsMillis: 60000
+            # 配置一个连接在池中最小生存的时间，单位是毫秒
+            minEvictableIdleTimeMillis: 300000
+            # 配置一个连接在池中最大生存的时间，单位是毫秒
+            maxEvictableIdleTimeMillis: 900000
+            # 配置检测连接是否有效
+            validationQuery: SELECT 1 FROM DUAL
+            testWhileIdle: true
+            testOnBorrow: false
+            testOnReturn: false
+            webStatFilter:
+              enabled: true
+            statViewServlet:
+              enabled: true
+              # 设置白名单，不填则允许所有访问
+              allow:
+              url-pattern: /druid/*
+              # 控制台管理用户名和密码
+              login-username:
+              login-password:
+            filter:
+              stat:
+                enabled: true
+                # 慢SQL记录
+                log-slow-sql: true
+                slow-sql-millis: 1000
+                merge-sql: true
+              wall:
+                config:
+                  multi-statement-allow: true

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.OrderNoteDao"> 
+    <resultMap type="com.shuogesha.cms.entity.OrderNote" id="OrderNoteResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="dateline" column="dateline"/>  
+ 		<result property="content" column="content"/>  
+ 		<result property="remark" column="remark"/>  
+ 		<result property="orderId" column="order_id"/>  
+ 		<association property="user" column="user_id" select="com.shuogesha.platform.dao.UserDao.findById" >
+        </association>   
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.OrderNote"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_order_note(id,name,content,dateline,remark,order_id,user_id) 
+		values(null,#{name},#{content},now(),#{remark},#{orderId},#{user.id})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="OrderNoteResult">
+		select * from e_order_note where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_order_note where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="OrderNoteResult">
+		select * from e_order_note where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="OrderNoteResult">
+		delete from e_order_note where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.OrderNote"> 
+ 		update e_order_note set name=#{name} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findList" parameterType="Long" resultMap="OrderNoteResult">
+		select * from e_order_note where order_id=#{orderId} order by id desc
+	</select>
+</mapper>  

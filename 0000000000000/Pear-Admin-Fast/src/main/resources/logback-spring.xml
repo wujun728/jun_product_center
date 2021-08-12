@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 文件输出格式 -->
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+    <property name="LOG_NAME" value="pear" />
+    <!--所在项目包 打印日志用-->
+    <property name="PACKAGE_NAME" value="com.pearadmin" />
+    <!-- test文件路径 -->
+    <property name="TEST_FILE_PATH" value="/var/log/${LOG_NAME}" />
+    <!-- pro文件路径 -->
+    <property name="PROD_FILE_PATH" value="/var/log/${LOG_NAME}" />
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <!-- 输出到文件 -->
+        <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug"/>
+        <logger name="org.apache.ibatis.reflection" level="INFO"/>
+
+        <logger name="${PACKAGE_NAME}" level="debug" />
+        <root level="info">
+           <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>
+    
+    <!-- 测试环境 -->
+    <springProfile name="test">
+        <!-- 每天产生一个文件 -->
+        <appender name="TEST_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${TEST_FILE_PATH}${file.separator}${LOG_NAME}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>${TEST_FILE_PATH}${file.separator}${LOG_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+                <maxHistory>7</maxHistory>
+                <maxFileSize>100MB</maxFileSize>
+                <totalSizeCap>20GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder>
+                <pattern>
+                    [%date{yyyy-MM-dd HH:mm:ss.SSS}] %X{logthreadId} %-5level %logger{80} %method  %line - %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug"/>
+        <logger name="org.apache.ibatis.reflection" level="INFO"/>
+
+        <logger name="${PACKAGE_NAME}" level="debug" />
+        <root level="debug">
+            <appender-ref ref="TEST_FILE" />
+        </root>
+    </springProfile>
+    
+    <!-- 生产环境 -->
+    <springProfile name="prod">
+        <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${PROD_FILE_PATH}${file.separator}${LOG_NAME}.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <!-- rollover daily -->
+                <fileNamePattern>${PROD_FILE_PATH}${file.separator}${LOG_NAME}-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+                <!-- each file should be at most 100MB, keep 60 days worth of history, but at most 20GB -->
+                <maxHistory>7</maxHistory>
+                <maxFileSize>100MB</maxFileSize>
+                <totalSizeCap>20GB</totalSizeCap>
+            </rollingPolicy>
+            <encoder>
+                <pattern>
+                    [%date{yyyy-MM-dd HH:mm:ss.SSS}] %X{logthreadId} %-5level %logger{80} %method  %line - %msg%n
+                </pattern>
+            </encoder>
+        </appender>
+        <root level="warn">
+            <appender-ref ref="PROD_FILE" />
+        </root>
+    </springProfile>
+</configuration>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.schedule.mapper.ScheduleJobMapper" >
+
+  <!-- 定时任务映射集合 -->
+  <resultMap id="ScheduleJobMap" type="ScheduleJob" >
+    <id column="job_id" property="jobId" jdbcType="BIGINT" />
+    <result column="job_name" property="jobName"></result>
+    <result column="bean_name" property="beanName" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="VARCHAR" />
+    <result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 根据条件查询所有定时任务 -->
+  <select id="selectList"  resultMap="ScheduleJobMap">
+    select * from schedule_job
+    <where>
+      <if test="jobName!=null and jobName!=''">
+        and job_name like "%"#{jobName}"%"
+      </if>
+    </where>
+  </select>
+
+  <!-- 根据标识查询定时任务 -->
+  <select id="selectById" parameterType="string" resultMap="ScheduleJobMap">
+    select * from schedule_job where job_id = #{jobId}
+  </select>
+
+  <!-- 新增定时任务数据 -->
+  <insert id="insert" parameterType="ScheduleJob" >
+    insert into schedule_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jobId!=null">
+        job_id,
+      </if>
+      <if test="jobName!=null">
+        job_name,
+      </if>
+      <if test="beanName!=null">
+        bean_name,
+      </if>
+      <if test="params!=null">
+        params,
+      </if>
+      <if test="cronExpression!=null">
+        cron_expression,
+      </if>
+      <if test="status!=null">
+        status,
+      </if>
+      <if test="remark!=null">
+        remark,
+      </if>
+      <if test="createTime!=null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values(" suffix=")" suffixOverrides=",">
+      <if test="jobId!=null">
+        #{jobId},
+      </if>
+      <if test="jobName!=null">
+        #{jobName},
+      </if>
+      <if test="beanName!=null">
+        #{beanName},
+      </if>
+      <if test="params!=null">
+        #{params},
+      </if>
+      <if test="cronExpression!=null">
+        #{cronExpression},
+      </if>
+      <if test="status!=null">
+        #{status},
+      </if>
+      <if test="remark!=null">
+        #{remark},
+      </if>
+      <if test="createTime!=null">
+        #{createTime},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 修改定时任务数据 -->
+  <update id="updateById" parameterType="ScheduleJob">
+    update schedule_job
+    <set>
+      <if test="jobName!=null">
+        job_name = #{jobName},
+      </if>
+      <if test="beanName!=null">
+        bean_name = #{beanName},
+      </if>
+      <if test="params!=null">
+        params = #{params},
+      </if>
+      <if test="cronExpression!=null">
+        cron_expression = #{cronExpression},
+      </if>
+      <if test="status!=null">
+        status = #{status},
+      </if>
+      <if test="createTime!=null">
+        create_time = #{createTime},
+      </if>
+    </set>
+    where job_id = #{jobId}
+  </update>
+
+  <!-- 根据标识删除定时任务 -->
+  <delete id="deleteById" parameterType="string">
+    delete from schedule_job where job_id = #{jobId}
+  </delete>
+
+</mapper>

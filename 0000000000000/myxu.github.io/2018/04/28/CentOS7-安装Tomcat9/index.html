@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/hexo/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/hexo/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/hexo/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言此次实验环境以及涉及的工具 腾讯云服务器 CentOS 7.2 64位 Xshell：用于在本地连接腾讯云服务器，远程操作服务器的终端 FileZilla：本地连接远程服务器，主要用于服务器与本地电脑之间的文件传输  已安装JDK(必须) 在安装Tomcat之前必须先安装JDK,在这之前我已经通过yum安装了java-1.8.0-openjdk，可以参考CentOS7 yum 安装 JDK8">
+<meta name="keywords" content="java,Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7 安装Tomcat9">
+<meta property="og:url" content="https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/index.html">
+<meta property="og:site_name" content="个人php技术分享">
+<meta property="og:description" content="前言此次实验环境以及涉及的工具 腾讯云服务器 CentOS 7.2 64位 Xshell：用于在本地连接腾讯云服务器，远程操作服务器的终端 FileZilla：本地连接远程服务器，主要用于服务器与本地电脑之间的文件传输  已安装JDK(必须) 在安装Tomcat之前必须先安装JDK,在这之前我已经通过yum安装了java-1.8.0-openjdk，可以参考CentOS7 yum 安装 JDK8">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/Tomcat.png">
+<meta property="og:image" content="https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/check_port.png">
+<meta property="og:image" content="https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/update_port.png">
+<meta property="og:updated_time" content="2019-12-30T13:47:46.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS7 安装Tomcat9">
+<meta name="twitter:description" content="前言此次实验环境以及涉及的工具 腾讯云服务器 CentOS 7.2 64位 Xshell：用于在本地连接腾讯云服务器，远程操作服务器的终端 FileZilla：本地连接远程服务器，主要用于服务器与本地电脑之间的文件传输  已安装JDK(必须) 在安装Tomcat之前必须先安装JDK,在这之前我已经通过yum安装了java-1.8.0-openjdk，可以参考CentOS7 yum 安装 JDK8">
+<meta name="twitter:image" content="https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/Tomcat.png">
+
+
+
+  <link rel="alternate" href="/hexo/atom.xml" title="个人php技术分享" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CentOS7 安装Tomcat9 | 个人php技术分享</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人php技术分享</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">life will find  its way out.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/hexo/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://myxu.github.io/hexo/hexo/2018/04/28/CentOS7-安装Tomcat9/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Clannad.Armin">
+      <meta itemprop="description" content="个人php技术分享">
+      <meta itemprop="image" content="/hexo/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人php技术分享">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CentOS7 安装Tomcat9
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-28 00:41:35" itemprop="dateCreated datePublished" datetime="2018-04-28T00:41:35+08:00">2018-04-28</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-12-30 21:47:46" itemprop="dateModified" datetime="2019-12-30T21:47:46+08:00">2019-12-30</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/hexo/categories/java开发环境搭建/" itemprop="url" rel="index"><span itemprop="name">java开发环境搭建</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h4 id="此次实验环境以及涉及的工具"><a href="#此次实验环境以及涉及的工具" class="headerlink" title="此次实验环境以及涉及的工具"></a>此次实验环境以及涉及的工具</h4><ul>
+<li>腾讯云服务器 CentOS 7.2 64位</li>
+<li>Xshell：用于在本地连接腾讯云服务器，远程操作服务器的终端</li>
+<li>FileZilla：本地连接远程服务器，主要用于服务器与本地电脑之间的文件传输</li>
+</ul>
+<h4 id="已安装JDK-必须"><a href="#已安装JDK-必须" class="headerlink" title="已安装JDK(必须)"></a>已安装JDK(必须)</h4><ul>
+<li>在安装Tomcat之前必须先安装JDK,在这之前我已经通过yum安装了<strong>java-1.8.0-openjdk</strong>，可以参考<a href="https://myxu.github.io/2018/04/26/centOS7yum安装JDK8/">CentOS7 yum 安装 JDK8</a></li>
+</ul>
+<hr>
+<p><br></p>
+<h3 id="下载安装-Tomcat9"><a href="#下载安装-Tomcat9" class="headerlink" title="下载安装 Tomcat9"></a>下载安装 Tomcat9</h3><h4 id="通过Xshell连接上腾讯云服务器"><a href="#通过Xshell连接上腾讯云服务器" class="headerlink" title="通过Xshell连接上腾讯云服务器"></a>通过Xshell连接上腾讯云服务器</h4><p><br></p>
+<h4 id="进入-usr-local目录中创建所需的文件夹"><a href="#进入-usr-local目录中创建所需的文件夹" class="headerlink" title="进入/usr/local目录中创建所需的文件夹"></a>进入<strong>/usr/local</strong>目录中创建所需的文件夹</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">mkdir -p tools(用于保存下载或者上传上来的Tomcat文件)</span><br><span class="line">mkdir -p webDevelopmentTools/tomcat(为了方便管理统一将Tomcat都安装到该目录)</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h4 id="进入-usr-local-tools，下载Tomcat9的安装文件"><a href="#进入-usr-local-tools，下载Tomcat9的安装文件" class="headerlink" title="进入/usr/local/tools，下载Tomcat9的安装文件"></a>进入<strong>/usr/local/tools</strong>，下载Tomcat9的安装文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装wget(若安装过忽略)：yum -y install wget</span><br><span class="line">通过wget下载Tomcat：wget http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.7/bin/apache-tomcat-9.0.7.tar.gz</span><br></pre></td></tr></table></figure>
+<p>对于这个下载链接大家需要注意的是Tomcat版本问题，比如若想安装的是Tomcat7，那你需要到<a href="http://tomcat.apache.org/" rel="external nofollow noopener noreferrer" target="_blank">Tomcat官网</a>找到他对应的详细版本号替换成如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.86/bin/apache-tomcat-7.0.86.tar.gz</span><br></pre></td></tr></table></figure></p>
+<p>当然如果实在找不到下载的链接，可以直接到官网下载然后再通过FileZilla上传到服务器，说实话FileZilla能更直观地操作服务器上面的文件。</p>
+<p><br></p>
+<h4 id="将下载到的文件-apache-tomcat-9-0-7-tar-gz-进行解压"><a href="#将下载到的文件-apache-tomcat-9-0-7-tar-gz-进行解压" class="headerlink" title="将下载到的文件(apache-tomcat-9.0.7.tar.gz)进行解压"></a>将下载到的文件(apache-tomcat-9.0.7.tar.gz)进行解压</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/tools/</span><br><span class="line"></span><br><span class="line">解压：tar -zxvf apache-tomcat-9.0.7.tar.gz</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h4 id="复制解压文件到指定安装目录"><a href="#复制解压文件到指定安装目录" class="headerlink" title="复制解压文件到指定安装目录"></a>复制解压文件到指定安装目录</h4><p>解压之后将得到一个<strong>apache-tomcat-9.0.7</strong>文件夹，需要将其复制到指定的安装目录/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/,因为我可能会安装多个版本的Tomcat，因此我在tomcat目录下又以Tomcat的版本号来区分存放。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv apache-tomcat-9.0.7  ../webDevelopmentTools/tomcat/apache-tomcat-9.0.7/</span><br></pre></td></tr></table></figure></p>
+<p>这样，Tomcat9的下载安装已经完成，剩下的就是完成相关配置。</p>
+<hr>
+<p><br></p>
+<h3 id="Tomcat的相关配置"><a href="#Tomcat的相关配置" class="headerlink" title="Tomcat的相关配置"></a>Tomcat的相关配置</h3><p><br></p>
+<h4 id="配置Tomcat环境变量"><a href="#配置Tomcat环境变量" class="headerlink" title="配置Tomcat环境变量"></a>配置Tomcat环境变量</h4><ul>
+<li><p>cd /etc</p>
+</li>
+<li><p>vim profile (小白不懂vim自己Google)</p>
+</li>
+<li><p>在profile文件后面添加如下配置，涉及到的路径修改成自己实际安装的路径即可</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_HOME=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7</span><br><span class="line">CATALINA_BASE=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7</span><br><span class="line">PATH=$PATH:$CATALINA_BASE/bin</span><br><span class="line">export PATH CATALINA_BASE</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h4 id="配置Tomcat开机自启"><a href="#配置Tomcat开机自启" class="headerlink" title="配置Tomcat开机自启"></a>配置Tomcat开机自启</h4><ul>
+<li><p>cd /usr/lib/systemd/system</p>
+</li>
+<li><p>mkdir tomcat9.service</p>
+</li>
+<li><p>vim tomcat9.service</p>
+</li>
+<li><p>在Tomcat9.service文件中完成如下配置，路径需要修改成自己实际安装的路径</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Tomcat</span><br><span class="line">After=syslog.target network.target remote-fs.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">ExecStart=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/bin/startup.sh</span><br><span class="line">ExecStop=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/bin/shutdown.sh</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>保存退出之后，执行<strong>systemctl enable tomcat9.service</strong>,使Tomcat9开机自启。Tomcat的其他操作如下：</p>
+<ul>
+<li><p>启动Tomcat：<strong>systemctl start tomcat9.service</strong></p>
+</li>
+<li><p>关闭Tomcat：<strong>systemctl stop tomcat9.service</strong></p>
+</li>
+<li><p>重启Tomcat：<strong>systemctl restart tomcat9.service</strong></p>
+</li>
+<li><p>查看Tomcat状态：<strong>systemctl status tomcat9.service</strong></p>
+</li>
+<li><p>进入tomcat安装目录下的bin目录，执行<strong>startup.sh</strong> or <strong>shutdown.sh</strong>也可以开启/关闭Tomcat</p>
+</li>
+</ul>
+<p>完成以上的配置就可以访问Tomcat了，在浏览器输入<strong><a href="http://ip:8080" rel="external nofollow noopener noreferrer" target="_blank">http://ip:8080</a></strong>,出现Tomcat主页则说明安装成功了。</p>
+<img src="/hexo/2018/04/28/CentOS7-安装Tomcat9/Tomcat.png" title="Tomcat主页">
+<p><br></p>
+<h4 id="修改Tomcat的访问端口"><a href="#修改Tomcat的访问端口" class="headerlink" title="修改Tomcat的访问端口"></a>修改Tomcat的访问端口</h4><p>有时候8080端口可能会被其他服务占用，而导致Tomcat无法正常工作，因此很有必要知道怎么改Tomcat的访问端口。</p>
+<p>首先，可以了解一下如何查看某个端口是否被占用：</p>
+<blockquote>
+<p>netstat -anp | grep 8080</p>
+</blockquote>
+<p>若没有任何信息显示则说明该端口可使用，若是出现类似下面信息则说明该端口不可用</p>
+<img src="/hexo/2018/04/28/CentOS7-安装Tomcat9/check_port.png" title="端口不可用">
+<p><br><br>接下来就可以按照下面步骤来修改可使用的端口号了：</p>
+<ul>
+<li><p>cd /usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/conf (需要替换成你的Tomcat按照目录)</p>
+</li>
+<li><p>vim server.xml</p>
+</li>
+<li><p>修改下面配置</p>
+<img src="/hexo/2018/04/28/CentOS7-安装Tomcat9/update_port.png" title="修改端口">
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/hexo/tags/java/" rel="tag"># java</a>
+          
+            <a href="/hexo/tags/Tomcat/" rel="tag"># Tomcat</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo/2018/04/26/centOS7yum安装JDK8/" rel="next" title="centOS7 yum安装JDK8">
+                <i class="fa fa-chevron-left"></i> centOS7 yum安装JDK8
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/" rel="prev" title="IDEA 部署JavaWeb项目到远程服务器的Tomcat">
+                IDEA 部署JavaWeb项目到远程服务器的Tomcat <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Clannad.Armin</p>
+              <div class="site-description motion-element" itemprop="description">个人php技术分享</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/hexo/archives">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/hexo/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="external nofollow noopener noreferrer" target="_blank">粤ICP备19084151 </a>&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Clannad.Armin</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/hexo/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/hexo/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/hexo/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/hexo/js/utils.js?v=7.2.0"></script>
+
+  <script src="/hexo/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/hexo/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/hexo/js/scrollspy.js?v=7.2.0"></script>
+<script src="/hexo/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/hexo/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

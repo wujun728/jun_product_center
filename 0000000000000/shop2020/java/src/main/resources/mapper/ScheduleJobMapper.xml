@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.ScheduleJobDao"> 
+    <resultMap type="com.shuogesha.platform.entity.ScheduleJob" id="ScheduleJobResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="className" column="class_name"/>
+ 		<result property="cronExpression" column="cron_expression"/>
+ 		<result property="description" column="description"/>
+ 		<result property="status" column="status"/>
+ 		<result property="dateline" column="dateline"/> 
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.ScheduleJob"  useGeneratedKeys="true" keyProperty="id" >
+		insert into t_schedule_job(id,name,class_name,cron_expression,description,status,dateline)
+		 values(null,#{name},#{className},#{cronExpression},#{description},#{status},#{dateline})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="ScheduleJobResult">
+		select * from t_schedule_job
+		<if test="name!=null">where name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_schedule_job 
+		<if test="name!=null">where name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="ScheduleJobResult">
+		select * from t_schedule_job where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="ScheduleJobResult">
+		delete from t_schedule_job where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.ScheduleJob"> 
+ 		update t_schedule_job set name=#{name},class_name=#{className},cron_expression=#{cronExpression},description=#{description},status=#{status} where id=#{id}
+ 	</update>
+ 	
+ 	
+ 	<select id="getList" parameterType="Map" resultMap="ScheduleJobResult">
+		select * from t_schedule_job
+ 		order by id desc
+ 	</select>
+</mapper>  

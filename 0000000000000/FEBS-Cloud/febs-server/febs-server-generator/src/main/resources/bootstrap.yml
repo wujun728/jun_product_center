@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: FEBS-Server-Generator
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: febs-server-generator
+        file-extension: yaml
+      discovery:
+        server-addr: ${nacos.url}:8001
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error

@@ -1,0 +1,77 @@
+### 不加 v 就是没有标题
+GET {{esUrl}}/_cat/master
+
+### Verbose  查看 master
+GET {{esUrl}}/_cat/master?v
+
+### Help 使用帮助
+GET {{esUrl}}/_cat/master?help
+
+### Headers 查询指定字段 headers
+GET {{esUrl}}/_cat/nodes?help
+
+### Headers 查询指定字段 headers
+GET {{esUrl}}/_cat/nodes?h=ip,port,heapPercent,name,node.role
+
+### Numeric formats  默认的情况下,字节数据,大小和时间值是使用 human-formatted , 所以它们没有使用数值排序,你可以改变它们
+# s(sort) bytes=b , time= 时间格式查看官网 https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#time-units ,size=k/m/g/t/p
+GET {{esUrl}}/_cat/indices?bytes=b&s=store.size:desc&v
+
+### Response as test,json,smile,yaml or cbor
+# pretty 表示以更美观的方式展示 json
+GET {{esUrl}}/_cat/indices?format=json&pretty
+
+### Sort
+GET {{esUrl}}/_cat/templates?v&s=order:desc,index_patterns
+
+### Cat api
+GET {{esUrl}}/_cat/health?v
+
+### 查询有哪些索引
+GET {{esUrl}}/_cat/indices?v
+
+### 查询索引信息
+GET {{esUrl}}/goods
+
+### search
+GET {{esUrl}}/goods/_search/
+Content-Type: application/json
+
+{
+  "query": {
+    "match": {
+      "brand": "华为"
+    }
+  }
+}
+
+### search
+GET {{esUrl}}/goods/_search/
+Content-Type: application/json
+
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+### search
+GET {{esUrl}}/goods/_search/
+Content-Type: application/json
+
+
+### cluster apis
+GET {{esUrl}}/_cluster/state
+
+###  _stats
+GET {{esUrl}}/_stats
+
+###
+GET {{esUrl}}/zt-subscribe-room-inquiry/_search
+Content-Type: application/json
+
+{"query":{"bool":{"must":[],"must_not":[],"should":[{"match_all":{}}]}},"from":0,"size":50,"sort":[{"_score":{"order":"desc"}}],"aggs":{},"version":true};
+
+###
+
+

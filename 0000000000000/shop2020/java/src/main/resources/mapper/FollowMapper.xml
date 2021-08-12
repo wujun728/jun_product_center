@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.FollowDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Follow" id="FollowResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="fromUid" column="from_uid"/>  
+ 		<result property="toUid" column="to_uid"/>  
+ 		<result property="dateline" column="dateline"/>  
+ 		<result property="followed" column="followed"/>    
+  		<association property="toUser" column="to_uid" select="getUnifiedUser"/>   
+ 		<association property="fromUser" column="from_uid" select="getUnifiedUser"/>   
+	</resultMap>
+	 
+	 
+	<resultMap type="com.shuogesha.platform.entity.UnifiedUser" id="UnifiedUserResult">
+		<result property="id" column="id"/> 
+		<result property="nickName" column="nickName"/>  
+ 		<result property="phone" column="phone"/>  
+ 		<result property="avatar" column="avatar"/> 
+ 		<result property="sex" column="sex"/>  
+ 		<result property="type" column="type"/>   
+ 		<result property="city" column="city"/>   
+	</resultMap>
+	
+	<select id="getUnifiedUser" parameterType="Long" resultMap="UnifiedUserResult">
+        select *,'' as followed from t_unifieduser where id =#{id}
+    </select>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Follow"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_follow(id,name,from_uid,to_uid,dateline) 
+		values(null,#{name},#{fromUid},#{toUid},#{dateline})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="FollowResult">
+		select *,'true' as followed
+		from e_follow e where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="fromUid!=null"> and from_uid=#{fromUid}</if> 
+		<if test="toUid!=null"> and to_uid=#{toUid}</if> 
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+ 	<select id="queryFollowList" parameterType="Map" resultMap="FollowResult">
+		select *,
+		<if test="toUid!=null">
+		    (select count(c.id) from e_follow c where c.to_uid=e.from_uid and c.from_uid=#{toUid}) as followed
+		</if>
+		<if test="toUid==null">'' as followed</if> 
+		from e_follow e where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="fromUid!=null"> and from_uid=#{fromUid}</if> 
+		<if test="toUid!=null"> and to_uid=#{toUid}</if> 
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_follow where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="fromUid!=null"> and from_uid=#{fromUid}</if> 
+		<if test="toUid!=null"> and to_uid=#{toUid}</if> 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="FollowResult">
+		select *,'' as followed from e_follow where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="FollowResult">
+		delete from e_follow where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Follow"> 
+ 		update e_follow set name=#{name} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findByFollw" parameterType="com.shuogesha.cms.entity.Follow" resultMap="FollowResult">
+		select *,'' as followed from e_follow where from_uid=#{fromUid} and to_uid=#{toUid};
+	</select>
+</mapper>  

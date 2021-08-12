@@ -1,0 +1,416 @@
+h2,
+h3 {
+  orphans: 3;
+  widows: 3;
+}
+h2,
+h3 {
+  page-break-after: avoid;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+.h1 small,
+.h2 small,
+.h3 small,
+.h4 small,
+.h5 small,
+.h6 small,
+h1 .small,
+h2 .small,
+h3 .small,
+h4 .small,
+h5 .small,
+h6 .small,
+.h1 .small,
+.h2 .small,
+.h3 .small,
+.h4 .small,
+.h5 .small,
+.h6 .small {
+  font-weight: normal;
+  line-height: 1;
+  color: #777;
+}
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+h1 small,
+.h1 small,
+h2 small,
+.h2 small,
+h3 small,
+.h3 small,
+h1 .small,
+.h1 .small,
+h2 .small,
+.h2 .small,
+h3 .small,
+.h3 .small {
+  font-size: 65%;
+}
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+h4 small,
+.h4 small,
+h5 small,
+.h5 small,
+h6 small,
+.h6 small,
+h4 .small,
+.h4 .small,
+h5 .small,
+.h5 .small,
+h6 .small,
+.h6 .small {
+  font-size: 75%;
+}
+h1,
+.h1 {
+  font-size: 36px;
+}
+h2,
+.h2 {
+  font-size: 30px;
+}
+h3,
+.h3 {
+  font-size: 24px;
+}
+h4,
+.h4 {
+  font-size: 18px;
+}
+h5,
+.h5 {
+  font-size: 14px;
+}
+h6,
+.h6 {
+  font-size: 12px;
+}
+
+.padding-large {
+  padding: 30px
+}
+
+.padding-large-top {
+  padding-top: 30px
+}
+
+.padding-large-right {
+  padding-right: 30px
+}
+
+.padding-large-bottom {
+  padding-bottom: 30px
+}
+
+.padding-large-left {
+  padding-left: 30px
+}
+
+.padding-big {
+  padding: 20px
+}
+
+.padding-big-top {
+  padding-top: 20px
+}
+
+.padding-big-right {
+  padding-right: 20px
+}
+
+.padding-big-bottom {
+  padding-bottom: 20px
+}
+
+.padding-big-left {
+  padding-left: 20px
+}
+
+.padding {
+  padding: 10px
+}
+
+.padding-top {
+  padding-top: 10px
+}
+
+.padding-right {
+  padding-right: 10px
+}
+
+.padding-bottom {
+  padding-bottom: 10px
+}
+
+.padding-left {
+  padding-left: 10px
+}
+
+.padding-small {
+  padding: 5px
+}
+
+.padding-small-top {
+  padding-top: 5px
+}
+
+.padding-small-right {
+  padding-right: 5px
+}
+
+.padding-small-bottom {
+  padding-bottom: 5px
+}
+
+.padding-small-left {
+  padding-left: 5px
+}
+
+.padding-little {
+  padding: 2px
+}
+
+.padding-little-top {
+  padding-top: 2px
+}
+
+.padding-little-right {
+  padding-right: 2px
+}
+
+.padding-little-bottom {
+  padding-bottom: 2px
+}
+
+.padding-little-left {
+  padding-left: 2px
+}
+
+.margin-large {
+  margin: 30px
+}
+
+.margin-large-top {
+  margin-top: 30px
+}
+
+.margin-large-right {
+  margin-right: 30px
+}
+
+.margin-large-bottom {
+  margin-bottom: 30px
+}
+
+.margin-large-left {
+  margin-left: 30px
+}
+
+.margin-big {
+  margin: 20px
+}
+
+.margin-big-top {
+  margin-top: 20px
+}
+
+.margin-big-right {
+  margin-right: 20px
+}
+
+.margin-big-bottom {
+  margin-bottom: 20px
+}
+
+.margin-big-left {
+  margin-left: 20px
+}
+
+/*.margin {*/
+/*  margin: 10px!important;*/
+/*  clear: both*/
+/*}*/
+
+.margin-top {
+  margin-top: 10px
+}
+
+.margin-right {
+  margin-right: 10px
+}
+
+.margin-bottom {
+  margin-bottom: 10px
+}
+
+.margin-left {
+  margin-left: 10px
+}
+
+.margin-small {
+  margin: 5px
+}
+
+.margin-small-top {
+  margin-top: 5px
+}
+
+.margin-small-right {
+  margin-right: 5px
+}
+
+.margin-small-bottom {
+  margin-bottom: 5px
+}
+
+.margin-small-left {
+  margin-left: 5px
+}
+
+.margin-little {
+  margin: 2px
+}
+
+.margin-little-top {
+  margin-top: 2px
+}
+
+.margin-little-right {
+  margin-right: 2px
+}
+
+.margin-little-bottom {
+  margin-bottom: 2px
+}
+
+.margin-little-left {
+  margin-left: 2px
+}
+.border {
+  border: solid 1px #ddd
+}
+
+.border-none {
+  border: 0
+}
+
+.border-top {
+  border-top: solid 1px #ddd
+}
+
+.border-right {
+  border-right: solid 1px #ddd
+}
+
+.border-bottom {
+  border-bottom: solid 1px #ddd
+}
+
+.border-left {
+  border-left: solid 1px #ddd
+}
+
+.border-left-right {
+  border-left: solid 1px #ddd;
+  border-right: solid 1px #ddd
+}
+
+.border-top-bottom {
+  border-top: solid 1px #ddd;
+  border-bottom: solid 1px #ddd
+}
+
+.border-large {
+  border-width: 10px
+}
+
+.border-big {
+  border-width: 5px
+}
+
+.border-middle {
+  border-width: 3px
+}
+
+.border-small {
+  border-width: 2px
+}
+/*自定义*白烟*文本/边框/背景色*/
+.text-whitesmoke,a.text-whitesmoke:link,a.text-whitesmoke:visited,.button.border-whitesmoke,blockquote.border-whitesmoke,.pager.border-whitesmoke a,.pager-prev.border-whitesmoke,.pager-next.border-whitesmoke {	color: #f5f5f5;}
+.border-whitesmoke,.border-whitesmoke .button,.border-whitesmoke .tab-nav li a,.border-whitesmoke .tab-body,.button.bg-whitesmoke,.selected.border-whitesmoke,.pointer.border-whitesmoke li,.nav.border-whitesmoke .active a,.nav.nav-tabs.border-whitesmoke,.nav-main.border-whitesmoke a,.nav-main.border-whitesmoke .nav-head,.pagination.border-whitesmoke li,.pager.border-whitesmoke a {	border-color: #f5f5f5;}
+.bg-whitesmoke,.border-whitesmoke .button.active,.pointer.border-whitesmoke .active,.nav-pills.border-whitesmoke .active a,.nav-whitesmoke.border-whitesmoke .nav-head,.pagination.border-whitesmoke .active {	background-color: #f5f5f5;}
+/*自定义*金*文本/边框/背景色*/
+.text-gold,a.text-gold:link,a.text-gold:visited,.button.border-gold,blockquote.border-gold,.pager.border-gold a,.pager-prev.border-gold,.pager-next.border-gold {	color: #ffd700;}
+.border-gold,.border-gold .button,.border-gold .tab-nav li a,.border-gold .tab-body,.button.bg-gold,.selected.border-gold,.pointer.border-gold li,.nav.border-gold .active a,.nav.nav-tabs.border-gold,.nav-main.border-gold a,.nav-main.border-gold .nav-head,.pagination.border-gold li,.pager.border-gold a {	border-color: #ffd700;}
+.bg-gold,.border-gold .button.active,.pointer.border-gold .active,.nav-pills.border-gold .active a,.nav-gold.border-gold .nav-head,.pagination.border-gold .active {	background-color: #ffd700;}
+/*自定义*橙色*文本/边框/背景色*/
+.text-orange,a.text-orange:link,a.text-orange:visited,.button.border-orange,blockquote.border-orange,.pager.border-orange a,.pager-prev.border-orange,.pager-next.border-orange {	color: #ffa500;}
+.border-orange,.border-orange .button,.border-orange .tab-nav li a,.border-orange .tab-body,.button.bg-orange,.selected.border-orange,.pointer.border-orange li,.nav.border-orange .active a,.nav.nav-tabs.border-orange,.nav-main.border-orange a,.nav-main.border-orange .nav-head,.pagination.border-orange li,.pager.border-orange a {	border-color: #ffa500;}
+.bg-orange,.border-orange .button.active,.pointer.border-orange .active,.nav-pills.border-orange .active a,.nav-orange.border-orange .nav-head,.pagination.border-orange .active {	background-color: #ffa500;}
+/*自定义*森林绿*文本/边框/背景色*/
+.text-forestgreen,a.text-forestgreen:link,a.text-forestgreen:visited,.button.border-forestgreen,blockquote.border-forestgreen,.pager.border-forestgreen a,.pager-prev.border-forestgreen,.pager-next.border-forestgreen {	color: #228b22;}
+.border-forestgreen,.border-forestgreen .button,.border-forestgreen .tab-nav li a,.border-forestgreen .tab-body,.button.bg-forestgreen,.selected.border-forestgreen,.pointer.border-forestgreen li,.nav.border-forestgreen .active a,.nav.nav-tabs.border-forestgreen,.nav-main.border-forestgreen a,.nav-main.border-forestgreen .nav-head,.pagination.border-forestgreen li,.pager.border-forestgreen a {	border-color: #228b22;}
+.bg-forestgreen,.border-forestgreen .button.active,.pointer.border-forestgreen .active,.nav-pills.border-forestgreen .active a,.nav-forestgreen.border-forestgreen .nav-head,.pagination.border-forestgreen .active {	background-color: #228b22;}
+
+.cursor-point{
+  cursor: pointer;
+}
+.not-select{
+  -moz-user-select:none;/*火狐*/
+  -webkit-user-select:none;/*webkit浏览器*/
+  -ms-user-select:none;/*IE10*/
+  -khtml-user-select:none;/*早期浏览器*/
+  user-select:none;
+}
+.text-center{
+  text-align: center;
+}
+
+.text-more {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.text{
+  word-break: break-all;
+  line-height: 1.5;
+}

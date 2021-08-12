@@ -1,0 +1,137 @@
+version: '3'
+
+services:
+  febs-admin:
+    image: febs-admin:latest
+    container_name: febs-admin
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--nacos.url=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8401:8401
+    restart: on-failure
+  febs-gateway:
+    image: febs-gateway:latest
+    container_name: febs-gateway
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--febs-admin=127.0.0.1"
+      - "--mongo.url=127.0.0.1"
+      - "--nacos.url=127.0.0.1"
+      - "--redis.url=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8301:8301
+    restart: on-failure
+  febs-auth:
+    image: febs-auth:latest
+    container_name: febs-auth
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--febs-admin=127.0.0.1"
+      - "--nacos.url=127.0.0.1"
+      - "--mysql.url=127.0.0.1"
+      - "--redis.url=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8101:8101
+    restart: on-failure
+  febs-server-system:
+    image: febs-server-system:latest
+    container_name: febs-server-system
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--febs-admin=127.0.0.1"
+      - "--febs-gateway=127.0.0.1"
+      - "--nacos.url=127.0.0.1"
+      - "--mysql.url=127.0.0.1"
+      - "--febs-tx-manager=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8201:8201
+    depends_on:
+      - febs-tx-manager
+    restart: on-failure
+  febs-server-test:
+    image: febs-server-test:latest
+    container_name: febs-server-test
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--nacos.url=127.0.0.1"
+      - "--febs-admin=127.0.0.1"
+      - "--mysql.url=127.0.0.1"
+      - "--febs-tx-manager=127.0.0.1"
+      - "--febs-gateway=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8202:8202
+    depends_on:
+      - febs-tx-manager
+    restart: on-failure
+  febs-server-generator:
+    image: febs-server-generator:latest
+    container_name: febs-server-generator
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--nacos.url=127.0.0.1"
+      - "--febs-admin=127.0.0.1"
+      - "--mysql.url=127.0.0.1"
+      - "--febs-gateway=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8203:8203
+    restart: on-failure
+  febs-server-job:
+    image: febs-server-job:latest
+    container_name: febs-server-job
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--nacos.url=127.0.0.1"
+      - "--febs-admin=127.0.0.1"
+      - "--mysql.url=127.0.0.1"
+      - "--febs-gateway=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8204:8204
+    restart: on-failure
+  febs-tx-manager:
+    image: febs-tx-manager:latest
+    container_name: febs-tx-manager
+    volumes:
+      - "/febs/log:/log"
+    command:
+      - "--nacos.url=127.0.0.1"
+      - "--febs-admin=127.0.0.1"
+      - "--mysql.url=127.0.0.1"
+      - "--redis.url=127.0.0.1"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 8501:8501
+      - 8888:8888
+    restart: on-failure
+  febs-cloud-web:
+    image: febs-cloud-web
+    container_name: febs-cloud-web
+    volumes:
+      - "/febs/log:/log"
+    environment:
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 9527:80
+    restart: on-failure

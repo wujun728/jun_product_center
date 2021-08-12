@@ -1,0 +1,100 @@
+.p-switch{
+    align-items: center;
+    display: inline-block;
+    height: 28px;
+    margin: 4px;
+    input[type=checkbox] {
+      width: 48px;
+      height: 24px;
+      -webkit-appearance: none;
+      background-color: transparent;
+      border: 0;
+      outline: 0 !important;
+      color: #d8d8d8;
+      position: relative;
+      transition: all .3s ease;
+    } 
+    input[type=checkbox]:before{
+      content: "";
+      display:block;
+      width: 48px;
+      height: 24px;
+      border: 1px solid #ddd;
+      background-color: whitesmoke;
+      box-sizing:border-box;  
+      border-radius: 50px;
+      position: absolute;
+    }
+    input[type=checkbox]:after{
+      content: "";
+      display:block;
+      width: 24px;
+      height: 24px;
+      left:1px;
+      border: 1px solid #fff;
+      background-color: #fff;
+      box-sizing:border-box;  
+      box-shadow: 0 1px 3px rgba(0,0,0,.4);
+      border-radius: 50%;
+      position: absolute;
+      transition: all .3s ease;
+      left: -1px;
+    }
+    input[type=checkbox]:disabled:before{
+      content: "";
+      display:block;
+      width: 48px;
+      height: 24px;
+      cursor:not-allowed;
+      border: 1px solid whitesmoke;
+      background-color: whitesmoke;
+      box-sizing:border-box;  
+      border-radius: 50px;
+      position: absolute;
+      opacity: 0.6;
+    }
+    input[type=checkbox]:disabled:after{
+      content: "";
+      display:block;
+      width: 24px;
+      height: 24px;
+      cursor:not-allowed;
+      border: 1px solid #fff;
+      background-color: #fff;
+      box-sizing:border-box;  
+      box-shadow: 0 1px 3px rgba(0,0,0,.4);
+      border-radius: 50%;
+      position: absolute;
+    }
+    input[type=checkbox]:checked:before{
+      content: "";
+      display:block;
+      width: 48px;
+      height: 24px;
+      border: 1px solid #ddd;
+      background-color: #00c58e;
+      box-sizing:border-box;  
+      border-radius: 50px;
+      position: absolute;
+    }
+    input[type=checkbox]:checked:after{
+      content: "";
+      display:block;
+      width: 24px;
+      height: 24px;
+      left:100%;
+      -webkit-transform: translateX(-100%);
+      transform: translateX(-100%);
+      border: 1px solid #fff;
+      background-color: #fff;
+      box-sizing:border-box;  
+      box-shadow: 0 1px 3px rgba(0,0,0,.4);
+      border-radius: 50%;
+      position: absolute;
+    }
+    .p-switch-text{
+      margin-right: 7px;
+      position: relative;
+      top: -7px;
+    }
+} 

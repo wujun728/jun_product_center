@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>个人php技术分享</title>
+  
+  <subtitle>life will find  its way out.</subtitle>
+  <link href="/hexo/atom.xml" rel="self"/>
+  
+  <link href="https://myxu.github.io/hexo/"/>
+  <updated>2020-01-02T16:34:15.726Z</updated>
+  <id>https://myxu.github.io/hexo/</id>
+  
+  <author>
+    <name>Clannad.Armin</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP升级到7.4.1实验记录</title>
+    <link href="https://myxu.github.io/hexo/2020/01/03/PHP%E5%8D%87%E7%BA%A7%E5%88%B07-4-1%E5%AE%9E%E9%AA%8C%E8%AE%B0%E5%BD%95/"/>
+    <id>https://myxu.github.io/hexo/2020/01/03/PHP升级到7-4-1实验记录/</id>
+    <published>2020-01-02T16:25:53.000Z</published>
+    <updated>2020-01-02T16:34:15.726Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="更新PHP到7-4-1版本记录（CentOS7）"><a href="#更新PHP到7-4-1版本记录（CentOS7）" class="headerlink" title="更新PHP到7.4.1版本记录（CentOS7）"></a>更新PHP到7.4.1版本记录（CentOS7）</h3><p><code>实验环境</code></p><ul><li>腾讯云CentOS7服务器</li><li>root身份登录</li></ul><h4 id="1、安装所需的EPEL、REMI源"><a href="#1、安装所需的EPEL、REMI源" class="headerlink" title="#1、安装所需的EPEL、REMI源"></a>#1、安装所需的EPEL、REMI源</h4><p>CentOS7自身的源并没有最新的PHP7.4.1包，我们需要而外从其他源中获取，所以首先要安装这些第三方的源。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span><br><span class="line">yum -y install https://rpms.remirepo.net/enterprise/remi-release-7.rpm</span><br></pre></td></tr></table></figure></p><h4 id="2、启用remi源"><a href="#2、启用remi源" class="headerlink" title="#2、启用remi源"></a>#2、启用remi源</h4><p>进入到<strong>/etc/yum.repos.d/</strong>目录，你会发现remi源提供了多个版本的PHP包，这里我们只要启用7.4版本的就行了。<br><img src="https://myxu-blog-image-1252642211.cos.ap-guangzhou.myqcloud.com/redis-muke-study-notes/20200102234434.png" alt=""></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">## yum-utils包扩展了yum包管理器额外的功能</span><br><span class="line">yum -y install yum-utils</span><br><span class="line">## 启用PHP7.4版本的remi源</span><br><span class="line">yum-config-manager --enable remi-php74</span><br></pre></td></tr></table></figure><p><img src="https://myxu-blog-image-1252642211.cos.ap-guangzhou.myqcloud.com/redis-muke-study-notes/20200102235610.png" alt=""></p><h4 id="3、卸载之前安装的PHP"><a href="#3、卸载之前安装的PHP" class="headerlink" title="#3、卸载之前安装的PHP"></a>#3、卸载之前安装的PHP</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum remove php php*</span><br></pre></td></tr></table></figure><h4 id="4、安装PHP7-4-amp-amp-相关扩展"><a href="#4、安装PHP7-4-amp-amp-相关扩展" class="headerlink" title="#4、安装PHP7.4 &amp;&amp; 相关扩展"></a>#4、安装PHP7.4 &amp;&amp; 相关扩展</h4><ul><li><p>查看可安装的包</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list | grep php74</span><br></pre></td></tr></table></figure></li><li><p>安装php &amp;&amp; php-cli</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install php php-cli</span><br></pre></td></tr></table></figure></li><li><p>安装扩展</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install php-fpm php-pdod等</span><br></pre></td></tr></table></figure></li><li><p>安装后再次查看，包来源前面带有<strong>@</strong>符号说明该包已经安装<br><img src="https://myxu-blog-image-1252642211.cos.ap-guangzhou.myqcloud.com/redis-muke-study-notes/20200103003340.png" alt=""></p></li></ul><h4 id="4、检测PHP版本-amp-amp-已安装扩展"><a href="#4、检测PHP版本-amp-amp-已安装扩展" class="headerlink" title="#4、检测PHP版本 &amp;&amp; 已安装扩展"></a>#4、检测PHP版本 &amp;&amp; 已安装扩展</h4><ul><li>php版本<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -v</span><br></pre></td></tr></table></figure></li></ul><p><img src="https://myxu-blog-image-1252642211.cos.ap-guangzhou.myqcloud.com/redis-muke-study-notes/20200103001330.png" alt=""></p><ul><li>已安装的PHP扩展<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -m</span><br></pre></td></tr></table></figure></li></ul><p><img src="https://myxu-blog-image-1252642211.cos.ap-guangzhou.myqcloud.com/redis-muke-study-notes/20200103001416.png" alt=""></p><p><code>注意</code>：</p><ul><li>这里我遇到了一个问题，安装后我直接运行上面命令会报错<strong>-bash: php: command not found</strong>，之后我关闭了<strong>xshell</strong>连接窗口后重新连接，再次运行则成功了。</li><li>推测原因就是安装成功后，php的可执行文件路径被写入到系统环境变量中，但是对于当前窗口使用还是之前的系统环境变量信息，才会导致报错说php命令找不到，因为旧的php被卸载了，而新还未生效。windows下同样如此，cmd安装了新东西并修改了环境变量，需要重新打开cmd才能使新的环境变量生效、</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;更新PHP到7-4-1版本记录（CentOS7）&quot;&gt;&lt;a href=&quot;#更新PHP到7-4-1版本记录（CentOS7）&quot; class=&quot;headerlink&quot; title=&quot;更新PHP到7.4.1版本记录（CentOS7）&quot;&gt;&lt;/a&gt;更新PHP到7.4.1版本记
+      
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://myxu.github.io/hexo/categories/PHP/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>自动部署测试</title>
+    <link href="https://myxu.github.io/hexo/2019/07/07/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E6%B5%8B%E8%AF%95/"/>
+    <id>https://myxu.github.io/hexo/2019/07/07/自动部署测试/</id>
+    <published>2019-07-07T04:14:55.000Z</published>
+    <updated>2019-07-07T04:50:39.697Z</updated>
+    
+    <content type="html"><![CDATA[<p>测试一下github+webhook的自动部署12</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;测试一下github+webhook的自动部署12&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="自动部署" scheme="https://myxu.github.io/hexo/categories/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/"/>
+    
+    
+      <category term="自动部署" scheme="https://myxu.github.io/hexo/tags/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA 部署JavaWeb项目到远程服务器的Tomcat</title>
+    <link href="https://myxu.github.io/hexo/2018/04/29/IDEA-%E9%83%A8%E7%BD%B2JavaWeb%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84Tomcat/"/>
+    <id>https://myxu.github.io/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/</id>
+    <published>2018-04-28T17:57:25.000Z</published>
+    <updated>2018-05-17T17:28:30.858Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><hr><p>在本地IDEA下开发JavaWeb项目并部署到远程服务器上的Tomcat，传统方式是在本地运行项目生成war文件.但其实我们可以通过IDEA以及相关配置，来实现在IDEA运行项目的同时自动将项目上传部署到服务器上的Tomcat。</p><h4 id="实验环境、工具"><a href="#实验环境、工具" class="headerlink" title="实验环境、工具"></a>实验环境、工具</h4><hr><ul><li><p>腾讯云服务器 CentOS 7.2 64位</p></li><li><p>Xshell：用于在本地连接腾讯云服务器，远程操作服务器的终端</p></li><li><p>IDEA 2017.2旗舰版(Ultimate)</p></li><li><p>本地 Windows10 OS</p></li></ul><h4 id="必须的环境配置"><a href="#必须的环境配置" class="headerlink" title="必须的环境配置"></a>必须的环境配置</h4><hr><p>远程服务器上面必须先安装<code>JDK</code>跟<code>Tomcat</code>，确保能正常访问到Tomcat默认的主页</p><ul><li><p><strong>java-1.8.0-openjdk</strong>，参考<a href="https://myxu.github.io/2018/04/26/centOS7yum%E5%AE%89%E8%A3%85JDK8/">CentOS yum 安装JDK8</a></p></li><li><p><strong>Tomcat9.0.7</strong>，参考<a href="https://myxu.github.io/2018/04/28/CentOS7-%E5%AE%89%E8%A3%85Tomcat9/">CentOS7 安装Tomcat9</a></p></li></ul><h3 id="服务器端配置"><a href="#服务器端配置" class="headerlink" title="服务器端配置"></a>服务器端配置</h3><h4 id="相关配置"><a href="#相关配置" class="headerlink" title="相关配置"></a>相关配置</h4><hr><p>参考<a href="https://www.jetbrains.com/help/idea/2016.1/run-debug-configuration-tomcat-server.html" rel="external nofollow noopener noreferrer" target="_blank">IDEA官网</a>的相关配置，来启动jmx。</p><ul><li><p><strong>cd /usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/bin</strong> &nbsp;(Tomcat安装目录下的bin文件夹)</p></li><li><p><strong>vim catalina.sh</strong></p></li><li><p>在<strong>catalina.sh</strong>文件最前面添加以下配置</p></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">export CATALINA_OPTS=&quot;-Dcom.sun.management.jmxremote</span><br><span class="line">-Dcom.sun.management.jmxremote.port=10999 （替换成你的服务器可用的端口）</span><br><span class="line">-Dcom.sun.management.jmxremote.ssl=false</span><br><span class="line">-Dcom.sun.management.jmxremote.authenticate=false</span><br><span class="line">-Djava.rmi.server.hostname=119.29.251.126&quot; （替换成你的服务器IP）</span><br><span class="line"></span><br><span class="line">export JAVA_OPTS=&quot;-Dcom.sun.management.jmxremote=</span><br><span class="line">-Dcom.sun.management.jmxremote.port=10999</span><br><span class="line">-Dcom.sun.management.jmxremote.ssl=false</span><br><span class="line">-Dcom.sun.management.jmxremote.authenticate=false&quot;</span><br></pre></td></tr></table></figure><p><br><code>注意</code>：在配置端口之前需要检测一下配置的端口是否可用。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">netstat -anp | grep 1099(需要检测的端口号)   </span><br><span class="line">该命令用于检测端口是否可用，若是没有任何显示信息则说明可用</span><br></pre></td></tr></table></figure><h4 id="配置后Tomcat的启动方式"><a href="#配置后Tomcat的启动方式" class="headerlink" title="配置后Tomcat的启动方式"></a>配置后Tomcat的启动方式</h4><hr><p><code>配置前</code><br>在这之前基本都是通过systemctl start xxxx.service的方式来启动Tomcat，其实本质就是执行Tomcat安装目录下bin文件夹中的<strong>startup.sh</strong>脚本去启动的。<br><br><br><code>配置后</code><br>现在我们则需要通过<strong>catalina.sh</strong>脚本来启动Tomcat，该脚本同样是在Tomcat安装目录下的bin目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/bin</span><br><span class="line">catalina.sh run &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p><p>其中“ &gt; /dev/null 2&gt;&amp;1 &amp;”是Linux中的命令：把标准输出和出错处理都放到回收站，这样就免得一大堆输出占领你的屏幕。</p><p><br>启动之后，使用命令<code>jps</code>,若出现下面类似信息则说明配置成功或者通过浏览器去访问Tomcat的默认主页来检测。</p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/jps.png" title="Tomcat启动成功"><h3 id="本地配置"><a href="#本地配置" class="headerlink" title="本地配置"></a>本地配置</h3><h4 id="IDEA创建JavaWeb项目"><a href="#IDEA创建JavaWeb项目" class="headerlink" title="IDEA创建JavaWeb项目"></a>IDEA创建JavaWeb项目</h4><hr><p>使用IDEA创建一个JavaWeb项目来进行测试，如何在IDEA创建一个JavaWeb项目参考</p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/createProject.png"><p><br></p><h4 id="IDEA的Tomcat配置"><a href="#IDEA的Tomcat配置" class="headerlink" title="IDEA的Tomcat配置"></a>IDEA的Tomcat配置</h4><hr><ul><li><p>进行IDEA的Tomcat配置，选择<strong>Edit Configurations</strong></p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/Edit_Configurations.png"><p><br></p></li><li><p>新建一个Tomcat配置，跟以往的配置不同的是这次选择的Tomcat Server是<strong>Remote</strong>，即远程的服务器上Tomcat</p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/AddRemoteTomcatConfig.png"><p><br></p></li><li><p>运行配置名称、运行Tomcat版本、访问URL的配置、远程服务器上Tomcat连接配置</p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_1.png"></li></ul><blockquote><p><strong>注意</strong>：在选择Tomcat版本时，所选择的只能看到本地的Tomcat，因此为了保证运行Tomcat的版本配置的正确，所以最好保证本地的Tomcat与远程服务器上的Tomcat版本一致，即本地安装的Tomcat与服务器上安装的Tomcat版本一致</p></blockquote><p><br></p><ul><li><p>远程服务器上Tomcat的配置</p><ul><li><p>配置连接类型以及创建一个新的服务器连接配置<br><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_2.png"><br></p></li><li><p>创建一个新的服务器连接配置则会出现以下窗口<br><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_3.png"><br></p></li></ul><p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_4.png"><br></p><p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_5.png"><br></p><ul><li>配置服务器连接信息<br><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_6.png"><br><br></li></ul><p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_7.png"><br></p><p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_8.png"><br></p><ul><li>选择上一步配置的服务器连接信息<br><br></li></ul><p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_10.png"><br></p><ul><li>配置Deployment<br><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_11.png"><br><br></li></ul><p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_12.png"><br></p><ul><li>配置jmx端口，即与前面服务器配置的<code>Dcom.sun.management.jmxremote.port</code>一致<br><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/config_13.png"><br></li></ul></li></ul><h3 id="部署测试"><a href="#部署测试" class="headerlink" title="部署测试"></a>部署测试</h3><hr><p>保存以上配置之后运行前面配置的远程Tomcat配置<br><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/DeployTest.png"></p><img src="/hexo/2018/04/29/IDEA-部署JavaWeb项目到远程服务器的Tomcat/success.png"><h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><hr><ul><li><p><a href="https://blog.csdn.net/u010100466/article/details/72614545" rel="external nofollow noopener noreferrer" target="_blank">https://blog.csdn.net/u010100466/article/details/72614545</a></p></li><li><p><a href="https://www.jetbrains.com/help/idea/2016.1/run-debug-configuration-tomcat-server.html" rel="external nofollow noopener noreferrer" target="_blank">https://www.jetbrains.com/help/idea/2016.1/run-debug-configuration-tomcat-server.html</a></p></li><li><p><a href="https://blog.csdn.net/u012188141/article/details/80039942" rel="external nofollow noopener noreferrer" target="_blank">https://blog.csdn.net/u012188141/article/details/80039942</a></p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;h4 id=&quot;应用场景&quot;&gt;&lt;a href=&quot;#应用场景&quot; class=&quot;headerlink&quot; title=&quot;应用场景&quot;&gt;&lt;/a&gt;应用场景&lt;/h
+      
+    
+    </summary>
+    
+      <category term="IDEA的使用" scheme="https://myxu.github.io/hexo/categories/IDEA%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    
+    
+      <category term="Tomcat" scheme="https://myxu.github.io/hexo/tags/Tomcat/"/>
+    
+      <category term="IDEA" scheme="https://myxu.github.io/hexo/tags/IDEA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS7 安装Tomcat9</title>
+    <link href="https://myxu.github.io/hexo/2018/04/28/CentOS7-%E5%AE%89%E8%A3%85Tomcat9/"/>
+    <id>https://myxu.github.io/hexo/2018/04/28/CentOS7-安装Tomcat9/</id>
+    <published>2018-04-27T16:41:35.000Z</published>
+    <updated>2019-12-30T13:47:46.382Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><h4 id="此次实验环境以及涉及的工具"><a href="#此次实验环境以及涉及的工具" class="headerlink" title="此次实验环境以及涉及的工具"></a>此次实验环境以及涉及的工具</h4><ul><li>腾讯云服务器 CentOS 7.2 64位</li><li>Xshell：用于在本地连接腾讯云服务器，远程操作服务器的终端</li><li>FileZilla：本地连接远程服务器，主要用于服务器与本地电脑之间的文件传输</li></ul><h4 id="已安装JDK-必须"><a href="#已安装JDK-必须" class="headerlink" title="已安装JDK(必须)"></a>已安装JDK(必须)</h4><ul><li>在安装Tomcat之前必须先安装JDK,在这之前我已经通过yum安装了<strong>java-1.8.0-openjdk</strong>，可以参考<a href="https://myxu.github.io/2018/04/26/centOS7yum安装JDK8/">CentOS7 yum 安装 JDK8</a></li></ul><hr><p><br></p><h3 id="下载安装-Tomcat9"><a href="#下载安装-Tomcat9" class="headerlink" title="下载安装 Tomcat9"></a>下载安装 Tomcat9</h3><h4 id="通过Xshell连接上腾讯云服务器"><a href="#通过Xshell连接上腾讯云服务器" class="headerlink" title="通过Xshell连接上腾讯云服务器"></a>通过Xshell连接上腾讯云服务器</h4><p><br></p><h4 id="进入-usr-local目录中创建所需的文件夹"><a href="#进入-usr-local目录中创建所需的文件夹" class="headerlink" title="进入/usr/local目录中创建所需的文件夹"></a>进入<strong>/usr/local</strong>目录中创建所需的文件夹</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">mkdir -p tools(用于保存下载或者上传上来的Tomcat文件)</span><br><span class="line">mkdir -p webDevelopmentTools/tomcat(为了方便管理统一将Tomcat都安装到该目录)</span><br></pre></td></tr></table></figure><p><br></p><h4 id="进入-usr-local-tools，下载Tomcat9的安装文件"><a href="#进入-usr-local-tools，下载Tomcat9的安装文件" class="headerlink" title="进入/usr/local/tools，下载Tomcat9的安装文件"></a>进入<strong>/usr/local/tools</strong>，下载Tomcat9的安装文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">安装wget(若安装过忽略)：yum -y install wget</span><br><span class="line">通过wget下载Tomcat：wget http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.7/bin/apache-tomcat-9.0.7.tar.gz</span><br></pre></td></tr></table></figure><p>对于这个下载链接大家需要注意的是Tomcat版本问题，比如若想安装的是Tomcat7，那你需要到<a href="http://tomcat.apache.org/" rel="external nofollow noopener noreferrer" target="_blank">Tomcat官网</a>找到他对应的详细版本号替换成如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.86/bin/apache-tomcat-7.0.86.tar.gz</span><br></pre></td></tr></table></figure></p><p>当然如果实在找不到下载的链接，可以直接到官网下载然后再通过FileZilla上传到服务器，说实话FileZilla能更直观地操作服务器上面的文件。</p><p><br></p><h4 id="将下载到的文件-apache-tomcat-9-0-7-tar-gz-进行解压"><a href="#将下载到的文件-apache-tomcat-9-0-7-tar-gz-进行解压" class="headerlink" title="将下载到的文件(apache-tomcat-9.0.7.tar.gz)进行解压"></a>将下载到的文件(apache-tomcat-9.0.7.tar.gz)进行解压</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/tools/</span><br><span class="line"></span><br><span class="line">解压：tar -zxvf apache-tomcat-9.0.7.tar.gz</span><br></pre></td></tr></table></figure><p><br></p><h4 id="复制解压文件到指定安装目录"><a href="#复制解压文件到指定安装目录" class="headerlink" title="复制解压文件到指定安装目录"></a>复制解压文件到指定安装目录</h4><p>解压之后将得到一个<strong>apache-tomcat-9.0.7</strong>文件夹，需要将其复制到指定的安装目录/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/,因为我可能会安装多个版本的Tomcat，因此我在tomcat目录下又以Tomcat的版本号来区分存放。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv apache-tomcat-9.0.7  ../webDevelopmentTools/tomcat/apache-tomcat-9.0.7/</span><br></pre></td></tr></table></figure></p><p>这样，Tomcat9的下载安装已经完成，剩下的就是完成相关配置。</p><hr><p><br></p><h3 id="Tomcat的相关配置"><a href="#Tomcat的相关配置" class="headerlink" title="Tomcat的相关配置"></a>Tomcat的相关配置</h3><p><br></p><h4 id="配置Tomcat环境变量"><a href="#配置Tomcat环境变量" class="headerlink" title="配置Tomcat环境变量"></a>配置Tomcat环境变量</h4><ul><li><p>cd /etc</p></li><li><p>vim profile (小白不懂vim自己Google)</p></li><li><p>在profile文件后面添加如下配置，涉及到的路径修改成自己实际安装的路径即可</p></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_HOME=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7</span><br><span class="line">CATALINA_BASE=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7</span><br><span class="line">PATH=$PATH:$CATALINA_BASE/bin</span><br><span class="line">export PATH CATALINA_BASE</span><br></pre></td></tr></table></figure><p><br></p><h4 id="配置Tomcat开机自启"><a href="#配置Tomcat开机自启" class="headerlink" title="配置Tomcat开机自启"></a>配置Tomcat开机自启</h4><ul><li><p>cd /usr/lib/systemd/system</p></li><li><p>mkdir tomcat9.service</p></li><li><p>vim tomcat9.service</p></li><li><p>在Tomcat9.service文件中完成如下配置，路径需要修改成自己实际安装的路径</p></li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Tomcat</span><br><span class="line">After=syslog.target network.target remote-fs.target nss-lookup.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=oneshot</span><br><span class="line">ExecStart=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/bin/startup.sh</span><br><span class="line">ExecStop=/usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/bin/shutdown.sh</span><br><span class="line">ExecReload=/bin/kill -s HUP $MAINPID</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure><p>保存退出之后，执行<strong>systemctl enable tomcat9.service</strong>,使Tomcat9开机自启。Tomcat的其他操作如下：</p><ul><li><p>启动Tomcat：<strong>systemctl start tomcat9.service</strong></p></li><li><p>关闭Tomcat：<strong>systemctl stop tomcat9.service</strong></p></li><li><p>重启Tomcat：<strong>systemctl restart tomcat9.service</strong></p></li><li><p>查看Tomcat状态：<strong>systemctl status tomcat9.service</strong></p></li><li><p>进入tomcat安装目录下的bin目录，执行<strong>startup.sh</strong> or <strong>shutdown.sh</strong>也可以开启/关闭Tomcat</p></li></ul><p>完成以上的配置就可以访问Tomcat了，在浏览器输入<strong><a href="http://ip:8080" rel="external nofollow noopener noreferrer" target="_blank">http://ip:8080</a></strong>,出现Tomcat主页则说明安装成功了。</p><img src="/hexo/2018/04/28/CentOS7-安装Tomcat9/Tomcat.png" title="Tomcat主页"><p><br></p><h4 id="修改Tomcat的访问端口"><a href="#修改Tomcat的访问端口" class="headerlink" title="修改Tomcat的访问端口"></a>修改Tomcat的访问端口</h4><p>有时候8080端口可能会被其他服务占用，而导致Tomcat无法正常工作，因此很有必要知道怎么改Tomcat的访问端口。</p><p>首先，可以了解一下如何查看某个端口是否被占用：</p><blockquote><p>netstat -anp | grep 8080</p></blockquote><p>若没有任何信息显示则说明该端口可使用，若是出现类似下面信息则说明该端口不可用</p><img src="/hexo/2018/04/28/CentOS7-安装Tomcat9/check_port.png" title="端口不可用"><p><br><br>接下来就可以按照下面步骤来修改可使用的端口号了：</p><ul><li><p>cd /usr/local/webDevelopmentTools/tomcat/apache-tomcat-9.0.7/conf (需要替换成你的Tomcat按照目录)</p></li><li><p>vim server.xml</p></li><li><p>修改下面配置</p><img src="/hexo/2018/04/28/CentOS7-安装Tomcat9/update_port.png" title="修改端口"></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h3&gt;&lt;h4 id=&quot;此次实验环境以及涉及的工具&quot;&gt;&lt;a href=&quot;#此次实验环境以及涉及的工具&quot; class=&quot;headerlink&quot; title=
+      
+    
+    </summary>
+    
+      <category term="java开发环境搭建" scheme="https://myxu.github.io/hexo/categories/java%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    
+    
+      <category term="java" scheme="https://myxu.github.io/hexo/tags/java/"/>
+    
+      <category term="Tomcat" scheme="https://myxu.github.io/hexo/tags/Tomcat/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>centOS7 yum安装JDK8</title>
+    <link href="https://myxu.github.io/hexo/2018/04/26/centOS7yum%E5%AE%89%E8%A3%85JDK8/"/>
+    <id>https://myxu.github.io/hexo/2018/04/26/centOS7yum安装JDK8/</id>
+    <published>2018-04-26T07:43:33.000Z</published>
+    <updated>2018-04-26T12:41:21.117Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><ul><li>腾讯云服务器 CentOS 7.2 64位</li></ul><h3 id="检查系统是否已自带open-jdk"><a href="#检查系统是否已自带open-jdk" class="headerlink" title="检查系统是否已自带open-jdk"></a>检查系统是否已自带open-jdk</h3><p><code>命令</code></p><ul><li>rpm -qa | grep java 或者 rpm -qa | grep jdk</li></ul><p><strong>ps:</strong>如果没有显示则说明尚未安装jdk，若是已经安装可以通过命令<code>rpm -qa | grep java | xargs rpm -e --nodeps</code>批量卸载所有带java的文件</p><h3 id="安装openjdk-无需配置path环境变量"><a href="#安装openjdk-无需配置path环境变量" class="headerlink" title="安装openjdk(无需配置path环境变量)"></a>安装openjdk(无需配置path环境变量)</h3><h4 id="检索yum源中的jdk包"><a href="#检索yum源中的jdk包" class="headerlink" title="检索yum源中的jdk包"></a>检索yum源中的jdk包</h4><p><code>命令</code></p><ul><li>yum list java*</li><li>yum list java-1.8*(指定搜索1.8版本)</li></ul><p>通过以上命令可以检索出当前yum源中openjdk版本为1.8.0<br><img src="/hexo/2018/04/26/centOS7yum安装JDK8/openjdk_list.png" title="jdk列表"></p><h4 id="安装1-8版本的open-jdk"><a href="#安装1-8版本的open-jdk" class="headerlink" title="安装1.8版本的open-jdk"></a>安装1.8版本的open-jdk</h4><p>这里我们需要安装java-1.8版本的所有文件，安装命令：</p><ul><li>yum install -y java-1.8.0-openjdk*</li></ul><h4 id="检查是否安装成功"><a href="#检查是否安装成功" class="headerlink" title="检查是否安装成功"></a>检查是否安装成功</h4><p><code>命令</code></p><ul><li>java -version</li></ul><img src="/hexo/2018/04/26/centOS7yum安装JDK8/java_version.png" title="jdk安装成功"><p>出现以上类似信息则说明安装成功了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;开发环境&quot;&gt;&lt;a href=&quot;#开发环境&quot; class=&quot;headerlink&quot; title=&quot;开发环境&quot;&gt;&lt;/a&gt;开发环境&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;腾讯云服务器 CentOS 7.2 64位&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;检查系统是否已自带open-j
+      
+    
+    </summary>
+    
+      <category term="java开发环境搭建" scheme="https://myxu.github.io/hexo/categories/java%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    
+    
+      <category term="java" scheme="https://myxu.github.io/hexo/tags/java/"/>
+    
+      <category term="jdk" scheme="https://myxu.github.io/hexo/tags/jdk/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>心情不好</title>
+    <link href="https://myxu.github.io/hexo/2017/12/04/in-bad-mod/"/>
+    <id>https://myxu.github.io/hexo/2017/12/04/in-bad-mod/</id>
+    <published>2017-12-04T15:10:23.000Z</published>
+    <updated>2017-12-04T15:31:28.085Z</updated>
+    
+    <content type="html"><![CDATA[<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=31649922&auto=0&height=66"></iframe>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot; src=&quot;//music.163.com/outchain/player?type=2&amp;id=
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>手动创建Oracle数据库</title>
+    <link href="https://myxu.github.io/hexo/2017/11/16/manualy-creating-the-oracle-database/"/>
+    <id>https://myxu.github.io/hexo/2017/11/16/manualy-creating-the-oracle-database/</id>
+    <published>2017-11-15T17:09:49.000Z</published>
+    <updated>2019-12-30T13:47:50.205Z</updated>
+    
+    <content type="html"><![CDATA[<p>电脑没电了，明天再整理。辣鸡学校，天天断电<br>…</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;电脑没电了，明天再整理。辣鸡学校，天天断电&lt;br&gt;…&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="Oracle" scheme="https://myxu.github.io/hexo/categories/Oracle/"/>
+    
+    
+      <category term="Oracle" scheme="https://myxu.github.io/hexo/tags/Oracle/"/>
+    
+  </entry>
+  
+</feed>

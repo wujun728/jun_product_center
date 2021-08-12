@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.modules.sys.mapper.SysDeptMapper">
+
+    <resultMap id="SysDeptMap" type="SysDept">
+        <id column="dept_id" property="deptId"></id>
+        <result column="dept_name" property="deptName"></result>
+        <result column="parent_id" property="parentId"></result>
+        <result column="leader" property="leader"></result>
+        <result column="email" property="email"></result>
+        <result column="phone" property="phone"></result>
+        <result column="status" property="status"></result>
+        <result column="sort" property="sort"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_by" property="updateBy"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="remark" property="remark"></result>
+        <result column="address" property="address"></result>
+    </resultMap>
+
+    <select id="selectList" resultMap="SysDeptMap">
+        select * from sys_dept
+        <where>
+            <if test="deptName!=null and deptName!=''">
+                and dept_name like "%"#{deptName}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="selectById" parameterType="string" resultMap="SysDeptMap">
+        select * from sys_dept where dept_id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="SysDept">
+        insert into sys_dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptId!=null">
+                dept_id,
+            </if>
+            <if test="deptName!=null">
+                dept_name,
+            </if>
+            <if test="parentId!=null">
+                parent_id,
+            </if>
+            <if test="leader!=null">
+                leader,
+            </if>
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="email!=null">
+                email,
+            </if>
+            <if test="sort!=null">
+                sort,
+            </if>
+            <if test="status!=null">
+                status,
+            </if>
+            <if test="address!=null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="deptId!=null">
+                #{deptId},
+            </if>
+            <if test="deptName!=null">
+                #{deptName},
+            </if>
+            <if test="parentId!=null">
+                #{parentId},
+            </if>
+            <if test="leader!=null">
+                #{leader},
+            </if>
+            <if test="phone!=null">
+                #{phone},
+            </if>
+            <if test="email!=null">
+                #{email},
+            </if>
+            <if test="sort!=null">
+                #{sort},
+            </if>
+            <if test="status!=null">
+                #{status},
+            </if>
+            <if test="address!=null">
+                #{address},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="SysDept">
+        update sys_dept
+        <set>
+            <if test="deptName!=null and deptName!=''">
+                dept_name = #{deptName},
+            </if>
+            <if test="parentId!=null and parentId!=''">
+                parent_id = #{parentId},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone = #{phone},
+            </if>
+            <if test="email!=null and email!=''">
+                email = #{email},
+            </if>
+            <if test="status!=null and status!=''">
+                status = #{status},
+            </if>
+            <if test="sort!=null and sort!=''">
+                sort = #{sort},
+            </if>
+            <if test="address!=null and address!=''">
+                address = #{address},
+            </if>
+            <if test="leader!=null and leader!=''">
+                leader = #{leader},
+            </if>
+        </set>
+        where dept_id = #{deptId}
+    </update>
+
+    <delete id="deleteById" parameterType="string">
+          delete from sys_dept where dept_id = #{id}
+    </delete>
+
+    <delete id="deleteByIds" parameterType="string">
+        delete from sys_dept where dept_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

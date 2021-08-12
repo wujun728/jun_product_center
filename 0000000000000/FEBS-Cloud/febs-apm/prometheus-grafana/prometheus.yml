@@ -1,0 +1,71 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['YOUR-IP:8403']
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['YOUR-IP:8405']
+        labels:
+          instance: 'node_exporter'
+  - job_name: 'redis_exporter'
+    static_configs:
+      - targets: ['YOUR-IP:8408']
+        labels:
+          instance: 'redis_exporter'
+  - job_name: 'mysql_exporter'
+    static_configs:
+      - targets: ['YOUR-IP:8409']
+        labels:
+          instance: 'mysql_exporter'
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['YOUR-IP:8407']
+        labels:
+          instance: 'cadvisor'
+
+  - job_name: 'febs-server-system-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['YOUR-IP:8201']
+        labels:
+          instance: 'febs-server-system'
+  - job_name: 'febs-server-auth-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['YOUR-IP:8101']
+        labels:
+          instance: 'febs-auth'
+  - job_name: 'febs-server-test-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['YOUR-IP:8202']
+        labels:
+          instance: 'febs-server-test'
+  - job_name: 'febs-server-job-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['YOUR-IP:8204']
+        labels:
+          instance: 'febs-server-job'
+  - job_name: 'febs-tx-manager-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['YOUR-IP:8501']
+        labels:
+          instance: 'febs-tx-manager'
+rule_files:
+  - 'memory_over.yml'
+  - 'server_down.yml'
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ["YOUR-IP:8406"]

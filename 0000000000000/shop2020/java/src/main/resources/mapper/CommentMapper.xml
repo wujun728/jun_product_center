@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.CommentDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Comment" id="CommentResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+		<result property="refer" column="refer"/> 
+		<result property="referid" column="referid"/> 
+		<result property="parent" column="parent"/> 
+		<result property="dateline" column="dateline"/> 
+ 		<association property="unifiedUser" column="user_id" select="com.shuogesha.platform.dao.UnifiedUserDao.findById" >
+        </association> 
+        <association property="parentUser" column="p_uid" select="com.shuogesha.platform.dao.UnifiedUserDao.findById" >
+        </association>   
+ 	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Comment"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_comment(id,name,refer,referid,parent,dateline,user_id) 
+		values(null,#{name},#{refer},#{referid},#{parent},#{dateline},#{unifiedUser.id})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="CommentResult">
+		select *,(select ee.user_id from e_comment ee where ee.id=e.parent) as p_uid from e_comment e where 1=1 
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="refer!=null"> and refer =#{refer}</if>
+		<if test="referid!=null"> and referid =#{referid}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_comment where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="refer!=null"> and refer =#{refer}</if>
+		<if test="referid!=null"> and referid =#{referid}</if>
+	</select>
+	
+	<select id="findList" parameterType="Map" resultMap="CommentResult">
+		select *,'' as p_uid  from e_comment where parent !=''
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="refer!=null"> and refer =#{refer}</if>
+		<if test="referid!=null"> and referid =#{referid}</if>
+		<if test="parentid!=null"> and parent =#{parentid}</if>
+		order by id desc 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="CommentResult">
+		select *,'' as p_uid from e_comment where id=#{id};
+	</select>
+ 	
+	
+ 	<select id="removeById" parameterType="Long" resultMap="CommentResult">
+		delete from e_comment where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Comment"> 
+ 		update e_comment set name=#{name} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="removeByNewsId" parameterType="Map" resultMap="CommentResult">
+		delete from e_comment where refer=#{refer} and referid =#{referid};
+	</select>
+</mapper>  

@@ -1,0 +1,15 @@
+{
+  "connectIdParam": {
+    "module": "mongo",
+    "connName": "localhost"
+  },
+  "connectParam": {
+    "host": "localhost",
+    "port": 27017
+  },
+  "authParam":{
+    "username":"root",
+    "password":"h123",
+    "database":""
+  }
+}

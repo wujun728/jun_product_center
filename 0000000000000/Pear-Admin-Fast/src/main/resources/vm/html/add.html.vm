@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增${functionName}')" />
+</head>
+<body>
+    <form class="layui-form">
+        <div class="mainBox">
+            <div class="main-container">
+#foreach($column in $columns)
+#set($field=$column.javaField)
+#if($column.insert && !$column.pk)
+#if(($column.usableColumn) || (!$column.superColumn))
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+#set($dictType=$column.dictType)
+#if($column.htmlType == "input")
+            <div class="layui-form-item">
+                <label class="layui-form-label">${comment}：</label>
+                <div class="layui-input-block">
+                    <input type="text" name="${field}" placeholder="请输入${comment}" class="layui-input" #if($column.required) lay-verify="required"#end/>
+                </div>
+            </div>
+#elseif($column.htmlType == "select")
+            <div class="layui-form-item">
+                <label class="layui-form-label">${comment}：</label>
+                <div class="layui-input-block">
+                    <select name="${field}" #if($column.required) lay-verify="required" #end   #if("" !=$column.dictType)dict-code="${column.dictType}"#end >
+                        <option value="">所有</option>
+                    </select>
+                </div>
+            </div>
+#elseif($column.htmlType == "checkbox")
+            <div class="layui-form-item">
+                <label class="layui-form-label">${comment}：</label>
+                <div class="layui-input-block">
+#if("" !=$column.dictType)
+                <div class="check-box" check-box-dict-code="${column.dictType}" name="${field}"></div>
+#else
+                    <div class="check-box">
+                        <input type="checkbox" name="${field}" title="无" lay-skin="primary" #if($column.required) lay-verify="required"#end>
+                    </div>
+#end
+                </div>
+            </div>
+#elseif($column.htmlType == "radio")
+            <div class="layui-form-item">
+                <label class="layui-form-label">${comment}：</label>
+                <div class="layui-input-block">
+#if("" !=$column.dictType)
+                    <div class="radio-box" radio-dict-code="${column.dictType}" name="${field}">
+                    </div>
+#else
+                    <div class="radio-box">
+                        <input type="radio" name="${field}" value="" title="未知" #if($column.required) lay-verify="required"#end>
+                    </div>
+#end
+                </div>
+            </div>
+#elseif($column.htmlType == "datetime")
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">${comment}：</label>
+                <div class="col-sm-8">
+                    <div class="input-group date">
+                        <input type="text" name="${field}" class="layui-input" id="${field}" #if($column.required) lay-verify="required"#end>
+                    </div>
+                </div>
+            </div>
+#elseif($column.htmlType == "textarea")
+            <div class="layui-form-item">
+                <label class="layui-form-label">${comment}：</label>
+                <div class="layui-input-block">
+                    <textarea name="${field}" #if($column.required) lay-verify="required"#end placeholder="请输入${comment}" class="layui-textarea"></textarea>
+                </div>
+            </div>
+#end
+#end
+#end
+#end
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit="" lay-filter="${businessName}-save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="pear-btn pear-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+</body>
+<th:block th:include="include :: footer" />
+<script th:inline="javascript">
+
+    layui.use(['form', 'jquery','laydate','dictionary'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let laydate = layui.laydate;
+
+        let prefix = "/${moduleName}/${businessName}/"
+
+        #foreach($column in $columns)
+            #set($field=$column.javaField)
+            #if($column.insert && !$column.pk)
+                #if(($column.usableColumn) || (!$column.superColumn))
+                    #set($parentheseIndex=$column.columnComment.indexOf("（"))
+                    #if($parentheseIndex != -1)
+                        #set($comment=$column.columnComment.substring(0, $parentheseIndex))
+                    #else
+                        #set($comment=$column.columnComment)
+                    #end
+                    #set($dictType=$column.dictType)
+                    #if($column.htmlType == "datetime")
+                        laydate.render({
+                            elem: '#$column.javaField'
+                        });
+                    #end
+                #end
+            #end
+        #end
+
+        form.on('submit(${businessName}-save)', function (data) {
+            for(var key in data.field){
+                var type=$(data.form).find("input[name='"+key+"']").attr("type");
+                if(type=="checkbox"){
+                    var value="";
+                    $(data.form).find("input[name='"+key+"']:checked").each(function(){
+                        value+=$(this).val()+",";
+                    })
+                    if(value!=""){
+                        value=value.substr(0,value.length-1);
+                        data.field[key]=value;
+                    }
+
+                }
+            }
+            $.ajax({
+                url: prefix+'save',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));
+                            parent.layui.table.reload("${businessName}-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+    });
+</script>
+</html>

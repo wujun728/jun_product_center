@@ -1,0 +1,113 @@
+package ${packageName}.service.impl;
+
+import java.util.List;
+import java.util.ArrayList;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.pearadmin.common.web.domain.request.PageDomain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ${packageName}.mapper.${ClassName}Mapper;
+import ${packageName}.domain.${ClassName};
+import ${packageName}.service.I${ClassName}Service;
+
+/**
+ * ${functionName}Service业务层处理
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+{
+    @Autowired
+    private ${ClassName}Mapper ${className}Mapper;
+
+    /**
+     * 查询${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return ${functionName}
+     */
+    @Override
+    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return ${className}Mapper.select${ClassName}ById(${pkColumn.javaField});
+    }
+
+    /**
+     * 查询${functionName}列表
+     * 
+     * @param ${className} ${functionName}
+     * @return ${functionName}
+     */
+    @Override
+    public List<${ClassName}> select${ClassName}List(${ClassName} ${className})
+    {
+        return ${className}Mapper.select${ClassName}List(${className});
+    }
+
+    /**
+     * 查询${functionName}
+     * @param ${className} ${functionName}
+     * @param pageDomain
+     * @return ${functionName} 分页集合
+     * */
+    @Override
+    public PageInfo<${ClassName}> select${ClassName}Page(${ClassName} ${className}, PageDomain pageDomain)
+    {
+        PageHelper.startPage(pageDomain.getPage(),pageDomain.getLimit());
+        List<${ClassName}> data = ${className}Mapper.select${ClassName}List(${className});
+        return new PageInfo<>(data);
+    }
+
+    /**
+     * 新增${functionName}
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+
+    @Override
+    public int insert${ClassName}(${ClassName} ${className})
+    {
+        return ${className}Mapper.insert${ClassName}(${className});
+    }
+
+    /**
+     * 修改${functionName}
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    @Override
+    public int update${ClassName}(${ClassName} ${className})
+    {
+        return ${className}Mapper.update${ClassName}(${className});
+    }
+
+    /**
+     * 删除${functionName}对象
+     * 
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */
+    @Override
+    public int delete${ClassName}ByIds(String[] ids)
+    {
+        return ${className}Mapper.delete${ClassName}ByIds(ids);
+    }
+
+    /**
+     * 删除${functionName}信息
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果
+     */
+    @Override
+    public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return ${className}Mapper.delete${ClassName}ById(${pkColumn.javaField});
+    }
+}

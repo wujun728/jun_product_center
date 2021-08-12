@@ -1,0 +1,20 @@
+.p-button-group .p-button{
+    border-radius: 0px;
+    margin: 1px;
+}
+.p-button-group .p-button:first-child{
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+.p-button-group .p-button:last-child{
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+.p-button-group .p-button.p-button-round:first-child{
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+.p-button-group .p-button.p-button-round:last-child{
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}

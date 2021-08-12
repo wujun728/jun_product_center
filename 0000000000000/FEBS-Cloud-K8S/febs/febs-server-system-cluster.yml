@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: febs-server-system-d
+spec:
+  selector:
+    matchLabels:
+      name: febs-server-system
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: febs-server-system
+    spec:
+      containers:
+        - name: febs-server-system
+          image: docker.mrbird.cc/febs/febs-server-system:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8201
+          args:
+            - "--spring.profiles.active=prod"
+          env:
+            - name: mysql.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: febs.mysql.url
+            - name: nacos.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: nacos.url
+            - name: logstash.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: logstash.url
+            - name: febs-gateway
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: febs.gateway.url
+            - name: febs-monitor-admin
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: febs.monitor.admin.url
+            - name: TZ
+              value: "Asia/Shanghai"
+          volumeMounts:
+            - mountPath: /log
+              name: febs-server-system-data
+          resources:
+            requests:
+              cpu: 0.3
+              memory: 300Mi
+            limits:
+              cpu: 1
+              memory: 500Mi
+      volumes:
+        - name: febs-server-system-data
+          nfs:
+            path: /nfs/log
+            server: 192.168.33.15

@@ -1,0 +1,14 @@
+package ${packageName}.service;
+
+import ${packageName}.domain.${ClassName};
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ * ${functionName}Service接口
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface I${ClassName}Service extends IService<${ClassName}> {
+
+}

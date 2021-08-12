@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysFileMapper">
+
+    <!-- 列 表 查 询 -->
+    <select id="selectList" resultType="com.pearadmin.system.domain.SysFile">
+        select
+        id as id,
+        file_name as fileName,
+        file_desc as fileDesc,
+        file_path as filePath,
+        file_type as fileType,
+        file_size as fileSize,
+        create_by as createBy,
+        create_time as createTime
+        from
+        sys_file order by create_time desc
+    </select>
+
+    <!-- 根据 ID 查询 -->
+    <select id="selectById" resultType="com.pearadmin.system.domain.SysFile">
+        select
+        id as id,
+        file_name as fileName,
+        file_desc as fileDesc,
+        file_path as filePath,
+        file_type as fileType,
+        file_size as fileSize,
+        create_by as createBy,
+        create_time as createTime
+        from
+        sys_file where id = #{id}
+    </select>
+
+    <!-- 插 入 数 据 -->
+    <insert id="insert">
+        insert into sys_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="fileName != null">
+                file_name,
+            </if>
+            <if test="fileDesc != null">
+                file_desc,
+            </if>
+            <if test="filePath != null">
+                file_path,
+            </if>
+            <if test="fileType != null">
+                file_type,
+            </if>
+            <if test="fileSize !=null">
+                file_size,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="targetDate !=null">
+                target_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="fileName != null">
+                #{fileName},
+            </if>
+            <if test="fileDesc != null">
+                #{fileDesc},
+            </if>
+            <if test="filePath != null">
+                #{filePath},
+            </if>
+            <if test="fileType != null">
+                #{fileType},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="targetDate != null">
+                #{targetDate},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteById" parameterType="string">
+        delete from sys_file where id = #{id}
+    </delete>
+
+</mapper>

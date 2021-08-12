@@ -1,0 +1,128 @@
+package ${packageName}.controller;
+
+import com.github.pagehelper.PageInfo;
+import ${packageName}.domain.${ClassName};
+import com.pearadmin.common.tools.string.Convert;
+import com.pearadmin.common.web.base.BaseController;
+import com.pearadmin.common.web.domain.request.PageDomain;
+import com.pearadmin.common.web.domain.response.Result;
+import com.pearadmin.common.web.domain.response.module.ResultTable;
+import com.pearadmin.common.tools.secure.SecurityUtil;
+import com.pearadmin.system.domain.SysUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import ${packageName}.service.I${ClassName}Service;
+
+import java.time.LocalDateTime;
+
+/**
+ * ${functionName}Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@RequestMapping("/${moduleName}/${businessName}")
+public class ${ClassName}Controller extends BaseController
+{
+    private String prefix = "${moduleName}/${businessName}";
+
+    @Autowired
+    private I${ClassName}Service ${className}Service;
+
+    @GetMapping("/main")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/main','${permissionPrefix}:main')")
+    public ModelAndView main()
+    {
+        return jumpPage(prefix + "/main");
+    }
+
+    /**
+     * 查询${functionName}列表
+     */
+    @ResponseBody
+    @GetMapping("/data")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/data','${permissionPrefix}:data')")
+    public ResultTable list(@ModelAttribute ${ClassName} ${className}, PageDomain pageDomain)
+    {
+        PageInfo<${ClassName}> pageInfo = ${className}Service.select${ClassName}Page(${className},pageDomain);
+        return pageTable(pageInfo.getList(),pageInfo.getTotal());
+    }
+
+    /**
+     * 新增${functionName}
+     */
+    @GetMapping("/add")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/add','${permissionPrefix}:add')")
+    public ModelAndView add()
+    {
+        return jumpPage(prefix + "/add");
+    }
+
+    /**
+     * 新增保存${functionName}
+     */
+    @ResponseBody
+    @PostMapping("/save")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/add','${permissionPrefix}:add')")
+    public Result save(@RequestBody ${ClassName} ${className})
+    {
+        SysUser sysUser = (SysUser)SecurityUtil.currentUserObj();
+        ${className}.setCreateTime(LocalDateTime.now());
+        ${className}.setCreateBy(sysUser.getUserId());
+        ${className}.setCreateName(sysUser.getUsername());
+        return decide(${className}Service.insert${ClassName}(${className}));
+    }
+
+    /**
+     * 修改${functionName}
+     */
+    @GetMapping("/edit")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/edit','${permissionPrefix}:edit')")
+    public ModelAndView edit(${pkColumn.javaType} ${pkColumn.javaField}, ModelMap mmap)
+    {
+        ${ClassName} ${className} = ${className}Service.select${ClassName}ById(${pkColumn.javaField});
+        mmap.put("${className}", ${className});
+        return jumpPage(prefix + "/edit");
+    }
+
+    /**
+     * 修改保存${functionName}
+     */
+    @ResponseBody
+    @PutMapping("/update")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/edit','${permissionPrefix}:edit')")
+    public Result update(@RequestBody ${ClassName} ${className})
+    {
+        SysUser sysUser = (SysUser)SecurityUtil.currentUserObj();
+        ${className}.setUpdateTime(LocalDateTime.now());
+        ${className}.setUpdateBy(sysUser.getUserId());
+        ${className}.setUpdateName(sysUser.getUsername());
+        return decide(${className}Service.update${ClassName}(${className}));
+    }
+
+    /**
+     * 删除${functionName}
+     */
+    @ResponseBody
+    @DeleteMapping( "/batchRemove")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/remove','${permissionPrefix}:remove')")
+    public Result batchRemove(String ids)
+    {
+        return decide(${className}Service.delete${ClassName}ByIds(Convert.toStrArray(ids)));
+    }
+
+    /**
+     * 删除
+     */
+    @ResponseBody
+    @DeleteMapping("/remove/{${pkColumn.javaField}}")
+    @PreAuthorize("hasPermission('/${moduleName}/${businessName}/remove','${permissionPrefix}:remove')")
+    public Result remove(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    {
+        return decide(${className}Service.delete${ClassName}ById(${pkColumn.javaField}));
+    }
+}

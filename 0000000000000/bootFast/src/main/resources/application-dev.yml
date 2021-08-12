@@ -1,0 +1,73 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    max-connections: 20000
+spring:  
+  application:
+      name: bootFast 
+  main:
+    allow-bean-definition-overriding: true 
+  aop:
+    proxy-target-class: true
+    auto: true 
+  resources:
+    staticLocations: classpath:/templates/,classpath:/static/page 
+    #默认单个数据源的配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/bootFast?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true
+    username: root
+    password: yi
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #配置初始化大小/最小/最大
+    initial-size: 1
+    min-idle: 1
+    max-active: 20
+    #获取连接等待超时时间
+    max-wait: 60000
+    #间隔多久进行一次检测，检测需要关闭的空闲连接
+    time-between-eviction-runs-millis: 60000
+    #一个连接在池中最小生存的时间
+    min-evictable-idle-time-millis: 300000
+    #validation-query: SELECT 'x'
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+    pool-prepared-statements: false
+    max-pool-prepared-statement-per-connection-size: 20
+  servlet:
+      multipart:
+        enabled: true
+        max-file-size: 20MB
+        max-request-size: 20MB  
+ ##图片临时路径
+#文件上传目录(window是d/e/f盘， linux是/)（注意Linux和Windows上的目录结构不同）
+file:
+  uploadFolder: /Users/zhaohaiyuan/Downloads/upload/
+#静态资源对外暴露的访问路径(访问图片的路径)
+  staticAccessPath: /upload/** 
+#配置Mybatis
+mybatis:
+  type-aliases-package: com.shuogesha.*.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    # 开启驼峰命名转换，如：Table(create_time) -> Entity(createTime)。不需要我们关心怎么进行字段匹配，mybatis会自动识别`大写字母与下划线`
+    map-underscore-to-camel-case: true 
+#打印SQL日志 
+logging:
+ #path: ./logs/ #打印存放日志的路径
+ level:
+  com.shuogesha: DEBUG #包名下日志的级别
+#swagger
+swagger:
+  enable: true
+  info:
+    version: 0.1
+    title: bootFast接口
+    description: bootFast快速开发后台管理系统 
+
+    

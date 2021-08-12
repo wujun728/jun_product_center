@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/hexo/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/hexo/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/hexo/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/hexo/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="开发环境 腾讯云服务器 CentOS 7.2 64位  检查系统是否已自带open-jdk命令  rpm -qa | grep java 或者 rpm -qa | grep jdk  ps:如果没有显示则说明尚未安装jdk，若是已经安装可以通过命令rpm -qa | grep java | xargs rpm -e --nodeps批量卸载所有带java的文件 安装openjdk(无需配置path">
+<meta name="keywords" content="java,jdk">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centOS7 yum安装JDK8">
+<meta property="og:url" content="https://myxu.github.io/hexo/2018/04/26/centOS7yum安装JDK8/index.html">
+<meta property="og:site_name" content="个人php技术分享">
+<meta property="og:description" content="开发环境 腾讯云服务器 CentOS 7.2 64位  检查系统是否已自带open-jdk命令  rpm -qa | grep java 或者 rpm -qa | grep jdk  ps:如果没有显示则说明尚未安装jdk，若是已经安装可以通过命令rpm -qa | grep java | xargs rpm -e --nodeps批量卸载所有带java的文件 安装openjdk(无需配置path">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://myxu.github.io/hexo/2018/04/26/centOS7yum安装JDK8/openjdk_list.png">
+<meta property="og:image" content="https://myxu.github.io/hexo/2018/04/26/centOS7yum安装JDK8/java_version.png">
+<meta property="og:updated_time" content="2018-04-26T12:41:21.117Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centOS7 yum安装JDK8">
+<meta name="twitter:description" content="开发环境 腾讯云服务器 CentOS 7.2 64位  检查系统是否已自带open-jdk命令  rpm -qa | grep java 或者 rpm -qa | grep jdk  ps:如果没有显示则说明尚未安装jdk，若是已经安装可以通过命令rpm -qa | grep java | xargs rpm -e --nodeps批量卸载所有带java的文件 安装openjdk(无需配置path">
+<meta name="twitter:image" content="https://myxu.github.io/hexo/2018/04/26/centOS7yum安装JDK8/openjdk_list.png">
+
+
+
+  <link rel="alternate" href="/hexo/atom.xml" title="个人php技术分享" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://myxu.github.io/hexo/2018/04/26/centOS7yum安装JDK8/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>centOS7 yum安装JDK8 | 个人php技术分享</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/hexo/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">个人php技术分享</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">life will find  its way out.</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/hexo/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://myxu.github.io/hexo/hexo/2018/04/26/centOS7yum安装JDK8/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Clannad.Armin">
+      <meta itemprop="description" content="个人php技术分享">
+      <meta itemprop="image" content="/hexo/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人php技术分享">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">centOS7 yum安装JDK8
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-26 15:43:33 / 修改时间：20:41:21" itemprop="dateCreated datePublished" datetime="2018-04-26T15:43:33+08:00">2018-04-26</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/hexo/categories/java开发环境搭建/" itemprop="url" rel="index"><span itemprop="name">java开发环境搭建</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><ul>
+<li>腾讯云服务器 CentOS 7.2 64位</li>
+</ul>
+<h3 id="检查系统是否已自带open-jdk"><a href="#检查系统是否已自带open-jdk" class="headerlink" title="检查系统是否已自带open-jdk"></a>检查系统是否已自带open-jdk</h3><p><code>命令</code></p>
+<ul>
+<li>rpm -qa | grep java 或者 rpm -qa | grep jdk</li>
+</ul>
+<p><strong>ps:</strong>如果没有显示则说明尚未安装jdk，若是已经安装可以通过命令<code>rpm -qa | grep java | xargs rpm -e --nodeps</code>批量卸载所有带java的文件</p>
+<h3 id="安装openjdk-无需配置path环境变量"><a href="#安装openjdk-无需配置path环境变量" class="headerlink" title="安装openjdk(无需配置path环境变量)"></a>安装openjdk(无需配置path环境变量)</h3><h4 id="检索yum源中的jdk包"><a href="#检索yum源中的jdk包" class="headerlink" title="检索yum源中的jdk包"></a>检索yum源中的jdk包</h4><p><code>命令</code></p>
+<ul>
+<li>yum list java*</li>
+<li>yum list java-1.8*(指定搜索1.8版本)</li>
+</ul>
+<p>通过以上命令可以检索出当前yum源中openjdk版本为1.8.0<br><img src="/hexo/2018/04/26/centOS7yum安装JDK8/openjdk_list.png" title="jdk列表"></p>
+<h4 id="安装1-8版本的open-jdk"><a href="#安装1-8版本的open-jdk" class="headerlink" title="安装1.8版本的open-jdk"></a>安装1.8版本的open-jdk</h4><p>这里我们需要安装java-1.8版本的所有文件，安装命令：</p>
+<ul>
+<li>yum install -y java-1.8.0-openjdk*</li>
+</ul>
+<h4 id="检查是否安装成功"><a href="#检查是否安装成功" class="headerlink" title="检查是否安装成功"></a>检查是否安装成功</h4><p><code>命令</code></p>
+<ul>
+<li>java -version</li>
+</ul>
+<img src="/hexo/2018/04/26/centOS7yum安装JDK8/java_version.png" title="jdk安装成功">
+<p>出现以上类似信息则说明安装成功了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/hexo/tags/java/" rel="tag"># java</a>
+          
+            <a href="/hexo/tags/jdk/" rel="tag"># jdk</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo/2017/12/04/in-bad-mod/" rel="next" title="心情不好">
+                <i class="fa fa-chevron-left"></i> 心情不好
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/hexo/2018/04/28/CentOS7-安装Tomcat9/" rel="prev" title="CentOS7 安装Tomcat9">
+                CentOS7 安装Tomcat9 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Clannad.Armin</p>
+              <div class="site-description motion-element" itemprop="description">个人php技术分享</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/hexo/archives">
+                
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/hexo/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="external nofollow noopener noreferrer" target="_blank">粤ICP备19084151 </a>&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Clannad.Armin</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/hexo/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/hexo/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/hexo/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/hexo/js/utils.js?v=7.2.0"></script>
+
+  <script src="/hexo/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/hexo/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/hexo/js/scrollspy.js?v=7.2.0"></script>
+<script src="/hexo/js/post-details.js?v=7.2.0"></script>
+
+
+
+  
+
+
+  <script src="/hexo/js/next-boot.js?v=7.2.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

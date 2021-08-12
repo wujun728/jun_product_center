@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysRoleMapper">
+
+    <resultMap id="SysRoleMap" type="SysRole">
+        <id column="role_id" property="roleId"></id>
+        <result column="role_name" property="roleName"></result>
+        <result column="role_code" property="roleCode"></result>
+        <result column="enable" property="enable"></result>
+        <result column="sort" property="sort"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_by" property="updateBy"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="remark" property="remark"></result>
+    </resultMap>
+
+    <select id="selectList" resultMap="SysRoleMap">
+        select * from sys_role
+        <where>
+            <if test="roleCode!=null and roleCode!=''">
+                and role_code like "%"#{roleCode}"%"
+            </if>
+            <if test="roleName!=null and roleName!=''">
+                and role_name like "%"#{roleName}"%"
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据 Id 查询角色-->
+    <select id="selectById" parameterType="string" resultMap="SysRoleMap">
+        select * from sys_role where role_id = #{id}
+    </select>
+    <!-- 根据 用户名-->
+    <select id="selectByUsername" resultMap="SysRoleMap">
+        SELECT
+        *
+        FROM
+        sys_role sr ON sr.role_id = srp.role_id
+        LEFT JOIN sys_user_role sur ON sur.role_id = sr.role_id
+        LEFT JOIN sys_user su ON su.user_id = sur.user_id
+        WHERE
+        su.username = #{username}
+        and sr.enable = 1
+        ORDER BY
+        sr.sort ASC
+    </select>
+
+    <!-- 新增 SysRole 数据 -->
+    <insert id="insert" parameterType="SysRole">
+        insert into sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId!=null">
+                role_id,
+            </if>
+            <if test="roleName!=null">
+                role_name,
+            </if>
+            <if test="roleCode!=null">
+                role_code,
+            </if>
+            <if test="enable!=null">
+                enable,
+            </if>
+            <if test="details!=null">
+                details,
+            </if>
+            <if test="sort!=null">
+                sort,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="roleId!=null">
+                #{roleId},
+            </if>
+            <if test="roleName!=null">
+                #{roleName},
+            </if>
+            <if test="roleCode!=null">
+                #{roleCode},
+            </if>
+            <if test="enable!=null">
+                #{enable},
+            </if>
+            <if test="details!=null">
+                #{details},
+            </if>
+            <if test="sort!=null">
+                #{sort},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据 Id 修改角色数据 -->
+    <update id="updateById" parameterType="SysRole">
+        update sys_role
+        <set>
+            <if test="roleName!=null and roleName!=''">
+                role_name = #{roleName},
+            </if>
+            <if test="roleCode!=null and roleCode!=''">
+                role_code = #{roleCode},
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable = #{enable},
+            </if>
+            <if test="details!=null and details!=''">
+                details = #{details},
+            </if>
+            <if test="sort!=null and sort!=''">
+                sort = #{sort},
+            </if>
+        </set>
+        where role_id = #{roleId}
+    </update>
+
+    <!-- 根据 Id 删除用户数据 -->
+    <delete id="deleteById" parameterType="string">
+          delete from sys_role where role_id = #{id}
+    </delete>
+
+    <!-- 根据 Id 批量删除用户数据 -->
+    <delete id="deleteByIds" parameterType="string">
+        delete from sys_role where role_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

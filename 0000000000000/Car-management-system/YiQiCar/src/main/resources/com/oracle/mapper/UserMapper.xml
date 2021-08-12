@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.UserMapper">
+
+	<resultMap id="BaseResultMap" type="com.oracle.vo.User">
+		<id column="UserId" jdbcType="INTEGER" property="userid" />
+		<result column="LoginName" jdbcType="VARCHAR"
+			property="loginname" />
+		<result column="LoginPwd" jdbcType="VARCHAR"
+			property="loginpwd" />
+		<result column="LoginTime" jdbcType="TIMESTAMP"
+			property="logintime" />
+		<result column="eid" jdbcType="INTEGER" property="eid" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		UserId, LoginName, LoginPwd, LoginTime, eid
+	</sql>
+	<select id="selectByPrimaryKey"
+		parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where UserId = #{userid,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByNameAndPwd" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where loginname = #{name} and loginpwd = #{password}
+	</select>
+
+	<delete id="deleteByPrimaryKey"
+		parameterType="java.lang.Integer">
+		delete from sys_user
+		where UserId =
+		#{userid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.oracle.vo.User">
+		insert into sys_user (UserId,
+		LoginName, LoginPwd,
+		LoginTime, eid)
+		values (#{userid,jdbcType=INTEGER},
+		#{loginname,jdbcType=VARCHAR},
+		#{loginpwd,jdbcType=VARCHAR},
+		#{logintime,jdbcType=TIMESTAMP}, #{eid,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.oracle.vo.User">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				UserId,
+			</if>
+			<if test="loginname != null">
+				LoginName,
+			</if>
+			<if test="loginpwd != null">
+				LoginPwd,
+			</if>
+			<if test="logintime != null">
+				LoginTime,
+			</if>
+			<if test="eid != null">
+				eid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="loginname != null">
+				#{loginname,jdbcType=VARCHAR},
+			</if>
+			<if test="loginpwd != null">
+				#{loginpwd,jdbcType=VARCHAR},
+			</if>
+			<if test="logintime != null">
+				#{logintime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="eid != null">
+				#{eid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.oracle.vo.User">
+		update sys_user
+		<set>
+			<if test="loginname != null">
+				LoginName = #{loginname,jdbcType=VARCHAR},
+			</if>
+			<if test="loginpwd != null">
+				LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+			</if>
+			<if test="logintime != null">
+				LoginTime = #{logintime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="eid != null">
+				eid = #{eid,jdbcType=INTEGER},
+			</if>
+		</set>
+		where UserId = #{userid,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey"
+		parameterType="com.oracle.vo.User">
+		update sys_user
+		set LoginName =
+		#{loginname,jdbcType=VARCHAR},
+		LoginPwd = #{loginpwd,jdbcType=VARCHAR},
+		LoginTime = #{logintime,jdbcType=TIMESTAMP},
+		eid =
+		#{eid,jdbcType=INTEGER}
+		where UserId = #{userid,jdbcType=INTEGER}
+	</update>
+
+</mapper>

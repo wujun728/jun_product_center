@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: sanri-tools
+  profiles:
+    active: company
+  main:
+    banner-mode: "off"
+  freemarker:
+    cache: false
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML
+translate:
+  baidu:
+    appId: 20181123000238271
+    secret: PoT5TnMl_4pVIhosG_Fk
+  youdao:
+    appId: 28a343197650d05a
+    secret: hioXXfQjbWnRDuLrvbvx3tGpo7hDUpHt
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+logging:
+  level:
+    root: info
+    com.sanri.tools.modules: debug

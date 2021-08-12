@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysMailMapper">
+
+    <resultMap id="sysMailView" type="com.pearadmin.system.domain.SysMail">
+        <id column="mail_id" property="mailId"/>
+        <result column="receiver" property="receiver"/>
+        <result column="subject" property="subject"/>
+        <result column="content" property="content"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+
+    <insert id="insert" parameterType="com.pearadmin.system.domain.SysMail">
+        insert into sys_mail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mailId != null and mailId != ''">
+                mail_id,
+            </if>
+            <if test="receiver != null and receiver != ''">
+                receiver,
+            </if>
+            <if test="subject != null and subject != ''">
+                subject,
+            </if>
+            <if test="content != null and content != ''">
+                content,
+            </if>
+            <if test="createBy != null and createBy != ''">
+                create_by,
+            </if>
+            <if test="createTime != null and createTime != ''">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="mailId != null and mailId != ''">
+                #{mailId},
+            </if>
+            <if test="receiver != null and receiver != ''">
+                #{receiver},
+            </if>
+            <if test="subject != null and subject != ''">
+                #{subject},
+            </if>
+            <if test="content != null and content != ''">
+                #{content},
+            </if>
+            <if test="createBy != null and createBy != ''">
+                #{createBy},
+            </if>
+            <if test="createTime != null and createTime != ''">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectList" parameterType="com.pearadmin.system.domain.SysMail"
+            resultMap="sysMailView">
+        select * from sys_mail
+        <where>
+            <if test="receiver != null and receiver != ''">
+                and receiver like CONCAT('%', #{receiver}, '%')
+            </if>
+            <if test="subject != null and subject != ''">
+                and subject like CONCAT('%', #{subject}, '%')
+            </if>
+            <if test="content != null and content != ''">
+                and content like CONCAT('%', #{content}, '%')
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by = #{createBy}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="string">
+        delete from sys_mail
+        <where>
+            1 = 0
+            <if test="mailId != null and mailId != ''">
+                or mail_id = #{mailId}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteByIds" parameterType="list">
+        delete from sys_mail
+        <where>
+            1 = 0
+            <if test="ids != null">
+                or mail_id in
+                <foreach item="id" collection="list" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </delete>
+
+</mapper>

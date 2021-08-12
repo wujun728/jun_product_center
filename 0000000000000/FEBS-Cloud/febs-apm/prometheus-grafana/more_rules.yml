@@ -1,0 +1,108 @@
+groups:
+  - name: example #定义规则组
+    rules:
+      - alert: InstanceDown  #定义报警名称
+        expr: up == 0   #Promql语句，触发规则
+        for: 1m            # 一分钟
+        labels:       #标签定义报警的级别和主机
+          name: instance
+          severity: Critical
+        annotations:  #注解
+          summary: " {{ $labels.appname }}" #报警摘要，取报警信息的appname名称
+          description: " 服务停止运行 "   #报警信息
+          value: "{{ $value }}%"  # 当前报警状态值
+  - name: Host
+    rules:
+      - alert: HostMemory Usage
+        expr: (node_memory_MemTotal_bytes - (node_memory_MemFree_bytes + node_memory_Buffers_bytes + node_memory_Cached_bytes)) / node_memory_MemTotal_bytes * 100 >  80
+        for: 1m
+        labels:
+          name: Memory
+          severity: Warning
+        annotations:
+          summary: " {{ $labels.appname }} "
+          description: "宿主机内存使用率超过80%."
+          value: "{{ $value }}"
+      - alert: HostCPU Usage
+        expr: sum(avg without (cpu)(irate(node_cpu_seconds_total{mode!='idle'}[5m]))) by (instance,appname) > 0.65
+        for: 1m
+        labels:
+          name: CPU
+          severity: Warning
+        annotations:
+          summary: " {{ $labels.appname }} "
+          description: "宿主机CPU使用率超过65%."
+          value: "{{ $value }}"
+      - alert: HostLoad
+        expr: node_load5 > 4
+        for: 1m
+        labels:
+          name: Load
+          severity: Warning
+        annotations:
+          summary: "{{ $labels.appname }} "
+          description: " 主机负载5分钟超过4."
+          value: "{{ $value }}"
+      - alert: HostFilesystem Usage
+        expr: 1-(node_filesystem_free_bytes / node_filesystem_size_bytes) >  0.8
+        for: 1m
+        labels:
+          name: Disk
+          severity: Warning
+        annotations:
+          summary: " {{ $labels.appname }} "
+          description: " 宿主机 [ {{ $labels.mountpoint }} ]分区使用超过80%."
+          value: "{{ $value }}%"
+      - alert: HostDiskio
+        expr: irate(node_disk_writes_completed_total{job=~"Host"}[1m]) > 10
+        for: 1m
+        labels:
+          name: Diskio
+          severity: Warning
+        annotations:
+          summary: " {{ $labels.appname }} "
+          description: " 宿主机 [{{ $labels.device }}]磁盘1分钟平均写入IO负载较高."
+          value: "{{ $value }}iops"
+      - alert: Network_receive
+        expr: irate(node_network_receive_bytes_total{device!~"lo|bond[0-9]|cbr[0-9]|veth.*|virbr.*|ovs-system"}[5m]) / 1048576  > 3
+        for: 1m
+        labels:
+          name: Network_receive
+          severity: Warning
+        annotations:
+          summary: " {{ $labels.appname }} "
+          description: " 宿主机 [{{ $labels.device }}] 网卡5分钟平均接收流量超过3Mbps."
+          value: "{{ $value }}3Mbps"
+      - alert: Network_transmit
+        expr: irate(node_network_transmit_bytes_total{device!~"lo|bond[0-9]|cbr[0-9]|veth.*|virbr.*|ovs-system"}[5m]) / 1048576  > 3
+        for: 1m
+        labels:
+          name: Network_transmit
+          severity: Warning
+        annotations:
+          summary: " {{ $labels.appname }} "
+          description: " 宿主机 [{{ $labels.device }}] 网卡5分钟内平均发送流量超过3Mbps."
+          value: "{{ $value }}3Mbps"
+  - name: Container
+    rules:
+      - alert: ContainerCPU Usage
+        expr: (sum by(name,instance) (rate(container_cpu_usage_seconds_total{image!=""}[5m]))*100) > 60
+        for: 1m
+        labels:
+          name: CPU
+          severity: Warning
+        annotations:
+          summary: "{{ $labels.name }} "
+          description: " 容器CPU使用超过60%."
+          value: "{{ $value }}%"
+      - alert: ContainerMem Usage
+        #    expr: (container_memory_usage_bytes - container_memory_cache)  / container_spec_memory_limit_bytes   * 100 > 10
+        expr:  container_memory_usage_bytes{name=~".+"}  / 1048576 > 1024
+        for: 1m
+        labels:
+          name: Memory
+          severity: Warning
+        annotations:
+          summary: "{{ $labels.name }} "
+          description: " 容器内存使用超过1GB."
+          value: "{{ $value }}G"

@@ -1,0 +1,51 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+			}
+		},
+		{
+			"path": "pages/hot/hot",
+			"style": {
+			}
+		},
+		{
+			"path": "pages/me/me",
+			"style": {
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationStyle":"custom"
+	},
+	"tabBar":{
+		"borderStyle":"black",
+		"backgroundColor":"white",
+		"color":"#8a8a8a",
+		"selectedColor":"red",
+		"list":[
+			{
+				"pagePath":"pages/index/index",
+				"iconPath":"static/tabBar/index.png",
+				"selectedIconPath":"static/tabBar/index_active.png",
+				"text":"首页"
+			},
+			{
+				"pagePath":"pages/hot/hot",
+				"iconPath":"static/tabBar/hot.png",
+				"selectedIconPath":"static/tabBar/hot_active.png",
+				"text":"热门"
+			},
+			{
+				"pagePath":"pages/me/me",
+				"iconPath":"static/tabBar/me.png",
+				"selectedIconPath":"static/tabBar/me_active.png",
+				"text":"我的"
+			}
+		]
+	}
+}

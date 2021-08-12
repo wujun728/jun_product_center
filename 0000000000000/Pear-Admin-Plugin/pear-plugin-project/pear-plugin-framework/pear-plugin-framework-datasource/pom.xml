@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.pearadmin</groupId>
+        <artifactId>pear-plugin-framework</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <groupId>com.pearadmin</groupId>
+    <artifactId>pear-plugin-framework-datasource</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>pear-plugin-framework-datasource</name>
+    <description>Demo project for Spring Boot</description>
+
+ <dependencies>
+     <!-- Druid Pool -->
+     <dependency>
+         <groupId>com.alibaba</groupId>
+         <artifactId>druid</artifactId>
+         <version>1.1.22</version>
+     </dependency>
+     <!-- HikariCP -->
+     <dependency>
+         <groupId>com.zaxxer</groupId>
+         <artifactId>HikariCP</artifactId>
+     </dependency>
+
+     <!-- Spring Boot Jdbc -->
+     <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-jdbc</artifactId>
+     </dependency>
+
+     <!-- Spring Boot Aop -->
+     <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-aop</artifactId>
+     </dependency>
+ </dependencies>
+</project>

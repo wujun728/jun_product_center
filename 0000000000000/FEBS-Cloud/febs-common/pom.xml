@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cc.mrbird</groupId>
+        <artifactId>febs-cloud</artifactId>
+        <version>2.2-RELEASE</version>
+        <relativePath>../febs-cloud/pom.xml</relativePath>
+    </parent>
+
+    <modules>
+        <module>febs-common-core</module>
+        <module>febs-common-redis-starter</module>
+        <module>febs-common-datasource-starter</module>
+        <module>febs-common-security-starter</module>
+        <module>febs-common-doc</module>
+        <module>febs-common-doc-gateway-starter</module>
+        <module>febs-common-doc-starter</module>
+        <module>febs-common-logging-starter</module>
+    </modules>
+
+    <artifactId>febs-common</artifactId>
+    <version>2.2-RELEASE</version>
+    <name>FEBS-Common</name>
+    <packaging>pom</packaging>
+    <description>FEBS-Common通用模块</description>
+
+</project>

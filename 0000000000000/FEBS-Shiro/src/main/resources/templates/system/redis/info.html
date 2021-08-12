@@ -1,0 +1,36 @@
+<style>
+    tr{border-top:1px solid #eee;font-size:1rem}tr:last-child{border-bottom:1px solid #eee}tr:hover{background:#fafafa!important}
+</style>
+<div class="card">
+    <div class="card-header">
+    </div>
+    <div class="card-block">
+        <div id="container" style="height:300px"></div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title"></h2>
+    </div>
+    <div class="card-block">
+        <div id="keysChart" style="height:300px"></div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title" style="padding:1rem 0">Redis 详细信息：</h2>
+    </div>
+    <div class="card-block">
+        <table class="table table-condensed table-hover"
+               style="word-break: break-all; word-wrap: break-word;">
+            <tbody>
+            <tr th:each="il:${infoList}">
+                <td style="width:30%;font-weight:bold">[[${il.key}]]</td>
+                <td style="width:40%">[[${il.description }]]</td>
+                <td style="width:30%">[[${il.value}]]</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script data-th-src="@{js/app/system/redis/info.js}"></script>

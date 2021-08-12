@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nacos-mysql-cm
+data:
+  nacos.mysql.master.root.password: "nacos_root" # 主数据库root密码
+  nacos.mysql.master.db: "febs_nacos" # 主数据库库名
+  nacos.mysql.master.user: "nacos" # 主数据库用户名
+  nacos.mysql.master.password: "nacos" # 主数据库密码
+  nacos.mysql.master.port: "3306" # 主数据库端口
+  nacos.mysql.replication.user: "nacos_ru" # 拷贝用的账户
+  nacos.mysql.replication.password: "nacos_ru" # 拷贝用的密码
+  nacos.mysql.slave.root.password: "nacos_root" # 从数据库root密码
+  nacos.mysql.slave.port: "3306" # 从数据库端口

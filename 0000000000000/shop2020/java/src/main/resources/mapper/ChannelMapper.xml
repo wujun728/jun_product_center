@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.ChannelDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Channel" id="ChannelResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="sort" column="sort"/>  
+ 		<result property="path" column="path"/>  
+ 		<result property="img" column="img"/>  
+ 		<association property="parent" column="pid" select="com.shuogesha.cms.dao.ChannelDao.findById" >
+        </association>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Channel"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_channel(id,name,path,img,pid,sort) values(null,#{name},#{path},#{img},#{parent.id},#{sort})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="ChannelResult">
+		select * from e_channel where 1=1 
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="pid!=null"> and pid =#{pid}</if>
+		<if test="pid==null"> and pid is null </if>
+		order by sort asc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_channel  where 1=1 
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="pid!=null"> and pid =#{pid}</if>
+		<if test="pid==null"> and pid is null </if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="ChannelResult">
+		select * from e_channel where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="ChannelResult">
+		delete from e_channel where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Channel"> 
+ 		update e_channel set name=#{name},path=#{path},img=#{img},sort=#{sort} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findAll" resultMap="ChannelResult">
+		select * from e_channel where 1=1
+		<if test="pid!=null"> and pid =#{pid}</if>
+		<if test="pid==null"> and pid is null </if>
+ 		order by sort asc 
+	</select>
+</mapper>  

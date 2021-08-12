@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.MessageDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Message" id="MessageResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/>  
+ 		<result property="type" column="type"/>  
+ 		<result property="content" column="content"/>  
+ 		<result property="data" column="data"/>  
+ 		<result property="userId" column="user_id"/>  
+ 		<result property="dateline" column="dateline"/>  
+ 		<result property="status" column="status"/>  
+ 		<result property="fromUid" column="from_uid"/>  
+ 		<association property="to_unifiedUser" column="user_id" select="com.shuogesha.platform.dao.UnifiedUserDao.findById" >
+        </association>  
+        <association property="from_unifiedUser" column="from_uid" select="com.shuogesha.platform.dao.UnifiedUserDao.findById" >
+        </association>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Message"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_message(id,name,type,content,data,user_id,dateline,status,from_uid) 
+		values(null,#{name},#{type},#{content},#{data},#{userId},#{dateline},#{status},#{fromUid})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="MessageResult">
+		select * from e_message where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="name==null"> and name!='MESSAGE'</if>
+		<if test="userId!=null and name!='MESSAGE'"> and user_id=#{userId}</if> 
+		<if test="userId!=null and name=='MESSAGE'"> and user_id=#{userId} or from_uid=#{userId}</if> 
+		<if test="userId!=null and name==null"> or name='ALL'</if> 
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_message where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="name==null"> and name!='MESSAGE'</if>
+		<if test="userId!=null and name!='MESSAGE'"> and user_id=#{userId}</if> 
+		<if test="userId!=null and name=='MESSAGE'"> and user_id=#{userId} or from_uid=#{userId}</if> 
+		<if test="userId!=null and name==null"> or name='ALL'</if> 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="MessageResult">
+		select * from e_message where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="MessageResult">
+		delete from e_message where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Message"> 
+ 		update e_message set name=#{name},type=#{type},content=#{content},data=#{data},user_id=#{userId},dateline=#{dateline},status=#{status},from_uid=#{fromUid} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="queryKefuList" parameterType="Map" resultMap="MessageResult">
+ 	  select mm.* from(
+		select m.* from e_message m  where 1=1 
+		<if test="name!=null"> and m.name like #{name}</if>
+		<if test="name==null"> and m.name!='MESSAGE'</if> 
+		order by id desc
+		) mm group by mm.user_id
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="countKefu" parameterType="Map" resultType="Long">
+ 		select count(*) from (
+ 		select count(mm.user_id) from(
+		select m.* from e_message m  where 1=1 
+		<if test="name!=null"> and m.name like #{name}</if>
+		<if test="name==null"> and m.name!='MESSAGE'</if> 
+		order by id desc
+		) mm group by mm.user_id  
+		)mmm
+	</select>
+</mapper>  

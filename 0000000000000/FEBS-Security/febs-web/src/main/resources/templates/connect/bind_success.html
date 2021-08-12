@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="edge"/>
+    <title>FEBS权限管理系统</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/favicon.ico}"/>
+    <link rel="stylesheet" data-th-href="@{/css/app.css}">
+</head>
+<body style="padding: 2rem 5rem;font-size: 1.4rem">
+<div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">绑定成功！</h4>
+    <p class="mb-0">恭喜您账号绑定成功，后续您可以使用该 QQ/微信 号登录系统，3秒后跳转到系统首页。</p>
+</div>
+<script data-th-inline="javascript">
+    var ctx = [[@{/}]];
+    setTimeout(function () {
+        location.href = ctx + "index";
+    }, 3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.MenuDao">
+	<resultMap type="com.shuogesha.platform.entity.Menu" id="MenuResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="icon" column="icon" />
+		<result property="path" column="path" />
+		<result property="status" column="status" />
+		<result property="sort" column="sort" />
+		<result property="pid" column="pid" />
+		<result property="page" column="page" />
+		<result property="type" column="type" />
+		<result property="perms" column="perms" /> 
+	</resultMap>
+
+
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.Menu"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		t_menu(id,name,icon,path,status,sort,pid,page,type,perms)
+		values(null,#{name},#{icon},#{path},#{status},#{sort},#{pid},#{page},#{type},#{perms})
+	</insert>
+
+
+	<select id="queryList" parameterType="Map"
+		resultMap="treeMenu">
+		select * from t_menu where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+
+	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_menu where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+
+
+	<select id="findById" parameterType="Long"
+		resultMap="MenuResult">
+		select * from t_menu where id=#{id};
+	</select>
+
+	<select id="removeById" parameterType="Long" resultMap="MenuResult">
+		delete from t_menu where id=#{id};
+ 	</select>
+
+	<update id="updateById" parameterType="com.shuogesha.platform.entity.Menu">
+		update t_menu set
+		name=#{name},icon=#{icon},path=#{path},status=#{status},sort=#{sort},pid=#{pid},page=#{page},type=#{type},perms=#{perms}
+		where id=#{id}
+	</update>
+
+	<select id="queryMenuList" resultMap="MenuResult">
+		select * from t_menu where 1=1
+		<if test="pid!=null"> and pid =#{pid}</if>
+		<if test="pid==null"> and (pid is null or pid =0) </if>
+		order by sort asc
+	</select>
+
+	<resultMap type="com.shuogesha.platform.entity.Menu" id="treeMenu">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="icon" column="icon" />
+		<result property="path" column="path" />
+		<result property="status" column="status" />
+		<result property="sort" column="sort" />
+		<result property="type" column="type" />
+		<collection property="children" ofType="com.shuogesha.platform.entity.Menu" column="{id=id}"
+			select="findMenuByParentId" />
+	</resultMap>
+
+	<select id="findMenuByParentId" resultMap="treeMenu">
+		select * from t_menu
+		where pid = #{id} 
+ 		order by sort asc
+	</select>
+
+	<select id="findAll" resultMap="treeMenu">
+		select * from t_menu where 1=1
+		<if test="pid!=null"> and pid =#{pid}</if>
+		<if test="pid==null"> and (pid is null or pid =0)</if>
+ 		order by sort asc
+	</select>
+	
+	<resultMap type="com.shuogesha.platform.entity.Menu" id="treeMenu1">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="icon" column="icon" />
+		<result property="path" column="path" />
+		<result property="status" column="status" />
+		<result property="sort" column="sort" />
+		<result property="type" column="type" />
+		<collection property="children" ofType="com.shuogesha.platform.entity.Menu" column="{id=id,type=type}"
+			select="findMenuByParentId1" />
+		<collection property="operate" ofType="com.shuogesha.platform.entity.Menu" column="{id=id}"
+			select="findMenuByParentId2" />	 
+	</resultMap>
+
+	<select id="findMenuByParentId1" resultMap="treeMenu1">
+		select * from t_menu 
+		where pid = #{id} and 1=1
+		<if test="type!=null"> and type =#{type}</if>
+		order by sort asc
+	</select>
+	
+	<select id="findMenuByParentId2" resultMap="treeMenu1">
+		select * from t_menu 
+		where pid = #{id} and type='1' and status='0'
+ 		order by sort asc
+	</select>
+	
+	<select id="getAllMenus" resultMap="treeMenu1">
+		select * from t_menu where 1=1
+		<if test="pid!=null"> and pid =#{pid}</if>
+		<if test="pid==null"> and (pid is null or pid =0)</if>
+		<if test="type!=null"> and type =#{type}</if>
+		order by sort asc
+	</select>
+
+</mapper>  

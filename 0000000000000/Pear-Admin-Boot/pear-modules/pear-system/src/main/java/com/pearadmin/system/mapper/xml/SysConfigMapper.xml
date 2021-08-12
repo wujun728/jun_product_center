@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysConfigMapper">
+
+    <resultMap id="SysConfigMap" type="SysConfig">
+        <id column="config_id" property="configId"></id>
+        <result column="config_name" property="configName"></result>
+        <result column="config_code" property="configCode"></result>
+        <result column="config_type" property="configType"></result>
+        <result column="config_value" property="configValue"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="update_by" property="updateBy"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="remark" property="remark"></result>
+    </resultMap>
+
+    <select id="selectList" resultMap="SysConfigMap">
+        select * from sys_config
+        <where>
+            config_type = 'custom'
+            <if test="configCode!=null and configCode!=''">
+                and config_code like "%"#{configCode}"%"
+            </if>
+            <if test="configName!=null and configName!=''">
+                and config_name like "%"#{configName}"%"
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据 Id 查询系统配置-->
+    <select id="selectById" parameterType="string" resultMap="SysConfigMap">
+        select * from sys_config where config_id = #{id}
+    </select>
+
+    <!-- 根据 Code 查询系统配置-->
+    <select id="selectByCode" parameterType="string" resultMap="SysConfigMap">
+        select * from sys_config where config_code = #{code}
+    </select>
+
+    <!-- 新增 SysConfig 数据 -->
+    <insert id="insert" parameterType="SysConfig">
+        insert into sys_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configId!=null">
+                config_id,
+            </if>
+            <if test="configName!=null">
+                config_name,
+            </if>
+            <if test="configCode!=null">
+                config_code,
+            </if>
+            <if test="configType!=null">
+                config_type,
+            </if>
+            <if test="configValue!=null">
+                config_value,
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="configId!=null">
+                #{configId},
+            </if>
+            <if test="configName!=null">
+                #{configName},
+            </if>
+            <if test="configCode!=null">
+                #{configCode},
+            </if>
+            <if test="configType!=null">
+                #{configType},
+            </if>
+            <if test="configValue!=null">
+                #{configValue},
+            </if>
+            <if test="remark!=null and remark!=''">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 根据 Id 修改系统配置数据 -->
+    <update id="updateById" parameterType="SysConfig">
+        update sys_config
+        <set>
+            <if test="configName!=null and configName!=''">
+                config_name = #{configName},
+            </if>
+            <if test="configCode!=null and configCode!=''">
+                config_code = #{configCode},
+            </if>
+            <if test="configValue!=null and configValue!=''">
+                config_value = #{configValue},
+            </if>
+            <if test="configType!=null and configType!=''">
+                config_type = #{configType},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+        </set>
+        where config_id = #{configId}
+    </update>
+
+    <!-- 根据 Id 删除系统配置数据 -->
+    <delete id="deleteById" parameterType="string">
+          delete from sys_config where config_id = #{id}
+    </delete>
+
+    <!-- 根据 Id 批量删除系统配置数据 -->
+    <delete id="deleteByIds" parameterType="string">
+        delete from sys_config where config_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,13 @@
+{
+  "connectIdParam": {
+    "module": "redis",
+    "connName": "192.168.0.134"
+  },
+  "connectParam": {
+    "host": "192.168.0.134",
+    "port": 6379
+  },
+  "authParam": {
+    "password": "h123"
+  }
+}

@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+
+spring:
+  security:
+    user:
+      name: mrbird
+      password: 123456
+  boot:
+    admin:
+      ui:
+        title: febs actuator

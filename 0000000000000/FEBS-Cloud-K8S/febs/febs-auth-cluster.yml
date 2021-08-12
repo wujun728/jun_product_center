@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: febs-auth-service
+spec:
+  ports:
+    - port: 8101
+      targetPort: 8101
+  selector:
+    name: febs-auth
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: febs-auth-d
+spec:
+  selector:
+    matchLabels:
+      name: febs-auth
+  replicas: 2 # 2实例集群
+  template:
+    metadata:
+      labels:
+
+        name: febs-auth
+    spec:
+      containers:
+        - name: febs-auth
+          image: docker.mrbird.cc/febs/febs-auth:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8101
+          args:
+            - "--spring.profiles.active=prod"
+          env: # 从configmap加载配置到环境变量
+            - name: mysql.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: febs.mysql.url
+            - name: redis.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: febs.redis.url
+            - name: nacos.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: nacos.url
+            - name: logstash.url
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: logstash.url
+            - name: febs-monitor-admin
+              valueFrom:
+                configMapKeyRef:
+                  name: febs-cm
+                  key: febs.monitor.admin.url
+            - name: TZ
+              value: "Asia/Shanghai"
+          volumeMounts:
+            - mountPath: /log
+              name: febs-auth-data
+          # 虚拟机资源有限，对资源进行限制
+          resources:
+            requests:
+              cpu: 0.3
+              memory: 300Mi
+            limits:
+              cpu: 1
+              memory: 500Mi
+      volumes: # 日志挂载到NFS服务器
+        - name: febs-auth-data
+          nfs:
+            path: /nfs/log
+            server: 192.168.33.15

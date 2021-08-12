@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nacos-mysql-master
+  labels:
+    name: nacos-mysql-master
+spec:
+  replicas: 1
+  selector:
+    name: nacos-mysql-master
+  template:
+    metadata:
+      labels:
+        name: nacos-mysql-master
+    spec:
+      containers:
+        - name: master
+          image: nacos/nacos-mysql-master:latest # nacos-mysql-master镜像
+          ports:
+            - containerPort: 3306 # 端口3306
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: nacos-mysql-master-data
+          # 从nacos-mysql-cm中读取配置，加载到环境变量
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: nacos-mysql-cm
+                  key: nacos.mysql.master.root.password
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: nacos-mysql-cm
+                  key: nacos.mysql.master.db
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: nacos-mysql-cm
+                  key: nacos.mysql.master.user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: nacos-mysql-cm
+                  key: nacos.mysql.master.password
+            - name: MYSQL_REPLICATION_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: nacos-mysql-cm
+                  key: nacos.mysql.replication.user
+            - name: MYSQL_REPLICATION_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: nacos-mysql-cm
+                  key: nacos.mysql.replication.password
+      volumes: # 指定nfs服务挂载
+        - name: nacos-mysql-master-data
+          nfs:
+            path: /nfs/nacos-mysql-master
+            server: 192.168.33.15
+---
+# 创建nacos主库service，供nacos server连接
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-master # 必须叫这个名字，因为nacos server内部根据这个名字连接数据库
+  labels:
+    name: mysql-master
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    name: nacos-mysql-master

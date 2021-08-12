@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.PaymentsDao"> 
+    <resultMap type="com.shuogesha.platform.entity.Payments" id="PaymentsResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="sort" column="sort"/>  
+ 		<result property="status" column="status"/>  
+ 		<result property="remark" column="remark"/>  
+ 		<result property="img" column="img"/>  
+ 		<result property="content" column="content"/>  
+ 		<result property="type" column="type"/>  
+ 		<result property="platform" column="platform"/>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.Payments"  useGeneratedKeys="true" keyProperty="id" >
+		insert into t_payments(id,name,sort,status,remark,img,content,type,platform) 
+		values(null,#{name},#{sort},#{status},#{remark},#{img},#{content},#{type},#{platform})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="PaymentsResult">
+		select * from t_payments where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_payments where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="PaymentsResult">
+		select * from t_payments where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="PaymentsResult">
+		delete from t_payments where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.Payments"> 
+ 		update t_payments set name=#{name},sort=#{sort},status=#{status},remark=#{remark},img=#{img},content=#{content},type=#{type},platform=#{platform} where id=#{id}
+ 	</update>
+ 	
+ 	
+ 	<select id="findList" parameterType="Map" resultMap="PaymentsResult">
+		select * from t_payments where 1=1 and status='0'
+		<if test="platform!=null"> and (platform=#{platform} or platform='all')</if>
+		order by sort desc
+ 	</select>
+</mapper>  

@@ -1,0 +1,287 @@
+{
+  "info": {
+    "_postman_id": "4d61085d-8340-4bf6-880c-15a4185fd915",
+    "name": "FEBS-Cloud",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. 密码模式获取令牌",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "description": "客户端凭证，值的格式为Basic空格 + client_id:client_secret经过Base64加密后的值",
+            "key": "Authorization",
+            "type": "text",
+            "value": "Basic ZmViczoxMjM0NTY="
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8301/auth/oauth/token?grant_type=password&username=mrbird&password=1234qwer&key=1234&code=8873",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "auth",
+            "oauth",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "password",
+              "description": "认证类型，password密码模式"
+            },
+            {
+              "key": "username",
+              "value": "mrbird",
+              "description": "用户名"
+            },
+            {
+              "key": "password",
+              "value": "1234qwer",
+              "description": "密码"
+            },
+            {
+              "key": "key",
+              "value": "1234",
+              "description": "代表每个验证码的唯一key"
+            },
+            {
+              "key": "code",
+              "value": "8873",
+              "description": "验证码值（验证码的值可以通过浏览器访问http://localhost:8301/auth/captcha?key=1234获取）"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. 刷新令牌",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Basic ZmViczoxMjM0NTY=",
+            "description": "客户端凭证，值的格式为Basic空格 + client_id:client_secret经过Base64加密后的值",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8301/auth/oauth/token?grant_type=refresh_token&refresh_token=5d2dd6c3-bd99-4558-b622-bf8612d7c4fb",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "auth",
+            "oauth",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "refresh_token"
+            },
+            {
+              "key": "refresh_token",
+              "value": "5d2dd6c3-bd99-4558-b622-bf8612d7c4fb"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. feign测试",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "bearer 4597893b-4ab3-468d-baa2-6ae0faf8ae9e",
+            "equals": true,
+            "description": "值格式：bearer空格+访问令牌"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8301/test/user/list",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "test",
+            "user",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. 通过febsutil获取在线用户信息",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "description": "值格式：bearer空格+访问令牌",
+            "equals": true,
+            "key": "Authorization",
+            "value": "bearer 684d687c-5d10-48fd-a58d-8484896cf9f6"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8301/test/user",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "test",
+            "user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. 分布式事务测试",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "description": "值格式：bearer空格+访问令牌",
+            "key": "Authorization",
+            "type": "text",
+            "value": "bearer 41171c4d-5b22-41d3-bb41-cb08564b2373"
+          }
+        ],
+        "url": {
+          "raw": "localhost:8301/test/pay?goodsId=1&goodsName=iPhone SE",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "test",
+            "pay"
+          ],
+          "query": [
+            {
+              "key": "goodsId",
+              "value": "1",
+              "description": "商品ID"
+            },
+            {
+              "key": "goodsName",
+              "value": "iPhone SE",
+              "description": "商品名称"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. 授权码模式获取令牌",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "description": "客户端凭证，值的格式为Basic空格 + client_id:client_secret经过Base64加密后的值",
+            "key": "Authorization",
+            "type": "text",
+            "value": "Basic Y29kZToxMjM0NTY="
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8301/auth/oauth/token?grant_type=authorization_code&code=HLapQA&redirect_uri=http://www.baidu.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "auth",
+            "oauth",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "authorization_code",
+              "description": "认证类型，authorization_code授权码模式"
+            },
+            {
+              "key": "code",
+              "value": "HLapQA",
+              "description": "授权码"
+            },
+            {
+              "key": "redirect_uri",
+              "value": "http://www.baidu.com",
+              "description": "重定向地址"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. 客户端模式获取令牌",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "description": "客户端凭证，值的格式为Basic空格 + client_id:client_secret经过Base64加密后的值",
+            "key": "Authorization",
+            "type": "text",
+            "value": "Basic Y29kZToxMjM0NTY="
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8301/auth/oauth/token?grant_type=client_credentials&client=code",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8301",
+          "path": [
+            "auth",
+            "oauth",
+            "token"
+          ],
+          "query": [
+            {
+              "key": "grant_type",
+              "value": "client_credentials",
+              "description": "认证类型，client_credentials客户端模式"
+            },
+            {
+              "key": "client",
+              "value": "code",
+              "description": "客户端client_id"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}

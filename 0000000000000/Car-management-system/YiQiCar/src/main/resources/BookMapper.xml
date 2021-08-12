@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oracle.dao.BookDao">
+
+	<insert id="save" parameterType="book">
+		insert into book values(null,#{bookName},#{price})
+	</insert>
+	
+	
+	<select id="getAll" resultType="book">
+		select * from book
+	</select>
+	
+	
+	<select id="getBookById" resultType="book" parameterType="int">
+		select * from  book where isbn=#{isbn}
+	</select>
+</mapper>

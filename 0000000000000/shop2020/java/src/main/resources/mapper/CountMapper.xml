@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.CountDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Count" id="CountResult">
+		<result property="id" column="id"/> 
+		<result property="referid" column="referid"/> 
+ 		<result property="refer" column="refer"/>  
+ 		<result property="views" column="views"/>  
+ 		<result property="viewsmonth" column="viewsmonth"/>  
+ 		<result property="viewsweek" column="viewsweek"/>  
+ 		<result property="viewsday" column="viewsday"/>  
+ 		<result property="comments" column="comments"/>  
+ 		<result property="commentsmonth" column="commentsmonth"/>  
+ 		<result property="commentsweek" column="commentsweek"/>  
+ 		<result property="commentsday" column="commentsday"/>  
+ 		<result property="praise" column="praise"/>  
+ 		<result property="collect" column="collect"/>  
+  	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Count"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_count(id,referid,refer,views,comments,praise,collect) values(null,#{referid},#{refer},#{views},#{comments},#{praise},#{collect})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="CountResult">
+		select * from e_count where 1=1
+		<if test="referid!=null"> and referid =#{referid}</if> 
+		<if test="refer!=null"> and refer =#{refer}</if> 
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_count where 1=1
+		<if test="referid!=null"> and referid =#{referid}</if> 
+		<if test="refer!=null"> and refer =#{refer}</if> 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="CountResult">
+		select * from e_count where id=#{id};
+	</select> 
+	
+	<select id="findByRefer" parameterType="Map" resultMap="CountResult">
+		select * from e_count where referid=#{referid} and refer=#{refer};
+	</select> 
+	
+ 	<select id="removeById" parameterType="Long" resultMap="CountResult">
+		delete from e_count where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Count"> 
+ 		update e_count set views=#{views},comments=#{comments},praise=#{praise},collect=#{collect} where id=#{id}
+ 	</update>
+ 	
+ 	<update id="updateAll" parameterType="Map"> 
+ 		update e_count 
+ 		<trim prefix="set" suffixOverrides=",">
+ 			<if test="views!=null"> views=#{views},</if> 
+ 			<if test="viewsday!=null"> viewsday=#{viewsday},</if> 
+ 			<if test="viewsweek!=null"> viewsweek=#{viewsweek},</if> 
+ 			<if test="viewsmonth!=null"> viewsmonth=#{viewsmonth},</if> 
+ 			<if test="comments!=null"> comments=#{comments},</if>  
+ 			<if test="praise!=null"> praise=#{praise},</if>  
+ 			<if test="collect!=null"> collect=#{collect},</if>  
+ 		</trim>
+ 		where 1=1
+ 		<if test="id!=null"> and id =#{id}</if>  
+ 	</update>
+ 	
+ 	<update id="updateAllAdd" parameterType="Map"> 
+ 		update e_count 
+ 		<trim prefix="set" suffixOverrides=",">
+ 			<if test="views!=null"> views=views+#{views},</if> 
+ 			<if test="viewsday!=null"> viewsday=viewsday+#{viewsday},</if> 
+ 			<if test="viewsweek!=null"> viewsweek=viewsweek+#{viewsweek},</if> 
+ 			<if test="viewsmonth!=null"> viewsmonth=viewsmonth+#{viewsmonth},</if> 
+ 			<if test="comments!=null"> comments=comments+#{comments},</if>  
+ 			<if test="praise!=null"> praise=praise+#{praise},</if>  
+ 			<if test="collect!=null"> collect=collect+#{collect},</if>  
+ 		</trim>
+ 		where 1=1
+ 		<if test="id!=null"> and id =#{id}</if>  
+ 	</update>
+ 	
+ 	
+</mapper>  

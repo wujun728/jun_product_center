@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Title</title>
+    <link rel="stylesheet" href="assets/layui/css/layui.css"/>
+    <link rel="stylesheet" href="assets/css/main.css"/>
+</head>
+<body>
+<!-- header -->
+<div class="ew-header">
+    <a class="layui-logo" href="index.html">EASY WEB</a>
+    <div class="ew-nav-group">
+        <div class="nav-toggle"><i class="layui-icon layui-icon-more-vertical"></i></div>
+        <ul class="layui-nav" lay-filter="ew-header-nav">
+            <li class="layui-nav-item">
+                <a lay-href="index.html">首页</a>
+            </li>
+            <li class="layui-nav-item">
+                <a lay-href="index.html#pricing">授权</a>
+            </li>
+            <li class="layui-nav-item">
+                <a lay-href="index.html#guide">指南</a>
+            </li>
+            <li class="layui-nav-item">
+                <a lay-href="index.html#product">产品</a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="doc/" target="_blank">文档</a>
+            </li>
+            <li class="layui-nav-item no-padding-right">
+                <a href="javascript:;">演示<i class="layui-hide-xs">&emsp;</i></a>
+                <dl class="layui-nav-child">
+                    <dd><a href="https://demo.easyweb.vip/iframe/" target="_blank">iframe版</a></dd>
+                    <dd><a href="https://demo.easyweb.vip/spa/" target="_blank">spa单页面版</a></dd>
+                    <dd><a href="https://demo.easyweb.vip/pro/" target="_blank">单标签版</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item no-padding-right">
+                <a href="javascript:;">管理员<i class="layui-hide-xs">&emsp;</i></a>
+                <dl class="layui-nav-child text-center">
+                    <dd><a href="info.html">个人中心</a></dd>
+                    <dd><a href="order.html">我的订单</a></dd>
+                    <dd lay-unselect><a ew-event="psw" data-url="password.html">修改密码</a></dd>
+                    <dd lay-unselect><a ew-event="logout" data-url="login.html">退出登录</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-container body-card">
+    <div class="layui-card">
+        <div class="layui-card-body ew-state-group">
+            <img src="assets/images/error_ic_403.png" style="height: 200px;">
+            <p>&emsp;您没有权限访问此页面。</p>
+            <div class="btn-group">
+                <a class="layui-btn layui-btn-primary" ew-event="back">返回上级</a>
+                <a class="layui-btn" href="index.html">返回首页</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="assets/layui/layui.js"></script>
+<script type="text/javascript" src="assets/js/common.js"></script>
+<script>
+    layui.use(['element'], function () {
+        var $ = layui.jquery;
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

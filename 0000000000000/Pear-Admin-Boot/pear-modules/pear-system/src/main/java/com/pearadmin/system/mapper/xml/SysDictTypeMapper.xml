@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysDictTypeMapper">
+
+    <!-- 映射转换集合 -->
+    <resultMap id="SysDictTypeMap" type="SysDictType">
+        <id column="id" property="id"></id>
+        <result column="type_name" property="typeName"></result>
+        <result column="type_code" property="typeCode"></result>
+        <result column="enable" property="enable"></result>
+        <result column="description" property="description"></result>
+        <result column="update_by" property="updateBy"></result>
+        <result column="update_time" property="updateTime"></result>
+        <result column="create_by" property="createBy"></result>
+        <result column="create_time" property="createTime"></result>
+        <result column="remark" property="remark"></result>
+    </resultMap>
+
+    <!-- 查询数据字典列表 -->
+    <select id="selectList" parameterType="SysDictType" resultMap = "SysDictTypeMap">
+        select * from sys_dict_type
+        <where>
+            <if test="typeName!=null and typeName!=''">
+               and type_name like "%"#{typeName}"%"
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据 Id 查询字典-->
+    <select id="selectById" parameterType="string" resultMap="SysDictTypeMap">
+        select * from sys_dict_type where id = #{id}
+    </select>
+
+    <!-- 插入数据字典数据 -->
+    <insert id="insert" parameterType="SysDictType">
+        insert into sys_dict_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">
+                id,
+            </if>
+            <if test="typeName!=null and typeName!=''">
+                type_name,
+            </if>
+            <if test="typeCode!=null and typeCode!=''">
+                type_code,
+            </if>
+            <if test="description!=null and description!=''">
+                description,
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable,
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                update_by,
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                update_time,
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                create_by,
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                create_time,
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id!=null and id!=''">
+                #{id},
+            </if>
+            <if test="typeName!=null and typeName!=''">
+                #{typeName},
+            </if>
+            <if test="typeCode!=null and typeCode!=''">
+                #{typeCode},
+            </if>
+            <if test="description!=null and description!=''">
+                #{description},
+            </if>
+            <if test="enable!=null and enable!=''">
+                #{enable},
+            </if>
+            <if test="updateBy!=null and updateBy!=''">
+                #{updateBy},
+            </if>
+            <if test="updateTime!=null and updateTime!=''">
+                #{updateTime},
+            </if>
+            <if test="createBy!=null and createBy!=''">
+                #{createBy},
+            </if>
+            <if test="createTime!=null and createTime!=''">
+                #{createTime},
+            </if>
+            <if test="remark!=null and remark!=''">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="SysDictType">
+        update sys_dict_type
+        <set>
+            <if test="typeName!=null and typeName!=''">
+                type_name = #{typeName},
+            </if>
+            <if test="typeCode!=null and typeCode!=''">
+                type_code = #{typeCode},
+            </if>
+            <if test="enable!=null and enable!=''">
+                enable = #{enable},
+            </if>
+            <if test="description!=null and description!=''">
+                description = #{description},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据 Id 删除用户数据 -->
+    <delete id="deleteById" parameterType="string">
+          delete from sys_dict_type where id = #{id}
+    </delete>
+</mapper>

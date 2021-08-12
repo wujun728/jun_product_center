@@ -1,0 +1,37 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: FEBS-Gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: febs-gateway
+        file-extension: yaml
+      discovery:
+        server-addr: ${nacos.url}:8001
+  boot:
+    admin:
+      client:
+        instance:
+          prefer-ip: true
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error
+        data:
+          convert:
+            CustomConversions: error
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error

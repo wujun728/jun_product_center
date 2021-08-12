@@ -1,0 +1,93 @@
+{
+  "groups": [
+    {
+      "name": "febs.doc",
+      "type": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "febs.doc.base-package",
+      "type": "java.lang.String",
+      "description": "接口扫描路径，如Controller路径",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.description",
+      "type": "java.lang.String",
+      "description": "文档描述",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.description-color",
+      "type": "java.lang.String",
+      "description": "文档描述颜色",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties",
+      "defaultValue": "#42b983"
+    },
+    {
+      "name": "febs.doc.description-font-size",
+      "type": "java.lang.String",
+      "description": "文档描述字体大小",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties",
+      "defaultValue": "14"
+    },
+    {
+      "name": "febs.doc.email",
+      "type": "java.lang.String",
+      "description": "联系方式：邮箱",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.enable",
+      "type": "java.lang.Boolean",
+      "description": "是否开启doc功能",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties",
+      "defaultValue": true
+    },
+    {
+      "name": "febs.doc.license",
+      "type": "java.lang.String",
+      "description": "协议",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.license-url",
+      "type": "java.lang.String",
+      "description": "协议地址",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.name",
+      "type": "java.lang.String",
+      "description": "联系方式：姓名",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.terms-of-service-url",
+      "type": "java.lang.String",
+      "description": "服务url",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.title",
+      "type": "java.lang.String",
+      "description": "文档标题",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.url",
+      "type": "java.lang.String",
+      "description": "联系方式：个人网站url",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    },
+    {
+      "name": "febs.doc.version",
+      "type": "java.lang.String",
+      "description": "版本",
+      "sourceType": "cc.mrbird.febs.common.doc.starter.properties.FebsDocProperties"
+    }
+  ],
+  "hints": []
+}

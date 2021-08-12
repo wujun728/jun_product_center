@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../favicon.ico" rel="icon">
+    <meta name="baidu_union_verify" content="fbd9a27c6ab795781006bc2095348a8d">
+    <title>Pear Admin 文档</title>
+    <style>
+        body {
+            margin: 0;
+            color: #314659;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+        }
+        /** header */
+        
+        .e-header {
+            height: 55px;
+            padding: 0 15px 0 170px;
+            text-align: right;
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .05);
+            -webkit-user-select: none;
+            user-select: none;
+            z-index: 999;
+        }
+        /** logo */
+        
+        .e-header .e-logo {
+            position: absolute;
+            left: 25px;
+            color: #333;
+            font-size: 20px;
+            line-height: 55px;
+            padding-left: 40px;
+            background-image: url(assets/img/logo.png);
+            background-repeat: no-repeat;
+            background-position: 0 14px;
+            background-size: 30px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        /** nav */
+        
+        .e-header .e-nav-group {
+            display: inline-block;
+        }
+        
+        .e-header .e-nav {
+            padding: 0;
+            list-style: none;
+            margin: 0 10px 0 0;
+            vertical-align: top;
+        }
+        
+        .e-header .e-nav .e-nav-item {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .e-header .e-nav a {
+            color: #333;
+            font-size: 15px;
+            padding: 0 15px;
+            line-height: 56px;
+            display: block;
+            position: relative;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .e-header .e-nav .e-nav-item.e-this>a {
+            color: #4aca85;
+        }
+        
+        .e-header .e-nav .e-nav-item>a:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            margin: 0 auto;
+            background-color: #4aca85;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+        }
+        
+        .e-header .e-nav .e-nav-item>a:hover:after,
+        .e-header .e-nav .e-nav-item.e-this>a:after {
+            width: calc(100% - 25px);
+        }
+        
+        .e-header .e-nav .e-nav-item.have-child:after {
+            content: "";
+            border: 5px solid;
+            border-color: #999 transparent transparent transparent;
+            position: absolute;
+            right: 1px;
+            top: 50%;
+            margin-top: -1px;
+            -webkit-transition: all .2s;
+            transition: all .2s;
+        }
+        
+        .e-header .e-nav .e-nav-item.have-child:hover:after {
+            border-color: transparent transparent #999 transparent;
+            margin-top: -6px;
+        }
+        
+        .e-header .e-nav .e-nav-item .e-nav-child {
+            position: absolute;
+            top: 100%;
+            left: -35px;
+            min-width: 165px;
+            width: max-content;
+            margin: -5px 0 0 0;
+            border-radius: 4px;
+            background-color: #ffffff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, .15);
+            visibility: hidden;
+            -webkit-transform: scaleY(0);
+            transform: scaleY(0);
+            -webkit-transform-origin: top;
+            transform-origin: top;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+        }
+        
+        .e-header .e-nav .e-nav-item:hover>.e-nav-child {
+            visibility: visible;
+            -webkit-transform: scaleY(1);
+            transform: scaleY(1);
+        }
+        
+        .e-header .e-nav .e-nav-item .e-nav-child>dd {
+            margin: 0;
+        }
+        
+        .e-header .e-nav .e-nav-item .e-nav-child>dd>a {
+            font-size: 14px;
+            line-height: 40px;
+            text-align: center;
+        }
+        
+        .e-header .e-nav .e-nav-item .e-nav-child>dd>a:hover {
+            background-color: rgba(128, 128, 128, .15);
+        }
+        /* nav-toggle */
+        
+        .e-header .nav-toggle {
+            height: 55px;
+            padding: 15px 15px 0 15px;
+            box-sizing: border-box;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .e-header .nav-toggle>i,
+        .e-header .nav-toggle:before,
+        .e-header .nav-toggle:after {
+            content: "";
+            width: 5px;
+            height: 5px;
+            margin: 3px auto;
+            background-color: #666;
+            border-radius: 50%;
+            display: block;
+        }
+        
+        .e-show-xs {
+            display: none;
+        }
+        /** 自适应 */
+        
+        @media screen and (max-width: 960px) {
+            .e-header {
+                padding: 0 35px 0 150px;
+            }
+            /* logo */
+            .e-header .e-logo {
+                left: 10px;
+            }
+            /* nav */
+            .e-header .e-nav-group {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+            .e-header .nav-toggle {
+                display: block;
+            }
+            .e-header .e-nav {
+                position: absolute;
+                right: 5px;
+                top: 50px;
+                margin: 0;
+                border-radius: 4px;
+                background-color: #fff;
+                box-shadow: 0 0 8px rgba(0, 0, 0, .15);
+                -webkit-transform: scale(0);
+                transform: scale(0);
+                -webkit-transform-origin: top right;
+                transform-origin: top right;
+                opacity: 0;
+                -webkit-transition: all .3s;
+                transition: all .3s;
+            }
+            /* nav-hover */
+            .e-header .e-nav-group:hover>.e-nav {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: 1;
+            }
+            /* nav-item */
+            .e-header .e-nav .e-nav-item {
+                display: block;
+                min-width: 130px;
+            }
+            .e-header .e-nav .e-nav-item>a {
+                font-size: 14px;
+                line-height: 40px;
+                text-align: center;
+            }
+            .e-header .e-nav .e-nav-item:first-child>a {
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            .e-header .e-nav .e-nav-item:last-child>a {
+                border-bottom-left-radius: 4px;
+                border-bottom-right-radius: 4px;
+            }
+            .e-header .e-nav .e-nav-item>a:hover {
+                background-color: rgba(128, 128, 128, .15);
+            }
+            .e-header .e-nav .e-nav-item>a:after {
+                display: none;
+            }
+            .e-header .e-nav .e-nav-item.e-this>a {
+                color: #fff;
+                background-color: #4aca85;
+            }
+            .e-header .e-nav .e-nav-item .e-nav-child {
+                top: 0;
+                left: auto;
+                right: 100%;
+                margin: -235px -5px 0 0;
+                min-width: 130px;
+                -webkit-transform-origin: center;
+                transform-origin: center;
+            }
+            .e-header .e-nav .e-nav-item.have-child:after {
+                right: 8px;
+            }
+            .e-show-xs {
+                display: block;
+            }
+        }
+        /** iframe */
+        
+        .e-iframe {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .e-iframe>iframe {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        /** 用户信息部分 */
+        
+        .user-group {
+            height: 55px;
+            line-height: 55px;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+        
+        .lg-btn {
+            color: #666;
+            margin: 0 3px;
+            padding: 0 8px;
+            font-size: 12px;
+            line-height: 20px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            text-decoration: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+        
+        .lg-btn:hover {
+            background-color: rgba(128, 128, 128, .15);
+        }
+        
+        .ew-tips-msg {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            color: #fff;
+            width: 160px;
+            font-size: 16px;
+            padding: 12px 15px;
+            background-color: #4aca85;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .05);
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        #btnTheme:before {
+            content: "暗色";
+        }
+        
+        .ew-dark #btnTheme:before {
+            content: "亮色";
+        }
+        /** 夜间模式 */
+        
+        .ew-dark {
+            background-color: #191919;
+        }
+        
+        .ew-dark .e-header {
+            background-color: #1F1F1F;
+        }
+        
+        @media screen and (max-width: 960px) {
+            .ew-dark .e-header .e-nav {
+                background-color: #2C2C2C;
+            }
+        }
+        
+        .ew-dark .e-header .e-nav .e-nav-item .e-nav-child {
+            background-color: #2C2C2C;
+        }
+        
+        .ew-dark .lg-btn {
+            color: #AAAAAA;
+            border-color: #AAAAAA;
+        }
+        
+        .ew-dark .e-header .e-logo,
+        .ew-dark .e-header .e-nav a {
+            color: #CCCCCC;
+        }
+        
+        .banner {
+            z-index: 1000000000;
+            bottom: 10px;
+            right: 10px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="e-header" style="padding-left: 20px;">
+        <div style="float: left;height: 60px;line-height: 60px;font-size: 18px;">文 档 库</div>
+        <div class="e-nav-group">
+            <div class="nav-toggle"><i></i></div>
+            <ul class="e-nav">
+                <li class="e-nav-item e-this">
+                    <a e-href="layui/">Layui 版本</a>
+                </li>
+                <li class="e-nav-item">
+                    <a e-href="boot/">Boot 版本</a>
+                </li>
+                <li class="e-nav-item">
+                    <a e-href="think/">Think 版本</a>
+                </li>
+                <li class="e-nav-item">
+                    <a e-href="abp/">Abp 版本</a>
+                </li>
+                <li class="e-nav-item">
+                    <a e-href="ant/">Ant 版本</a>
+                </li>
+                <li class="e-nav-item">
+                    <a e-href="flask/">Flask 版本</a>
+                </li>
+            </ul>
+        </div>
+        <div class="user-group">
+            <a class="lg-btn" id="btnClear">清缓存</a>
+            <a class="lg-btn" id="btnTheme"></a>
+        </div>
+    </div>
+    <div class="e-iframe">
+        <iframe src="layui/" id="ef" frameborder="0"></iframe>
+    </div>
+    <div class="banner">
+        <div class="wwads-cn wwads-vertical" data-id="73" style="max-width:200px"></div>
+    </div>
+    <!-- js部分 -->
+    <script type="text/javascript" src="https://wwads.cn/js/makemoney.js" async></script>
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script>
+        $(function() {
+            var $body = $('body'),
+                $iframe = $('#ef');
+            $body.on('click', '[e-href]', function() {
+                $('.e-header .e-nav-item.e-this').removeClass('e-this');
+                $(this).parent().addClass('e-this');
+                $iframe.attr('src', $(this).attr('e-href'));
+            });
+
+            /* 清除缓存 */
+            $('#btnClear').click(function() {
+                localStorage.clear();
+                localStorage.setItem('doc_theme', $body.hasClass('ew-dark') ? 'ew-dark' : '');
+                $iframe.attr('src', $iframe.attr('src'));
+                showMsg('清除成功');
+            });
+
+            /* 显示提示信息 */
+            function showMsg(msg) {
+                if (window.msgTimer) clearTimeout(window.msgTimer);
+                $('.ew-tips-msg').remove();
+                $body.append('<div class="ew-tips-msg">' + msg + '</div>');
+                window.msgTimer = setTimeout(function() {
+                    $('.ew-tips-msg').remove();
+                }, 1500);
+            }
+
+            /* 切换主题 */
+            $('#btnTheme').click(function() {
+                $body.toggleClass('ew-dark');
+                $iframe[0].contentWindow.$('body').toggleClass('ew-dark');
+                localStorage.setItem('doc_theme', $body.hasClass('ew-dark') ? 'ew-dark' : '');
+            });
+            var theme = localStorage.getItem('doc_theme');
+            if (theme) $body.addClass(theme);
+
+        });
+    </script>
+</body>
+
+</html>

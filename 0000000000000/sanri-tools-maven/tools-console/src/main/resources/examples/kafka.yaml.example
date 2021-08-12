@@ -1,0 +1,25 @@
+chroot: /
+connectIdParam:
+  module: kafka
+  connName: test
+kafka:
+  properties:
+    sasl:
+      jaas:
+        config: org.apache.kafka.common.security.plain.PlainLoginModule required username=hd password=hd-kafka;
+      mechanism: PLAIN
+    security:
+      protocol: SASL_PLAINTEXT
+  listener:
+    concurrency: 4
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    bootstrap-servers: 10.101.72.76:9091,10.101.72.76:9092,10.101.72.76:9093
+  bootstrap-servers: 10.101.72.76:9091,10.101.72.76:9092,10.101.72.76:9093
+  consumer:
+    group-id: sanritest1
+    auto-offset-reset: earliest
+    enable-auto-commit: false
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

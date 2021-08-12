@@ -1,0 +1,10 @@
+{
+  "connectIdParam": {
+    "module": "elasticsearch",
+    "connName": "10.101.72.43_9200"
+  },
+  "connectParam": {
+    "host": "10.101.72.43",
+    "port": 9200
+  }
+}

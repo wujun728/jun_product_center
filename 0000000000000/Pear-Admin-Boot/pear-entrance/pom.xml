@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--依赖项目-->
+    <parent>
+        <groupId>com.pearadmin</groupId>
+        <artifactId>pear-admin-boot</artifactId>
+        <version>1.4.1-RELEASE</version>
+    </parent>
+
+    <!-- 仓库信息 -->
+    <groupId>com.pearadmin</groupId>
+    <artifactId>pear-entrance</artifactId>
+    <version>1.4.1-RELEASE</version>
+
+    <!-- 项目信息 -->
+    <name>启动模块</name>
+    <description>Demo project for Spring Boot</description>
+
+    <!-- 依赖管理 -->
+    <dependencies>
+        <!-- 工 具 类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <!-- 代 码 生 成 -->
+        <dependency>
+            <groupId>com.pearadmin</groupId>
+            <artifactId>pear-generate</artifactId>
+        </dependency>
+        <!-- 系 统 业 务 -->
+        <dependency>
+            <groupId>com.pearadmin</groupId>
+            <artifactId>pear-system</artifactId>
+        </dependency>
+        <!-- 定 时 任 务 -->
+        <dependency>
+            <groupId>com.pearadmin</groupId>
+            <artifactId>pear-schedule</artifactId>
+        </dependency>
+        <!-- 工 作 流 程 -->
+        <dependency>
+            <groupId>com.pearadmin</groupId>
+            <artifactId>pear-process</artifactId>
+        </dependency>
+        <!-- 三方依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Web 模块 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- 模 板 引 擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- MyBatis 框架 -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- 分 页 组 件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- Spring Boot 监控 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- My Sql 连接工具 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- 验证码 -->
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+        </dependency>
+        <!-- 权限标签 -->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+        </dependency>
+        <!-- 动态数据源 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        </dependency>
+        <!-- yaml 解析 -->
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- 构建工具 -->
+    <build>
+        <!-- Maven 构 建 插 件 -->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

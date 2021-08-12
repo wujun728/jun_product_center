@@ -1,0 +1,281 @@
+<style>
+    .default_avatars_list {
+        display: inline-block;
+    }
+
+    .default_avatars_list img {
+        width: 12.3%;
+        display: inline;
+        margin: 1rem;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+</style>
+<div class="card profile" style="padding: 1.2rem">
+    <div class="profile__img">
+        <img alt="">
+        <a href="javascript:void(0)" class="zmdi zmdi-edit profile__img__edit" title="更换头像"></a>
+    </div>
+    <div class="actions" style="margin-right: 1rem">
+        <a href="javascript:void(0)" onclick="editUserProfile()" style="color: #707070 !important">编辑资料</a>
+    </div>
+    <div class="profile__info">
+        <ul class="icon-list">
+            <li><i class="zmdi zmdi-account"></i> <span style="font-weight: 600">[[${user.username}]]</span> --
+                [[${user.roleName}]]
+            </li>
+            <li><i class="zmdi zmdi-male-female"></i> [[${user.ssex}]]</li>
+            <li><i class="zmdi zmdi-card-travel"></i> [[${#strings.defaultString(user.deptName,'无部门信息')}]]</li>
+            <li><i class="zmdi zmdi-phone"></i> [[${#strings.defaultString(user.mobile,'未绑定手机号')}]]
+                <a data-th-if="${not #strings.isEmpty(user.mobile)}" onclick="mobileUnbind();"
+                   style="color:#03A9F4;margin-left: .5rem;">[ 解除绑定 ]</a>
+                <a data-th-if="${#strings.isEmpty(user.mobile)}" onclick="mobileBind();"
+                   style="color:#03A9F4;margin-left: .5rem;">[ 立即绑定 ]</a>
+            </li>
+            <li id="profile__info_email"><i class="zmdi zmdi-email"></i><span> [[${#strings.defaultString(user.email,'无邮箱信息')}]]</span>
+            </li>
+            <li><i class="zmdi zmdi-comment-text"></i>
+                <span>[[${#strings.defaultString(user.description,'暂无个人介绍')}]]</span></li>
+            <li>
+                <a id="connet_qq"><img style="width: 1.4rem;"/></a>&nbsp;&nbsp;
+                <a id="connect_wechat"><img style="width: 1.6rem;"/></a>
+            </li>
+            <form id="connect_qq_form" action="/connect/qq" method="post" style="display: none"></form>
+            <form id="disconnect_qq_form" action="/connect/qq" method="post" style="display: none"><input name="_method"/></form>
+            <form id="connect_wechat_form" action="/connect/weixin" method="post" style="display: none"></form>
+            <form id="disconnect_wechat_form" action="/connect/weixin" method="post" style="display: none"><input name="_method"/></form>
+        </ul>
+    </div>
+</div>
+<div class="modal fade" id="update-profile" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left">个人信息</h3>
+            </div>
+            <div class="modal-body">
+                <form id="update-profile-form">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                  	  用户名：
+                                </span>
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control">
+                                    <input type="text" hidden name="oldusername" class="form-control">
+                                    <input type="text" hidden name="userId" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group" style="margin-top:10px;">
+                                <span class="input-group-addon">
+                                    	性别：
+                                 </span>
+                                <div class="form-group">
+                                    <label class="custom-control custom-radio">
+                                        <input name="ssex" type="radio" value="0" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">男</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="ssex" type="radio" value="1" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">女</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="ssex" type="radio" value="2" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">保密</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                	     邮箱：
+                                </span>
+                                <div class="form-group">
+                                    <input type="text" name="email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="justify-content: flex-start;margin-top: .5rem;">
+                                 	   部门：
+                                 </span>
+                                <div class="form-group">
+                                    <div id="deptTree"></div>
+                                </div>
+                                <input type="hidden" name="deptId">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    	 个人描述：
+                                </span>
+                                <div class="form-group">
+                                    <input type="text" name="description" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save">保存</button>
+                <button type="button" class="btn btn-secondary btn-close">关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="default-avatars" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left">更换头像</h3>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row default_avatars_list">
+                        <img data-th-src="@{img/avatar/default.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165920.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165927.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165754.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165815.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165821.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165827.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165834.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165840.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165846.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165855.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165909.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165914.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165936.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165942.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165947.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414165955.jpg}" title="点击更换！">
+                        <img data-th-src="@{img/avatar/20180414170003.jpg}" title="点击更换！">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-close" id="close_update_avatar_button"
+                        data-dismiss="modal">关闭
+                </button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mobile-bind" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left">绑定手机号</h3>
+            </div>
+            <div class="modal-body">
+                <form id="mobile-bind-form">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                     手机号：
+                                </span>
+                                <div class="form-group">
+                                    <input type="text" name="mobile" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    验证码：
+                                </span>
+                                <div class="form-group">
+                                    <input type="text" name="smsCode" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="display: flex;flex-direction: row-reverse;">
+                        <a href="javascript:void(0)" onclick="sendCode(1)"
+                           style="color: #32c787;font-weight: 600;display:flex;flex-direction: row-reverse;margin-right: 5.3rem;">发送短信验证码</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save">绑定</button>
+                <button type="button" class="btn btn-secondary btn-close">关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="mobile-unbind" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left">解绑手机号</h3>
+            </div>
+            <div class="modal-body">
+                <form id="mobile-unbind-form">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                     手机号：
+                                </span>
+                                <div class="form-group">
+                                    <input readonly="readonly" type="text" name="mobile" class="form-control"
+                                           data-th-value="${user.mobile}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    验证码：
+                                </span>
+                                <div class="form-group">
+                                    <input type="text" name="smsCode" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="display: flex;flex-direction: row-reverse;">
+                        <a href="javascript:void(0)" onclick="sendCode(2)"
+                           style="color: #32c787;font-weight: 600;display:flex;flex-direction: row-reverse;margin-right: 5.3rem;">发送短信验证码</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save">解绑</button>
+                <button type="button" class="btn btn-secondary btn-close">关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-inline="javascript">
+    var avatar = ctx + "img/avatar/" + [[${user.avatar}]];
+    var userId = [[${user.userId}]];
+</script>
+<script data-th-src="@{js/app/system/user/profile.js}"></script>

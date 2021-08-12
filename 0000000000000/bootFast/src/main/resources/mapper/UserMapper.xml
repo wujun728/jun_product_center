@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.UserDao"> 
+    <resultMap type="com.shuogesha.platform.entity.User" id="UserResult">
+		<result property="id" column="id"/> 
+		<result property="username" column="username"/> 
+ 		<result property="email" column="email"/>
+ 		<result property="phone" column="phone"/> 
+ 		<result property="realname" column="realname"/>  
+ 		<result property="sex" column="sex"/> 
+ 		<result property="remark" column="remark"/>  
+ 		<result property="dateline" column="dateline"/> 
+ 		<result property="admin" column="admin"/>  
+ 		<result property="selfadmin" column="self_admin"/> 
+ 		<result property="step" column="step"/>    
+ 		<result property="siteId" column="site_id"/> 
+        <association property="unifiedUser" column="id" select="getUnifiedUser"/>   
+  		<collection property="roles"  ofType="com.shuogesha.platform.entity.Role" javaType="ArrayList"  column="id"                       
+            select="com.shuogesha.platform.dao.RoleDao.findByUserId">
+        </collection> 
+  	</resultMap>
+  	
+    <resultMap type="com.shuogesha.platform.entity.UnifiedUser" id="UnifiedUserResult">
+		<result property="id" column="id"/> 
+		<result property="nickName" column="nickName"/> 
+ 		<result property="username" column="username"/>
+ 		<result property="password" column="password"/> 
+ 		<result property="email" column="email"/>  
+ 		<result property="phone" column="phone"/> 
+ 		<result property="realname" column="realname"/>  
+ 		<result property="avatar" column="avatar"/> 
+ 		<result property="activation" column="activation"/>  
+ 		<result property="disabled" column="disabled"/> 
+ 		<result property="registerIp" column="registerIp"/>  
+ 		<result property="registerTime" column="registerTime"/> 
+ 		<result property="lastLoginTime" column="lastLoginTime"/>  
+ 		<result property="lastLoginIp" column="lastLoginIp"/> 
+ 		<result property="group" column="group"/>  
+	</resultMap>
+	 
+	 
+    <select id="getUnifiedUser" parameterType="Long" resultType="com.shuogesha.platform.entity.UnifiedUser">
+        select * from t_unifieduser where id =#{id}
+    </select>
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.User" >
+		insert into t_user values(#{id},#{username},#{email},#{phone},#{realname},#{sex},#{remark},#{dateline},#{admin},#{self_admin},#{step},#{site_id})
+	</insert>
+	
+	<select id="removeRoleById" parameterType="Long">
+		delete from t_role_user where user_id=#{id}; 
+	</select>
+	
+	<insert id="addRole" parameterType="com.shuogesha.platform.entity.User"> 
+ 		insert into t_role_user(id, user_id, role_id)
+ 		values
+		<foreach collection="roles" item="vi"  separator=",">
+		(null,#{id},#{vi.id})
+		</foreach>  
+		ON DUPLICATE KEY UPDATE
+ 		user_id = VALUES(user_id),
+		role_id = VALUES(role_id)
+ 	</insert> 
+        
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="UserResult">
+		select * from t_user 
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_user where 1=1 
+ 	    <if test="username != null">
+	        and username=#{username} 
+	    </if> 
+ 	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="UserResult">
+		select * from t_user where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="UserResult">
+		delete from t_user where id=#{id}; 
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.User"> 
+ 		update t_user set username=#{username},email=#{email},phone=#{phone},realname=#{realname},sex=#{sex},remark=#{remark},dateline=#{dateline},admin=#{admin},self_admin=#{selfAdmin},step=#{step},site_id=#{siteId} where id=#{id}
+ 	</update>
+ 	
+ 	<update id="updateOne"  parameterType="com.shuogesha.platform.entity.User">
+	 UPDATE t_user
+	 <trim prefix="set" suffixOverrides=",">
+	  <if test="email!=null">email=#{email},</if>
+	  <if test="username!=null">username=#{username},</if>
+	  <if test="sex!=null">sex=#{sex},</if>
+	  <if test="remark!=null">remark=#{remark},</if>
+	  <if test="phone!=null">phone=#{phone},</if>
+	  <if test="realname!=null">realname=#{realname},</if> 
+	</trim>
+	 WHERE id=#{id}
+	</update>
+	
+</mapper>  

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.AdsenseDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Adsense" id="AdsenseResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="sort" column="sort"/>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Adsense"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_adsense(id,name,sort) values(null,#{name},#{sort})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="AdsenseResult">
+		select * from e_adsense where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_adsense where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="AdsenseResult">
+		select * from e_adsense where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="AdsenseResult">
+		delete from e_adsense where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Adsense"> 
+ 		update e_adsense set name=#{name},sort=#{sort} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findAll" parameterType="Map" resultMap="AdsenseResult">
+		select * from e_adsense where 1=1
+ 		order by sort asc
+ 	</select>
+ 	
+</mapper>  

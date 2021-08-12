@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.SystemLogDao"> 
+    <resultMap type="com.shuogesha.platform.entity.SystemLog" id="SystemLogResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="username" column="username"/>  
+ 		<result property="dateline" column="dateline"/>  
+ 		<result property="content" column="content"/>  
+ 		<result property="type" column="type"/>  
+ 		<result property="ip" column="ip"/>  
+ 		<result property="url" column="url"/>  
+ 		<result property="method" column="method"/>  
+ 		<result property="param" column="param"/>  
+ 		<result property="userId" column="user_id"/>  
+ 	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.SystemLog"  useGeneratedKeys="true" keyProperty="id" >
+		insert into t_system_log (id,name,username,dateline,content,type,ip,url,method,param,user_id) 
+		values(null,#{name},#{username},#{dateline},#{content},#{type},#{ip},#{url},#{method},#{param},#{userId})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="SystemLogResult">
+		select * from t_system_log where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_system_log where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="SystemLogResult">
+		select * from t_system_log where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="SystemLogResult">
+		delete from t_system_log where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.SystemLog"> 
+ 		update t_system_log set name=#{name} where id=#{id}
+ 	</update>
+</mapper>  

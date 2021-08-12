@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="edge" />
+    <title>FEBS权限管理系统</title>
+    <link rel="shortcut icon" type="image/png" th:href="@{/img/favicon.ico}" />
+    <link rel="stylesheet" th:href="@{css/login.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/iCheck/minimal/green.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{css/app.css}" type="text/css">
+    <!-- animate -->
+    <link rel="stylesheet" th:href="@{css/animate/animate.min.css}" type="text/css">
+    <script th:src="@{js/jquery.min.js}"></script>
+    <script th:src="@{js/iCheck/icheck.js}"></script>
+    <script th:src="@{js/bootstrap-notify/bootstrap-notify.min.js}"></script>
+    <script th:src="@{js/common.js}"></script>
+</head>
+<body>
+<!-- Form-->
+<div class="form">
+    <div class="form-toggle"></div>
+    <div class="form-panel one">
+        <div class="form-header" style="text-align: center">
+            <img alt="社交账户头像" style="border-radius: 50%;max-width: 6rem;"/>
+            <div style="font-size: 1.2rem;line-height: 2rem;margin-top: 1rem;"></div>
+            <div style="display: none" id="providerId"></div>
+        </div>
+        <div class="form-content">
+            <form action="#" method="post" onsubmit="return false">
+                <div class="form-group type1">
+                    <label>账号</label>
+                    <input type="text" name="username" />
+                </div>
+                <div class="form-group type1">
+                    <label>密码</label>
+                    <input type="password" name="password" />
+                </div>
+                <div class="form-group type2" style="display: none">
+                    <label>账号</label>
+                    <input type="text" name="username" />
+                </div>
+                <div class="form-group type2" style="display: none">
+                    <label>密码</label>
+                    <input type="password" name="password" />
+                </div>
+                <div class="form-group type2" style="display: none">
+                    <label>确认密码</label>
+                    <input type="password" name="password2" />
+                </div>
+                <div class="form-group" style="padding-top: 1rem">
+                    <button class="type1" onclick="socialBind()" id="social-bind-button" type="submit">绑定</button>
+                    <button class="type2" onclick="socialRegist()" id="social-regist-button" type="submit" style="display: none">注册并绑定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div data-th-include="common/footer"></div>
+</body>
+<script th:inline="javascript">
+    var ctx = [[@{/}]];
+    var socialUser = [[${socialUser}]];
+</script>
+<script data-th-src="@{js/app/socialRegist.js}"></script>
+</html>

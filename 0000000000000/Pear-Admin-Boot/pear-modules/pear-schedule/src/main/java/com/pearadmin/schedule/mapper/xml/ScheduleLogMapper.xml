@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.schedule.mapper.ScheduleLogMapper" >
+
+  <!-- 映射处理集合 -->
+  <resultMap id="ScheduleLogMap" type="ScheduleLog" >
+    <id column="log_id" property="logId" jdbcType="BIGINT" />
+    <result column="job_id" property="jobId" jdbcType="BIGINT" />
+    <result column="bean_name" property="beanName" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="error" property="error" jdbcType="VARCHAR" />
+    <result column="times" property="times" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <!-- 根据条件处理 -->
+  <select id="selectList" parameterType="ScheduleLog" resultMap="ScheduleLogMap">
+     select a.log_id,a.job_id,a.bean_name,a.params,a.error,a.status,a.create_time,a.times,b.job_name as jobName from schedule_log a left join schedule_job b on
+     a.job_id = b.job_id
+    <where>
+      <if test="jobName!=null and jobName!=''">
+        and job_name like "%"#{jobName}"%"
+      </if>
+    </where>
+     order by create_time desc
+  </select>
+
+  <!-- 插入任务日志 -->
+  <insert id="insert" parameterType="ScheduleLog">
+    insert into schedule_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logId!=null">
+        log_id,
+      </if>
+      <if test="jobId!=null">
+        job_id,
+      </if>
+      <if test="beanName!=null">
+        bean_name,
+      </if>
+      <if test="params!=null">
+        params,
+      </if>
+      <if test="status!=null">
+        status,
+      </if>
+      <if test="error!=null">
+        error,
+      </if>
+      <if test="times!=null">
+      times,
+      </if>
+      <if test="createTime!=null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values(" suffix=")" suffixOverrides=",">
+      <if test="logId!=null">
+        #{logId},
+      </if>
+      <if test="jobId!=null">
+        #{jobId},
+      </if>
+      <if test="beanName!=null">
+        #{beanName},
+      </if>
+      <if test="params!=null">
+        #{params},
+      </if>
+      <if test="status!=null">
+        #{status},
+      </if>
+      <if test="error!=null">
+        #{error},
+      </if>
+      <if test="times!=null">
+        #{times},
+      </if>
+      <if test="createTime!=null">
+        #{createTime},
+      </if>
+    </trim>
+  </insert>
+</mapper>

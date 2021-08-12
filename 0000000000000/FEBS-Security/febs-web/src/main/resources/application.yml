@@ -1,0 +1,182 @@
+server:
+  port: 80
+  servlet:
+    session:
+      # session超时时间，单位为秒
+      timeout: 3600
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/febs_security?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      connection-test-query: select 1
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      pool-name: FebsHikariCP
+
+  thymeleaf:
+    cache: false
+  aop:
+    proxy-target-class: true
+
+  # 时间类型格式化，时区为 +8区
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+  # redis配置，默认没有密码
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    jedis:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000
+    timeout: 0
+
+  # session 存储到 redis，实现分布式 session
+  session:
+    store-type: redis
+    redis:
+      namespace: febs:spring:session
+
+# spring boot admin配置开始
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:8081
+#        username: mrbird
+#        password: 123456
+#  application:
+#    name: febs
+#
+#info:
+#  app:
+#    name: "febs-security"
+#    description: "spring boot&spring security 权限管理系统"
+#    version: "1.0"
+#    spring-boot-version: "2.0.4.RELEASE"
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'
+#  endpoint:
+#    health:
+#      show-details: ALWAYS
+# spring boot admin配置结束
+
+# 数据库密码加密 密钥
+jasypt:
+  encryptor:
+    password: febs
+
+# mybatis配置
+mybatis:
+  mapper-locations: classpath:mapper/system/*.xml,classpath:mapper/quartz/*.xml
+  configuration:
+    jdbc-type-for-null: null
+  type-aliases-package: cc.mrbird.system.domain,cc.mrbird.quartz.domain
+
+# 通用 mapper插件配置
+mapper:
+  mappers: cc.mrbird.common.config.MyMapper
+  not-empty: false
+  identity: mysql
+
+# pagehelper插件配置（分页）
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+febs:
+  oss:
+    # 七牛云存储配置
+    qiniu:
+      access-key: your-access-key
+      secret-key: your-secret-key
+      bucket: your-bucket
+      path: your-path
+  # 是否在控制台打印 sql语句
+  showsql: true
+  # AOP记录用户操作日志，true开启，false关闭
+  open-aop-log: true
+  security:
+    # 登录路径
+    login-url: /login
+    # 登出路径
+    logout-url: /logout
+    # 首页路径
+    index-url: /index
+    # 免认证静态资源路径
+    anon-resources-url: /css/**,/js/**,/fonts/**,/img/**
+    # 记住我有效时间，单位为秒
+    remember-me-timeout: 3600
+    # 验证码相关配置
+    code:
+      # 图形验证码相关配置
+      image:
+        # 图形验证码由字符位数
+        length: 4
+        # 图形验证码图片长度，单位 px
+        width: 148
+        # 图形验证码高度，单位 px
+        height: 36
+        # 图形验证码失效时间
+        expire-in: 60
+        # 以下资源需要验证图形验证码
+        url: /test/img/code
+        # 生成图形验证码的请求 url
+        create-url: /image/code
+        # 对应图形验证码登录页面 form表单的 action属性
+        login-processing-url: /form/login
+
+      # 短信验证码相关配置
+      sms:
+        # 短信验证码字符位数
+        length: 4
+        # 短信验证码的有效时间，单位为秒
+        expire-in: 120
+        # 以下资源需要短信验证码验证
+        url: /mobile/bind,/mobile/unbind,/test/sms/code
+        # 生成短信验证码的请求 url
+        create-url: /sms/code
+        # 对应短信验证码登录页面 form表单的 action属性
+        login-processing-url: /mobile/login
+    social:
+      # 社交账户登录处理路径前缀
+      filter-processes-url: /login
+      # 使用新的社交账号登录时，跳转到该 url，进行绑定或注册操作
+      social-redirect-url: /social
+      # 未登录情况下，进行社交账号绑定的 url
+      social-bind-url: /social/bind
+      # 未登录情况下，进行社交账号注册的 url
+      social-regist-url: /social/regist
+      qq:
+        # 和 filter-processes-url 组成 QQ登录 url
+        provider-id: qq
+        # QQ登录的 appId，需要到 QQ互联 中申请
+        app-id: your-app-id
+        # QQ登录的 appSecret，需要到 QQ互联 中申请
+        app-secret: your-app-secret
+      weixin:
+        # 和 filter-processes-url 组成 微信登录 url
+        providerId: weixin
+        # 微信登录的 appId，需要到 微信开放平台 中申请
+        appId: your-app-id
+        # 微信登录的 appSecret，需要到 微信开放平台 中申请
+        appSecret: your-app-secret
+    session:
+      # 同一个账号最大并发登录数量，超出这个数量后，后者踢掉前者
+      maximum-sessions: 1

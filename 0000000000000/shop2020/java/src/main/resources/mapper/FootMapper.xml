@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.FootDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Foot" id="FootResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="referid" column="referid"/>  
+ 		<result property="refer" column="refer"/>  
+ 		<result property="dateline" column="dateline"/>  
+ 		<result property="userId" column="user_id"/>  
+ 		<result property="content" column="content"/>   
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Foot"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_foot(id,name,referid,refer,dateline,user_id,content,create_time) 
+		values(null,#{name},#{referid},#{refer},#{dateline},#{userId},#{content},now())
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="FootResult">
+		select * from e_foot where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="userId!=null"> and user_id=#{userId}</if> 
+		order by create_time desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_foot where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		<if test="userId!=null"> and user_id=#{userId}</if> 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="FootResult">
+		select * from e_foot where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="FootResult">
+		delete from e_foot where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Foot"> 
+ 		update e_foot set name=#{name},dateline=#{dateline},create_time=now() where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findByRefer" parameterType="com.shuogesha.cms.entity.Foot" resultMap="FootResult">
+		select * from e_foot where 1=1
+		<if test="refer!=null"> and refer=#{refer}</if> 
+		<if test="referid!=null"> and referid=#{referid}</if> 
+		<if test="userId!=null"> and user_id=#{userId}</if>  
+	</select> 
+</mapper>  

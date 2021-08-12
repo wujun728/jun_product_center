@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.AuthenticationDao"> 
+    <resultMap type="com.shuogesha.platform.entity.Authentication" id="AuthenticationResult">
+		<result property="id" column="id"/> 
+		<result property="uid" column="uid"/> 
+ 		<result property="username" column="username"/>  
+ 		<result property="phone" column="phone"/> 
+ 		<result property="email" column="email"/>  
+ 		<result property="loginTime" column="login_time"/> 
+ 		<result property="loginIp" column="login_ip"/>  
+ 		<result property="updateTime" column="update_time"/>   
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.Authentication">
+		insert into t_authentication values(#{id},#{uid},#{username},#{phone},#{email},#{loginTime},#{loginIp},#{updateTime})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="AuthenticationResult">
+		select * from t_authentication
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_authentication 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="String" resultMap="AuthenticationResult">
+		select * from t_authentication where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="String" resultMap="AuthenticationResult">
+		delete from t_authentication where id=#{id};
+	</select>
+	
+ 	<select id="deleteExpire" parameterType="String" resultMap="AuthenticationResult">
+		delete from t_authentication where updateTime &lt;=#{dateline};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.Authentication"> 
+ 		update t_authentication set uid=#{uid},username=#{username},phone=#{phone},email=#{email},login_time=#{loginTime},login_ip=#{loginIp},update_time=#{updateTime} where id=#{id}
+ 	</update>
+ 	
+ 	
+ 	<select id="removeByUid" parameterType="Long" resultMap="AuthenticationResult">
+		delete from t_authentication where uid=#{uid};
+	</select>
+</mapper>  

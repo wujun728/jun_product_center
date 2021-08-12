@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysLogMapper">
+
+    <select id="selectList" resultType="SysLog">
+        select
+        id as id,
+        title as title,
+        method as method,
+        business_type as businessType,
+        request_method as requestMethod,
+        operate_name as operateName,
+        operate_url as operateUrl,
+        operate_address as operateAddress,
+        request_param as requestParam,
+        response_body as responseBody,
+        success as success,
+        error_msg as errorMsg,
+        create_time as createTime,
+        description as description,
+        request_body as requestBody,
+        logging_type as loggingType,
+        browser as browser,
+        system_os as systemOs
+        from sys_logging
+        where logging_type = #{loggingType}
+        <if test="startTime!=null">
+            and create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null">
+            and create_time &lt;= #{endTime}
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="selectTopLoginLog" resultType="SysLog">
+        select
+        id as id,
+        title as title,
+        method as method,
+        business_type as businessType,
+        request_method as requestMethod,
+        operate_name as operateName,
+        operate_url as operateUrl,
+        operate_address as operateAddress,
+        request_param as requestParam,
+        response_body as responseBody,
+        success as success,
+        error_msg as errorMsg,
+        create_time as createTime,
+        description as description,
+        request_body as requestBody,
+        logging_type as loggingType,
+        browser as browser,
+        system_os as systemOs
+        from sys_logging
+        where logging_type = "LOGIN" and operate_name = #{operateName} order by create_time desc limit 1,11
+    </select>
+
+    <insert id="insert" parameterType="SysLog">
+        insert into sys_logging
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="businessType != null">
+                business_type,
+            </if>
+            <if test="requestMethod != null">
+                request_method,
+            </if>
+            <if test="operateName != null">
+                operate_name,
+            </if>
+            <if test="operateUrl != null">
+                operate_url,
+            </if>
+            <if test="operateAddress != null">
+                operate_address,
+            </if>
+            <if test="requestParam != null">
+                request_param,
+            </if>
+            <if test="responseBody != null">
+                response_body,
+            </if>
+            <if test="success != null">
+                success,
+            </if>
+            <if test="errorMsg != null">
+                error_msg,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="requestBody != null">
+                request_body,
+            </if>
+            <if test="browser != null">
+                browser,
+            </if>
+            <if test="systemOs != null">
+                system_os,
+            </if>
+            <if test="loggingType != null">
+                logging_type
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="method != null">
+                #{method},
+            </if>
+            <if test="businessType != null">
+                #{businessType},
+            </if>
+            <if test="requestMethod != null">
+                #{requestMethod},
+            </if>
+            <if test="operateName != null">
+                #{operateName},
+            </if>
+            <if test="operateUrl != null">
+                #{operateUrl},
+            </if>
+            <if test="operateAddress != null">
+                #{operateAddress},
+            </if>
+            <if test="requestParam != null">
+                #{requestParam},
+            </if>
+            <if test="responseBody != null">
+                #{responseBody},
+            </if>
+            <if test="success != null">
+                #{success},
+            </if>
+            <if test="errorMsg != null">
+                #{errorMsg},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="description != null">
+                #{description},
+            </if>
+            <if test="requestBody != null">
+                #{requestBody},
+            </if>
+            <if test="browser != null">
+                #{browser},
+            </if>
+            <if test="systemOs != null">
+                #{systemOs},
+            </if>
+            <if test="loggingType != null">
+                #{loggingType},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getById" resultType="SysLog">
+        select
+        id as id,
+        title as title,
+        method as method,
+        business_type as businessType,
+        request_method as requestMethod,
+        operate_name as operateName,
+        operate_url as operateUrl,
+        operate_address as operateAddress,
+        request_param as requestParam,
+        response_body as responseBody,
+        success as success,
+        error_msg as errorMsg,
+        create_time as createTime,
+        description as description,
+        request_body as requestBody,
+        logging_type as loggingType,
+        browser as browser,
+        system_os as systemOs
+        from sys_logging
+        <where>
+            <if test=" id != null and id != '' ">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.AdDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Ad" id="AdResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+ 		<result property="code" column="code"/>  
+ 		<result property="start_time" column="start_time"/>  
+ 		<result property="end_time" column="end_time"/>  
+ 		<result property="img" column="img"/>  
+ 		<result property="url" column="url"/>  
+ 		<result property="remark" column="remark"/>  
+ 		<result property="status" column="status"/>  
+ 		<result property="sort" column="sort"/>  
+  		<association property="adsense" column="adsense_id" select="com.shuogesha.cms.dao.AdsenseDao.findById" >
+        </association>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Ad"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_ad(id,name,adsense_id,code,start_time,end_time,img,url,remark,status,sort) 
+		values(null,#{name},#{adsense.id},#{code},#{start_time},#{end_time},#{img},#{url},#{remark},#{status},#{sort})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="AdResult">
+		select * from e_ad where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_ad where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="AdResult">
+		select * from e_ad where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="AdResult">
+		delete from e_ad where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Ad"> 
+ 		update e_ad set name=#{name},code=#{code},adsense_id=#{adsense.id},start_time=#{start_time},end_time=#{end_time},img=#{img},url=#{url},remark=#{remark},status=#{status},sort=#{sort} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findList" parameterType="Map" resultMap="AdResult">
+		select * from e_ad where status='0' and start_time <![CDATA[ <= ]]> now() and end_time <![CDATA[ >= ]]> now()
+		<if test="type!=null"> and adsense_id= #{type}</if>
+		order by sort asc
+ 	</select>
+</mapper>  

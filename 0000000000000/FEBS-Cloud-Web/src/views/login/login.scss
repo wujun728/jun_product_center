@@ -1,0 +1,38 @@
+$bg:#283443;
+$light_gray:#fff;
+$cursor: #555;
+
+@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+  .login-container .el-input input {
+    color: $cursor;
+  }
+}
+.login-container {
+  .el-input {
+    display: inline-block;
+    font-size: .9rem !important;
+    input {
+      background: transparent;
+      border: 0;
+      -webkit-appearance: none;
+      border-radius: 0;
+      color: #000000;
+      height: 28px;
+      caret-color: $cursor;
+      &:-webkit-autofill {
+        box-shadow: 0 0 0 1000px $bg inset !important;
+        -webkit-text-fill-color: $cursor !important;
+      }
+    }
+  }
+
+  .el-form-item {
+    border: 1px solid #dedede;
+    border-radius: 2px;
+    color: #454545;
+    transition: all .3s;
+    &:hover {
+      border-color: #57a3f3;
+    }
+  }
+}

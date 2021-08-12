@@ -1,0 +1,30 @@
+pear:
+  datasource:
+    primary: master
+    druid:
+      master:
+        enable: true
+        url: jdbc:mysql://localhost:3306/pear-admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+        username: root
+        password: root
+        initialSize: 6
+        minIdle: 10
+        maxActive: 30
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        maxEvictableIdleTimeMillis: 900000
+        validationQuery: SELECT 1 FROM DUAL
+      salves:
+        enable: true
+        url: jdbc:mysql://localhost:3306/pear-admin?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+        username: root
+        password: root
+        initialSize: 10
+        minIdle: 10
+        maxActive: 30
+        maxWait: 60000
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        maxEvictableIdleTimeMillis: 900000
+        validationQuery: SELECT 1 FROM DUAL

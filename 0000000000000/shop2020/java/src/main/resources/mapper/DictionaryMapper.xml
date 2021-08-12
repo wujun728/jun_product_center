@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.DictionaryDao"> 
+    <resultMap type="com.shuogesha.platform.entity.Dictionary" id="DictionaryResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+		<result property="value" column="value"/> 
+		<result property="ctgId" column="ctg_id"/> 
+		<result property="sort" column="sort"/>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.platform.entity.Dictionary">
+		insert into t_dictionary values(null,#{name},#{value},#{ctgId},#{sort})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="DictionaryResult">
+		select * from t_dictionary where ctg_id=#{ctgId}
+		<if test="name!=null">and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_dictionary where ctg_id=#{ctgId}
+		<if test="name!=null">and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="DictionaryResult">
+		select * from t_dictionary where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="DictionaryResult">
+		delete from t_dictionary where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.Dictionary"> 
+ 		update t_dictionary set name=#{name},sort=#{sort},value=#{value} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="findByCode" parameterType="Map" resultMap="DictionaryResult">
+		select s.* from t_dictionary s inner join t_dictionaryctg a on a.id=s.ctg_id where a.code=#{code}
+	</select>
+</mapper>  

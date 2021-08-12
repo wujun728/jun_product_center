@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"boot-mongo-admin.quartz_triggers"},{"v":2,"unique":true,"key":{"keyGroup":1,"keyName":1},"name":"keyGroup_1_keyName_1","ns":"boot-mongo-admin.quartz_triggers"}],"uuid":"9c90388952a741fb9109c7a994e1a821"}

@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: FEBS-TX-Manager
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.url}:8001
+        group: DEFAULT_GROUP
+        prefix: febs-tx-manager
+        file-extension: yaml
+logging:
+  level:
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error

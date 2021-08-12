@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.system.dao.DictMapper">
+
+    <resultMap id="dictMap" type="cc.mrbird.system.domain.Dict">
+
+        <id column="DICT_ID" jdbcType="DECIMAL" property="dictId" />
+        <result column="KEYY" jdbcType="DECIMAL" property="keyy" />
+        <result column="VALUEE" jdbcType="VARCHAR" property="valuee" />
+        <result column="FIELD_NAME" jdbcType="VARCHAR" property="fieldName" />
+        <result column="TABLE_NAME" jdbcType="VARCHAR" property="tableName" />
+
+    </resultMap>
+
+    <select id="findDictByFieldName" resultMap="dictMap">
+        select d.DICT_ID dictId,d.KEYY keyy,d.VALUEE valuee,d.FIELD_NAME fieldName,d.TABLE_NAME tableName from t_dict d
+        where 1=1
+        AND d.FIELD_NAME = #{param1}
+        order by d.KEYY
+    </select>
+
+    <select id="findDictByFieldNameAndKeyy" resultType="cc.mrbird.system.domain.Dict">
+        select d.DICT_ID dictId,d.KEYY keyy,d.VALUEE valuee,d.FIELD_NAME fieldName,d.TABLE_NAME tableName from t_dict d
+        where 1=1
+            AND d.FIELD_NAME = #{param1}
+            AND d.KEYY = #{param2}
+        order by d.KEYY
+    </select>
+
+</mapper>

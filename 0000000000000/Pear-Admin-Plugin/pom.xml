@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- Spring Boot Starter Parent -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- Pear Admin Plugin 仓 库 位 置 -->
+    <groupId>com.pearadmin</groupId>
+    <artifactId>pear-admin-plugin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <!-- Pear Admin Plugin 项 目 描 述 -->
+    <name>pear-admin-plugin</name>
+    <description>
+        可 拔 插 的 Spring Boot 插 件 集 , 为 Pear Admin Boot / Pear Admin Cloud 插 件 服 务
+    </description>
+
+    <!-- 模 块 管 理 -->
+    <modules>
+        <module>pear-plugin-sample</module>
+        <module>pear-plugin-project</module>
+    </modules>
+
+    <!-- 版 本 控 制 -->
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
+    <!-- 依 赖 管 理 -->
+    <dependencies>
+
+        <!-- Spring Boot Starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

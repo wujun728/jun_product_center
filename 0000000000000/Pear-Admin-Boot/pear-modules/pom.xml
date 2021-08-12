@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 仓 库 信 息 -->
+    <parent>
+        <groupId>com.pearadmin</groupId>
+        <artifactId>pear-admin-boot</artifactId>
+        <version>1.4.1-RELEASE</version>
+    </parent>
+
+    <!-- 仓 库 地 址 -->
+    <groupId>com.pearadmin</groupId>
+    <artifactId>pear-modules</artifactId>
+    <version>1.4.1-RELEASE</version>
+    <name> 业务逻辑 </name>
+    <description>Demo project for Spring Boot </description>
+    <packaging>pom</packaging>
+
+    <!-- 模 块 管 理 -->
+    <modules>
+        <module>pear-generate</module>  <!-- 代码生成模块 -->
+        <module>pear-system</module>     <!-- 系统业务模块 -->
+        <module>pear-schedule</module>   <!-- 定时任务模块 -->
+        <module>pear-process</module>    <!-- 工作流程模块 -->
+    </modules>
+
+</project>

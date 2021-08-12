@@ -1,0 +1,16 @@
+{
+  "connectIdParam": {
+    "module": "database",
+    "connName": "localhost"
+  },
+  "connectParam": {
+    "host": "localhost",
+    "port": 3306
+  },
+  "authParam": {
+    "username": "root",
+    "password": "h123"
+  },
+  "dbType": "mysql",
+  "database": "test"
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pearadmin.system.mapper.SysRolePowerMapper">
+
+    <resultMap id="SysRolePowerMap" type="SysRolePower">
+        <id column="id" property="id"></id>
+        <result column="role_id" property="roleId"></result>
+        <result column="power_id" property="powerId"></result>
+    </resultMap>
+
+    <select id="selectByRoleId" parameterType="string" resultMap="SysRolePowerMap">
+        select * from sys_role_power
+        where role_id = #{roleId}
+    </select>
+
+    <insert id="batchInsert" parameterType="list">
+        insert into sys_role_power
+        ( id, role_id, power_id )
+        values
+        <foreach collection ="list" item="item" separator =",">
+            (#{item.id}, #{item.roleId}, #{item.powerId})
+        </foreach >
+    </insert>
+
+    <!-- 根据 Id 删除角色数据 -->
+    <delete id="deleteByRoleId" parameterType="string">
+          delete from sys_role_power where role_id = #{roleId}
+    </delete>
+
+    <!-- 根据 Id 删除角色数据 -->
+    <delete id="deleteByRoleIds" parameterType="string">
+          delete from sys_role_power where role_id in
+        <foreach collection ="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach >
+    </delete>
+
+    <!-- 根据 Id 删除角色数据 -->
+    <delete id="deleteByPowerId" parameterType="string">
+          delete from sys_role_power where power_id = #{powerId}
+    </delete>
+
+    <!-- 根据 Id 删除角色数据 -->
+    <delete id="deleteByPowerIds" parameterType="string">
+        delete from sys_role_power where power_id in
+        <foreach collection ="powerIds" item="powerId" open="(" separator="," close=")">
+            #{powerId}
+        </foreach >
+    </delete>
+
+</mapper>

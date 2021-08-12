@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>febs-cloud</artifactId>
+        <groupId>cc.mrbird</groupId>
+        <version>2.2-RELEASE</version>
+        <relativePath>../febs-cloud/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>febs-apm</artifactId>
+    <version>2.2-RELEASE</version>
+    <packaging>pom</packaging>
+    <name>FEBS-APM</name>
+    <description>FEBS-APM(Application Performance Monitor)</description>
+
+    <modules>
+        <module>febs-admin</module>
+    </modules>
+</project>

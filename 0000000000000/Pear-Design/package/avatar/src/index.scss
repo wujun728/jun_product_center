@@ -1,0 +1,28 @@
+.p-avatar {
+    display: inline-block;
+    background-color: #00c58e;
+    color: white;
+    width: 48px;
+    height: 48px;
+    font-size: 12px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: none;
+}
+.p-avatar table {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border-spacing: 0;
+}
+.p-avatar table td {
+    text-align: center;
+    vertical-align: middle;
+}
+.p-avatar img {
+    width: 100%;
+    overflow: hidden;
+}

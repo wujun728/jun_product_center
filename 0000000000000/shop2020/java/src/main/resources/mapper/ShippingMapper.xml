@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.cms.dao.ShippingDao"> 
+    <resultMap type="com.shuogesha.cms.entity.Shipping" id="ShippingResult">
+		<result property="id" column="id"/> 
+		<result property="name" column="name"/> 
+  		<result property="dateline" column="dateline"/>  
+ 		<result property="orderId" column="order_id"/>  
+ 		<result property="express" column="express"/>  
+ 		<result property="type" column="type"/>  
+ 		<result property="path" column="path"/>  
+	</resultMap>
+	 
+    
+	<insert id="saveEntity" parameterType="com.shuogesha.cms.entity.Shipping"  useGeneratedKeys="true" keyProperty="id" >
+		insert into e_shipping(id,name,dateline,order_id,express,type,path) values(null,#{name},now(),#{orderId},#{express},#{type},#{path})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="ShippingResult">
+		select * from e_shipping where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from e_shipping where 1=1
+		<if test="name!=null"> and name like #{name}</if>
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="ShippingResult">
+		select * from e_shipping where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="ShippingResult">
+		delete from e_shipping where id=#{id};
+	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.cms.entity.Shipping"> 
+ 		update e_shipping set name=#{name},sort=#{sort} where id=#{id}
+ 	</update>
+ 	
+ 	<select id="removeByOrderId" parameterType="Long" resultMap="ShippingResult">
+		delete from e_shipping where order_id=#{id};
+	</select>
+	
+	<select id="findByOrderId" parameterType="Map" resultMap="ShippingResult">
+		select * from e_shipping where order_id=#{id}
+ 		order by id desc
+ 	</select>
+	
+</mapper>  

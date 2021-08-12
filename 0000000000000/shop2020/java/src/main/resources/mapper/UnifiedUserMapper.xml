@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 定义命名空间 -->
+<mapper namespace="com.shuogesha.platform.dao.UnifiedUserDao"> 
+    <resultMap type="com.shuogesha.platform.entity.UnifiedUser" id="UnifiedUserResult">
+		<result property="id" column="id"/> 
+		<result property="nickName" column="nick_name"/> 
+ 		<result property="username" column="username"/>
+ 		<result property="password" column="password"/> 
+ 		<result property="email" column="email"/>  
+ 		<result property="phone" column="phone"/> 
+ 		<result property="realname" column="realname"/>  
+ 		<result property="avatar" column="avatar"/> 
+ 		<result property="activation" column="activation"/>  
+ 		<result property="disabled" column="disabled"/> 
+ 		<result property="registerIp" column="register_ip"/>  
+ 		<result property="registerTime" column="register_time"/> 
+ 		<result property="lastLoginTime" column="last_login_time"/>  
+ 		<result property="lastLoginIp" column="last_login_ip"/> 
+ 		<result property="sex" column="sex"/>  
+  		<result property="type" column="type"/>  
+  	</resultMap>
+	 
+    
+	<insert id="saveEntity" useGeneratedKeys="true" keyProperty="id"  parameterType="com.shuogesha.platform.entity.UnifiedUser" >
+		insert into t_unifieduser(id,nick_name,username,password,email,phone,realname,avatar,activation,disabled,register_ip,register_time,last_login_time,last_login_ip,type,sex)
+		 values(null,#{nickName},#{username},#{password},#{email},#{phone},#{realname},#{avatar},#{activation},#{disabled},#{registerIp},#{registerTime},#{lastLoginTime},#{lastLoginIp},#{type},#{sex})
+	</insert>
+    
+ 	 
+ 	<select id="queryList" parameterType="Map" resultMap="UnifiedUserResult">
+		select * from t_unifieduser
+		order by id desc
+		limit #{pageSize} offset #{offset}
+	</select>
+	
+ 	<select id="count" parameterType="Map" resultType="Long">
+		select count(0) from t_unifieduser 
+	</select>
+	
+	<select id="findMax" parameterType="Map" resultType="Long">
+		select max(id) from t_unifieduser 
+	</select>
+	
+ 	
+ 	<select id="findById" parameterType="Long" resultMap="UnifiedUserResult">
+		select * from t_unifieduser where id=#{id};
+	</select>
+	
+ 	<select id="removeById" parameterType="Long" resultMap="UnifiedUserResult">
+		delete from t_unifieduser where id=#{id};
+ 	</select>
+ 	
+ 	<update id="updateById" parameterType="com.shuogesha.platform.entity.UnifiedUser"> 
+ 		update t_unifieduser set nick_name=#{nickName},username=#{username},password=#{password},email=#{email},phone=#{phone},realname=#{realname},avatar=#{avatar},activation=#{activation},disabled=#{disabled},register_ip=#{registerIp},register_time=#{registerTime},last_login_time=#{lastLoginTime},last_login_ip=#{lastLoginIp},type=#{type},sex=#{sex}  where id=#{id}
+ 	</update>
+ 	
+ 	<update id="updateOne"  parameterType="com.shuogesha.platform.entity.UnifiedUser">
+	 UPDATE t_unifieduser
+	 <trim prefix="set" suffixOverrides=",">
+	  <if test="nickName!=null">nick_name=#{nickName},</if>
+	  <if test="username!=null">username=#{username},</if>
+	  <if test="password!=null">password=#{password},</if>
+	  <if test="email!=null">email=#{email},</if>
+	  <if test="phone!=null">phone=#{phone},</if>
+	  <if test="realname!=null">realname=#{realname},</if>
+ 	  <if test="avatar!=null">avatar=#{avatar},</if>
+ 	  <if test="sex!=null">sex=#{sex},</if>
+ 	  <if test="lastLoginTime!=null">last_login_time=#{lastLoginTime},</if>
+ 	  <if test="lastLoginIp!=null">last_login_ip=#{lastLoginIp},</if>
+ 	 </trim>
+	 WHERE id=#{id}
+	</update>
+	
+ 	<select id="findByUsername" parameterType="String" resultMap="UnifiedUserResult">
+		select * from t_unifieduser where username=#{username} or phone=#{username} or email=#{username};
+	</select>
+	
+ 	
+ 	<select id="countByUsername" parameterType="Map" resultType="Long">
+		select count(0) from t_unifieduser where username=#{username} 
+	</select>
+	
+ 	<update id="saveProfile" parameterType="com.shuogesha.platform.entity.UnifiedUser"> 
+ 		update t_unifieduser set email=#{email},phone=#{phone} where id=#{id}
+ 	</update>
+ 	
+ 	<update id="updateStatus"  parameterType="com.shuogesha.platform.entity.UnifiedUser">
+	 UPDATE t_unifieduser set disabled=#{disabled} WHERE id=#{id}
+	</update>
+</mapper>  

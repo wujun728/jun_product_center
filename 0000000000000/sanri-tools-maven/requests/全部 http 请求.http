@@ -1,0 +1,874 @@
+### 版本管理 - 当前版本
+GET {{baseUrl}}/version/current
+
+### 类加载器 - 所有的类加载器
+GET {{baseUrl}}/classloader/classloaders
+
+### 类加载器 - 查看类加载器加载的类
+GET {{baseUrl}}/classloader/listLoadedClasses?classloaderName=job
+
+### 类加载器 - 查看某个类的所有方法信息
+GET {{baseUrl}}/classloader/user/com.mmc.dubbo.api.user.UserFact/methodNames
+
+### 类加载器- 查看类结构
+GET {{baseUrl}}/classloader/user/com.mmc.dubbo.api.user.UserFact/classStruct
+
+### 类加载器 - 构建方法参数
+GET {{baseUrl}}/classloader/user/com.mmc.dubbo.api.user.UserService/insert/buildParams
+
+### 类加载器 - 上传 zip 包, 需要类有严格的目录结构
+POST {{baseUrl}}/classloader/uploadClassesZip
+Content-Type: multipart/form-data; boundary=uploadClassesZip
+
+--uploadClassesZip
+Content-Disposition: form-data; name="file"; filename="messagecenterdao.zip"
+Content-Type: application/octet-stream
+
+< d:/test/messagecenterdao.zip
+--uploadClassesZip
+Content-Disposition: form-data; name="classloaderName"
+Content-Type: application/x-www-form-urlencoded
+
+messagecenterdao
+
+### 类加载器 - 上传 zip 包, 不需要严格的目录结构
+POST {{baseUrl}}/classloader/uploadClassesZipSimple
+Content-Type: multipart/form-data; boundary=uploadClassesZip
+
+--uploadClassesZip
+Content-Disposition: form-data; name="file"; filename="job.zip"
+Content-Type: application/octet-stream
+
+< d:/test/job.zip
+--uploadClassesZip
+Content-Disposition: form-data; name="classloaderName"
+Content-Type: application/x-www-form-urlencoded
+
+job
+### 类加载器 - 上传单个 class 文件
+POST {{baseUrl}}/classloader/uploadSingleClass
+Content-Type: multipart/form-data; boundary=uploadSingleClass
+
+--uploadSingleClass
+Content-Disposition: form-data; name="file"; filename="ParkingLotBean.class"
+Content-Type: application/octet-stream
+
+< d:/test/ParkingLotBean.class
+--uploadSingleClass
+Content-Disposition: form-data; name="classloaderName"
+Content-Type: application/x-www-form-urlencoded
+
+park
+### 类加载器 - 上传单个 java 文件,将自动编译
+POST {{baseUrl}}/classloader/uploadSingleJavaFile
+Content-Type: multipart/form-data; boundary=uploadSingleJavaFile
+
+--uploadSingleJavaFile
+Content-Disposition: form-data; name="file"; filename="ParkMessageDto.java"
+Content-Type: application/octet-stream
+
+< d:/test/ParkMessageDto.java
+--uploadSingleJavaFile
+Content-Disposition: form-data; name="classloaderName"
+Content-Type: application/x-www-form-urlencoded
+
+park
+
+### 数据 - 类加载器随机数据生成
+GET {{baseUrl}}/data/random?className=com.sanri.tools.modules.core.dtos.param.DatabaseConnectParam&classloaderName=
+
+### 数据 - 类加载器随机数据生成 List
+GET {{baseUrl}}/data/random/list?className=com.sanri.tools.modules.core.dtos.param.DatabaseConnectParam&classloaderName=
+
+### 数据 - 正则表达式生成数据
+GET {{baseUrl}}/data/random/regex?regex=\d{10}[a-z]{2}\s\w{5}
+
+### 数据 - 爬虫数据
+POST {{baseUrl}}/data/spider
+Content-Type: application/json
+
+{
+  "className": "com.sanri.app.jsoup.biquge1.NovelSearch",
+  "classloaderName": "jsoup",
+  "params": {
+  "keyword": "校花的贴身高手"
+  }
+}
+
+### 序列化 - 可用的序列化列表
+GET {{baseUrl}}/serializer/names
+
+### 插件 - 获取所有插件名称
+GET {{baseUrl}}/plugin/names
+
+### 插件 - 插件列表,经过排序的
+GET {{baseUrl}}/plugin/list
+
+### 插件 - 获取插件详情
+GET {{baseUrl}}/plugin/detail?key=database:metadata
+
+### 插件 - 访问插件
+GET {{baseUrl}}/plugin/visited?key=kafka:main
+
+### 插件 - 序列化数据到文件
+GET {{baseUrl}}/plugin/serializer
+
+### 连接管理-获取所有模块
+GET {{baseUrl}}/connect/modules
+
+### 连接管理 - 创建新模块
+POST {{baseUrl}}/connect/createModule
+Content-Type: application/x-www-form-urlencoded
+
+name=redis2
+
+### 连接管理-获取某个模块的连接列表
+GET {{baseUrl}}/connect/redis/names
+
+### 连接管理-获取某个连接详情
+GET {{baseUrl}}/connect/redis/10.101.72.43
+
+### 连接管理-获取所有连接
+GET {{baseUrl}}/connect/all
+
+### 连接管理- 获取连接示例
+GET {{baseUrl}}/connect/kafka/yaml/example
+
+### 创建 redis 连接
+POST {{baseUrl}}/connect/create/redis
+Content-Type: application/json
+
+{
+  "connectIdParam": {
+    "module": "redis",
+    "connName": "192.168.0.134"
+  },
+  "connectParam": {
+    "host": "192.168.0.134",
+    "port": 6379
+  }
+}
+
+
+### 创建数据库连接
+POST {{baseUrl}}/connect/create/database
+Content-Type: application/json
+
+{
+  "connectIdParam": {
+    "module": "database",
+    "connName": "localhost"
+  },
+  "connectParam": {
+    "host": "localhost",
+    "port": 3306
+  },
+  "authParam": {
+    "username": "root",
+    "password": "h123"
+  },
+  "dbType": "mysql",
+  "database": "test"
+}
+
+### 创建 zookeeper 连接
+POST {{baseUrl}}/connect/create/zookeeper
+Content-Type: application/json
+
+{
+  "connectIdParam": {
+    "module": "zookeeper",
+    "connName": "10.101.72.43_2182"
+  },
+  "connectParam": {
+    "host": "10.101.72.43",
+    "port": 2182
+  }
+}
+
+### 获取所有数据库连接
+GET {{baseUrl}}/db/metadata/connections
+
+### 获取所有 catalogs
+GET {{baseUrl}}/db/metadata/catalogs?connName=localhost
+
+### 获取 catalog 的所有表
+GET {{baseUrl}}/db/metadata/tables?connName=localhost&catalog=test
+
+### 刷新所有的表
+GET {{baseUrl}}/db/metadata/refreshTables?connName=localhost&catalog=test&schema=
+
+### 表元数据 - 刷新表的列
+GET {{baseUrl}}/db/metadata/refreshColumns?connName=localhost&catalog=test&tableName=batch
+
+### 表元数据 - 刷新表的主键
+GET {{baseUrl}}/db/metadata/refreshPrimaryKeys?connName=localhost&catalog=test&tableName=batch
+
+### 表元数据 - 刷新表的索引
+GET {{baseUrl}}/db/metadata/refreshIndexs?connName=localhost&catalog=test&tableName=batch
+
+### 表元数据 - 搜索表
+GET {{baseUrl}}/db/metadata/searchTables?connName=lo&catalog=hdsc_db&schemas=mct&keyword=mct_push_rule_config_event_items
+
+### 标记表-常用标记
+GET {{baseUrl}}/db/metadata/extend/mark/tags
+
+### 标记表-标记表
+POST {{baseUrl}}/db/metadata/extend/mark/config/tableMark
+Content-Type: application/json
+
+[
+  {
+    "connName": "lo",
+    "actualTableName": {
+      "catalog": null,
+      "schema": "mct",
+      "tableName": "mct_system_config"
+    },
+    "tags": [
+      "config"
+    ]
+  }
+]
+
+### 标记表-获取表标记
+GET {{baseUrl}}/db/metadata/extend/mark/tableTags?connName=lo&schema=mct&tableName=mct_system_config
+
+### 标记表-查找某个标记的表
+GET {{baseUrl}}/db/metadata/extend/mark/tagTables?connName=lo&schema=mct&tag=config
+
+### 表关系 - 配置表关系
+POST {{baseUrl}}/db/metadata/extend/relation/config
+Content-Type: application/json
+
+{
+  "connName": "lo",
+  "catalog": null,
+  "tableRelations": [
+    {
+      "sourceTableName": {
+        "schema": "mct",
+        "tableName": "mct_event_record_biz"
+      },
+      "targetTableName": {
+        "schema": "mct",
+        "tableName": "mct_event_record_plc"
+      },
+      "sourceColumnName": "uuid",
+      "targetColumnName": "uuid",
+      "relation": "ONE_ONE"
+    }
+  ]
+}
+
+### 数据库 - 表关系 - 查询表引用的关系
+GET {{baseUrl}}/db/metadata/extend/relation/parents?connName=lo&schema=mct&tableName=mct_event_handler
+
+### 数据库 - 表关系  - 查询表的下级引用
+GET {{baseUrl}}/db/metadata/extend/relation/childs?connName=lo&schema=mct&tableName=mct_event_record_biz
+
+### 数据库 - 表关系  - 查询表的关联层级
+GET {{baseUrl}}/db/metadata/extend/relation/hierarchy?connName=lo&schema=mct&tableName=mct_event_record_biz
+
+### 数据库 - 数据 - 单表随机数据生成
+POST {{baseUrl}}/db/data/singleTableRandomData
+Content-Type: application/json
+
+{
+  "connName": "localhost",
+  "actualTableName": {
+    "catalog": "test",
+    "tableName": "test_index"
+  },
+  "size": 120,
+  "columnMappers": [
+    {
+      "columnName": "title",
+      "random": "T(com.sanri.tools.modules.core.utils.RandomUtil).chinese(64,null)"
+    },
+    {
+      "columnName": "idcard",
+      "random": "T(com.sanri.tools.modules.core.utils.RandomUtil).idcard()"
+    },
+    {
+      "columnName": "age",
+      "random": "T(org.apache.commons.lang3.RandomUtils).nextInt(1,140)"
+    },
+    {
+      "columnName": "author",
+      "random": "T(com.sanri.tools.modules.core.utils.RandomUtil).chinese(32,null)"
+    },
+    {
+      "columnName": "report_time",
+      "random": "T(org.apache.commons.lang3.time.DateFormatUtils).ISO_8601_EXTENDED_DATETIME_FORMAT.format(T(com.sanri.tools.modules.core.utils.RandomUtil).date())"
+    }
+  ]
+}
+
+### 数据库 - 数据 - 单表随机数据生成(关联其它表)
+POST {{baseUrl}}/db/data/singleTableRandomData
+Content-Type: application/json
+
+{
+  "connName": "localhost",
+  "actualTableName": {
+    "catalog": "test",
+    "tableName": "emp"
+  },
+  "size": 100,
+  "columnMappers": [
+    {
+      "columnName": "empno",
+      "random": "T(org.apache.commons.lang3.RandomStringUtils).randomNumeric(4)"
+    },
+    {
+      "columnName": "ename",
+      "random": "T(com.sanri.tools.modules.core.utils.RandomUtil).chinese(5,null)"
+    },
+    {
+      "columnName": "deptno",
+      "sql": "select deptno from test.dept"
+    }
+  ]
+}
+
+### 数据库 - 数据 - 导入数据
+POST {{baseUrl}}/db/data/import/excel
+Content-Type: multipart/form-data; boundary=importData
+
+--importData
+Content-Disposition: form-data; name="excel"; filename="acc_auth_history_record.xlsx"
+Content-Type: application/octet-stream
+
+< d:/test/acc_auth_history_record.xlsx
+--importData
+Content-Disposition: form-data; name="config"
+Content-Type: application/json
+
+{
+"connName": "localhost",
+"actualTableName": {
+    "catalog": "test",
+    "tableName": "test_index"
+},
+"startRow": 2,
+"mapping": [
+    {
+      "columnName": "title",
+      "index": 35
+    },{
+      "columnName": "author",
+      "index": 31
+    },
+    {
+      "columnName": "idcard",
+      "random": "T(com.sanri.tools.modules.core.utils.RandomUtil).idcard()"
+    },
+    {
+      "columnName": "age",
+      "random": "T(org.apache.commons.lang3.RandomUtils).nextInt(1,140)"
+    },
+    {
+      "columnName": "report_time",
+      "random": "T(org.apache.commons.lang3.time.DateFormatUtils).ISO_8601_EXTENDED_DATETIME_FORMAT.format(T(com.sanri.tools.modules.core.utils.RandomUtil).date())"
+    }
+ ]
+}
+
+### 数据表 - 数据 - 导出数据预览
+POST {{baseUrl}}/db/data/exportPreview
+Content-Type: application/json
+
+{
+  "connName": "lo",
+  "sql": "select * from mct.mct_event_record_common"
+}
+
+### 数据表 - 数据 - 导出数据
+POST {{baseUrl}}/db/data/exportData
+Content-Type: application/json
+
+{
+  "connName": "lo",
+  "sqls": ["select * from mct.mct_event_record_common"],
+  "traceId": "abc"
+}
+### 数据表 - 数据 - 执行查询
+POST {{baseUrl}}/db/data/executeQuery
+Content-Type: application/json
+
+{
+  "connName": "lo",
+  "sqls": ["select * from mct.mct_event_record_common limit 10"],
+  "traceId": "abc"
+}
+### 数据表 - 数据 - 执行 ddl
+POST {{baseUrl}}/db/data/executeUpdate
+Content-Type: application/json
+
+{
+  "connName": "localhost",
+  "sqls": ["create table abc(name varchar(32))"],
+  "traceId": "abc"
+}
+### 数据表 - 配置数据(nacos,diamond) - 所有分组信息
+GET {{baseUrl}}/db/data/config/groups?connName=lo&schemaName=nacos
+
+### 数据表 - 配置数据 - 分组的 dataIds
+GET {{baseUrl}}/db/data/config/dataIds?connName=lo&schemaName=nacos&groupId=scp-st-messagecenter-component
+
+### 数据表 - 配置数据 - 获取配置数据详情
+GET {{baseUrl}}/db/data/config/content?connName=lo&schemaName=nacos&groupId=scp-st-messagecenter-component&dataId=scp-st-messagecenter-component-dev.properties
+
+### 数据库 - 代码生成 - 列出所有重命名策略
+GET {{baseUrl}}/db/code/renameStrategies
+
+### 数据表 - 代码生成 - 生成 javaBean
+POST {{baseUrl}}/db/code/build/javaBean
+Content-Type: application/json
+
+{
+  "connName": "lo",
+  "catalog": null,
+  "schema": "mct",
+  "tableNames": [
+    "mct_event_record_common","mct_event_record","mct_event_handler"
+  ],
+  "lombok": true,
+  "swagger2": false,
+  "persistence": false,
+  "serializer": false,
+  "packageName": "com.sanri.entity",
+  "renameStrategy": "defaultRenameStragtegy"
+}
+
+
+### 数据库 - 代码生成 - mapper 生成 ;  mybatis , tk.mybatis
+POST {{baseUrl}}/db/code/build/mapper
+Content-Type: application/json
+
+
+### 数据库 - 代码生成 - 列出所有模板
+GET {{baseUrl}}/db/code/templates
+
+### 数据库 - 代码生成 - 查询某个模板详情
+GET {{baseUrl}}/db/code/mapper.xml.32322.ftl/content
+
+### 数据库 - 代码生成 - 建立一个方案
+POST {{baseUrl}}/db/code/override
+Content-Type: application/json
+
+{
+  "name": "base.schema",
+  "content": "mapper.xml.32322.ftl"
+}
+
+### 数据库 - 代码生成 - 列出所有方案
+GET {{baseUrl}}/db/code/schemas
+
+### 数据库 - 代码生成 - 列出某个方案的模板列表
+GET {{baseUrl}}/db/code/base.schema/templates
+
+### 数据库 - 代码生成 - 预览模板代码
+POST {{baseUrl}}/db/code/template/code/preview
+Content-Type: application/json
+
+{
+  "template": "mapper.xml.32322.ftl",
+  "connName": "localhost",
+  "renameStrategyName": "defaultRenameStragtegy",
+  "actualTableName": {
+    "catalog": "test",
+    "tableName": "batch"
+  },
+  "packageConfig": {
+  "mapper": "com.sanri.test.mapper"
+  }
+}
+
+### 数据库 - 代码生成  - 生成代码
+POST {{baseUrl}}/db/code/template/code/generator
+
+Content-Type: application/json
+
+{
+  "renameStrategyName": "defaultRenameStragtegy",
+  "templates": [
+    "mapper.xml.32322.ftl"
+  ],
+  "dataSourceConfig": {
+    "connName": "localhost",
+    "catalog": "test",
+    "tableNames": ["batch"]
+  },
+  "packageConfig": {
+    "mapper": "com.sanri.test.mapper"
+  }
+}
+
+### zookeeper - 列出子节点
+GET {{baseUrl}}/zookeeper/childrens?connName=192.168.72.42_2181&path=/hd/kafka
+
+### zookeeper - 元数据 meta
+GET {{baseUrl}}/zookeeper/meta?connName=192.168.72.43&path=/brokers
+
+### zookeeper - acls 权限
+GET {{baseUrl}}/zookeeper/acls?connName=192.168.72.43&path=/brokers
+
+### zookeeper - 读取数据
+GET {{baseUrl}}/zookeeper/readData?connName=192.168.72.43&path=/brokers/ids/1&serializer=string
+
+### zookeeper - 写入数据
+POST {{baseUrl}}/zookeeper/writeData
+Content-Type: application/x-www-form-urlencoded
+
+connName=192.168.2.134_2181&path=/abc&data=zookeeperop
+
+### zookeeper - 删除节点
+POST {{baseUrl}}/zookeeper/deleteNode
+Content-Type: application/x-www-form-urlencoded
+
+connName=192.168.2.134_2181&path=/abc
+
+### zookeeper - 列出收藏夹
+GET {{baseUrl}}/zookeeper/favorites?connName=192.168.2.134_2181
+
+### zookeeper - 添加收藏
+POST {{baseUrl}}/zookeeper/addFavorite
+Content-Type: application/x-www-form-urlencoded
+
+connName=192.168.2.134_2181&name=dubbo&path=/dubbo
+
+### zookeeper - 删除收藏
+POST {{baseUrl}}/zookeeper/removeFavorite
+Content-Type: application/x-www-form-urlencoded
+
+connName=192.168.2.134_2181&name=dubbo
+
+### redis - mode 查询
+GET {{baseUrl}}/redis/monitor/mode?connName=10.101.72.43
+
+### redis - 查看 redis 的节点列表
+GET {{baseUrl}}/redis/monitor/nodes?connName=10.101.72.43
+
+### redis - scan 某个 key ,可以模糊查询
+GET {{baseUrl}}/redis/key/scan?connName=10.101.72.43&pattern=*IR*&limit=20&cursor=1435|0&keySerializer=string
+
+### redis - 读取某个具体的 key
+GET {{baseUrl}}/redis/data?connName=192.168.0.134&key=abc&subKeys=mm,mm2&keySerializer=string&value=string&hashKey=string&hashValue=string
+
+### redis -  扫描 hashKey
+GET {{baseUrl}}/redis/key/subKeys?connName=192.168.0.134&key=abc&pattern=*&limit=2&keySerializer=string&value=string&hashKey=string&hashValue=string&cursor=0
+
+### redis -  key 长度
+GET {{baseUrl}}/redis/key/length?connName=192.168.0.134&key=abc
+
+### redis - 获取客户端连接列表和占用连接数
+GET {{baseUrl}}/redis/monitor/clientList?connName=192.168.0.134
+
+### redis - 获取内存占用
+GET {{baseUrl}}/redis/monitor/memoryUses?connName=192.168.0.134
+
+### redis - 删除 key
+POST {{baseUrl}}/redis/dropKeys?connName=10.101.72.43&keys=abc,def
+
+### redis - 找出所有以某个前缀开头的 key
+GET {{baseUrl}}/redis/prefixKeys?connName=10.101.72.43&match=ab*
+
+### google 翻译
+GET http://translate.google.cn/translate_a/single?client=gtx&sl=zh-CN&tl=en&dt=t&q=查询当前组织下的审核人
+
+### 翻译取名工具
+GET {{baseUrl}}/name/translate?orginChars=查询当前组织下的审核人&tokenizer=ik&tranlates=baidu
+
+### 所有的英语翻译
+GET {{baseUrl}}/name/englishs
+
+### 所有的分词器
+GET {{baseUrl}}/name/tokenizers
+
+### 所有的业务词
+GET {{baseUrl}}/name/bizs
+
+### 业务词详情
+GET {{baseUrl}}/name/detail/common
+
+### 写入业务词
+POST {{baseUrl}}/name/mirror/write/common
+Content-Type: application/x-www-form-urlencoded
+
+用户=user
+人=people
+### 多列翻译
+GET {{baseUrl}}/name/multiTranslate?words=审核人&words=消息中心&words=查询当前组织下的审核人&english=baidu
+
+### 多列翻译下划线方式
+GET {{baseUrl}}/name/mutiTranslateUnderline?words=审核人&words=消息中心&words=查询当前组织下的审核人&english=baidu
+
+### 创建 kafka 连接
+POST {{baseUrl}}/kafka/connect/create
+Content-Type: application/yaml
+
+connectIdParam:
+  module: kafka
+  connName: 192.168.72.76_2181
+chroot: /hd/kafka
+kafka:
+  properties:
+    sasl:
+      jaas:
+        config: org.apache.kafka.common.security.plain.PlainLoginModule required username=hd password=hd-kafka;
+      mechanism: PLAIN
+    security:
+      protocol: SASL_PLAINTEXT
+
+### 列出所有的主题信息
+GET {{baseUrl}}/kafka/topics?clusterName=192.168.72.42_2181
+
+### 列出主题日志数量
+GET {{baseUrl}}/kafka/topic/logSize?clusterName=192.168.72.42_2181&topic=EGSC_SCP_DEVICEMGMT_STATUSTOBROADCAST_TOPIC
+
+### 列出所有的消费组
+GET {{baseUrl}}/kafka/groups?clusterName=192.168.72.42_2181
+
+### 列出消费组消费的主题
+GET {{baseUrl}}/kafka/group/topics?clusterName=192.168.72.42_2181&group=scp-st-broadcastApp_BC_APP6876
+
+### 消费组情况查询
+GET {{baseUrl}}/kafka/group/subscribes?clusterName=192.168.72.42_2181&group=scp-st-broadcastApp_BC_APP6876
+
+### 消费组消费主题的偏移量 offset,logsize,lag
+GET {{baseUrl}}/kafka/group/topic/offset?clusterName=192.168.72.42_2181&group=scp-st-broadcastApp_BC_APP6876&topic=EGSC_SCP_DEVICEMGMT_STATUSTOBROADCAST_TOPIC
+
+### 消费组所有主题的偏移量
+GET {{baseUrl}}/kafka/group/topics/offset?clusterName=192.168.72.42_2181&group=scp-st-broadcastApp_BC_APP6876
+
+### brokers
+GET {{baseUrl}}/kafka/brokers?clusterName=192.168.72.42_2181
+
+### 消费主题最后几条数据
+GET {{baseUrl}}/kafka/topic/data/last?clusterName=192.168.72.42_2181&topic=EGSC_SCP_SDC_EVENT_DATA_TOPIC&partition=-1&perPartitionSize=10&serializer=string
+
+### 消费主题数据,并创建索引
+GET {{baseUrl}}/kafka/topic/data/consumerDataAndCreateIndex?clusterName=192.168.72.42_2181&topic=EGSC_SCP_SDC_EVENT_DATA_TOPIC&partition=-1&perPartitionSize=10&serializer=string
+
+### 使用索引来查询数据
+GET {{baseUrl}}/kafka/topic/data/search?keyword=5236833587864535049012
+
+### 消费主题附近的几条数据
+GET {{baseUrl}}/kafka/group/topic/data/nearby?clusterName=192.168.72.42_2181&topic=EGSC_SCP_SDC_EVENT_DATA_TOPIC&partition=0&offset=16090&perPartitionSize=10&serializer=string
+
+### 发送 json 数据
+POST {{baseUrl}}/kafka/topic/data/send/json
+Content-Type: application/json
+
+### 监控 kafka broker 数据
+GET {{baseUrl}}/kafka/monitor/broker?clusterName=192.168.72.42_2181
+
+### 监控 kafka topic 数据
+GET {{baseUrl}}/kafka/monitor/topic/EGSC_EGC_MC_APP_ORG_TOPIC?clusterName=192.168.72.42_2181
+
+### soap工具 - 加载一个 webservice port
+GET {{baseUrl}}/soap/ports?wsdl=http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl
+
+### soap工具 - 查看某一个 port 的所有方法列表
+GET {{baseUrl}}/soap/WeatherWebServiceSoap/methods?wsdl=http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl
+
+### soap工具 - 获取某个方法入参
+GET {{baseUrl}}/soap/WeatherWebServiceSoap/getWeatherbyCityName/input?wsdl=http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl
+
+### soap 工具 - 获取某个方法出参
+GET {{baseUrl}}/soap/WeatherWebServiceSoap/getWeatherbyCityName/output?wsdl=http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl
+
+### soap 工具 - 构建 soap 参数
+GET {{baseUrl}}/soap/WeatherWebServiceSoap/getWeatherbyCityName/build?wsdl=http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl
+
+### soap 工具 - 发起查询
+POST {{baseUrl}}/soap/WeatherWebServiceSoap/getWeatherbyCityName/request?wsdl=http://www.webxml.com.cn/WebServices/WeatherWebService.asmx?wsdl
+Content-Type: text/plain
+
+<?xml version="1.0" encoding="UTF-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soap:Body xmlns="http://WebXml.com.cn/">
+  <getWeatherbyCityName>
+            <theCityName>深圳</theCityName>
+        </getWeatherbyCityName>
+    </soap:Body>
+</soap:Envelope>
+
+### dubbo - 获取所有的服务
+GET {{baseUrl}}/dubbo/services?connName=192.168.2.134_2181
+
+### dubbo - 获取所有提供者
+GET {{baseUrl}}/dubbo/providers?connName=192.168.2.134_2181&serviceName=com.mmc.dubbo.api.user.UserService
+
+### dubbo - 调用方法
+POST {{baseUrl}}/dubbo/invoke
+Content-Type: application/json
+
+{
+  "connName": "192.168.2.134_2181",
+  "serviceName": "com.mmc.dubbo.api.user.UserService",
+  "classloaderName": "user",
+  "methodName": "getCurrentById",
+  "providerURL": "dubbo://192.168.2.101:30880/com.mmc.dubbo.api.user.UserService?anyhost=true&application=mmc-dubbo-provider&dubbo=2.6.2&generic=false&interface=com.mmc.dubbo.api.user.UserService&methods=getCurrentById,insert&pid=35288&side=provider&timestamp=1596275905147",
+  "args": ["18"]
+}
+
+### dubbo - 查看可用连接
+GET {{baseUrl}}/dubbo/connects
+
+### mybatis - 上传 mapper 文件
+POST {{baseUrl}}/mybatis/uploadMapperFile
+Content-Type: multipart/form-data; boundary=uploadMapperFile
+
+--uploadMapperFile
+Content-Disposition: form-data; name="file"; filename="BatchMapper.xml"
+Content-Type: application/octet-stream
+
+< d:/test/ScheduleMapper.xml
+--uploadMapperFile
+Content-Disposition: form-data; name="project"
+Content-Type: application/x-www-form-urlencoded
+
+ir
+--uploadMapperFile
+Content-Disposition: form-data; name="classloaderName"
+Content-Type: application/x-www-form-urlencoded
+
+entity
+### mybatis 的 mapper 文件不会在启动的时候加载, 需要手动 reload
+GET {{baseUrl}}/mybatis/reload
+
+### mybatis - 列出所有当前加载的项目
+GET {{baseUrl}}/mybatis/projects
+
+### mybatis 获取加载到的 sqlId
+GET {{baseUrl}}/mybatis/statementIds?project=ir
+
+### mybatis - 获取 sqlId 需要的参数
+GET {{baseUrl}}/mybatis/statementParams?project=ir&statementId=com.eg.egsc.scp.informationrelease.mapper.ScheduleMapper.queryByCondition
+
+### mybatis 执行获取绑定的 sql
+POST {{baseUrl}}/mybatis/boundSql
+Content-Type: application/json
+
+{
+  "project": "ir",
+  "connName": "lo",
+  "statementId": "com.eg.egsc.scp.informationrelease.mapper.ScheduleMapper.queryByCondition",
+  "className": "java.util.HashMap",
+  "arg": {
+    "value": {
+      "scheduleMode": "normal",
+      "pageSize": 10,
+      "start": 0,
+      "isExamine": 0
+    }
+  }
+}
+
+### 计算 cron 下次执行时间
+POST {{baseUrl}}/cron/nextExecutionTime
+Content-Type: application/x-www-form-urlencoded
+
+expression=0 1-6/2 14 ? * ?
+
+### 生成数据库文档
+POST {{baseUrl}}/db/metadata/generate?connName=lo&schemas=mct
+
+### 添加注释
+GET {{baseUrl}}/comments
+
+### 测试 redis 新版本
+GET {{baseUrl}}/redis/v2/testmu
+Content-Type: application/json
+connName: 10.101.72.43
+
+{
+  "pattern": "abc*"
+}
+
+### mongodb - 创建连接
+POST {{baseUrl}}/connect/create/mongo
+Content-Type: application/json
+
+{
+  "connectIdParam": {
+    "module": "mongo",
+    "connName": "192.168.108.130"
+  },
+  "connectParam": {
+    "host": "192.168.108.130",
+    "port": 27017
+  }
+}
+
+### mongo - 查询所有库
+GET {{baseUrl}}/mongo/databaseNames?connName=192.168.108.130
+
+### mongo - 查询库的所有集合
+GET {{baseUrl}}/mongo/collectionNames/mall-port?connName=192.168.108.130
+
+### mongo - 数据筛选
+GET {{baseUrl}}/mongo/queryPage?connName=192.168.108.130&databaseName=mall-port&collectionName=goods&pageNo=1&pageSize=10
+
+### chat - 查看在线用户列表
+GET {{baseUrl}}/chat/onlineUsers
+
+### chat - 获取sessionId
+GET {{baseUrl}}/chat/sessionId
+
+### bindQuartz
+POST {{baseUrl}}/quartz/localhost@job/bindQuartz
+Content-Type: application/json
+
+{
+  "org.quartz.jobStore.tablePrefix": "qrtz_"
+}
+
+### quartz - triggers
+GET {{baseUrl}}/quartz/triggers?connNaame=localhost&catalog=job
+
+### quartz - trigger
+GET {{baseUrl}}/quartz/trigger?connName=localhost@job&group=default&name=mm&classloaderName=job
+
+### quartz - pause
+GET {{baseUrl}}/quartz/pause?connName=localhost@job&group=default&name=mm&classloaderName=job
+
+### quartz - add job
+POST {{baseUrl}}/quartz/localhost@job/editJob
+Content-Type: application/json
+
+{
+  "name": "mm",
+  "group": "default",
+  "description": "一个测试添加 job 的功能 ",
+  "className": "com.itstyle.quartz.job.CleanUnRelatedImageJob",
+  "classloaderName": "job",
+  "jobMethodName": "",
+  "cron": "* * * * * ? *"
+}
+
+### es - 创建新连接
+POST {{baseUrl}}/connect/create/elasticsearch
+Content-Type: application/json
+
+{
+  "connectIdParam": {
+    "module": "elasticsearch",
+    "connName": "10.101.40.127"
+  },
+  "connectParam": {
+    "host": "10.101.40.127",
+    "port": 9200
+  }
+}
+
+
+### es - 数据查询
+GET {{baseUrl}}/elasticsearch/search/10.101.40.127/third_out_log_index_2020
+Content-Type: application/json
+
+{"query":{"bool":{"must":[],"must_not":[],"should":[{"match_all":{}}]}},"from":0,"size":50,"sort":[{"_score":{"order":"desc"}}],"aggs":{},"version":true};
+
+###

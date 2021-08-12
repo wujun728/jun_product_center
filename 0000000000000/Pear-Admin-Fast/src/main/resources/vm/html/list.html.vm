@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="include :: header('${functionName}列表')" />
+</head>
+<body class="pear-container">
+     <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId" class="layui-form">
+
+                    <div class="layui-form-item">
+#foreach($column in $columns)
+#if($column.query)
+    #set($javaField=$column.javaField)
+    #set($comment=$column.columnComment)
+    #if($column.htmlType == "input")
+                        <label class="layui-form-label">${comment}：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="${javaField}" placeholder="请输入${comment}" class="layui-input" #if($column.required) lay-required#end/>
+                        </div>
+    #elseif(($column.htmlType == "select" || $column.htmlType == "radio") && "" !=$column.dictType)
+               
+                        <label class="layui-form-label">${comment}：</label>
+                        <div class="layui-input-inline">
+                            <select name="${javaField}" #if($column.required) lay-required#end  #if("" !=$column.dictType)dict-code="${column.dictType}" #end>
+                                <option value="">所有</option>
+                            </select>
+                        </div>
+#end
+#end
+#end
+                    <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="${businessName}-query">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="pear-btn pear-btn-md">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+     </div>
+         <div class="layui-card">
+             <div class="layui-card-body">
+                 <table id="${businessName}-table" lay-filter="${businessName}-table"></table>
+
+                 <script type="text/html" id="${businessName}-toolbar">
+                     <button  sec:authorize="hasPermission('/${moduleName}/${businessName}/add','${permissionPrefix}:add')"  class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+                         <i class="layui-icon layui-icon-add-1"></i>
+                         新增
+                     </button>
+                     <button  sec:authorize="hasPermission('/${moduleName}/${businessName}/remove','${permissionPrefix}:remove')"   class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+                         <i class="layui-icon layui-icon-delete"></i>
+                         删除
+                     </button>
+                 </script>
+
+                 <script type="text/html" id="${businessName}-bar">
+                     <button  sec:authorize="hasPermission('/${moduleName}/${businessName}/edit','${permissionPrefix}:edit')"   class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
+                     </button>
+                     <button  sec:authorize="hasPermission('/${moduleName}/${businessName}/remove','${permissionPrefix}:remove')"   class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+                     </button>
+                 </script>
+             </div>
+         </div>
+#foreach($column in $columns)
+#if("" !=$column.dictType&&"input" !=$column.dictType)
+    <script type="text/html" id="${column.javaField}_parseDictText">
+#if($column.htmlType == "checkbox")
+        {{layui.dictionary.parseDictTexts(d.${column.javaField},  '${column.dictType}')}}
+#else
+        {{layui.dictionary.parseDictText(d.${column.javaField},  '${column.dictType}')}}
+#end
+
+    </script>
+#end
+#end
+    <th:block th:include="include :: footer" />
+         <script>
+             layui.use(['table', 'form', 'jquery','dictionary'], function () {
+                 let table = layui.table;
+                 let form = layui.form;
+                 let $ = layui.jquery;
+
+                 let prefix = "/${moduleName}/${businessName}/";
+
+                 let cols = [
+                     [
+                         {type: 'checkbox'},
+#foreach($column in $columns)
+#set($javaField=$column.javaField)
+#set($comment=$column.columnComment)
+#if($column.pk)
+                         {
+                             field: '${javaField}',
+                             title: '${comment}'
+                         },
+#elseif($column.list && "" != $javaField)
+                        {
+                             field: '${javaField}',
+                             title: '${comment}'
+#if("" !=$column.dictType&&"input" !=$column.dictType)
+                            ,templet: "#${column.javaField}_parseDictText"
+#end
+                        },
+#end
+#end
+                         {title: '操作', toolbar: '#${businessName}-bar', align: 'center', width: 130}
+                     ]
+                 ]
+
+                 table.render({
+                     elem: '#${businessName}-table',
+                     url: prefix + 'data',
+                     page: true,
+                     cols: cols,
+                     skin: 'line',
+                     toolbar: '#${businessName}-toolbar',
+                     defaultToolbar: [{
+                         layEvent: 'refresh',
+                         icon: 'layui-icon-refresh',
+                     }, 'filter', 'print', 'exports']
+                 });
+
+                 table.on('tool(${businessName}-table)', function (obj) {
+                     if (obj.event === 'remove') {
+                         window.remove(obj);
+                     } else if (obj.event === 'edit') {
+                         window.edit(obj);
+                     }
+                 });
+
+                 table.on('toolbar(${businessName}-table)', function (obj) {
+                     if (obj.event === 'add') {
+                         window.add();
+                     } else if (obj.event === 'refresh') {
+                         window.refresh();
+                     } else if (obj.event === 'batchRemove') {
+                         window.batchRemove(obj);
+                     }
+                 });
+
+                 form.on('submit(${businessName}-query)', function (data) {
+                     table.reload('${businessName}-table', {where: data.field})
+                     return false;
+                 });
+
+                 window.add = function () {
+                     layer.open({
+                         type: 2,
+                         title: '新增${functionName}',
+                         shade: 0.1,
+                         area: ['550px', '500px'],
+                         content: prefix + 'add'
+                     });
+                 }
+
+                 window.edit = function (obj) {
+                     layer.open({
+                         type: 2,
+                         title: '修改${functionName}',
+                         shade: 0.1,
+                         area: ['550px', '500px'],
+                         content: prefix + 'edit?${pkColumn.javaField}=' + obj.data['${pkColumn.javaField}']
+                     });
+                 }
+
+                 window.remove = function (obj) {
+                     layer.confirm('确定要删除该${functionName}', {icon: 3, title: '提示'}, function (index) {
+                         layer.close(index);
+                         let loading = layer.load();
+                         $.ajax({
+                             url: prefix + "remove/" + obj.data['${pkColumn.javaField}'],
+                             dataType: 'json',
+                             type: 'delete',
+                             success: function (result) {
+                                 layer.close(loading);
+                                 if (result.success) {
+                                     layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                         obj.del();
+                                     });
+                                 } else {
+                                     layer.msg(result.msg, {icon: 2, time: 1000});
+                                 }
+                             }
+                         })
+                     });
+                 }
+
+                 window.batchRemove = function (obj) {
+                     let data = table.checkStatus(obj.config.id).data;
+                     if (data.length === 0) {
+                         layer.msg("未选中数据", {icon: 3, time: 1000});
+                         return false;
+                     }
+                     let ids = "";
+                     for (let i = 0; i < data.length; i++) {
+                         ids += data[i].${pkColumn.javaField} + ",";
+                     }
+                     ids = ids.substr(0, ids.length - 1);
+                     layer.confirm('确定要删除这些${functionName}', {icon: 3, title: '提示'}, function (index) {
+                         layer.close(index);
+                         let loading = layer.load();
+                         $.ajax({
+                             url: prefix + "batchRemove",
+                             dataType: 'json',
+                             data: {"ids":ids},
+                             type: 'delete',
+                             success: function (result) {
+                                 layer.close(loading);
+                                 if (result.success) {
+                                     layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                                         table.reload('${businessName}-table');
+                                     });
+                                 } else {
+                                     layer.msg(result.msg, {icon: 2, time: 1000});
+                                 }
+                             }
+                         })
+                     });
+                 }
+
+                 window.refresh = function (param) {
+                     table.reload('${businessName}-table', {where: param});
+                 }
+             })
+         </script>
+</body>
+</html>
