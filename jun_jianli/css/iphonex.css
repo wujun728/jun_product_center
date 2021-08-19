@@ -1,0 +1,46 @@
+@supports (bottom: constant(safe-area-inset-bottom)) or (bottom: env(safe-area-inset-bottom)) {
+    /*适配万达*/
+    /*.wanda_bottom .container-edit-row .content-top,
+    .wanda_bottom .bottom-buttons,
+    .wanda_bottom #approve-bottombar,
+    .wanda_bottom .public-popup .dialog-btnbottom,
+    .wanda_bottom .bottom-btn,
+    .wanda_bottom .chosen-main, .search-main,
+    .wanda_bottom .bottom-menu{
+        background: green !important;
+        padding-bottom: 57px !important;
+    }
+    .wanda_bottom .chosen-bottombar{
+       bottom: 57px !important;
+    }
+    .wanda_bottom .public-popup .dialog-btnbottom{background-color: transparent; }
+    .wanda_bottom .switchSinglePage.panel .scroll{
+        background: #fff !important;
+    }
+    .wanda_bottom .detail-content{
+        margin-bottom: 57px !important;
+    }*/
+    .content-top,
+    .container-edit-row{z-index: 1;}
+    .container-edit-row .content-top{
+        -webkit-overflow-scrolling: touch;
+    }
+    .watermark-mask,/*水印*/
+    html.of body #container{
+        display: none !important;
+    }
+
+    html.of body{
+        height: 100%;
+    }
+    
+    html.of #vue-edit-table{
+        height: 100%;
+        width: 100%;
+        position: relative;
+    }
+
+    .container-edit-row .cell-row{
+        background: #fcfcfc !important;
+    }
+}
