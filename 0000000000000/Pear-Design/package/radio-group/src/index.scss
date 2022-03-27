@@ -1,9 +1,0 @@
-.radio-group {
-    align-items: center;
-    $base-space: 10px;
-    .radio-item {
-      &:not(:last-child) {
-        margin-right: $base-space;
-      }
-    }
-}

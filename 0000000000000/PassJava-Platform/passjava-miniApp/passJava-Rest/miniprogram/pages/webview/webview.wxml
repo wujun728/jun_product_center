@@ -1,3 +1,0 @@
-<view class='web-wrapper'>
-  <web-view src='{{url}}'></web-view>
-</view>

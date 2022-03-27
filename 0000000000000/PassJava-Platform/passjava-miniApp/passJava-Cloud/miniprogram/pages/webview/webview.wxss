@@ -1,8 +1,0 @@
-.web-wrapper {
-  min-height:100vh;
-}
-
-.web-wrapper .web-image {
-  width: 100%;
-  min-height:100vh;
-}

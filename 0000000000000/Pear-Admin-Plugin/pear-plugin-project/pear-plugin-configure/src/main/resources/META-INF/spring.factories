@@ -1,5 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.pearadmin.plugin.configure.datasource.DataSourceAutoConfiguration,\
-  com.pearadmin.plugin.configure.sequence.SequenceAutoConfiguration,\
-  com.pearadmin.plugin.configure.document.DocumentAutoConfiguration

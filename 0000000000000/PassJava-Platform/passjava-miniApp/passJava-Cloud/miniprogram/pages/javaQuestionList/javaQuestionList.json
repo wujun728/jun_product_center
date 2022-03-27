@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "Java知识点",
-  "navigationBarBackgroundColor": "#ffffff",
-  "navigationBarTextStyle": "black",
-  "usingComponents": {
-    "component-list": "../../components/list/list"
-  }
-}

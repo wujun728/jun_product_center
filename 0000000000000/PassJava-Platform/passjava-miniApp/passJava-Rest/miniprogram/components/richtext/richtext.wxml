@@ -1,3 +1,0 @@
-<view >
-   <rich-text nodes="{{detail}}"> </rich-text>
-</view>

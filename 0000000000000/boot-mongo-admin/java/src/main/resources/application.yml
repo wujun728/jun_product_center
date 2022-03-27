@@ -1,4 +1,0 @@
-#配置读取的环境 
-spring:
-  profiles:
-    active: prod

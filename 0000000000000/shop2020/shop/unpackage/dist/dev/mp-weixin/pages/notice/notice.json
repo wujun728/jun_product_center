@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "通知",
-  "usingComponents": {
-    "uni-load-more": "/components/uni-load-more/uni-load-more"
-  }
-}

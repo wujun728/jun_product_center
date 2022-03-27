@@ -1,9 +1,0 @@
-data:
-  path:
-    config: /home/appdeploy/sanri-test/configs
-    tmp: /tmp
-    libs: /tmp/libs
-logging:
-  path: /tmp/logs
-server:
-  port: 8084

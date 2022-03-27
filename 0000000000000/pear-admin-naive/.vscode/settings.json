@@ -1,7 +1,0 @@
-{
-  "editor.formatOnSave": true,
-  "npm-scripts.showStartNotification": false,
-  "editor.tabSize": 2,
-  "files.autoSave": "afterDelay",
-  "editor.fontSize": 13
-}
