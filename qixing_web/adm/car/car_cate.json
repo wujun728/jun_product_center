@@ -1,0 +1,32 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "宝马X5",
+            "name": "粤A55555",
+            "status": 1,
+            "create_time": 1639900555,
+            "update_time": 0
+        },
+        {
+            "id": 2,
+            "title": "哈弗H6",
+            "name": "粤A66666",
+            "status": 1,
+            "create_time": 1639900666,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "title": "奥迪Q8",
+            "name": "粤A88888",
+            "status": 1,
+            "create_time": 1639900888,
+            "update_time": 0
+        }
+    ]
+}

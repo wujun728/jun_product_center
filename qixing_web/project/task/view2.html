@@ -1,0 +1,406 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<style>
+.hover-view i,.hover-edit i{margin-left:4px; font-weight:800; cursor:pointer; opacity:0}
+.hover-edit.hover-on i{opacity:1}
+.layui-tab-title .layui-this{background-color:#fff;}
+.layui-tab-card,.layui-card{box-shadow:0 0 0 0 rgb(0 0 0 / 10%); border-radius:0; border-top:none;}
+.layui-card-tips {color: #969696;}
+.layui-card-value {padding: 4px 0 16px;font-size: 18px;color: #1E9FFF;}
+
+.content-content{line-height:1.6;}
+.content-content p{margin-bottom:6px;}
+.content-content img{max-width:100%; padding:8px; box-sizing: border-box;}
+
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
+
+.log-item i{font-weight:800; color:#323232}
+.log-content strong{margin:0 4px; color:#323232}
+.layui-unselect dl {max-height:188px;}
+.layui-table-form{margin-top:8px;}
+
+.task-son{padding:3px 0;}
+.task-son .del-son{margin-left:8px; cursor:pointer; display:none;}
+.task-son:hover .del-son{display:inline;}
+</style>
+{/block}
+{block name="body"}
+<div>
+	<div class="p-3 border-b">
+		<h2 class="pb-3 hover-edit">
+			<span class="font20" id="title_{$detail.id}" data-val="">{$detail.title}</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-name="title"></i>
+		</h2>
+		<div>
+			<span class="layui-badge layui-bg-gray">#T{$detail.id}</span>
+			<span class="mx-2">{$detail.admin_name}</span>
+			<span class="gray">创建于{$detail.times}<span id="editTips">{gt name="$detail.update_time" value="0"}，最近更新于 {:time_trans($detail.update_time)}{/gt}</span></span>
+			{eq name="$detail.admin_id" value="$login_admin.id"}
+			<span class="layui-btn layui-btn-xs layui-btn-danger ml-4" id="delBtn"><i class="layui-icon">&#xe640;</i>删除</span>
+			{/eq}
+		</div>
+	</div>
+	<div class="layui-row border-b" style="background-color:#fff;">
+		<div class="layui-col-md9 px-3 py-1 border-r">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">任务负责人</td>
+					<td class="hover-edit"><span id="director_uid_{$detail.id}"
+							data-val="{$detail.director_uid}">{$detail.director_name}</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="director_uid"></i></td>
+					<td class="layui-td-gray">协作人</td>
+					<td class="hover-edit" colspan="5"><span id="assist_admin_ids_{$detail.id}"
+							data-val="{$detail.assist_admin_ids}">{$detail.assist_admin_names}</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="assist_admin_ids"></i></td>
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray-2">计划完成日期</td>
+					<td class="hover-edit"><span id="end_time_{$detail.id}" data-val="">{$detail.end_time|
+							date='Y-m-d'}</span>{gt name="$detail.delay" value="0"}<span class="layui-badge ml-2">逾期
+							{$detail.delay} 天</span>{/gt}<i class="iconfont icon-wodedianping" title="编辑"
+							data-name="end_time"></i></td>
+					<td class="layui-td-gray">预估工时</td>
+					<td class="hover-edit"><span id="plan_hours_{$detail.id}" data-val="">{$detail.plan_hours}</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="plan_hours"></i></td>		
+					<td class="layui-td-gray">工作类型</td>
+					<td class="hover-edit"><span id="cate_{$detail.id}"
+							data-val="{$detail.cate}">{$detail.cate_name}</span><i class="iconfont icon-wodedianping"
+							title="编辑" data-name="cate"></i></td>	
+					<td class="layui-td-gray">优先级</td>
+					<td class="hover-edit"><span class="layui-color-{$detail.priority}" id="priority_{$detail.id}"
+							data-val="{$detail.priority}">{$detail.priority_name}</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="priority"></i>
+					</td>
+				</tr>
+				<tr>	
+					<td class="layui-td-gray-2">实际完成日期</td>
+					<td class="hover-edit">{eq name="$detail.over_time" value="0"}-{else/}{$detail.over_time|date='Y-m-d'}{/eq}</td>	
+					<td class="layui-td-gray">实际工时</td>
+					<td class="hover-edit">{eq name="$detail.work_hours" value="0"}-{else/}{$detail.work_hours}{/eq}
+					</td>	
+					<td class="layui-td-gray">任务状态</td>
+					<td class="hover-edit">
+						<span class="layui-color-{$detail.flow_status}" id="flow_status_{$detail.id}" data-val="{$detail.flow_status}">『{$detail.flow_name}』</span><i class="iconfont icon-wodedianping" title="编辑" data-name="flow_status"></i>
+					</td>					
+					<td class="layui-td-gray">完成进度</td>
+					<td class="hover-edit"><span class="layui-color-{$detail.done_ratio}" id="done_ratio_{$detail.id}" data-val="{$detail.done_ratio}">{$detail.done_ratio}%</span>{neq name="$detail.done_ratio" value="100"}<i class="iconfont icon-wodedianping" title="编辑" data-name="done_ratio"></i>{/neq}
+					</td>						
+				</tr>
+				<tr>
+					<td class="layui-td-gray-2">前置任务</td>
+					<td colspan="7" class="hover-edit">					
+					<span id="project_id_{$detail.id}" data-val="{$detail.before_task}">
+					{gt name="$detail.before_task" value="0"}
+					<span class="layui-badge layui-bg-gray">#T{$detail.before_task}</span><span class="layui-color-{$detail.before_task_flow_status}">『{$detail.before_task_flow_name}』</span><a href="/project/task/view/id/{$detail.before_task}">{$detail.before_task_name}</a>
+					{else/}
+					<span class="gray">未设置</span>{/gt}
+					</span>
+					<i class="iconfont icon-wodedianping" title="编辑" data-name="before_task"></i>
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray-2">子任务<span class="layui-btn layui-btn-xs add-son">+ 新增</span></td>
+					<td colspan="7">					
+						{empty name="$son_task"}
+						<span class="gray">暂无子任务</span>
+						{else/}
+							{volist name="son_task" id="vo"}
+							<p class="task-son"><span class="layui-badge layui-bg-gray">#T{$vo.id}</span><span class="layui-color-{$vo.flow_status}">『{$vo.flow_name}』</span><a href="/project/task/view/id/{$vo.id}">{$vo.title}</a><span class="del-son red" title="取消父子关系" data-id="{$vo.id}">✘</span></p>
+							{/volist}
+						{/empty}
+					</td>
+				</tr>
+			</table>
+			<div class="content hover-edit">
+				<h3 class="py-4">任务描述<i class="iconfont icon-wodedianping" title="编辑" data-name="content"></i></h3>
+				<div class="content-content" id="content_{$detail.id}" data-val="{$detail.content}">{$detail.content|raw}</div>
+			</div>
+			<div class="detail-file">
+				<h3 class="py-4">文件附件 <button type="button" class="layui-btn layui-btn-normal layui-btn-xs" id="uploadBtn" style="font-weight:400;">+ 上传</button></h3>
+				<div class="layui-row pb-2" id="fileBox">
+					{empty name="$file_array"}
+					<div style="line-height:1.5">
+						<div class="layui-data-none">暂无附件文件</div>
+					</div>
+					{/empty}
+					{volist name="$file_array" id="vo"}
+					<div class="layui-col-md6" id="uploadImg{$vo.id}">{:file_card($vo)}</div>
+					{/volist}
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3 p-4">
+			<div class="pb-4 hover-{$role_edit}">
+				<p class="gray mb-2">关联项目</p>
+				<span id="project_id_{$detail.id}" data-val="{$detail.project_id}">
+					{gt name="$detail.project_id" value="0"}{$detail.project_name}{else/}<span class="gray">未设置</span>{/gt}
+				</span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-name="project_id"></i>
+			</div>
+
+			<div class="pb-4 mt-3">
+				<h5 class="mb-1">工作记录<span class="layui-btn layui-btn-xs add-schedule right">+ 工作记录</span></h5>
+				<div id="schedule_{$detail.id}" style="line-height:1.5">
+					<div class="layui-data-none">暂无工作记录</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-tab layui-tab-card" style="margin:0;" lay-filter="docDemoTabBrief">
+		<ul class="layui-tab-title">
+			<li class="layui-this">员工评论({$detail.comments})</li>
+			<li>操作日志({$detail.logs})</li>
+		</ul>
+		<div class="layui-tab-content py-1 px-3" style="background-color:#fff;">
+			<div class="layui-tab-item comment-list layui-show">
+				<div class="comment-input my-2">
+					<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+				</div>
+				<div id="comment_task_{$detail.id}"></div>
+			</div>
+			<div class="layui-tab-item logs-list">
+				<div id="log_task_{$detail.id}"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const admin_id = '{$detail.admin_id}';
+	const detail_id = '{$detail.id}';
+	const moduleInit = ['tool','employeepicker','oaEdit','oaSchedule','oaComment','oaTool'];
+	function gouguInit() {
+		const opsData = {
+			flow_status: [
+				{ 'id': 1, 'title': '未开始' },
+				{ 'id': 2, 'title': '进行中' },
+				{ 'id': 3, 'title': '已完成' },
+				{ 'id': 4, 'title': '不解决' },
+				{ 'id': 5, 'title': '已关闭' }
+			],
+			type: [
+				{ 'id': 1, 'title': '需求' },
+				{ 'id': 2, 'title': '设计' },
+				{ 'id': 3, 'title': '研发' },
+				{ 'id': 4, 'title': '缺陷' }
+			],
+			priority: [
+				{ 'id': 1, 'title': '低' },
+				{ 'id': 2, 'title': '中' },
+				{ 'id': 3, 'title': '高' },
+				{ 'id': 4, 'title': '紧急' }
+			],
+			done_ratio: [
+				{ 'id': 0, 'title': '0%' },
+				{ 'id': 20, 'title': '20%' },
+				{ 'id': 40, 'title': '40%' },
+				{ 'id': 50, 'title': '50%' },
+				{ 'id': 60, 'title': '60%' },
+				{ 'id': 80, 'title': '80%' }
+			]
+		}
+		const edit = layui.oaEdit,work = layui.oaSchedule,comment = layui.oaComment, oaTool = layui.oaTool, tool = layui.tool;
+
+		$('.hover-edit').hover(function () {
+			$(this).addClass('hover-on');
+		}, function () {
+			$(this).removeClass('hover-on');
+		})
+
+		$('.hover-edit').on('click', 'i', function () {
+			let name = $(this).data('name');
+			let show_txt = $('#' + name + '_' + detail_id).text().replace(/[\r\n\t]/g, "");
+			let real_txt = $('#' + name + '_' + detail_id).data('val');
+			if (real_txt === '') {
+				real_txt = show_txt;
+			}
+			editShow(detail_id, name, show_txt, real_txt);
+		})
+
+		$('#delBtn').on('click', function () {
+			layer.confirm('确定要删除该任务吗？请慎重', { icon: 3, title: '提示' }, function (index) {
+				let callback = function (e) {
+					layer.closeAll();
+					layer.msg(e.msg);
+					parent.layui.taskTable.reload();
+					if (e.code == 0) {
+						parent.layui.tool.close(1000);
+					}
+				}
+				let postData = { "id": detail_id };
+				tool.delete("/project/task/delete", postData, callback);
+			});
+		})
+		
+		$('.add-son').on('click', function () {
+			let callback = function(data){
+				if(data.id!=0){
+					tool.post("/project/api/task_add_son", {'pid': detail_id, 'id': data.id}, function(e){
+						layer.msg(e.msg);
+						if(e.code==0){
+							location.reload();
+						}
+					})
+				}
+			}
+			oaTool.taskPicker(callback,{set_pid:detail_id});			
+		});
+		
+		$('.del-son').on('click', function () {
+			let id = $(this).data('id');
+			layer.confirm('确定取消该任务的父子关系吗?', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						location.reload();
+					}
+				}
+				tool.delete("/project/api/task_del_son", {id: id}, callback);
+				layer.close(index);
+			});	
+		});
+
+		oaTool.addFile({
+			type:1,
+			isSave:true,
+			uidDelete:true,
+			colmd:6,
+			ajaxDelete:function(file_id){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {						
+						$('#fileItem' + file_id).remove();
+					}
+				}
+				tool.delete("/project/api/delete_file", {id: file_id}, callback);			
+			},
+			ajaxSave:function(res){
+				let callback = function (e) {
+					location.reload();
+				}
+				tool.post("/project/api/add_file", {'topic_id': detail_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'task' }, callback);
+			}
+		});
+		//工作记录相关
+		work.load(detail_id);
+		$('.add-schedule').on('click', function () {
+			work.add(detail_id,{'id':0});	
+		})
+		
+		//任务日志
+		comment.log(detail_id,'task');
+
+		//评论
+		comment.load(detail_id,'task');
+		$('#commentInput').on('click', function () {
+			comment.textarea(0,detail_id,0,0,'task','');
+		})
+		//回复
+		$('#comment_task_' + detail_id).on('click', '[data-event="replay"]', function () {
+			let pid = $(this).data('id');
+			let padmin_id = $(this).data('uid');
+			comment.textarea(0, detail_id, pid, padmin_id, 'task', '');
+		})
+		//编辑
+		$('#comment_task_' + detail_id).on('click', '[data-event="edit"]', function () {
+			let id = $(this).data('id');
+			let content = $('#comment_' + id).data('content');
+			comment.textarea(id, detail_id, 0, 0, 'task', content);
+		})
+
+		//删除
+		$('#comment_task_' + detail_id).on('click', '[data-event="del"]', function () {
+			let id = $(this).data('id');
+			comment.del(id, detail_id, 'task');
+		})
+
+		let loading = false;
+		let editPost = function (id, name, show_val, real_val) {
+			let callback = function (e) {
+				layer.closeAll();
+				if (e.code == 0) {
+					setTimeout(function () {
+						location.reload();
+					}, 400)
+					if (parent.layui.taskTable) {
+						parent.layui.taskTable.reload();
+					}
+				}
+				else {
+					layer.msg(e.msg);
+				}
+			}
+			let postData = { id: id };
+			postData[name] = real_val;
+			tool.post("/project/task/add", postData, callback);
+		}
+
+		function editShow(id, name, show_txt, real_txt) {
+			if (loading == true) {
+				return false;
+			}
+			if (name == "title" || name == "plan_hours") {
+				edit.text(id, name, real_txt, editPost);
+			}
+			if (name == "end_time") {
+				if (admin_id == login_admin) {
+					edit.date(id, name, real_txt, editPost);
+				} else {
+					layer.msg('您没权限修改，请联系创建人修改');
+				}
+			}
+			if (name == "director_uid") {
+				edit.employee_one(id, name, show_txt, real_txt, editPost);
+			}
+			if (name == "assist_admin_ids") {
+				edit.employee_more(id, name, show_txt, real_txt, editPost);
+			}
+			if (name == "flow_status" || name == "priority" || name == "done_ratio" || name == "type") {
+				edit.dropdown(id, name, real_txt, opsData[name], editPost);
+			}
+			if (name == "cate") {
+				loading = true;
+				tool.get("/api/index/get_work_cate", {}, function (res) {
+					let data = res.data;
+					loading = false;
+					edit.dropdown(id, name, real_txt, data, editPost, 0);
+				});
+			}
+			if (name == "project_id") {
+				if (admin_id == login_admin) {
+					edit.select_table(id, name, real_txt, editPost, 1);
+				} else {
+					layer.msg('您没权限修改，请联系创建人或负责人修改');
+				}
+			}
+			if (name == "before_task") {
+				if (admin_id == login_admin) {
+					edit.select_task(id, name, real_txt, editPost, 1);
+				} else {
+					layer.msg('您没权限修改，请联系创建人或负责人修改');
+				}
+			}
+			if (name == "content") {
+				edit.editor(id, name, real_txt, editPost);
+			}
+		}
+	}
+</script>
+{/block}

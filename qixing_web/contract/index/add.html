@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/static/assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">新增合同</h3>
+    <table class="layui-table layui-table-form">
+		      <tr>
+        <td class="layui-td-gray">合同名称<font>*</font></td>
+        <td colspan="3"><input type="text" name="name" lay-verify="required" lay-reqText="请输入合同名称" autocomplete="off" placeholder="请输入合同名称" class="layui-input"></td>
+		<td class="layui-td-gray">合同性质</td>
+        <td>
+			<input type="hidden" name="type" value="1">
+			普通合同        </td>
+      </tr>
+      <tr>
+        <td class="layui-td-gray">签约主体<span style="font-size:12px;">(乙方)</span><font>*</font></td>
+        <td>
+          <select name="subject_id" lay-verify="required" lay-reqText="请选择签约主体公司">
+            <option value="">请选择签约主体公司</option>
+                        <option value="1">勾股信息科技有限公司</option>
+                      </select>
+        </td>
+        <td class="layui-td-gray">合同编号<font>*</font></td>
+        <td>
+          <input type="text" name="code" value="12024011518162068" autocomplete="off" readonly lay-verify="required" lay-reqText="请输入合同编号" placeholder="请输入合同编号" class="layui-input">
+        </td>
+	    <td class="layui-td-gray">合同类别<font>*</font></td>
+        <td>
+          <select name="cate_id" lay-verify="required" lay-reqText="请选择合同类别">
+            <option value="">请选择合同类别</option>
+                        <option value="47">嘻嘻嘻</option>
+                        <option value="46">..</option>
+                        <option value="45">111</option>
+                        <option value="44">23</option>
+                        <option value="43">1111</option>
+                        <option value="42">qq12</option>
+                        <option value="41">55</option>
+                        <option value="40">kkk1111111111</option>
+                        <option value="39">aaa</option>
+                        <option value="38">	 销售合同</option>
+                        <option value="37">12</option>
+                        <option value="35">AD</option>
+                        <option value="32">25464</option>
+                        <option value="31">11</option>
+                        <option value="30">威威</option>
+                        <option value="29">普通合同</option>
+                        <option value="28">普通</option>
+                        <option value="27">lll</option>
+                        <option value="26">买卖合同</option>
+                        <option value="25">测试类别1</option>
+                        <option value="23">啊啊啊协议</option>
+                        <option value="21">k;lk;</option>
+                        <option value="20">劳动合同</option>
+                        <option value="15">222</option>
+                        <option value="14">房孺复</option>
+                        <option value="13">是</option>
+                        <option value="12">测试</option>
+                        <option value="11">测试合同</option>
+                        <option value="10">22</option>
+                        <option value="9">应酬合同</option>
+                        <option value="8">发票合同</option>
+                        <option value="7">123</option>
+                        <option value="6">其他合同</option>
+                        <option value="5">代理协议</option>
+                        <option value="4">委托协议</option>
+                        <option value="3">租赁合同</option>
+                        <option value="2">采购合同</option>
+                        <option value="1">销售合同12</option>
+                      </select>
+        </td>
+      </tr>
+	  <tr>
+        <td class="layui-td-gray">客户名称<span style="font-size:12px;">(甲方)</span><font>*</font></td>
+        <td>
+							<input type="text" name="customer" autocomplete="off" readonly lay-verify="required" lay-reqText="请输入客户名称" placeholder="请输入客户名称" class="layui-input customer-picker">
+				
+								<input type="hidden" name="customer_id" value="0">
+						
+        </td>
+        <td class="layui-td-gray">签约客户代表<font>*</font></td>
+        <td>
+          <input type="text" name="customer_name" autocomplete="off" lay-verify="required" lay-reqText="请输入客户代表姓名" placeholder="请输入客户代表姓名" class="layui-input">
+        </td>
+		<td class="layui-td-gray">客户联系电话<font>*</font></td>
+        <td>
+			<input type="text" name="customer_mobile" autocomplete="off" lay-verify="required" lay-reqText="请输入客户联系电话" placeholder="请输入客户联系电话" class="layui-input">
+        </td>
+      </tr>
+	   <tr>
+        <td class="layui-td-gray-2">客户联系地址</td>
+        <td  colspan="3">
+          <input type="text" name="customer_address" autocomplete="off" placeholder="请输入客户联系地址" class="layui-input">
+        </td>
+        <td class="layui-td-gray-2">合同始止日期<font>*</font></td>
+        <td>
+			<div id="barDate" class="layui-input-inline">
+				<div class="layui-input-inline" style="width:110px; margin-bottom:0">
+					<input type="text" class="layui-input" id="start_time" placeholder="选择时间区间" readonly name="start_time" lay-verify="required" lay-reqText="请选择合同开始时间">
+				</div>
+				~
+				<div class="layui-input-inline" style="width:110px;margin-bottom:0">
+					<input type="text" class="layui-input" id="end_time" placeholder="选择时间区间" readonly name="end_time" lay-verify="required" lay-reqText="请选择合同结束时间">
+				</div>
+			</div>
+        </td>
+      </tr>
+	        <tr>
+        <td class="layui-td-gray">合同金额<font>*</font></td>
+        <td>
+           <input type="text" name="cost" value=""  lay-verify="required|number" lay-reqText="请输入合同金额，数字" placeholder="请输入合同金额，数字" autocomplete="off" class="layui-input">
+        </td>
+        <td class="layui-td-gray">是否含税</td>
+        <td>
+          <input type="radio" name="is_tax" value="1" title="是" checked lay-filter="tax">
+          <input type="radio" name="is_tax" value="0" title="否" lay-filter="tax">
+        </td>
+        <td class="layui-td-gray">税点(百分比)</td>
+        <td>
+          <input type="text" name="tax" value="" lay-verify="number" placeholder="请输入税点，数字" autocomplete="off" class="layui-input">
+        </td>
+      </tr>
+	  	  <tr>
+		<td colspan="6"><strong>签订信息</strong></td>
+	  </tr>
+	  <tr>
+        <td class="layui-td-gray-2">合同签订人<font>*</font></td>
+        <td>
+			<div class="layui-input-inline" style="width:50%;">
+			  <input type="text" name="sign_name" autocomplete="off" readonly lay-verify="required" lay-reqText="请选择合同签订人" placeholder="请选择合同签订人" class="layui-input">
+			</div>
+			<div class="layui-input-inline gray" style="width:42%;" id="sign_department"></div>
+			<input type="hidden" name="sign_uid">
+			<input type="hidden" name="sign_did">
+        </td>
+		<td class="layui-td-gray-2">合同签订时间<font>*</font></td>
+        <td>
+			<input type="text" name="sign_time" readonly lay-verify="required" lay-reqText="请选择合同签订日期" placeholder="请选择合同签订日期" class="layui-input tool-time">
+        </td>
+        <td class="layui-td-gray-2">合同制定人<font>*</font></td>
+        <td>
+          <input type="text" name="prepared_name" autocomplete="off" readonly placeholder="请选择合同制定人" class="layui-input picker-one">
+		  <input type="hidden" name="prepared_uid" lay-verify="required" lay-reqText="请选择合同制定人">
+        </td>
+      </tr>
+	  <tr>
+        <td class="layui-td-gray-2">合同保管人<font>*</font></td>
+        <td>
+          <input type="text" name="keeper_name" autocomplete="off" readonly placeholder="请选择合同保管人" class="layui-input picker-one">
+		  <input type="hidden" name="keeper_uid" lay-verify="required" lay-reqText="请选择合同保管人">
+        </td>
+		<td class="layui-td-gray">合同共享人员</td>
+        <td colspan="3">
+			<input type="text" name="share_names" autocomplete="off" readonly placeholder="请选择共享人员" class="layui-input picker-more">
+			<input type="hidden" name="share_ids">
+        </td>
+      </tr>
+	   <tr>
+		<td colspan="6"><strong>相关附件</strong></td>
+	  </tr>
+      <tr>
+		<td class="layui-td-gray">
+			<button type="button" class="layui-btn layui-btn-sm" id="uploadBtn"><i class="layui-icon"></i>附件上传</button>
+		</td>
+		<td colspan="5" style="line-height:inherit">
+			<div class="layui-row" id="fileBox">
+				<input type="hidden" id="fileBoxInput" data-type="file" name="file_ids" value="">
+			</div>
+		</td>
+      </tr>
+	  <tr>
+		<td colspan="6"><strong>备注信息</strong></td>
+	  </tr>
+      <tr>
+        <td colspan="6">
+          <textarea name="remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+        </td>
+      </tr>
+    </table>
+    <div class="py-3">
+	   <input type="hidden" name="scene" value="add">
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','employeepicker','oaTool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,table = layui.table,laydate = layui.laydate,oaTool = layui.oaTool, employeepicker = layui.employeepicker;
+		//日期范围
+		laydate.render({
+			elem: '#barDate',
+			range: ['#start_time', '#end_time']
+		});
+		
+		//相关附件上传
+		oaTool.addFile();
+		
+		//选择关联的客户	
+		$('.customer-picker').on('click', function () {
+			let that = $(this);
+			let callback = function(data){
+				$('[name="customer_id"]').val(data.id);
+				$('[name="customer"]').val(data.name);
+				$('[name="customer_name"]').val(data.contact_name);
+				$('[name="customer_mobile"]').val(data.contact_mobile);
+				$('[name="customer_address"]').val(data.address);
+			}
+			oaTool.customerPicker(callback);
+		});
+		
+		//选择合同签订人弹窗	
+		$('body').on('click','[name="sign_name"]',function () {
+			var ids=$('[name="sign_uid"]').val(),names=$('[name="sign_name"]').val();
+			employeepicker.init({
+				ids:ids,
+				names:names,
+				type:0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				callback:function(ids,names,dids,departments){
+					$('[name="sign_uid"]').val(ids);
+					$('[name="sign_name"]').val(names);
+					$('[name="sign_did"]').val(dids);
+					$('#sign_department').html('部门：'+departments);
+				}
+			});
+		});
+		
+		//radio选择
+		form.on('radio(tax)', function(data){
+			if(data.value == 0){
+				$('[name="tax"]').val('0').hide();
+			}else{
+				$('[name="tax"]').val('').show();
+			}
+		});
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			if (data.field.type == 1 && data.field.cost == '') {
+				layer.msg('请完善合同金额');
+				return false;
+			}
+			if (data.field.is_tax == 1 && data.field.tax == '') {
+				layer.msg('请完善税点');
+				return false;
+			}
+			if (data.field.is_tax == 1 && data.field.cost == '') {
+				layer.msg('请完善金额');
+				return false;
+			}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/contract/index/add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

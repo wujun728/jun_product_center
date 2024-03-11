@@ -1,0 +1,37 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 0,
+    "data": [
+        {
+            "id": 1,
+            "title": "超级岗位",
+            "work_price": 1000,
+            "remark": "超级岗位，不能轻易修改权限",
+            "status": 1,
+            "create_time": 0,
+            "update_time": 0,
+            "groupName": "超级员工权限"
+        },
+        {
+            "id": 2,
+            "title": "总经理",
+            "work_price": 1000,
+            "remark": "总经理",
+            "status": 1,
+            "create_time": 0,
+            "update_time": 0,
+            "groupName": "总经理权限"
+        },
+        {
+            "id": 3,
+            "title": "普通员工",
+            "work_price": 500,
+            "remark": "普通员工",
+            "status": 1,
+            "create_time": 0,
+            "update_time": 0,
+            "groupName": "普通员工权限"
+        }
+    ]
+}

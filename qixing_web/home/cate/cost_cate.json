@@ -1,0 +1,57 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "差旅费",
+            "status": 1,
+            "create_time": 1639898199,
+            "update_time": 1685761005
+        },
+        {
+            "id": 2,
+            "title": "办公费",
+            "status": 1,
+            "create_time": 1639898434,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "title": "招待费",
+            "status": 1,
+            "create_time": 1639898564,
+            "update_time": 0
+        },
+        {
+            "id": 4,
+            "title": "交通费",
+            "status": 1,
+            "create_time": 1639898564,
+            "update_time": 0
+        },
+        {
+            "id": 5,
+            "title": "通讯费",
+            "status": 1,
+            "create_time": 1639898564,
+            "update_time": 0
+        },
+        {
+            "id": 6,
+            "title": "采购付款",
+            "status": 1,
+            "create_time": 1639898564,
+            "update_time": 0
+        },
+        {
+            "id": 7,
+            "title": "其他",
+            "status": 1,
+            "create_time": 1639898564,
+            "update_time": 0
+        }
+    ]
+}

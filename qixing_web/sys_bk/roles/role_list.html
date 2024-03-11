@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+ 
+      <!-- <link rel="stylesheet" href="/layui/css/layui.css"> 
+     <link rel="stylesheet" href="/css/custom.form.css">  -->
+</head>
+<body>
+<div class="panel panel-default operation_role" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="deptInfo" style="width: 700px;margin-top: 10px">
+            <input name="id" hidden/>
+            <input name="pid" hidden/>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">角色名称</label>
+                <div class="layui-input-block">
+                    <input type="name" name="name" placeholder="请输入角色名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-form-label ">备注</div>
+                <div class="layui-input-block">
+                    <input type="description" name="description" placeholder="请输入备注信息" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="status" lay-skin="switch" lay-filter="switch" lay-text="启用|禁用" checked>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">请选择权限</label>
+            </div>
+            <div class="layui-form-item" >
+                <div class="layui-tree">
+                    <div id="permissionTree"></div>
+                </div>
+            </div>
+            <div class="form-group-bottom text-right">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+                    <button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="panel panel-default operation_role_dataScope" hidden>
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="deptInfo" style="width: 700px;margin-top: 10px">
+            <input name="roleId" hidden/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">数据范围</label>
+                <div class="layui-input-block">
+                    <input id="dataScope" name="dataScope" hidden/>
+                    <select id="dataScopeS" name="dataScopeS" lay-filter="select-datascope">
+                        <option value="">请选择</option>
+                        <option value="1">所有</option>
+                        <option value="2">自定义部门</option>
+                        <option value="3">本部门及以下部门</option>
+                        <option value="4">本部门</option>
+                        <option value="5">自己</option>
+                    </select>
+                </div>
+            </div>
+            <div id="choose-dept" hidden>
+                <div class="layui-form-item" style="margin-left: 40px;">
+                    <div class="layui-tree">
+                        <div id="deptTree"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit_datascope">保存</button>
+                    <button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="role_table_div">
+    <div id="searchParam" shiro:hasPermission="sys:role:list">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" id="roleName" class="layui-input" autocomplete="off" placeholder="请输入角色名称">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" readonly class="layui-input" id="createTime" placeholder="创建时间">
+            </div>
+            <div class="layui-input-inline layui-form">
+                <select id="status">
+                    <option value="">请选择角色状态</option>
+                    <option value="1">正常</option>
+                    <option value="0">弃用</option>
+                </select>
+            </div>
+            <div class="layui-input-inline ">
+                <button class="layui-btn" onclick="search()" id="search">查询</button>
+            </div>
+        </div>
+
+    </div>
+    <table class="layui-hide" id="role_table" lay-filter="role_table"></table>
+</div>
+</body>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="addNewRole" shiro:hasPermission="sys:role:add">添加</button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="sys:role:update">编辑</a>
+    <a class="layui-btn layui-btn-xs" lay-event="dataScope" shiro:hasPermission="sys:role:bindDept">数据权限</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:role:deleted">删除</a>
+</script>
+<!-- js部分 -->
+<!--
+    <script type="text/javascript" src="../../assets/js/common.js"></script>
+-->
+<script type="text/javascript" src="../../assets/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="../../assets/js/core.util.js"></script>
+<!-- <script src="/js/core.util.js"></script>
+<script src="/layui/layui.all.js"></script> -->
+
+<link rel="stylesheet" href="../../assets/module/admin.css"/>
+<script src="../../assets/module/admin.js"></script>
+
+
+<script>
+    //获取token
+    var token = CoreUtil.getData("access_token");
+    //地址栏转义token中的#号
+    var tokenQuery = token.replace("#", "%23");
+    var tableIns1;
+    var table = layui.table;
+    var form = layui.form;
+    var layer = layui.layer;
+    var $ = jQuery = layui.jquery;
+    var laydate = layui.laydate;
+    var tree = layui.tree;
+    var startTime = null;
+    var endTime = null;
+    layui.config({
+        base: '../../assets/module/'
+    }).extend({
+        eleTree: 'eleTree/eleTree'
+    }).use(['table', 'laypage', 'layer', 'laydate', 'tree', 'eleTree'], function () {
+        var eleTree = layui.eleTree;
+        tableIns1 = table.render({
+            elem: '#role_table'
+            , contentType: 'application/json'
+            , headers: {"authorization": token}
+            , page: true //开启分页
+            , url: '/api/sys/roles' //数据接口
+            , method: 'POST'
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+                    "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+                }
+            }
+            , cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
+                    {field: 'name', title: '角色名称', width: 200},
+                    {field: 'createTime', title: '创建时间', minWidth: 120},
+                    {field: 'updateTime', title: '更新时间', minWidth: 120},
+                    {
+                        field: 'status', title: '状态', width: 100, templet: function (item) {
+                            if (item.status === 1) {
+                                return '  <input type="checkbox" lay-skin="switch" lay-text="正常|弃用" checked disabled>';
+                            }
+                            if (item.status === 0) {
+                                return '  <input type="checkbox" lay-skin="switch" lay-text="正常|弃用" disabled>';
+                            }
+                        }
+                    },
+                    {field: 'description', title: '描述', width: 300},
+                    {title: '操作', width: 250, toolbar: '#tool'}
+                ]
+            ]
+            , toolbar: '#toolbar'
+        });
+
+
+        laydate.render({
+            elem: '#createTime'
+            , type: 'datetime'
+            , range: '~'
+            , done: function (value, date, endDate) {
+                if (value != null && value != undefined && value != "") {
+                    startTime = value.split("~")[0];
+                    endTime = value.split("~")[1];
+                } else {
+                    startTime = null;
+                    endTime = null;
+                }
+
+            }
+        });
+        table.on('toolbar(role_table)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'addNewRole':
+                    //隐藏表格
+                    $(".role_table_div").hide();
+                    //显示编辑窗口
+                    $(".operation_role").show();
+                    $(".title").html("新增角色");
+                    $(".operation_role input[name=id]").val("");
+                    $(".operation_role input[name=pid]").val("");
+                    $(".operation_role input[name=name]").val("");
+                    $(".operation_role input[name=description]").val("");
+                    $(".operation_role input[name=status]").attr('checked', 'checked');
+                    $(".operation_role input[name=status]").attr('type', 'hidden').val(1);
+                    var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                    x[0].setAttribute("class", "layui-unselect layui-form-switch layui-form-onswitch");
+                    var d = document.getElementsByTagName('em')[0];
+                    d.firstChild.nodeValue = '启用';
+                    form.render(); //更新全部
+                    initTree();
+                    break;
+            }
+        });
+        table.on('tool(role_table)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'del':
+                    tipDialog(data.id);
+                    break;
+                case 'edit':
+                    $(".role_table_div").hide();
+                    //显示编辑窗口
+                    $(".operation_role").show();
+                    $(".title").html("编辑角色");
+                    getRoleDetail(data.id);
+                    break;
+                case 'dataScope':
+                    $(".role_table_div").hide();
+                    //显示编辑窗口
+                    $(".operation_role").hide();
+                    $(".operation_role_dataScope").show();
+
+                    $(".title").html("数据权限");
+                    getRoleDetail(data.id);
+                    break;
+            }
+        });
+        var getRoleDetail = function (id) {
+            CoreUtil.sendGet("/api/sys/role/" + id, null, function (res) {
+                $(".operation_role input[name=id]").val(res.data.id);
+                $(".operation_role input[name=pid]").val(res.data.pid);
+                $(".operation_role input[name=name]").val(res.data.name);
+                $(".operation_role input[name=description]").val(res.data.description);
+                if (res.data.status == 1) {
+                    $(".operation_role input[name=status]").attr('checked', 'checked');
+                    $(".operation_role input[name=status]").attr('type', 'hidden').val(1);
+                    var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                    x[0].setAttribute("class", "layui-unselect layui-form-switch layui-form-onswitch");
+                    var d = document.getElementsByTagName('em')[0];
+                    d.firstChild.nodeValue = '启用';
+                } else {
+                    $(".operation_role input[name=status]").attr('type', 'hidden').removeAttr("checked").val(0);
+                    var x = document.getElementsByClassName("layui-unselect layui-form-switch");
+                    x[0].setAttribute("class", "layui-unselect layui-form-switch");
+                    var d = document.getElementsByTagName('em')[0];
+                    d.firstChild.nodeValue = '禁用';
+                }
+                $(".operation_role_dataScope input[name=roleId]").val(res.data.id);
+                if (!CoreUtil.isEmpty(res.data.dataScope)) {
+                    $("#dataScopeS").find('option[value="' + res.data.dataScope + '"]').prop('selected', true);
+                    $("#dataScope").val(res.data.dataScope)
+                    if (res.data.dataScope == "2") {
+                        $("#choose-dept").show();
+                    }
+                } else {
+                    $("#dataScopeS option:first").prop("selected", 'selected');
+                }
+                loadPermissionTree(res.data.permissionRespNodes);
+                loadDeptTree(res.data.deptRespNodes);
+                form.render(); //更新全部
+
+            });
+        }
+        var initTree = function () {
+            CoreUtil.sendGet("/api/sys/permission/tree/all", null, function (res) {
+                loadPermissionTree(res.data);
+            });
+        };
+        var loadPermissionTree = function (data) {
+            tree.render({
+                elem: '#permissionTree'
+                , data: data
+                , onlyIconControl: true  //是否仅允许节点左侧图标控制展开收缩
+                , showCheckbox: true  //是否显示复选框
+                , id: 'permissionIds'
+                , accordion: false
+                , click: function (obj) {
+                    selectNode = obj;
+                    layer.msg(JSON.stringify(selectNode.data.title));
+                }
+            });
+        };
+        var el;
+        var loadDeptTree = function (data) {
+            $("#deptTree").html("");
+            el = eleTree({
+                el: '#deptTree',
+                data: data,
+                highlightCurrent: true,
+                showCheckbox: true,
+                isDefaultChangePstatus: true,
+                checkStrictly: true,
+                draggable: true,
+                defaultExpandAll: true
+            })
+        };
+        form.on('switch(switch)', function () {
+            $(".operation_role input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 0);
+
+        });
+        $("#btn_cancel").click(function () {
+            $(".role_table_div").show();
+            $(".operation_role").hide();
+            $(".operation_role_dataScope").hide();
+            return false;
+        });
+
+        form.on('select(select-datascope)', function (data) {
+            $("#dataScope").val(data.value)
+            if (data.value == "2") {
+                $("#choose-dept").show();
+            } else {
+                $("#choose-dept").hide();
+            }
+        });
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            var permissionIds = [];
+            var brchArrays = tree.getChecked('permissionIds');
+            var params = {
+                id: data.field.id,
+                name: data.field.name,
+                description: data.field.description,
+                status: data.field.status,
+                permissions: getPermissionIds(brchArrays, permissionIds)
+            }
+            if (data.field.id === undefined || data.field.id === null || data.field.id === "") {
+                CoreUtil.sendPost("/api/sys/role", params, function (res) {
+                    $(".role_table_div").show();
+                    $(".operation_role").hide();
+                    $(".operation_role_dataScope").hide();
+                    search();
+                });
+            } else {
+                CoreUtil.sendPut("/api/sys/role", params, function (res) {
+                    //显示表格
+                    $(".role_table_div").show();
+                    //隐藏编辑窗口
+                    $(".operation_role").hide();
+                    $(".operation_role_dataScope").hide();
+                    search();
+                });
+            }
+
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(submit_datascope)', function (data) {
+
+            if (CoreUtil.isEmpty($("#dataScope").val())) {
+                layer.msg("请选择数据范围");
+                return false;
+            }
+            var deptIds = [];
+            var brchArrays = el.getChecked();
+            if (brchArrays == undefined || brchArrays == null || !brchArrays instanceof Object) {
+                return false;
+            }
+            for (var i = 0; i < brchArrays.length; i++) {
+                deptIds.push(brchArrays[i].id);
+            }
+            var params = {
+                id: $(".operation_role_dataScope input[name=roleId]").val(),
+                dataScope: $("#dataScope").val(),
+                depts: deptIds
+            }
+            CoreUtil.sendPost("/api/sys/role/bindDept", params, function (res) {
+                //显示表格
+                $(".role_table_div").show();
+                //隐藏编辑窗口
+                $(".operation_role").hide();
+                $(".operation_role_dataScope").hide();
+                search();
+            });
+
+            return false;
+        });
+        var tipDialog = function (id) {
+            layer.open({
+                content: '确定要删除么',
+                skin: 'layui-layer-admin',
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendDelete("/api/sys/role/" + id, null, function (res) {
+                        layer.msg(res.msg);
+                        search();
+                    });
+                }
+            });
+        }
+    });
+
+    function getPermissionIds(jsonObj, permissionIds) {
+        if (jsonObj == undefined || jsonObj == null || !jsonObj instanceof Object) {
+            return null;
+        }
+        for (var i = 0; i < jsonObj.length; i++) {
+            permissionIds.push(jsonObj[i].id);
+            getPermissionIds(jsonObj[i].children, permissionIds);
+        }
+        return permissionIds;
+    }
+
+    function getDeptIds(jsonObj, deptIds) {
+        if (jsonObj == undefined || jsonObj == null || !jsonObj instanceof Object) {
+            return null;
+        }
+        for (var i = 0; i < jsonObj.length; i++) {
+            deptIds.push(jsonObj[i].id);
+            getDeptIds(jsonObj[i].children, deptIds);
+        }
+        return deptIds;
+    }
+
+    //执行查询
+    function search() {
+        //这里以搜索为例
+        tableIns1.reload({
+            where: { //设定异步数据接口的额外参数，任意设
+                name: $("#roleName").val(),
+                status: $("#status").val(),
+                startTime: startTime,
+                endTime: endTime,
+
+            }
+            , page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    };
+</script>
+</html>

@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "id": 1,
+        "title": "11",
+        "type": "2",
+        "cid": 0,
+        "cmid": 0,
+        "ptid": 0,
+        "admin_id": 1,
+        "did": 1,
+        "start_time": "2024-01-18 09:00",
+        "end_time": "2024-01-25 00:00",
+        "remind_type": 0,
+        "remind_time": "-",
+        "remark": "111",
+        "delete_time": 0,
+        "create_time": "2024-01-18 11:15:09",
+        "update_time": 0,
+        "start_time_a": "2024-01-18",
+        "end_time_a": "2024-01-25",
+        "start_time_b": "09:00",
+        "end_time_b": "00:00",
+        "user": "超级员工"
+    }
+}

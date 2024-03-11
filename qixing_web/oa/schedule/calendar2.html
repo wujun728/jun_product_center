@@ -1,0 +1,226 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<link rel="stylesheet" href="{__GOUGU__}/third_party/fullcalendar/main.min.css"/>
+<style>
+.main-body{background-color:#fff;}
+#calendar {width: 100%;margin: 0 auto;
+-moz-user-select: none; /*火狐*/
+-webkit-user-select: none; /*webkit浏览器*/
+-ms-user-select: none; /*IE10*/
+-khtml-user-select: none; /*早期浏览器*/
+user-select: none;}
+.fc .fc-toolbar.fc-header-toolbar{margin-bottom:0;border:1px solid #ddd; border-bottom:none;padding:15px 12px;background-color:#fafafa;}
+.fc-col-header{background-color:#fafafa;}
+.fc .fc-button-primary {
+    color: #fff;
+    background-color: #1E9FFF;
+    border-color: #1E9FFF;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active, .fc .fc-button-primary:not(:disabled):active {
+    color: #fff;
+    background-color: #FBBC05;
+    border-color: #FBBC05;
+}
+.fc .fc-button-primary:focus, .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus {
+	box-shadow: 0 0 0 0;
+}
+.fc .fc-button-primary:hover{color:#fff; background-color:#52B5FF; border-color:#52B5FF;}
+.fc-daygrid-event-harness{cursor:pointer;}
+.fc .fc-daygrid-week-number{font-size:12px;}
+/*今天背景色和字体颜色 */
+.fc .fc-daygrid-day.fc-day-today .fc-event-title,.fc .fc-daygrid-day.fc-day-today .fc-event-time,.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number{
+	font-weight:800;
+	color:#FF5722;
+}
+/*星期六,星期天背景色和字体颜色
+.fc-day-sat,.fc-day-sun{
+    background-color: #fafafa;
+}
+*/
+.fc-h-event .fc-event-main{color:#333}
+
+.calendar-select{width:100px; height:38px; position:absolute; top:27px; right:255px; z-index:100;}
+.calendar-select .layui-input{height: 36px; line-height: 1.2;}
+.layui-tags-span {padding: 3px 6px;font-size: 12px; background-color:#fff; border-radius: 3px; margin:2px 0; margin-right: 5px; border: 1px solid #e6e6e6; display: inline-block;}
+.layui-layer-content .layui-table-view .layui-table td,.layui-layer-content .layui-table-view .layui-table th{padding:1px 0;}
+.layui-unselect dl {max-height:188px;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<script src="{__GOUGU__}/third_party/fullcalendar/main.min.js"></script>
+<div class="p-3">
+	<div id="calendar"></div>
+	<div class="calendar-select">
+		<div class="layui-input-inline" style="width: 90px;"><input type="text" placeholder="请选择员工" class="layui-input" data-event="select" autocomplete="off"/></div>		
+	</div>
+</div>
+<!-- /主体 -->
+{/block}
+<!-- 脚本 -->
+{block name="script"}
+<script type="text/javascript">
+	var uid=0;	
+	function addZero(num){
+		if(num<10){
+			num='0'+num;
+		}
+		return num;
+	}
+	const moduleInit = ['tool','employeepicker','oaSchedule'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool, employeepicker = layui.employeepicker,laydate = layui.laydate,work = layui.oaSchedule;
+		
+		// 选择员工
+		$('body').on('click','[data-event="select"]',function(){
+			var that = $(this);
+			var names = that.val(), ids = $('[name="uid"]').val();
+			employeepicker.init({
+				ids: ids,
+				names: names,
+				type: 0,
+				department_url: '/api/index/get_department_tree',
+				employee_url: '/api/index/get_employee',
+				callback: function (ids, names, dids, departments) {
+					uid = ids;
+					that.val(names);
+					calendar.refetchEvents({
+						url: '/oa/schedule/index?uid='+uid
+					});
+				}
+			})
+		});
+		
+		//请求事件api数据
+		function eventApi(id){
+			if(id==0){
+				return false;
+			}
+			$.ajax({
+				url: "/oa/schedule/detail",
+				type:'post',
+				data:{id:id},
+				success:function(res){					
+					detail=res.data;
+					work.view(detail);
+				}
+			});	
+		}
+
+
+		//日历
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			views: {
+				dayGrid: {
+					viewDidMount:function(arg){
+						calendar.setOption('height', window.innerHeight-30);
+					}
+				},
+				timeGrid: {
+					viewDidMount:function(arg){
+						calendar.setOption('height', 'auto');
+					}
+				},
+				week: {
+					viewDidMount:function(arg){
+						calendar.setOption('height', 'auto');
+					}
+				},
+				day: {
+					viewDidMount:function(arg){
+						calendar.setOption('height', 'auto');
+					}
+				}
+			},
+			//initialDate: '2020-09-12',//默认显示日期
+			initialView: 'dayGridMonth',//默认显示月视图
+			customButtons: {
+				clear: {
+					text: '清空员工', click: function () {
+						uid = 0;
+						$('[data-event="select"]').val('');
+						calendar.refetchEvents({
+							url: '/oa/schedule/index?uid='+uid
+						});
+					}
+				}
+            },
+			headerToolbar: {
+				left: 'prev,next',
+				center: 'title',
+				right: 'clear dayGridMonth,timeGridWeek,listWeek'
+			},
+			height: 'auto',//自动高度
+			navLinks: true, // can click day/week names to navigate views
+			editable: false,//确定是否可以拖拉调整日历事件的时间。
+			selectable: false,//拖拉选择日期
+			selectMirror: false,//是否在用户拖动时绘制"占位符"事件。
+			dateClick: function(arg) {
+				console.log(arg);
+				var dateStr	= arg.date.getFullYear()+'-'+addZero(arg.date.getMonth()+1)+'-'+addZero(arg.date.getDate());			
+				var detail={};
+				detail['id']=0;
+				detail['title']='';
+				detail['labor_type']=0;
+				detail['start_time_a']=dateStr;
+				detail['end_time_a']=dateStr;		
+				detail['start_time_b']='09:00';
+				detail['end_time_b']='09:30';		
+				detail['remark']='';
+				detail['type']=0;
+				detail['remind_type']=0;
+				//console.log(detail);	
+				work.add(0, detail);	
+			},
+			nowIndicator: true,
+			weekNumbers: true,// 是否开启周数
+			firstDay: 1,
+			displayEventEnd: false, //所有视图显示结束时间
+			eventTimeFormat: { // like '14:30:00'
+				hour: '2-digit',
+				minute: '2-digit',
+				//second: '2-digit',
+				meridiem: false,
+				hour12: false //设置时间为24小时
+			},
+			locale: 'zh-cn',//语言
+			buttonText: {
+				//按钮文本
+				today: '今天',
+				month: '月',
+				week: '周',
+				day: '日',
+				list: '记录列表',
+			},
+			weekText: '周',
+			allDayText: '全天',
+			moreLinkText: function(n) {
+				return '另外 ' + n + ' 个'
+			},
+			noEventsText: '没有事件显示',
+			events: function(fetchInfo, successCallback, failureCallback ){
+				$.ajax({
+					type:"POST",
+					url: "/oa/schedule/calendar",
+					dataType:"json",
+					data:{start:fetchInfo.startStr,end:fetchInfo.endStr,uid:uid},
+					success:function(result){
+						//console.info(result);
+						successCallback(result);
+					},
+					error:function(){
+						failureCallback();
+					}
+				})
+			},
+			eventClick: function(info) {
+				//console.log(info.event);
+				eventApi(info.event.id);
+			}
+		});
+		calendar.render();
+	}
+	</script>
+{/block}
+<!-- /脚本 -->
