@@ -13,7 +13,7 @@
         <dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-common</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.12</version>
         </dependency>
         <dependency>
             <groupId>io.github.wujun728</groupId>
