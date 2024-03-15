@@ -36,7 +36,9 @@ layui.define([], function (exports) {
 					if (layui.pageTable) {
 						layui.pageTable.resize('test');
 					}
-					ft();
+					if(ft){
+						ft();
+					}
 				},
 				success: function (obj, index) {
 					var btn = '<div data-index="'+index+'" class="express-close" title="关闭">关闭</div>';

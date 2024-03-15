@@ -28,28 +28,28 @@
 <body class="main-body">
 	<!-- 主体 -->
 	
-<form class="layui-form p-4">
+<form class="layui-form p-4" id="addOrUpdateForm" lay-filter="addOrUpdateForm" >
 	<h3 class="pb-3">TOKEN配置</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
 			<td class="layui-td-gray-2">Token签发组织</td>
 			<td>
-				<input type="hidden" value="3" name="id">
-				<input type="text" name="iss" autocomplete="off" placeholder="请输入签发组织" lay-reqText="请输入签发组织" class="layui-input" value="oa.gougucms.com">
+				<input type="hidden" value="" name="id">
+				<input type="text" name="iss" autocomplete="off" placeholder="请输入签发组织" lay-reqText="请输入签发组织" class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray-2">Token签发作者</td>
 			<td>
-				<input type="text" name="aud" autocomplete="off" placeholder="请输入签发作者" lay-reqText="请输入签发作者" class="layui-input" value="gouguoa">
+				<input type="text" name="aud" autocomplete="off" placeholder="请输入签发作者" lay-reqText="请输入签发作者" class="layui-input" value="">
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray">Token Secrect</td>
 			<td>
-				<input type="text" name="secrect" autocomplete="off" placeholder="请输入secrect" lay-reqText="请输入secrect" class="layui-input" value="GOUGUOA">
+				<input type="text" name="secrect" autocomplete="off" placeholder="请输入secrect" lay-reqText="请输入secrect" class="layui-input" value="">
 			</td>
 			<td class="layui-td-gray">Token过期时间</td>
 			<td>
-				<input type="text" name="exptime" autocomplete="off" placeholder="请输入过期时间" lay-reqText="请输入过期时间" class="layui-input" value="3600">
+				<input type="text" name="exptime" autocomplete="off" placeholder="请输入过期时间" lay-reqText="请输入过期时间" class="layui-input" value="">
 			</td>
 		</tr>
 	</table>
@@ -81,6 +81,16 @@
 	const moduleInit = ['tool'];
 	function gouguInit() {
 		var form = layui.form, tool = layui.tool;
+
+		debugger;
+		var editData = CoreUtil.getData('config_id');
+        if(editData !== null && editData !== undefined){
+            form.val('addOrUpdateForm', JSON.parse(editData.content));
+			$("#id").val(editData.id);
+			$('input[name="id"]').val(editData.id);
+			isEdit = true;
+		}
+
 		//监听提交
 		form.on('submit(webform)', function (data) {
 			let callback = function (e) {
@@ -89,7 +99,9 @@
 					tool.sideClose(1000);
 				}
 			}
-			tool.post("/home/conf/edit", data.field, callback);
+			var content =  JSON.stringify(data.field);
+			var send = {"content":content,"id":data.field.id};
+			tool.post("/api/rest/oa_config/edit", JSON.stringify(send), callback);
 			return false;
 		});
 	}
@@ -156,8 +168,10 @@
 </script>
 
 	<!-- /脚本 -->
-	<script src="/assets/layui/layui.js"></script>
-	<script src="/assets/gouguInit.js"></script>
+<!-- <script type="text/javascript"  src="../../assets/js/jquery.js"></script> -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/js/core.util.js"></script>
 	<!-- 统计代码 -->
 	
 	<!-- /统计代码 -->

@@ -17,6 +17,7 @@ console.log("moduleInit="+moduleInit);
 var module = {
 	notice: 'notice/notice',
 	admin: 'admin',
+	tool: 'tool',
 	xnUtil: 'xnUtil/xnUtil' 
 };
 

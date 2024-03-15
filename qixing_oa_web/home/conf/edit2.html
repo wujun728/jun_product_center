@@ -28,15 +28,15 @@
 <body class="main-body">
 	<!-- 主体 -->
 	
-<form class="layui-form p-4">
+<form class="layui-form p-4" id="addOrUpdateForm" lay-filter="addOrUpdateForm" >
 	<h3 class="pb-3">邮箱配置</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
 			<td class="layui-td-gray-2">SMTP地址<font>*</font>
 			</td>
 			<td>
-				<input type="hidden" name="id" value="2">
-				<input type="text" name="smtp" lay-verify="required" autocomplete="off" placeholder="请输入SMTP服务器地址" lay-reqText="请输入SMTP服务器地址" class="layui-input" value="smtp.qq.com" style="width:240px;display: inline-block;">
+				<input type="hidden" name="id" value="">
+				<input type="text" name="smtp" lay-verify="required" autocomplete="off" placeholder="请输入SMTP服务器地址" lay-reqText="请输入SMTP服务器地址" class="layui-input" value="" style="width:240px;display: inline-block;">
 				<span style="color:#999; font-size:12px;">如：QQ邮箱的SMTP服务器地址是smtp.qq.com，163邮箱的SMTP服务器地址是smtp.163.com</span>
 			</td>
 		</tr>
@@ -44,31 +44,31 @@
 			<td class="layui-td-gray-2">协议端口号<font>*</font>
 			</td>
 			<td>
-				<input type="text" name="smtp_port" lay-verify="required" autocomplete="off" placeholder="请输入端口" lay-reqText="请输入端口" class="layui-input" value="465"  style="width:240px;display: inline-block;"><span style="color:#999; font-size:12px;">如：QQ邮箱的ssl协议方式端口号是465/587，163邮箱的ssl协议方式端口号是465/994</span>
+				<input type="text" name="smtp_port" lay-verify="required" autocomplete="off" placeholder="请输入端口" lay-reqText="请输入端口" class="layui-input" value=""  style="width:240px;display: inline-block;"><span style="color:#999; font-size:12px;">如：QQ邮箱的ssl协议方式端口号是465/587，163邮箱的ssl协议方式端口号是465/994</span>
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray">邮箱账户<font>*</font></td>
-			<td><input type="text" name="smtp_user" autocomplete="off" lay-verify="required" placeholder="请输入邮箱用户名" lay-reqText="请输入邮箱用户名" class="layui-input" value="gougucms@qq.com"style="width:240px;display: inline-block;"><span style="color:#999; font-size:12px;">如：gougucms@qq.com</span>
+			<td><input type="text" name="smtp_user" autocomplete="off" lay-verify="required" placeholder="请输入邮箱用户名" lay-reqText="请输入邮箱用户名" class="layui-input" value=""style="width:240px;display: inline-block;"><span style="color:#999; font-size:12px;">如：gougucms@qq.com</span>
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray">邮箱密码<font>*</font></td>
-			<td><input type="password" name="smtp_pwd" lay-verify="required" autocomplete="off" placeholder="请输入邮箱密码" class="layui-input" value="123456" style="width:240px;display: inline-block;"><span style="color:#999; font-size:12px;">不一定是登录密码，如QQ邮箱的是第三方授权登录码，要自己去开启，在邮箱的设置->账户->POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</span>
+			<td><input type="password" name="smtp_pwd" lay-verify="required" autocomplete="off" placeholder="请输入邮箱密码" class="layui-input" value="" style="width:240px;display: inline-block;"><span style="color:#999; font-size:12px;">不一定是登录密码，如QQ邮箱的是第三方授权登录码，要自己去开启，在邮箱的设置->账户->POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务</span>
 			</td>
 		</tr>
 
 		<tr>
 			<td class="layui-td-gray">发送人<font>*</font></td>
 			<td>
-				<input type="text" name="from" autocomplete="off" lay-verify="required" placeholder="请输入要显示的发送者" lay-reqText="请输入要显示的发送者" class="layui-input" value="勾股CMS系统管理员" style="width:240px; display: inline-block;">
+				<input type="text" name="from" autocomplete="off" lay-verify="required" placeholder="请输入要显示的发送者" lay-reqText="请输入要显示的发送者" class="layui-input" value="" style="width:240px; display: inline-block;">
 				<span style="color:#999; font-size:12px;">用于展示给发送方，如：勾股CMS系统管理员</span>
 			</td>
 		</tr>
 		<tr>
 			<td class="layui-td-gray">显示的邮箱<font>*</font></td>
 			<td>
-				<input type="text" name="email" lay-verify="required" autocomplete="off" placeholder="请输入要显示的发送者邮箱" lay-reqText="请输入要显示的发送者邮箱" class="layui-input" value="admin@gougucms.com" style="width:240px;display: inline-block;">
+				<input type="text" name="email" lay-verify="required" autocomplete="off" placeholder="请输入要显示的发送者邮箱" lay-reqText="请输入要显示的发送者邮箱" class="layui-input" value="" style="width:240px;display: inline-block;">
 				<span style="color:#999;font-size:12px;">可以不同于上面的账户，用于展示给发送方的邮箱，如：admin@gougucms.com</span>
 			</td>
 		</tr>
@@ -102,6 +102,16 @@
 			selector: "#container",
 			height: 320
 		});
+
+		debugger;
+		var editData = CoreUtil.getData('config_id');
+        if(editData !== null && editData !== undefined){
+            form.val('addOrUpdateForm', JSON.parse(editData.content));
+			$("#id").val(editData.id);
+			$('input[name="id"]').val(editData.id);
+			isEdit = true;
+		}
+		
 		//监听提交
 		form.on('submit(webform)', function (data) {
 			data.field.template = tinyMCE.editors['container'].getContent();
@@ -111,7 +121,9 @@
 					tool.sideClose(1000);
 				}
 			}
-			tool.post("/home/conf/edit", data.field, callback);
+			var content =  JSON.stringify(data.field);
+			var send = {"content":content,"id":data.field.id};
+			tool.post("/api/rest/oa_config/edit", JSON.stringify(send), callback);
 			return false;
 		});
 
@@ -149,8 +161,10 @@
 </script>
 
 	<!-- /脚本 -->
-	<script src="/assets/layui/layui.js"></script>
-	<script src="/assets/gouguInit.js"></script>
+<!-- <script type="text/javascript"  src="../../assets/js/jquery.js"></script> -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/js/core.util.js"></script>
 	<!-- 统计代码 -->
 	
 	<!-- /统计代码 -->

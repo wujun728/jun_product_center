@@ -28,7 +28,7 @@
 <body class="main-body">
 	<!-- 主体 -->
 	
-<form class="layui-form p-4">
+<form  id="addOrUpdateForm" lay-filter="addOrUpdateForm"  class="layui-form p-4">
 	<h3 class="pb-3">配置项</h3>
 	<table class="layui-table layui-table-form">
 		<tr>
@@ -75,8 +75,23 @@
 	
 <script>
 	const moduleInit = ['tool'];
+	
+	var isEdit = false;
+
+
+
 	function gouguInit() {
-		var form = layui.form, tool = layui.tool;
+		var table = layui.table, tool = layui.tool, form = layui.form;
+
+			// $(function () {
+		//debugger;
+        var editData = CoreUtil.getData('config_id');
+        if(editData !== null && editData !== undefined){
+            form.val('addOrUpdateForm', editData);
+			isEdit = true;
+		}
+	// });
+	
 		//监听提交
 		form.on('submit(webform)', function (data) {
 			let callback = function (e) {
@@ -85,15 +100,22 @@
 					tool.sideClose(1000);
 				}
 			}
-			tool.post("/home/conf/add", data.field, callback);
+			//debugger;
+			if(isEdit){
+				tool.post("/api/rest/oa_config/edit", JSON.stringify(data.field), callback);
+			}else{
+				tool.post("/api/rest/oa_config/add", JSON.stringify(data.field), callback);
+			}
 			return false;
 		});
 	}
-</script>
 
+</script>
 	<!-- /脚本 -->
-	<script src="/assets/layui/layui.js"></script>
-	<script src="/assets/gouguInit.js"></script>
+<!-- <script type="text/javascript"  src="../../assets/js/jquery.js"></script> -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/js/core.util.js"></script>
 	<!-- 统计代码 -->
 	
 	<!-- /统计代码 -->
