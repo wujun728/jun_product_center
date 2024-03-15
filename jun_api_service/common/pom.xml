@@ -17,8 +17,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.wujun728</groupId>
-            <artifactId>jun-groovy-api-spring-boot-starter</artifactId>
-            <version>1.0.10</version>
+            <artifactId>jun-online-api-spring-boot-starter</artifactId>
+            <version>1.0.12</version>
         </dependency>
         <dependency>
             <groupId>com.jun.plugin</groupId>
