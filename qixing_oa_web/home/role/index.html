@@ -57,7 +57,8 @@
 			elem: '#role',
 			toolbar: '#toolbarDemo',
 			defaultToolbar: false,
-			url: "index.json", //数据接口
+			//url: "index.json", //数据接口
+			url: "/api/rest/oa_admin_group/list", //数据接口
 			page: false, //开启分页
 			limit: 20,
 			cols: [[ //表头
@@ -92,11 +93,11 @@
 					let callback = function (e) {
 						layer.msg(e.msg);
 						if (e.code == 0) {
-							layer.msg(res.msg);
+							layer.msg(e.msg);
 							obj.del();
 						}
 					}
-					tool.delete("/home/role/delete", { id: obj.data.id }, callback);
+					tool.delete("/api/rest/oa_admin_group/delete", JSON.stringify({ id: obj.data.id }), callback);
 					layer.close(index);
 				});
 			}
@@ -105,9 +106,11 @@
 
 </script>
 
-	<!-- /脚本 -->
-	<script src="../../assets/layui/layui.js"></script>
-	<script src="../../assets/gouguInit.js"></script>
+<!-- /脚本 -->
+<!-- <script type="text/javascript"  src="../../assets/js/jquery.js"></script> -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/js/core.util.js"></script>
 	<!-- 统计代码 -->
 	
 	<!-- /统计代码 -->

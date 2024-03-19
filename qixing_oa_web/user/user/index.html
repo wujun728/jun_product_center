@@ -79,8 +79,8 @@
 	</div>
 </div>
 
-<script type="text/html" id="thumb">
-	<img src="{{d.thumb}}" width="30" height="30" />
+<script type="text/html" id="pic">
+	<img src="{{d.pic}}" width="30" height="30" />
 </script>
 <script type="text/html" id="toolbara">
 	<div class="layui-btn-group">
@@ -105,13 +105,14 @@
 	function gouguInit() {
 		var table = layui.tablePlus, tool = layui.tool,tree = layui.tree,form = layui.form,upload = layui.upload;			
 		$.ajax({
-			url: "get_department_tree.json",
+			// url: "get_department_tree.json",
+			url: "/api/sys/dept/tree",
 			type:'get',
 			success:function(res){					
 				//仅节点左侧图标控制收缩
 				tree.render({
 					elem: '#depament',
-					data: res.trees,
+					data: res.data,
 					onlyIconControl: true,  //是否仅允许节点左侧图标控制展开收缩
 					click: function(obj){
 						//layer.msg(JSON.stringify(obj.data));
@@ -222,7 +223,8 @@
 			toolbar: '#toolbara',
 			defaultToolbar: [],
 			is_excel:true,
-			url: "index.json", //数据接口	
+			// url: "index.json", //数据接口	
+			url: "/api/rest/sys_user/page", //数据接口	
 			page: true, //开启分页
 			limit: 20,
 			height: 'full-85',
@@ -269,18 +271,18 @@
 						title: '登录账号',
 						width: 132
 					}, {
-						field: 'thumb',
+						field: 'pic',
 						title: '头像',
-						toolbar: '#thumb',
+						toolbar: '#pic',
 						align: 'center',
 						width: 60
 					}, {
-						field: 'name',
+						field: 'realName',
 						title: '用户姓名',
 						align: 'center',
 						width: 80
 					},{
-						field: 'mobile',
+						field: 'phone',
 						title: '手机号码',
 						align: 'center',
 						width: 120
@@ -304,17 +306,19 @@
 							return html;
 						}
 					},{
-						field: 'department',
+						field: 'deptId',
 						title: '所在部门',
 						align: 'center',
 						width: 110
 					}, {
-						field: 'position',
+						field: 'leavel',
+						// field: 'position',
 						title: '岗位职称',
 						align: 'center',
 						width: 110
 					}, {
-						field: 'entry_time',
+						// field: 'entry_time',
+						field: 'joincompanytime',
 						title: '入职日期',
 						align: 'center',
 						width: 100
@@ -338,13 +342,13 @@
 							var html = '';
 							var btn1 = '<span class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</span>';
 							var btn2 = '<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
-							var btn3 = '<span class="layui-btn layui-btn-xs layui-btn-warm" lay-event="copy">复制密码</span>';
+							// var btn3 = '<span class="layui-btn layui-btn-xs layui-btn-warm" lay-event="copy">复制密码</span>';
 							var btn4 = '<span class="layui-btn layui-btn-xs layui-btn-danger" lay-event="psw">重置密码</span>';
 							if(d.reg_pwd == ''){
 								html = '<div class="layui-btn-group">'+btn1+btn2+btn4+'</div>';
 							}
 							else{
-								html = '<div class="layui-btn-group">'+btn1+btn2+btn3+'</div>';
+								html = '<div class="layui-btn-group">'+btn1+btn2+btn4+'</div>';
 							}
 							return html;
 						}						

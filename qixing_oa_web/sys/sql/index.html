@@ -31,7 +31,7 @@
 <div class="p-3">
 	<form class="layui-form gg-form-bar border-x border-t">
 		<div class="layui-input-inline" style="width:300px;">
-			<input type="text" name="keywords" placeholder="关键字名称" class="layui-input" autocomplete="off" />
+			<input type="text" name="keywords" placeholder="在线接口名称" class="layui-input" autocomplete="off" />
 		</div>
 		<div class="layui-input-inline" style="width:150px;">
 			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
@@ -45,7 +45,7 @@
 </script>
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
-  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 添加关键字</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 添加在线接口</button>
   </div>
 </script>
 
@@ -63,7 +63,7 @@
 		var table = layui.table, tool = layui.tool, form = layui.form;
 		layui.pageTable = table.render({
 			elem: '#test',
-			title: '关键字列表',
+			title: '在线接口列表',
 			toolbar: '#toolbarDemo',
 			defaultToolbar: false,
 			url: "/api/rest/api_config/page",
@@ -146,7 +146,7 @@
 		//表头工具栏事件
 		table.on('toolbar(test)', function(obj){
 			if (obj.event === 'add') {
-				tool.side("/home/keywords/add.html");
+				tool.side("/sys/sql/add.html");
 				return;
 			}
 		});

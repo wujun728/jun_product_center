@@ -919,8 +919,8 @@
 		//监听提交
 		form.on('submit(webform)', function (obj) {
 			$.ajax({
-				url: "/home/role/add",
-				data: obj.field,
+				url: "/api/rest/oa_admin_group/add",
+				data: JSON.stringify(obj.field),
 				type: 'post',
 				success: function (e) {
 					layer.msg(e.msg);
