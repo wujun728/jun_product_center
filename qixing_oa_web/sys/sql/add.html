@@ -29,15 +29,45 @@
 	<!-- 主体 -->
 	
 <form class="layui-form p-4">
-	<h3 class="pb-3">知识关键字</h3>
+	<h3 class="pb-3">在线接口API</h3>
 	<table class="layui-table">
 		<tr>
-			<td class="layui-td-gray-2">关键字名称<font>*</font></td>
+			<td class="layui-td-gray-2">API接口路径<font>*</font></td>
 			<td>				
-				<input type="text" name="title" lay-verify="required" lay-reqText="请输入关键字名称" autocomplete="off" placeholder="请输入关键字名称" class="layui-input" >
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入接口名称" autocomplete="off" placeholder="请输入在线接口名称" class="layui-input" >
 			</td>
-			<td class="layui-td-gray">排序</td>
-			<td><input type="text" name="sort" placeholder="请输入排序，数字" autocomplete="off" class="layui-input" >
+			<td class="layui-td-gray">接口类型<font>*</font></td>
+			<td>
+			  <select name="cate_id" lay-verify="required" lay-reqText="请选择接口类型">
+				<option value="">请选择接口类型</option>
+							<option value="1" selected>SQL接口</option>
+							<option value="2" >脚本接口</option>
+							<option value="24" >├─水煮</option>
+							<option value="20" >├─实施经济数据</option>
+							<option value="17" >├─0000</option>
+							<option value="28" >&sect;&sect;├─下级</option>
+							<option value="30" >&sect;&sect;&sect;&sect;├─44</option>
+						  </select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">请求类型<font>*</font></td>
+			<td colspan = "3">
+				<input type="checkbox" name="AAA" title="GET" lay-skin="tag" checked>
+				<input type="checkbox" name="AAA" title="POST" lay-skin="tag" checked> 
+				<input type="checkbox" name="AAA" title="DELETE" lay-skin="tag"  > 
+				<input type="checkbox" name="AAA" title="PUT" lay-skin="tag"  > 
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">接口中文名称</td>
+			<td>
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入接口名称" autocomplete="off" placeholder="请输入在线接口名称" class="layui-input" >
+			</td>
+
+			<td class="layui-td-gray-2">接口英文名称<font>*</font></td>
+			<td>				
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入接口名称" autocomplete="off" placeholder="请输入在线接口名称" class="layui-input" >
 			</td>
 		</tr>
 		<tr>

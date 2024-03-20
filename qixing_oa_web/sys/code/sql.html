@@ -178,9 +178,11 @@ body .layui-tree-skin-skin .layui-tree-branch{
  </div>
 	</div>
 	<!-- /脚本 -->
-<script src="../../assets/layui/layui.js"></script>
-<script src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
 <script type="text/javascript" src="../../assets/js/core.util.js"></script>
+<script type="text/javascript" src="../../assets/js/grid-init.js"></script>
+<script type="text/javascript" src="../../assets/js/alert.js"></script>
 
 <script type="text/javascript">
 	var ddlSqlId=document.getElementById("ddlSql");
@@ -291,12 +293,13 @@ function reviewFunc(obj){
 	
 
 //表格数据
-function getTableList(){
-	// gridArgs.title='SQL';
+function getTableList(){ 
+	gridArgs.title='SQL';
 	gridArgs.dataId='id';
 	gridArgs.deleteUrl='/portal/form/sql/delete?treeId='+itemId;
 	gridArgs.updateUrl='/portal/form/sql/edit?id=';
-	gridArgs.addUrl='/portal/form/sql/add?treeId='+itemId+"&treeName="+itemName;
+	gridArgs.addUrl='/sys/code/sql_add.html?treeId='+itemId+"&treeName="+itemName;
+	// gridArgs.addUrl='/portal/form/sql/add?treeId='+itemId+"&treeName="+itemName;
 	gridArgs.gridDivId ='maingrid';
 	gridArgs.heightDiff=113;
 	initGrid({id : 'maingrid',
@@ -310,7 +313,8 @@ function getTableList(){
 	   			{title: '创建时间', field: 'create_time'},
 				{title: '操作',fixed:'right',width : 180,align : 'left',toolbar : '#bar_maingrid'} // 这里的toolbar值是模板元素的选择器
 			] ],
-			url:"/portal/form/sql/list",
+			url:"sql_list.json",
+			// url:"/portal/form/sql/list",
 			where:{"tree_id":itemId},
 			searchForm : 'searchForm'
 		},{review:reviewFunc});
@@ -320,8 +324,9 @@ function getTableList(){
 function queryLeftTree(){
 	leftNodes="";
 	$.ajax({
-		url:"/portal/form/sysTree/tree?type=sql",  
-	    type:"POST", 
+		url:"sql_tree.json",  
+		// url:"/portal/form/sysTree/tree?type=sql",  
+	    type:"GET", 
 	    data: {
 	    },
 	    success:function(data){

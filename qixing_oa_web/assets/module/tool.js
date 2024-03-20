@@ -52,6 +52,52 @@ layui.define([], function (exports) {
 			});
 			return layIndex;
 		},
+		side2: function (url, width, ft) {
+			let that = this;
+			if (that.loading == true) {
+				return false;
+			}
+			that.loading = true;
+			sideWidth = '80%';
+			if(window.innerWidth>1400 && window.innerWidth<=1600){
+				sideWidth = '85%';
+			}
+			if(window.innerWidth>1000 && window.innerWidth<=1440){
+				sideWidth = '92%';
+			}
+			if(window.innerWidth<=1000){
+				sideWidth = '93.8%';
+			}
+			var layIndex = layer.open({
+				type: 1,
+				title: false,
+				offset: 'r',
+				anim: 'slideLeft',
+				closeBtn: 0,
+				content: url,
+				area: [sideWidth, '100%'],
+				skin:'layui-layer-gougu-admin',
+				end: function(){
+					$('body').removeClass('right-open');
+					if (layui.pageTable) {
+						layui.pageTable.resize('test');
+					}
+					if(ft){
+						ft();
+					}
+				},
+				success: function (obj, index) {
+					var btn = '<div data-index="'+index+'" class="express-close" title="关闭">关闭</div>';
+					obj.append(btn);
+					$('body').addClass('right-open');
+					that.loading = false;
+					obj.on('click','.express-close', function () {					
+						layer.close(index);
+					})
+				}
+			});
+			return layIndex;
+		},
 		box: function (url,title="内容", width=720,height=405) {
 			let that = this;
 			if (that.loading == true) {
