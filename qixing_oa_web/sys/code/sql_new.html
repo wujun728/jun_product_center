@@ -114,8 +114,8 @@
 
 		<div id="apiTest">
 			<div style="padding:30px 0;">
-				<span class="layui-btn layui-btn-sm" onclick="testLogin();">Api测试登录</span>
-				<span class="layui-btn layui-btn-sm" onclick="testToken();">Token测试</span>
+				<span class="layui-btn layui-btn-sm" onclick="testLogin();">Api登录测试</span>
+				<span class="layui-btn layui-btn-sm" onclick="testToken();">Api接口测试</span>
 			</div>
 			<div style="padding:12px 0;word-wrap:break-word">
 				<p class="red">先点击登录，在点击测试，会有好的结果哦！</p>
@@ -263,15 +263,16 @@
 
 	var token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhcGkuZ291Z3VjbXMuY29tIiwiYXVkIjoiZ291Z3VjbXMiLCJpYXQiOjE2MjczMTY1MTgsImV4cCI6MTYyNzMyMDExOCwidWlkIjoxfQ.3soLDbwrEqn4EZtpD4h05FmvmMtJEh1LtE1vZ_ANcnI';
 	function testToken() {
+		var url = "/api"+$("input[name='path']").val();
 		$.ajax({
 			headers: {
 				Token: token
 			},
-			url: "/api/demo/test",
+			url: url,
 			type: "get",
 			success: function (res) {
 				$('#res').html(JSON.stringify(res));
-				if (res.code == 111) {
+				if (res.code != 0) {
 					layer.msg(res.msg);
 				}
 			}

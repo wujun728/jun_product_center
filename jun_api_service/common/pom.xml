@@ -13,22 +13,22 @@
         <dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-common</artifactId>
-            <version>1.0.12</version>
+            <version>1.0.13</version>
         </dependency>
         <dependency>
             <groupId>io.github.wujun728</groupId>
-            <artifactId>jun-online-api-spring-boot-starter</artifactId>
-            <version>1.0.12</version>
+            <artifactId>jun-run-api-spring-boot-starter</artifactId>
+            <version>1.0.13</version>
         </dependency>
         <dependency>
             <groupId>com.jun.plugin</groupId>
-            <artifactId>jun-generator-spring-boot-starter</artifactId>
-            <version>1.0.10</version>
+            <artifactId>jun-code-generator-spring-boot-starter</artifactId>
+            <version>1.0.13</version>
         </dependency>
         <dependency>
             <groupId>com.jun.plugin</groupId>
-            <artifactId>jun-online-form-spring-boot-starter</artifactId>
-            <version>1.0.10</version>
+            <artifactId>jun-dynamic-form-spring-boot-starter</artifactId>
+            <version>1.0.13</version>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
