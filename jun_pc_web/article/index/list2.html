@@ -1,0 +1,148 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t">
+		<div class="layui-input-inline">
+			<select name="cate_id">
+				<option value="">请选择知识文章分类</option>
+				{volist name=":set_recursion(article_cate())" id="v"}
+				<option value="{$v.id}">{$v.title}</option>
+				{/volist}
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="标题/分类/描述/内容" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-search-reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="status">
+	<i class="layui-icon {{#  if(d.status == 1){ }}layui-icon-ok{{#  } else { }}layui-icon-close{{#  } }}"></i>
+</script>
+<script type="text/html" id="is_share">
+	<i class="layui-icon {{#  if(d.is_share == 0){ }}layui-icon-close{{#  } else { }}layui-icon-ok{{#  } }}"></i>
+</script>
+<script type="text/html" id="toolbarDemo">
+<div class="layui-btn-container">
+   <span class="layui-btn layui-btn-normal layui-btn-sm" title="添加文章" lay-event="add">+ 添加知识文章</span>
+</div>
+</script>
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','tablePlus'];
+	function gouguInit() {
+		var table = layui.tablePlus, tool = layui.tool ,form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '文章列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar:false,
+			url: "/article/index/list", //数据接口
+			cols: [
+				[ //表头
+					{
+						field: 'id',
+						title: '编号',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'sort',
+						title: '排序',
+						align: 'center',
+						width: 66
+					}, {
+						field: 'cate_title',
+						title: '分类',
+						align: 'center',
+						width: 120
+					}, {
+						field: 'title',
+						title: '文章标题',
+						templet: '<div><a data-href="/article/index/view/id/{{d.id}}.html" class="side-a">{{d.title}}</a></div>'
+					},{
+						field: 'read',
+						title: '阅读量',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'status',
+						title: '状态',
+						toolbar: '#status',
+						align: 'center',
+						width: 66
+					}, {
+						field: 'is_share',
+						title: '阅读权限范围',
+						align: 'center',
+						width: 100,
+						templet: function(d){
+							let html='<span class="green">私有</span>';
+							if(d.is_share==1){
+								html='<span class="blue">所有人</span>';
+							}
+							else if(d.is_share==2){
+								html='<span class="yellow">部门</span>';
+							}
+							else if(d.is_share==3){
+								html='<span class="red">部分人员</span>';
+							}
+							return html;
+						}
+					}, {
+						field: 'right',
+						title: '操作',
+						toolbar: '#barDemo',
+						width: 100,
+						align: 'center'
+					}
+				]
+			]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/article/index/add");
+				return;
+			}
+		});
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if(obj.event === 'edit'){
+				tool.side('/article/index/add?id='+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要删除吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (res) {
+						layer.msg(res.msg);
+						if (res.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/article/index/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

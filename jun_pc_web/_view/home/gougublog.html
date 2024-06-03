@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>勾股博客</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+  <link rel="stylesheet" href="../../assets/gougu/css/gougu.css">
+  <style>
+    .dashboard-num table {width: 100%;}
+    .dashboard-num td {text-align: center; padding: 16px 0; width: 20%;border-left: 1px solid #f1f1f1; position: relative;}
+    .dashboard-num td:nth-child(1) { border-left: none}
+    .dashboard-num .num-title { padding-bottom: 10px; color: #999;}
+    .dashboard-num .blue {font-size: 18px; font-weight: 300;}
+    .dashboard-num td .badge {position: absolute;top: 0; right: 0;}
+    .dashboard-num td .badge span { padding: 2px 4px; font-size: 12px; border-radius: 0 0 0 4px;}
+    .dashboard-total td {border-top: 1px solid #f1f1f1}
+    .dashboard-logs .layui-timeline-item {padding-bottom: 1px;}
+    .info-td { width: 90px; text-align: right;background-color: #fafafa; color: #999; padding: 5px 3px;}
+    .info-td {width: 90px; text-align: right;background-color: #fafafa; color: #999; padding: 5px 3px;}
+    .info-msg-list li{position:relative;padding:10px 0;border-bottom:1px solid #EEE}
+    .info-msg-list li h3{padding-bottom:5px;font-weight:700}
+    .info-msg-list li p{padding-bottom:10px}
+    .info-msg-list li>span{color:#999}
+    .info-msg-list .msg-reply{display:none;position:absolute;right:0;bottom:12px}
+    .info-msg-list li:hover .msg-reply{display:block}
+  </style>
+</head>
+
+<body>
+  <div class="p-3">
+    <div class="layui-row layui-col-space12">
+      <div class="layui-col-md8">
+        <div class="layui-row layui-col-space12">
+          <div class="layui-col-md12">
+            <div class="layui-card dashboard-num">
+              <table>
+                <tr>
+                  <td>
+                    <div class="num-title">系统用户</div>
+                    <div class="blue">2</div>
+                  </td>
+                  <td>
+                    <div class="num-title">注册用户</div>
+                    <div class="blue">33</div>
+                  </td>
+                  <td>
+                    <div class="num-title">文章</div>
+                    <div class="blue">130</div>
+                  </td>
+                  <td>
+                    <div class="num-title">动态</div>
+                    <div class="blue">66</div>
+                  </td>
+                  <td>
+                    <div class="num-title">图片</div>
+                    <div class="blue">59</div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="layui-card">
+              <div class="layui-card-title">注册用户</div>
+              <div class="p-3">
+                <table id="userList" lay-filter="UserList" class="layui-hide"></table>
+              </div>
+            </div>
+            <div class="layui-card">
+              <div class="layui-card-title">文章列表</div>
+              <div class="p-3">
+                <table id="article" lay-filter="article" class="layui-hide"></table>
+              </div>
+            </div>
+            <div class="layui-card">
+              <div id="chartView" style="width: 100%;height:300px;"></div>
+            </div>
+            <div class="layui-card">
+              <div id="chartYear" style="width: 100%;height:240px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layui-col-md4">
+        <div class="layui-card">
+          <div class="layui-card-title">系统信息</div>
+          <div class="layui-card-body">
+            <table class="layui-table" lay-skin="" lay-size="sm">
+              <tr>
+                <td colspan="4" style="color: #E94335; background-color:#f8f8f8">
+                  提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
+              </tr>
+              <tr>
+                <td class="info-td">服务器系统</td>
+                <td>Linux</td>
+                <td class="info-td">PHP版本</td>
+                <td>7.2.33</td>
+              </tr>
+              <tr>
+                <td class="info-td">上传附件限制</td>
+                <td>50M</td>
+                <td class="info-td">执行时间限制</td>
+                <td>300秒 </td>
+              </tr>
+              <tr>
+                <td class="info-td">勾股BLOG版本</td>
+                <td colspan="3">2.4.26<a class="layui-badge layui-bg-blue" style="margin-left:8px"
+                    href="https://blog.gougucms.com/home/book/detail/bid/2.html" target="_blank">勾股BLOG文档</a></td>
+              </tr>
+              <tr>
+                <td class="info-td">ThinkPHP版本</td>
+                <td colspan="3">6.0.12LTS<a class="layui-badge layui-bg-blue" style="margin-left:8px"
+                    href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
+              </tr>
+              <tr>
+                <td class="info-td">Layui版本</td>
+                <td colspan="3">2.6.8<a class="layui-badge layui-bg-blue" style="margin-left:8px"
+                    href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
+              </tr>
+              <tr>
+                <td class="info-td">BUG反馈</td>
+                <td colspan="3"><a href="mailto:hdm58@qq.com" target="_blank">hdm58@qq.com</a></td>
+              </tr>
+              <tr>
+                <td class="info-td">QQ交流群</td>
+                <td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I" target="_blank"
+                    rel="nofollow"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群"
+                      title="gougucms交流群" style="vertical-align:middle"></a></td>
+              </tr>
+              <tr>
+                <td class="info-td">同系列开源软件</td>
+                <td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:8px"
+                    href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a
+                    class="layui-badge layui-bg-blue" style="margin-right:8px" href="https://gitee.com/gougucms/office"
+                    target="_blank">勾股OA</a><a class="layui-badge layui-bg-blue" href="https://gitee.com/gougucms/dev"
+                    target="_blank">勾股DEV</a></td>
+              </tr>
+              <tr>
+                <td class="info-td">🍗🍗<br />给作者加鸡腿<br />🍗🍗</td>
+                <td colspan="3">
+                  <img src="https://www.gougucms.com/static/home/images/zfb.png" data-event="pay"
+                    style="width:50%; max-width:100%; cursor:pointer;" align=center /><img
+                    src="https://www.gougucms.com/static/home/images/wx.png" data-event="pay"
+                    style="width:50%; max-width:100%; cursor:pointer;" align=center />
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="layui-card">
+          <div class="layui-card-title">用户留言</div>
+          <div class="layui-card-body">
+            <ul class="info-msg-list">
+              <li>
+                <h3>素还真</h3>
+                <p>迷惘时，不要想太多，只要循心而往，那就是方向了…</p>
+                <span>5月16日14:26</span>
+                <a href="javascript:;" gg-event="reply" data-id="8"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+              <li>
+                <h3>忌霞殇</h3>
+                <p>每一个人的心中，都有一个隐密的角落，他不想打开让人发现。因为发现不代表照进来的就是阳光，或许更是黑暗。所以，他掩饰、隐藏。但又何妨，人本就与隐藏共同生活。</p>
+                <span>5月15日 18:25</span>
+                <a href="javascript:;" gg-event="reply" data-id="7"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+              <li>
+                <h3>抚棺与化蝶</h3>
+                <p>人生，没有谁必须为另一个人负起责任的道理。 注定的缘分，不管错生几次，还是会相遇的。</p>
+                <span>5月12日 15:53</span>
+                <a href="javascript:;" gg-event="reply" data-id="6"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+              <li>
+                <h3>宫无后</h3>
+                <p>你以为只要长得漂亮就有男生喜欢？你以为只要有了钱漂亮妹子就自己贴上来了？你以为学霸就能找到好工作？我告诉你吧，这些都是真的！</p>
+                <span>5月10日 09:22</span>
+                <a href="javascript:;" gg-event="reply" data-id="5"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+              <li>
+                <h3>南风不竞</h3>
+                <p>有心天下，却输一笔多情，我的山水落在你的眉间，你肯入画吗？</p>
+                <span>4月29日 10:11</span>
+                <a href="javascript:;" gg-event="reply" data-id="2"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+              <li>
+                <h3>皇甫笑禅</h3>
+                <p>一个人要退到哪里，才不是江湖。</p>
+                <span>4月28日 10:02</span>
+                <a href="javascript:;" gg-event="reply" data-id="4"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+              <li>
+                <h3>倦收天</h3>
+                <p>当初的景，当初的人，皆已不复当初，就连当初的记忆，也开始模糊。</p>
+                <span>4月15日 09:10</span>
+                <a href="javascript:;" gg-event="reply" data-id="1"
+                  class="layui-btn layui-btn-xs msg-reply">回复</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../assets/third_party/echart/echarts.min.js"></script>
+  <script>
+    const moduleInit = ['tool'];
+    function gouguInit() {
+      var layer = layui.layer, table = layui.table;
+      //注册用户
+      table.render({
+        elem: '#userList'
+        , url: "../../json/blog_user.json"
+        , page: false //开启分页
+        , cols: [[ //表头
+          { field: 'username', title: '用户名' }
+          , { field: 'username', title: '昵称', align: 'center', 'width': 120 }
+          , {
+            field: 'sex', title: '性别', 'width': 60, align: 'center', templet: function (d) {
+              let str = '-';
+              if (d.sex == 1) {
+                str = '男';
+              }
+              else if (d.sex == 2) {
+                str = '女';
+              }
+              return str;
+            }
+          }
+          , {
+            field: 'headimgurl', title: '头像', align: 'center', 'width': 60, templet: function (d) {
+              return '<img src="https://blog.gougucms.com' + d.headimgurl + '" width="20" height="20" />';
+            }
+          }
+          , { field: 'login_num', title: '登录次数', align: 'center', 'width': 90 }
+          , { field: 'last_login_time', title: '最后登录时间', align: 'center', 'width': 160 }
+        ]]
+      });
+
+      //文章
+      table.render({
+        elem: '#article'
+        , url: "../../json/blog_article.json"
+        , page: false //开启分页
+        , cols: [[ //表头
+          { field: 'title', title: '文章标题', templet: '<div><a href="https://blog.gougucms.com/home/index/detail/id/{{d.id}}.html" class="layui-table-link" target="_blank">{{d.title}}</a></div>' }
+          , { field: 'cate_title', title: '文章分类', align: 'center', 'width': 100 }
+          , { field: 'read', title: '访问量', align: 'center', 'width': 80 }
+          , { field: 'create_time', title: '发布时间', align: 'center', 'width': 160 }
+        ]]
+      });
+      $('body').on('click', '[data-event="pay"]', function () {
+        var src = $(this).attr('src');
+        layer.open({
+          type: 1,
+          title: '感谢您给作者加鸡腿🍗🍗',
+          content: '<img src="' + src + '" style="width:100%" align=center />',
+        });
+      })
+      get_view_data();
+    }
+
+
+    function setHour(num) {
+      var str = num + ':00';
+      if (num < 10) {
+        str = '0' + num + ':00';
+      }
+      return str;
+    }
+    var chartView = echarts.init(document.getElementById('chartView'));
+    function get_view_data() {
+      $.ajax({
+        url: "../../json/blog_data.json",
+        type: 'get',
+        data: {},
+        success: function (e) {
+          if (e.code == 0) {
+            var data_first = e.data.data_first;
+            var data_second = e.data.data_second;
+            archiveCalendar = e.data.data_three;
+            var myDate = new Date();
+            var nowHour = myDate.getHours(); //获取当前小时数(0-23)
+            var xData = [];
+            var yData1 = [];
+            var yData2 = [];
+            $.each(data_first, function (key, value) {
+              if (key <= nowHour) {
+                yData1.push(value);
+              }
+            });
+            $.each(data_second, function (key, value) {
+              xData.push(setHour(key));
+              yData2.push(value);
+            });
+            var ops = {
+              title: {
+                top: '12px',
+                text: '今日与昨日访问统计',
+                left: '10px',
+                textStyle: {
+                  fontSize: '18',
+                  color: '#333',
+                }
+              },
+              color: ["#1AAD19", "#1890FF"],
+              grid: {
+                left: '16px',
+                right: '30px',
+                bottom: '12px',
+                top: '60px',
+                containLabel: true
+              },
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'cross',
+                  crossStyle: {
+                    color: '#999'
+                  }
+                }
+              },
+              toolbox: {
+                show: true,
+              },
+              legend: {
+                data: ["今日", "昨日"],
+                top: '18px',
+              },
+              xAxis: [{
+                type: "category",
+                boundaryGap: !1,
+                data: xData,
+                axisLine: {
+                  lineStyle: {
+                    color: '#999999',
+                    width: 1,
+                  }
+                },
+              }],
+              yAxis: [{
+                type: "value",
+                axisLine: {
+                  show: true,
+                  lineStyle: {
+                    color: '#999999',
+                    width: 1,
+                  }
+                },
+              }],
+              series: [{
+                name: "今日",
+                type: "line",
+                smooth: !0,
+                itemStyle: {
+                  normal: {
+                    areaStyle: {
+                      type: "default",
+                      opacity: 0.2
+                    }
+                  }
+                },
+                data: yData1
+              }, {
+                name: "昨日",
+                type: "line",
+                smooth: !0,
+                itemStyle: {
+                  normal: {
+                    areaStyle: {
+                      type: "default",
+                      opacity: 0.2
+                    }
+                  }
+                },
+                data: yData2
+              }]
+            }
+            chartView.setOption(ops);
+
+
+            let myChart = echarts.init(document.getElementById('chartYear'));
+            let option = {
+              title: {
+                top: '12px',
+                text: '近一年访问统计',
+                left: '10px',
+                textStyle: {
+                  fontSize: '18',
+                  color: '#333',
+                }
+              },
+              tooltip: {
+                padding: 6,
+                formatter: function (obj) {
+                  var value = obj.value;
+                  return '<div style="font-size: 12px;">' + value[0] + '：' + value[1] + ' 个访客</div>';
+                }
+              },
+              visualMap: {
+                min: 0,
+                max: 500,
+                show: false,
+                inRange: {
+                  color: ['#fafafa', '#1AAD19']
+                }
+              },
+              calendar: {
+                top: 75,
+                left: 50,
+                right: 20,
+                range: getRange(),
+                cellSize: ['auto', 21],
+                splitLine: {
+                  lineStyle: {
+                    color: '#aaa',
+                    type: 'dashed'
+                  }
+                },
+                itemStyle: {
+                  borderWidth: 0.5
+                },
+                yearLabel: { show: false },
+                monthLabel: {
+                  nameMap: 'cn',
+                  fontSize: 12
+                },
+                dayLabel: {
+                  show: true,
+                  formatter: '{start}  1st',
+                  fontWeight: 'lighter',
+                  nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                  fontSize: 12
+                }
+              },
+              series: [{
+                type: 'heatmap',
+                coordinateSystem: 'calendar',
+                calendarIndex: 0,
+                data: getDay()
+              }]
+            };
+            myChart.setOption(option);
+
+            setTimeout(function () {
+              window.onresize = function () {
+                chartView.resize();
+                myChart.resize();
+              }
+            })
+            console.log(e.data);
+          }
+        }
+      })
+
+      var archiveCalendar = {};
+      function getRange() {
+        let today = new Date();
+        let tYear = today.getFullYear();
+        let tMonth = today.getMonth() + 1;
+        let tDate = today.getDate();
+        let dateFirst = tYear + "-" + tMonth + "-" + tDate;
+        let datelast = (tYear - 1) + "-" + tMonth + "-" + tDate;
+        let dataRange = [];
+        dataRange.push(dateFirst);
+        dataRange.push(datelast);
+        return dataRange;
+      }
+
+      function getDay() {
+        var today = new Date();
+        var dayArray = [];
+        for (var i = 0; i < 366; i++) {
+          var targetday_milliseconds = today.getTime() - 1000 * 60 * 60 * 24 * i;
+          var date = new Date(targetday_milliseconds);
+          dayArray.push(retunDay(date));
+        }
+        return dayArray;
+      }
+
+      function retunDay(day) {
+        var tYear = day.getFullYear();
+        var tMonth = day.getMonth();
+        var tDate = day.getDate();
+        tMonth = tMonth + 1;
+        if (tMonth.toString().length == 1) {
+          tMonth = "0" + tMonth;
+        }
+        if (tDate.toString().length == 1) {
+          tDate = "0" + tDate;
+        }
+        var dateStr = tYear + "-" + tMonth + "-" + tDate;
+        var dateArray = [];
+        dateArray.push(dateStr);
+        if (archiveCalendar[dateStr]) {
+          dateArray.push(archiveCalendar[dateStr]);
+        }
+        else {
+          dateArray.push(0);
+        }
+        return dateArray;
+      }
+
+
+
+    }
+
+  </script>
+  <script src="../../assets/layui/layui.js"></script>
+  <script src="../../assets/gougu/gouguInit.js"></script>
+</body>
+
+</html>

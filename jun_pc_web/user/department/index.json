@@ -1,0 +1,222 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "董事会",
+            "pid": 0,
+            "leader_id": 2,
+            "phone": "13688888888",
+            "sort": 0,
+            "remark": "",
+            "status": 1,
+            "create_time": 0,
+            "update_time": 1685526795,
+            "leader": "素还真",
+            "children": [
+                {
+                    "id": 2,
+                    "title": "人事部",
+                    "pid": 1,
+                    "leader_id": 5,
+                    "phone": "13688888889",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1685860088,
+                    "leader": "玉辞心",
+                    "children": []
+                },
+                {
+                    "id": 3,
+                    "title": "财务部",
+                    "pid": 1,
+                    "leader_id": 4,
+                    "phone": "13688888898",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1685860096,
+                    "leader": "风采铃",
+                    "children": []
+                },
+                {
+                    "id": 4,
+                    "title": "市场部",
+                    "pid": 1,
+                    "leader_id": 6,
+                    "phone": "13688888978",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1685526811,
+                    "leader": "秦假仙",
+                    "children": []
+                },
+                {
+                    "id": 5,
+                    "title": "销售部",
+                    "pid": 1,
+                    "leader_id": 8,
+                    "phone": "13688889868",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1685526819,
+                    "leader": "谈无欲",
+                    "children": [
+                        {
+                            "id": 8,
+                            "title": "销售一部",
+                            "pid": 5,
+                            "leader_id": 23,
+                            "phone": "13688998838",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526824,
+                            "leader": "佛剑分说",
+                            "children": []
+                        },
+                        {
+                            "id": 9,
+                            "title": "销售二部",
+                            "pid": 5,
+                            "leader_id": 24,
+                            "phone": "13688999828",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526828,
+                            "leader": "剑子仙迹",
+                            "children": []
+                        },
+                        {
+                            "id": 10,
+                            "title": "销售三部",
+                            "pid": 5,
+                            "leader_id": 25,
+                            "phone": "13688999918",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526833,
+                            "leader": "疏楼龙宿",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "title": "技术部",
+                    "pid": 1,
+                    "leader_id": 7,
+                    "phone": "13688898858",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1685526838,
+                    "leader": "叶小钗",
+                    "children": [
+                        {
+                            "id": 11,
+                            "title": "产品部",
+                            "pid": 6,
+                            "leader_id": 51,
+                            "phone": "13688888886",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526842,
+                            "leader": "照世明灯",
+                            "children": []
+                        },
+                        {
+                            "id": 12,
+                            "title": "设计部",
+                            "pid": 6,
+                            "leader_id": 52,
+                            "phone": "13688888876",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526847,
+                            "leader": "屈世途",
+                            "children": []
+                        },
+                        {
+                            "id": 13,
+                            "title": "研发部",
+                            "pid": 6,
+                            "leader_id": 53,
+                            "phone": "13688888666",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526852,
+                            "leader": "乱世狂刀",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "title": "客服部",
+                    "pid": 1,
+                    "leader_id": 9,
+                    "phone": "13688988848",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1685526857,
+                    "leader": "红尘雪",
+                    "children": [
+                        {
+                            "id": 14,
+                            "title": "客服一部",
+                            "pid": 7,
+                            "leader_id": 71,
+                            "phone": "13688888865",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526863,
+                            "leader": "翠萝寒",
+                            "children": []
+                        },
+                        {
+                            "id": 15,
+                            "title": "客服二部",
+                            "pid": 7,
+                            "leader_id": 72,
+                            "phone": "13688888855",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1685526868,
+                            "leader": "夜飞天",
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

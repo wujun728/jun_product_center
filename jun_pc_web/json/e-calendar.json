@@ -1,0 +1,86 @@
+{
+  "code": 200,
+  "msg": "",
+  "data": [
+    {
+      "startDate": "2019-11-13",
+      "endDate": "2019-11-13",
+      "startTime": "08:00",
+      "endTime": "09:00",
+      "courseName": "Java初级程序设计",
+      "courseId": "110"
+    },
+    {
+      "startDate": "2019-11-13",
+      "endDate": "2019-11-13",
+      "startTime": "08:00",
+      "endTime": "09:00",
+      "courseName": "计算机科学与技术",
+      "courseId": "111"
+    },
+    {
+      "startDate": "2019-11-14",
+      "endDate": "2019-11-14",
+      "startTime": "08:00",
+      "endTime": "09:00",
+      "courseName": "锋利的jQuery",
+      "courseId": "112"
+    },
+    {
+      "startDate": "2019-11-15",
+      "endDate": "2019-11-15",
+      "startTime": "08:00",
+      "endTime": "09:00",
+      "courseName": "锋利的jQuery",
+      "courseId": "113"
+    },
+    {
+      "startDate": "2019-11-16",
+      "endDate": "2019-11-16",
+      "startTime": "10:00",
+      "endTime": "12:00",
+      "courseName": "HTML5与CSS3网页设计",
+      "courseId": "114"
+    },
+    {
+      "startDate": "2019-11-17",
+      "endDate": "2019-11-17",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "courseName": "JavaScript程序设计",
+      "courseId": "115"
+    },
+    {
+      "startDate": "2019-11-18",
+      "endDate": "2019-11-18",
+      "startTime": "16:00",
+      "endTime": "18:00",
+      "courseName": "数据库原理及应用",
+      "courseId": "116"
+    },
+    {
+      "startDate": "2019-11-19",
+      "endDate": "2019-11-19",
+      "startTime": "13:00",
+      "endTime": "15:00",
+      "courseName": "数据库原理及应用",
+      "courseId": "116"
+    },
+    {
+      "startDate": "2019-11-20",
+      "endDate": "2019-11-20",
+      "startTime": "08:00",
+      "endTime": "09:00",
+      "courseName": "数据库原理及应用",
+      "courseId": "116"
+    },
+    {
+      "startDate": "2019-11-21",
+      "endDate": "2019-11-21",
+      "startTime": "10:00",
+      "endTime": "12:00",
+      "courseName": "数据库原理及应用",
+      "courseId": "116"
+    }
+  ]
+}

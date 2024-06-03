@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/static/assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑联系人</h3>
+    <table class="layui-table layui-table-form">
+      <tr>
+        <td class="layui-td-gray">客户名称</td>
+        <td colspan="5">王绍峰</td>
+      </tr>
+      <tr>
+        <td class="layui-td-gray">姓名<font>*</font></td>
+        <td>
+          <input type="text" name="name" value="www" autocomplete="off" lay-verify="required" lay-reqText="请输入联系人姓名" placeholder="请输入联系人姓名" class="layui-input">
+        </td>
+		<td class="layui-td-gray">联系电话<font>*</font></td>
+        <td>
+			<input type="text" name="mobile" value="19833032571" autocomplete="off" lay-verify="required" lay-reqText="请输入联系人电话" placeholder="请输入联系人电话" class="layui-input">
+        </td>
+		<td class="layui-td-gray">性别<font>*</font></td>
+        <td>
+			<input type="radio" name="sex" value="1" title="男"  checked>
+			<input type="radio" name="sex" value="2" title="女" >
+        </td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">微 信 号</td>
+        <td>
+			<input type="text" name="wechat" value="" autocomplete="off" placeholder="请输入联系人微信号" class="layui-input">
+        </td>
+		<td class="layui-td-gray">QQ号码</td>
+        <td>
+			<input type="text" name="qq" value="" autocomplete="off" placeholder="请输入联系人QQ号码" class="layui-input">
+        </td>
+		<td class="layui-td-gray">电子邮箱</td>
+        <td>
+			<input type="text" name="email" value="" autocomplete="off" placeholder="请输入联系人电子邮箱" class="layui-input">
+        </td>
+      </tr>
+	  <tr>
+		<td class="layui-td-gray">称谓</td>
+        <td>
+			<input type="text" name="nickname" value="" autocomplete="off" placeholder="请输入联系人的称谓" class="layui-input">
+        </td>
+		<td class="layui-td-gray">部门</td>
+        <td>
+			<input type="text" name="department" value="" autocomplete="off" placeholder="请输入联系人所在部门" class="layui-input">
+        </td>
+		<td class="layui-td-gray">职务</td>
+        <td>
+			<input type="text" name="position" value="" autocomplete="off" placeholder="请输入联系人担任的职务" class="layui-input">
+        </td>
+      </tr>
+    </table>
+    <div class="py-3">
+	   <input type="hidden" name="id" value="18">
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,laydate = layui.laydate;
+		laydate.render({
+			elem: '#follow_time'
+			,type: 'datetime'
+		});
+		laydate.render({
+			elem: '#next_time'
+			,min: 0
+			,type: 'datetime'
+		});
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			if(!data.field.sex){
+				layer.msg('请选择性别');
+				return false;
+			}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose();
+					parent.layui.contactTable.reload();
+				}
+			}
+			tool.post("/customer/contact/contact_add", data.field, callback);
+			return false;
+		});
+
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

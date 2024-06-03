@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">部门架构</h3>
+		<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">部门名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" value="技术部" lay-verify="required" autocomplete="off" placeholder="请输入部门名称" lay-reqText="请输入部门名称" class="layui-input">
+			</td>
+			<td class="layui-td-gray">上级部门<font>*</font></td>
+			<td>
+				<select name="pid" lay-verify="required" lay-reqText="请选择上级部门">
+					<option value="0">作为顶级部门</option>
+										<option value="1"  selected>董事会</option>
+										<option value="2" >人事部</option>
+										<option value="3" >财务部</option>
+										<option value="4" >市场部</option>
+										<option value="5" >销售部</option>
+										<option value="6" >技术部</option>
+										<option value="7" >客服部</option>
+										<option value="8" >销售一部</option>
+										<option value="9" >销售二部</option>
+										<option value="10" >销售三部</option>
+										<option value="11" >产品部</option>
+										<option value="12" >设计部</option>
+										<option value="13" >研发部</option>
+										<option value="14" >客服一部</option>
+										<option value="15" >客服二部</option>
+									</select>
+			</td>
+			<td class="layui-td-gray">排序<font>*</font></td>
+			<td>
+				<input type="text" name="sort" lay-verify="required|number" value="0" autocomplete="off" placeholder="请输入排序" lay-reqText="请输入排序" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">部门负责人</td>
+			<td>
+				<select name="leader_id">
+					<option value="0">请选择部门负责人</option>
+									</select>
+			</td>
+			<td class="layui-td-gray-2">部门联系电话</td>
+			<td colspan="3">
+				<input type="text" name="phone" value="13688898858" placeholder="请输入部门联系电话，可空" autocomplete="off" class="layui-input">
+			</td>
+		</tr>
+	</table>
+		<div class="py-3">
+		<input type="hidden" name="id" value="6">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool;		  
+		//监听提交
+		form.on('submit(webform)', function(data){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);					
+				}
+			}
+			tool.post("/user/department/add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

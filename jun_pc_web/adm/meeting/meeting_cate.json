@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "会议室一",
+            "status": 1,
+            "create_time": 1639899124,
+            "update_time": 0
+        },
+        {
+            "id": 2,
+            "title": "会议室二",
+            "status": 1,
+            "create_time": 1639899140,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "title": "会议室三",
+            "status": 1,
+            "create_time": 1639899148,
+            "update_time": 0
+        }
+    ]
+}

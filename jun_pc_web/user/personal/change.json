@@ -1,0 +1,23 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1,
+    "data": [
+        {
+            "id": 1,
+            "uid": 2,
+            "from_did": 1,
+            "to_did": 8,
+            "remark": "111",
+            "admin_id": 1,
+            "status": 1,
+            "move_time": "2024-01-18",
+            "create_time": "2024-01-18 17:51:09",
+            "update_time": 0,
+            "name": "张三",
+            "admin": "超级员工",
+            "adepartment": "董事会",
+            "bdepartment": "销售一部"
+        }
+    ]
+}

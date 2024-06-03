@@ -1,0 +1,77 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<table class="layui-hide" id="role" lay-filter="role"></table>
+</div>
+
+<script type="text/html" id="status">
+  <i class="layui-icon {{#  if(d.status == 1){ }}green layui-icon-ok{{#  } else { }}red layui-icon-close{{#  } }}"></i>
+</script>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add">+ 添加权限组</button>
+  </div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#role',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: false,
+			url: "/home/role/index", //数据接口
+			page: false, //开启分页
+			limit: 20,
+			cols: [[ //表头
+				{ field: 'id', title: 'ID号', align: 'center', width: 80 }
+				, { field: 'title', title: '权限组名称', width: 200 }
+				, { field: 'desc', title: '备注' }
+				, { field: 'status', title: '状态', toolbar: '#status', align: 'center', width: 80 }
+				, {	width: 100,title: '操作',align: 'center',templet: function (d) {
+						var html = '<div class="layui-btn-group"><button class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
+						return html;
+					}
+				}
+			]]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(role)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/home/role/add");
+				return;
+			}
+		});
+		//监听行工具事件
+		table.on('tool(role)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				tool.side('/home/role/add?id='+obj.data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要删除该权限组吗？', { icon: 3, title: '提示' }, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layer.msg(res.msg);
+							obj.del();
+						}
+					}
+					tool.delete("/home/role/delete", { id: obj.data.id }, callback);
+					layer.close(index);
+				});
+			}
+		});
+	}
+
+</script>
+{/block}
+<!-- /脚本 -->

@@ -1,0 +1,36 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "公章",
+            "status": 1,
+            "create_time": 1639899124,
+            "update_time": 0
+        },
+        {
+            "id": 2,
+            "title": "合同章",
+            "status": 1,
+            "create_time": 1639899140,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "title": "法人章",
+            "status": 1,
+            "create_time": 1639899148,
+            "update_time": 0
+        },
+        {
+            "id": 4,
+            "title": "其他",
+            "status": 1,
+            "create_time": 1639899158,
+            "update_time": 0
+        }
+    ]
+}
