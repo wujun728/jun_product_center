@@ -655,3 +655,8 @@ Consider marking one of the beans as @Primary, updating the consumer to accept m
 2024-06-03 15:20:00.005  INFO 12992 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
 2024-06-03 15:21:00.009  INFO 12992 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
 2024-06-03 15:22:00.002  INFO 12992 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-06-03 15:23:00.028  INFO 12992 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-06-03 15:24:00.008  INFO 12992 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-06-03 15:25:00.002  INFO 12992 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-06-03 15:26:00.001  INFO 12992 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-06-03 15:27:00.002  INFO 12992 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
