@@ -17,7 +17,8 @@
 	<modules> 
 		<module>jun_api_online</module> 
 		<module>jun_api_online_groovy</module>
-		
+		<module>jun_microservice</module>
+
 	</modules>
 
 	<dependencies>

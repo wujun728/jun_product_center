@@ -43,6 +43,7 @@
 <script type="text/javascript"  src="../../assets/js/base64.js"></script>
 
 <script>
+  var ctx = "/api/"
   //获取token
   var token = CoreUtil.getData("access_token");
   //地址栏转义token中的#号
@@ -146,7 +147,7 @@
     //删除
     var tipDialog=function (ids) {
       layer.open({
-        content: "确定要删除么?",
+        content: "确定要删除么1?",
         yes: function(index, layero){
           layer.close(index); //如果设定了yes回调，需进行手工关闭
           CoreUtil.sendDelete(ctx + "sysFiles/delete",ids,function (res) {

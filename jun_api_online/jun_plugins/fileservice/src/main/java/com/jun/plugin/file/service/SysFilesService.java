@@ -24,14 +24,8 @@ public interface SysFilesService extends IService<SysFilesEntity> {
 
 	Result saveFile(MultipartFile file, String biztype, String bizid);
 	
-	Result saveOssFile(MultipartFile file);
-
-
-
     Result saveFile(File file, String biztype, String bizid);
 
 
-    Result saveFile(File file);
-	
 }
 

@@ -41,8 +41,6 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
     @Resource
     private SysFilesMapper sysFilesMapper;
     
-    private static final ThreadLocal<Map<Object, Object>> mapTmp = new ThreadLocal();
-
     @Override
     public Result saveFile(MultipartFile file) {
         //存储文件夹
@@ -90,33 +88,14 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
 	}
 
 
-	
-	
-
-
-
-//    /**
-//     * 获取文件后缀名
-//     *
-//     * @param fileName 文件名
-//     * @return 后缀名
-//     */
-//    private String getFileType(String fileName) {
-//        if (fileName != null && fileName.contains(".")) {
-//            return fileName.substring(fileName.lastIndexOf("."));
-//        }
-//        return "";
-//    }
-
-	@Override
-	public Result saveFile(MultipartFile file, String biztype, String bizid) {
-        Map map = Maps.newHashMap();
-        map.put("biztype",biztype);
-        map.put("bizid", bizid);
-		mapTmp.set(map);
-		this.saveOssFile(file);
-		return this.saveFile(file);
-	}
+//	@Override
+//	public Result saveFile(MultipartFile file, String biztype, String bizid) {
+////        Map map = Maps.newHashMap();
+////        map.put("biztype",biztype);
+////        map.put("bizid", bizid);
+//		//this.saveOssFile(file);
+//		return this.saveFile(file,biztype,bizid);
+//	}
 
 //    @Override
 //    public Result saveFile(MultipartFile file, String biztype, String bizid) {
@@ -155,9 +134,9 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
 
 
     @Override
-    public Result saveOssFile(MultipartFile file) {
+    public Result saveFile(MultipartFile file,String bizType,String bizid) {
         try {
-            String username = "sessionService.getCurrentUsername()";
+            String username = "admin";
             String fileName = file.getOriginalFilename();
             String fileNameNew = QiniuUtils.getFileNameByDate(username,fileName);
 //    		QiniuUtils.uploadFile(file, fileNameNew);
@@ -165,7 +144,7 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
             String URL = QiniuUtils.domain + "/" + fileName;
 //    		String downUrl = QiniuUtils.download(fileNameNew);;
             //保存文件记录
-            saveFilesEntity(fileNameNew, downUrl, "filemanager", QiniuUtils.FormetFileSize(file.getSize()),"","");
+            saveFilesEntity(fileNameNew, downUrl, "filemanager", QiniuUtils.FormetFileSize(file.getSize()),bizType,bizid);
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("src", downUrl);
             return Result.success(resultMap);
@@ -175,7 +154,7 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
         }
     }
     @Override
-    public Result saveFile(File file) {
+    public Result saveFile(File file,String bizType,String bizid) {
         try {
             String username = "sessionService.getCurrentUsername()";
             String fileName =  file.getName();
@@ -240,11 +219,5 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
 
 
 
-    @Override
-    public Result saveFile(File file, String biztype, String bizid) {
-        mapTmp.set(ImmutableMap.builder().put("biztype",biztype).put("bizid", bizid).build());
-//		this.saveOssFile(file);
-        return this.saveFile(file);
-    }
 
 }
