@@ -1,4 +1,4 @@
-package com.jun.plugin.project;
+package com.jun.plugin;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
