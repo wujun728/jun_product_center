@@ -6,7 +6,7 @@ import com.jun.plugin.common.Result;
 import com.jun.plugin.common.constant.Constant;
 import com.jun.plugin.common.exception.BusinessException;
 import com.jun.plugin.common.exception.code.BaseResponseCode;
-import com.jun.plugin.common.util.HttpRequestUtil;
+import com.jun.plugin.common.utils.HttpRequestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;

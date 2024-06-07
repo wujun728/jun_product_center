@@ -8,7 +8,7 @@ import com.alibaba.fastjson2.JSONReader;
 import com.alibaba.fastjson2.JSONWriter;
 import com.jun.plugin.common.Result;
 //import org.apache.shiro.authz.annotation.RequiresPermissions;
-import com.jun.plugin.common.service.RedisService;
+import com.jun.plugin.common.redis.service.RedisService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.security.auth.message.AuthException;
 
+
 @Component
 @Slf4j
 public class QiniuUtils {

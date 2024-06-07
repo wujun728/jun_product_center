@@ -8,11 +8,12 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.jun.plugin.common.Result;
 import com.jun.plugin.common.exception.BusinessException;
-import com.jun.plugin.common.utils.DateUtils;
 import com.jun.plugin.file.entity.SysFilesEntity;
 import com.jun.plugin.file.mapper.SysFilesMapper;
 import com.jun.plugin.file.utils.QiniuUtils;
@@ -45,7 +46,7 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
     public Result saveFile(MultipartFile file) {
         //存储文件夹
 //        String createTime = DateUtils.format(new Date(), DateUtils.DATEPATTERN);
-        String createTime = DateUtils.dateTimeNow();
+        String createTime = DateUtil.now();
         String newPath = fileUploadProperties.getPath() + createTime + File.separator;
         File uploadDirectory = new File(newPath);
         if (uploadDirectory.exists()) {
@@ -164,7 +165,8 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
             String URL = QiniuUtils.domain + "/" + fileName;
 //    		String downUrl = QiniuUtils.download(fileNameNew);;
             //保存文件记录
-            saveFilesEntity(fileNameNew,  downUrl, "filemanager", QiniuUtils.FormetFileSize(FileUtils.sizeOfAsBigInteger(file).longValue()),"","");
+            saveFilesEntity(fileNameNew,  downUrl, "filemanager",
+                    QiniuUtils.FormetFileSize(FileUtil.size(file)),"","");
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("src", downUrl);
             return Result.success(resultMap);

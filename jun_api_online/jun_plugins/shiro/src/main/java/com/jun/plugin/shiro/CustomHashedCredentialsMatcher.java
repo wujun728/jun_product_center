@@ -2,7 +2,7 @@ package com.jun.plugin.shiro;
 
 import com.jun.plugin.common.exception.BusinessException;
 import com.jun.plugin.common.exception.code.BaseResponseCode;
-import com.jun.plugin.common.service.RedisService;
+import com.jun.plugin.common.redis.service.RedisService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

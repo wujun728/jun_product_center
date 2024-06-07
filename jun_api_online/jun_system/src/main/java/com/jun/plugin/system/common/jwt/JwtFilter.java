@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.jun.plugin.common.Result;
 import com.jun.plugin.common.constant.Constant;
 import com.jun.plugin.common.exception.BusinessException;
-import com.jun.plugin.common.service.RedisService;
+import com.jun.plugin.common.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

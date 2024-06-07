@@ -2,7 +2,7 @@ package com.jun.plugin.system.controller;
 
 import com.google.common.collect.Maps;
 import com.jun.plugin.common.Result;
-import com.jun.plugin.common.service.RedisService;
+import com.jun.plugin.common.redis.service.RedisService;
 import com.wf.captcha.ArithmeticCaptcha;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;

@@ -11,14 +11,39 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.jun.plugin</groupId>
+            <artifactId>jun-common-core</artifactId>
+            <version>1.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jun.plugin</groupId>
+            <artifactId>jun-redis-spring-boot-starter</artifactId>
+            <version>1.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jun.plugin</groupId>
+            <artifactId>jun-db-spring-boot-starter</artifactId>
+            <version>1.0.16</version>
+        </dependency>
+        <!--<dependency>
+            <groupId>com.jun.plugin</groupId>
+            <artifactId>jun-dynamic-form-spring-boot-starter</artifactId>
+            <version>1.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jun.plugin</groupId>
+            <artifactId>jun-code-generator-spring-boot-starter</artifactId>
+            <version>1.0.13</version>
+        </dependency>-->
+        <!--<dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-common</artifactId>
             <version>1.0.15</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-groovy-api-spring-boot-starter</artifactId>
-            <version>1.0.15</version>
+            <version>1.0.16</version>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>

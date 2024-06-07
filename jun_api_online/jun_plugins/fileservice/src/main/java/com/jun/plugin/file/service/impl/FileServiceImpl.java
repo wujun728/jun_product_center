@@ -19,7 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jun.plugin.common.utils.DateUtils;
+import cn.hutool.core.date.DateUtil;
 import com.jun.plugin.file.config.FileProperties;
 import com.jun.plugin.file.entity.SysFilesEntity;
 import com.jun.plugin.file.mapper.SysFilesMapper;
@@ -127,7 +127,7 @@ public class FileServiceImpl implements FileService {
     }
 
     private void saveSysFile(File file,String originalFilename,String newFilePathName, String username,String biztype,String bizid) throws IOException {
-        String createTime = DateUtils.dateTimeNow();
+        String createTime = DateUtil.now();
         String newPath = fileUploadProperties.getPath() + createTime + File.separator;
         File uploadDirectory = new File(newPath);
         if (uploadDirectory.exists()) {

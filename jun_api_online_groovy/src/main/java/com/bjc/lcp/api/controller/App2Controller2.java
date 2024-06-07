@@ -5,7 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jun.plugin.common.Result;
-import com.jun.plugin.common.util.HttpRequestUtil;
+import com.jun.plugin.common.utils.HttpRequestUtil;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

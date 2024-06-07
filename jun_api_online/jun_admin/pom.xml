@@ -9,16 +9,11 @@
 	<name>主应用Main</name>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.jun.plugin</groupId>
-			<artifactId>jun-common-core</artifactId>
-			<version>1.0.16</version>
-		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.30</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -34,19 +29,9 @@
 			<artifactId>jun_common</artifactId>
 			<version>1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.jun.plugin</groupId>
-			<artifactId>jun-dynamic-form-spring-boot-starter</artifactId>
-			<version>1.0.13</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jun.plugin</groupId>
-			<artifactId>jun-code-generator-spring-boot-starter</artifactId>
-			<version>1.0.13</version>
-		</dependency>
         <dependency>
-            <groupId>com.jun.plugin</groupId>
-		    <artifactId>generator</artifactId>
+			<groupId>com.jun.plugin</groupId>
+			<artifactId>jun_generator</artifactId>
 			<version>1.0</version>
 			<exclusions>
 				<exclusion>
@@ -121,11 +106,11 @@
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
 		</dependency>
 		<!--数据源-->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
 			<version>1.2.18</version>
-		</dependency>
+		</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
@@ -146,11 +131,11 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>3.5.3.2</version>
-		</dependency>
+		</dependency>-->
 		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-mysql -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>

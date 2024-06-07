@@ -3,12 +3,12 @@ package com.jun.plugin.system.common.aop.aspect;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.jun.plugin.common.base.service.HttpSessionService;
 import com.jun.plugin.common.constant.Constant;
 import com.jun.plugin.common.entity.BaseEntity;
 import com.jun.plugin.common.entity.BaseFlowEntity;
 import com.jun.plugin.common.exception.BusinessException;
-import com.jun.plugin.common.service.HttpSessionService;
-import com.jun.plugin.common.service.RedisService;
+import com.jun.plugin.common.redis.service.RedisService;
 import com.jun.plugin.system.entity.*;
 import com.jun.plugin.system.service.*;
 

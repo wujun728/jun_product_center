@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jun.plugin</groupId>
-    <version>1.0</version>
     <artifactId>jun_generator</artifactId>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <name>代码生成器</name>
 
@@ -28,7 +28,7 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.3.1</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-core</artifactId>
             <version>3.5.3.2</version>
@@ -38,7 +38,7 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.3.2</version>
-        </dependency>
+        </dependency>-->
         <!--<dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>

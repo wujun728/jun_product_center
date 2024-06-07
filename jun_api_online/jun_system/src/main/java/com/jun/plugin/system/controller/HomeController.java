@@ -2,7 +2,7 @@ package com.jun.plugin.system.controller;
 
 import com.google.common.collect.Lists;
 import com.jun.plugin.common.Result;
-import com.jun.plugin.common.service.HttpSessionService;
+import com.jun.plugin.common.base.service.HttpSessionService;
 import com.jun.plugin.system.vo.resp.App;
 import com.jun.plugin.system.vo.resp.Menu;
 import io.swagger.annotations.Api;

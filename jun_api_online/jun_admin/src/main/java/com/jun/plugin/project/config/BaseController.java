@@ -1,16 +1,11 @@
 package com.jun.plugin.project.config;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.jun.plugin.common.Result;
-//import com.jun.plugin.common.util.SpringContextUtil;
-import com.jun.plugin.common.utils.spring.SpringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.Inet4Address;

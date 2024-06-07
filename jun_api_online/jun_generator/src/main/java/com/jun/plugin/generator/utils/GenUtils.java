@@ -1,10 +1,10 @@
 package com.jun.plugin.generator.utils;
 
 import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.jun.plugin.common.exception.BusinessException;
 
-import com.jun.plugin.common.utils.DateUtils;
 import com.jun.plugin.generator.code.TableInfo;
 import com.jun.plugin.generator.entity.ColumnEntity;
 import com.jun.plugin.generator.entity.TableEntity;
@@ -147,7 +147,7 @@ public class GenUtils {
         map.put("package", config.getString("package"));
         map.put("author", config.getString("author"));
         map.put("email", config.getString("email"));
-        map.put("datetime", DateUtils.dateTime());
+        map.put("datetime", DateUtil.now());
         map.put("identity", IdWorker.getId());
         map.put("addId", IdWorker.getId());
         map.put("updateId", IdWorker.getId());

@@ -5,10 +5,8 @@ import com.alibaba.fastjson2.JSONObject;
 import com.jun.plugin.common.constant.Constant;
 import com.jun.plugin.common.exception.BusinessException;
 import com.jun.plugin.common.exception.code.BaseResponseCode;
-import com.jun.plugin.common.service.RedisService;
-//import com.jun.plugin.system.service.PermissionService;
-//import com.jun.plugin.system.service.RoleService;
 
+import com.jun.plugin.common.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

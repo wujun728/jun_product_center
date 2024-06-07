@@ -3,9 +3,9 @@ package com.jun.plugin.sms.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jun.plugin.common.Result;
-import com.jun.plugin.common.service.HttpSessionService;
-import com.jun.plugin.common.service.RedisService;
-import com.jun.plugin.common.util.PasswordUtils;
+import com.jun.plugin.common.base.service.HttpSessionService;
+import com.jun.plugin.common.redis.service.RedisService;
+import com.jun.plugin.common.utils.PasswordUtils;
 import com.jun.plugin.sms.service.SendSmsImpl;
 import com.jun.plugin.system.entity.SysUser;
 import com.jun.plugin.system.mapper.SysUserMapper;

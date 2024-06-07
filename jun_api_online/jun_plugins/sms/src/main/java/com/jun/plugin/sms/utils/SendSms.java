@@ -2,7 +2,7 @@ package com.jun.plugin.sms.utils;
 
 import javax.annotation.Resource;
 
-import com.jun.plugin.common.service.HttpSessionService;
+import com.jun.plugin.common.base.service.HttpSessionService;
 import org.springframework.stereotype.Component;
 
 import com.tencentcloudapi.common.Credential;

@@ -25,7 +25,7 @@
     <dependencies>
         <dependency>
             <groupId>com.jun.plugin</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>jun_common</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
