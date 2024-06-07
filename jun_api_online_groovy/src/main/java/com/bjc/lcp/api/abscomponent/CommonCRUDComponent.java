@@ -13,10 +13,10 @@ import com.alibaba.fastjson2.JSON;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.jun.plugin.common.base.interfaces.AbstractExecutor;
-import com.jun.plugin.common.base.interfaces.Context;
-import com.jun.plugin.db.record.Db;
-import com.jun.plugin.db.record.Record;
+import io.github.wujun728.common.base.interfaces.AbstractExecutor;
+import io.github.wujun728.common.base.interfaces.Context;
+import io.github.wujun728.db.record.Db;
+import io.github.wujun728.db.record.Record;
 
 /**
  * 组件ID：BAS000000000100

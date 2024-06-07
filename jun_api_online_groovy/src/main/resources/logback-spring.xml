@@ -42,7 +42,7 @@
     <!--开发环境:打印控制台-->
     <springProfile name="dev">
         <!-- 打印sql -->
-        <logger name="com.jun.plugin" level="DEBUG"/>
+        <logger name="io.github.wujun728" level="DEBUG"/>
         <root level="${LOG_LEVEL}">
             <appender-ref ref="CONSOLE"/>
         </root>

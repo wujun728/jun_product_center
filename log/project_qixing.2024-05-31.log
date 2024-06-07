@@ -8,26 +8,26 @@
 2024-05-31 13:58:17.781  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
 2024-05-31 13:58:17.783  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
 2024-05-31 13:58:17.799  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
-2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'com.jun.plugin.generator.mapper.GeneratorMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'com.jun.plugin.quartz.mapper.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'com.jun.plugin.quartz.mapper.SysJobMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'com.jun.plugin.system.mapper.SysContentMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'com.jun.plugin.system.mapper.SysDeptMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'com.jun.plugin.system.mapper.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'com.jun.plugin.system.mapper.SysDictMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'com.jun.plugin.system.mapper.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'com.jun.plugin.system.mapper.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'com.jun.plugin.system.mapper.SysRoleMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'com.jun.plugin.system.mapper.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'com.jun.plugin.system.mapper.SysUserMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'com.jun.plugin.system.mapper.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.119  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'com.jun.plugin.file.mapper.SysFilesMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.119  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesOssMapper' and 'com.jun.plugin.file.mapper.SysFilesOssMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.120  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.file.mapper]' package. Please check your configuration.
-2024-05-31 13:58:18.122  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.sms.mapper]' package. Please check your configuration.
-2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLogMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.snakerflow.**.mapper]' package. Please check your configuration.
+2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'mapper.io.github.wujun728.generator.GeneratorMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'mapper.io.github.wujun728.quartz.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'mapper.io.github.wujun728.quartz.SysJobMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'mapper.io.github.wujun728.system.SysContentMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'mapper.io.github.wujun728.system.SysDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'mapper.io.github.wujun728.system.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'mapper.io.github.wujun728.system.SysDictMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'mapper.io.github.wujun728.system.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'mapper.io.github.wujun728.system.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'mapper.io.github.wujun728.system.SysRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'mapper.io.github.wujun728.system.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'mapper.io.github.wujun728.system.SysUserMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'mapper.io.github.wujun728.system.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.119  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'mapper.io.github.wujun728.file.SysFilesMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.119  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesOssMapper' and 'io.github.wujun728.file.mapper.SysFilesOssMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.120  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.file.mapper]' package. Please check your configuration.
+2024-05-31 13:58:18.122  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.sms.mapper]' package. Please check your configuration.
+2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'mapper.ext.io.github.wujun728.snakerflow.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'mapper.ext.io.github.wujun728.snakerflow.ExtLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.snakerflow.**.mapper]' package. Please check your configuration.
 2024-05-31 13:58:18.457  INFO 18692 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
 2024-05-31 13:58:18.553  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
 2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
@@ -68,8 +68,8 @@
 2024-05-31 13:58:21.492  INFO 18692 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
 2024-05-31 13:58:21.643  INFO 18692 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2024-05-31 13:58:21.643  INFO 18692 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6289 ms
-2024-05-31 13:58:23.501  WARN 18692 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class com.jun.plugin.generator.entity.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2024-05-31 13:58:23.585 ERROR 18692 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[com.jun.plugin.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
+2024-05-31 13:58:23.501  WARN 18692 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class entity.io.github.wujun728.generator.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2024-05-31 13:58:23.585 ERROR 18692 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[io.github.wujun728.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
 2024-05-31 13:58:24.419  INFO 18692 --- [restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
 2024-05-31 13:58:24.435  INFO 18692 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2024-05-31 13:58:24.759  INFO 18692 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
@@ -172,8 +172,8 @@
 2024-05-31 13:58:34.148  INFO 18692 --- [restartedMain] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
 2024-05-31 13:58:34.149  INFO 18692 --- [restartedMain] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
 2024-05-31 13:58:34.181  INFO 18692 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Started OnlineApplication in 20.626 seconds (JVM running for 21.864)
-2024-05-31 13:58:34.187  INFO 18692 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : restartedMain获取锁
-2024-05-31 13:58:34.187  INFO 18692 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : 添加连接池成功：main
+2024-05-31 13:58:34.187  INFO 18692 --- [restartedMain] io.github.wujun728.db.DataSourcePool         : restartedMain获取锁
+2024-05-31 13:58:34.187  INFO 18692 --- [restartedMain] io.github.wujun728.db.DataSourcePool         : 添加连接池成功：main
 2024-05-31 13:58:34.188  INFO 18692 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 资源搜集器111，将项目中所有接口（带@RequestMapping的）都搜集起来 
 2024-05-31 13:58:34.190  INFO 18692 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 缓存资源URL集合完成!资源数量：224
 2024-05-31 13:58:34.195  INFO 18692 --- [restartedMain] c.j.plugin.groovy.plugin.PluginManager   : scan BasePlugin is finish
@@ -369,25 +369,25 @@
 2024-05-31 17:17:38.089  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
 2024-05-31 17:17:38.091  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
 2024-05-31 17:17:38.113  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
-2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'com.jun.plugin.generator.mapper.GeneratorMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'com.jun.plugin.quartz.mapper.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'com.jun.plugin.quartz.mapper.SysJobMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'com.jun.plugin.system.mapper.SysContentMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'com.jun.plugin.system.mapper.SysDeptMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'com.jun.plugin.system.mapper.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'com.jun.plugin.system.mapper.SysDictMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'com.jun.plugin.system.mapper.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'com.jun.plugin.system.mapper.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'com.jun.plugin.system.mapper.SysRoleMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'com.jun.plugin.system.mapper.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'com.jun.plugin.system.mapper.SysUserMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'com.jun.plugin.system.mapper.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.447  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'com.jun.plugin.file.mapper.SysFilesMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.448  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.file.mapper]' package. Please check your configuration.
-2024-05-31 17:17:38.451  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.sms.mapper]' package. Please check your configuration.
-2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLogMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.snakerflow.**.mapper]' package. Please check your configuration.
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'mapper.io.github.wujun728.generator.GeneratorMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'mapper.io.github.wujun728.quartz.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'mapper.io.github.wujun728.quartz.SysJobMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'mapper.io.github.wujun728.system.SysContentMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'mapper.io.github.wujun728.system.SysDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'mapper.io.github.wujun728.system.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'mapper.io.github.wujun728.system.SysDictMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'mapper.io.github.wujun728.system.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'mapper.io.github.wujun728.system.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'mapper.io.github.wujun728.system.SysRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'mapper.io.github.wujun728.system.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'mapper.io.github.wujun728.system.SysUserMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'mapper.io.github.wujun728.system.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.447  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'mapper.io.github.wujun728.file.SysFilesMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.448  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.file.mapper]' package. Please check your configuration.
+2024-05-31 17:17:38.451  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.sms.mapper]' package. Please check your configuration.
+2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'mapper.ext.io.github.wujun728.snakerflow.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'mapper.ext.io.github.wujun728.snakerflow.ExtLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.snakerflow.**.mapper]' package. Please check your configuration.
 2024-05-31 17:17:38.809  INFO 21056 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
 2024-05-31 17:17:38.918  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
 2024-05-31 17:17:38.921  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
@@ -428,8 +428,8 @@
 2024-05-31 17:17:42.763  INFO 21056 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
 2024-05-31 17:17:42.926  INFO 21056 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2024-05-31 17:17:42.926  INFO 21056 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7406 ms
-2024-05-31 17:17:44.888  WARN 21056 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class com.jun.plugin.generator.entity.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2024-05-31 17:17:44.969 ERROR 21056 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[com.jun.plugin.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
+2024-05-31 17:17:44.888  WARN 21056 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class entity.io.github.wujun728.generator.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2024-05-31 17:17:44.969 ERROR 21056 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[io.github.wujun728.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
 2024-05-31 17:17:45.798  INFO 21056 --- [restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
 2024-05-31 17:17:45.813  INFO 21056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
 2024-05-31 17:17:46.102  INFO 21056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
@@ -462,7 +462,7 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:343)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1370)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1359)
-	at com.jun.plugin.project.OnlineApplication.main(OnlineApplication.java:39)
+	at io.github.wujun728.project.OnlineApplication.main(OnlineApplication.java:39)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -539,25 +539,25 @@ Caused by: org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_
 2024-05-31 17:18:23.314  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
 2024-05-31 17:18:23.316  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
 2024-05-31 17:18:23.333  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'com.jun.plugin.generator.mapper.GeneratorMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'com.jun.plugin.quartz.mapper.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'com.jun.plugin.quartz.mapper.SysJobMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'com.jun.plugin.system.mapper.SysContentMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'com.jun.plugin.system.mapper.SysDeptMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'com.jun.plugin.system.mapper.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'com.jun.plugin.system.mapper.SysDictMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'com.jun.plugin.system.mapper.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'com.jun.plugin.system.mapper.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'com.jun.plugin.system.mapper.SysRoleMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'com.jun.plugin.system.mapper.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'com.jun.plugin.system.mapper.SysUserMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'com.jun.plugin.system.mapper.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.669  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'com.jun.plugin.file.mapper.SysFilesMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.670  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.file.mapper]' package. Please check your configuration.
-2024-05-31 17:18:23.672  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.sms.mapper]' package. Please check your configuration.
-2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLogMapper' mapperInterface. Bean already defined with the same name!
-2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.snakerflow.**.mapper]' package. Please check your configuration.
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'mapper.io.github.wujun728.generator.GeneratorMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'mapper.io.github.wujun728.quartz.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'mapper.io.github.wujun728.quartz.SysJobMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'mapper.io.github.wujun728.system.SysContentMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'mapper.io.github.wujun728.system.SysDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'mapper.io.github.wujun728.system.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'mapper.io.github.wujun728.system.SysDictMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'mapper.io.github.wujun728.system.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'mapper.io.github.wujun728.system.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'mapper.io.github.wujun728.system.SysRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'mapper.io.github.wujun728.system.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'mapper.io.github.wujun728.system.SysUserMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'mapper.io.github.wujun728.system.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.669  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'mapper.io.github.wujun728.file.SysFilesMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.670  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.file.mapper]' package. Please check your configuration.
+2024-05-31 17:18:23.672  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.sms.mapper]' package. Please check your configuration.
+2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'mapper.ext.io.github.wujun728.snakerflow.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'mapper.ext.io.github.wujun728.snakerflow.ExtLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[io.github.wujun728.snakerflow.**.mapper]' package. Please check your configuration.
 2024-05-31 17:18:24.025  INFO 9352 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
 2024-05-31 17:18:24.132  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
 2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
@@ -596,8 +596,8 @@ Caused by: org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_
 2024-05-31 17:18:27.195  INFO 9352 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
 2024-05-31 17:18:27.402  INFO 9352 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
 2024-05-31 17:18:27.402  INFO 9352 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6341 ms
-2024-05-31 17:18:29.303  WARN 9352 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class com.jun.plugin.generator.entity.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
-2024-05-31 17:18:29.379 ERROR 9352 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[com.jun.plugin.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
+2024-05-31 17:18:29.303  WARN 9352 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class entity.io.github.wujun728.generator.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2024-05-31 17:18:29.379 ERROR 9352 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[io.github.wujun728.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
 2024-05-31 17:18:30.175  INFO 9352 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
 2024-05-31 17:18:30.195  INFO 9352 --- [restartedMain] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
 2024-05-31 17:18:30.195  INFO 9352 --- [restartedMain] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.2 created.
@@ -695,8 +695,8 @@ Caused by: org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_
 2024-05-31 17:18:39.224  INFO 9352 --- [restartedMain] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
 2024-05-31 17:18:39.224  INFO 9352 --- [restartedMain] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
 2024-05-31 17:18:39.257  INFO 9352 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Started OnlineApplication in 20.061 seconds (JVM running for 21.353)
-2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : restartedMain获取锁
-2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : 添加连接池成功：main
+2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] io.github.wujun728.db.DataSourcePool         : restartedMain获取锁
+2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] io.github.wujun728.db.DataSourcePool         : 添加连接池成功：main
 2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 资源搜集器111，将项目中所有接口（带@RequestMapping的）都搜集起来 
 2024-05-31 17:18:39.266  INFO 9352 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 缓存资源URL集合完成!资源数量：217
 2024-05-31 17:18:39.270  INFO 9352 --- [restartedMain] c.j.plugin.groovy.plugin.PluginManager   : scan BasePlugin is finish
@@ -739,16 +739,16 @@ Caused by: org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_
 2024-05-31 17:19:43.431  INFO 9352 --- [http-nio-8082-exec-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
 2024-05-31 17:19:43.529 ERROR 9352 --- [http-nio-8082-exec-7] c.j.p.c.config.RestExceptionHandler      : Exception,exception:{}
 
-com.jun.plugin.common.exception.BusinessException: 上传文件失败
-	at com.jun.plugin.file.service.impl.SysFilesServiceImpl.saveOssFile(SysFilesServiceImpl.java:240)
-	at com.jun.plugin.file.service.impl.SysFilesServiceImpl.saveFile(SysFilesServiceImpl.java:183)
-	at com.jun.plugin.file.service.impl.SysFilesServiceImpl$$FastClassBySpringCGLIB$$2c57dca5.invoke(<generated>)
+io.github.wujun728.common.exception.BusinessException: 上传文件失败
+	at impl.service.io.github.wujun728.file.SysFilesServiceImpl.saveOssFile(SysFilesServiceImpl.java:240)
+	at impl.service.io.github.wujun728.file.SysFilesServiceImpl.saveFile(SysFilesServiceImpl.java:183)
+	at impl.service.io.github.wujun728.file.SysFilesServiceImpl$$FastClassBySpringCGLIB$$2c57dca5.invoke(<generated>)
 	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
 	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
 	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704)
-	at com.jun.plugin.file.service.impl.SysFilesServiceImpl$$EnhancerBySpringCGLIB$$ca36c1e9.saveFile(<generated>)
-	at com.jun.plugin.file.controller.SysFilesController.add(SysFilesController.java:70)
+	at impl.service.io.github.wujun728.file.SysFilesServiceImpl$$EnhancerBySpringCGLIB$$ca36c1e9.saveFile(<generated>)
+	at controller.io.github.wujun728.file.SysFilesController.add(SysFilesController.java:70)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -777,16 +777,16 @@ com.jun.plugin.common.exception.BusinessException: 上传文件失败
 	at com.github.xiaoymin.knife4j.spring.filter.SecurityBasicAuthFilter.doFilter(SecurityBasicAuthFilter.java:90)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
+	at io.github.wujun728.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at io.github.wujun728.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
+	at io.github.wujun728.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at io.github.wujun728.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
@@ -850,16 +850,16 @@ org.springframework.web.HttpRequestMethodNotSupportedException: Request method '
 	at com.github.xiaoymin.knife4j.spring.filter.SecurityBasicAuthFilter.doFilter(SecurityBasicAuthFilter.java:90)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
+	at io.github.wujun728.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at io.github.wujun728.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
+	at io.github.wujun728.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at io.github.wujun728.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
@@ -889,8 +889,8 @@ org.springframework.web.HttpRequestMethodNotSupportedException: Request method '
 2024-05-31 17:22:57.886 ERROR 9352 --- [http-nio-8082-exec-2] c.j.p.c.config.RestExceptionHandler      : Exception,exception:{}
 
 java.lang.NullPointerException: null
-	at com.jun.plugin.file.service.impl.FileServiceImpl.fileList(FileServiceImpl.java:159)
-	at com.jun.plugin.file.controller.FileControl.filedata(FileControl.java:106)
+	at impl.service.io.github.wujun728.file.FileServiceImpl.fileList(FileServiceImpl.java:159)
+	at controller.io.github.wujun728.file.FileControl.filedata(FileControl.java:106)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -919,16 +919,16 @@ java.lang.NullPointerException: null
 	at com.github.xiaoymin.knife4j.spring.filter.SecurityBasicAuthFilter.doFilter(SecurityBasicAuthFilter.java:90)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
+	at io.github.wujun728.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at io.github.wujun728.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
+	at io.github.wujun728.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
-	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at io.github.wujun728.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)

@@ -4,9 +4,9 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 //import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 //import com.jfinal.plugin.druid.DruidPlugin;
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.IExecutor;
-import com.jun.plugin.db.record.Db;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.IExecutor;
+import io.github.wujun728.db.record.Db;
 
 import java.util.Map;
 

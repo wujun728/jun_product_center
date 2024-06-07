@@ -1,11 +1,11 @@
 package com.bjc.lcp.api.abscomponent;
 //import com.jfinal.plugin.activerecord.Db;
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.AbstractExecutor;
-import com.jun.plugin.db.record.Db;
-import com.jun.plugin.groovy.util.JdbcUtil;
-import com.jun.plugin.sql.SqlEngine;
-import com.jun.plugin.sql.SqlMeta;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.AbstractExecutor;
+import io.github.wujun728.db.record.Db;
+import io.github.wujun728.groovy.util.JdbcUtil;
+import io.github.wujun728.sql.SqlEngine;
+import io.github.wujun728.sql.SqlMeta;
 import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 import java.util.Map;

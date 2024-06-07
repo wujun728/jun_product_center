@@ -10,10 +10,10 @@ import com.alibaba.fastjson2.JSON;
 //import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 //import com.jfinal.plugin.activerecord.Db;
 //import com.jfinal.plugin.activerecord.Record;
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.AbstractExecutor;
-import com.jun.plugin.db.record.Db;
-import com.jun.plugin.db.record.Record;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.AbstractExecutor;
+import io.github.wujun728.db.record.Db;
+import io.github.wujun728.db.record.Record;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;

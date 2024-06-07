@@ -23,9 +23,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Slf4j
 @EnableScheduling
 @SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class) // 多数据源 (exclude = DruidDataSourceAutoConfigure.class)
-@MapperScan({"com.jun.plugin.**.mapper","com.bjc.lcp.**.mapper"})
-@ComponentScan(basePackages = {"com.bjc.lcp","com.jun.plugin"})
-@ServletComponentScan(basePackages = {"com.jun.plugin.**.filter"})
+@MapperScan({"io.github.wujun728.**.mapper","com.bjc.lcp.**.mapper"})
+@ComponentScan(basePackages = {"com.bjc.lcp","io.github.wujun728"})
+@ServletComponentScan(basePackages = {"io.github.wujun728.**.filter"})
 public class ApiServiceApplication {
 
     public static void main(String[] args) throws UnknownHostException {

@@ -2,7 +2,7 @@
 //
 //import com.alibaba.druid.pool.DruidDataSource;
 //import com.gitthub.wujun728.engine.base.interfaces.IExecutor;
-//import com.jun.plugin.common.Result;
+//import io.github.wujun728.common.Result;
 //import lombok.Data;
 //import org.beetl.sql.annotation.entity.AutoID;
 //import org.beetl.sql.annotation.entity.Table;

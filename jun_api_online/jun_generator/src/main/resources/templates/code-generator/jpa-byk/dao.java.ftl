@@ -3,7 +3,7 @@
 import org.springframework.stereotype.Service;
 
 import ${packageName}.entity.${classInfo.className}Entity;
- import com.jun.plugin.common.base.IDAO;
+ import io.github.wujun728.common.base.IDAO;
 </#if>
 /**
  * @description ${classInfo.classComment}数据层

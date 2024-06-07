@@ -17,7 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 <#--import org.apache.shiro.authz.annotation.RequiresPermissions;-->
 import org.springframework.web.servlet.ModelAndView;
-import com.jun.plugin.common.Result;
+import io.github.wujun728.common.Result;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;

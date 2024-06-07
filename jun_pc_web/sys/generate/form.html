@@ -102,7 +102,7 @@
                 <label class="layui-form-label layui-form-required">代码包名</label>
                 <div class="layui-input-block">
                     <div id="packageName">
-                        <input name="packageName" class="layui-input" placeholder="（包名）例:com.jun.plugin.app" value="com.jun.plugin.app" lay-verType="tips" lay-verify="required" required/>
+                        <input name="packageName" class="layui-input" placeholder="（包名）例:io.github.wujun728.app" value="io.github.wujun728.app" lay-verType="tips" lay-verify="required" required/>
                     </div>
                 </div>
             </div>
@@ -333,10 +333,10 @@
         function showGenerateType (generateType) {
             if (generateType === '1') {
                 $("#packageNameMd").show()
-                $("#packageName").html('<input name="packageName" class="layui-input" placeholder="（包名）例:com.jun.plugin.app" value="com.jun.plugin.app" lay-verType="tips" lay-verify="required" required/>')
+                $("#packageName").html('<input name="packageName" class="layui-input" placeholder="（包名）例:io.github.wujun728.app" value="io.github.wujun728.app" lay-verType="tips" lay-verify="required" required/>')
             } else {
                 $("#packageNameMd").hide()
-                $("#packageName").html('<input name="packageName" style="display: none" value="com.jun.plugin.app"/>')
+                $("#packageName").html('<input name="packageName" style="display: none" value="io.github.wujun728.app"/>')
             }
         }
     });

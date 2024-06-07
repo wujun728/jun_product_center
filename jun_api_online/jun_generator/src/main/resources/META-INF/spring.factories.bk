@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-#com.jun.plugin.generator.config.DevtoolsAutoConfig
+#io.github.wujun728.generator.config.DevtoolsAutoConfig

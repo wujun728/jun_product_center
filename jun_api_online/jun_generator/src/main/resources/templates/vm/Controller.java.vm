@@ -12,9 +12,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import java.util.List;
-import com.jun.plugin.system.common.utils.DataResult;
-import com.jun.plugin.common.aop.annotation.DataScope;
-import com.jun.plugin.module.flow.process.BaseFlowController;
+import io.github.wujun728.system.common.utils.DataResult;
+import io.github.wujun728.common.aop.annotation.DataScope;
+import io.github.wujun728.module.flow.process.BaseFlowController;
 
 import ${package}.entity.${className}Entity;
 import ${package}.mapper.${className}Mapper;

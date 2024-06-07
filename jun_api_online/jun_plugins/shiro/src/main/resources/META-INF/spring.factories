@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.jun.plugin.shiro.ShiroAutoConfig
+io.github.wujun728.shiro.ShiroAutoConfig

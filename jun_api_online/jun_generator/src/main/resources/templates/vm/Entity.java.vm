@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jun.plugin.common.entity.BaseFlowEntity;
+import io.github.wujun728.common.entity.BaseFlowEntity;
 import org.springframework.data.annotation.Id;
 
 #if(${hasBigDecimal})

@@ -71,7 +71,7 @@ mybatis-plus:
 project:
   database: mysql
   config:
-    packages: 'com.jun.plugin.abcd,com.jun.plugin.abc'
+    packages: 'io.github.wujun728.abcd,io.github.wujun728.abc'
   datasource:
     dsname: 'main'
     url: ${spring.datasource.url}

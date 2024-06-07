@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.jun.plugin.file.config.FileAutoConfig
+io.github.wujun728.file.config.FileAutoConfig

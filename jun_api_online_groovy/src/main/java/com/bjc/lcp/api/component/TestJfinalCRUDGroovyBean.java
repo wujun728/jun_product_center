@@ -6,10 +6,10 @@ import cn.hutool.json.JSONUtil;
 //import com.jfinal.plugin.activerecord.Db;
 //import com.jfinal.plugin.activerecord.Record;
 //import com.jfinal.plugin.druid.DruidPlugin;
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.IExecutor;
-import com.jun.plugin.db.record.Db;
-import com.jun.plugin.db.record.Record;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.IExecutor;
+import io.github.wujun728.db.record.Db;
+import io.github.wujun728.db.record.Record;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;

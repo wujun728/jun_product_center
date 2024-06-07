@@ -2,10 +2,10 @@ package ${packageServiceImpl};
 
 import org.springframework.stereotype.Service;
 
-import com.jun.plugin.biz.dao.${classInfo.className}Dao;
+import io.github.wujun728.biz.dao.${classInfo.className}Dao;
 import ${packageModel}.${classInfo.className};
 import ${packageService}.${classInfo.className}Service;
-import com.jun.plugin.codegenerator.admin.model.ReturnT;
+import io.github.wujun728.codegenerator.admin.model.ReturnT;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;

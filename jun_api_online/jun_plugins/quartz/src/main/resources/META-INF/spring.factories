@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.jun.plugin.quartz.config.QuartzAutoConfig
+io.github.wujun728.quartz.config.QuartzAutoConfig

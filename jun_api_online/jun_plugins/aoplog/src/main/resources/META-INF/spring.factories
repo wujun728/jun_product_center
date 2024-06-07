@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.jun.plugin.aoplog.config.LogAutoConfig
+io.github.wujun728.aoplog.config.LogAutoConfig

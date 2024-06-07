@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.jun.plugin.bizservice.config.CommonAutoConfig
+io.github.wujun728.bizservice.config.CommonAutoConfig

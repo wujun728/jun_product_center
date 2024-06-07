@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.jun.plugin.bizservice.mapper.BizTestMapper">
+<mapper namespace="io.github.wujun728.bizservice.mapper.BizTestMapper">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.jun.plugin.bizservice.entity.BizTestEntity" id="bizTestMap">
+    <resultMap type="io.github.wujun728.bizservice.entity.BizTestEntity" id="bizTestMap">
         <result property="id" column="id"/>
         <result property="cusname" column="cusname"/>
         <result property="money" column="money"/>

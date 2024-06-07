@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ${packageModel}.${classInfo.className};
 import ${packageService}.${classInfo.className}Service;
-import com.jun.plugin.codegenerator.admin.model.ReturnT;
+import io.github.wujun728.codegenerator.admin.model.ReturnT;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.jun.plugin.module.oss.mapper.SysOssDao">
-	<select id="queryObject" resultType="com.jun.plugin.module.oss.entity.SysOssEntity">
+<mapper namespace="io.github.wujun728.module.oss.mapper.SysOssDao">
+	<select id="queryObject" resultType="io.github.wujun728.module.oss.entity.SysOssEntity">
 		select * from sys_oss where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.jun.plugin.module.oss.entity.SysOssEntity">
+	<select id="queryList" resultType="io.github.wujun728.module.oss.entity.SysOssEntity">
 		select * from sys_oss order by id desc
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -17,7 +17,7 @@
 		select count(*) from sys_oss 
 	</select>
 	 
-	<insert id="save" parameterType="com.jun.plugin.module.oss.entity.SysOssEntity" useGeneratedKeys="true" keyProperty="id">
+	<insert id="save" parameterType="io.github.wujun728.module.oss.entity.SysOssEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_oss
 		(
 			`url`, 
@@ -30,7 +30,7 @@
 		)
 	</insert>
 	 
-	<update id="update" parameterType="com.jun.plugin.module.oss.entity.SysOssEntity">
+	<update id="update" parameterType="io.github.wujun728.module.oss.entity.SysOssEntity">
 		update sys_oss 
 		<set>
 			<if test="url != null">`url` = #{url}, </if>

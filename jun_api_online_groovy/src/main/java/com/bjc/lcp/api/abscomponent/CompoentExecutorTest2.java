@@ -6,8 +6,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.jun.plugin.common.base.interfaces.AbstractExecutor;
-import com.jun.plugin.common.base.interfaces.Context;
+import io.github.wujun728.common.base.interfaces.AbstractExecutor;
+import io.github.wujun728.common.base.interfaces.Context;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.pool.DruidDataSource;

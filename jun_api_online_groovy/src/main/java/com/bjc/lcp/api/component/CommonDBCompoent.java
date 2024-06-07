@@ -7,8 +7,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.IExecutor;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.IExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

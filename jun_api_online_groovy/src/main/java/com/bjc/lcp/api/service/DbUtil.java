@@ -10,12 +10,12 @@ import com.alibaba.fastjson2.JSON;
 //import com.jfinal.plugin.activerecord.Db;
 //import com.jfinal.plugin.activerecord.Record;
 //import com.jfinal.plugin.druid.DruidPlugin;
-import com.jun.plugin.common.generator.GeneratorUtil;
-import com.jun.plugin.db.record.Db;
-import com.jun.plugin.db.record.Record;
-import com.jun.plugin.groovy.util.JdbcUtil;
-import com.jun.plugin.sql.SqlEngine;
-import com.jun.plugin.sql.SqlMeta;
+import io.github.wujun728.common.generator.GeneratorUtil;
+import io.github.wujun728.db.record.Db;
+import io.github.wujun728.db.record.Record;
+import io.github.wujun728.groovy.util.JdbcUtil;
+import io.github.wujun728.sql.SqlEngine;
+import io.github.wujun728.sql.SqlMeta;
 import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 

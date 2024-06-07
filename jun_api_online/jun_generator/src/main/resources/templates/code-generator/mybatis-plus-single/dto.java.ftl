@@ -5,7 +5,7 @@
 import java.util.Date;
 import java.util.List;
 import java.io.Serializable;
-import com.jun.plugin.common.entity.BaseEntity;
+import io.github.wujun728.common.entity.BaseEntity;
 <#if isSwagger?exists && isSwagger==true>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;</#if>

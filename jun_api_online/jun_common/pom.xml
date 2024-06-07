@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jun.plugin</groupId>
+    <groupId>io.github.wujun728</groupId>
     <artifactId>jun_common</artifactId>
 	<version>1.0</version>
     <packaging>jar</packaging>
@@ -11,27 +11,27 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.jun.plugin</groupId>
-            <artifactId>jun-common-core</artifactId>
+            <groupId>io.github.wujun728</groupId>
+            <artifactId>jun-common</artifactId>
             <version>1.0.16</version>
         </dependency>
         <dependency>
-            <groupId>com.jun.plugin</groupId>
+            <groupId>io.github.wujun728</groupId>
             <artifactId>jun-redis-spring-boot-starter</artifactId>
             <version>1.0.16</version>
         </dependency>
         <dependency>
-            <groupId>com.jun.plugin</groupId>
+            <groupId>io.github.wujun728</groupId>
             <artifactId>jun-db-spring-boot-starter</artifactId>
             <version>1.0.16</version>
         </dependency>
         <!--<dependency>
-            <groupId>com.jun.plugin</groupId>
+            <groupId>io.github.wujun728</groupId>
             <artifactId>jun-dynamic-form-spring-boot-starter</artifactId>
             <version>1.0.13</version>
         </dependency>
         <dependency>
-            <groupId>com.jun.plugin</groupId>
+            <groupId>io.github.wujun728</groupId>
             <artifactId>jun-code-generator-spring-boot-starter</artifactId>
             <version>1.0.13</version>
         </dependency>-->

@@ -7,8 +7,8 @@ import cn.hutool.db.Entity;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.IExecutor;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.IExecutor;
 
 import javax.annotation.PostConstruct;
 import java.sql.SQLException;

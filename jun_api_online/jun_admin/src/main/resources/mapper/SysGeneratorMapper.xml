@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jun.plugin.generator.mapper.GeneratorMapper">
+<mapper namespace="io.github.wujun728.generator.mapper.GeneratorMapper">
 
 
-    <resultMap id="BaseResultMap" type="com.jun.plugin.generator.code.TsysTables" >
+    <resultMap id="BaseResultMap" type="io.github.wujun728.generator.code.TsysTables" >
         <result column="table_name" property="tableName" jdbcType="VARCHAR" />
         <result column="engine" property="engine" jdbcType="VARCHAR" />
         <result column="table_comment" property="tableComment" jdbcType="VARCHAR" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
-    <resultMap id="BaseResultMap2" type="com.jun.plugin.generator.code.BeanColumn" >
+    <resultMap id="BaseResultMap2" type="io.github.wujun728.generator.code.BeanColumn" >
         <result column="table_catalog" property="table_catalog" jdbcType="VARCHAR" />
         <result column="table_schema" property="table_schema" jdbcType="VARCHAR" />
         <result column="table_name" property="table_name" jdbcType="VARCHAR" />
@@ -39,7 +39,7 @@
         id, table_name, menu_name, pid, gen_time
     </sql>
     <!-- 获取列表 -->
-    <select id="selectAllTables" resultType="com.jun.plugin.generator.entity.SysGenerator">
+    <select id="selectAllTables" resultType="io.github.wujun728.generator.entity.SysGenerator">
 
 
         SELECT

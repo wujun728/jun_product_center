@@ -1,8 +1,8 @@
 package com.bjc.lcp.api.component;
 
 import cn.hutool.core.lang.Console;
-import com.jun.plugin.common.Result;
-import com.jun.plugin.common.base.interfaces.IExecutor;
+import io.github.wujun728.common.Result;
+import io.github.wujun728.common.base.interfaces.IExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 
