@@ -1,9 +1,9 @@
 package com.bjc.lcp.api.abscomponent;
 
 //import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Db;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
-import io.github.wujun728.db.record.Db;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

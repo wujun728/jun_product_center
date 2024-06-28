@@ -3,7 +3,6 @@ package io.github.wujun728.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.wujun728.common.base.service.HttpSessionService;
 import io.github.wujun728.common.exception.BusinessException;
 import io.github.wujun728.common.exception.code.BaseResponseCode;
 import io.github.wujun728.system.entity.SysRole;
@@ -48,8 +47,6 @@ public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impleme
     @Resource
     private PermissionService permissionService;
     @Resource
-    private HttpSessionService httpSessionService;
-    @Resource
     private DeptService deptService;
     @Resource
     private SysRoleDeptService sysRoleDeptService;
@@ -85,7 +82,7 @@ public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impleme
             reqVO.setPermissionIds(vo.getPermissions());
             rolePermissionService.addRolePermission(reqVO);
             // 刷新权限
-            httpSessionService.refreshRolePermission(sysRole.getId());
+            //httpSessionService.refreshRolePermission(sysRole.getId());
         }
     }
 
@@ -145,7 +142,7 @@ public class RoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impleme
         userRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getRoleId, id));
         if (!CollectionUtils.isEmpty(userIds)) {
             // 刷新权限
-            userIds.parallelStream().forEach(httpSessionService::refreshUerId);
+            //userIds.parallelStream().forEach(httpSessionService::refreshUerId);
         }
     }
 

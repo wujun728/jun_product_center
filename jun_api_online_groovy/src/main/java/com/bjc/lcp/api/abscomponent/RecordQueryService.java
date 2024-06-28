@@ -1,9 +1,9 @@
 package com.bjc.lcp.api.abscomponent;
 //import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Db;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.groovy.util.JdbcUtil;
+//import io.github.wujun728.db.record.Db;
 import io.github.wujun728.sql.SqlEngine;
 import io.github.wujun728.sql.SqlMeta;
 import org.springframework.stereotype.Component;

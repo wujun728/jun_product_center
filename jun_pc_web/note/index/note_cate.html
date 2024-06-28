@@ -47,15 +47,17 @@
 	<!-- /底部 -->
 	
 	<!-- 脚本 -->
-	
+<script type="text/javascript" src="../../assets/js/core.util.js"></script>
 <script>
+	const pageFlag = 'note_cate';
 	const moduleInit = ['tool'];
 	function gouguInit() {
 		var treeTable = layui.treeTable, tool = layui.tool;
 		
 		layui.pageTable = treeTable.render({
 			elem: '#treeTable'
-			,url: "note_cate.json"
+			// ,url: "note_cate.json"
+			,url: "/api/rest/oa_note_cate/tree?ds=oa"
 			,tree: { // treeTable 特定属性集
 				customName: {name:'title'},
 				data: {},
@@ -69,7 +71,9 @@
 				,{field:'title', title: '分类名称'}
 				,{field:'pid', title: '父级ID', width:80, align:'center'}
 				,{width:160,title: '操作', align:'center',templet: function(d){
-					var html = '<span class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="add">添加子分类</button><button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></span>';
+					var html = '<span class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="add">添加子分类</button>'
+						+'<button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button>'
+						+'<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></span>';
 					return html;
 				  }
 				}
@@ -80,8 +84,8 @@
 			
 		//表头工具栏事件
 		$('.add-menu').on('click', function(){
-			//sessionStorage.setItem("note_cate_add-"+"pid",obj.data.id);
-			sessionStorage.setItem("note_cate_add-"+"pid",null);
+			//sessionStorage.setItem(pageFlag+"pid",obj.data.id);
+			sessionStorage.setItem(pageFlag+"pid",null);
 			tool.side("/note/index/note_cate_add.html");
 			return;
 		});
@@ -89,12 +93,12 @@
 		//操作按钮
 		treeTable.on('tool(treeTable)', function (obj) {
 			if (obj.event === 'add') {
-				sessionStorage.setItem("note_cate_add-"+"pid",obj.data.id);
+				sessionStorage.setItem(pageFlag+"pid",obj.data.id);
 				tool.side('/note/index/note_cate_add.html?pid='+obj.data.id);
 				return;
 			}
 			if (obj.event === 'edit') {
-				sessionStorage.setItem("note_cate_add-"+"pid",obj.data.id);
+				sessionStorage.setItem(pageFlag+"pid",obj.data.id);
 				tool.side('/note/index/note_cate_add.html?id='+obj.data.id);
 				return;
 			}

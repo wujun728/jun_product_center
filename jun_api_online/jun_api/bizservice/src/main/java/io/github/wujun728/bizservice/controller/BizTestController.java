@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.bizservice.service.BizTestService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
@@ -58,7 +57,7 @@ public class BizTestController {
 
     @ApiOperation(value = "新增")
     @PostMapping("bizTest/add")
-    @RequiresPermissions("bizTest:add")
+    //@RequiresPermissions("bizTest:add")
     @ResponseBody
     public Result add(@RequestBody BizTestEntity bizTest){
         bizTestService.save(bizTest);
@@ -67,7 +66,7 @@ public class BizTestController {
 
     @ApiOperation(value = "删除")
     @DeleteMapping("bizTest/delete")
-    @RequiresPermissions("bizTest:delete")
+    //@RequiresPermissions("bizTest:delete")
     @ResponseBody
     public Result delete(@RequestBody @ApiParam(value = "id集合") List<String> ids){
         bizTestService.removeByIds(ids);
@@ -76,7 +75,7 @@ public class BizTestController {
 
     @ApiOperation(value = "更新")
     @PutMapping("bizTest/update")
-    @RequiresPermissions("bizTest:update")
+    //@RequiresPermissions("bizTest:update")
     @ResponseBody
     public Result update(@RequestBody BizTestEntity bizTest){
         bizTestService.updateById(bizTest);
@@ -85,7 +84,7 @@ public class BizTestController {
 
     @ApiOperation(value = "查询分页数据")
     @PostMapping("bizTest/listByPage")
-    @RequiresPermissions("bizTest:list")
+    //@RequiresPermissions("bizTest:list")
     @ResponseBody
     public Result findListByPage(@RequestBody BizTestEntity bizTest){
         Page page = new Page(bizTest.getPage(), bizTest.getLimit());

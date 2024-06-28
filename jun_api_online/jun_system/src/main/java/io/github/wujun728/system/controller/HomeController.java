@@ -1,8 +1,8 @@
 package io.github.wujun728.system.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.google.common.collect.Lists;
 import io.github.wujun728.common.Result;
-import io.github.wujun728.common.base.service.HttpSessionService;
 import io.github.wujun728.system.vo.resp.App;
 import io.github.wujun728.system.vo.resp.Menu;
 import io.github.wujun728.system.vo.resp.PermissionRespNode;
@@ -35,8 +35,6 @@ import javax.annotation.Resource;
 public class HomeController {
     @Resource
     private HomeService homeService;
-    @Resource
-    private HttpSessionService httpSessionService;
     
     @Resource
     private PermissionService permissionService;
@@ -45,7 +43,7 @@ public class HomeController {
     @ApiOperation(value = "获取首页数据接口")
     public Result getHomeInfo() {
         //通过access_token拿userId
-        String userId = httpSessionService.getCurrentUserId();
+        String userId = StpUtil.getLoginIdAsString();
         Result result = Result.success(homeService.getHomeInfo(userId));
         return result;
     }
@@ -54,7 +52,7 @@ public class HomeController {
 	@GetMapping("/init")
     @ApiOperation(value = "获取首页数据接口")
     public Map getHomeInitInfo() {
-    	String userId = httpSessionService.getCurrentUserId();
+    	String userId = StpUtil.getLoginIdAsString();
     	List<PermissionRespNode> menus = permissionService.permissionTreeList(userId);
     	Map result = new HashMap<>();
     	Map homeInfo = new HashMap<>();
@@ -75,7 +73,7 @@ public class HomeController {
 	@GetMapping("/initNew")
     @ApiOperation(value = "获取首页数据接口")
     public Result getHomeInitNewInfo() {
-    	String userId = httpSessionService.getCurrentUserId();
+    	String userId = StpUtil.getLoginIdAsString();
 
     	Map result = new HashMap<>();
     	Map homeInfo = new HashMap<>();

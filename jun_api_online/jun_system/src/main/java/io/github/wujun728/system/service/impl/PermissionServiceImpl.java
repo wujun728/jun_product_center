@@ -3,7 +3,6 @@ package io.github.wujun728.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.wujun728.common.base.service.HttpSessionService;
 import io.github.wujun728.common.exception.BusinessException;
 import io.github.wujun728.common.exception.code.BaseResponseCode;
 import io.github.wujun728.system.entity.SysPermission;
@@ -45,9 +44,6 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
     private RolePermissionService rolePermissionService;
     @Resource
     private SysPermissionMapper sysPermissionMapper;
-    @Resource
-    @Lazy
-    private HttpSessionService httpSessionService;
 
     /**
      * 根据用户查询拥有的权限
@@ -97,17 +93,11 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
         //删除和角色关联
         rolePermissionService.remove(Wrappers.<SysRolePermission>lambdaQuery().eq(SysRolePermission::getPermissionId, permissionId));
 
-        if (!CollectionUtils.isEmpty(userIds)) {
-            //刷新权限
-            userIds.parallelStream().forEach(httpSessionService::refreshUerId);
-        }
-
     }
 
     @Override
     public void updatePermission(SysPermission vo) {
         sysPermissionMapper.updateById(vo);
-        httpSessionService.refreshPermission(vo.getId());
     }
 
     /**
@@ -137,7 +127,7 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
      * 获取权限标识
      */
     @Override
-    public Set<String> getPermissionsByUserId(String userId) {
+    public List<String> getPermissionsByUserId(String userId) {
 
         List<SysPermission> list = getPermission(userId);
         Set<String> permissions = new HashSet<>();
@@ -150,7 +140,8 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
             }
 
         }
-        return permissions;
+        //return permissions;
+        return new ArrayList<String>(permissions);
     }
 
     /**

@@ -68,8 +68,9 @@
 	
 <script>
 	const moduleInit = ['tool'];
-	var val = sessionStorage.getItem("note_cate_add-"+"pid");
-	console.log("111="+val);
+	const pageFlag = 'note_cate'; 
+	var val = sessionStorage.getItem(pageFlag+"pid");
+	console.log("pid="+val);
 	function gouguInit() {
 		var form = layui.form,tool=layui.tool;		  
 		//监听提交
@@ -80,7 +81,8 @@
 					tool.sideClose(1000);				
 				}
 			}
-			tool.post("/note/index/note_cate_add", data.field, callback);
+			tool.post("/api/rest/oa_note_cate/add?ds=oa", data.field, callback);
+			// tool.post("/note/index/note_cate_add", data.field, callback);
 			return false;
 		});
 	}

@@ -1,20 +1,14 @@
 package io.github.wujun728.project.config;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjUtil;
-import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.jfinal.plugin.activerecord.Record;
 import io.github.wujun728.common.base.interfaces.IRecordHandler;
-import io.github.wujun728.common.base.service.HttpSessionService;
-import io.github.wujun728.common.constant.Constant;
-import io.github.wujun728.db.record.Record;
-import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
 
 
 /**
@@ -26,10 +20,6 @@ import java.util.HashSet;
  */
 @Component
 public class RecordHandlerConfig implements IRecordHandler {
-
-    @Lazy
-    @Resource
-    HttpSessionService httpSessionService;
 
     @Override
     public String tableName() {
@@ -45,10 +35,10 @@ public class RecordHandlerConfig implements IRecordHandler {
             record.set("create_time", DateUtil.now());
         }
         if(ObjUtil.isNotNull(record.get("create_id"))){
-            record.set("create_id", httpSessionService.getCurrentUserId());
+            record.set("create_id", StpUtil.getLoginIdAsString());
         }
         if(ObjUtil.isNotNull(record.get("update_id"))){
-            record.set("update_id", httpSessionService.getCurrentUserId());
+            record.set("update_id", StpUtil.getLoginIdAsString());
         }
     }
 
@@ -61,10 +51,10 @@ public class RecordHandlerConfig implements IRecordHandler {
             record.set("create_time", DateUtil.now());
         }
         if(ObjUtil.isNotNull(record.get("create_id"))){
-            record.set("create_id", httpSessionService.getCurrentUserId());
+            record.set("create_id", StpUtil.getLoginIdAsString());
         }
         if(ObjUtil.isNotNull(record.get("update_id"))){
-            record.set("update_id", httpSessionService.getCurrentUserId());
+            record.set("update_id", StpUtil.getLoginIdAsString());
         }
     }
 }

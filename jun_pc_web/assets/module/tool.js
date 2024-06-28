@@ -5,7 +5,7 @@ layui.define([], function (exports) {
 		//右侧iframe的方式打开页面，参考勾股CMS、勾股OA
 		side: function (url, width) {
 			this.side(url, width, function () {});
-		},
+		}, 
 		side: function (url, width, ft) {
 			let that = this;
 			if (that.loading == true) {

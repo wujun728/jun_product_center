@@ -5,14 +5,12 @@ import cn.hutool.db.meta.MetaUtil;
 import cn.hutool.db.meta.Table;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
-//import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Record;
-//import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.druid.DruidPlugin;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.IExecutor;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Record;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -28,12 +26,12 @@ import java.util.Map;
 public class GenTableCRUDSQLComponent implements IExecutor<Result, Map<String,Object>> {
 
 	public static void initDb(String configName, String url, String username, String password) {
-		Db.init(url,username,password);
-//		DruidPlugin dp = new DruidPlugin(url, username, password);
-//		ActiveRecordPlugin arp = new ActiveRecordPlugin(configName, dp);
-//		// 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
-//		dp.start();
-//		arp.start();
+//		Db.init(url,username,password);
+		DruidPlugin dp = new DruidPlugin(url, username, password);
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(configName, dp);
+		// 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
+		dp.start();
+		arp.start();
 	}
 
 	@Override

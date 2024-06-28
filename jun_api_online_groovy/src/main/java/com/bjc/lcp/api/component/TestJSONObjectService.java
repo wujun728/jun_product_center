@@ -1,14 +1,14 @@
 package com.bjc.lcp.api.component;
 
 import com.alibaba.fastjson2.JSONObject;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Page;
-//import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
 import io.github.wujun728.common.exception.BusinessException;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Page;
-import io.github.wujun728.db.record.Record;
+//import io.github.wujun728.db.record.Db;
+//import io.github.wujun728.db.record.Page;
+//import io.github.wujun728.db.record.Record;
 import io.github.wujun728.groovy.groovy.GroovyDynamicLoader;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

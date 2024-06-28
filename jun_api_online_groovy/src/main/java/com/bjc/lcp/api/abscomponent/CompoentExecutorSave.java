@@ -10,10 +10,13 @@ import com.alibaba.fastjson2.JSON;
 //import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 //import com.jfinal.plugin.activerecord.Db;
 //import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Record;
+//import io.github.wujun728.db.record.Db;
+//import io.github.wujun728.db.record.Record;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -42,12 +45,12 @@ public class CompoentExecutorSave extends AbstractExecutor<Result, Map<String,Ob
 
 		Boolean isExtsis = false;
 		try {
-			Db.init(appNo,ds);
-//			ActiveRecordPlugin arp = new ActiveRecordPlugin(appNo, ds);
-//			arp.setDevMode(true);
-//			arp.setShowSql(true);
-//			arp.start();
-			//Db.use(appNo);
+//			Db.init(appNo,ds);
+			ActiveRecordPlugin arp = new ActiveRecordPlugin(appNo, ds);
+			arp.setDevMode(true);
+			arp.setShowSql(true);
+			arp.start();
+			Db.use(appNo);
 		} catch (IllegalArgumentException e) {
 			isExtsis = true;
 		}

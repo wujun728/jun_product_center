@@ -10,10 +10,11 @@ import com.alibaba.fastjson2.JSON;
 //import com.jfinal.plugin.activerecord.Db;
 //import com.jfinal.plugin.activerecord.Record;
 //import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.druid.DruidPlugin;
 import io.github.wujun728.common.generator.GeneratorUtil;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Record;
-import io.github.wujun728.groovy.util.JdbcUtil;
 import io.github.wujun728.sql.SqlEngine;
 import io.github.wujun728.sql.SqlMeta;
 import freemarker.template.TemplateException;
@@ -48,13 +49,13 @@ public class DbUtil {
             log.warn(e.getMessage());
         }
         if( !isExtsis ){
-            Db.init(url,username,password);
-//            DruidPlugin dp = new DruidPlugin(url, username, password);
-//            ActiveRecordPlugin arp = new ActiveRecordPlugin(configName, dp);
-//            arp.setDevMode(true);
-//            arp.setShowSql(true);
-//            dp.start();
-//            arp.start();
+//            Db.init(url,username,password);
+            DruidPlugin dp = new DruidPlugin(url, username, password);
+            ActiveRecordPlugin arp = new ActiveRecordPlugin(configName, dp);
+            arp.setDevMode(true);
+            arp.setShowSql(true);
+            dp.start();
+            arp.start();
             log.warn("Config have bean created by configName: {}",configName);
         }
     }

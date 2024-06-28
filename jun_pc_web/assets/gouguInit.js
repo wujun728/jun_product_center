@@ -40,6 +40,7 @@ if (moduleInit.length > 0) {
 }
 console.log("moduleInit="+moduleInit);
 console.log("module="+module);
+
 layui.config({
 	base: rootPath + "module/",
 	version: "1.0.0"
@@ -48,5 +49,7 @@ layui.config({
 		gouguInit();
 	}
 });
+
+
 
 

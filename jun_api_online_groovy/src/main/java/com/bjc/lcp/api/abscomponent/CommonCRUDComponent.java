@@ -6,17 +6,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson2.JSON;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Record;
-//import com.jfinal.plugin.activerecord.generator.MetaBuilder;
-//import com.jfinal.plugin.activerecord.generator.TableMeta;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.generator.MetaBuilder;
+import com.jfinal.plugin.activerecord.generator.TableMeta;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
 import io.github.wujun728.common.base.interfaces.Context;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Record;
 
 /**
  * 组件ID：BAS000000000100

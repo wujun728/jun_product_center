@@ -23,7 +23,7 @@ target
 .idea
 *.iml
 *.log
-
+doc2
 # git
 *.orig
 

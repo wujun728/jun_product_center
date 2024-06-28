@@ -1,10 +1,11 @@
 package io.github.wujun728.system.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.wf.captcha.utils.CaptchaUtil;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.aop.annotation.DataScope;
-import io.github.wujun728.common.base.service.HttpSessionService;
 import io.github.wujun728.common.exception.code.BaseResponseCode;
 import io.github.wujun728.common.redis.service.RedisService;
 import io.github.wujun728.system.entity.SysUser;
@@ -45,8 +46,6 @@ public class UserController {
     private UserService userService;
     @Resource
     private UserRoleService userRoleService;
-    @Resource
-    private HttpSessionService httpSessionService;
 
     @Resource
     private RedisService redisService;
@@ -69,11 +68,6 @@ public class UserController {
     @ApiOperation(value = "用户登录接口")
     public Result login(@RequestBody @Valid SysUser vo, HttpServletRequest request) {
         //判断验证码
-//        if (!CaptchaUtil.ver(vo.getCaptcha(), request)) {
-//            // 清除session中的验证码
-//            CaptchaUtil.clear(request);
-//            return Result.fail("验证码错误！");
-//        }
         if (vo.getVerCode()!=null){
             // 获取redis中的验证码
             String redisCode = redisService.get("captcha:"+vo.getVerCode());
@@ -138,7 +132,7 @@ public class UserController {
     @GetMapping("/user")
     @ApiOperation(value = "查询用户详情接口")
     public Result youSelfInfo() {
-        String userId = httpSessionService.getCurrentUserId();
+        String userId = StpUtil.getLoginIdAsString();
         return Result.success(userService.getById(userId));
     }
 
@@ -192,7 +186,7 @@ public class UserController {
     @GetMapping("/user/logout")
     @ApiOperation(value = "退出接口")
     public Result logout() {
-        httpSessionService.abortUserByToken();
+        StpUtil.logout();
 //        Subject subject = SecurityUtils.getSubject();
 //        subject.logout();
         return Result.success();
@@ -204,7 +198,7 @@ public class UserController {
         if (StringUtils.isEmpty(vo.getOldPwd()) || StringUtils.isEmpty(vo.getNewPwd())) {
             return Result.fail("旧密码与新密码不能为空");
         }
-        String userId = httpSessionService.getCurrentUserId();
+        String userId = StpUtil.getLoginIdAsString();
         vo.setId(userId);
         userService.updatePwd(vo);
         return Result.success();
@@ -215,10 +209,10 @@ public class UserController {
     //@RequiresPermissions("sys:user:deleted")
     public Result deletedUser(@RequestBody @ApiParam(value = "用户id集合") List<String> userIds) {
         //删除用户， 删除redis的绑定的角色跟权限
-        httpSessionService.abortUserByUserIds(userIds);
         LambdaQueryWrapper<SysUser> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.in(SysUser::getId, userIds);
         userService.remove(queryWrapper);
+        //StpUtil.logout();
         return Result.success();
     }
 
@@ -244,7 +238,7 @@ public class UserController {
             userRoleService.addUserRoleInfo(reqVO);
         }
         //刷新权限
-        httpSessionService.refreshUerId(userId);
+        //httpSessionService.refreshUerId(userId);
         return Result.success();
     }
 }

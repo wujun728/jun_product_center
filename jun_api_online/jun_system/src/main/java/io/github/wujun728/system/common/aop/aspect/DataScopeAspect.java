@@ -1,9 +1,9 @@
 package io.github.wujun728.system.common.aop.aspect;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import io.github.wujun728.common.base.service.HttpSessionService;
 import io.github.wujun728.common.constant.Constant;
 import io.github.wujun728.common.entity.BaseEntity;
 import io.github.wujun728.common.entity.BaseFlowEntity;
@@ -51,8 +51,6 @@ import java.util.stream.Collectors;
 public class DataScopeAspect {
 
     @Resource
-    HttpSessionService sessionService;
-    @Resource
     RoleService roleService;
     @Resource
     SysRoleDeptService sysRoleDeptService;
@@ -76,7 +74,7 @@ public class DataScopeAspect {
     protected void handleDataScope(final JoinPoint joinPoint) {
     	long time1= System.currentTimeMillis();
         //获取当前登陆人
-        String id = sessionService.getCurrentUserId();
+        String id = StpUtil.getLoginIdAsString();
         List<String> userIds = null;
         long time2= System.currentTimeMillis()-time1;
         System.err.println("time cost 1.1 = "+(time2));

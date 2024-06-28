@@ -17,11 +17,9 @@
 	<modules>
 		<module>jun_common</module>
 		<module>jun_system</module>
-		<module>jun_plugins</module>
 		<module>jun_api</module>
 		<module>jun_admin</module>
 		<module>jun_generator</module>
-		<module>jun_plugin</module>
 
 	</modules>
 

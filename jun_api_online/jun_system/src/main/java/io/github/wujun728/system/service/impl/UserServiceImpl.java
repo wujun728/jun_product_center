@@ -1,5 +1,6 @@
 package io.github.wujun728.system.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.jwt.JWTUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -7,11 +8,10 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.github.wujun728.common.base.service.HttpSessionService;
 import io.github.wujun728.common.exception.BusinessException;
 import io.github.wujun728.common.exception.code.BaseResponseCode;
-import io.github.wujun728.common.utils.JUNUtil;
 import io.github.wujun728.common.utils.PasswordUtils;
+import io.github.wujun728.rest.util.JUNUtil;
 import io.github.wujun728.system.entity.SysDept;
 import io.github.wujun728.system.entity.SysRole;
 import io.github.wujun728.system.entity.SysUser;
@@ -55,9 +55,6 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
     private UserRoleService userRoleService;
     @Resource
     private SysDeptMapper sysDeptMapper;
-    @Resource
-    private HttpSessionService httpSessionService;
-
     @Value("${spring.redis.allowMultipleLogin}")
     private Boolean allowMultipleLogin;
     @Value("${spring.profiles.active}")
@@ -89,11 +86,11 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         }
         LoginRespVO respVO = new LoginRespVO();
         BeanUtils.copyProperties(sysUser, respVO);
-
         //是否删除之前token， 此处控制是否支持多登陆端；
         // true:允许多处登陆; false:只能单处登陆，顶掉之前登陆
         if (!allowMultipleLogin) {
-            httpSessionService.abortUserById(sysUser.getId());
+            //StpUtil.login(sysUser.getId());
+            //httpSessionService.abortUserById(sysUser.getId());
         }
         if (StringUtils.isNotBlank(sysUser.getDeptId())) {
             SysDept sysDept = sysDeptMapper.selectById(sysUser.getDeptId());
@@ -112,9 +109,11 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         }
         String token = JWTUtil.createToken(null,sysUser.getUsername().getBytes());
 //        String token = JwtUtil.sign(sysUser.getUsername());
-        String accesstoken = httpSessionService.createTokenAndUser(sysUser,roles , permissionService.getPermissionsByUserId(sysUser.getId()),token);
+        String accesstoken = token;//httpSessionService.createTokenAndUser(sysUser,roles , permissionService.getPermissionsByUserId(sysUser.getId()),token);
         respVO.setAccessToken(accesstoken);
         respVO.setAuthorization(token);
+        //saToken
+        StpUtil.login(sysUser.getId());
         return respVO;
     }
 
@@ -140,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
                 || (!StringUtils.isEmpty(vo.getPassword())
                 && !sysUser.getPassword().equals(PasswordUtils.encode(vo.getPassword(), sysUser.getSalt())))
                 || !sysUser.getStatus().equals(vo.getStatus())) {
-            httpSessionService.abortUserById(vo.getId());
+
         }
 
         if (!StringUtils.isEmpty(vo.getPassword())) {
@@ -149,7 +148,6 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         } else {
             vo.setPassword(null);
         }
-        vo.setUpdateId(httpSessionService.getCurrentUserId());
         sysUserMapper.updateById(vo);
 
     }
@@ -158,7 +156,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
     public void updateUserInfoMy(SysUser vo) {
 
 
-        SysUser user = sysUserMapper.selectById(httpSessionService.getCurrentUserId());
+        SysUser user = sysUserMapper.selectById(StpUtil.getLoginIdAsString());
         if (null == user) {
             throw new BusinessException(BaseResponseCode.DATA_ERROR);
         }
@@ -170,9 +168,9 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
             vo.setPassword(null);
 //            user.setPassword(null);
         }
-        vo.setUpdateId(httpSessionService.getCurrentUserId());
+        vo.setUpdateId(StpUtil.getLoginIdAsString());
         vo.setPassword(null);
-        user.setUpdateId(httpSessionService.getCurrentUserId());
+        user.setUpdateId(StpUtil.getLoginIdAsString());
         BeanUtils.copyProperties(vo,user, JUNUtil.getNullPropertyNames(vo));
         sysUserMapper.updateById(user);
 
@@ -386,8 +384,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         sysUser.setPassword(PasswordUtils.encode(vo.getNewPwd(), sysUser.getSalt()));
         sysUserMapper.updateById(sysUser);
         //退出用户
-        httpSessionService.abortAllUserByToken();
-
+        StpUtil.logout();
     }
 
     @Override

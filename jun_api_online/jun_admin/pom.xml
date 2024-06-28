@@ -21,6 +21,16 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.83</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -48,43 +58,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-        <dependency>
-            <groupId>io.github.wujun728</groupId>
-		    <artifactId>quartz</artifactId>
-			<version>1.0</version>
-        </dependency>
+
+
         <dependency>
             <groupId>io.github.wujun728</groupId>
 		    <artifactId>jun_system</artifactId>
 			<version>1.0</version>
         </dependency>
-		<dependency>
-            <groupId>io.github.wujun728</groupId>
-		    <artifactId>fileservice</artifactId>
-			<version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.wujun728</groupId>
-		    <artifactId>sms</artifactId>
-			<version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.wujun728</groupId>
-		    <artifactId>snakerflow</artifactId>
-			<version>1.0</version>
-			<scope>compile</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>cglib-nodep</artifactId>
-					<groupId>cglib</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>commons-logging</artifactId>
-					<groupId>commons-logging</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
 		<!-- 公共模块 -->
 		<dependency>
 	        <groupId>org.springframework.boot</groupId>

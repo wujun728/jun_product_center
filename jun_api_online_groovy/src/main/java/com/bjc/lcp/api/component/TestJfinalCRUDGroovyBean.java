@@ -3,13 +3,15 @@ package com.bjc.lcp.api.component;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 //import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 //import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.druid.DruidPlugin;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.IExecutor;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Record;
+//import io.github.wujun728.db.record.Db;
+//import io.github.wujun728.db.record.Record;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -22,17 +24,17 @@ public class TestJfinalCRUDGroovyBean  implements IExecutor<Result, Map<String,O
 
 	@PostConstruct
 	public void test(){
-		Db.init(SpringUtil.getProperty("spring.datasource.url"),
-				SpringUtil.getProperty("spring.datasource.username"),
-				SpringUtil.getProperty("spring.datasource.password"));
-//		DruidPlugin dp = new DruidPlugin(SpringUtil.getProperty("spring.datasource.url"),
+//		Db.init(SpringUtil.getProperty("spring.datasource.url"),
 //				SpringUtil.getProperty("spring.datasource.username"),
 //				SpringUtil.getProperty("spring.datasource.password"));
-//		ActiveRecordPlugin arp = new ActiveRecordPlugin("test1",dp);
-//		// arp.addMapping("blog", Blog.class);
-//		// 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
-//		dp.start();
-//		arp.start();
+		DruidPlugin dp = new DruidPlugin(SpringUtil.getProperty("spring.datasource.url"),
+				SpringUtil.getProperty("spring.datasource.username"),
+				SpringUtil.getProperty("spring.datasource.password"));
+		ActiveRecordPlugin arp = new ActiveRecordPlugin("test1",dp);
+		// arp.addMapping("blog", Blog.class);
+		// 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
+		dp.start();
+		arp.start();
 	}
 
 

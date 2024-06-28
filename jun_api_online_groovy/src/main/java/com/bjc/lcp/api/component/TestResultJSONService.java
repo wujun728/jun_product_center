@@ -4,9 +4,12 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 //import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 //import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.druid.DruidPlugin;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.IExecutor;
-import io.github.wujun728.db.record.Db;
+//import io.github.wujun728.db.record.Db;
 
 import java.util.Map;
 
@@ -23,12 +26,12 @@ import java.util.Map;
 public class TestResultJSONService implements IExecutor<Result, Map<String,Object>> {
 
 	public void initDb(String appNo, String url, String username, String password) {
-//		DruidPlugin dp = new DruidPlugin(url, username, password);
-//		ActiveRecordPlugin arp = new ActiveRecordPlugin(appNo, dp);
-//		// 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
-//		dp.start();
-//		arp.start();
-		Db.init(url,username,password);
+		DruidPlugin dp = new DruidPlugin(url, username, password);
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(appNo, dp);
+		// 与 jfinal web 环境唯一的不同是要手动调用一次相关插件的start()方法
+		dp.start();
+		arp.start();
+		//Db.init(url,username,password);
 	}
 
 	@Override

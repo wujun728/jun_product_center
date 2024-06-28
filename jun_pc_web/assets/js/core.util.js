@@ -162,6 +162,14 @@ var CoreUtil = (function () {
         }
         return label;
     }
+
+    coreUtil.getPageName = function () { 
+        var pageName = window.location.pathname;
+        var index = pageName.lastIndexOf("/") + 1;
+        var fileName = pageName.substr(index);
+        //document.getElementById("pageName").textContent = fileName;
+        return fileName;
+    }
      
     
 
@@ -259,4 +267,11 @@ function getProjectUrl() {
         layuiDir = jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
     }
     return layuiDir.substring(0, layuiDir.indexOf('assets'));
+}
+
+function getPageName() {
+    var pageName = window.location.pathname;
+    var index = pageName.lastIndexOf("/") + 1;
+    var fileName = pageName.substr(index);
+    //document.getElementById("pageName").textContent = fileName;
 }

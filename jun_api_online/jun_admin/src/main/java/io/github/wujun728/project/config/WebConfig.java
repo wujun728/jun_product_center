@@ -1,6 +1,9 @@
 package io.github.wujun728.project.config;
 
 
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.router.SaRouter;
+import cn.dev33.satoken.stp.StpUtil;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
@@ -28,11 +31,6 @@ import java.util.List;
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Resource
-//    private MyWebInterceptor myWebInterceptor;
-//    @Resource
-//    private LoggerInterceptor loggerInterceptor;
-
     /**
      * 资源跨域设置
      */
@@ -44,22 +42,41 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*");
     }
 
+
     /**
      * 请求拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        WebMvcConfigurer.super.addInterceptors(registry);
-        //loggerInterceptor.addInterceptor(registry);
-        //myWebInterceptor.addInterceptor(registry);
-//        registry.addInterceptor(new RepeatSubmitInterceptor() {
-//                    @Override
-//                    public boolean isRepeatSubmit(HttpServletRequest request) {
-//                        return false;
-//                    }
-//                }).addPathPatterns("/**")
-//                .excludePathPatterns("/emp/toLogin","/emp/login","/js/**","/css/**","/images/**");
+        // 注册 Sa-Token 拦截器，定义详细认证规则
+        registry.addInterceptor(new SaInterceptor(handler ->{
+                    //SaRouter.match("/**", r -> StpUtil.checkLogin());
+                    // 指定一条 match 规则
+                    SaRouter
+                            .match("/user/**")    // 拦截的 path 列表，可以写多个 */
+                            .notMatch("/user/doLogin")        // 排除掉的 path 列表，可以写多个
+                            .check(r -> StpUtil.checkLogin());        // 要执行的校验动作，可以写完整的 lambda 表达式
+                    // 根据路由划分模块，不同模块不同鉴权
+//                    SaRouter.match("/user/**", r -> StpUtil.checkPermission("user"));
+//                    SaRouter.match("/admin/**", r -> StpUtil.checkPermission("admin"));
+//                    SaRouter.match("/orders/**", r -> StpUtil.checkPermission("orders"));
+                }).isAnnotation(true))
+                .excludePathPatterns("/doc.html")
+                .excludePathPatterns("/swagger-resources/**")
+                .excludePathPatterns("/webjars/**")
+                .excludePathPatterns("/error")
+                .excludePathPatterns("/static/**")
+                .excludePathPatterns("/files/**")
+                .excludePathPatterns("/login")
+                .excludePathPatterns("/index/login")
+                .excludePathPatterns("/sys/user/login")
+                .excludePathPatterns("/sys/getVerify")
+                .excludePathPatterns("/app/api/**")
+                .excludePathPatterns("/api/**")
+                .excludePathPatterns("/")
+                .addPathPatterns("/**");
     }
+
 
     /**
      * @description: 访问静态文件,发现如果继承了WebMvcConfigurationSupport，则在yml中配置的相关内容会失效。 需要重新指定静态资源

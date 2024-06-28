@@ -44,7 +44,7 @@ public interface PermissionService extends IService<SysPermission> {
      * @param userId userId
      * @return Set
      */
-    Set<String> getPermissionsByUserId(String userId);
+    List<String> getPermissionsByUserId(String userId);
 
     /**
      * 根据userId获取权限树

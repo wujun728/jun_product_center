@@ -5,13 +5,13 @@ import cn.hutool.db.meta.Column;
 import cn.hutool.db.meta.MetaUtil;
 import cn.hutool.db.meta.Table;
 import cn.hutool.json.JSONUtil;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
 import io.github.wujun728.common.exception.BusinessException;
-import io.github.wujun728.db.record.Db;
-import io.github.wujun728.db.record.Record;
+//import io.github.wujun728.db.record.Db;
+//import io.github.wujun728.db.record.Record;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
