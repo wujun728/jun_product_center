@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- <link rel="stylesheet" href="/layui/css/layui.css" media="all"> -->
+    
+    <link rel="stylesheet" href="../../assets/css/gougu.css?v=1.0.24" media="all">
+</head>
+<body>
+<div id="searchParam">
+    <div class="layui-form-item" shiro:hasPermission="sys:log:list">
+        <div class="layui-input-inline">
+            <input type="text" id="username" class="layui-input" autocomplete="off" placeholder="请输入账号">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" id="operation" class="layui-input" autocomplete="off" placeholder="用户操作动作">
+        </div>
+        <div class="layui-input-inline">
+            <input type="text" readonly class="layui-input" id="createTime" placeholder="创建时间">
+        </div>
+        <div class="layui-input-inline ">
+            <button class="layui-btn" onclick="search()" id="search">查询</button>
+        </div>
+    </div>
+
+</div>
+<table class="layui-hide" id="log_table" lay-filter="log_table"></table>
+<div id="laypage"></div>
+</body>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-group">
+        <button shiro:hasPermission="sys:log:deleted" type="button" class="layui-btn layui-btn-sm" lay-event="getCheckData">
+            批量删除
+        </button>
+    </div>
+</script>
+<script type="text/html" id="tool">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sys:log:deleted">删除</a>
+</script>
+<!-- <script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script> -->
+
+<!-- /脚本 -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript" src="../../assets/js/core.util.js"></script>
+
+<script>
+    //获取token
+    var token = CoreUtil.getData("access_token");
+    //地址栏转义token中的#号
+    var tokenQuery = token.replace("#", "%23");
+    var tableIns1;
+    var table = layui.table;
+    var laypage = layui.laypage
+    var form = layui.form;
+    var layer = layui.layer;
+    var $ = jQuery = layui.jquery;
+    var laydate = layui.laydate;
+    var flag;
+    var startTime = null;
+    var endTime = null;
+    layui.use(['table', 'laypage', 'layer', 'laydate'], function () {
+
+        //加载table
+        tableIns1 = table.render({
+            elem: '#log_table'
+            , contentType: 'application/json'
+            , headers: {"authorization": token}
+            , page: true //开启分页
+            , url: '/api/sys/logs' //数据接口
+            , method: 'POST'
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+                    "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+                }
+            }
+            , cols: [
+                [
+                    {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
+                    {field: 'username', title: '账号', width: 130},
+                    {field: 'operation', title: '用户操作', width: 140},
+                    {field: 'method', title: '请求方法', width: 400},
+                    {field: 'params', title: '请求参数', width: 300},
+                    {field: 'createTime', title: '创建时间', minWidth: 120},
+                    {width: 150, toolbar: "#tool", title: '操作'}
+                ]
+            ]
+            , toolbar: '#toolbar'
+        });
+
+
+        //日期范围
+        laydate.render({
+            elem: '#createTime'
+            , type: 'datetime'
+            , range: '~'
+            , done: function (value, date, endDate) {
+                if (value != null && value != undefined && value != "") {
+                    startTime = value.split("~")[0];
+                    endTime = value.split("~")[1];
+                } else {
+                    //清空时间的时候要清空以前选择的日期
+                    startTime = null;
+                    endTime = null;
+                }
+
+            }
+        });
+
+        //表头工具栏事件
+        table.on('toolbar(log_table)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    if (data.length == 0) {
+                        layer.msg("请选择要批量删除的日志");
+                    } else {
+                        var logIds = [];
+                        $(data).each(function (index, item) {
+                            logIds.push(item.id);
+                        });
+                        tipDialog(logIds);
+                    }
+                    break;
+            }
+            ;
+        });
+        //操作工具栏事件
+        table.on('tool(log_table)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'del':
+                    var logIds = [];
+                    logIds.push(data.id);
+                    tipDialog(logIds);
+                    break;
+            }
+        });
+
+        //删除前确认对话框
+        var tipDialog = function (logIds) {
+            layer.open({
+                content: '确定要删除么',
+                skin: 'layui-layer-admin',
+                yes: function (index, layero) {
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                    CoreUtil.sendDelete("/sys/logs", logIds, function (res) {
+                        layer.msg(res.msg);
+                        search();
+                    });
+                }
+            });
+        }
+    });
+
+    //执行查询
+    function search() {
+        //这里以搜索为例
+        tableIns1.reload({
+            where: { //设定异步数据接口的额外参数，任意设
+                username: $("#username").val(),
+                operation: $("#operation").val(),
+                userId: $("#userId").val(),
+                startTime: startTime,
+                endTime: endTime,
+            }
+            , page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    };
+</script>
+</html>

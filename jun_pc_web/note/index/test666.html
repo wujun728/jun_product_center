@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取当前页面名称</title>
+    <script type="text/javascript" src="../../assets/js/core.util.js"></script>
+    <script>
+        function getPageName11() {
+            document.getElementById("pageName").textContent = '111'+CoreUtil.getPageName();
+        }
+    </script>
+</head>
+<body onload="getPageName11();">
+    <p>当前页面名称是：<span id="pageName"></span></p>
+</body>
+</html>
