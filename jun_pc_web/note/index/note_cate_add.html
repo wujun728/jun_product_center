@@ -28,9 +28,10 @@
 <body class="main-body">
 	<!-- 主体 -->
 	
-<form class="layui-form p-4">
+<form class="layui-form p-4"  lay-filter="info"  >
 	<h3 class="pb-3">公告分类</h3>
 		<table class="layui-table">
+			<input type="hidden" name="id" id="id">
 		<tr>
 			<td class="layui-td-gray">父级分类<font>*</font></td>
 			<td>
@@ -65,14 +66,28 @@
 	<!-- /底部 -->
 	
 	<!-- 脚本 -->
-	
+<script type="text/javascript" src="../../assets/js/core.util.js"></script>	
 <script>
 	const moduleInit = ['tool'];
 	const pageFlag = 'note_cate'; 
 	var val = sessionStorage.getItem(pageFlag+"pid");
 	console.log("pid="+val);
 	function gouguInit() {
-		var form = layui.form,tool=layui.tool;		  
+		var form = layui.form,tool=layui.tool;	
+
+		var data = CoreUtil.getData('note_cate'); 
+		console.log(data); 
+		if (data && data.id) {
+			form.val('info', data);
+			form.render(); //更新全部
+			//$('#user-form').attr('method', 'POST');
+			// var rds = new Array();
+			// for (var i = 0; i < data.roles.length; i++) {
+			// 	rds.push(data.roles[i].id);
+			// }
+			// formSelects.value('roleId', rds);
+		}
+				
 		//监听提交
 		form.on('submit(webform)', function(data){
 			let callback = function (e) {
@@ -81,7 +96,12 @@
 					tool.sideClose(1000);				
 				}
 			}
-			tool.post("/api/rest/oa_note_cate/add?ds=oa", data.field, callback);
+			console.log(data.id); 
+			if (data.id) {
+				tool.post("/api/rest/oa_note_cate/update?ds=oa", data.field, callback);
+			}else{
+				tool.post("/api/rest/oa_note_cate/add?ds=oa", data.field, callback);
+			}
 			// tool.post("/note/index/note_cate_add", data.field, callback);
 			return false;
 		});

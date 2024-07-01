@@ -63,7 +63,8 @@
 			defaultToolbar: false,
 			page: true, //开启分页
 			limit: 20,
-			url: "index.json", //数据接口		
+			url: "/api/rest/oa_note/page?ds=oa", //数据接口		
+			//url: "index.json", //数据接口		
 			cols: [
 				[
 					{
@@ -83,6 +84,7 @@
 						width: 136,
 						templet: function (d) {
 							var html = '<span class="layui-color-'+d.cate_id+'">'+d.cate_title+'</span>';
+							console.log(html);
 							return html;
 						}
 					}, {
@@ -98,6 +100,7 @@
 						width: 196,
 						templet: function (d) {
 							var html = d.start_time + ' ~ ' + d.end_time;
+							console.log(html);
 							return html;
 						}
 					},{

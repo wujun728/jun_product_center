@@ -49,7 +49,6 @@
 	<!-- 脚本 -->
 <script type="text/javascript" src="../../assets/js/core.util.js"></script>
 <script>
-	const pageFlag = 'note_cate';
 	const moduleInit = ['tool'];
 	function gouguInit() {
 		var treeTable = layui.treeTable, tool = layui.tool;
@@ -85,7 +84,8 @@
 		//表头工具栏事件
 		$('.add-menu').on('click', function(){
 			//sessionStorage.setItem(pageFlag+"pid",obj.data.id);
-			sessionStorage.setItem(pageFlag+"pid",null);
+			//sessionStorage.setItem('note_cate',null);
+			CoreUtil.setData('note_cate',null);
 			tool.side("/note/index/note_cate_add.html");
 			return;
 		});
@@ -93,12 +93,13 @@
 		//操作按钮
 		treeTable.on('tool(treeTable)', function (obj) {
 			if (obj.event === 'add') {
-				sessionStorage.setItem(pageFlag+"pid",obj.data.id);
+				CoreUtil.setData('note_cate',null);
 				tool.side('/note/index/note_cate_add.html?pid='+obj.data.id);
 				return;
 			}
 			if (obj.event === 'edit') {
-				sessionStorage.setItem(pageFlag+"pid",obj.data.id);
+				//sessionStorage.setItem(pageFlag+"pid",obj.data.id);
+				CoreUtil.setData('note_cate',obj.data);
 				tool.side('/note/index/note_cate_add.html?id='+obj.data.id);
 				return;
 			}
@@ -110,7 +111,7 @@
 							obj.del();
 						}
 					}
-					tool.delete("/note/index/note_cate_delete", { id: obj.data.id }, callback);
+					tool.delete("/api/rest/oa_note_cate/delete?ds=oa", { id: obj.data.id }, callback);
 					layer.close(index);
 				});
 			}

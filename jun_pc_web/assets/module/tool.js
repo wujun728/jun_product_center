@@ -34,7 +34,7 @@ layui.define([], function (exports) {
 				end: function(){
 					$('body').removeClass('right-open');
 					if (layui.pageTable) {
-						layui.pageTable.resize('test');
+						//layui.pageTable.resize('test');
 					}
 					if(ft){
 						ft();
@@ -80,7 +80,7 @@ layui.define([], function (exports) {
 				end: function(){
 					$('body').removeClass('right-open');
 					if (layui.pageTable) {
-						layui.pageTable.resize('test');
+						//layui.pageTable.resize('test');
 					}
 					if(ft){
 						ft();
