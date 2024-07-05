@@ -35,12 +35,14 @@
 		<tr>
 			<td class="layui-td-gray">父级分类<font>*</font></td>
 			<td>
-				<select name="pid" lay-verify="required" lay-reqText="请选择父级分类">
-				  <option value="0">作为顶级分类</option>
-				  				  <option value="3" >防疫公告</option>
-				  				  <option value="2" >紧急公告</option>
-				  				  <option value="1" >普通公告</option>
-				  				</select>
+				<!-- <select name="pid" lay-verify="required|filter-select" lay-reqText="请选择父级分类" id ="pid">
+					<option value="0">作为顶级分类</option>
+						<option value="3" >防疫公告</option>
+						<option value="2" >紧急公告</option>
+						<option value="1" >普通公告</option>
+				</select> -->
+				<input type="hidden" name="pid" id="pid">
+				<input type="text" name="pid2"  id="pid2"  lay-verify="required" lay-max="256"  placeholder="请输入成员名称"   autocomplete="off" class="layui-input">
 			</td>
 			<td class="layui-td-gray">分类名称<font>*</font></td>
 			<td>
@@ -48,7 +50,8 @@
 			</td>
 			<td class="layui-td-gray">排序</td>
 			<td>
-				<input type="text" name="sort" placeholder="请输入排序，数字" value="0" autocomplete="off" class="layui-input">
+				<!-- <input type="text" name="sort" placeholder="请输入排序，数字" value="0" autocomplete="off" class="layui-input"> -->
+				<input type="number" name="sort" placeholder="请输入排序，数字" autocomplete="off" class="layui-input" min="0" step="1" lay-affix="number">
 			</td>
 		</tr>
 	</table>
@@ -68,17 +71,88 @@
 	<!-- 脚本 -->
 <script type="text/javascript" src="../../assets/js/core.util.js"></script>	
 <script>
-	const moduleInit = ['tool'];
-	const pageFlag = 'note_cate'; 
-	var val = sessionStorage.getItem(pageFlag+"pid");
-	console.log("pid="+val);
+	
+
+	const moduleInit = ['tool','tableSelect'];
 	function gouguInit() {
 		var form = layui.form,tool=layui.tool;	
+		var tableSelect = layui.tableSelect;
 
-		var data = CoreUtil.getData('note_cate'); 
-		console.log(data); 
-		if (data && data.id) {
-			form.val('info', data);
+	//获取token
+	var token = CoreUtil.getData("access_token");
+	//地址栏转义token中的#号
+	var tokenQuery = token==null?"":token.replace("#", "%23");
+
+	// tableSelect.render({
+	// 	elem: '#pid2',
+	// 	checkedKey: 'id',
+	// 	table: {
+	// 		url: '/api/sys/users/listByPage?authorization='+tokenQuery,
+	// 		method: 'POST',
+	// 		contentType: 'application/json',
+	// 		 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	// 	        return {
+	// 	          "code": res.code, //解析接口状态
+	// 	          "msg": res.msg, //解析提示文本
+	// 	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	// 	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	// 	        }
+	// 	      },
+	// 		cols: [ [
+	// 				{ type: 'radio' },
+	// 				{ field: 'realName', title: '名称' },
+	// 				{ field: 'username', title: '标题' },
+	// 				{ field: 'id', title: 'ID' , hide:true }
+	// 			] ]
+	// 	},
+	// 	done: function (elem, data) {
+	// 		var label = [];var ids = [];
+	// 		layui.each(data.data, function (index, item) {
+	// 			label.push(item.realName);
+	// 			ids.push(item.id);
+	// 			console.log('item.id='+item.id);  
+	// 			console.log('item.realName='+item.realName);  
+	// 		})
+	// 		elem.val(label.join(","));
+	// 		elem.val(ids.join(","));
+	// 		$("#pid").val(ids);
+	// 		$("#pid2").val(label);
+	// 		form.render();
+	// 	}
+	// });
+
+		// var datas_note_cate = CoreUtil.getSysDict('posi');
+    	// console.log('datas_note_cate='+datas_note_cate);
+		// // 假设我们从一个API获取数据
+		// $.ajax({
+		// 	url: '/api/rest/exec/note_cate_names', // 你的API URL
+		// 	type: 'get',
+		// 	dataType: 'json',
+		// 	success: function(result){
+		// 		// 假设返回的数据格式为：{code: 0, data: [{name: "Option 1", value: "1"}, ...]}
+		// 		if(result.code === 0){
+		// 			var options = '';
+		// 			layui.each(result.data, function(index, item){
+		// 				options += '<option value="' + item.value + '">' + item.name + '</option>';
+		// 			});
+		// 			$('#pid').html(options); // 更新下拉框的选项
+		// 			form.render('select'); // 更新渲染
+		// 		}
+		// 	}
+		// });
+		
+		// // 监听下拉框选择事件
+		// form.on('select(filter-select)', function(data){
+		// 	console.log(data.value); // 获取被选中的值
+		// });
+
+
+
+
+		var recordData = CoreUtil.getData('note_cate'); 
+		console.log("1111"+recordData); 
+		if (recordData && recordData.id) {
+			form.val('info', recordData);
 			form.render(); //更新全部
 			//$('#user-form').attr('method', 'POST');
 			// var rds = new Array();
@@ -96,8 +170,7 @@
 					tool.sideClose(1000);				
 				}
 			}
-			console.log(data.id); 
-			if (data.id) {
+			if (recordData && recordData.id) {
 				tool.post("/api/rest/oa_note_cate/update?ds=oa", data.field, callback);
 			}else{
 				tool.post("/api/rest/oa_note_cate/add?ds=oa", data.field, callback);

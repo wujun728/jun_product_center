@@ -123,7 +123,12 @@ public class SysDictController {
             return json;
         }else{
             String jsonStr = redisService.get(name);
-            return JSONArray.parseArray(jsonStr, JSONReader.Feature.SupportAutoType);
+            JSONArray jsonArray = JSONArray.parseArray(jsonStr, JSONReader.Feature.SupportAutoType);
+            if(jsonArray.size()==0){
+                jsonArray = sysDictService.getType(name);
+                redisService.setAndExpire(name,jsonArray.toJSONString(JSONWriter.Feature.WriteMapNullValue),3600);
+            }
+            return jsonArray;
         }
     }
     

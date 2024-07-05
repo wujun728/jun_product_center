@@ -43,12 +43,12 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictEntity
             return new JSONArray();
         }
         //根据名称获取字典
-        SysDictEntity dict = this.getOne(Wrappers.<SysDictEntity>lambdaQuery().eq(SysDictEntity::getName, name));
+        /*SysDictEntity dict = this.getOne(Wrappers.<SysDictEntity>lambdaQuery().eq(SysDictEntity::getName, name));
         if (dict == null || dict.getId() == null) {
             return new JSONArray();
-        }
+        }*/
         //获取明细
-        List<SysDictDetailEntity> list = sysDictDetailMapper.selectList(Wrappers.<SysDictDetailEntity>lambdaQuery().eq(SysDictDetailEntity::getDictId, dict.getId()).orderByAsc(SysDictDetailEntity::getSort));
+        List<SysDictDetailEntity> list = sysDictDetailMapper.selectList(Wrappers.<SysDictDetailEntity>lambdaQuery().eq(SysDictDetailEntity::getDict_name, name).orderByAsc(SysDictDetailEntity::getSort));
         return JSONArray.parseArray(JSON.toJSONString(list));
     }
     

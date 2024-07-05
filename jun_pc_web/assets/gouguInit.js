@@ -20,6 +20,7 @@ var module = {
 	notice: 'notice/notice',
 	admin: 'admin',
 	tool: 'tool',
+	tableSelect: 'tableSelect',
 	xnUtil: 'xnUtil/xnUtil' ,
 	treetable: 'treetable-lay/treetable'
 };

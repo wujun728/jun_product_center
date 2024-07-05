@@ -179,13 +179,7 @@ var CoreUtil = (function () {
         if (dictTemp!=undefined && !CoreUtil.isEmpty(dictTemp)) {
             return dictTemp;
         }
-
         var datas ;
-         
-		// CoreUtil.sendGet2("/api/sysDict/getType/"+name, null, function (res) {
-        //     console.log('res='+res);
-        //     datas = res;
-	    // }); 
         $.ajax({
             url: "/api/sysDict/getType/"+name,
             cache: false,
