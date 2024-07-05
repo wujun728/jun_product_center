@@ -6,18 +6,12 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.db.meta.MetaUtil;
 import cn.hutool.db.meta.Table;
 import com.alibaba.fastjson2.JSON;
-//import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Record;
-//import com.jfinal.plugin.druid.DruidPlugin;
-import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.druid.DruidPlugin;
+import freemarker.template.TemplateException;
 import io.github.wujun728.common.generator.GeneratorUtil;
+import io.github.wujun728.rest.util.ActiveRecordUtil;
 import io.github.wujun728.sql.SqlEngine;
 import io.github.wujun728.sql.SqlMeta;
-import freemarker.template.TemplateException;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
@@ -41,23 +35,7 @@ public class DbUtil {
     }
 
     public static void initDb(String configName, String url, String username, String password) {
-        Boolean isExtsis = true;
-        try {
-            Db.use(configName);
-        } catch (IllegalArgumentException e) {
-            isExtsis = false;
-            log.warn(e.getMessage());
-        }
-        if( !isExtsis ){
-//            Db.init(url,username,password);
-            DruidPlugin dp = new DruidPlugin(url, username, password);
-            ActiveRecordPlugin arp = new ActiveRecordPlugin(configName, dp);
-            arp.setDevMode(true);
-            arp.setShowSql(true);
-            dp.start();
-            arp.start();
-            log.warn("Config have bean created by configName: {}",configName);
-        }
+        ActiveRecordUtil.initActiveRecordPlugin(configName,url,username,password);
     }
 
     public static String updateSQL(HashMap<String, Object> data) throws IOException, TemplateException {

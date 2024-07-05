@@ -2,21 +2,15 @@ package com.bjc.lcp.api.abscomponent;
 
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.RandomUtil;
-import cn.hutool.db.meta.MetaUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson2.JSON;
-//import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-//import com.jfinal.plugin.activerecord.Db;
-//import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import io.github.wujun728.common.Result;
 import io.github.wujun728.common.base.interfaces.AbstractExecutor;
-//import io.github.wujun728.db.record.Db;
-//import io.github.wujun728.db.record.Record;
+import io.github.wujun728.rest.util.ActiveRecordUtil;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -40,17 +34,9 @@ public class CompoentExecutorSave extends AbstractExecutor<Result, Map<String,Ob
 		ds.setUrl( "jdbc:mysql://localhost:3306/db_qixing_bk?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2b8");
 		ds.setUsername("root");
 		ds.setPassword("");
-
-		//MetaUtil.getTableMeta(ds,"").get
-
 		Boolean isExtsis = false;
 		try {
-//			Db.init(appNo,ds);
-			ActiveRecordPlugin arp = new ActiveRecordPlugin(appNo, ds);
-			arp.setDevMode(true);
-			arp.setShowSql(true);
-			arp.start();
-			Db.use(appNo);
+			ActiveRecordUtil.initActiveRecordPlugin(appNo,ds);
 		} catch (IllegalArgumentException e) {
 			isExtsis = true;
 		}
