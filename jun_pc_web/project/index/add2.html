@@ -1,0 +1,342 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<style>
+.layui-form-pane .layui-form-label {width:60px; padding:8px;}
+.layui-form-pane .layui-form-label.label-index,.layui-form-pane .layui-form-label.label-first {width:80px;}
+.layui-form-item .layui-input-inline {margin-right:4px;}
+.layui-form-item .layui-inline {margin-right:0; margin-bottom:0;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-3">
+	<h3 class="pb-3">新建项目</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">项目名称<font>*</font></td>
+			<td>
+				<input type="text" name="name" lay-verify="required" lay-reqText="请输入项目名称" placeholder="请输入项目名称" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray-2">计划完成周期<span style="color: red">*</span></td>
+			<td id="date">
+				<div class="layui-input-inline">
+					<input type="text" id="start_time" name="start_time" readonly lay-verify="required" lay-reqText="请选择开始时间" placeholder="请选择" class="layui-input" value="">
+				</div>
+				-
+				<div class="layui-input-inline">
+					<input type="text" id="end_time" name="end_time" readonly lay-verify="required" lay-reqText="请选择结束时间" placeholder="请选择" class="layui-input" value="">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">负责人<font>*</font></td>
+			<td>
+				<input type="text" name="director_name" placeholder="请选择项目负责人" readonly class="layui-input picker-one" value="">
+				<input type="hidden" name="director_uid" lay-verify="required" readonly lay-reqText="请选择项目负责人" value="">
+			</td>
+			<td class="layui-td-gray">项目成员<span style="color: red">*</span></td>
+			<td colspan="3">
+				<input type="text" id="team_admin_names" name="team_admin_names"  placeholder="请选择项目成员" readonly class="layui-input picker-more" value="">
+				<input type="hidden" id="team_admin_ids" name="team_admin_ids" class="layui-input" value="">
+			</td>
+		</tr>
+		{gt name=":isModule('contract')" value="0"}
+		<tr>
+			<td class="layui-td-gray">关联合同</td>
+			<td colspan="8">
+				<input type="text" class="layui-input contract-picker" name="contract_name" placeholder="请选择需要关联的合同" readonly value="">		
+				<input type="hidden" class="layui-input" name="contract_id" value="0">		
+				<input type="hidden" class="layui-input" name="customer_id" value="0">		
+			</td>
+		</tr>
+		{/gt}
+		<tr>
+			<td class="layui-td-gray">项目简介<span style="color: red">*</span></td>
+			<td colspan="3">
+				<textarea name="content" class="layui-textarea" lay-verify="required" lay-reqText="请完善项目简介"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="8" class="layui-td-gray" style="text-align:left; font-weight:600">项目阶段<font>*</font></td>
+		</tr>
+		<tr>
+			<td colspan="8">
+				<div id="flowList">
+					{volist name = "$section" id="vo" key="k"}
+					{eq name="key" value="0"}
+					<div class="layui-form-item layui-form-pane">
+						<div class="layui-inline">
+						  <label class="layui-form-label label-first">第{$key+1}阶段</label>
+						  <div class="layui-input-inline" style="width:120px;">
+							<select name="flowName[]" lay-filter="flowName" lay-verify="required" lay-reqText="请选择阶段名称">
+								<option value="">请选择</option>
+								{volist name = "section" id="voo" key="kk"}
+								<option value="{$voo}" {eq name="$kk" value ="$k"} selected{/eq}>{$voo}</option>
+								{/volist}
+							</select>
+						  </div>
+						</div>
+						<div class="layui-inline">
+						  <label class="layui-form-label">负责人</label>
+						  <div class="layui-input-inline" style="width:120px;">
+							<input type="text" name="chargeNames[]" autocomplete="off" readonly placeholder="选择阶段负责人" class="layui-input picker-one" lay-verify="required" lay-reqText="请选择阶段负责人" value="{$user_info.name}">
+							<input type="hidden" name="chargeIds[]" value="{$user_info.id}">
+						  </div>
+						</div>
+						<div class="layui-inline">
+						  <label class="layui-form-label">成员</label>
+						  <div class="layui-input-inline" style="width:168px;">
+							<input type="text" name="membeNames[]" autocomplete="off" readonly placeholder="选择阶段成员，可多选" class="layui-input picker-more" lay-verify="required" lay-reqText="请选择阶段成员">
+							<input type="hidden" name="membeIds[]">
+						  </div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">周期</label>
+							<div class="layui-input-inline" style="width:186px;">
+								<input type="text" name="cycleDate[]" class="layui-input select-time-range" readonly placeholder="开始 到 结束" lay-verify="required" lay-reqText="请选择阶段周期">
+							</div>
+						</div>
+					</div>
+					{else/}
+					<div class="layui-form-item layui-form-pane">
+						<div class="layui-inline">
+						  <label class="layui-form-label label-index">第{$key+1}阶段</label>
+						  <div class="layui-input-inline" style="width:120px;">
+							<select name="flowName[]" lay-filter="flowName" lay-verify="required" lay-reqText="请选择阶段名称">
+								<option value="">请选择</option>
+								{volist name = "section" id="voo" key="kk"}
+								<option value="{$voo}" {eq name="$kk" value ="$k"} selected{/eq}>{$voo}</option>
+								{/volist}
+							</select>
+						  </div>
+						</div>
+						<div class="layui-inline">
+						  <label class="layui-form-label">负责人</label>
+						  <div class="layui-input-inline" style="width:120px;">
+							<input type="text" name="chargeNames[]" autocomplete="off" readonly placeholder="选择阶段负责人" class="layui-input picker-one" lay-verify="required" lay-reqText="请选择阶段负责人">
+							<input type="hidden" name="chargeIds[]">
+						  </div>
+						</div>
+						<div class="layui-inline">
+						  <label class="layui-form-label">成员</label>
+						  <div class="layui-input-inline" style="width:168px;">
+							<input type="text" name="membeNames[]" autocomplete="off" readonly placeholder="选择阶段成员，可多选" class="layui-input picker-more" lay-verify="required" lay-reqText="请选择阶段成员">
+							<input type="hidden" name="membeIds[]">
+						  </div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">周期</label>
+							<div class="layui-input-inline" style="width:186px;">
+								<input type="text" name="cycleDate[]" class="layui-input select-time-range" readonly placeholder="开始 到 结束" lay-verify="required" lay-reqText="请选择阶段周期">
+							</div>
+						</div>
+						<span class="layui-btn layui-btn-danger layui-btn-sm">删除</span>
+					</div>
+					{/eq}
+					{/volist}					
+				</div>
+				<span class="layui-btn layui-btn-xs add-flow" data-type="1">+ 添加自定义阶段</span>
+				<div style="padding:10px; margin-top:10px; font-size:12px; background-color:#fffcf0">
+					<p><strong>温馨提示</strong></p>
+					<p>1、项目开始流转前，请确保已完善好各项目信息。</p>
+					<p>2、项目开始流转后，只有项目管理员，创建人和负责人可修改项目信息。</p>
+					<p>3、项目管理员，创建人和负责人可以修改项目阶段的信息，但是修改完成后已流转的项目阶段需要重新走一遍流程。</p>
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-3">
+		<input type="hidden" name="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var form = layui.form,tool = layui.tool,table = layui.table,laydate = layui.laydate,employeepicker = layui.employeepicker;	
+		//日期范围
+		laydate.render({
+			elem: '#date',
+			range: ['#start_time', '#end_time']
+		});	
+		
+		//日期
+		lay('.select-time-range').each(function () {
+			laydate.render({
+				elem: this,
+				range: '到',
+				trigger: 'click'
+			});
+		});
+		
+		//选择关联合同	
+		$('.contract-picker').on('click', function () {
+			contractProject();
+		});
+		var contractTable;
+		function contractProject() {
+			layer.open({
+				title: '选择合同',
+				area: ['600px', '580px'],
+				type: 1,
+				content: '<div class="picker-table">\
+					<form class="layui-form pb-2">\
+						<div class="layui-input-inline" style="width:480px;">\
+						<input type="text" name="keywords"  placeholder="合同名称" class="layui-input" autocomplete="off" />\
+						</div>\
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search_form">提交搜索</button>\
+					</form>\
+					<div id="contractTable"></div></div>',
+				success: function () {
+					contractTable = table.render({
+						elem: '#contractTable'
+						, url: '/contract/api/get_contract'
+						, page: true //开启分页
+						, limit: 10
+						, cols: [[
+							{ type: 'radio', title: '选择' }
+							, { field: 'id', width: 100, title: '编号', align: 'center' }
+							, { field: 'name', title: '合同名称' }
+						]]
+					});
+					//项目搜索提交
+					form.on('submit(search_form)', function (data) {
+						contractTable.reload({ where: { keywords: data.field.keywords }, page: { curr: 1 } });
+						return false;
+					});
+				},
+				btn: ['确定'],
+				btnAlign: 'c',
+				yes: function () {
+					var checkStatus = table.checkStatus(contractTable.config.id);
+					var data = checkStatus.data;
+					if (data.length > 0) {
+						$('[name="contract_name"]').val(data[0].name);
+						$('[name="contract_id"]').val(data[0].id);
+						$('[name="customer_id"]').val(data[0].customer_id);
+						layer.closeAll();
+					}
+					else {
+						layer.msg('请先选择合同');
+						return false;
+					}
+				}
+			})
+		}
+    
+		
+		$('.add-flow').on('click',function(){
+			let len = $('#flowList').find('.layui-form-item').length;
+			let index = len+1;
+			let type = $(this).data('type');;
+			let tem=['<div class="layui-form-item layui-form-pane">\
+				<div class="layui-inline">\
+				  <label class="layui-form-label label-index">第'+index+'阶段</label>\
+				  <div class="layui-input-inline" style="width:120px;">\
+					<select name="flowName[]" lay-filter="flowName" lay-verify="required" lay-reqText="请选择阶段名称">\
+						<option value="">请选择</option>\
+						<option value="立项阶段">立项阶段</option>\
+						<option value="产品阶段">产品阶段</option>\
+						<option value="UI阶段">UI阶段</option>\
+						<option value="测试阶段">测试阶段</option>\
+						<option value="交付阶段">交付阶段</option>\
+						<option value="售后阶段">售后阶段</option>\
+						<option value="项目完结">项目完结</option>\
+					</select>\
+				  </div>\
+				</div>\
+				<div class="layui-inline">\
+				  <label class="layui-form-label">负责人</label>\
+				  <div class="layui-input-inline" style="width:120px;">\
+					<input type="text" name="chargeName[]" autocomplete="off" readonly placeholder="选择阶段负责人" class="layui-input picker-one" lay-verify="required" lay-reqText="请选择阶段负责人">\
+					<input type="hidden" name="chargeIds[]">\
+				  </div>\
+				</div>\
+				<div class="layui-inline">\
+				  <label class="layui-form-label">成员</label>\
+				  <div class="layui-input-inline" style="width:168px;">\
+					<input type="text" name="membeNames[]" autocomplete="off" readonly placeholder="选择阶段成员，可多选" class="layui-input picker-more" lay-verify="required" lay-reqText="请选择阶段成员">\
+					<input type="hidden" name="membeIds[]">\
+				  </div>\
+				</div>\
+				<div class="layui-inline">\
+					<label class="layui-form-label">周期</label>\
+					<div class="layui-input-inline" style="width:186px;">\
+						<input type="text" name="cycleDate[]" class="layui-input select-time-range" readonly placeholder="开始 到 结束" lay-verify="required" lay-reqText="请选择阶段周期">\
+					</div>\
+				</div>\
+				<span class="layui-btn layui-btn-danger layui-btn-sm">删除</span>\
+			</div>',
+			'<div class="layui-form-item layui-form-pane">\
+				<div class="layui-inline">\
+				  <label class="layui-form-label label-index">第'+index+'阶段</label>\
+				  <div class="layui-input-inline" style="width:120px;">\
+					<input type="text" name="flowName[]" autocomplete="off" placeholder="输入阶段名称" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称">\
+				  </div>\
+				</div>\
+				<div class="layui-inline">\
+				  <label class="layui-form-label">负责人</label>\
+				  <div class="layui-input-inline" style="width:120px;">\
+					<input type="text" name="chargeNames[]" autocomplete="off" readonly placeholder="选择阶段负责人" class="layui-input picker-one" lay-verify="required" lay-reqText="请选择阶段负责人">\
+					<input type="hidden" name="chargeIds[]">\
+				  </div>\
+				</div>\
+				<div class="layui-inline">\
+				  <label class="layui-form-label">成员</label>\
+				  <div class="layui-input-inline" style="width:168px;">\
+					<input type="text" name="membeNames[]" autocomplete="off" readonly placeholder="选择阶段成员，可多选" class="layui-input picker-more" lay-verify="required" lay-reqText="请选择阶段成员">\
+					<input type="hidden" name="membeIds[]">\
+				  </div>\
+				</div>\
+				<div class="layui-inline">\
+					<label class="layui-form-label">周期</label>\
+					<div class="layui-input-inline" style="width:186px;">\
+						<input type="text" name="cycleDate[]" class="layui-input select-time-range" readonly placeholder="开始 到 结束" lay-verify="required" lay-reqText="请选择阶段周期">\
+					</div>\
+				</div>\
+				<span class="layui-btn layui-btn-danger layui-btn-sm">删除</span>\
+			</div>'
+			];
+			$('#flowList').append(tem[type]);
+			form.render();
+			//日期
+			lay('.select-time-range').each(function () {
+				laydate.render({
+					elem: this,
+					range: '到',
+					trigger: 'click'
+				});
+			});
+		});
+		$('#flowList').on('click','.layui-btn-danger',function(){
+			$(this).parents('.layui-form-item').remove();
+			var items = $('.label-index').length;
+			if(items>0){
+				$('.label-index').each(function(index,item){
+					$(this).html('第'+(index+2)+'阶段');
+				})
+			}
+		});
+		
+		
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/project/index/add",data.field,callback);
+			return false;
+		});
+	}
+
+</script>
+{/block}

@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">新增客户</h3>
+    <table class="layui-table layui-table-form">
+      <tr>
+        <td class="layui-td-gray">客户名称<font>*</font></td>
+        <td colspan="3"><input type="text" name="name" lay-verify="required" lay-reqText="请输入客户名称" autocomplete="off" placeholder="请输入客户名称" class="layui-input"></td>
+		<td class="layui-td-gray">客户来源<font>*</font></td>
+        <td>
+			<select name="source_id" lay-verify="required" lay-reqText="请选择客户来源">
+            <option value="">请选择客户来源</option>
+                        <option value="1">独立开发</option>
+                        <option value="2">微信公众号</option>
+                        <option value="3">今日头条</option>
+                        <option value="4">百度搜索</option>
+                        <option value="5">销售活动</option>
+                        <option value="6">电话来访</option>
+                        <option value="7">客户介绍</option>
+                        <option value="8">其他来源</option>
+                      </select>
+        </td>
+      </tr>
+      <tr>
+        <td class="layui-td-gray">联系地址<font>*</font></td>
+        <td>
+          <input type="text" name="address" autocomplete="off" lay-verify="required" lay-reqText="请输入客户联系地址" placeholder="请输入客户联系地址" class="layui-input">
+        </td>
+        <td class="layui-td-gray">所属行业<font>*</font></td>
+        <td>
+          <select name="industry_id" lay-verify="required" lay-reqText="请选择所属行业">
+            <option value="">请选择所属行业</option>
+                        <option value="1">工业品企业</option>
+                        <option value="2">互联网企业</option>
+                        <option value="3">服务行业</option>
+                        <option value="4">消费品企业</option>
+                        <option value="5">原材料企业</option>
+                        <option value="6">农业企业</option>
+                        <option value="7">科技企业</option>
+                        <option value="8">其他行业</option>
+                      </select>
+        </td>
+	    <td class="layui-td-gray">客户等级<font>*</font></td>
+        <td>
+          <select name="grade_id" lay-verify="required" lay-reqText="请选择客户等级">
+            <option value="">请选择客户等级</option>
+                        <option value="1">普通客户</option>
+                        <option value="2">VIP客户</option>
+                        <option value="3">白银客户</option>
+                        <option value="4">黄金客户</option>
+                        <option value="5">钻石客户</option>
+                      </select>
+        </td>
+      </tr>
+	  	  <tr>
+        <td class="layui-td-gray">归属员工<font>*</font></td>
+        <td>
+			<input type="text" name="belong_name" value="超级员工" autocomplete="off" readonly  lay-verify="required" lay-reqText="请选择客户归属人" placeholder="请选择客户归属人" class="layui-input">
+			<input type="hidden" name="belong_uid" value="1">
+			<input type="hidden" name="belong_did" value="1">
+        </td>
+        <td class="layui-td-gray">归属部门</td>
+        <td>
+          <input type="text" id="department_name" name="belong_department" value="董事会" autocomplete="off" readonly class="layui-input">
+        </td>
+		<td class="layui-td-gray">共享员工</td>
+        <td>
+			<input type="text" name="share_names" autocomplete="off" readonly placeholder="请选择共享人员" class="layui-input picker-more">
+			<input type="hidden" name="share_ids">
+        </td>
+      </tr>
+	  	  <tr>
+		<td class="layui-td-gray" style="vertical-align:top">客户介绍<font>*</font></td>
+        <td colspan="5">
+          <textarea name="content" placeholder="请输入客户介绍信息" lay-verify="required" lay-reqText="请输入客户介绍信息" class="layui-textarea"></textarea>
+        </td>
+      </tr>
+	  <tr>
+		<td class="layui-td-gray" style="vertical-align:top">经营业务</td>
+        <td colspan="5">
+          <textarea name="market" placeholder="请输入客户主要经营业务" class="layui-textarea"></textarea>
+        </td>
+      </tr>
+	  <tr>
+		<td colspan="6"><strong>首要联系人信息</strong></td>
+	  </tr>
+	  <tr>
+        <td class="layui-td-gray">联 系 人<font>*</font></td>
+        <td>
+          <input type="text" name="c_name" autocomplete="off" lay-verify="required" lay-reqText="请输入联系人姓名" placeholder="请输入联系人姓名" class="layui-input">
+        </td>
+		<td class="layui-td-gray">联系电话<font>*</font></td>
+        <td>
+			<input type="text" name="c_mobile" autocomplete="off" lay-verify="required|mobile" lay-reqText="请输入联系人电话" placeholder="请输入联系人电话" class="layui-input">
+        </td>
+		<td class="layui-td-gray">性别<font>*</font></td>
+        <td>
+			<input type="radio" name="c_sex" value="1" title="男">
+			<input type="radio" name="c_sex" value="2" title="女" >
+        </td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">微 信 号</td>
+        <td>
+			<input type="text" name="c_wechat" autocomplete="off" placeholder="请输入联系人微信号" class="layui-input">
+        </td>
+		<td class="layui-td-gray">QQ号码</td>
+        <td>
+			<input type="text" name="c_qq" autocomplete="off" placeholder="请输入联系人QQ号码" class="layui-input">
+        </td>
+		<td class="layui-td-gray">电子邮箱</td>
+        <td>
+			<input type="text" name="c_email" autocomplete="off" placeholder="请输入联系人电子邮箱" class="layui-input">
+        </td>
+      </tr>
+	   <tr>
+		<td colspan="6"><strong>备注信息</strong></td>
+	  </tr>
+      <tr>
+        <td colspan="6">
+          <textarea name="remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+        </td>
+      </tr>
+    </table>
+    <div class="py-3">
+	   <input type="hidden" name="scene" value="add">
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,employeepicker = layui.employeepicker;
+		
+		//选择归属人人弹窗	
+		$('body').on('click','[name="belong_name"]',function () {
+			var ids=$('[name="belong_uid"]').val(),names=$('[name="belong_name"]').val();
+			employeepicker.init({
+				ids:ids,
+				names:names,
+				type:0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				callback:function(ids,names,dids,departments){
+					$('[name="belong_uid"]').val(ids);
+					$('[name="belong_name"]').val(names);
+					$('[name="belong_did"]').val(dids);
+					$('#department_name').val(departments);
+				}
+			});
+		});	
+	
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			if(!data.field.c_sex){
+				layer.msg('请选择首要联系的性别');
+				return false;
+			}
+			tool.post("/customer/index/add", data.field, callback);
+			return false;
+		});
+
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/layui/layui.js"></script>
+	<script src="/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="../../assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<table class="layui-hide" id="conf" lay-filter="conf"></table>
+</div>
+
+<div id="saveOrEdit"  class="panel panel-default operation" hidden>
+	<form  id="addOrUpdateForm" lay-filter="addOrUpdateForm"  class="layui-form p-4">
+		<h3 class="pb-3">配置项</h3>
+		<table class="layui-table layui-table-form">
+			<tr>
+				<td class="layui-td-gray">配置名称<font>*</font>
+				</td>
+				<td>
+					<input type="hidden" name="id" value="" />
+					<input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入配置名称" lay-reqText="请输入配置名称" class="layui-input" value="">
+				</td>
+				<td class="layui-td-gray">状态<font>*</font>
+				</td>
+				<td>				<input type="radio" name="status" value="1" title="正常" checked>
+					<input type="radio" name="status" value="0" title="禁用">
+								</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">
+					配置标识<font>*</font>
+				</td>
+				<td colspan="3">
+					<input type="text" name="name" lay-verify="required" placeholder="请输入配置标识" lay-reqText="请输入配置标识"
+						autocomplete="off" class="layui-input" value="">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<span class="red">注意：新增配置项以后，需要对应新增模板文件，模板文件名称需与标识名称一致，建议复制现有的配置模板文件，然后根据需求修改对应的表单即可。</span>
+				</td>
+			</tr>
+		</table>
+		<div class="py-3">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/html" id="status">
+	<i class="layui-icon {{#  if(d.status == 1){ }}green layui-icon-ok{{#  } else { }}red layui-icon-close{{#  } }}"></i>
+</script>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+	<button class="layui-btn layui-btn-sm" lay-event="add">+ 添加配置项</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#conf',
+			title: '配置列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: false,
+			//url: "index.json",
+			url: "/api/rest/oa_config/list",
+			cellMinWidth: 80,
+			page: false, //开启分页				
+			limit: 20,
+			cols: [
+				[{
+					field: 'id',
+					width: 80,
+					title: 'ID编号',
+					align: 'center'
+				}, {
+					field: 'title',
+					width: 200,
+					title: '配置名称'
+				}, {
+					field: 'name',
+					title: '配置标识<span class="red">（新增的模板文件名称需与标识名称一致）</span>'
+				}, {
+					field: 'status',
+					width: 80,
+					title: '状态',
+					templet: '#status',
+					align: 'center'
+				}, {
+					width: 160,
+					title: '操作',
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group"><button class="layui-btn layui-btn-xs" lay-event="edit1">修改</button>'+
+							'<button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit" >编辑配置</button>'+
+							'<button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
+						return html;
+					}
+				}]
+			]
+		});
+
+		//表头工具栏事件
+		table.on('toolbar(conf)', function (obj) {
+			if (obj.event === 'add') {
+				CoreUtil.setData('config_id',null);
+				//$(".operation").show();
+          		$(".pb-3").html("新增配置项");
+				var data = {"id":"","title":"","status":"1","name":""};
+				form.val('addOrUpdateForm', data);
+				tool.side2($(".operation"));
+				return;
+			}
+		});
+
+		//监听行工具事件
+		table.on('tool(conf)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit1') {
+				CoreUtil.setData('config_id',data);
+				//var editData = CoreUtil.getData('config_id');
+				//console.log("editData="+JSON.stringify(editData));
+				$(".pb-3").html("编辑配置项");
+          		//$(".title").html("新增");
+				form.val('addOrUpdateForm', data);
+				tool.side2($(".operation"));
+				//tool.side2('add.html?id=' + data.id);
+				return;
+			}
+			if (obj.event === 'edit') {
+				CoreUtil.setData('config_id',data);
+				if(data.name == 'web'){
+					tool.side('/home/conf/edit1.html');
+				}else
+				if(data.name == 'email'){
+					tool.side('/home/conf/edit2.html');
+				}else
+				if(data.name == 'token'){
+					tool.side('/home/conf/edit3.html');
+				}else
+				if(data.name == 'other'){
+					tool.side('/home/conf/edit4.html');
+				}else{
+					// tool.side('/home/conf/edit?id=' + data.id);
+					tool.side('/home/conf/edit5.html');
+				}
+				return;
+			}
+			if (obj.event === 'del') {
+				if(data.name == 'web'){
+					layer.msg("内置配置暂不支持删除！");
+					return;
+				}
+				if(data.name == 'email'){
+					layer.msg("内置配置暂不支持删除！");
+					return;
+				}
+				if(data.name == 'token'){
+					layer.msg("内置配置暂不支持删除！");
+					return;
+				}
+				if(data.name == 'other'){
+					layer.msg("内置配置暂不支持删除！");
+					return;
+				}
+				layer.confirm('确定要删除吗?', {
+					icon: 3,
+					title: '提示'
+				}, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+							layer.close(index);
+						}
+					}
+					tool.delete("/api/rest/oa_config/delete", { id: obj.data.id }, callback);
+				});
+			}
+		});
+
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			var isEdit = true;
+			var id = $("input[name='id']").val();
+			if(id == "" || id ==null || id == undefined){
+				isEdit = false;
+			}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			//debugger;
+			if(isEdit){
+				tool.post("/api/rest/oa_config/edit", JSON.stringify(data.field), callback);
+			}else{
+				tool.post("/api/rest/oa_config/add", JSON.stringify(data.field), callback);
+			}
+			return false;
+		});
+	}
+</script>
+
+<!-- /脚本 -->
+<!-- <script type="text/javascript"  src="../../assets/js/jquery.js"></script> -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/js/core.util.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

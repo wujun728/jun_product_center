@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css?v=318"/>
+    <!-- <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+      <link rel="stylesheet" href="/css/public.css" media="all"> -->
+      <style type="text/css">
+      	.layui-form-pane .layui-form-label {
+		    width: 180px;
+		    padding: 8px 15px;
+		    height: 38px;
+		    line-height: 20px;
+		    border-width: 1px;
+		    border-style: solid;
+		    border-radius: 2px 0 0 2px;
+		    text-align: center;
+		    background-color: #FAFAFA;
+		    overflow: hidden;
+		    white-space: nowrap;
+		    text-overflow: ellipsis;
+		    box-sizing: border-box;
+		}
+		
+		.layui-form-pane .layui-input-block {
+		    margin-left: 180px;
+		    left: -1px;
+		}
+      </style>
+</head>
+<body>
+<div class="layui-container" style="width:600px;">
+    <form class="layui-form layui-form-pane" action="" lay-filter="userInfo">
+        <input name="id" hidden>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号</label>
+            <div class="layui-input-block">
+                <input th:if="${flagType} eq 'edit'" type="text" name="username" lay-verify="title" disabled="disabled"
+                       style="background:#eeeeee!important" autocomplete="off" placeholder="请输入账号"
+                       class="layui-input layui-disabled ">
+                <input th:if="${flagType} eq 'add'" type="text" name="username" lay-verify="title" autocomplete="off"
+                       placeholder="请输入账号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label  layui-required">姓名</label>
+            <div class="layui-input-block">
+                <input type="realName" name="realName" placeholder="请输入姓名"  lay-verify="required"  autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">昵称</label>
+            <div class="layui-input-block">
+                <input type="nickName" name="nickName" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item ">
+            <label class="layui-form-label  layui-required">手机号</label>
+            <div class="layui-input-block">
+                <input type="tel" name="phone" placeholder="请输入手机号" lay-verify="required|phone" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-block">
+                <!--lay-verify="required|email"-->
+                <input type="text" id="email"   name="email"  placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input th:if="${flagType} eq 'add'" type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁止"
+                       lay-filter="switch" checked="checked">
+                <input th:if="${flagType} eq 'edit'" type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁止"
+                       lay-filter="switch" checked="checked" disabled="disabled">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label  layui-required">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="1" title="男">
+                <input type="radio" name="sex" value="2" title="女">
+            </div>
+        </div>
+        
+		<div class="layui-form-item">
+            <label class="layui-form-label ">职称级别</label>
+            <div class="layui-input-block">
+                <select id="leavel" name="leavel" lay-filter="leavel" th:with="type=${@sysDictService.getType('posi')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">出生年月</label>
+            <div class="layui-input-block">
+<!--                 <input type="borndate" name="borndate" placeholder="请输入出生年月" autocomplete="off" class="layui-input"> -->
+                <input type="text" name="borndate" id="borndate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">年龄</label>
+            <div class="layui-input-block">
+                <input type="number" name="age" max="160" placeholder="请输入年龄" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">党团员</label>
+            <div class="layui-input-block">
+                <select id="dangyuan" name="dangyuan" lay-filter="dangyuan" placeholder="请输入党团员"  th:with="type=${@sysDictService.getType('dict_dangyuan')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">学历</label>
+            <div class="layui-input-block">
+                <select id="education1" name="education1" lay-filter="education1" placeholder="请输入学历"  th:with="type=${@sysDictService.getType('dict_firest_degree')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内毕业院校</label>
+            <div class="layui-input-block">
+                <input type="school1" name="school1" placeholder="请输入国内毕业院校" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内本科第一专业</label>
+            <div class="layui-input-block">
+                <input type="major1" name="major1" placeholder="请输入国内本科第一专业" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内本科第二专业</label>
+            <div class="layui-input-block">
+                <input type="major2" name="major2" placeholder="请输入国内本科第二专业" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内本科毕业时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="majordate" id="majordate" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内本科学历证书编号</label>
+            <div class="layui-input-block">
+                <input type="majorno" name="majorno" placeholder="请输入国内本科学历证书编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内本科学校类别</label>
+            <div class="layui-input-block">
+                <select id="schooltype" name="schooltype" lay-filter="schooltype" placeholder="请输入国内本科学校类别"  th:with="type=${@sysDictService.getType('dict_schooltype')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内本科是否全日制</label>
+            <div class="layui-input-block">
+                <select id="isfulltime" name="isfulltime" lay-filter="isfulltime" placeholder="请输入国内本科是否全日制"  th:with="type=${@sysDictService.getType('dict_yes_no')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内研究生学院</label>
+            <div class="layui-input-block">
+                <input type="school2" name="school2" placeholder="请输入国内研究生学院" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内研究生专业</label>
+            <div class="layui-input-block">
+                <input type="educol1" name="educol1" placeholder="请输入国内研究生专业" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内研究生毕业时间</label>
+            <div class="layui-input-block">
+<!--                 <input type="educol2" name="educol2" placeholder="请输入国内研究生毕业时间" autocomplete="off" class="layui-input"> -->
+                <input type="text" name="educol2" id="educol2" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内研究生学历编号</label>
+            <div class="layui-input-block">
+                <input type="educol3" name="educol3" placeholder="请输入国内研究生学历编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">国内研究生是否全日制</label>
+            <div class="layui-input-block">
+                <select id="educol4" name="educol4" lay-filter="educol4" placeholder="请输入国内研究生是否全日制"  th:with="type=${@sysDictService.getType('dict_yes_no')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外毕业本科院校</label>
+            <div class="layui-input-block">
+                <input type="educol11" name="educol11" placeholder="请输入海外毕业本科院校" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外毕业专业</label>
+            <div class="layui-input-block">
+                <input type="educol12" name="educol12" placeholder="请输入海外毕业专业" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外本科毕业时间</label>
+            <div class="layui-input-block">
+<!--                 <input type="educol13" name="educol13" placeholder="请输入海外本科毕业时间" autocomplete="off" class="layui-input"> -->
+                <input type="text" name="educol13" id="educol13" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外本科学历证书编号</label>
+            <div class="layui-input-block">
+                <input type="educol14" name="educol14" placeholder="请输入海外本科学历证书编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">本年海外院校排名</label>
+            <div class="layui-input-block">
+                <input type="educol15" name="educol15" placeholder="请输入本年海外院校排名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外毕业研究生院</label>
+            <div class="layui-input-block">
+                <input type="educol16" name="educol16" placeholder="请输入海外毕业研究生院" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外研究生专业</label>
+            <div class="layui-input-block">
+                <input type="educol17" name="educol17" placeholder="请输入海外研究生专业" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外研究生毕业时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="educol18" id="educol18" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外研究生学历证书编号</label>
+            <div class="layui-input-block">
+                <input type="educol19" name="educol19" placeholder="请输入海外研究生学历证书编号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">英语级别</label>
+            <div class="layui-input-block">
+                <select id="engtype" name="engtype" lay-filter="engtype" placeholder="请输入英语级别"  th:with="type=${@sysDictService.getType('dict_eng_leavel')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">其他语种</label>
+            <div class="layui-input-block">
+                <select id="otherlang" name="otherlang" lay-filter="otherlang" placeholder="请输入其他语种"  th:with="type=${@sysDictService.getType('dict_otherlang')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">其他语言考试 </label>
+            <div class="layui-input-block">
+                <input type="otherexam" name="otherexam" placeholder="请输入其他语言考试 " autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">参加工作时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="worktimebegin" id="worktimebegin" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">进所前就职单位(1)</label>
+            <div class="layui-input-block">
+                <input type="companybeforejonin" name="companybeforejonin" placeholder="请输入进所前就职单位(1)" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">职位</label>
+            <div class="layui-input-block">
+                <input type="companybeforejoninjob" name="companybeforejoninjob" placeholder="请输入职位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">进所前就职单位(2)</label>
+            <div class="layui-input-block">
+                <input type="companybeforejonin2" name="companybeforejonin2" placeholder="请输入进所前就职单位(2)" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">职位</label>
+            <div class="layui-input-block">
+                <input type="companybeforejoninjob2" name="companybeforejoninjob2" placeholder="请输入职位" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">进所时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="joincompanytime" id="joincompanytime" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">所龄</label>
+            <div class="layui-input-block">
+                <input type="number" name="companyage" max="" placeholder="请输入所龄" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">职称</label>
+            <div class="layui-input-block">
+                <select id="jobtitle" name="jobtitle" lay-filter="jobtitle" th:with="type=${@sysDictService.getType('posi')}">
+			        <option value="">请选择</option>
+			        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+			    </select>
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">职称证号</label>
+            <div class="layui-input-block">
+                <input type="jobtitleno" name="jobtitleno" placeholder="请输入职称证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">海外执业资格</label>
+            <div class="layui-input-block">
+                <input type="isoutsitejob" name="isoutsitejob" placeholder="请输入海外执业资格" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">通过门数</label>
+            <div class="layui-input-block">
+                <input type="number" name="passcount" max="6" placeholder="请输入通过门数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">其中免考门数</label>
+            <div class="layui-input-block">
+                <input type="number" name="noexamcount" max="6" placeholder="请输入其中免考门数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">注会通过的门数</label>
+            <div class="layui-input-block">
+                <input type="number" name="cpacount1" max="6" placeholder="请输入注会通过的门数" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">注会通过的科目</label>
+            <div class="layui-input-block">
+                <input type="cpapasscounte" name="cpapasscounte" placeholder="请输入注会通过的科目" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">批准注册会计师时间</label>
+            <div class="layui-input-block">
+                <input type="text" name="cpadate1" id="cpadate1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">批准注师文号</label>
+            <div class="layui-input-block">
+                <input type="cpano" name="cpano" placeholder="请输入批准注师文号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">注册会计师证号</label>
+            <div class="layui-input-block">
+                <input type="cpacode" name="cpacode" placeholder="请输入注册会计师证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">注册评估师证号</label>
+            <div class="layui-input-block">
+                <input type="cpacode2" name="cpacode2" placeholder="请输入注册评估师证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">注册税务师证号</label>
+            <div class="layui-input-block">
+                <input type="cpacode3" name="cpacode3" placeholder="请输入注册税务师证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">工程造价师证号</label>
+            <div class="layui-input-block">
+                <input type="cpacode4" name="cpacode4" placeholder="请输入工程造价师证号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">特长</label>
+            <div class="layui-input-block">
+                <input type="text" name="goodat" placeholder="请输入特长" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">家庭住址</label>
+            <div class="layui-input-block">
+                <input type="text" name="homeadress" placeholder="请输入家庭住址" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">固定电话</label>
+            <div class="layui-input-block">
+                <input type="number" name="telephone" placeholder="请输入固定电话" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+<div class="layui-form-item">
+            <label class="layui-form-label ">身份证号码</label>
+            <div class="layui-input-block">
+                <input type="text" name="idno" maxlength="18" placeholder="请输入身份证号码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+
+        <div class="form-group-bottom text-right" id="buttonSave">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+        </div>
+    </form>
+</div>
+</body>
+<!-- <script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script> -->
+<script type="text/javascript" src="/assets/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="/assets/js/core.util.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+    var layer = layui.layer;
+    var $ = jQuery = layui.jquery;
+    var form = layui.form;
+    var element = layui.element;
+    
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#borndate'
+        });
+        laydate.render({
+            elem: '#majordate'
+        });
+        laydate.render({
+            elem: '#educol2'
+        });
+        laydate.render({
+            elem: '#educol13'
+        });
+        laydate.render({
+            elem: '#educol18'
+        });
+        laydate.render({
+            elem: '#worktimebegin'
+        });
+        laydate.render({
+            elem: '#joincompanytime'
+        });
+        laydate.render({
+            elem: '#cpadate1'
+        });
+    }); 
+    $(function () {
+        CoreUtil.sendGet("/api/sys/user", null, function (res) {
+            if (res.data != null) {
+                $(".layui-container input[name=id]").val(res.data.id);
+                $(".layui-container input[name=username]").val(res.data.username);
+                $(".layui-container input[name=realName]").val(res.data.realName);
+                $(".layui-container input[name=nickName]").val(res.data.nickName);
+                $(".layui-container input[name=email]").val(res.data.email);
+                $(".layui-container input[name=phone]").val(res.data.phone);
+                $(".layui-container input[name=sex][value=1]").attr("checked", res.data.sex == 1 ? true : false);
+                $(".layui-container input[name=sex][value=2]").attr("checked", res.data.sex == 2 ? true : false);
+                if (res.data.status == 1) {
+                    $(".layui-container input[name=status]").attr('checked', 'checked');
+                    $(".layui-container input[name=status]").attr('type', 'hidden').val(1);
+                } else {
+                    $(".layui-container input[name=status]").attr('type', 'hidden').removeAttr("checked").val(2);
+                    var x = document.getElementsByClassName("layui-unselect layui-form-switch layui-form-onswitch");
+                    x[0].setAttribute("class", "layui-unselect layui-form-switch");
+                    var d = document.getElementsByTagName('em')[0];
+                    d.firstChild.nodeValue = '禁用';
+                }
+                
+                
+                $(".layui-container select[name=leavel]").val(res.data.leavel); 
+                $(".layui-container input[name=borndate]").val(res.data.borndate); 
+                $(".layui-container input[name=age]").val(res.data.age); 
+                $(".layui-container select[name=dangyuan]").val(res.data.dangyuan); 
+                $(".layui-container select[name=education1]").val(res.data.education1); 
+                $(".layui-container input[name=school1]").val(res.data.school1); 
+                $(".layui-container input[name=major1]").val(res.data.major1); 
+                $(".layui-container input[name=major2]").val(res.data.major2); 
+                $(".layui-container input[name=majordate]").val(res.data.majordate); 
+                $(".layui-container input[name=majorno]").val(res.data.majorno); 
+                $(".layui-container select[name=schooltype]").val(res.data.schooltype); 
+                $(".layui-container select[name=isfulltime]").val(res.data.isfulltime); 
+                $(".layui-container input[name=school2]").val(res.data.school2); 
+                $(".layui-container input[name=educol1]").val(res.data.educol1); 
+                $(".layui-container input[name=educol2]").val(res.data.educol2); 
+                $(".layui-container input[name=educol3]").val(res.data.educol3); 
+                $(".layui-container select[name=educol4]").val(res.data.educol4); 
+                $(".layui-container input[name=educol11]").val(res.data.educol11); 
+                $(".layui-container input[name=educol12]").val(res.data.educol12); 
+                $(".layui-container input[name=educol13]").val(res.data.educol13); 
+                $(".layui-container input[name=educol14]").val(res.data.educol14); 
+                $(".layui-container input[name=educol15]").val(res.data.educol15); 
+                $(".layui-container input[name=educol16]").val(res.data.educol16); 
+                $(".layui-container input[name=educol17]").val(res.data.educol17); 
+                $(".layui-container input[name=educol18]").val(res.data.educol18); 
+                $(".layui-container input[name=educol19]").val(res.data.educol19); 
+                $(".layui-container select[name=engtype]").val(res.data.engtype); 
+                $(".layui-container select[name=otherlang]").val(res.data.otherlang); 
+                $(".layui-container input[name=otherexam]").val(res.data.otherexam); 
+                $(".layui-container input[name=worktimebegin]").val(res.data.worktimebegin); 
+                $(".layui-container input[name=companybeforejonin]").val(res.data.companybeforejonin); 
+                $(".layui-container input[name=companybeforejoninjob]").val(res.data.companybeforejoninjob); 
+                $(".layui-container input[name=companybeforejonin2]").val(res.data.companybeforejonin2); 
+                $(".layui-container input[name=companybeforejoninjob2]").val(res.data.companybeforejoninjob2); 
+                $(".layui-container input[name=joincompanytime]").val(res.data.joincompanytime); 
+                $(".layui-container input[name=companyage]").val(res.data.companyage); 
+                $(".layui-container input[name=jobtitle]").val(res.data.jobtitle); 
+                $(".layui-container input[name=jobtitleno]").val(res.data.jobtitleno); 
+                $(".layui-container input[name=isoutsitejob]").val(res.data.isoutsitejob); 
+                $(".layui-container input[name=passcount]").val(res.data.passcount); 
+                $(".layui-container input[name=noexamcount]").val(res.data.noexamcount); 
+                $(".layui-container input[name=cpacount1]").val(res.data.cpacount1); 
+                $(".layui-container input[name=cpapasscounte]").val(res.data.cpapasscounte); 
+                $(".layui-container input[name=cpadate1]").val(res.data.cpadate1); 
+                $(".layui-container input[name=cpano]").val(res.data.cpano); 
+                $(".layui-container input[name=cpacode]").val(res.data.cpacode); 
+                $(".layui-container input[name=cpacode2]").val(res.data.cpacode2); 
+                $(".layui-container input[name=cpacode3]").val(res.data.cpacode3); 
+                $(".layui-container input[name=cpacode4]").val(res.data.cpacode4); 
+                $(".layui-container input[name=goodat]").val(res.data.goodat); 
+                $(".layui-container input[name=homeadress]").val(res.data.homeadress); 
+                $(".layui-container input[name=telephone]").val(res.data.telephone); 
+                $(".layui-container input[name=idno]").val(res.data.idno); 
+ 
+                form.render(); //更新全部
+            }
+        });
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            CoreUtil.sendPut("/api/sys/user/info", data.field, function (res) {
+                layer.msg(res.msg);
+            });
+            return false;
+        });
+
+        //监听指定开关
+        form.on('switch(switch)', function () {
+            $(".layui-container input[name=status]").attr('type', 'hidden').val(this.checked ? 1 : 2);
+
+        });
+    })
+</script>
+</html>

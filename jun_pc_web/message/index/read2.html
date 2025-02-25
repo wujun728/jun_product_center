@@ -1,0 +1,91 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">消息详情</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">信息主题</td>
+			<td colspan="5">{$detail.title}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">发送人</td>
+			<td>{$detail.person_name}</td>
+			<td class="layui-td-gray-2">接收人类别</td>
+			<td>
+				{eq name="$detail.type" value="0"}-{/eq}
+				{eq name="$detail.type" value="1"}同事{/eq}
+				{eq name="$detail.type" value="2"}部门{/eq}
+				{eq name="$detail.type" value="3"}岗位{/eq}
+				{eq name="$detail.type" value="4"}全部{/eq}
+			</td>
+			<td class="layui-td-gray">发送时间</td>
+			<td>{$detail.send_time}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">收件人</td>
+			<td colspan="5">{$detail.users}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">消息内容</td>
+			<td colspan="5">
+				{if condition="($detail.template == 0)"}
+					{$detail.content}
+					{if condition="($detail.fid > 0)"}		
+					<table class="layui-table" style="margin-top:10px;">
+					<tr>
+						<td class="layui-td-gray-2">引用消息内容</td>
+						<td style="color:#999">{$detail.from_content}</td>
+					</tr>
+					{notempty name="$detail.from_file_array"}
+					<tr>
+						<td class="layui-td-gray-2" style="vertical-align:top">引用消息附件</td>
+						<td style="line-height:inherit">						
+							{volist name="$detail.from_file_array" id="vo"}
+								<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+							{/volist}
+						</td>
+					</tr>
+					{/notempty}
+					</table>
+					{/if}
+				{else/}
+					{$detail.content}{:getMessageLink($detail.template,$detail.action_id)}
+				{/if}
+			</td>
+		</tr>
+		{notempty name="$detail.file_array"}
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top">相关附件</td>
+			<td colspan="5" style="line-height:inherit">
+				{volist name="$detail.file_array" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+				{/volist}
+			</td>
+		</tr>
+		{/notempty}
+		{notempty name="$detail.read_users"}
+		<tr>
+			<td class="layui-td-gray-2" style="vertical-align:top">收件人已读回执</td>
+			<td colspan="5">{$detail.read_users}</td>
+		</tr>
+		{/notempty}
+	</table>
+	{if condition="($detail.template == 0) AND ($detail.pid != 0)"}
+	<div class="py-3">
+		<a class="layui-btn" href="/message/index/reply?id={$detail.id}&type=1">回复</a>
+	</div>
+	{/if}
+</form>
+{/block}
+<!-- /主体 -->
+{block name="script"}
+	<script>
+	const moduleInit = ['tool','oaTool'];
+	function gouguInit() {
+		if (parent.layui.pageTable) {
+			parent.layui.pageTable.reload();
+		}
+	}
+	</script>
+{/block}

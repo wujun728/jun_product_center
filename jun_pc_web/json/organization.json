@@ -1,0 +1,139 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 12,
+  "data": [
+    {
+      "organizationId": 1,
+      "parentId": 0,
+      "organizationName": "某某公司",
+      "organizationFullName": "武汉某某科技有限公司",
+      "organizationType": 1,
+      "sortNumber": 1,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 2,
+      "parentId": 1,
+      "organizationName": "研发部",
+      "organizationFullName": "研发部",
+      "organizationType": 3,
+      "sortNumber": 2,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 3,
+      "parentId": 2,
+      "organizationName": "高教组",
+      "organizationFullName": "高等教育行业项目组",
+      "organizationType": 4,
+      "sortNumber": 3,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 4,
+      "parentId": 2,
+      "organizationName": "政务组",
+      "organizationFullName": "政务行业项目组",
+      "organizationType": 4,
+      "sortNumber": 4,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 5,
+      "parentId": 2,
+      "organizationName": "制造组",
+      "organizationFullName": "生产制造行业项目组",
+      "organizationType": 4,
+      "sortNumber": 5,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 6,
+      "parentId": 2,
+      "organizationName": "仿真组",
+      "organizationFullName": "虚拟仿真行业项目组",
+      "organizationType": 4,
+      "sortNumber": 6,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 7,
+      "parentId": 1,
+      "organizationName": "测试部",
+      "organizationFullName": "测试部",
+      "organizationType": 3,
+      "sortNumber": 7,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 8,
+      "parentId": 1,
+      "organizationName": "设计部",
+      "organizationFullName": "设计部",
+      "organizationType": 3,
+      "sortNumber": 8,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 9,
+      "parentId": 1,
+      "organizationName": "市场部",
+      "organizationFullName": "设计部",
+      "organizationType": 3,
+      "sortNumber": 9,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 10,
+      "parentId": 9,
+      "organizationName": "规划组",
+      "organizationFullName": "产品规划组",
+      "organizationType": 4,
+      "sortNumber": 10,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 11,
+      "parentId": 9,
+      "organizationName": "售前组",
+      "organizationFullName": "产品售前组",
+      "organizationType": 4,
+      "sortNumber": 11,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "organizationId": 12,
+      "parentId": 9,
+      "organizationName": "售后组",
+      "organizationFullName": "产品售后组",
+      "organizationType": 4,
+      "sortNumber": 12,
+      "comments": "",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    }
+  ]
+}

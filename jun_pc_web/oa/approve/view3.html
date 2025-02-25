@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/static/assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<style>
+.layui-form-pane .layui-form-label{color:#999; width:80px; padding:8px 3px;}
+.layui-form-item .layui-inline{margin-right:3px; margin-bottom:10px;}
+.layui-form-item{margin-bottom:5px;}
+.layui-form-item .layui-btn-danger{display:none; margin-top:-8px}
+.layui-form-item:hover .layui-btn-danger{display:inline-block;}
+.select-1,.select-2{display:none;}
+
+.log-timeline{ position: relative; min-height:600px; padding-left: 48px; background-color:#fff;}
+.log-timeline:after {content: ""; position: absolute; top: 0; left: 24px; width: 1px; height: 100%; background: #e3e9ed;}
+.log-timeline dl{padding-bottom: 8px; position: relative;}
+.log-timeline dt{font-size: 16px; line-height: 2.4; color: #323232; font-weight:600}
+.log-timeline dd{font-size: 14px; line-height: 1.6; padding:5px 0}
+.log-timeline .date-second-point{width: 10px; height: 10px; display: block; border-radius: 50%; border: 3px solid #FBBC05; background: #fff; position: absolute; z-index: 99; left:-32px; top:9px}
+.log-timeline .log-thumb{width: 24px; height: 24px; border-radius: 50%; margin-right:4px;}
+.log-timeline .open-a{margin:0 4px;}
+.log-item i{font-weight:800; color:#323232}
+.log-content strong{margin:0 4px; color:#323232}
+
+</style>
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">加班申请审批</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">加班时间</td>
+			<td>2023-08-17 的下午 至 2023-08-18 的下午</td>
+			<td class="layui-td-gray">请假天数</td>
+			<td>共24.0天</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">加班事由</td>
+			<td colspan="3">11</td>
+		</tr>
+	</table>
+	
+		<table class="layui-table layui-table-form mt-4">
+		<tr>
+			<td class="layui-td-gray">审核状态</td>
+			<td><span class="black">待审批</span>			</td>
+			<td class="layui-td-gray-2">当前审核人</td>
+			<td>叶小钗</td>
+			<td class="layui-td-gray">抄送人</td>
+			<td>收万劫</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">审批流程</td>
+			<td colspan="5">
+				<div class="flow-flexbox check-items flow-flex-row" id="flowList">
+					<div class="flow-flexbox check-item flow-flex-row">
+						<i class="layui-icon layui-icon-add-circle" data-ok=""></i>
+						<div class="check-item-name">素还真</div>
+						<div class="check-item-status">创建</div>
+						<span class="layui-icon layui-icon-right"></span>
+					</div>
+				</div>
+			</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">审批记录</td>
+			<td colspan="5">
+				<ul class="layui-timeline flow-record pt-2">
+						
+					<li class="layui-timeline-item delete-0">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+						<p style="padding-left:24px">2023-08-28 09:52<span class="black ml-2">素还真</span><span class="mx-2 layui-color-0">提交</span>了此申请。操作意见：<span class="green">提交申请</span></p>
+					</li>
+								</ul>
+			</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">审批节点 <font>*</font></td>
+			<td colspan="5">
+				<input type="radio" name="check_node" lay-filter="check_node" value="1" title="审核结束">
+				<input type="radio" name="check_node" lay-filter="check_node" value="2" title="下一审批人">
+				<div class="layui-inline">
+				<input type="text" name="check_admin_name" value="" autocomplete="off" placeholder="请选择下一审批人" lay-verify="required" lay-reqText="请选择下一审批人" class="layui-input picker-one"><input type="hidden" name="check_admin_ids" value="">
+				</div>				
+			</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">审批意见 <font>*</font></td>
+			<td colspan="5">
+				<textarea name="content" placeholder="请输入审批意见" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+			</table>
+	<input type="hidden" name="id" value="414">
+	<input type="hidden" name="flow_type" value="0">
+	<input type="hidden" name="check_step_sort" value="0">
+	<div id="formBtn" style="padding: 10px 0">
+					<span class="layui-btn layui-btn-normal" data-status="1"><i class="layui-icon layui-icon-ok"></i> 通过</span>
+			<span class="layui-btn layui-btn-danger" data-status="2"><i class="layui-icon layui-icon-close"></i> 拒绝</span>
+					    </div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+const moduleInit = ['tool','employeepicker','oaTool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool, employeepicker = layui.employeepicker,laydate = layui.laydate,dropdown = layui.dropdown;
+		//获取审核信息
+		$.ajax({
+			url: "/api/index/get_flow_nodes",
+			type:'get',
+			data:{id:$('[name="id"]').val()},
+			success: function (e) {
+					if (e.code == 0) {	
+						let flowHtml='',list = e.data,record_list='',sort = $('[name="check_step_sort"]').val();
+						for(var f=0;f<list.length;f++){
+							//审批流程
+							let checkUser = '',
+							iconRight ='<span class="layui-icon layui-icon-right"></span>',
+							iconStatus ='<i class="layui-icon layui-icon-time"></i>',
+							strStatus ='<div class="check-item-status">待审核</div>',
+							sortClass ='';
+							if(f == list.length-1){
+								iconRight ='';
+							}
+							if(list[f].flow_type == 1 || list[f].flow_type == 2){
+								checkUser=list[f].flow_type == 1?'部门负责人':'上级部门负责人';
+								if(list[f].check_list.length>0){
+									if(list[f].check_list[0].status == 1){
+										iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+										strStatus ='<div class="check-item-status">通过</div>';
+									}
+									else if(list[f].check_list[0].status == 2){
+										iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+										strStatus ='<div class="check-item-status">拒绝</div>';
+									}
+								}
+							}
+							else if(list[f].flow_type == 0 ){
+								checkUser=list[f].user_id_info[0].name;
+								if(list[f].check_list.length>0){
+									iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+									strStatus ='<div class="check-item-status">拒绝</div>';
+									for(var m=0;m<list[f].check_list.length;m++){
+										if(list[f].check_list[m].status == 1){
+											iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+											strStatus ='<div class="check-item-status">通过</div>';
+										}
+									}
+								}
+							}
+							else if(list[f].flow_type == 3 ){
+								checkUser='多人或签';
+								if(list[f].user_id_info.length>0){
+									iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+									strStatus ='<div class="check-item-status">待审核</div>';
+									for(var m=0;m<list[f].user_id_info.length;m++){
+										if(list[f].user_id_info[m].status == 1){
+											iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+											strStatus ='<div class="check-item-status">通过</div>';
+											break;
+										}
+										if(list[f].user_id_info[m].status == 2){
+											iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+											strStatus ='<div class="check-item-status">拒绝</div>';
+										}
+									}
+								}
+							}
+							else if(list[f].flow_type == 4){
+								checkUser='多人会签';
+								if(list[f].user_id_info.length>0){
+									iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+									strStatus ='<div class="check-item-status">通过</div>';
+									for(var m=0;m<list[f].user_id_info.length;m++){
+										if(list[f].user_id_info[m].status == 2){
+											iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+											strStatus ='<div class="check-item-status">拒绝</div>';
+											break;
+										}
+										if(list[f].user_id_info[m].status == 0){
+											iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+											strStatus ='<div class="check-item-status">待审核</div>';
+										}
+									}
+								}
+							}
+							else if(list[f].flow_type == 5){
+								checkUser=list[f].flow_name+' ['+list[f].user_id_info[0].name+']';
+								if(list[f].user_id_info.length>0){
+									iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+									strStatus ='<div class="check-item-status">通过</div>';
+									for(var m=0;m<list[f].user_id_info.length;m++){
+										if(list[f].user_id_info[m].status == 2){
+											iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+											strStatus ='<div class="check-item-status">拒绝</div>';
+											break;
+										}
+										if(list[f].user_id_info[m].status == 0){
+											iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+											strStatus ='<div class="check-item-status">待审核</div>';
+										}
+									}
+								}
+							}
+							
+							if(sort == list[f].sort){
+								sortClass ='flow-this';
+								iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+								strStatus ='<div class="check-item-status">当前审核</div>';
+							}
+							flowHtml+= '<div class="flow-flexbox check-item flow-flex-row '+sortClass+'" id="flow'+f+'">'+iconStatus+'\
+								<div class="check-item-name">'+checkUser+'</div>'+strStatus+iconRight+'\
+							</div>';
+						}
+						
+						$('#flowList').append(flowHtml);					
+					}
+				}
+			})	
+		
+		
+		//监听提交
+		$('#formBtn').on('click','span', function(data){
+			let id=$('[name="id"]').val();
+			let content=$('[name="content"]').val();
+			let check_status=$(this).data('status');
+			
+			let flow_type = $('input[name="flow_type"]').val();
+			let check_node=0,check_admin_ids=0;
+			if(flow_type == 0 && check_status==1){
+				check_node = $('input[name="check_node"]:checked').val();
+				check_admin_ids = $('input[name="check_admin_ids"]').val();
+				if(!check_node){
+					layer.msg('请选择下一审批节点');
+					return false;
+				}
+				if(check_node == 2 && check_admin_ids==''){
+					layer.msg('请选择下一审批人');
+					return false;
+				}
+			}			
+			
+			if(check_status ==1 || check_status==2){
+				if(content==''){
+					layer.msg('请输入审批意见');
+					return false;
+				}
+				let confirmTips='确定通过该审核？';
+				if(check_status==2){
+					confirmTips='确定拒绝该审核？';
+				}				
+				layer.confirm(confirmTips, function(index){
+					$.ajax({
+						url: "/api/index/flow_check",
+						type:'post',
+						data:{
+							id:id,
+							type:1,
+							check_node:check_node,
+							check_admin_ids:check_admin_ids,
+							check:check_status,
+							content:content
+						},
+						success: function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {	
+								tool.sideClose(1000);
+							}
+						}
+					})
+					layer.close(index);
+				});   
+			}
+			else if(check_status ==3){			
+				layer.prompt({
+					formType: 2,
+					title: '请输入撤回理由',
+					area: ['500px', '120px'] //自定义文本域宽高
+				}, function(value, index, elem){
+					if(value==''){
+						layer.msg('请输入撤回理由');
+						return false;
+					}
+					$.ajax({
+						url: "/api/index/flow_check",
+						type:'post',
+						data:{
+							id:id,
+							type:1,
+							check:check_status,
+							content:value
+						},
+						success: function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {	
+								tool.sideClose(1000);
+							}
+						}
+					})
+					layer.close(index);
+				});
+			}
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">功能菜单/节点</h3>
+		<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">父级菜单/节点<font>*</font>
+			</td>
+			<td>
+				<select name="pid" lay-verify="required" lay-filter="pid" lay-reqText="请选择父级菜单/节点">
+					<option value="0" title="0">作为顶级菜单/节点</option>
+										<option value="1" title="1" >系统管理 (1级)</option>
+										<option value="9" title="2" >├─系统配置 (2级)</option>
+										<option value="10" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="11" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="12" title="3" >&sect;&sect;├─编辑 (3级)</option>
+										<option value="13" title="2" >├─功能模块 (2级)</option>
+										<option value="14" title="3" >&sect;&sect;├─安装 (3级)</option>
+										<option value="15" title="3" >&sect;&sect;├─升级 (3级)</option>
+										<option value="16" title="3" >&sect;&sect;├─卸载 (3级)</option>
+										<option value="17" title="2" >├─功能节点 (2级)</option>
+										<option value="18" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="19" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="20" title="2" >├─角色权限 (2级)</option>
+										<option value="21" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="22" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="23" title="2" >├─数据权限 (2级)</option>
+										<option value="24" title="3" >&sect;&sect;├─编辑 (3级)</option>
+										<option value="25" title="2" >├─操作日志 (2级)</option>
+										<option value="26" title="2" >├─备份数据 (2级)</option>
+										<option value="27" title="3" >&sect;&sect;├─备份数据表 (3级)</option>
+										<option value="28" title="3" >&sect;&sect;├─优化数据表 (3级)</option>
+										<option value="29" title="3" >&sect;&sect;├─修复数据表 (3级)</option>
+										<option value="30" title="2" >├─还原数据 (2级)</option>
+										<option value="31" title="3" >&sect;&sect;├─还原数据表 (3级)</option>
+										<option value="32" title="3" >&sect;&sect;├─下载备份数据 (3级)</option>
+										<option value="33" title="3" >&sect;&sect;├─删除备份数据 (3级)</option>
+										<option value="2" title="1" >基础数据 (1级)</option>
+										<option value="34" title="2" >├─审批类型 (2级)</option>
+										<option value="35" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="36" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="37" title="2" >├─审批流程 (2级)</option>
+										<option value="38" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="39" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="40" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="41" title="2" >├─报销类型 (2级)</option>
+										<option value="42" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="43" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="44" title="2" >├─费用类型 (2级)</option>
+										<option value="45" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="46" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="47" title="2" >├─企业主体 (2级)</option>
+										<option value="48" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="49" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="50" title="2" >├─行业类型 (2级)</option>
+										<option value="51" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="52" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="53" title="2" >├─工作类别 (2级)</option>
+										<option value="54" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="55" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="56" title="2" >├─服务类型 (2级)</option>
+										<option value="57" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="58" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="59" title="2" >├─关 键 字 (2级)</option>
+										<option value="60" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="61" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="196" title="2" >├─附件管理 (2级)</option>
+										<option value="197" title="3" >&sect;&sect;├─编辑附件 (3级)</option>
+										<option value="198" title="3" >&sect;&sect;├─移动附件 (3级)</option>
+										<option value="199" title="3" >&sect;&sect;├─删除附件 (3级)</option>
+										<option value="200" title="3" >&sect;&sect;├─附件分组 (3级)</option>
+										<option value="201" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="202" title="3" >&sect;&sect;├─删除附件分组 (3级)</option>
+										<option value="3" title="1" >人力资源 (1级)</option>
+										<option value="62" title="2" >├─部门架构 (2级)</option>
+										<option value="63" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="64" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="65" title="2" >├─岗位职称 (2级)</option>
+										<option value="66" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="67" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="68" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="69" title="2" >├─企业员工 (2级)</option>
+										<option value="70" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="71" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="72" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="73" title="3" >&sect;&sect;├─重设密码 (3级)</option>
+										<option value="74" title="2" >├─人事调动 (2级)</option>
+										<option value="75" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="76" title="2" >├─离职档案 (2级)</option>
+										<option value="77" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="78" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="203" title="3" >&sect;&sect;├─资料交接 (3级)</option>
+										<option value="4" title="1" >行政管理 (1级)</option>
+										<option value="79" title="2" >├─印章管理 (2级)</option>
+										<option value="80" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="81" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="82" title="2" >├─车辆管理 (2级)</option>
+										<option value="83" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="84" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="85" title="2" >├─会议室管理 (2级)</option>
+										<option value="86" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="87" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="5" title="1" >企业公告 (1级)</option>
+										<option value="88" title="2" >├─公告类型 (2级)</option>
+										<option value="89" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="90" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="91" title="2" >├─公告列表 (2级)</option>
+										<option value="92" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="93" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="94" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="6" title="1" >办公审批 (1级)</option>
+										<option value="95" title="2" >├─我发起的 (2级)</option>
+										<option value="96" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="97" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="98" title="2" >├─我处理的 (2级)</option>
+										<option value="99" title="2" >├─抄送给我的 (2级)</option>
+										<option value="7" title="1" >日常办公 (1级)</option>
+										<option value="100" title="2" >├─日程安排 (2级)</option>
+										<option value="101" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="102" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="103" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="104" title="2" >├─日程日历 (2级)</option>
+										<option value="105" title="2" >├─工作记录 (2级)</option>
+										<option value="106" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="107" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="108" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="109" title="3" >&sect;&sect;├─更改工时 (3级)</option>
+										<option value="110" title="2" >├─工作日历 (2级)</option>
+										<option value="111" title="2" >├─工作汇报 (2级)</option>
+										<option value="112" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="113" title="3" >&sect;&sect;├─发送 (3级)</option>
+										<option value="114" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="115" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="8" title="1" >财务管理 (1级)</option>
+										<option value="116" title="2" >├─报销管理 (2级)</option>
+										<option value="117" title="3" >&sect;&sect;├─我申请的 (3级)</option>
+										<option value="118" title="4" >&sect;&sect;&sect;&sect;├─新建/编辑 (4级)</option>
+										<option value="119" title="4" >&sect;&sect;&sect;&sect;├─删除 (4级)</option>
+										<option value="120" title="4" >&sect;&sect;&sect;&sect;├─查看 (4级)</option>
+										<option value="121" title="3" >&sect;&sect;├─我处理的 (3级)</option>
+										<option value="122" title="3" >&sect;&sect;├─抄送给我的 (3级)</option>
+										<option value="123" title="3" >&sect;&sect;├─打款(管理专用) (3级)</option>
+										<option value="124" title="2" >├─发票管理 (2级)</option>
+										<option value="125" title="3" >&sect;&sect;├─我申请的 (3级)</option>
+										<option value="126" title="4" >&sect;&sect;&sect;&sect;├─新建/编辑 (4级)</option>
+										<option value="127" title="4" >&sect;&sect;&sect;&sect;├─删除 (4级)</option>
+										<option value="128" title="4" >&sect;&sect;&sect;&sect;├─查看 (4级)</option>
+										<option value="129" title="3" >&sect;&sect;├─我处理的 (3级)</option>
+										<option value="130" title="3" >&sect;&sect;├─抄送给我的 (3级)</option>
+										<option value="131" title="3" >&sect;&sect;├─开票(管理专用) (3级)</option>
+										<option value="132" title="2" >├─到账管理 (2级)</option>
+										<option value="133" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="134" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="135" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="136" title="1" >客户管理 (1级)</option>
+										<option value="137" title="2" >├─客户等级 (2级)</option>
+										<option value="138" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="139" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="140" title="2" >├─客户渠道 (2级)</option>
+										<option value="141" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="142" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="143" title="2" >├─抢 客 宝 (2级)</option>
+										<option value="144" title="2" >├─客户列表 (2级)</option>
+										<option value="145" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="146" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="147" title="3" >&sect;&sect;├─获取 (3级)</option>
+										<option value="148" title="3" >&sect;&sect;├─转入公海 (3级)</option>
+										<option value="149" title="2" >├─公海客户 (2级)</option>
+										<option value="150" title="3" >&sect;&sect;├─分配客户 (3级)</option>
+										<option value="151" title="3" >&sect;&sect;├─转入废弃池 (3级)</option>
+										<option value="152" title="2" >├─废弃客户 (2级)</option>
+										<option value="153" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="154" title="3" >&sect;&sect;├─还原 (3级)</option>
+										<option value="155" title="2" >├─客户联系人 (2级)</option>
+										<option value="156" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="157" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="158" title="2" >├─销售机会 (2级)</option>
+										<option value="159" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="160" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="161" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="204" title="2" >├─跟进记录 (2级)</option>
+										<option value="162" title="1" >合同协议 (1级)</option>
+										<option value="163" title="2" >├─合同类别 (2级)</option>
+										<option value="164" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="165" title="3" >&sect;&sect;├─设置 (3级)</option>
+										<option value="166" title="2" >├─合同列表 (2级)</option>
+										<option value="167" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="168" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="169" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="170" title="2" >├─合同归档 (2级)</option>
+										<option value="171" title="1" >项目管理 (1级)</option>
+										<option value="172" title="2" >├─项目列表 (2级)</option>
+										<option value="173" title="3" >&sect;&sect;├─新建 (3级)</option>
+										<option value="174" title="3" >&sect;&sect;├─编辑 (3级)</option>
+										<option value="175" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="176" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="177" title="2" >├─任务列表 (2级)</option>
+										<option value="178" title="3" >&sect;&sect;├─新建 (3级)</option>
+										<option value="179" title="3" >&sect;&sect;├─编辑 (3级)</option>
+										<option value="180" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="181" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="182" title="2" >├─任务工时 (2级)</option>
+										<option value="183" title="2" >├─文档列表 (2级)</option>
+										<option value="184" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="185" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="186" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="187" title="1" >知识文章 (1级)</option>
+										<option value="188" title="2" >├─知识类型 (2级)</option>
+										<option value="189" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="190" title="3" >&sect;&sect;├─删除 (3级)</option>
+										<option value="191" title="2" >├─共享知识 (2级)</option>
+										<option value="192" title="2" >├─个人知识 (2级)</option>
+										<option value="193" title="3" >&sect;&sect;├─新建/编辑 (3级)</option>
+										<option value="194" title="3" >&sect;&sect;├─查看 (3级)</option>
+										<option value="195" title="3" >&sect;&sect;├─删除 (3级)</option>
+									</select>
+			</td>
+			<td class="layui-td-gray-2">所属功能模块<font>*</font></td>
+			<td>
+				<select name="module" lay-verify="required" lay-reqText="请选择所属功能模块">
+					<option value="">请选择</option>
+										<option value="home">系统模块 </option>
+										<option value="user">人事模块 </option>
+										<option value="adm">行政模块 </option>
+										<option value="note">公告模块 </option>
+										<option value="oa">OA模块 </option>
+										<option value="finance">财务模块 </option>
+										<option value="customer">客户模块 </option>
+										<option value="contract">合同模块 </option>
+										<option value="project">项目模块 </option>
+										<option value="article">知识模块 </option>
+									</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">菜单/节点名称<font>*</font>
+			</td>
+			<td>
+				<input type="text" name="title" lay-verify="required" autocomplete="off" placeholder="请输入菜单/节点名称"
+					lay-reqText="请输入菜单/节点名称" class="layui-input">
+			</td>
+			<td class="layui-td-gray">操作日志名称<font>*</font>
+			</td>
+			<td>
+				<input type="text" name="name" lay-verify="required" placeholder="请输入操作日志名称" lay-reqText="请输入操作日志名称"
+					autocomplete="off" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">菜单/节点URL</td>
+			<td>
+				<input type="text" name="src" placeholder="请输入菜单/节点URL，可空" autocomplete="off" class="layui-input">
+			</td>
+			<td class="layui-td-gray">菜单排序</td>
+			<td>
+				<input type="text" name="sort" value="0" placeholder="请输入数字，越小越靠前" autocomplete="off"
+					class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">左侧菜单显示<font>*</font></td>
+			<td>
+				<input type="radio" name="menu" value="1" title="是">
+				<input type="radio" name="menu" value="2" title="不是">
+			</td>
+			<td class="layui-td-gray">菜单图标</td>
+			<td colspan="3">
+				<input type="text" name="icon" style="width:150px; display:inline" placeholder="请输入图标，可空"
+					autocomplete="off" class="layui-input">
+				如：icon-jichupeizhi<a href="/assets/icon/index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4"><strong class="red">注意：作为菜单显示类型时最多展示三级菜单，所以父级菜单/节点选项最大只能选择到2级，非菜单显示类型无限制；一级菜单需要填写菜单图标。</strong></td>
+		</tr>
+	</table>
+		<div class="py-3">
+		<input type="hidden" name="id" value="0">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,level=0;
+		level = $('[name="pid"]').find('[selected=""]').attr('title');
+		if(level === undefined){
+			level=0;
+		}
+		console.log(level);
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			form.on('select(pid)', function(data){
+				level = data.elem[data.elem.selectedIndex].title;
+			})
+			if (!data.field.menu || data.field.menu == '') {
+				layer.msg('请选择是否在左侧菜单显示');
+				return false;
+			}
+			if (data.field.pid==0 && data.field.menu == 1 && data.field.icon == '') {
+				layer.msg('请完善菜单图标');
+				return false;
+			}
+			if (data.field.menu == 1 && level > 2) {
+				layer.msg('左侧显示菜单最多只能添加三级');
+				return false;
+			}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					setTimeout(function(){
+						parent.parent.location.reload();
+					},1000);									
+				}
+			}
+			tool.post("/home/rule/add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/layui/layui.js"></script>
+	<script src="/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

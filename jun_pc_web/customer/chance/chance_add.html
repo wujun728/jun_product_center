@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/static/assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑销售机会</h3>
+    <table class="layui-table layui-table-form">
+      <tr>
+        <td class="layui-td-gray">客户名称</td>
+        <td colspan="3">济南</td>
+		<td class="layui-td-gray-2">客户联系人<font>*</font></td>
+        <td>
+          <select name="contact_id" lay-verify="required" lay-reqText="请选择联系人">
+            <option value="">请选择</option>
+                        <option value="7"  selected>大s =0</option>
+                      </select>
+        </td>
+      </tr>
+      <tr>
+	    <td class="layui-td-gray">机会标题<font>*</font></td>
+        <td colspan="3">
+           <input type="text" name="title" value="个人法国人" autocomplete="off" lay-verify="required" lay-reqText="请输入机会标题" placeholder="请输入机会标题" class="layui-input">
+        </td>
+        <td class="layui-td-gray">发现时间<font>*</font></td>
+        <td>
+          <input type="text" id="discovery_time" name="discovery_time" value="2023-07-25" readonly autocomplete="off" lay-verify="required" lay-reqText="请选择发现时间" placeholder="请选择发现时间" class="layui-input">
+        </td>
+      </tr>
+	  <tr>
+	    <td class="layui-td-gray">销售阶段<font>*</font></td>
+        <td>
+          <select name="stage" lay-verify="required" lay-reqText="请选择">
+            <option value="">请选择</option>
+            			<option value="0" >未设置</option>
+            			<option value="1"  selected>立项评估</option>
+            			<option value="2" >初期沟通</option>
+            			<option value="3" >需求分析</option>
+            			<option value="4" >商务谈判</option>
+            			<option value="5" >方案制定</option>
+            			<option value="6" >合同签订</option>
+            			<option value="7" >失单</option>
+                      </select>
+        </td>
+		<td class="layui-td-gray">预计金额<font>*</font></td>
+        <td>
+          <input type="text" name="expected_amount" autocomplete="off" value="15648.00" lay-verify="required|number" lay-reqText="请输入预计金额" placeholder="请输入预计金额" class="layui-input">
+        </td>
+        <td class="layui-td-gray-2">预计签单时间<font>*</font></td>
+        <td>
+          <input type="text" id="expected_time" name="expected_time" value="2023-07-26" readonly autocomplete="off" lay-verify="required" lay-reqText="请选择预计签单时间" placeholder="请选择预计签单时间" class="layui-input">
+        </td>
+      </tr>
+	  <tr>
+		<td class="layui-td-gray" style="vertical-align:top">需求描述<font>*</font></td>
+        <td colspan="5">
+          <textarea name="content" placeholder="请输入需求描述" lay-verify="required" lay-reqText="请输入需求描述" class="layui-textarea">个人</textarea>
+        </td>
+      </tr>
+      <tr>        
+        <td class="layui-td-gray">归属人员<font>*</font></td>
+        <td>
+          <input type="text" name="belong_name" value="风采铃" readonly autocomplete="off" placeholder="请选择归属人员" class="layui-input picker-one">
+		  <input type="hidden" name="belong_uid" value="4" lay-verify="required" lay-reqText="请选择归属人员">
+        </td>
+		<td class="layui-td-gray">协助人员</td>
+        <td colspan="3">
+          <input type="text" name="assist_names" value="" autocomplete="off" placeholder="请选择协助人员" class="layui-input picker-more">
+		  <input type="hidden" name="assist_ids" value="">
+        </td>
+      </tr>
+    </table>
+    <div class="py-3">
+	   <input type="hidden" name="id" value="3">
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,laydate = layui.laydate,employeepicker=layui.employeepicker;
+		laydate.render({
+			elem: '#discovery_time'
+		});
+		laydate.render({
+			elem: '#expected_time'
+			,min: 0
+		});
+		
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/customer/chance/chance_add", data.field, callback);
+			return false;
+		});
+
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

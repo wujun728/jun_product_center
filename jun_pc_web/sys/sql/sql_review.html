@@ -1,0 +1,17 @@
+
+<html>
+<head>
+<title>HTML显示json字符串并且进行格式化</title>
+</head>
+ 
+<body>
+<p id="show_p"style="display: none">[{"name":"财务部","value":"2c92b7677453204001745337153300e1"},{"name":"总经办","value":"2c92b76774532040017453375df900e9"},{"name":"经理室","value":"2c92b76774535711017457033ba200b6"},{"name":"人事部","value":"40288ae767ee75f70167ee7bae0a0001"},{"name":"项目部","value":"40288ae767ee75f70167ee7cb5120004"},{"name":"琴海森林（中国）科技有限公司","value":"ff808081616e1efd01616e2c89af0000"},{"name":"研发部","value":"ff80808161e4629f0161e49ac1d30001"},{"name":"组织机构","value":"sys"}]</p>
+<pre id="out_pre"></pre>
+ 
+</body>
+<script type="text/javascript"> 
+　 var text = document.getElementById('show_p').innerText; //获取json格式内容
+   var result = JSON.stringify(JSON.parse(text), null, 4);//将字符串转换成json对象 
+   document.getElementById('out_pre').innerText= result ;
+</script>
+</html>

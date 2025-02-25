@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>勾股Admin指南</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+
+	<link rel="stylesheet" href="../../assets/gougu/css/gougu.css">
+	<link rel="stylesheet" href="../../assets/third_party/prism/prism.css">
+</head>
+
+<body>
+	<div class="p-3">
+		<div class="layui-row layui-col-space12">
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>简介1222<span style="float:right; font-size:14px; color:red">【一键CRUD建表样例,请滚到底部查看111】</span></h3></div>
+					<div class="layui-card-body py-4" style="font-size:16px">
+						<p>现今，前端主要是以 React 和 Vue 为代表的 JS 框架盛行的时代，但还是有很多后端开发人员在使用Layui，因为Layui门槛极低，拿来即用，无需涉足各种前端工具的复杂配置，程序员只需面对浏览器本身，就能让业务所需要的一切元素与交互快速实现。</p><br>
+						<p>勾股Admin是一款开基于Layui的最新版扩展的Web UI解决方案。封装了Layui的自身调用方法和一些常用的工具函数，整合部分第三方开源的组件。更多是为服务端程序员量身定做，为使用者提供相对完善的前端UI开发方案，相信她是一个很好的前端轮子。</p><br>
+						<p>开源项目地址：<a target="_blank" class="blue" href = "https://gitee.com/gouguopen/guoguadmin">https://gitee.com/gouguopen/guoguadmin</a></p><br>
+						<p>PS：项目会不定时进行更新，建议⭐star⭐和👁️watch👁️一份。</p>
+					</div>
+				</div>
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>使用</h3></div>
+					<div class="layui-card-body">
+						<p>只需引用一个CSS文件和两个JS文件，声明需要加载的模块，然后初始化操作即可。</p>
+						<p>1、引用CSS文件，放在页头。</p>
+						<pre><code class="lang-html">&lt;link rel="stylesheet" href="/assets/gougu/css/gougu.css"&gt;</code></pre>
+						<p>PS：如果是布局母模板需要引入 layout.css。</p>
+						<pre><code class="lang-html">&lt;link rel="stylesheet" href="/assets/gougu/css/layout.css"&gt;</code></pre> 
+						<p>2、声明需要加载的模块，并完成初始化元素操作函数等，放在页脚。</p>
+						<pre><code class="lang-html">&lt;script&gt;
+//声明需要加载的模块
+const moduleInit = ['tool', 'admin'];
+
+//初始化操作
+function gouguInit() {
+	//do something here
+}
+&lt;/script&gt;</code></pre> 
+						<p>3、引用JS文件，放在页面的最下面。</p>
+						<pre><code class="lang-html">&lt;script src="/assets/layui/layui.js"&gt;&lt;/script&gt;
+&lt;script src="/assets/gougu/gouguInit.js"&gt;&lt;/script&gt;</code></pre>   
+						<p>PS：如果是项目使用的是模板继承方式开发的话，把引入文件固定写在母模板，然后只需要在子模板声明需要加载的模块，并完成初始化元素操作函数即可。</p>       
+					</div>
+				</div>
+				<div class="layui-card layui-form">
+					<div class="layui-card-header"><h3>目录结构</h3></div>
+					<div class="layui-card-body">
+<pre><code class="lang-html">
+┌── assets					# 静态资源
+│   ├── gougu				# 核心文件
+│	│	├── images			# 图片文件
+│	│	├── module			# 封装或第三方组件
+│	│	├── css			    # 样式
+│	│	├── gouguInit.js	# Lyui调用文件方法
+│	├── icon				# icon文件
+│	├── layui				# layui文件
+│	├── third_party			# 第三方插件文件
+├── json					# 页面展示模拟数据Json格式
+├── view					# 页面文件
+│	├── base				# 基础组件页面
+│	├── form				# 表单组件页面
+│	├── home				# 推荐效果页面
+│	├── table				# 数据表组件页面
+├── index.html				# 入口文件
+</code></pre>   
+<p>PS：项目会不定时进行更新，建议⭐star⭐和👁️watch👁️一份。</p>
+					</div>
+				</div>
+				
+				<div class="layui-card layui-form">
+					<div class="layui-card-header"><h3>module 封装或第三方组件</h3></div>
+					<div class="layui-card-body">
+<pre><code class="lang-html">
+┌── admin.js				# admin组件，一般在布局页面的母页面使用
+├── tool.js					# 工具类组件，一般每个页面都使用都到（右侧是针对tool工具类的使用讲解）
+├── tag.js					# tag组件
+├── tagpicker.js			# tag新增选择组件
+├── treeGrid.js				# 树形菜单组件
+├── treetable.js			# 树形表格组件
+├── formSelects.js			# 表单下来选择选项之间，支持多选、单选
+├── tinymce.js				# tinymce富文本编辑器
+├── editormd.js				# editormd Markdown编辑器
+</code></pre>   
+<p>PS：以上组件都在项目的assets\gougu\module\目录内，会不定时进行更新，建议关注项目，获取更新。</p>
+					</div>
+				</div>
+				
+				<div class="layui-card layui-form">
+					<div class="layui-card-header"><h3>third_party 第三方插件</h3></div>
+					<div class="layui-card-body">
+<pre><code class="lang-html">
+┌── echart				# 强大的chart插件
+├── fullcalendar		# 强大的日历插件
+├── prism				# 轻巧实用的代码高亮插件
+</code></pre>   
+<p>PS：以上组件都在项目的assets\third_party\目录内，会不定时进行更新，建议关注项目，获取更新。</p>
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>一键CRUD视频教程</h3></div>
+					<div class="layui-card-body">
+						<iframe src="//player.bilibili.com/player.html?aid=310475547&bvid=BV1RN411F7pF&cid=1038468340&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width:686px;height:386px"> </iframe>
+					</div>
+				</div>	
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>一键CRUD建表样例</h3></div>
+					<div class="layui-card-body">
+					<pre><code class="lang-sql">
+-- ----------------------------
+-- Table structure for cms_course
+-- ----------------------------
+DROP TABLE IF EXISTS `cms_course`;
+CREATE TABLE `cms_course`  (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cate_id` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '分类ID',
+  `course_type` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '类型:1线下课程,2视频课程,3音频课,4直播课',
+  `type` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '属性:1精华 2热门 3推荐',
+  `is_home` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否首页显示:0否,1是',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态:0下架,1正常',
+  `title` varchar(200) NOT NULL DEFAULT '' COMMENT '课程名称',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
+  `desc` varchar(1000) NOT NULL DEFAULT '' COMMENT '课程摘要',
+  `content` text NULL COMMENT '课程介绍',
+  `speaker` varchar(200) NOT NULL DEFAULT '' COMMENT '主讲老师',
+  `base_price` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '基础价格',
+  `price` decimal(10, 2) NULL DEFAULT 0.00 COMMENT '实际价格',
+  `live_link` varchar(255) NOT NULL DEFAULT '' COMMENT '直播地址',
+  `address` varchar(255) NOT NULL DEFAULT '' COMMENT '线下开课地址',
+  `start_time` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '课程开始时间',
+  `end_time` int(10) UNSIGNED NULL DEFAULT 0 COMMENT '课程结束时间',
+  `read` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '阅读量',
+  `sort` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `create_time` int(11) NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(11) NOT NULL DEFAULT 0 COMMENT '编辑时间',
+  `delete_time` int(11) NOT NULL DEFAULT 0 COMMENT '删除时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COMMENT = '课程::crud';
+					</code></pre>
+					</div>
+				</div>
+				
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>常用方法</h3></div>
+					<div class="layui-card-body">
+						<pre><code class="lang-html">&lt;script&gt;
+//以下方法在加载了tool模块后可调用
+const moduleInit = ['tool'];
+
+//初始化操作
+function gouguInit() {
+	let tool = layui.tool;
+}
+&lt;/script&gt;</code></pre> 
+					<pre><code class="lang-javascript">
+//右侧打开页面，如果不传框架宽度参数的话，打开的窗口会根据1280与1920两个宽度来自适应。
+tool.side(url, width);
+
+//关闭右侧打开页面,如果传入delay参数（数字毫秒），则会延迟关闭，不传即立即关闭。
+tool.sideClose(delay);
+
+//子页面打开新的tab，参数必填，'url':链接，'title':tab标题。
+tool.tabAdd(url,title);
+
+//子页面关闭当前tab
+tool.tabClose();
+
+//子页面关闭指定tab，参数id必填，且是数字
+tool.tabDelete(id);
+
+//子页面切换到指定tab，参数id必填，且是数字
+tool.tabChange(id);
+
+//子页面刷新指定tab，参数id必填，且是数字
+tool.tabRefresh(id);
+					</code></pre>
+					<div class="py-3">
+						<button class="layui-btn layui-btn-sm side-test">测试右侧打开页面</button>
+						<button class="layui-btn layui-btn-sm layui-btn-normal side-800">传入宽度800，右侧打开页面</button>
+						<button class="layui-btn layui-btn-sm new-tab">页面打开新TAB</button>
+						<button class="layui-btn layui-btn-sm side-alert">弹层打开页面</button>
+					</div>
+					</div>
+				</div>
+
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>get、post、put、delete请求方法</h3></div>
+					<div class="layui-card-body">
+						<pre><code class="lang-html">&lt;script&gt;
+//以下方法在加载了tool模块后可调用
+const moduleInit = ['tool'];
+
+//初始化操作
+function gouguInit() {
+	let tool = layui.tool;
+}
+&lt;/script&gt;</code></pre> 
+					<pre><code class="lang-javascript">/*=================以下是常规的（get、post、put、delete）方法调用====================*/
+
+//get获取。必填参数，'url':请求地址，字符串, 'data':需要传的参数，对象, 'callback':成功回调函数
+tool.get(url, data, callback);
+//例子：
+tool.get("/project/api/get_project", {}, function (res) {
+	let data = res.data;
+	console.log(data);
+});
+
+/*========================华丽的分割线============================*/
+
+//post提交。必填参数，'url':请求地址，字符串, 'data':需要传的参数，对象, 'callback':成功回调函数
+tool.post(url, data, callback);
+//例子：
+let callback = function (e) {
+	layer.msg(e.msg);
+	if (e.code == 0) {
+		setTimeout(function () {
+			parent.location.reload();
+		}, 1000);					
+	}
+}
+tool.post("/article/cate/cate_add", {id:1,title:'勾股Admin'}, callback);
+
+/*========================华丽的分割线============================*/
+
+//put修改。必填参数，'url':请求地址，字符串, 'data':需要传的参数，对象, 'callback':成功回调函数
+tool.put(url, data, callback);
+//例子：
+let callback = function (e) {
+	layer.msg(e.msg);
+	if (e.code == 0) {
+		parent.layui.tool.close(1000);
+	}
+}
+tool.put("/contract/index/add", {'id':1,'title':'勾股CMS'}, callback);
+
+/*========================华丽的分割线============================*/
+
+//delete删除。必填参数，'url':请求地址，字符串, 'data':需要传的参数，对象, 'callback':成功回调函数
+tool.delete(url, data, callback);
+//例子：
+let callback = function (e) {
+	layer.msg(e.msg);
+	if (e.code == 0) {
+		obj.del();
+	}
+}
+tool.delete("/article/cate/cate_delete", { id: 2}, callback);
+					</code></pre>
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>ajax的json 与 jsonp请求</h3></div>
+					<div class="layui-card-body">
+					<pre><code class="lang-javascript">/*=================以下是常规的ajax（json、jsonp）方法调用====================*/
+
+//ajax。必填参数，'options':请求参数，对象，'callback':成功回调函数
+tool.ajax(options, callback);
+
+//常规json请求例子：
+let options = {
+		url: '/home/ask/ask',
+		type: 'post',
+		data: {
+			title: '正常的Ajax请求',
+			content: '注意：这是一个常规的Ajax请求'
+		}
+	});
+let callback = function(res) {
+	if (res.code == 0) {
+		layer.msg('问题提交成功，我们会尽快回复您。');
+		setTimeout(function() {
+			window.location.href = '/home/user/my_ask.html'
+		}, 2000);
+		return;
+	}
+	layer.msg('发布失败！');
+}
+tool.ajax(options, callback);
+
+/*========================华丽的分割线============================*/
+
+//jsonp请求例子：
+let options = {
+		url: '/home/ask/ask',
+		type: 'post',
+		data: {
+			format:'jsonp',//这个jsonp必须要有
+			title: 'jsonp的Ajax请求',
+			content: '注意：这是一个jsonp的Ajax请求'
+		}
+	});
+let callback = function(res) {
+	if (res.code == 0) {
+		layer.msg('问题提交成功，我们会尽快回复您。');
+		setTimeout(function() {
+			window.location.href = '/home/user/my_ask.html'
+		}, 2000);
+		return;
+	}
+	layer.msg('发布失败！');
+}
+tool.ajax(options, callback);
+					</code></pre>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	function appendVideo(url){
+		let id=Date.now();
+		if(player){
+			player.dispose();
+		}
+		let poster = '/static/home/images/bg.png';
+		let thumb_id = $('#thumb').data('id');
+		if(id>0){
+			poster = $('#thumb').attr('src');
+		}
+		$('#player').html('<video id="player_'+id+'" width="580" height="326" preload="auto" playsinline webkit-playsinline></video>');
+		var player = TCPlayer('player_'+id, {'poster':poster});
+		player.src(url);			
+	}
+	
+	
+		const moduleInit = ['tool'];
+		function gouguInit() {
+			console.log('初始化成功...');
+			//appendVideo('https://www.gougucms.com/storage/image/crud.mp4');
+			var tool = layui.tool;
+			$('.side-test').on('click',function(){
+				tool.side('../../view/form/tinymce.html');
+			})
+			$('.side-800').on('click',function(){
+				tool.side('../../view/form/tinymce.html',800);
+			})
+			
+			$('.new-tab').on('click',function(){
+				tool.tabAdd('../../view/form/tinymce.html','我是刚刚打开的TAB1');
+			})
+			
+			$('.side-alert').on('click',function(){
+				layer.open({
+				  type: 2,
+				  title: '很多时候，我们想最大化看，比如像这个页面。',
+				  shadeClose: true,
+				  shade: false,
+				  maxmin: true, //开启最大化最小化按钮
+				  area: ['1000px', '600px'],
+				  content: '../../view/table/role.html'
+				});
+			})
+			
+			
+		}
+	</script>
+<script src="../../assets/layui/layui.js"></script>
+<script src="../../assets/gougu/gouguInit.js"></script>
+<script src="../../assets/third_party/prism/prism.js"></script>
+<link href="../../assets/third_party/TCPlayer/tcplayer.min.css" rel="stylesheet"/>
+<!--播放器脚本文件-->
+<script src="../../assets/third_party/TCPlayer/libs/hls.min.0.13.2m.js"></script>
+<script src="../../assets/third_party/TCPlayer/tcplayer.v4.5.2.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "pid": 0,
+            "sort": 1,
+            "title": "普通公告",
+            "create_time": 1637984265,
+            "update_time": 1637984299,
+            "children": []
+        },
+        {
+            "id": 2,
+            "pid": 0,
+            "sort": 2,
+            "title": "紧急公告",
+            "create_time": 1637984283,
+            "update_time": 1637984310,
+            "children": [
+                {
+                    "id": 6,
+                    "pid": 2,
+                    "sort": 0,
+                    "title": "测试",
+                    "create_time": 1685669250,
+                    "update_time": 0,
+                    "children": []
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "pid": 0,
+            "sort": 3,
+            "title": "防疫公告",
+            "create_time": 1637984283,
+            "update_time": 1637984310,
+            "children": []
+        }
+    ]
+}
