@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="../../assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="status">
+	<i class="layui-icon {{#  if(d.status == 1){ }}green layui-icon-ok{{#  } else { }}yellow layui-icon-close{{#  } }}"></i>
+</script>
+<script type="text/html" id="toolbarDemo">
+	<div class="layui-btn-container">
+		<button class="layui-btn layui-btn-sm" lay-event="add">+ 添加岗位</button>
+	</div>
+</script>
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</button><button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>
+</script>
+
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool;
+		layui.pageTable = table.render({
+			elem: '#test',
+			id: 'test',
+			title: '岗位列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: false,
+			url: "index.json", //数据接口				
+			page: false, //开启分页
+			cols: [
+				[
+					{
+						field: 'id',
+						title: 'ID号',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'title',
+						title: '岗位名称',
+						align: 'center',
+						width: 120
+					},{
+						field: 'groupName',
+						title: '权限角色'
+					},{
+						field: 'remark',
+						title: '备注'
+					},{
+						field: 'work_price',
+						title: '岗位工时单价(元)',
+						align: 'center',
+						width: 132
+					}, {
+						field: 'status',
+						title: '状态',
+						toolbar: '#status',
+						align: 'center',
+						width: 60
+					}, {
+						field: 'right',
+						title: '操作',
+						toolbar: '#barDemo',
+						width: 132,
+						align: 'center'
+					}
+				]
+			]
+		});
+
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/user/position/add.html");
+				return;
+			}
+		});
+		//监听行工具事件
+		table.on('tool(test)', function (obj) {
+			var data = obj.data;
+			if(obj.event === 'view'){
+				tool.side('/user/position/view.html?id='+data.id);
+				return;
+			}
+			if(obj.event === 'edit'){
+				tool.side('/user/position/add.html?id='+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				if (data.id == 1) {
+					layer.msg('超级岗位不能删除');
+					return;
+				}
+				layer.confirm('您确定要删除该岗位', {
+					icon: 3,
+					title: '提示'
+				}, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/user/position/delete", { id: obj.data.id }, callback);
+					layer.close(index);
+				});
+			}
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="../../assets/layui/layui.js"></script>
+	<script src="../../assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

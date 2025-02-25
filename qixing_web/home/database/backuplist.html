@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+	<div class="gg-form-bar border-t border-x" style="background-color:#FAFAFA">
+		<h3>数据还原</h3>
+	</div>
+	<table cellspacing="0" cellpadding="0" border="0" class="layui-table layui-table-form">
+		<tr>
+			<th style=" text-align: center; font-weight: 800;"><span>文件名称</span></th>
+			<th style=" text-align: center; font-weight: 800;"><span>文件格式</span></th>
+			<th style=" text-align: center; font-weight: 800;"><span>分隔符</span></th>
+			<th style=" text-align: center; font-weight: 800;"><span>文件总大小</span></th>
+			<th style=" text-align: center; font-weight: 800;"><span>分卷总数</span></th>
+			<th style=" text-align: center; font-weight: 800; width:222px"><span>操作</span></th>
+		</tr>
+				<tr style="background-color: #fafafa;">
+			<td><strong>备份时间：2024-01-18 15:41:55</strong></td>
+			<td align="center"><span>.sql</span></td>
+			<td align="center"><span>-</span></td>
+			<td align="center"><span>3.32KB</span></td>
+			<td align="center"><span>1</span></td>
+			<td align="center">
+				<div class="layui-btn-group" data-time='1705563715'>
+										<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="import">数据还原</a>
+					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除备份</a>
+									</div>
+			</td>
+		</tr>
+				<tr>
+			<td colspan="5">
+				20240118-154155-1.sql
+			</td>
+			<td align="center">
+				<a class="layui-btn layui-btn-xs"
+					href='/home/database/downfile?time=1705563715&part=1'>下载备份(分卷1)</a>
+			</td>
+		</tr>
+					</table>
+</div>
+
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	function gouguInit() {
+		function importData(data) {
+			if (data.code == 0) {
+				console.log(data.msg);
+				layer.closeAll();
+				layer.msg(data.msg, { time: 200000 });
+				if ($.isPlainObject(data.data)) {
+					$.ajax({
+						url: "/home/database/import",
+						type: 'get',
+						data: { "part": data.data.part, "start": data.data.start, time: data.data.time },
+						success: function (res) {
+							importData(res);
+						}
+					})
+				} else {
+					layer.msg(data.msg);
+					window.onbeforeunload = function () { return null; }
+				}
+			} else {
+				layer.msg(data.msg);
+			}
+		}
+		//监听行工具事件
+		$('[lay-event="import"]').on('click', function () {
+			var time = $(this).parent().data('time');
+			layer.confirm('确认要还原该备份吗?', {
+				icon: 3,
+				title: '提示'
+			}, function (index) {
+				layer.msg("数据还原中...", { time: 200000 });
+				$.ajax({
+					url: "/home/database/import?time=" + time,
+					type: 'post',
+					success: function (res) {
+						importData(res);
+					}
+				})
+				window.onbeforeunload = function () { return "正在还原数据库，请不要关闭！" }
+				layer.close(index);
+			});
+			return false;
+		})
+
+		$('[lay-event="del"]').on('click', function () {
+			var time = $(this).parent().data('time');
+			layer.confirm('确认要删除该备份吗?', {
+				icon: 3,
+				title: '提示'
+			}, function (index) {
+				$.ajax({
+					url: "/home/database/del",
+					data: { 'time': time },
+					success: function (res) {
+						layer.msg(res.msg);
+						if (res.code == 0) {
+							setTimeout(function () {
+								location.reload();
+							}, 2000)
+						}
+					}
+				})
+				layer.close(index);
+			});
+			return false;
+		})
+
+		$('[lay-event="reset"]').on('click', function () {
+			var time = $(this).parent().data('time');
+			layer.confirm('确认要清除该备份吗?', {
+				icon: 3,
+				title: '提示'
+			}, function (index) {
+				$.ajax({
+					url: "/home/database/del",
+					data: { 'time': time, 'lock': 1 },
+					success: function (res) {
+						layer.msg(res.msg);
+						if (res.code == 0) {
+							setTimeout(function () {
+								location.reload();
+							}, 2000)
+						}
+					}
+				})
+				layer.close(index);
+			});
+			return false;
+		})
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/layui/layui.js"></script>
+	<script src="/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

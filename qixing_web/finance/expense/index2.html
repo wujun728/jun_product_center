@@ -1,0 +1,216 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t" lay-filter="barsearchform">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" class="layui-input" id="diff_time" placeholder="选择时间区间" readonly name="diff_time">
+		</div>
+		<div class="layui-input-inline">
+			<select name="check_status">
+				<option value="">请选择状态</option>
+				<option value="1">审批中</option>
+				<option value="2">审批通过,待打款</option>
+				<option value="3">审批不通过</option>
+				<option value="4">撤销</option>
+				<option value="5">已打款</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+<div class="layui-btn-container">
+    <span class="layui-btn layui-btn-sm" lay-event="add">+ 添加报销登记</span>
+</div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','laydatePlus'];
+	function gouguInit() {
+		var form = layui.form,table = layui.table,tool=layui.tool, laydatePlus = layui.laydatePlus;
+		//日期范围
+		var diff_time = new laydatePlus({'target':'diff_time'});
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '报销管理列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar:['filter', {title:'导出EXCEL',layEvent: 'LAYTABLE_EXCEL',icon: 'layui-icon-export'}],
+			url: "/finance/expense/index", //数据接口		
+			page: true, //开启分页
+			cellMinWidth: 100,
+			limit: 20,
+			cols: [
+				[
+					{
+						field: 'id',
+						title: 'ID号',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'amount',
+						title: '报销总金额(元)',
+						align: 'right',
+						width: 120,
+					},{
+						field: 'check_status',
+						title: '状态',
+						align: 'center',
+						width: 120,
+						templet:function(d){
+							var html='<span class="black">待审批</span>';
+							if(d.check_status==1){
+								html='<span class="blue">审批中</span>';
+							}
+							else if(d.check_status==2){
+								html='<span class="green">审批通过</span>';
+							}
+							else if(d.check_status==3){
+								html='<span class="red">审批失败</span>';
+							}
+							else if(d.check_status==4){
+								html='<span class="red">已撤销</span>';
+							}
+							else if(d.check_status==5){
+								html='<span class="yellow">已打款</span>';
+							}
+							return html;
+						}
+					},{
+						field: 'admin_name',
+						title: '报销人',
+						align: 'center',
+						width: 100
+					},{
+						field: 'department',
+						title: '报销部门',
+						align: 'center',
+						width: 150
+					},{
+						field: 'code',
+						title: '报销凭证编号',
+						width: 150,
+					},{
+						field: 'expense_time',
+						title: '原始单据日期',
+						align: 'center',
+						width: 120
+					},{
+						field: 'income_month',
+						title: '入账月份',
+						align: 'center',
+						width: 90
+					},{
+						field: 'create_time',
+						title: '录入时间',
+						align: 'center',
+						width: 150
+					},{
+						field: 'check_user',
+						title: '当前审核人'
+					},{
+						field: 'pay_name',
+						title: '打款人',
+						align: 'center',
+						width: 90
+					},{
+						field: 'pay_time',
+						title: '打款确认时间',
+						align: 'center',
+						width: 150
+					}, {
+						field: 'right',
+						fixed: 'right',
+						title: '操作',
+						width: 130,
+						align: 'center',
+						templet:function(d){
+							var html='<div class="layui-btn-group">';
+							var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span>';
+							var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+							var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+							html+=btn1;
+							if(d.check_status==4 && d.admin_id==login_admin){
+								html+=btn2+btn3;
+							}
+							html+='</div>';
+							return html;
+						}
+					}
+				]
+			]
+		});
+
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/finance/expense/add");
+				return;
+			}
+			if(obj.event === 'LAYTABLE_EXCEL'){
+				var formSelect = form.val('barsearchform');
+				formSelect.limit=99999;
+				$.ajax({
+					url: '/finance/expense/index',
+					data: formSelect,
+					success:function(res){
+						table.exportFile('test', res.data,'xls');
+					}
+				});
+				return;
+			}
+		});
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/finance/expense/view?id="+data.id);
+				return;
+			}
+			if (obj.event === 'edit') {
+				tool.side("/finance/expense/add?id="+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定删除该报销记录吗？', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					$.ajax({
+						url: "/finance/expense/delete",
+						type:'post',
+						data: {
+							id: data.id
+						},
+						success: function(res) {
+							layer.msg(res.msg);
+							if (res.code == 0) {
+								obj.del();
+							}
+						}
+					})
+					layer.close(index);
+				});
+			}
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

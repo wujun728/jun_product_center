@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jun.plugin</groupId>
+    <artifactId>snakerflow</artifactId>
+	<version>1.0</version>
+    <packaging>jar</packaging>
+    <name>Snaker工作流</name>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.jun.plugin</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.github.snakerflow-starter</groupId>
+            <artifactId>snakerflow-spring-boot-starter</artifactId>
+            <version>1.0.6</version>
+        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.github.snakerflow-starter/snakerflow-spring-boot-starter -->
+        <dependency>
+            <groupId>com.github.snakerflow-starter</groupId>
+            <artifactId>snakerflow-spring-boot-starter</artifactId>
+            <version>1.0.8</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                    <groupId>com.baomidou</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.3.2</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- SpringBoot的依赖配置-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <!-- <version>2.6.9</version> -->
+                <!-- <version>2.3.12.RELEASE</version> -->
+                <!-- <version>2.4.13</version> -->
+                <version>2.5.14</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+    <repositories>
+        <repository>
+            <id>aliyun-repos</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-plugin</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+</project>

@@ -1,0 +1,154 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑客户</h3>
+    <table class="layui-table layui-table-form">
+      <tr>
+        <td class="layui-td-gray">客户名称<font>*</font></td>
+        <td colspan="3"><input type="text" name="name" lay-verify="required" value="{$detail.name}" lay-reqText="请输入客户名称" autocomplete="off" placeholder="请输入客户名称" class="layui-input"></td>
+		<td class="layui-td-gray">客户来源<font>*</font></td>
+        <td>
+			<select name="source_id" lay-verify="required" lay-reqText="请选择客户来源">
+            <option value="">请选择客户来源</option>
+            {volist name=":customer_source()" id="v"}
+            <option value="{$v.id}" {eq name="$v.id" value="$detail.source_id"} selected{/eq}>{$v.title}</option>
+            {/volist}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td class="layui-td-gray">联系地址<font>*</font></td>
+        <td colspan="3">
+          <input type="text" name="address" value="{$detail.address}" autocomplete="off" lay-verify="required" lay-reqText="请输入客户联系地址" placeholder="请输入客户联系地址" class="layui-input">
+        </td>
+	    <td class="layui-td-gray">客户等级<font>*</font></td>
+        <td>
+          <select name="grade_id" lay-verify="required" lay-reqText="请选择客户等级">
+            <option value="">请选择客户等级</option>
+            {volist name=":customer_grade()" id="v"}
+            <option value="{$v.id}" {eq name="$v.id" value="$detail.grade_id"} selected{/eq}>{$v.title}</option>
+            {/volist}
+          </select>
+        </td>
+      </tr>
+	 <tr>
+        <td class="layui-td-gray">所属行业<font>*</font></td>
+        <td>
+          <select name="industry_id" lay-verify="required" lay-reqText="请选择所属行业">
+            <option value="">请选择所属行业</option>
+            {volist name=":get_industry()" id="v"}
+            <option value="{$v.id}" {eq name="$v.id" value="$detail.industry_id"} selected{/eq}>{$v.title}</option>
+            {/volist}
+          </select>
+        </td>
+	    <td class="layui-td-gray">意向状态</td>
+        <td>
+          <select name="intent_status">
+            <option value="">请选择客户意向状态</option>
+            <option value="1" {eq name="$detail.intent_status" value="1"} selected{/eq}>意向不明</option>
+			<option value="2" {eq name="$detail.intent_status" value="2"} selected{/eq}>意向模糊</option>
+			<option value="3" {eq name="$detail.intent_status" value="3"} selected{/eq}>意向一般</option>
+			<option value="4" {eq name="$detail.intent_status" value="4"} selected{/eq}>意向强烈</option>
+          </select>
+        </td>
+		<td class="layui-td-gray">客户状态</td>
+        <td>
+          <select name="status">
+            <option value="">请选择客户当前状态</option>
+				<option value="1" {eq name="$detail.status" value="1"} selected{/eq}>新进客户</option>
+				<option value="2" {eq name="$detail.status" value="2"} selected{/eq}>跟进客户</option>
+				<option value="3" {eq name="$detail.status" value="3"} selected{/eq}>正式客户</option>
+				<option value="4" {eq name="$detail.status" value="4"} selected{/eq}>流失客户</option>
+				<option value="5" {eq name="$detail.status" value="5"} selected{/eq}>已成交客户</option>
+          </select>
+        </td>
+      </tr>
+	  {eq name="$sea" value="0"}
+	  <tr>
+        <td class="layui-td-gray">归属员工<font>*</font></td>
+        <td>
+			<div class="layui-input-inline" style="width:50%;">
+				<input type="text" name="belong_name" value="{$detail.belong_name}" autocomplete="off" readonly lay-verify="required" lay-reqText="请选择客户归属人" placeholder="请选择客户归属人" class="layui-input">
+			</div>
+			<div class="layui-input-inline gray" style="width:42%;">部门：<span id="department_name">{$detail.belong_department}</span></div>
+          <input type="hidden" name="belong_uid" value="{$detail.belong_uid}">
+          <input type="hidden" name="belong_did" value="{$detail.belong_did}">
+        </td>
+		<td class="layui-td-gray">共享员工</td>
+         <td colspan="3">
+			<input type="text" name="share_names" value="{$detail.share_names}" autocomplete="off" readonly placeholder="请选择共享人员" class="layui-input picker-more">
+			<input type="hidden" name="share_ids" value="{$detail.share_ids}">
+        </td>
+      </tr>
+	  {/eq}
+	  <tr>
+		<td class="layui-td-gray" style="vertical-align:top">客户介绍<font>*</font></td>
+        <td colspan="5">
+          <textarea name="content" placeholder="请输入客户介绍信息" lay-verify="required" lay-reqText="请输入客户介绍信息" class="layui-textarea">{$detail.content}</textarea>
+        </td>
+      </tr>
+	  <tr>
+		<td class="layui-td-gray" style="vertical-align:top">经营业务</td>
+        <td colspan="5">
+          <textarea name="market" placeholder="请输入客户主要经营业务" class="layui-textarea">{$detail.market}</textarea>
+        </td>
+      </tr>
+	   <tr>
+		<td class="layui-td-gray" style="vertical-align:top">备注信息</td>
+        <td colspan="5">
+          <textarea name="remark" placeholder="请输入备注信息" class="layui-textarea">{$detail.remark}</textarea>
+        </td>
+      </tr>
+    </table>
+    <div class="py-3">
+	   <input type="hidden" name="id" value="{$detail.id}">
+	   <input type="hidden" name="scene" value="edit">
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,employeepicker = layui.employeepicker;
+		
+		//选择归属人人弹窗	
+		$('body').on('click','[name="belong_name"]',function () {
+			var ids=$('[name="belong_uid"]').val(),names=$('[name="belong_name"]').val();
+			employeepicker.init({
+				ids:ids,
+				names:names,
+				type:0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				callback:function(ids,names,dids,departments){
+					$('[name="belong_uid"]').val(ids);
+					$('[name="belong_name"]').val(names);
+					$('[name="belong_did"]').val(dids);
+					$('#department_name').html(departments);
+				}
+			});
+		});	
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/customer/index/add", data.field, callback);
+			return false;
+		});
+
+	}
+</script>
+{/block}
+<!-- /脚本 -->

@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="../../assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-t border-x" lay-filter="barsearchform" id="barsearchform">
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="type">
+				<option value="">选择审批类别</option>
+								<option value="1">请假</option>
+								<option value="2">出差</option>
+								<option value="3">外出</option>
+								<option value="4">加班</option>
+								<option value="5">会议室预定</option>
+								<option value="6">公文流转</option>
+								<option value="7">物品维修</option>
+								<option value="8">资质借用</option>
+								<option value="9">用章</option>
+								<option value="10">用车</option>
+								<option value="11">用车归还</option>
+								<option value="12">借款</option>
+								<option value="13">付款</option>
+								<option value="14">奖励</option>
+								<option value="15">采购</option>
+								<option value="16">活动经费</option>
+								<option value="17">入职</option>
+								<option value="18">转正</option>
+								<option value="19">离职</option>
+								<option value="20">转岗</option>
+								<option value="21">招聘需求</option>
+								<option value="22">通用审批</option>
+								<option value="23">报销</option>
+								<option value="24">发票</option>
+								<option value="25">合同</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<input type="text" name="username"  placeholder="选择申请人" class="layui-input picker-one" readonly>
+			<input type="text" name="uid" value="" style="display:none" />	
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" class="layui-input" id="apply_time" placeholder="申请时间区间" readonly name="apply_time">
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+<h3 class="h3-title" style="height:28px;">审批列表</h3>
+</script>						
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','employeepicker','laydatePlus'];
+	function gouguInit() {
+		var form = layui.form,table = layui.table, tool = layui.tool ,element=layui.element,laydatePlus = layui.laydatePlus;
+		  
+		//日期范围
+		var apply_time = new laydatePlus({'target':'apply_time'});
+			
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+		$('[lay-filter="clear"]').on('click',function(){
+			setTimeout(function(){
+				$('[lay-filter="webform"]').click();
+			},10)			
+		});	
+		layui.pageTable = table.render({
+			elem: '#test'
+			,toolbar: '#toolbarDemo'
+			,defaultToolbar: false
+			,title:'审批列表'
+			,url: "copy.json"
+			,page: true //开启分页
+			,limit: 20
+			,cellMinWidth: 80
+			,cols: [[
+					{field:'id',width:80, title: 'ID号', align:'center'}
+					,{field:'name',title: '申请人',width:90,align:'center'}
+					,{field:'create_time',title: '申请时间',width:132,align:'center'}
+					,{field:'flow_type',title: '审批类型',width:100, align:'center'}
+					,{field:'department_name',title: '所属部门',width:100,align:'center'}
+					,{field:'check_user',title: '当前审批人',width:120,align:'center'}
+					,{field:'content',title: '理由/说明/备注'}
+					,{field:'check_status', title: '审批状态',width:80,align:'center',templet: function(d){
+						var htmlArray = ['<span style="color:#666666">待审批</span>','<span style="color:#4285f4">审批中</span>','<span style="color:#34a853">已通过</span>','<span style="color:#FF5722">已拒绝</span>','<span style="color:#fbbc05">已撤销</span>'];
+						return htmlArray[d.check_status];
+					}}
+					,{width:60,fixed: 'right',title: '操作', align:'center',templet: function(d){
+						var btn='<a class="layui-btn layui-btn-xs" lay-event="view">详情</a>';
+						return btn;
+					}}
+				]]
+			});
+			
+			table.on('tool(test)',function (obj) {
+				if(obj.event === 'view'){		
+					tool.side('/oa/approve/view?id='+obj.data.id);
+				}
+			});
+		}
+	</script>
+
+	<!-- /脚本 -->
+	<script src="../../assets/layui/layui.js"></script>
+	<script src="../../assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

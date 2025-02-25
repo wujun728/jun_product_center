@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="../../assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm addNew" type="button">+ 添加行业类型</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+	<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test'
+			,toolbar: '#toolbarDemo'
+			,defaultToolbar: false
+			,title:'工作类型列表'
+			,url: "industry_cate.json"
+			,page: false
+			,cellMinWidth: 80
+			,cols: [[
+					{field:'id',width:80, title: 'ID号', align:'center'}
+					,{field:'title',title: '类型名称'}
+					,{field:'status', title: '状态',width:80,align:'center',templet: function(d){
+						var html1='<span class="green">正常</span>';
+						var html2='<span class="yellow">禁用</span>';
+						if(d.status==1){
+							return html1;
+						}
+						else{
+							return html2;
+						}
+					}}
+					,{width:100,title: '操作', align:'center',templet: function(d){
+						var html='';
+						var btn='<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit">编辑</a>';
+						var btn1='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="disable">禁用</a>';
+						var btn2='<a class="layui-btn layui-btn-xs" lay-event="open">启用</a>';
+						if(d.status==1){
+							html = '<div class="layui-btn-group">'+btn+btn1+'</div>';
+						}
+						else{
+							html = '<div class="layui-btn-group">'+btn+btn2+'</div>';
+						}
+						return html;
+					}}
+				]]
+			});
+			
+			table.on('tool(test)',function (obj) {
+				if(obj.event === 'edit'){					
+					addExpense(obj.data.id,obj.data.title);
+				}
+				if(obj.event === 'disable'){
+					layer.confirm('确定要禁用该类型吗?', {icon: 3, title:'提示'}, function(index){
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								layui.pageTable.reload();
+							}
+						}
+						tool.post("/home/cate/industry_cate_check", { id: obj.data.id,status: 0,title: obj.data.title}, callback);
+						layer.close(index);
+					});
+				}
+				if(obj.event === 'open'){
+					layer.confirm('确定要启用该类型吗?', {icon: 3, title:'提示'}, function(index){
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								layui.pageTable.reload();
+							}
+						}
+						tool.post("/home/cate/industry_cate_check", { id: obj.data.id,status: 1,title: obj.data.title}, callback);
+						layer.close(index);
+					});
+				}
+			});
+			
+			$('body').on('click','.addNew',function(){
+				addExpense(0,'');	
+			});
+			
+			function addExpense(id,val){
+				var title = '新增类型';
+				if(id>0){
+					title = '编辑类型';
+				}
+				layer.prompt({
+					title: title,
+					value: val,
+					yes: function(index, layero) {
+						// 获取文本框输入的值
+						var value = layero.find(".layui-layer-input").val();
+						if (value) {
+							let callback = function (e) {
+								layer.msg(e.msg);
+								if (e.code == 0) {
+									layui.pageTable.reload();				
+								}
+							}
+							tool.post("/home/cate/industry_cate_add", {id: id,title: value}, callback);
+							layer.close(index);
+						} else {
+							layer.msg('请填写类型标题');
+						}
+					}
+				})
+			}
+		}
+	</script>
+
+	<!-- /脚本 -->
+	<script src="../../assets/layui/layui.js"></script>
+	<script src="../../assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

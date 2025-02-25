@@ -1,0 +1,100 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<div class="gg-form-bar border-t border-x">
+		<form id="taskForm" class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:100px;">
+				<select name="status" lay-filter="status">
+					<option value="">项目状态</option>
+					<option value="1">未开始</option>
+					<option value="2">进行中</option>
+					<option value="3">已完成</option>
+					<option value="4">已关闭</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:160px;">
+				<input type="text" name="director" placeholder="项目负责人，可多选" readonly class="layui-input picker-more" autocomplete="off" />
+				<input name="director_uid" style="display: none;" value="" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="keywords" placeholder="主题/描述内容" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="projecttable" lay-filter="projecttable"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新建项目</button>
+  </div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','tablePlus','employeepicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+		layui.pageTable = table.render({
+			elem: '#projecttable',
+			toolbar: '#toolbarDemo',
+			title: '项目列表',
+			cellMinWidth: 80,
+			page: true, //开启分页
+			limit: 20,
+			is_excel:true,
+			height: 'full-82',
+			url: "/project/index/index", //数据接口
+			cols: [[
+				{
+					field: 'id', title: '项目编号', width: 80, align: 'center', fixed: 'left', rowspan: 2, templet: function (d) {
+						return 'P' + d.id;
+					}
+				}
+				, {
+					field: 'status', title: '状态', align: 'center', width: 90, rowspan: 2, templet: function (d) {
+						var html = '<span class="layui-color-' + d.status + '">『' + d.status_name + '』</span>';
+						return html;
+					}
+				}
+				, {
+					field: 'name', title: '项目名称',minWidth:240, rowspan: 2, templet: function (d) {
+						var html = '<a class="side-a" data-href="/project/index/view/id/' + d.id + '">' + d.name + '</a>';
+						return html;
+					}
+				}
+				, { field: 'plan_time', title: '项目周期', align: 'center', width: 190, rowspan: 2 }
+				,{field: 'step',title: '当前阶段及负责人',align: 'center',width: 140,rowspan: 2 }
+				, { align: 'center', title: '关联任务', colspan: 3 }
+				, { field: 'director_name', fixed: 'right', title: '负责人', align: 'center', width: 80, rowspan: 2 }
+			], [
+				{ field: 'tasks_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+				, { field: 'tasks_finish', align: 'center', style: 'color: #FAC858;', width: 70, 'title': '已完成' }
+				, { field: 'tasks_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
+			]]
+		});
+
+		//监听搜索提交
+		form.on('submit(webform)', function (data) {
+			layui.pageTable.reload({ where: data.field });
+			return false;
+		});
+		
+		//触发事件
+		table.on('toolbar(projecttable)', function(obj){
+			if(obj.event === 'add'){
+				tool.side('/project/index/add');
+				return;
+			}
+		});
+	}		
+</script>
+{/block}
+<!-- /脚本 -->

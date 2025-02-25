@@ -1,0 +1,122 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="status">
+	<i class="layui-icon {{#  if(d.status == 1){ }}green layui-icon-ok{{#  } else { }}yellow layui-icon-close{{#  } }}"></i>
+</script>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <span class="layui-btn layui-btn-sm" lay-event="add">+ 添加公告</span>
+  </div>
+</script>
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span><span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span></div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool ,form = layui.form;	
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '公告列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: false,
+			page: true, //开启分页
+			limit: 20,
+			url: "/note/index/index", //数据接口		
+			cols: [
+				[
+					{
+						field: 'id',
+						title: 'ID号',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'sort',
+						title: '排序',
+						align: 'center',
+						width: 80
+					},{
+						field: 'cate_title',
+						title: '公告分类',
+						align: 'center',
+						width: 136,
+						templet: function (d) {
+							var html = '<span class="layui-color-'+d.cate_id+'">'+d.cate_title+'</span>';
+							return html;
+						}
+					}, {
+						field: 'title',
+						title: '公告标题',
+						minWidth:240,
+						templet: '<div><a data-href="/note/index/view/id/{{d.id}}.html" class="side-a">{{d.title}}</a></div>'
+					}, {
+						field: 'cate_title',
+						title: '公告展示期间',
+						align: 'center',
+						width: 196,
+						templet: function (d) {
+							var html = d.start_time + ' ~ ' + d.end_time;
+							return html;
+						}
+					},{
+						field: 'status',
+						title: '状态',
+						toolbar: '#status',
+						align: 'center',
+						width: 60
+					}, {
+						field: 'right',
+						title: '操作',
+						toolbar: '#barDemo',
+						width: 110,
+						align: 'center'
+					}
+				]
+			]
+		});
+
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/note/index/add");
+				return;
+			}
+		})
+
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				tool.side("/note/index/add?id="+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定删除该公告吗？', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/note/index/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->
