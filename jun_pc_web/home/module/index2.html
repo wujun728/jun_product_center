@@ -1,0 +1,112 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-page">
+	<table cellspacing="0" cellpadding="0" border="0" class="layui-table layui-table-form">
+		<tr>
+			<th style="text-align: center; background-color:#FAFAFA">模块名称</th>
+			<th style="text-align: center; background-color:#FAFAFA">模块所在目录</th>
+			<th style="text-align: center; background-color:#FAFAFA">功能描述</th>
+			<th style="text-align: center; background-color:#FAFAFA">类型</th>
+			<th style="text-align: center; background-color:#FAFAFA">作者</th>
+			<th style="text-align: center; background-color:#FAFAFA">状态</th>
+			<th style="text-align: center;  background-color:#FAFAFA; width:90px">操作</th>
+		</tr>
+		{empty name="module"}
+		<tr>
+			<td colspan="7" align="center">暂无数据</td>
+		</tr>
+		{/empty}
+		{volist name="module" id="vo" key="k"}
+		<tr>
+			<td align="center">{$vo.title}</td>
+			<td>app/{$vo.name}</td>
+			<td>{$vo.desc}</td>
+			<td align="center">
+				{eq name="$vo.type" value="1"}系统模块{/eq}
+				{eq name="$vo.type" value="2"}普通模块{/eq}
+			</td>
+			<td align="center">
+				{eq name="$vo.sourse" value="1"}勾股OA{/eq}
+				{eq name="$vo.sourse" value="2"}第三方{/eq}
+			</td>
+			{eq name="$vo.is_install" value="0"}
+			<td align="center">
+				<span class="green">未安装</span>
+			</td>
+			<td align="center">
+				<div class="layui-btn-group">
+					{eq name = "$vo.is_file" value="0"}
+					<a class="layui-btn layui-btn-xs down" href="https://www.gougucms.com/home/pages/detail/s/gouguoa.html" target="_blank">下载</a>
+					{/eq}
+					{eq name = "$vo.is_file" value="1"}
+					<a class="layui-btn layui-btn-xs install" data-name="{$vo.name}">安装</a>
+					{/eq}
+					<a class="layui-btn layui-btn-normal layui-btn-xs view" href="https://www.gougucms.com/home/pages/detail/s/gouguoa.html" target="_blank">演示</a>
+				</div>
+			</td>
+			{/eq}
+			{eq name="$vo.is_install" value="1"}
+			<td align="center">
+				<span class="yellow">已安装</span>
+			</td>
+			<td align="center">
+				<div class="layui-btn-group">
+					<a class="layui-btn layui-btn-danger layui-btn-xs delete" data-name="{$vo.name}" data-type="{$vo.type}">卸载</a>
+				</div>
+			</td>
+			{/eq}
+		</tr>
+		{/volist}
+	</table>
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool = layui.tool;
+
+		$('body').on('click', '.install', function () {
+			let name = $(this).data('name');
+			layer.confirm('确定要安装该模块吗?', { icon: 3, title: '提示' }, function (index) {
+				//layer.msg('该功能内测中...');
+				//return false;
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						layer.close(index);
+						location.reload();
+					}
+				}
+				tool.post("/home/module/install", {name: name}, callback);
+				layer.close(index);
+			});
+		});
+		$('body').on('click', '.delete', function () {
+			let name = $(this).data('name');
+			let type = $(this).data('type');
+			if(type==1){
+				layer.msg('系统模块，不支持卸载');
+				return false;
+			}
+			layer.confirm('确定要卸载该模块吗?', { icon: 3, title: '提示' }, function (index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						layer.close(index);
+						location.reload();
+					}
+				}
+				tool.post("/home/module/uninstall",{name: name}, callback);
+				layer.close(index);
+			});
+		});
+
+	}
+</script>
+{/block}
+<!-- /脚本 -->

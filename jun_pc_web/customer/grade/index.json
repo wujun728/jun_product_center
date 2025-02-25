@@ -1,0 +1,43 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "普通客户",
+            "status": 1,
+            "create_time": 1637987189,
+            "update_time": 0
+        },
+        {
+            "id": 2,
+            "title": "VIP客户",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "title": "白银客户",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 4,
+            "title": "黄金客户",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 5,
+            "title": "钻石客户",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        }
+    ]
+}

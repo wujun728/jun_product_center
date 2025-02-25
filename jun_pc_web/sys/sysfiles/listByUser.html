@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="table_div1">
+  <input id="copy_in" style="display: none" />
+    <div class="layui-form-item">
+      <div class="layui-input-inline ">
+        <button type="button" class="layui-btn  layui-btn-sm" id="upload">
+          <i class="layui-icon">&#xe67c;</i>上传文件
+        </button>
+      </div>
+    </div>
+  <table class="layui-table" id="showFilesTable" lay-filter="showFilesTable" ></table>
+</div>
+ 
+<script type="text/html" id="toolFiles">
+  <a class="layui-btn layui-btn-xs" lay-event="pre"  >预览</a>
+  <a class="layui-btn layui-btn-xs" lay-event="down" >下载</a>
+  <a class="layui-btn layui-btn-xs" lay-event="copy" >复制URL</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="http://qixing.hbqxcpa.cn/js/base64.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var biz_rowdata = CoreUtil.getData("biz_rowdata");
+  console.log("biz_rowdata.dictBiztype="+biz_rowdata.dictBiztype);
+  if(biz_rowdata.dictBiztype == undefined ||  biz_rowdata.dictBiztype==null ){
+	  biz_rowdata.dictBiztype==undefined?"":1;
+	  biz_rowdata['dictBiztype']="通用文件";
+  }
+  //地址栏转义token中的#号
+  var tokenQuery = token.replace("#", "%23");
+  var tableIns1Files;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var upload = layui.upload;
+  layui.use(['table', 'layer', 'laydate', 'upload'], function () {
+
+    //加载table
+    tableIns1Files = table.render({
+      elem: '#showFilesTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/sysFilesOss/listByPageUser'   //数据接口
+      , where:{refBizid: biz_rowdata.id/* ,dictBiztype: biz_rowdata.dictBiztype */}
+      , method: 'POST'
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
+          {field: 'fileName', title: '文件名', sort: true},
+          {field: 'createDate', title: '创建时间', sort: true},
+          {field: 'fileSize', title: '文件大小', sort: true},
+          {field: 'isOwner',hide: true  }, 
+          {field: 'creator', title: '操作人', hide: false},
+          {field: 'dictBiztype', title: '业务类型', hide: false},
+          {field: 'refBizid', title: '业务ID', hide: true},
+          {toolbar: "#toolFiles", title: '操作', width:280}
+        ]
+      ]
+    });
+
+    //执行实例
+    var uploadInst = upload.render({
+      elem: '#upload' //绑定元素
+      ,exts: 'jpg|gif|png|jpeg|txt|sql|pdf|doc|docx|xls|xlsx|ppt|pptx|zip|rar|gz|7z'
+      ,url: '/sysFilesOss/upload?authorization='+tokenQuery //上传接口
+      ,size: 1024*101
+      , accept: 'file'   //video audio images
+      , multiple: false  //多文件上传
+      //, number: 20  //multiple:true时有效
+      ,data: {
+    	  	  bizid: biz_rowdata.id, //$('#id').val(),
+        	  biztype: biz_rowdata.dictBiztype
+       }
+      ,done: function(res){
+    	  if(res.code!="0"){
+  			layer.alert(res.msg);
+  			return false;
+  		}
+        searchFiles();
+        //上传完毕回调
+      }
+      ,error: function(){
+    	  if(res.code!="0"){
+  			layer.alert(res.msg);
+  			return false;
+  		}
+        //请求异常回调
+      }
+    });
+
+ 
+    //列操作
+    table.on('tool(showFilesTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+        	 var data11 = data;
+             if(data11.length==0){
+               	layer.msg("请选择要操作的数据列！");
+             }else {
+       	          var ids11 = [];
+       	          var ids22 = [];
+       	          $(data11).each(function (index,item) {
+       	        	  if(item.orderState==0 || item.orderState==1){
+       	        		  ids11.push(item.orderState);
+       	        	  }
+       	        	  if(item.isOwner!=1){
+       	        		  ids22.push(item.isOwner);
+       	        	  }
+       	          });
+       	          if(ids11.length>0){
+       	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+             		  return;
+       	          }
+       	          if(ids22.length>0){
+       	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+             		  return;
+       	          }
+		          var ids=[];
+		          ids.push(data.id);
+		          tipFileDialog(ids);
+		          break;
+             }
+             
+        case 'pre':
+          //预览
+          //window.open(data.url,'_blank');
+              window.open('http://119.45.221.36:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(data.url)));
+          break;
+        case 'down':
+          //下载
+          window.open(data.url,'_blank');
+          break;
+        case 'copy':
+          var Url2=data.url;
+          var oInput = document.createElement('input');
+          oInput.value = Url2;
+          document.body.appendChild(oInput);
+          oInput.select(); // 选择对象
+          document.execCommand("Copy"); // 执行浏览器复制命令
+          oInput.className = 'oInput';
+          oInput.style.display='none';
+          layer.msg('已复制成功！');
+          break;
+      }
+    });
+
+
+    //删除
+    var tipFileDialog=function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/sysFilesOss/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              searchFiles();
+            });
+          });
+        }
+      });
+    };
+ 
+  });
+
+  //执行查询
+  function searchFiles() {
+    //这里以搜索为例
+    tableIns1Files.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        key: $("#key").val(),
+        refBizid: biz_rowdata.id,
+        dictBiztype: biz_rowdata.dictBiztype
+      }
+      , page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+</script>

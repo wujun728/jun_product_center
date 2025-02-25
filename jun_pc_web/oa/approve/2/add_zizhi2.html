@@ -1,0 +1,188 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+{include file="/approve/add_style" /}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">资质借用审批</h3>
+	{eq name="$id" value="0"}
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">借用人<font>*</font></td>
+			<td>
+				<input type="text" name="name" value="" autocomplete="off" readonly placeholder="请输入借用人" lay-verify="required" lay-reqText="请输入借用人" class="layui-input picker-one"><input type="hidden" name="uid">
+			</td>
+			<td class="layui-td-gray-2">借用人手机<font>*</font></td>
+			<td><input type="text" name="mobile" value="" autocomplete="off" placeholder="请输入借用人手机" lay-verify="required" lay-reqText="请输入借用人手机" class="layui-input"></td>
+		<tr>
+		</tr>
+			<td class="layui-td-gray-2">借用部门<font>*</font></td>
+			<td colspan="3">
+				<select name="department_type" lay-verify="required" lay-reqText="请选择借用部门">
+					<option value="">--请选择--</option>
+					{volist name=":get_department()" id="vo"}
+					<option value="{$vo.id}">{$vo.title}</option>
+					{/volist}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用类型<font>*</font></td>
+			<td>
+				<select name="detail_type" lay-verify="required" lay-reqText="请选择">
+				  <option value="">--请选择--</option>
+				  <option value="1">原件</option>
+				  <option value="2">扫描件</option>
+				  <option value="3">复印件</option>
+				</select>
+			</td>
+			<td class="layui-td-gray">档案类型<font>*</font></td>
+			<td>
+				<select name="other_type" lay-verify="required" lay-reqText="请选择">
+				  <option value="">--请选择--</option>
+				  <option value="1">公司资质</option>
+				  <option value="2">人员资质</option>
+				  <option value="3">离职/清退人员资质</option>
+				  <option value="4">注册人员执业印章</option>
+				  <option value="5">劳动合同</option>
+				  <option value="6">社保缴费记录</option>
+				  <option value="7">收入证明</option>
+				  <option value="8">其它</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">所借档案用途<font>*</font></td>
+			<td colspan="3">
+			<textarea name="content" placeholder="请输入所借档案用途" class="layui-textarea" lay-verify="required" lay-reqText="请输入所借档案用途"></textarea></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用日期<font>*</font></td>
+			<td>
+				<input type="text" id="start_time" name="start_time" class="layui-input" value="" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+			</td>
+			<td class="layui-td-gray-2">拟归还日期<font>*</font></td>
+			<td>
+				<input type="text" id="end_time" name="end_time" value="" readonly placeholder="请选择时间" lay-verify="required" lay-reqText="请选择时间" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用档案明细<font>*</font</td>
+			<td colspan="3">
+				<textarea name="remark" placeholder="请输入借用档案明细" class="layui-textarea" lay-verify="required" lay-reqText="请输入借用档案明细"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">
+				<textarea name="remark1" placeholder="请输入备注" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+	</table>
+	{else/}
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">借用人<font>*</font></td>
+			<td>
+				<input type="text" name="name" value="{$detail.name}" autocomplete="off" readonly placeholder="请输入借用人" lay-verify="required" lay-reqText="请输入借用人" class="layui-input picker-one"><input type="hidden" name="uid">
+			</td>
+			<td class="layui-td-gray-2">借用人手机<font>*</font></td>
+			<td><input type="text" name="mobile" value="{$detail.mobile}" autocomplete="off" placeholder="请输入借用人手机" lay-verify="required" lay-reqText="请输入借用人手机" class="layui-input"></td>
+		<tr>
+		</tr>
+			<td class="layui-td-gray-2">借用部门<font>*</font></td>
+			<td colspan="3">
+				<select name="department_type" lay-verify="required" lay-reqText="请选择借用部门">
+					<option value="">--请选择--</option>
+					{volist name=":get_department()" id="vo"}
+					<option value="{$vo.id}" {eq name="$vo.id" value="$detail.department_type"}selected=""{/eq}>{$vo.title}</option>
+					{/volist}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用类型<font>*</font></td>
+			<td>
+				<select name="detail_type" lay-verify="required" lay-reqText="请选择">
+				  <option value="">--请选择--</option>
+				  <option value="1" {eq name="$detail.detail_type" value="1"}selected=""{/eq}>原件</option>
+				  <option value="2" {eq name="$detail.detail_type" value="2"}selected=""{/eq}>扫描件</option>
+				  <option value="3" {eq name="$detail.detail_type" value="3"}selected=""{/eq}>复印件</option>
+				</select>
+			</td>
+			<td class="layui-td-gray">档案类型<font>*</font></td>
+			<td>
+				<select name="other_type" lay-verify="required" lay-reqText="请选择">
+				  <option value="">--请选择--</option>
+				  <option value="1" {eq name="$detail.other_type" value="1"}selected=""{/eq}>公司资质</option>
+				  <option value="2" {eq name="$detail.other_type" value="2"}selected=""{/eq}>人员资质</option>
+				  <option value="3" {eq name="$detail.other_type" value="3"}selected=""{/eq}>离职/清退人员资质</option>
+				  <option value="4" {eq name="$detail.other_type" value="4"}selected=""{/eq}>注册人员执业印章</option>
+				  <option value="5" {eq name="$detail.other_type" value="5"}selected=""{/eq}>劳动合同</option>
+				  <option value="6" {eq name="$detail.other_type" value="6"}selected=""{/eq}>社保缴费记录</option>
+				  <option value="7" {eq name="$detail.other_type" value="7"}selected=""{/eq}>收入证明</option>
+				  <option value="8" {eq name="$detail.other_type" value="8"}selected=""{/eq}>其它</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">所借档案用途<font>*</font></td>
+			<td colspan="3">
+			<textarea name="content" placeholder="请输入所借档案用途" class="layui-textarea" lay-verify="required" lay-reqText="请输入所借档案用途">{$detail.content}</textarea></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用日期<font>*</font></td>
+			<td>
+				<input type="text" id="start_time" name="start_time" class="layui-input" value="{$detail.start_time|date='Y-m-d'}" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+			</td>
+			<td class="layui-td-gray-2">拟归还日期<font>*</font></td>
+			<td>
+				<input type="text" id="end_time" name="end_time" value="{$detail.end_time|date='Y-m-d'}" readonly placeholder="请选择时间" lay-verify="required" lay-reqText="请选择时间" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用档案明细<font>*</font></td>
+			<td colspan="3">
+				<textarea name="remark" placeholder="请输入借用档案明细" class="layui-textarea" lay-verify="required" lay-reqText="请输入借用档案明细">{$detail.remark}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">
+				<textarea name="remark1" placeholder="请输入备注" class="layui-textarea">{$detail.remark1}</textarea>
+			</td>
+		</tr>
+	</table>
+	{/eq}
+	{include file="/approve/add_flow" /}
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool, employeepicker = layui.employeepicker,laydate = layui.laydate;		
+		if (typeof (flowStep) == "function") {
+			flowStep();
+		}  
+		//日期时间范围
+		laydate.render({
+			elem: '#start_time',
+			type: 'date',
+			format: 'yyyy-MM-dd',
+			showBottom: false
+		});
+		laydate.render({
+			elem: '#end_time',
+			type: 'date',
+			format: 'yyyy-MM-dd',
+			showBottom: false
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

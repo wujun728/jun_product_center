@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="table_div">
+<input name="id" id="id" value="1122" hidden/>
+  <input id="copy_in" style="display: none" />
+
+<div id="searchParam"  shiro:hasPermission="sysFiles:add">
+    <!-- 表格工具栏 -->
+    <form class="layui-form toolbar table-tool-mini">
+        <div class="layui-form-item">
+            <!--<div class="layui-inline">
+                <label class="layui-form-label w-auto">搜索:</label>
+                <div class="layui-input-inline">
+                    <input name="keyword" class="layui-input" type="text" placeholder="输入关键字"/>
+                </div>
+            </div>-->
+            <div class="layui-inline" style="padding-right: 110px;">
+                <button type="button" class="layui-btn" id="upload">
+                    <i class="layui-icon">&#xe67c;</i>上传简历
+                </button>
+                <button type="button" class="layui-btn" id="genResume">
+                    生成我的简历
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+  <!--<div id="searchParam"  shiro:hasPermission="sysFiles:add">
+          <div class="layui-btn-container">
+              <button type="button" class="layui-btn" id="upload">
+                  <i class="layui-icon">&#xe67c;</i>上传简历
+                </button>
+                <button type="button" class="layui-btn" id="genResume">
+                   生成我的简历
+                </button>
+          </div>
+  </div>-->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="sysFiles:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="toolFiles">
+  <a class="layui-btn layui-btn-xs" lay-event="pre" shiro:hasPermission="sysFiles:list">预览</a>
+  <a class="layui-btn layui-btn-xs" lay-event="down" shiro:hasPermission="sysFiles:list">下载</a>
+  <a class="layui-btn layui-btn-xs" lay-event="copy" shiro:hasPermission="sysFiles:list">一键复制</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sysFiles:delete">删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="http://qixing.hbqxcpa.cn/js/base64.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var biz_rowdata = CoreUtil.getData("biz_rowdata");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var upload = layui.upload;
+  layui.use(['table', 'layer', 'laydate', 'upload'], function () {
+
+    //加载table
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/sysFilesOss/listByPageUser' //数据接口
+      , where:{refBizid: '1122'  /* ,dictBiztype: biz_rowdata.dictBiztype */}
+      , method: 'POST'
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
+          {field: 'fileName', title: '简历名称', sort: true},
+          {field: 'createDate', title: '时间', sort: true},
+          {field: 'fileSize', title: '简历大小', sort: true},
+          {field: 'isOwner',hide: true  }, 
+          {field: 'creator', title: '人员', hide: false},
+          {field: 'dictBiztype', title: '类型', hide: false},
+          {field: 'refBizid', title: '业务ID', hide: true},
+          {toolbar: "#toolFiles", title: '操作', width:280}
+        ]
+      ]
+      // , toolbar: '#toolbar1'
+    });
+
+    //执行实例
+    var uploadInst = upload.render({
+      elem: '#upload' //绑定元素
+      ,exts: 'jpg|gif|png|jpeg|txt|doc|docx|sql|pdf|xls|xlsx|ppt|pptx'
+      ,url: '/sysFilesOss/upload?authorization='+tokenQuery //上传接口
+      ,size: 1024*101
+      , accept: 'file'   //video audio images
+      ,data: {
+    	  	  bizid: '1122',
+        	  biztype:'简历'
+       }
+      ,done: function(res){
+        search();
+        //上传完毕回调
+      }
+      ,error: function(){
+        //请求异常回调
+      }
+    });
+    
+    $('#genResume').on('click', function () {
+    	$(".operation input[name=refUsercoce]").val(userProfile.data.username);
+        $(".operation input[name=refUsername]").val(userProfile.data.realName);
+        $(".operation input[name=refUserdept]").val(userProfile.data.deptName);
+        
+        var exportParams = { 
+        		limit: 10000, 
+        		/* username: userProfile.data.username, 
+        		realName: userProfile.data.realName, 
+        		deptName: userProfile.data.deptName,  */
+        		key: $("#key").val() 
+        	};
+        CoreUtil.sendPost('/sysFilesOss/genResume?authorization='+tokenQuery+'&biztype=简历'+'&bizid=1122'
+        		+'&username='+userProfile.data.username+'&realName='+userProfile.data.realName, exportParams, function (res) {
+        	search();
+        });
+      });
+
+
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'pre':
+          //预览
+          //window.open(data.url,'_blank');
+              window.open('http://119.45.221.36:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(data.url))+ '&watermarkTxt=' + encodeURIComponent('齐兴会计师事务所'));
+          break;
+        case 'down':
+          //下载
+          window.open(data.url,'_blank');
+          break;
+        case 'copy':
+          var Url2=data.url;
+          var oInput = document.createElement('input');
+          oInput.value = Url2;
+          document.body.appendChild(oInput);
+          oInput.select(); // 选择对象
+          document.execCommand("Copy"); // 执行浏览器复制命令
+          oInput.className = 'oInput';
+          oInput.style.display='none';
+          layer.msg('已复制成功！');
+          break;
+      }
+    });
+
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+          skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/sysFilesOss/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+//         key: $("#key").val(),
+//         bizid:$('#id').val(),
+		refBizid: '1122'
+//   	    biztype:'abcde'
+      }
+      , page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+</script>

@@ -1,0 +1,52 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+{include file="/approve/view_style" /}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">物品维修审批</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">紧急程度</td>
+			<td>
+				  {eq name="$detail.detail_type" value="1"}普通{/eq}
+				  {eq name="$detail.detail_type" value="2"}紧急{/eq}
+				  {eq name="$detail.detail_type" value="3"}特急{/eq}
+			</td>
+			<td class="layui-td-gray-2">故障设备名称</td>
+			<td>{$detail.name}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">报修日期</td>
+			<td>{$detail.detail_time}</td>
+			<td class="layui-td-gray-2">预计维修费用</td>
+			<td>{$detail.amount}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">故障描述</td>
+			<td colspan="3">{$detail.content}</td>
+		</tr>
+		{notempty name="$detail.file_ids"}
+		<tr>
+			<td class="layui-td-gray">相关附件</td>
+			<td colspan="3" style="line-height:inherit">
+				<div class="layui-row">
+					{volist name="$detail.fileArray" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+					{/volist}
+				</div>
+			</td>
+		</tr>
+		{/notempty}
+	</table>	
+	{include file="/approve/view_step" /}
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+{include file="/approve/view_script" /}
+{/block}
+<!-- /脚本 -->

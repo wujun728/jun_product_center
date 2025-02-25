@@ -1,0 +1,169 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">系统配置</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">系统名称<font>*</font>
+			</td>
+			<td>
+				<input type="hidden" name="id" value="{$id}">
+				<input type="text" name="admin_title" lay-verify="required" autocomplete="off" placeholder="请输入系统名称" lay-reqText="请输入系统名称" class="layui-input" value="{$config.admin_title|default=''}">
+			</td>
+			<td class="layui-td-gray-2">左侧菜单模式</td>
+			<td colspan="3">
+				{empty name="$config.menu_mode"}
+					<input type="radio" name="menu_mode" value="classical" title="经典模式" checked>
+					<input type="radio" name="menu_mode" value="expand" title="展开模式" >
+				{else/}
+					<input type="radio" name="menu_mode" value="classical" title="经典模式" {eq name="$config.menu_mode" value="classical"}checked{/eq}>
+					<input type="radio" name="menu_mode" value="expand" title="展开模式" {eq name="$config.menu_mode" value="expand"}checked{/eq}>
+				{/empty}				
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">系统域名<font>*</font>
+			</td>
+			<td>
+				<input type="text" name="domain" lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入系统域名" lay-reqText="请输入系统域名" value="{$config.domain|default=''}">
+			</td>
+			<td class="layui-td-gray" rowspan="3">系统大LOGO</td>
+			<td rowspan="3" style="width: 180px;">
+				<div class="layui-upload" style="width: 180px;">
+					<div class="layui-upload-list" id="logo" style="width: 100%; height:64px; overflow: hidden;">
+						<img src="{$config.logo|default='/static/home/images/syslogo.png'}" style="max-width: 100%; height: 64px;" />
+						<input type="hidden" name="logo" value="{$config.logo|default='/static/home/images/syslogo.png'}">
+					</div>
+					<button type="button" class="layui-btn" style="width: 100%;" id="uploadBtn">上传LOGO</button>
+				</div>
+			</td>
+			<td class="layui-td-gray" rowspan="3">系统小LOGO</td>
+			<td rowspan="3" style="width: 180px;">
+				<div class="layui-upload" style="width: 180px;">
+					<div class="layui-upload-list" id="smalllogo" style="width: 100%; height:64px; overflow: hidden; text-align:center;">
+						<img src="{$config.small_logo|default='/static/home/images/syslogo_small.png'}" style="max-width: 100%; height: 64px;" />
+						<input type="hidden" name="small_logo" value="{$config.small_logo|default='/static/home/images/syslogo_small.png'}">
+					</div>
+					<button type="button" class="layui-btn" style="width: 100%;" id="uploadBtn2">上传LOGO</button>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">ICP备案号</td>
+			<td>
+				<input type="text" name="icp" autocomplete="off" placeholder="请输入ICP备案号" class="layui-input" value="{$config.icp|default=''}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">公安备案号</td>
+			<td>
+				<input type="text" name="beian" autocomplete="off" placeholder="请输入公安备案号" class="layui-input" value="{$config.beian|default=''}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">系统关键词<font>*</font></td>
+			<td colspan="5">
+				<input type="text" name="keywords" lay-verify="required" autocomplete="off" placeholder="多个关键词用“,”隔开" lay-reqText="请输入系统关键字" class="layui-input" value="{$config.keywords|default=''}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">系统描述<font>*</font>
+			</td>
+			<td colspan="5">
+				<textarea name="desc" lay-verify="required" placeholder="请输入系统描述" lay-reqText="请输入系统描述" class="layui-textarea">{$config.desc|default=''}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">代码版本号<font>*</font>
+			</td>
+			<td>
+				<input type="text" lay-verify="required" name="version" autocomplete="off" placeholder="请输入版本号" lay-reqText="请输入版本号" class="layui-input" value="{$config.version|default='1.0.0'}">
+			</td>
+			<td class="layui-td-gray">版权信息</td>
+			<td colspan="3">
+				<input type="text" name="copyright" autocomplete="off" placeholder="请输入版权信息" lay-reqText="请输入版权信息" readonly class="layui-input" value="{$config.copyright|default='勾股OA'}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-3">开启新消息声音提醒</td>
+			<td>
+				{empty name="$config.msg_sound"}
+					<input type="radio" name="msg_sound" value="1" title="开启" checked>
+					<input type="radio" name="msg_sound" value="2" title="不开启">
+				{else/}
+					<input type="radio" name="msg_sound" value="1" title="开启" {eq name="$config.msg_sound" value="1"}checked{/eq}>
+					<input type="radio" name="msg_sound" value="2" title="不开启" {eq name="$config.msg_sound" value="2"}checked{/eq}>
+				{/empty}				
+			</td>
+			<td class="layui-td-gray-3">开启系统页面水印</td>
+			<td colspan="3">
+				{empty name="$config.watermark"}
+					<input type="radio" name="watermark" value="1" title="开启" checked>
+					<input type="radio" name="watermark" value="2" title="不开启">
+				{else/}
+					<input type="radio" name="watermark" value="1" title="开启" {eq name="$config.watermark" value="1"}checked{/eq}>
+					<input type="radio" name="watermark" value="2" title="不开启" {eq name="$config.watermark" value="2"}checked{/eq}>
+				{/empty}				
+			</td>
+		</tr>
+	</table>
+
+	<div class="py-3">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, upload = layui.upload;
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					setTimeout(function(){
+						parent.parent.location.reload();
+					},1000)
+				}
+			}
+			tool.post("/home/conf/edit", data.field, callback);
+			return false;
+		});
+
+		//logo上传
+		var uploadInst = upload.render({
+			elem: '#uploadBtn',
+			url: "/api/index/upload",
+			done: function (res) {
+				layer.msg(res.msg);
+				if (res.code == 0) {
+					//上传成功
+					$('#logo input').attr('value', res.data.filepath);
+					$('#logo img').attr('src', res.data.filepath);
+				}
+			}
+		});
+		
+		var uploadInst2 = upload.render({
+			elem: '#uploadBtn2',
+			url: "/api/index/upload",
+			done: function (res) {
+				layer.msg(res.msg);
+				if (res.code == 0) {
+					//上传成功
+					$('#smalllogo input').attr('value', res.data.filepath);
+					$('#smalllogo img').attr('src', res.data.filepath);
+				}
+			}
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

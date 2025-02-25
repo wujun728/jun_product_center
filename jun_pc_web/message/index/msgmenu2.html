@@ -1,0 +1,10 @@
+<div class="p-3 sub-menu" style="width:160px;height: calc(100% - 24px);">
+	<div class="border bg-white" style="width:100%;height:100%;">
+		<ul>
+			<li class="sub-menu-li {eq name='$action' value='inbox'} active{/eq}"><a href="/message/index/inbox"><i class="iconfont icon-yiyichuli"></i><span class="text">收件箱</span><span class="num">({$count.inbox})<span></a></li>
+			<li class="sub-menu-li {eq name='$action' value='sendbox'} active{/eq}"><a href="/message/index/sendbox"><i class="iconfont icon-tuiguangshezhi"></i><span class="text">发件箱</span><span class="num">({$count.sendbox})<span></a></li>
+			<li class="sub-menu-li {eq name='$action' value='draft'} active{/eq}"><a href="/message/index/draft"><i class="iconfont icon-lunwenguanli"></i><span class="text">草稿箱</span><span class="num">({$count.draft})<span></a></li>
+			<li class="sub-menu-li {eq name='$action' value='rubbish'} active{/eq}"><a href="/message/index/rubbish"><i class="iconfont icon-tiku"></i><span class="text">垃圾箱</span><span class="num">({$count.rubbish})<span></a></li>
+		</ul>
+	</div>
+</div>

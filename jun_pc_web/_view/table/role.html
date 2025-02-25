@@ -1,0 +1,899 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="mobile-prefetch" href=""/>
+	<title>勾股OA</title>		
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。    "/>
+	<link rel="stylesheet" href="../../assets/gougu/css/gougu.css">
+<style>
+.checkbox16 .layui-form-checkbox span{font-size:15px;font-weight:800;}
+.layui-checkbox-disabled span,.layui-checkbox-disabled[lay-skin=primary] span{color: #666666!important;}
+</style>
+
+<script>
+	const login_user=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">员工信息</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">登录账号</td>
+			<td>
+				admin			</td>
+			<td class="layui-td-gray">登录密码</td>
+			<td>
+									密码已重置
+					<span class="layui-btn layui-btn-normal layui-btn-xs reset-psw" data-id="1">重设新密码</span>
+							</td>
+			<td class="layui-td-gray">员工状态</td>
+			<td>
+				<span style="color:#009688">正常</span>			</td>
+			<td rowspan="3" class="layui-td-gray">头像</td>
+			<td rowspan="3" valign="top" style="width: 100px;">
+				<div class="layui-upload">
+					<img src="https://oa.gougucms.com/static/home/images/icon.png" style="width:100px; height:100px; max-width:100%" />
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">员工姓名</td>
+			<td>
+				超级员工  <span class="layui-badge layui-bg-green">男</span>			</td>
+			<td class="layui-td-gray">手机号码</td>
+			<td>
+				13800138000			</td>
+			<td class="layui-td-gray">电子邮箱</td>
+			<td>
+							</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">所在部门</td>
+			<td>董事会</td>
+			<td class="layui-td-gray">岗位职称</td>
+			<td>超级岗位</td>
+			<td class="layui-td-gray">入职日期</td>
+			<td>
+				1970-01-01			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">员工类型</td>
+			<td>
+				<span style="color:#393D49">正式员工</span>			</td>
+			<td class="layui-td-gray-2">最后登录时间</td>
+			<td>
+				2022-11-16 17:54			</td>
+			<td class="layui-td-gray-2">最后登录IP</td>
+			<td>
+				163.142.228.155			</td>
+			<td class="layui-td-gray-2">累计登录次数</td>
+			<td>
+				97			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">员工简介</td>
+			<td colspan="7">
+							</td>
+		</tr>
+	</table>
+	<h3 class="py-3">用户权限</h3>
+	<table class="layui-table layui-table-form">
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="1" title="系统管理" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="9" lay-skin="primary" title="系统配置" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="9" name="rule[]" value="10" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="9" name="rule[]" value="11" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="9" name="rule[]" value="12" lay-skin="primary" title="编辑" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="13" lay-skin="primary" title="功能模块" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="13" name="rule[]" value="14" lay-skin="primary" title="安装" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="13" name="rule[]" value="15" lay-skin="primary" title="升级" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="13" name="rule[]" value="16" lay-skin="primary" title="卸载" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="17" lay-skin="primary" title="功能节点" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="17" name="rule[]" value="18" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="17" name="rule[]" value="19" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="20" lay-skin="primary" title="权限角色" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="20" name="rule[]" value="21" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="20" name="rule[]" value="22" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="23" lay-skin="primary" title="操作日志" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="24" lay-skin="primary" title="备份数据" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="24" name="rule[]" value="25" lay-skin="primary" title="备份数据表" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="24" name="rule[]" value="26" lay-skin="primary" title="优化数据表" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="24" name="rule[]" value="27" lay-skin="primary" title="修复数据表" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="28" lay-skin="primary" title="还原数据" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="28" name="rule[]" value="29" lay-skin="primary" title="还原数据表" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="28" name="rule[]" value="30" lay-skin="primary" title="下载备份数据" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="28" name="rule[]" value="31" lay-skin="primary" title="删除备份数据" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="2" title="基础数据" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="32" lay-skin="primary" title="审批类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="32" name="rule[]" value="33" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="32" name="rule[]" value="34" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="35" lay-skin="primary" title="审批流程" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="35" name="rule[]" value="36" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="35" name="rule[]" value="37" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="35" name="rule[]" value="38" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="39" lay-skin="primary" title="报销类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="39" name="rule[]" value="40" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="39" name="rule[]" value="41" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="42" lay-skin="primary" title="费用类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="42" name="rule[]" value="43" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="42" name="rule[]" value="44" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="45" lay-skin="primary" title="企业主体" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="45" name="rule[]" value="46" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="45" name="rule[]" value="47" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="48" lay-skin="primary" title="行业类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="48" name="rule[]" value="49" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="48" name="rule[]" value="50" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="51" lay-skin="primary" title="工作类别" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="51" name="rule[]" value="52" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="51" name="rule[]" value="53" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="54" lay-skin="primary" title="服务类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="54" name="rule[]" value="55" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="54" name="rule[]" value="56" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="57" lay-skin="primary" title="关 键 字" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="57" name="rule[]" value="58" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="57" name="rule[]" value="59" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="3" title="人力资源" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="60" lay-skin="primary" title="部门架构" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="60" name="rule[]" value="61" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="60" name="rule[]" value="62" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="63" lay-skin="primary" title="岗位职称" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="63" name="rule[]" value="64" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="63" name="rule[]" value="65" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="63" name="rule[]" value="66" lay-skin="primary" title="查看" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="67" lay-skin="primary" title="企业员工" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="67" name="rule[]" value="68" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="67" name="rule[]" value="69" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="67" name="rule[]" value="70" lay-skin="primary" title="设置" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="67" name="rule[]" value="71" lay-skin="primary" title="重设密码" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="72" lay-skin="primary" title="人事调动" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="72" name="rule[]" value="73" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="74" lay-skin="primary" title="离职档案" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="74" name="rule[]" value="75" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="74" name="rule[]" value="76" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="4" title="行政管理" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="77" lay-skin="primary" title="印章管理" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="77" name="rule[]" value="78" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="77" name="rule[]" value="79" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="80" lay-skin="primary" title="车辆管理" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="80" name="rule[]" value="81" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="80" name="rule[]" value="82" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="83" lay-skin="primary" title="会议室管理" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="83" name="rule[]" value="84" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="83" name="rule[]" value="85" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="5" title="企业公告" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="86" lay-skin="primary" title="公告类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="86" name="rule[]" value="87" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="86" name="rule[]" value="88" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="89" lay-skin="primary" title="公告列表" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="89" name="rule[]" value="90" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="89" name="rule[]" value="91" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="89" name="rule[]" value="92" lay-skin="primary" title="查看" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="6" title="办公审批" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="93" lay-skin="primary" title="我发起的" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="93" name="rule[]" value="94" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="93" name="rule[]" value="95" lay-skin="primary" title="查看" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="96" lay-skin="primary" title="我处理的" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="97" lay-skin="primary" title="抄送给我的" checked>
+						</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="7" title="日常办公" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="98" lay-skin="primary" title="日程安排" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="98" name="rule[]" value="99" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="98" name="rule[]" value="100" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="98" name="rule[]" value="101" lay-skin="primary" title="查看" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="102" lay-skin="primary" title="日程日历" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="103" lay-skin="primary" title="工作记录" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="103" name="rule[]" value="104" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="103" name="rule[]" value="105" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="103" name="rule[]" value="106" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="103" name="rule[]" value="107" lay-skin="primary" title="更改工时" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="108" lay-skin="primary" title="工作日历" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="109" lay-skin="primary" title="工作汇报" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="109" name="rule[]" value="110" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="109" name="rule[]" value="111" lay-skin="primary" title="发送" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="109" name="rule[]" value="112" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="109" name="rule[]" value="113" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="8" title="财务管理" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="114" lay-skin="primary" title="权限配置" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="115" lay-skin="primary" title="报销管理" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="116" lay-skin="primary" title="我申请的" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="117" lay-skin="primary" title="我处理的" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="118" lay-skin="primary" title="抄送给我的" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="119" lay-skin="primary" title="打款(管理专用)" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="120" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="121" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="115" name="rule[]" value="122" lay-skin="primary" title="查看" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="123" lay-skin="primary" title="发票管理" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="124" lay-skin="primary" title="我申请的" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="125" lay-skin="primary" title="我处理的" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="126" lay-skin="primary" title="抄送给我的" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="127" lay-skin="primary" title="开票(管理专用)" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="128" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="129" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="123" name="rule[]" value="130" lay-skin="primary" title="查看" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="131" lay-skin="primary" title="到账管理" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="131" name="rule[]" value="132" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="131" name="rule[]" value="133" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="131" name="rule[]" value="134" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="135" title="客户管理" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="136" lay-skin="primary" title="权限配置" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="137" lay-skin="primary" title="客户等级" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="137" name="rule[]" value="138" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="137" name="rule[]" value="139" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="140" lay-skin="primary" title="客户渠道" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="140" name="rule[]" value="141" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="140" name="rule[]" value="142" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="143" lay-skin="primary" title="抢 客 宝" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="144" lay-skin="primary" title="客户列表" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="144" name="rule[]" value="145" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="144" name="rule[]" value="146" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="144" name="rule[]" value="147" lay-skin="primary" title="获取" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="144" name="rule[]" value="148" lay-skin="primary" title="转入公海" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="149" lay-skin="primary" title="公海客户" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="149" name="rule[]" value="150" lay-skin="primary" title="分配客户" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="149" name="rule[]" value="151" lay-skin="primary" title="转入废弃池" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="152" lay-skin="primary" title="废弃客户" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="152" name="rule[]" value="153" lay-skin="primary" title="删除" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="152" name="rule[]" value="154" lay-skin="primary" title="还原" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="155" lay-skin="primary" title="客户联系人" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="155" name="rule[]" value="156" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="155" name="rule[]" value="157" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="158" title="合同协议" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="159" lay-skin="primary" title="权限配置" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="160" lay-skin="primary" title="合同类别" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="160" name="rule[]" value="161" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="160" name="rule[]" value="162" lay-skin="primary" title="设置" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="163" lay-skin="primary" title="合同列表" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="163" name="rule[]" value="164" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="163" name="rule[]" value="165" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="163" name="rule[]" value="166" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="167" lay-skin="primary" title="合同归档" checked>
+						</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="168" title="项目管理" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="169" lay-skin="primary" title="权限配置" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="170" lay-skin="primary" title="项目列表" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="170" name="rule[]" value="171" lay-skin="primary" title="新建" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="170" name="rule[]" value="172" lay-skin="primary" title="编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="170" name="rule[]" value="173" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="170" name="rule[]" value="174" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="175" lay-skin="primary" title="任务列表" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="175" name="rule[]" value="176" lay-skin="primary" title="新建" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="175" name="rule[]" value="177" lay-skin="primary" title="编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="175" name="rule[]" value="178" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="175" name="rule[]" value="179" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="180" lay-skin="primary" title="任务工时" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="181" lay-skin="primary" title="文档列表" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="181" name="rule[]" value="182" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="181" name="rule[]" value="183" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="181" name="rule[]" value="184" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+				<tr>
+			<td style="font-weight:800; text-align:center;">
+			  <input type="checkbox" disabled value="185" title="知识文章" checked>
+			</td>
+							<td>
+					<div style="padding:0 0 0 10px;">
+											<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="186" lay-skin="primary" title="知识类型" checked>
+						</div>
+													<div style="padding:0 0 3px; margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="186" name="rule[]" value="187" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="186" name="rule[]" value="188" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="189" lay-skin="primary" title="共享知识" checked>
+						</div>
+																	<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="190" lay-skin="primary" title="个人知识" checked>
+						</div>
+													<div style="padding:0 0 3px; ">
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="190" name="rule[]" value="191" lay-skin="primary" title="新建/编辑" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="190" name="rule[]" value="192" lay-skin="primary" title="查看" checked>
+								</div>
+															<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="190" name="rule[]" value="193" lay-skin="primary" title="删除" checked>
+								</div>
+														</div>
+																</div>
+				</td>
+					</tr>
+			</table>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool=layui.tool;	
+		//重设密码
+		$('.reset-psw').on('click',function(){
+			let id=$(this).data('id');
+			layer.confirm('确定要重设该用户的密码？', {
+				icon: 3,
+				title: '提示'
+			}, function (index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						layer.msg(e.msg);
+						if(e.code==0){
+							setTimeout(function(){
+								location.reload();
+							},2000);
+						}	
+					}
+				}
+				tool.post("/user/admin/reset_psw",{id: id}, callback);
+				layer.close(index);
+			})	
+		});
+	}
+	
+	//拷贝密码
+	function copyToClip(content) {
+		if (navigator.clipboard) {
+			navigator.clipboard.writeText(content);
+		} else {
+			var copy_textarea = document.createElement('textarea');
+			copy_textarea.style.position = 'fixed';
+			copy_textarea.style.clip = 'rect(0 0 0 0)';
+			copy_textarea.style.top = '10px';
+			copy_textarea.value = content;
+			document.body.appendChild(copy_textarea);
+			copy_textarea.select();
+			document.execCommand('copy', true);
+			document.body.removeChild(copy_textarea);
+		}
+		if (content != '') {
+			layer.msg('复制成功');
+		}
+	}
+</script>
+
+	<!-- /脚本 -->
+  <script src="../../assets/layui/layui.js"></script>
+  <script src="../../assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>
