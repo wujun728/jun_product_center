@@ -1,0 +1,102 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "name": "董事会",
+            "value": 1,
+            "selected": "",
+            "children": [
+                {
+                    "name": "人事部",
+                    "value": 2,
+                    "selected": "",
+                    "children": []
+                },
+                {
+                    "name": "财务部",
+                    "value": 3,
+                    "selected": "",
+                    "children": []
+                },
+                {
+                    "name": "市场部",
+                    "value": 4,
+                    "selected": "",
+                    "children": []
+                },
+                {
+                    "name": "销售部",
+                    "value": 5,
+                    "selected": "",
+                    "children": [
+                        {
+                            "name": "销售一部",
+                            "value": 8,
+                            "selected": "",
+                            "children": []
+                        },
+                        {
+                            "name": "销售二部",
+                            "value": 9,
+                            "selected": "",
+                            "children": []
+                        },
+                        {
+                            "name": "销售三部",
+                            "value": 10,
+                            "selected": "",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "技术部",
+                    "value": 6,
+                    "selected": "",
+                    "children": [
+                        {
+                            "name": "产品部",
+                            "value": 11,
+                            "selected": "",
+                            "children": []
+                        },
+                        {
+                            "name": "设计部",
+                            "value": 12,
+                            "selected": "",
+                            "children": []
+                        },
+                        {
+                            "name": "研发部",
+                            "value": 13,
+                            "selected": "",
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "name": "客服部",
+                    "value": 7,
+                    "selected": "",
+                    "children": [
+                        {
+                            "name": "客服一部",
+                            "value": 14,
+                            "selected": "",
+                            "children": []
+                        },
+                        {
+                            "name": "客服二部",
+                            "value": 15,
+                            "selected": "",
+                            "children": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

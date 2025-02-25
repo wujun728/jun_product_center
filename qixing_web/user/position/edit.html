@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">岗位职称</h3>
+		<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">岗位名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" value="人事总监" lay-verify="required" autocomplete="off" placeholder="请输入岗位名称" lay-reqText="请输入岗位名称" class="layui-input">
+			</td>
+			<td class="layui-td-gray-3">岗位工时单价(元)<font>*</font></td>
+			<td>
+				<input type="text" name="work_price" value="1000" lay-verify="required|number" placeholder="请输入岗位工时单价" lay-reqText="请输入岗位工时单价" autocomplete="off" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">状态<font>*</font></td>
+			<td colspan="3">
+				<input type="radio" name="status" value="1" title="正常" checked>
+				<input type="radio" name="status" value="0" title="禁止" >
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">权限角色<font>*</font></td>
+			<td colspan="3">
+							<input type="checkbox" name="group_id[]" title="超级员工权限" value="1"  lay-skin="primary">
+							<input type="checkbox" name="group_id[]" title="总经理权限" value="2" checked lay-skin="primary">
+							<input type="checkbox" name="group_id[]" title="普通员工权限" value="3"  lay-skin="primary">
+						</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">岗位备注</td>
+			<td colspan="3">
+				<textarea name="remark" placeholder="请输入岗位备注" class="layui-textarea">人事部的最大领导</textarea>
+			</td>
+		</tr>
+	</table>
+		<div class="py-3">
+		<input type="hidden" name="id" value="2">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool;
+		form.on('submit(webform)', function(data){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					setTimeout(function () {
+						parent.location.reload();
+					}, 1000);					
+				}
+			}
+			tool.post("/user/position/add", data.field, callback);
+			return false;
+		});
+		//监听提交
+		form.on('submit(webform)', function(data){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/user/position/add", data.field, callback);
+			return false;
+		});
+	}
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/layui/layui.js"></script>
+	<script src="/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

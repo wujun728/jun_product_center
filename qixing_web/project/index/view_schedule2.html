@@ -1,0 +1,85 @@
+<div class="p-3 bg-white">
+<table class="layui-hide" id="scheduleApi" lay-filter="schedule"></table>
+</div>
+<script>
+function project_schedule(){
+	if($('#projectTab').find('li').eq(2).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(2).data('load','true');
+	let form = layui.form,tool = layui.tool,table = layui.table,work = layui.oaSchedule,employeepicker=layui.employeepicker;
+	//项目工作记录
+	layui.scheduleTable = table.render({
+		elem: '#scheduleApi',
+		title: '工作记录列表',
+		cellMinWidth: 80,
+		url: "/oa/schedule/index", //数据接口
+		where: { 'tid': project_id },
+		page: true, //开启分页
+		limit: 20,
+		cols: [[ //表头
+			{ field: 'id', title: '序号', width: 60, align: 'center' }
+			, {
+				field: 'start_time', title: '工作时间范围', align: 'center', width: 180, templet: function (d) {
+					var html = d.start_time + '至' + d.end_time;
+					return html;
+				}
+			}
+			, { field: 'labor_time', title: '工时', style: 'color: #91CC75;', align: 'center', width: 60 }
+			, { field: 'labor_type_string', title: '工作类型', align: 'center', width: 90,templet:function(d){
+				var html = '<span class="layui-color-'+d.labor_type+'">'+d.labor_type_string+'</span>';
+				return html;
+			}}
+			, { field: 'work_cate', title: '工作类别', align: 'center', width: 100 }
+			, { field: 'title', title: '工作内容' }
+			, { field: 'name', title: '执行员工', align: 'center', width: 80 }
+			, { field: 'department', title: '所在部门', align: 'center', width: 100 }
+			, { field: 'create_time', title: '记录时间', align: 'center', width: 150 }
+			, {title: '操作',fixed:'right', align: 'center', width: 100, templet: function (d) {
+					return '<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="edit">修改</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>';
+				}
+			}
+		]]
+	});
+
+	// 选择员工
+	$('.gg-form-bar').on('click', '[data-event="select"]', function () {
+		var that = $(this);
+		var names = that.val(), ids = $('[name="uid"]').val();
+		employeepicker.init({
+			ids: ids,
+			names: names,
+			type: 0,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
+			callback: function (ids, names, dids, departments) {
+				$('[name="uid"]').val(ids);
+				that.val(names);
+				$('[lay-filter="webform"]').click();
+			}
+		})
+	});
+
+	//监听搜索提交
+	form.on('submit(webform)', function (data) {
+		let f = data.field;
+		layui.scheduleTable.reload({ where: { keywords: f.keywords, uid: f.uid, tid: project_id }, page: { curr: 1 } });
+		return false;
+	});
+	$('body').on('click', '[lay-filter="clear"]', function () {
+		setTimeout(function () {
+			$('[lay-filter="webform"]').click();
+		}, 10)
+	})
+	//监听行工具事件		
+	table.on('tool(schedule)', function (obj) {
+		if (obj.event === 'edit') {
+			work.add(0, obj.data);
+		}
+		if (obj.event === 'view') {
+			work.view(obj.data);
+		}
+		return false;
+	})
+}
+</script>

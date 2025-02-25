@@ -1,0 +1,68 @@
+<div class="bg-white">
+	<div id="logList" class="log-timeline p-3"></div>
+</div>
+<script>	
+function log(){
+	if($('#contractTab').find('li').eq(1).data('load') =='true'){
+		return false;
+	}
+	$('#contractTab').find('li').eq(1).data('load','true');
+	let tool = layui.tool;	
+	
+	//日志	
+	let callback = function(res){
+		$('.log-more').remove();
+		if(res.code==0 && res.data.length>0){
+			let itemLog = '',log_time='';					
+			$.each(res.data, function (index, item) {
+				let detail = "";
+				if(log_time != item.create_time){
+					if(log_time==''){
+						itemLog+='<dl><dt><span class="date-second-point"></span>'+item.create_time+'</dt>'
+					}
+					else{
+						itemLog+='</dl><dl><dt><span class="date-second-point"></span>'+item.create_time+'</dt>'
+					}
+					log_time = 	item.create_time;			
+				}
+				if(item.field =='new' || item.field =='del'){
+					detail= `
+						<span class="log-content gray">${item.action}了合同</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span>
+					`;
+				}
+				else if(item.field =='file'){
+					detail= `
+						<span class="log-content gray">${item.action}了${item.title}<strong>${item.new_content}</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span></span>
+					`;
+				}
+				else{
+					detail= `
+						<span class="log-content gray">将合同<strong>${item.title}</strong>从 ${item.old_content} ${item.action}为<strong>${item.new_content}</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span></span>
+					`;
+				}				
+				itemLog+= `
+					<dd><img src="${item.thumb}" class="log-thumb" /><span class="log-name">${item.name}</span>${detail}</dd>
+				`;
+			});
+			
+			itemLog+='</dl>';
+			if(res.data.length>19){
+				itemLog+='<div class="py-3 log-more"><button class="layui-btn layui-btn-normal layui-btn-sm" type="button">查看更多操作动态</button></div>';
+			}
+			$("#logList").append(itemLog);
+		}
+		else{
+			if(project_page ==1){
+				$("#logList").html('<div class="layui-data-none">暂无动态</div>');
+			}
+		}
+	}
+	
+	let contract_page=1;
+	tool.get("/contract/api/contract_log",{contract_id:contract_id,page:contract_page},callback);
+	$('#logList').on('click','.log-more',function(){
+		contract_page++;
+		tool.get("/contract/api/contract_log",{contract_id:contract_id,page:contract_page},callback);
+	});
+}
+</script>	

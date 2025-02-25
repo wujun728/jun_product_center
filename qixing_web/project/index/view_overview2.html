@@ -1,0 +1,600 @@
+<div class="layui-card border-b">
+	<div class='layui-card-body {$role=="0"?"hover-view":"hover-edit"}'>
+		<div class="py-1">
+			<span class="gray">项目状态：</span>
+			<span class="layui-color-{$detail.status}" id="status_{$detail.id}"
+			data-val="{$detail.status}">『{$detail.status_name}』</span>
+			<span class="gray" style="margin-left:32px">负责人：</span>
+			<span id="director_uid_{$detail.id}" data-val="{$detail.director_uid}">{$detail.director_name}</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="director_uid"></i>
+			<span class="gray" style="margin-left:32px">项目成员：</span>{$detail.team_admin_names}
+		</div>
+		<div class="py-1">
+			<span class="gray">计划完成周期：</span>
+			<span id="start_time_{$detail.id}" data-val="">{$detail.start_time_str}</span>
+			<i class="iconfont icon-wodedianping" title="修改计划开始日期" 	data-name="start_time"></i> 至&nbsp;&nbsp;&nbsp;&nbsp; <span id="end_time_{$detail.id}"
+				data-val="">{$detail.end_time_str}</span><i class="iconfont icon-wodedianping"
+				title="修改计划结束日期" data-name="end_time"></i>
+			{gt name=":isModule('contract')" value="0"}
+				<span class="gray" style="margin-left:32px">关联合同：</span>
+				<span id="contract_id_{$detail.id}" data-val="{$detail.contract_id}">{$detail.contract}</span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="contract_id"></i>
+			{/gt}
+		</div>
+		<div class="py-1">
+			<span class="gray">项目简介：</span>
+			<span id="content_{$detail.id}" data-val="{$detail.content}">{$detail.content}</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-id="{$detail.id}" data-name="content"></i>
+		</div>
+	</div>
+</div>
+
+<div class="layui-card border-y">
+	<div class="layui-card-header" style="height:45px;">
+		<div class="layui-row">
+			<div class="layui-col-md6">
+				<strong>项目阶段</strong>
+			</div>
+			{gt name="$role" value="0"}
+			<div class="layui-col-md6" style="text-align:right">
+				<a href="/project/index/edit/id/{$detail.id}" class="layui-btn layui-btn-normal layui-btn-sm">编辑项目阶段</a>
+			</div>
+			{/gt}
+		</div>
+	</div>
+	{notempty name="$step" id="vo"}
+	<div class="p-3 border-b">
+		<span class="gray">当前阶段：</span>{$step.flow_name}
+		<span class="gray" style="margin-left:20px">负责人：</span>{$step.check_name}
+		<span class="gray" style="margin-left:20px">成员：</span>{$step.flow_names}
+		<span class="gray" style="margin-left:20px">周期：</span>{$step.start_time|time_format=###,'Y-m-d'} 到 {$step.end_time|time_format=###,'Y-m-d'}
+		{eq name="$step.flow_uid" value="$login_admin.id"}
+		<div class="pt-3">
+			<span class="layui-btn layui-btn-normal layui-btn-sm" data-event="step" data-check="1">确认</span>
+			{gt name="$detail.step_sort" value="0"}
+			<span class="layui-btn layui-btn-danger layui-btn-sm" data-event="step" data-check="2">退回</span>
+			{/gt}
+		</div>
+		{/eq}
+	</div>
+	{/notempty}
+	<div class="px-3 py-1 border-b">
+		<div class="flow-flexbox check-items flow-flex-row">
+			{volist name="$step_array" id="vo"}
+			<div class="flow-flexbox check-item flow-flex-row">
+				{gt name="$vo.sort" value="$detail.step_sort"}
+				<i class="layui-icon layui-icon-time"></i>
+				{/gt}
+				{eq name="$vo.sort" value="$detail.step_sort"}
+				<i class="layui-icon layui-icon-username" data-on=""></i>
+				{/eq}
+				{lt name="$vo.sort" value="$detail.step_sort"}
+				<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>
+				{/lt}
+				<div class="check-item-name">{$vo.flow_name}</div>
+				<div class="check-item-status">{$vo.check_name}</div>
+				<span class="layui-icon layui-icon-right"></span>
+			</div>
+			{/volist}
+		</div>
+	</div>
+	<div class="p-3">
+		<p><strong>阶段流转记录</strong></p>
+		{notempty name="$step_record"}
+			<ul class="layui-timeline pt-2">
+			{volist name="$step_record" id="vo"}		
+				<li class="layui-timeline-item delete_{$vo.delete_time}">
+					<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+					{if ($vo.status == 1)}
+					<p style="padding-left:24px">{$vo.check_time_str}<span class="black mx-1">{$vo.check_name}</span><span class="mr-1 green">{$vo.status_str}</span>了{$vo.flow_name}的工作。</p>
+					{elseif ($vo.status == 2) /}
+					<p style="padding-left:24px">{$vo.check_time_str}<span class="black mx-1">{$vo.check_name}</span>在{$vo.flow_name}执行了<span class="mx-1 red">{$vo.status_str}</span>操作。操作意见：<span class="red">{$vo.content}</span></p>
+					{else /}
+					<p style="padding-left:24px">{$vo.check_time_str}<span class="black mx-1">{$vo.check_name}</span><span class="mr-1 layui-color-{$vo.status}">{$vo.status_str}</span>了该阶段流程。操作意见：<span class="red">{$vo.content}</span></p>
+					{/if}
+					
+				</li>
+			{/volist}
+			</ul>
+		{else/}
+		<div class="layui-data-none">暂无记录</div>
+		{/notempty}
+	</div>
+</div>
+
+<div class="layui-card border-y">
+	<div class="layui-card-header" style="height:45px;">
+		<div class="layui-row">
+			<div class="layui-col-md6">
+				<strong>项目附件</strong>
+			</div>
+			<div class="layui-col-md6" style="text-align:right">
+				<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="uploadBtn">上传附件</button>
+			</div>
+		</div>
+	</div>
+	<div class="layui-row p-2" id="fileBox">
+		{volist name="file_array" id="vo"}
+			<div class="layui-col-md4" id="fileItem{$vo.id}">{:file_card($vo)}</div>
+		{/volist}
+		{empty name="$file_array" }
+		<div class="layui-data-none">暂无附件</div>
+		{/empty}
+	</div>
+</div>
+
+<div class="layui-card border-y">
+	<div class="layui-card-header" style="height:45px;">
+		<div class="layui-row">
+			<div class="layui-col-md6">
+				<strong>关联链接</strong>
+			</div>
+			<div class="layui-col-md6" style="text-align:right">
+				<button type="button" class="layui-btn layui-btn-sm layui-btn-sm2" id="linkBtn">新增链接</button>
+			</div>
+		</div>
+	</div>
+	<div class="layui-card-body">
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th width="50%">链接URL</th>
+					<th width="30%" style="text-align:center">链接说明</th>
+					<th width="10%" style="text-align:center">添加人</th>
+					<th width="10%" style="text-align:center">操作</th>
+				</tr>
+			</thead>
+			<tbody id="linkList">
+				{volist name="link_array" id="vo"}
+				<tr>
+					<td><a href="{$vo.url}" target="_blank">{$vo.url}</a></td>
+					<td>{$vo.desc}</td>
+					<td style="text-align: center;">{$vo.admin_name}</td>
+					<td style="text-align: center;">
+						<div class="layui-btn-group" style="width:66px">
+							<button type="button" class="layui-btn layui-btn-xs link-edit" data-id="{$vo.id}" data-url="{$vo.url}" data-desc="{$vo.desc}"><i class="layui-icon"></i></button>
+							<button type="button" class="layui-btn layui-btn-danger layui-btn-xs link-delete" data-id="{$vo.id}"><i class="layui-icon"></i></button>
+						</div>
+					</td>
+				</tr>
+				{/volist}
+				{empty name="$link_array" }
+				<tr>
+					<td colspan="4"><div class="layui-data-none">暂无链接</div></td>
+				</tr>
+				{/empty}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="layui-row mb-3 border-y">
+	<div class="layui-col-xs6 layui-col-md4">
+		<div class="layui-card">
+			<div class="layui-card-header">
+				<strong>项目概况</strong>
+			</div>
+			<div class="p-3">
+				<dl>
+					<dt>任务 <span class="gray">(已完成/全部)</span></dt>
+					<dd class="layui-card-value" title="已完成/总任务">{$detail.tasks_finish} / {$detail.tasks}</dd>
+				</dl>
+			</div>
+			<div class="pt-2 px-3">
+				<dl>
+					<dt>项目工时 <span class="gray">(实际/计划)</span></dt>
+					<dd class="layui-card-value" title="实际工时/计划工时">{$detail.hours} / {$detail.plan_hours}</dd>
+				</dl>
+			</div>
+			<div class="pt-2 px-3">
+				<dl>
+					<dt>工作记录</dt>
+					<dd class="layui-card-value" title="工作记录数">{$detail.schedules}</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-xs6 layui-col-md8">
+		<div class="layui-card border-l">
+			<div class="layui-card-header">
+				<strong>项目进度</strong>
+			</div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md6">
+						<div id="progress" class="gougu-data-none" style="width:100%; height:200px;"></div>
+					</div>
+					<div class="layui-col-md6">
+						<div id="delay" class="gougu-data-none" style="width:100%; height:200px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="layui-card border-y">
+	<div class="layui-card-header">
+		<strong>项目燃尽图</strong>
+	</div>
+	<div class="layui-card-body">
+		<div id="cross" class="gougu-data-none" style="width:100%; height:360px;"
+			data-tips="任务数：{$detail.tasks}，已完成：{$detail.tasks_finish}，未完成：{$detail.tasks_unfinish}">
+		</div>
+	</div>
+</div>
+
+<div class="layui-row border-y">
+	<div class="layui-col-xs6 layui-col-md6">
+		<div class="layui-card  border-r">
+			<div class="layui-card-header">
+				<strong>任务分配情况</strong>
+			</div>
+			<div class="layui-card-body">
+				<div id="plan" class="gougu-data-none" style="width:100%; height:150px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-xs6 layui-col-md6">
+		<div class="layui-card">
+			<div class="layui-card-header">
+				<strong>工时登记情况</strong>
+			</div>
+			<div class="layui-card-body">
+				<div id="work" class="gougu-data-none" style="width:100%; height:150px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function overview(){
+	let form = layui.form,tool = layui.tool,table = layui.table, comment = layui.oaComment, edit = layui.oaEdit,oaTool = layui.oaTool;
+	$('.hover-edit').hover(function () {
+		$(this).addClass('hover-on');
+	}, function () {
+		$(this).removeClass('hover-on');
+	})
+
+	$('.hover-edit').on('click', 'i', function () {
+		let name = $(this).data('name');
+		let show_txt = $('#' + name + '_' + project_id).text().replace(/[\r\n\t]/g, "");
+		let real_txt = $('#' + name + '_' + project_id).data('val');
+		if (real_txt === '') {
+			real_txt = show_txt;
+		}
+		editShow(project_id, name, show_txt, real_txt);
+	})
+
+	let loading = false;
+	let editPost = function (id, name, show_val, real_val) {
+		let callback = function (e) {
+			layer.closeAll();
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				setTimeout(function () {
+					location.reload();
+				}, 1000)
+			}
+		}
+		let postData = { id: id };
+		postData[name] = real_val;
+		tool.post("/project/index/edit", postData, callback);
+	}
+
+	function editShow(id, name, show_txt, real_txt) {
+		if (loading == true) {
+			return false;
+		}
+		if (name == "name") {
+			edit.text(id, name, real_txt, editPost);
+		}
+		if (name == "start_time" || name == "end_time") {
+			edit.date(id, name, real_txt, editPost);
+		}
+		if (name == "director_uid") {
+			edit.employee_one(id, name, show_txt, real_txt, editPost);
+		}
+		if (name == "status") {
+			edit.dropdown(id, name, real_txt, opsData[name], editPost);
+		}
+		if (name == "content") {
+			edit.textarea(id, name, real_txt, editPost);
+		}
+		if (name == "contract_id") {
+			layer.open({
+				title: '选择合同',
+				area: ['600px', '580px'],
+				type: 1,
+				content: '<div class="picker-table">\
+					<form class="layui-form pb-2">\
+						<div class="layui-input-inline" style="width:480px;">\
+						<input type="text" name="keywords"  placeholder="合同名称" class="layui-input" autocomplete="off" />\
+						</div>\
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search_form">提交搜索</button>\
+					</form>\
+					<div id="contractTable"></div></div>',
+				success: function () {
+					contractTable = table.render({
+						elem: '#contractTable'
+						, url: '/contract/api/get_contract'
+						, page: true //开启分页
+						, limit: 10
+						, cols: [[
+							{ type: 'radio', title: '选择' }
+							, { field: 'id', width: 100, title: '编号', align: 'center' }
+							, { field: 'name', title: '合同名称' }
+						]]
+					});
+					//项目搜索提交
+					form.on('submit(search_form)', function (data) {
+						contractTable.reload({ where: { keywords: data.field.keywords }, page: { curr: 1 } });
+						return false;
+					});
+				},
+				btn: ['确定'],
+				btnAlign: 'c',
+				yes: function () {
+					var checkStatus = table.checkStatus(contractTable.config.id);
+					var data = checkStatus.data;
+					if (data.length > 0) {
+						let callback = function (e) {
+							layer.closeAll();
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								setTimeout(function () {
+									location.reload();
+								}, 1000)
+							}
+						}
+						let postData = { id: id, contract_id:data[0].id, customer_id:data[0].customer_id };
+						tool.post("/project/index/edit", postData, callback);
+					}
+					else {
+						layer.msg('请先选择合同');
+						return false;
+					}
+				}
+			})
+		}
+	}	
+
+	$('#delProject').on('click', function () {
+		layer.confirm('确定要删除该项目吗？请慎重', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code==0){
+					setTimeout(function () {
+						location.href='/project/index/index';
+					}, 1000)
+				}
+			}
+			let postData = { "id": project_id };
+			tool.delete("/project/index/delete", postData, callback);
+		});
+	})
+	
+	$('body').on('click','[data-event="step"]',function(){
+		let check = $(this).data('check');
+		let callback = function (e) {
+			layer.msg(e.msg);
+			if(e.code==0){
+				parent.layui.pageTable.reload();
+				setTimeout(function(){
+					location.reload();
+				},2000)
+			}
+		}
+		if(check == 2){
+			layer.open({
+				type: 1,
+				title: '请输入退回的原因或理由',
+				area: ['800px', '360px'],
+				content: '<div style="padding:5px;"><textarea class="layui-textarea" id="remarkTextarea" style="width: 100%; height: 240px;"></textarea></div>',
+				btnAlign: 'c',
+				btn: ['提交保存'],
+				yes: function () {
+					let remark = $("#remarkTextarea").val();
+					if (remark != '') {
+						tool.post("/project/api/step_check", {id: project_id,check:check,content:remark}, callback);
+					} else {
+						layer.msg('请输入原因或理由');
+					}
+				}
+			})
+		}
+		else{
+			layer.confirm('确认已完成该阶段工作，进入下个阶段？', {
+				icon: 3,
+				title: '提示'
+			},
+			function(index) {
+				tool.post("/project/api/step_check", {id: project_id,check:check}, callback);
+			})
+		}
+	});
+
+	oaTool.addFile({
+		type:1,
+		isSave:true,
+		ajaxDelete:function(file_id){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {						
+					$('#fileItem' + file_id).remove();
+				}
+			}
+			tool.delete("/project/api/delete_file", {id: file_id}, callback);			
+		},
+		ajaxSave:function(res){
+			let callback = function (e) {
+				layer.msg('上传成功');
+				setTimeout(function(){
+					location.reload();
+				},2000)	
+			}
+			tool.post("/project/api/add_file", { 'topic_id': project_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'project' }, callback);
+		}
+	});
+
+	$('#linkBtn').on('click', function () {
+		comment.addLink(0, project_id, 'project', '', '');
+	})
+	$('#linkList').on('click', '.link-edit', function () {
+		let id = $(this).data('id');
+		let url = $(this).data('url');
+		let desc = $(this).data('desc');
+		comment.addLink(id, project_id, 'project', url, desc);
+	})
+	$('#linkList').on('click', '.link-delete', function () {
+		let id = $(this).data('id');
+		layer.confirm('确定要删除该链接吗?', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				setTimeout(function(){
+					location.reload();
+				},2000)	
+			}
+			let postData = { "id": id };
+			tool.delete("/project/api/delete_link", postData, callback);
+		});
+	})
+
+	let callback = function (res) {
+		if (res.data.date_tasks instanceof Array == false) {
+			optionA.title.text = res.data.task_pie.ok_lv + '%';
+			optionA.series = [
+				{
+					type: 'pie',
+					radius: ['60%', '80%'],
+					center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						show: false
+					},
+					data: [
+						{ value: res.data.task_pie.count - res.data.task_pie.count_ok, name: '待处理' },
+						{ value: res.data.task_pie.count_ok, name: '已完成' }
+					]
+				}
+			];
+			optionA && progressChart.setOption(optionA);
+
+			optionB.title.text = res.data.task_pie.delay_lv + '%';
+			optionB.series = [
+				{
+					type: 'pie',
+					radius: ['60%', '80%'],
+					center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						show: false
+					},
+					data: [{
+						value: res.data.task_pie.delay,
+						name: '延迟',
+						itemStyle: {
+							color: "#ED6666",
+						}
+					},
+					{
+						value: (res.data.task_pie.count - res.data.task_pie.delay),
+						name: '未延迟',
+						itemStyle: {
+							color: "#91CC75",
+						}
+					}
+					]
+				}
+			];
+			optionB && delayChart.setOption(optionB);
+
+			var dataD = cross_count(res.data.date_tasks, res.data.date_tasks_ok);
+			var tips = $('#cross').data('tips');
+			optionD.title = {
+				text: '',
+				subtext: tips,
+				top: -10,
+			},
+			optionD.xAxis = {
+				type: 'category',
+				boundaryGap: false,
+				splitLine: {
+					show: true,
+					lineStyle: {
+						type: 'dashed'
+					}
+				},
+				data: dataD.x,
+				axisLabel: {
+					rotate: 30,
+					formatter: function (value, index) {
+						return value.slice(5);
+					}
+				}
+			};
+			optionD.series = [
+				{
+					name: '任务计划剩余',
+					type: 'line',
+					showSymbol: false,
+					markLine: {
+						data: [{ type: 'average', name: 'Avg' }],
+					},
+					lineStyle: {
+						width: 2
+					},
+					data: dataD.y
+				},
+				{
+					name: '任务实际剩余',
+					type: 'line',
+					showSymbol: false,
+					areaStyle: {
+						opacity: 0.1
+					},
+					markLine: {
+						data: [{ type: 'average', name: 'Avg' }],
+					},
+					lineStyle: {
+						width: 2
+					},
+					data: dataD.y2
+				}
+			]
+			optionD && crossChart.setOption(optionD)
+
+			var dataE = getCalendarData(res.data.date_tasks);
+			optionE.calendar.range = dataE.range,
+				optionE.series = {
+					type: 'heatmap',
+					coordinateSystem: 'calendar',
+					data: dataE.data
+				}
+			optionE && planChart.setOption(optionE);
+
+			if (res.data.date_schedules instanceof Array == false) {
+				var dataF = getCalendarData(res.data.date_schedules);
+				optionF.calendar.range = dataF.range,
+					optionF.series = {
+						type: 'heatmap',
+						coordinateSystem: 'calendar',
+						data: dataF.data
+					}
+				optionF && workChart.setOption(optionF);
+			}
+		}
+	}
+	tool.get('/project/api/get_chart_data', { 'project_id': project_id }, callback);
+
+	window.onresize = function () {
+		progressChart.resize();
+		delayChart.resize();
+		crossChart.resize();
+		planChart.resize();
+		workChart.resize();
+	}
+}
+</script>

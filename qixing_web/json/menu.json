@@ -1,0 +1,919 @@
+[
+	{
+		"id": 1,
+		"title": "工作台",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 1001,
+				"title": "办公工作台",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/index/main.html"
+			}
+		]
+	},
+	{
+		"id": 102,
+		"title": "系统管理NEW",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 1002,
+				"title": "菜单权限配置",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/menus/menu_list.html"
+			},
+			{
+				"id": 1003,
+				"title": "字典管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/sysdict/list.html"
+			},
+			{
+				"id": 1003,
+				"title": "用户管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/users/user_list.html"
+			},
+			{
+				"id": 1003,
+				"title": "角色管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/roles/role_list.html"
+			},
+			{
+				"id": 1003,
+				"title": "组织机构",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/depts/dept_list.html"
+			},
+			{
+				"id": 1003,
+				"title": "代码生成",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/generate/index.html"
+			}
+			,
+			{
+				"id": 1003,
+				"title": "代码生成V1",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/code/code.html"
+			}
+			,
+			{
+				"id": 1003,
+				"title": "自定义SQL",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/sql/index.html"
+			}
+			,
+			{
+				"id": 1003,
+				"title": "自定义SQL2",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "sys/code/sql_new.html"
+			}
+			
+			
+		]
+	},
+	{
+		"id": 2,
+		"title": "系统管理",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 1002,
+				"title": "系统配置",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/conf/index.html"
+			}
+			,
+			{
+				"id": 1003,
+				"title": "功能模块",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/module/index.html"
+			}
+			,
+			{
+				"id": 1004,
+				"title": "功能节点",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/menu/index.html"
+			}
+			,
+			{
+				"id": 1004,
+				"title": "角色权限",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/role/index.html"
+			},
+			{
+				"id": 1004,
+				"title": "数据权限",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/dataauth/index.html"
+			},
+			{
+				"id": 1004,
+				"title": "操作日志",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/log/index.html"
+			},
+			{
+				"id": 1004,
+				"title": "备份数据",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/database/database.html"
+			},
+			{
+				"id": 1004,
+				"title": "还原数据",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/database/backuplist.html"
+			}
+		]
+	},
+	{
+		"id": 3,
+		"title": "基础数据",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 2002,
+				"title": "审批类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/flow_type.html"
+			}
+			,
+			{
+				"id": 2003,
+				"title": "审批流程",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/flow/index.html"
+			}
+			,
+			{
+				"id": 2004,
+				"title": "报销类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/expense_cate.html"
+			}
+			,
+			{
+				"id": 2005,
+				"title": "费用类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/cost_cate.html"
+			}
+			,
+			{
+				"id": 2006,
+				"title": "企业主体",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/subject.html"
+			},
+			{
+				"id": 2007,
+				"title": "行业类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/industry_cate.html"
+			},
+			{
+				"id": 2008,
+				"title": "工作类别",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/work_cate.html"
+			},
+			{
+				"id": 2009,
+				"title": "服务类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/cate/services_cate.html"
+			},
+			{
+				"id": 2010,
+				"title": "关键字",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/keywords/index.html"
+			},
+			{
+				"id": 2011,
+				"title": "附件管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/files/index.html"
+			}
+		]
+	}, 
+	{
+		"id": 4,
+		"title": "人力资源",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 3001,
+				"title": "部门架构",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "user/department/index.html"
+			},
+			{
+				"id": 3002,
+				"title": "岗位职称",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "user/position/index.html"
+			},
+			{
+				"id": 3003,
+				"title": "企业员工",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "user/user/index.html"
+			},
+			{
+				"id": 3004,
+				"title": "人事调动",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "user/personal/change.html"
+			},
+			{
+				"id": 3005,
+				"title": "离职档案",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "user/personal/leave.html"
+			}  
+		]
+	},
+	{
+		"id": 5,
+		"title": "行政管理",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 5001,
+				"title": "印章管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "adm/seal/seal_cate.html"
+			},
+			{
+				"id": 5002,
+				"title": "车辆管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "adm/car/car_cate.html"
+			},
+			{
+				"id": 5003,
+				"title": "会议室管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "adm/meeting/meeting_cate.html"
+			} 
+		]
+	},
+	{
+		"id": 6,
+		"title": "企业公告",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 6001,
+				"title": "公告类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "note/index/note_cate.html"
+			},
+			{
+				"id": 6002,
+				"title": "公告列表",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "note/index/index.html"
+			} 
+		]
+	},
+	{
+		"id": 7,
+		"title": "办公审批",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 7001,
+				"title": "我发起的",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/approve/index.html"
+			},
+			{
+				"id": 7002,
+				"title": "我处理的",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/approve/list.html"
+			},
+			{
+				"id": 7002,
+				"title": "抄送我的",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/approve/copy.html"
+			}  
+		]
+	},
+	{
+		"id": 8,
+		"title": "日常办公",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 8001,
+				"title": "日程安排",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/plan/index.html"
+			},
+			{
+				"id": 8002,
+				"title": "日程日历",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/plan/calendar.html"
+			},
+			{
+				"id": 8003,
+				"title": "工作记录",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/schedule/index.html"
+			},
+			{
+				"id": 8004,
+				"title": "工作日历",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/schedule/calendar.html"
+			},
+			{
+				"id": 8005,
+				"title": "工作汇报",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "oa/work/index.html"
+			}
+		]
+	},
+	{
+		"id": 9,
+		"title": "财务管理",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 9,
+				"title": "报销管理", 
+				"type": 0,
+				"href": "",
+				"children": [
+					{
+						"id": 90011,
+						"title": "我申请的",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/expense/index.html"
+					},
+					{
+						"id": 90021,
+						"title": "我处理的",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/expense/list.html"
+					},
+					{
+						"id": 90031,
+						"title": "抄送我的",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/expense/copy.html"
+					},
+					{
+						"id": 90041,
+						"title": "打款(财务专用)",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/expense/checkedlist.html"
+					}
+				]
+			},
+			{
+				"id": 9,
+				"title": "发票管理", 
+				"type": 0,
+				"href": "",
+				"children": [
+					{
+						"id": 90012,
+						"title": "我申请的",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/invoice/index.html"
+					},
+					{
+						"id": 90022,
+						"title": "我处理的",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/invoice/list.html"
+					},
+					{
+						"id": 90032,
+						"title": "抄送我的",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/invoice/copy.html"
+					},
+					{
+						"id": 90042,
+						"title": "开票(财务专用)",
+						"icon": "",
+						"type": 1,
+						"target": "_iframe",
+						"href": "finance/invoice/checkedlist.html"
+					}
+				]
+			}, 
+			{
+				"id": 90033,
+				"title": "到账管理",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "finance/income/index.html"
+			} 
+		]
+	},
+	{
+		"id": 10,
+		"title": "客户管理",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 10001,
+				"title": "客户等级",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/grade/index.html"
+			},
+			{
+				"id": 10002,
+				"title": "客户渠道",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/source/index.html"
+			},
+			{
+				"id": 10003,
+				"title": "抢客宝",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/index/rush.html"
+			},
+			{
+				"id": 10004,
+				"title": "客户列表",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/index/index.html"
+			},
+			{
+				"id": 10005,
+				"title": "公海客户",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/index/sea.html"
+			},
+			{
+				"id": 10006,
+				"title": "废弃客户",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/index/trash.html"
+			},
+			{
+				"id": 10007,
+				"title": "客户联系人",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/contact/index.html"
+			},
+			{
+				"id": 10008,
+				"title": "销售机会",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/chance/index.html"
+			},
+			{
+				"id": 10009,
+				"title": "跟进记录",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "customer/trace/index.html"
+			}
+		]
+	},
+	{
+		"id": 11,
+		"title": "合同管理",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 11001,
+				"title": "合同类别",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "contract/cate/cate.html"
+			},
+			{
+				"id": 11002,
+				"title": "合同列表",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "contract/index/index.html"
+			},
+			{
+				"id": 11003,
+				"title": "合同归档",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "contract/index/archive.html"
+			} 
+		]
+	},
+	{
+		"id": 12,
+		"title": "项目管理",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 12001,
+				"title": "项目列表",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "project/index/index.html"
+			},
+			{
+				"id": 12002,
+				"title": "任务列表",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "project/task/index.html"
+			},
+			{
+				"id": 12003,
+				"title": "任务工时",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "project/task/task_time.html"
+			},
+			{
+				"id": 12003,
+				"title": "文档列表",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "project/document/index.html"
+			} 
+		]
+	},
+	{
+		"id": 13,
+		"title": "知识文章",
+		"icon": "icon-jichupeizhi",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 13001,
+				"title": "知识类型",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "article/cate/cate.html"
+			},
+			{
+				"id": 12002,
+				"title": "共享知识",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "article/index/index.html"
+			},
+			{
+				"id": 12003,
+				"title": "个人知识",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "article/index/list.html"
+			}  
+		]
+	},
+
+
+
+	{
+		"id": 9999,
+		"title": "------分割线------",
+		"icon": "bi-house",
+		"type": 0,
+		"target": "_iframe",
+		"href": "home/home/main.html"
+	},
+	{
+		"id": 1,
+		"title": "推荐页面",
+		"icon": "bi-house",
+		"type": 0,
+		"href": "",
+		"children": [
+			{
+				"id": 1001,
+				"title": "勾股main",
+				"icon": "",
+				"type": 1,
+				"target": "_iframe",
+				"href": "home/home/main.html"
+			},
+ 
+			{
+			"id": 11,
+			"title": "勾股DEV",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "_view/home/gougudev.html"
+		}, 
+		{
+			"id": 12,
+			"title": "勾股OA",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "_view/home/gouguoa.html"
+		},
+		
+		{
+			"id": 13,
+			"title": "勾股BLOG",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/home/gougublog.html"
+		} , {
+			"id": 14,
+			"title": "数据统计",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/home/analysis.html"
+		}, {
+			"id": 15,
+			"title": "内嵌页面",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "https://cn.bing.com"
+		}]
+	},{
+		"id": 2,
+		"title": "基础组件",
+		"icon": "bi-box",
+		"type": 0,
+		"children": [
+		{
+			"id": 201,
+			"title": "Layout 布局",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/layout.html"
+		},
+		{
+			"id": 202,
+			"title": "Button 按钮",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/button.html"
+		}, {
+			"id": 203,
+			"title": "Icon 图标",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "assets/icon/index.html"
+		}, {
+			"id": 204,
+			"title": "Image 图片",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/image.html"
+		},{
+			"id": 205,
+			"title": "Badge 徽标数",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/badge.html"
+		}, {
+			"id": 206,
+			"title": "Tag 标签",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/tag.html"
+		}]
+	}, {
+		"id": 3,
+		"title": "表单组件",
+		"icon": "bi-card-text",
+		"type": 0,
+		"children": [{
+			"id": 301,
+			"title": "普通表单",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/index.html"
+		},{
+			"id": 302,
+			"title": "表单校验",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/verify.html"
+		},{
+			"id": 303,
+			"title": "富文本编辑器",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/tinymce.html"
+		},{
+			"id": 304,
+			"title": "Mardown编辑器",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/editormd.html"
+		}]
+	}, {
+		"id": 4,
+		"title": "数据组件",
+		"icon": "bi-layers",
+		"type": 0,
+		"children": [{
+			"id": 401,
+			"title": "数据表格",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/table/index.html"
+		},{
+			"id": 402,
+			"title": "树形表格",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/table/tree_table.html"
+		}]
+	}
+]
