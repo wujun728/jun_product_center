@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务列表</title>
+    <!-- <link rel="stylesheet" href="../../component/pear/css/pear.css"/> -->
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+    <link rel="stylesheet" href="../../assets/css/pear.css?v=318"/>
+ 
+      <!-- <link rel="stylesheet" href="/layui/css/layui.css"> 
+     <link rel="stylesheet" href="/css/custom.form.css">  -->
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-tab layui-tab-card" lay-filter="test">
+            <ul class="layui-tab-title">
+                <li class="layui-this">待办任务</li>
+                <li>已办任务</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table style="margin-top: 10px;" id="todo-list-table" lay-filter="user-table-todo"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table style="margin-top: 10px;" id="done-list-table" lay-filter="user-table-done"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<div class="panel panel-default operation" id="doTaskPage" hidden >
+    <div class="panel-heading title"></div>
+    <div class="layui-card-body">
+        <form class="layui-form " action="" lay-filter="info" >
+            <div class="layui-form-item">
+			 	<label class="layui-form-label" >审批人</label>
+			      <div class=" layui-input-block "> 
+			      	<input name="operatorNextid" id="operatorNextid" hidden/>
+					<input type="text" name="operatorNext"  id="operatorNext"  lay-max="256" readonly="readonly"
+						  placeholder="请输入下一环节审批人"   autocomplete="off" class="layui-input">
+						  <!-- lay-verify="required|operatorNext" -->
+				    </div>
+            </div>
+            <div class="layui-form-item">
+                  <label class="layui-form-label " >处理意见</label>
+			      <div class=" layui-input-block "> 
+					   <textarea  name="taskOperatorMsg"  id="taskOperatorMsg"  lay-max="256" 
+					   	placeholder="请输入处理意见"  lay-verify="required|taskOperatorMsg"   autocomplete="off"   class="layui-textarea"></textarea>
+				    </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="pear-btn layui-btn-normal  pear-btn-success" id="withAgree" lay-event="agree">同意</button>
+    				<button class="pear-btn layui-btn-normal pear-btn-warming" id="withRefuse" lay-event="refuse">驳回到发起人</button> 
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/html" id="lct-bar">
+    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">流程图
+    </button>
+    <!--    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>-->
+    <!--    </button>-->
+</script>
+
+<!--     <button class="pear-btn pear-btn-sm pear-btn-success" lay-event="agree">同意
+    </button>
+    <button class="pear-btn pear-btn-sm pear-btn-warming" lay-event="refuse">驳回
+    </button> 
+-->
+<script type="text/html" id="todo-bar">
+    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">流程图
+    </button>
+    <button class="pear-btn pear-btn-primary pear-btn-success" lay-event="view">查看
+    </button>
+    <button class="pear-btn pear-btn-primary pear-btn-warming" lay-event="doTask">处理
+    </button>
+</script>
+
+<!-- js部分 -->
+<!--
+    <script type="text/javascript" src="../../assets/js/common.js"></script>
+-->
+<script type="text/javascript" src="../../assets/libs/layui/layui.all.js"></script>
+<script type="text/javascript" src="../../assets/js/core.util.js"></script>
+<!-- <script src="/js/core.util.js"></script>
+<script src="/layui/layui.all.js"></script> -->
+
+<link rel="stylesheet" href="../../assets/module/admin.css"/>
+<script src="../../assets/module/admin.js"></script>
+<script>
+	//获取token
+	var token = CoreUtil.getData("access_token");
+	//地址栏转义token中的#号
+	var tokenQuery = token==null?"":token.replace("#", "%23");
+	var $ = jQuery = layui.jquery;
+    layui.config({ 
+        base: '../../assets/module/'
+    }).use(['table', 'form', 'jquery', 'element', 'easyAdmin'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let element = layui.element;
+        var easyAdmin = layui.easyAdmin;
+        var tableSelect = layui.tableSelect;
+        var rowData;
+        let todoCols = [
+            [
+                {title: '流程编号', field: 'orderNo', align: 'center'},
+                {title: '任务节点', field: 'taskName', align: 'center'},
+                {title: '任务到达时间', field: 'taskCreateTime', align: 'center'},
+                {title: '流程名称', field: 'processName', align: 'center'},
+                {title: '操作', toolbar: '#todo-bar', align: 'center'}
+            ]
+        ]
+
+        let doneCols = [
+            [
+                {title: '流程编号', field: 'orderNo', align: 'center',width: 230},
+                {title: '任务节点', field: 'taskName', align: 'center'},
+                {title: '任务到达时间', field: 'taskCreateTime', align: 'center'},
+                {title: '任务完成时间', field: 'taskEndTime', align: 'center'},
+                {title: '流程名称', field: 'processName', align: 'center'},
+                {title: '处理人', field: 'operator', align: 'center'},
+                {title: '处理结果', field: 'taskOperatorFlag', align: 'center',templet: function (item) {
+    	            return item.taskVariableMap.taskOperatorFlag==undefined?"未填写":item.taskVariableMap.taskOperatorFlag;
+                }},
+                {title: '处理意见', field: 'taskOperatorMsg', align: 'center',templet: function (item) {
+    	            return item.taskVariableMap.taskOperatorMsg==undefined?"未填写":item.taskVariableMap.taskOperatorMsg;
+	             }},
+                {title: '操作', toolbar: '#lct-bar', align: 'center'}
+            ]
+        ]
+
+        easyAdmin.tableRender({
+            elem: '#todo-list-table',
+            url: '/flow/task/todoList',
+            page: true,
+            cols: todoCols,
+            skin: 'line',
+            toolbar: false
+        });
+
+        easyAdmin.tableRender({
+            elem: '#done-list-table',
+            url: '/flow/task/doneList',
+            page: true,
+            cols: doneCols,
+            skin: 'line',
+            toolbar: false
+        });
+        
+
+        table.on('tool(user-table-done)', function (obj) {
+            if (obj.event === 'remove') {
+                window.remove(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            }
+        });
+
+        table.on('tool(user-table-todo)', function (obj) {
+            if (obj.event === 'agree') {
+                window.agree(obj);
+            } else if (obj.event === 'refuse') {
+                window.refuse(obj);
+            } else if (obj.event === 'edit') {
+                window.edit(obj);
+            } else if (obj.event === 'view') {
+                window.view(obj);
+            } else if (obj.event === 'doTask') {
+                window.doTask(obj);
+            }
+        });
+        
+
+        //监听Tab切换，以改变地址hash值
+        element.on('tab(test)', function (data) {
+            if (data.index == 0) {
+                table.reload('todo-list-table')
+            }
+            if (data.index == 1) {
+                table.reload('done-list-table')
+            }
+        });
+        
+      	
+        window.edit = function (obj) {
+            var data = obj.data;
+            layer.open({
+                type: 2,
+                title: '查看流程图',
+                shade: 0.1,
+                shadeClose : false,
+                area: ['980px', '500px'],
+                content: ['../flow/diagram.html?orderId=' + data.orderId + "&processId=" + data.processId, 'no']
+            });
+        };
+        
+      	//<!-- 流程flow-mark001,新增流程,查看流程表单明细，通用 -->
+        window.view = function (obj) {
+        	rowData = obj;
+            var data = obj.data;
+            var processName = obj.data.taskVariableMap.processName;
+            var businessId = obj.data.taskVariableMap.businessId;
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-demo', //样式类名
+                title: "查看明细",
+                shadeClose : false,
+                area: ['80%', '80%'], //宽高
+                shade: 0.6, //遮罩透明度
+                maxmin: true, //允许全屏最小化
+                anim: 1, //0-6的动画形式，-1不开启
+                content:  '/public/flow/task/bizContent/view/'+processName+'/'+businessId,
+                end: function(){
+                    //table.reload('todo-list-table')
+                }
+            });
+        };
+      //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+        window.doTask = function (obj) {
+        	rowData = obj;
+            var data = obj.data;
+            CoreUtil.setData("data_doTask",obj);
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-demo', //样式类名
+                title: "处理任务",
+                shadeClose : false,
+                area: ['880px', '500px'], //宽高
+                shade: 0.6, //遮罩透明度
+                maxmin: true, //允许全屏最小化
+                anim: 1, //0-6的动画形式，-1不开启
+                content:  '/table/doTask.html',
+                end: function(){
+                    table.reload('todo-list-table')
+                }
+            });
+        };
+        
+//         form.on('submit(dict-type-query)', function (data) {
+//             table.reload('dict-type-table', {where: data.field})
+//             return false;
+//         });
+        
+
+        window.error = function (obj) {
+            layer.open({
+                type: 1,
+                title: '异常信息',
+                shade: 0,
+                area: ['450px', '350px'],
+                content: '<div class="pear-container"><div class="layui-card"><div class="layui-card-body">' + obj.data['error'] + '</div></div></div>'
+            });
+        }
+       
+       
+    })
+</script>
+</html>

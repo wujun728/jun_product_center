@@ -1,0 +1,174 @@
+{eq name="$is_create_admin" value = "1"}
+<table class="layui-table layui-table-form">
+	<tr>
+		<td class="layui-td-gray-2">选择审批流程<font>*</font></td>
+		<td colspan="7">
+			<select name="flow_id" lay-verify="required" lay-filter="flowtype" lay-reqText="请选择审批流程">
+			<option value="">--请选择--</option>
+			{volist name="flows" id="vo"}
+			  <option value="{$vo.id}" title="{$vo.check_type}">{$vo.name}</option>
+			{/volist}
+			</select>
+		</td>
+	</tr>
+	<tr id="flow_tr">
+		<td class="layui-td-gray">审核人<font>*</font></td>
+		<td colspan="7">
+			<input type="text" name="check_admin_name" value="" autocomplete="off" placeholder="请选择审核人" lay-verify="required" lay-reqText="请选择审核人" class="layui-input picker-one" readonly>
+			<input type="hidden" name="check_admin_ids" value="">
+		</td>
+	</tr>
+</table>
+{/eq}
+<div class="pt-2">
+	{eq name="$is_create_admin" value = "1"}
+	<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交审核</button>
+	<a class="layui-btn" href="/contract/index/add/id/{$detail.id}">编辑合同</a>
+	{/eq}
+	{gt name="$auth" value="0"}
+	<span class="layui-btn layui-btn-warm" data-event="ctrl" data-status="5">中止合同</span>
+	<span class="layui-btn layui-btn-danger" data-event="ctrl" data-status="6">作废合同</span>
+	{/gt}
+</div>
+<script>
+	function init(form,tool) {		
+		$('body').on('click','[data-event="ctrl"]',function(){
+			let status = $(this).data('status');
+			let action = '';
+			let title = ''
+			if(status == 5){
+				title = '确定要中止该合同?';
+				action = 'stop_ok';
+			}
+			if(status == 6){
+				title = '确定要作废该合同?';
+				action = 'void_ok';
+			}
+			layer.confirm(title, {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					parent.layui.pageTable.reload();
+					setTimeout(function(){
+						location.reload();
+					},2000)					
+				}
+				layer.open({
+					type: 1,
+					title: '请输入原因或理由',
+					area: ['800px', '360px'],
+					content: '<div style="padding:5px;"><textarea class="layui-textarea" id="remarkTextarea" style="width: 100%; height: 240px;"></textarea></div>',
+					btnAlign: 'c',
+					btn: ['提交保存'],
+					yes: function () {
+						let remark = $("#remarkTextarea").val();
+						if (remark != '') {
+							tool.post("/contract/api/check", {id: contract_id,check_status:status,mark:remark}, callback);
+						} else {
+							layer.msg('请输入原因或理由');
+						}
+					}
+				})		
+				layer.close(index);
+			});
+		});
+		
+		//监听提交
+		form.on('submit(webform)', function(data){
+			layer.confirm('提交审核后合同内容将不能编辑，确定要提交审核?', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				data.field.id = contract_id;
+				data.field.check_status = 1;
+				$.ajax({
+					url: "/contract/api/check",
+					type:'post',
+					data:data.field,
+					success:function(e){
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							parent.layui.tool.close(1000);
+						}
+					}
+				})
+			});
+			return false;
+		});
+
+		form.on('select(flowtype)', function(data){
+			var check_type = data.elem[data.elem.selectedIndex].title;
+			var formHtml='<td class="layui-td-gray">审核人<font>*</font></td>\
+			<td colspan="5">\
+				<input type="text" name="check_admin_name" value="" autocomplete="off" placeholder="请选择审核人" lay-verify="required" lay-reqText="请选择审核人" class="layui-input picker-one"><input type="hidden" name="check_admin_ids" value="">\
+			</td>';
+			if(check_type == 2){
+				$('#flow_tr').html(formHtml);
+				form.render();
+			}
+			if(data.value==''){
+				return false;
+			}
+			$.ajax({
+				url: "/api/index/get_flow_users",
+				type:'get',
+				data:{id:data.value},
+				success: function (e) {
+					if (e.code == 0) {
+						var flowLi='';
+						var flow_data = e.data.flow_data;
+						if(e.data.copy_uids && e.data.copy_uids !=''){
+							$('[name="copy_names"]').val(e.data.copy_unames);
+							$('[name="copy_uids"]').val(e.data.copy_uids.split(','));
+						}
+						if(check_type == 1 || check_type == 3){
+							for(var a=0;a<flow_data.length;a++){
+								var userList='',sign_type = '';
+								if(check_type == 1){
+									if(flow_data[a].flow_type==1){
+										userList+= '<li style="padding:3px 0">当前部门负责人</li>';
+									}
+									else if(flow_data[a].flow_type==2){
+										userList+= '<li style="padding:3px 0">上级部门负责人</li>';
+									}
+									else{
+										if(flow_data[a].flow_type==3){
+											sign_type= ' <span class="layui-badge layui-bg-blue">或签</span>';
+										}
+										if(flow_data[a].flow_type==4){
+											sign_type= ' <span class="layui-badge layui-bg-blue">会签</span>';
+										}
+										for(var b=0;b<flow_data[a].user_id_info.length;b++){
+											userList+= '<li style="padding:3px 0"><img src="'+flow_data[a].user_id_info[b].thumb+'" style="width:24px; height:24px; border-radius:50%; margin-right:8px;" />'+flow_data[a].user_id_info[b].name+'</li>';
+										}
+									}
+								}
+								else if(check_type == 3){
+									sign_type= ' <span class="layui-badge layui-bg-blue">'+flow_data[a].flow_name+'</span>'
+									for(var b=0;b<flow_data[a].user_id_info.length;b++){
+										userList+= '<li style="padding:3px 0"><img src="'+flow_data[a].user_id_info[b].thumb+'" style="width:24px; height:24px; border-radius:50%; margin-right:8px;" />'+flow_data[a].user_id_info[b].name+'</li>';
+									}
+								}
+								flowLi+='<li class="layui-timeline-item">\
+									<i class="layui-icon layui-timeline-axis">&#xe63f;</i>\
+									<div class="layui-timeline-content">\
+									  <p class="layui-timeline-title"><strong>第'+(a+1)+'级审批</strong>'+sign_type+'</p>\
+									  <ul>'+userList+'</ul>\
+									</div>\
+								</li>';
+							}							
+							formHtml = '<td class="layui-td-gray">审批流程</td>\
+										<td colspan="7">\
+											<ul id="flowList" class="layui-timeline">'+flowLi+'</ul>\
+										</td>';
+							$('#flow_tr').html(formHtml);
+						}
+					}
+				}
+			})
+		});
+	}
+
+</script>

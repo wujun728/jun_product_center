@@ -1,0 +1,28 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1,
+    "data": [
+        {
+            "id": 1,
+            "uid": 3,
+            "remark": "111",
+            "admin_id": 1,
+            "lead_admin_id": 2,
+            "connect_uids": "2",
+            "connect_id": 2,
+            "connect_time": 0,
+            "status": 1,
+            "quit_time": "2024-01-19",
+            "create_time": "2024-01-18 18:04:53",
+            "update_time": 0,
+            "name": "李四",
+            "department": "董事会",
+            "position": "人事总监",
+            "connect_time_str": "-",
+            "lead_admin": "张三",
+            "connect_name": "张三",
+            "connect_names": "张三"
+        }
+    ]
+}

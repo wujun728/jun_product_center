@@ -1,0 +1,233 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<style>
+html{background-color:#fff;}
+.log-timeline{ position: relative; padding-left: 48px; background-color:#fff;}
+.log-timeline:after {content: ""; position: absolute; top: 0; left: 24px; width: 1px; height: 100%; background: #e3e9ed;}
+.log-timeline dl{padding-bottom: 8px; position: relative;}
+.log-timeline dt{font-size: 16px; line-height: 2.4; color: #323232; font-weight:600}
+.log-timeline dd{font-size: 14px; line-height: 1.6; padding:5px 0}
+.log-timeline .date-second-point{width: 10px; height: 10px; display: block; border-radius: 50%; border: 3px solid #FBBC05; background: #fff; position: absolute; z-index: 99; left:-32px; top:9px}
+.log-timeline .log-thumb{width: 24px; height: 24px; border-radius: 50%; margin-right:4px;}
+.log-timeline .open-a{margin:0 4px;}
+.log-item i{font-weight:800; color:#323232}
+.log-content strong{margin:0 4px; color:#323232}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<div class="px-3 pt-3">	
+	<h3 class="pb-3">客户详情</h3>
+	<table class="layui-table layui-table-form">
+	  <tr>
+		<td class="layui-td-gray">客户名称</td>
+		<td colspan="5">{$detail.name}</td>
+		<td class="layui-td-gray-2">录入人</td>
+		<td>
+			{$detail.admin_name}
+		</td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">联系地址</td>
+		<td colspan="5">
+			{$detail.address}
+		</td>
+		<td class="layui-td-gray">客户等级</td>
+		<td>
+			{volist name=":customer_grade()" id="v"}
+			{eq name="$v.id" value="$detail.grade_id"}{$v.title}{/eq}
+			{/volist}
+		</td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">所属行业</td>
+		<td>
+			{volist name=":get_industry()" id="v"}
+			{eq name="$v.id" value="$detail.industry_id"}{$v.title}{/eq}
+			{/volist}
+		</td>
+		<td class="layui-td-gray">意向状态</td>
+		<td>
+			{eq name="$detail.intent_status" value="0"}-{/eq}
+			{eq name="$detail.intent_status" value="1"}意向不明{/eq}
+			{eq name="$detail.intent_status" value="2"}意向模糊{/eq}
+			{eq name="$detail.intent_status" value="3"}意向一般{/eq}
+			{eq name="$detail.intent_status" value="4"}意向强烈{/eq}
+		</td>
+		<td class="layui-td-gray">客户状态</td>
+		<td>
+			{eq name="$detail.status" value="0"}-{/eq}
+			{eq name="$detail.status" value="1"}新进客户{/eq}
+			{eq name="$detail.status" value="2"}跟进客户{/eq}
+			{eq name="$detail.status" value="3"}正式客户{/eq}
+			{eq name="$detail.status" value="4"}流失客户{/eq}
+			{eq name="$detail.status" value="5"}已成交客户{/eq}
+		</td>
+		<td class="layui-td-gray">客户来源</td>
+		<td>
+			{volist name=":customer_source()" id="v"}
+				{eq name="$v.id" value="$detail.source_id" }{$v.title}{/eq}
+			{/volist}
+		</td>
+	  </tr>
+	  {gt name="$detail['belong_uid']" value="0"}
+	  <tr>
+		<td class="layui-td-gray">归属员工</td>
+		<td>{$detail.belong_name}</td>
+		<td class="layui-td-gray">归属部门</td>
+		<td>{$detail.belong_department}</td>
+		<td class="layui-td-gray">共享员工</td>
+		<td colspan="3">{$detail.share_names}</td>
+	  </tr>
+	  {/gt}
+	  <tr>
+		<td class="layui-td-gray">客户介绍</td>
+		<td colspan="7">{$detail.content}</td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">经营范围</td>
+		<td colspan="7">{$detail.market}</td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">备注信息</td>
+		<td colspan="7">{$detail.remark}</td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">
+			<div class="layui-input-inline">相关附件</div>
+			{eq name="$detail.status" value="1" }<div class="layui-input-inline"><button type="button" class="layui-btn layui-btn-xs" id="uploadBtn"><i class="layui-icon"></i></button></div>{/eq}
+		</td>
+		<td colspan="7" style="line-height:inherit">
+			<div id="fileBox">
+			{volist name="$detail.file_array" id="vo"}
+			<div class="layui-col-md4" id="file_{$vo.id}">{:file_card($vo)}</div>
+			{/volist}
+			</div>
+		</td>
+	   </tr>
+	  {notempty name="$contact"}
+	  <tr>
+		<td colspan="8"><strong>首要联系人信息</strong></td>
+	  </tr>
+	  <tr>
+		<td class="layui-td-gray">姓名称呼</td>
+		<td>{$contact.name} </td>
+		<td class="layui-td-gray">手机号码</td>
+		<td>{$contact.mobile}</td>
+		<td class="layui-td-gray">QQ号码</td>
+		<td>{$contact.qq}</td>
+		<td class="layui-td-gray">微信号码</td>
+		<td>{$contact.wechat}</td>
+		</tr>
+	 {/notempty}
+	{notempty name="$detail.trace"}
+	  <tr>
+		<td colspan="8"><strong>最近沟通记录</strong></td>
+	  </tr>
+		<tr>
+		<td class="layui-td-gray">沟通时间</td>
+		<td>{$detail.trace.follow_time}</td>
+		<td class="layui-td-gray">沟通人</td>
+		<td>{$detail.trace.contact_name}</td>
+		<td class="layui-td-gray">跟进方式</td>
+		<td>{$detail.trace.type_name}</td>
+		<td class="layui-td-gray">当前阶段</td>
+		<td>{$detail.trace.stage_name}</td>
+	  </tr>
+	  <tr>	
+		<td class="layui-td-gray-2">下次联系时间</span></td>
+		<td>{$detail.trace.next_time}</td>	  
+		<td class="layui-td-gray">沟通内容</td>
+		<td colspan="5">{$detail.trace.content}</td>
+	  </tr>	
+	  {/notempty}
+	</table>
+	<div class="layui-tab" lay-filter="customer" id="customerTab">
+	  <ul class="layui-tab-title">
+		<li class="layui-this" data-load="true">跟进记录</li>
+		<li>联 系 人</li>
+		<li>销售机会</li>
+		<li>操作记录</li>
+	  </ul>
+	  <div class="layui-tab-content">
+		<div class="layui-tab-item layui-show">
+			{include file="/index/view_trace" /}
+		</div>
+		<div class="layui-tab-item">
+			{include file="/index/view_contact" /}
+		</div>
+		<div class="layui-tab-item">
+			{include file="/index/view_chance" /}
+		</div>
+		<div class="layui-tab-item">
+			{include file="/index/view_log" /}
+		</div>
+	  </div>
+	</div>
+	
+	
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+const customer_id = '{$detail.id}';
+const customer_status = '{$detail.status}';
+const moduleInit = ['tool','employeepicker','oaTool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool, upload = layui.upload,element = layui.element,oaTool = layui.oaTool;	
+		
+		trace();
+		element.on('tab(customer)', function(data){
+			let index = data.index;
+			if(index == 1){
+				contact();	
+			}
+			if(index == 2){
+				chance();	
+			}
+			if(index == 3){
+				log();	
+			}
+		});
+		
+		oaTool.addFile({
+			isSave:true,
+			type:1,
+			ajaxSave:function(res){
+				$.ajax({
+					url: "/customer/api/add_file",
+					type:'post',
+					data:{
+						'customer_id':customer_id,
+						'file_id':res.data.id,
+						'file_name':res.data.name
+					},
+					success: function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							setTimeout(function(){
+								location.reload();
+							},1000)							
+						}
+					}
+				})
+			},
+			ajaxDelete:function(file_id){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {						
+						$('#file_' + file_id).remove();
+					}
+				}
+				tool.delete("/customer/api/delete_file", {id: file_id}, callback);
+			}
+		})
+		
+	}
+
+</script>
+{/block}
+<!-- /脚本 -->

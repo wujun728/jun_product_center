@@ -1,0 +1,477 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<style>
+.layui-form-pane .layui-form-label{color:#999; width:80px; padding:8px 3px;}
+.layui-form-item .layui-inline{margin-right:3px; margin-bottom:10px;}
+.layui-form-item{margin-bottom:5px;}
+.layui-form-item .layui-btn-danger{display:none; margin-top:-8px}
+.layui-form-item:hover .layui-btn-danger{display:inline-block;}
+.select-1,.select-2{display:none;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">发票详情</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">开票金额(元)</td>
+			<td>
+				{$detail.amount}
+			</td>
+			<td class="layui-td-gray">开票类型</td>
+			<td>
+			{eq name="$detail.invoice_type" value="1"}增值税专用发票{/eq}
+			{eq name="$detail.invoice_type" value="2"}普通发票{/eq}
+			{eq name="$detail.invoice_type" value="3"}专业发票{/eq}
+			</td>
+			<td class="layui-td-gray">开票主体</td>
+			<td>
+				{volist name=":finance_invoice_subject()" id="vo"}
+				{eq name="$vo.id" value="$detail.invoice_subject"}{$vo.title}{/eq}
+				{/volist}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">抬头类型</td>
+			<td>
+				{eq name="$detail.type" value="1"}企业{/eq}
+				{eq name="$detail.type" value="2"}个人{/eq}
+			</td>
+			<td class="layui-td-gray">开票抬头</td>
+			<td>{$detail.invoice_title}</td>
+			<td class="layui-td-gray">电话号码</td>
+			<td>{$detail.invoice_phone}</td>
+		</tr>
+		<tr class="invoice-type" {eq name="$detail.type" value="2"}style="display:none"{/eq}>
+			<td class="layui-td-gray-2">纳税人识别号</td>
+			<td>{$detail.invoice_tax}</td>
+			<td class="layui-td-gray">开户行</td>
+			<td>{$detail.invoice_bank}</td>
+			<td class="layui-td-gray">银行账号</td>
+			<td>{$detail.invoice_account}</td>
+		</tr>
+		<tr class="invoice-type" {eq name="$detail.type" value="2"}style="display:none"{/eq}>
+			<td class="layui-td-gray-2">银行营业网点</td>
+			<td>{$detail.invoice_banking}</td>
+			<td class="layui-td-gray">地址</td>
+			<td colspan="3">{$detail.invoice_address}</td>
+		</tr>
+		{if condition="$detail.contract_id > 0"}
+		<tr>
+		<td class="layui-td-gray">关联的合同</td>
+			<td colspan="5">{$detail.contract_name}</td>
+		</tr>
+		{/if}
+		{notempty name="$detail.remark"}
+		<tr>
+			<td class="layui-td-gray">备注信息</td>
+			<td colspan="5">{$detail.remark}</td>
+		</tr>
+		{/notempty}
+		{notempty name="$detail.file_ids"}
+		<tr>
+			<td class="layui-td-gray">关联附件</td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row">
+					{volist name="$detail.fileArray" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+					{/volist}
+				</div>
+			</td>
+		</tr>
+		{/notempty}
+		<tr>
+			<td class="layui-td-gray">发票状态</td>
+			<td>
+				{if condition="($detail.check_status == 0)"}
+					<span class="black">待审核</span>
+				{elseif condition="($detail.check_status == 1)"}
+					<span class="blue">审核中</span>
+				{elseif condition="($detail.check_status == 2)"}
+					<span class="green">审核通过,待开具</span>
+				{elseif condition="($detail.check_status == 3)"}
+					<span class="red">审核不通过</span>
+				{elseif condition="($detail.check_status == 4)"}
+					<span class="red">已撤销</span>
+				{elseif condition="($detail.check_status == 5)"}
+					<span class="green">已开具</span>
+				{elseif condition="($detail.check_status == 10)"}
+					<span class="yellow">已作废</span>
+				{/if}
+			</td>
+			<td class="layui-td-gray-2">当前审核人</td>
+			<td>{$detail.check_user}</td>
+			<td class="layui-td-gray">抄送人</td>
+			<td>{$detail.copy_user}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">审批流程</td>
+			<td colspan="5">
+				<div class="flow-flexbox check-items flow-flex-row" id="flowList">
+					<div class="flow-flexbox check-item flow-flex-row">
+						<i class="layui-icon layui-icon-add-circle" data-ok=""></i>
+						<div class="check-item-name">{$detail.create_user}</div>
+						<div class="check-item-status">创建</div>
+						<span class="layui-icon layui-icon-right"></span>
+					</div>
+				</div>
+			</td>
+		</tr>
+		{notempty name="$check_record"}
+		<tr>
+			<td class="layui-td-gray">审批记录</td>
+			<td colspan="5">
+				<ul class="layui-timeline flow-record pt-2">
+				{volist name="$check_record" id="vo"}		
+					<li class="layui-timeline-item delete-{$vo.delete_time}">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+						<p style="padding-left:24px">{$vo.check_time_str}<span class="black ml-2">{$vo.name}</span><span class="mx-2 layui-color-{$vo.status}">{$vo.status_str}</span>了此申请。操作意见：<span class="green">{$vo.content}</span></p>
+					</li>
+				{/volist}
+				</ul>
+			</td>
+		</tr>
+		{/notempty}
+		{if ( $detail.check_status eq 1) AND ( $is_check_admin eq 1) }
+		{eq name="$flows.flow_type" value="0"}
+		<tr>
+			<td class="layui-td-gray">审批节点 <font>*</font></td>
+			<td colspan="5">
+				<form class="layui-form">
+					<input type="radio" name="check_node" lay-filter="check_node" value="1" title="审核结束">
+					<input type="radio" name="check_node" lay-filter="check_node" value="2" title="下一审批人">
+					<div class="layui-inline">
+					<input type="text" name="check_admin_name" value="" autocomplete="off" placeholder="请选择下一审批人" lay-verify="required" lay-reqText="请选择下一审批人" class="layui-input picker-one"><input type="hidden" name="check_admin_ids" value="">
+					</div>
+				</form>				
+			</td>
+		</tr>
+		{/eq}
+		<tr>
+			<td class="layui-td-gray">审批意见 <font>*</font></td>
+			<td colspan="5">
+				<textarea name="content" placeholder="请输入审批意见" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+		{/if}
+		{if ( $detail.check_status gt 4)}
+		<tr>
+			<td class="layui-td-gray">开票人</td>
+			<td>{$detail.open_admin}</td>
+			<td class="layui-td-gray">发票号码</td>
+			<td>{$detail.code}</td>
+			<td class="layui-td-gray">开票时间</td>
+			<td colspan="3">{$detail.open_time}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">物流单号</td>
+			<td colspan="5">{$detail.delivery}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">			
+				<div class="layui-input-inline">其他附件</div>
+				<div class="layui-input-inline">
+					<button type="button" class="layui-btn layui-btn-xs" id="uploadBtn"><i class="layui-icon"></i></button>
+				</div>
+			</td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row" id="fileBox">
+					<input type="hidden" data-type="file" name="other_file_ids" value="{$detail.other_file_ids}">
+					{notempty name="$detail.other_file_ids"}
+					{volist name="$detail.fileArrayOther" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo)}</div>
+					{/volist}
+					{/notempty}
+				</div>
+			</td>
+		</tr>
+		{/if}
+	</table>
+	<input type="hidden" name="id" value="{$detail.id}">
+	<input type="hidden" name="flow_type" value="{$flows.flow_type}">
+	<input type="hidden" name="check_step_sort" value="{$detail.check_step_sort}">
+	<input type="hidden" name="check_status" value="{$detail.check_status}">
+	<div id="formBtn" style="padding: 10px 0">
+		{eq name="$detail.check_status" value='1'}
+			{eq name="$is_check_admin" value='1'}
+			<span class="layui-btn layui-btn-normal" data-status="1"><i class="layui-icon layui-icon-ok"></i> 通过</span>
+			<span class="layui-btn layui-btn-danger" data-status="2"><i class="layui-icon layui-icon-close"></i> {$flows.flow_type == 5?'回退':'拒绝'}</span>
+			{/eq}
+			{eq name="$is_create_admin" value='1'}
+			<span class="layui-btn layui-btn-primary" data-status="3"><i class="layui-icon layui-icon-reduce-circle"></i> 撤回</span>
+			{/eq}
+		{/eq}
+		{if ( $detail.check_status eq 3) AND ( $is_create_admin eq 1) }
+			<span class="layui-btn layui-btn-primary" data-status="3"><i class="layui-icon layui-icon-reduce-circle"></i> 撤回</span>
+		{/if}
+		{if ( $detail.check_status eq 4) AND ( $is_create_admin eq 1) }
+		<a class="layui-btn" href="/finance/invoice/add?id={$detail.id}">重新编辑</a>
+		{/if}
+    </div>
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+const moduleInit = ['tool','employeepicker','oaTool'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool, oaTool = layui.oaTool,dropdown = layui.dropdown;
+
+	oaTool.addFile({
+		isSave:true,
+		uidDelete:true,
+		ajaxSave:function(val){
+			$.ajax({
+				url: "/finance/api/open",
+				type:'post',
+				data:{
+					id:$('[name="id"]').val(),
+					other_file_ids:val
+				},
+				success: function (e) {
+					location.reload();
+				}
+			})
+		},
+		ajaxDelete:function(val){
+			$.ajax({
+				url: "/finance/api/open",
+				type:'post',
+				data:{
+					id:$('[name="id"]').val(),
+					other_file_ids:val
+				},
+				success: function (e) {
+					location.reload();
+				}
+			})
+		}
+	})
+
+	//获取审核信息
+	$.ajax({
+		url: "/api/index/get_flow_nodes",
+		type:'get',
+		data:{id:$('[name="id"]').val(),type:3},
+		success: function (e) {
+				if (e.code == 0) {	
+					let flowHtml='',list = e.data,record_list='',sort = $('[name="check_step_sort"]').val(), check_status = $('[name="check_status"').val();
+					for(var f=0;f<list.length;f++){
+						//审批流程
+						let checkUser = '',
+						iconRight ='<span class="layui-icon layui-icon-right"></span>',
+						iconStatus ='<i class="layui-icon layui-icon-time"></i>',
+						strStatus ='<div class="check-item-status">待审核</div>',
+						sortClass ='';
+						if(f == list.length-1){
+							iconRight ='';
+						}
+						if(list[f].flow_type == 1 || list[f].flow_type == 2){
+							checkUser=list[f].flow_type == 1?'部门负责人':'上级部门负责人';
+							if(list[f].check_list.length>0){
+								if(list[f].check_list[0].status == 1){
+									iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+									strStatus ='<div class="check-item-status">通过</div>';
+								}
+								else if(list[f].check_list[0].status == 2){
+									iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+									strStatus ='<div class="check-item-status">拒绝</div>';
+								}
+							}
+						}
+						else if(list[f].flow_type == 0 ){
+							checkUser=list[f].user_id_info[0].name;
+							if(list[f].check_list.length>0){
+								iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+								strStatus ='<div class="check-item-status">拒绝</div>';
+								for(var m=0;m<list[f].check_list.length;m++){
+									if(list[f].check_list[m].status == 1){
+										iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+										strStatus ='<div class="check-item-status">通过</div>';
+									}
+								}
+							}
+						}
+						else if(list[f].flow_type == 3 ){
+							checkUser='多人或签';
+							if(list[f].user_id_info.length>0){
+								iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+								strStatus ='<div class="check-item-status">待审核</div>';
+								for(var m=0;m<list[f].user_id_info.length;m++){
+									if(list[f].user_id_info[m].status == 1){
+										iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+										strStatus ='<div class="check-item-status">通过</div>';
+										break;
+									}
+									if(list[f].user_id_info[m].status == 2){
+										iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+										strStatus ='<div class="check-item-status">拒绝</div>';
+									}
+								}
+							}
+						}
+						else if(list[f].flow_type == 4){
+							checkUser='多人会签';
+							if(list[f].user_id_info.length>0){
+								iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+								strStatus ='<div class="check-item-status">通过</div>';
+								for(var m=0;m<list[f].user_id_info.length;m++){
+									if(list[f].user_id_info[m].status == 2){
+										iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+										strStatus ='<div class="check-item-status">拒绝</div>';
+										break;
+									}
+									if(list[f].user_id_info[m].status == 0){
+										iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+										strStatus ='<div class="check-item-status">待审核</div>';
+									}
+								}
+							}
+						}
+						else if(list[f].flow_type == 5){
+							checkUser=list[f].flow_name+' ['+list[f].user_id_info[0].name+']';
+							if(list[f].user_id_info.length>0){
+								iconStatus ='<i class="layui-icon layui-icon-ok-circle" data-ok=""></i>';
+								strStatus ='<div class="check-item-status">通过</div>';
+								for(var m=0;m<list[f].user_id_info.length;m++){
+									if(list[f].user_id_info[m].status == 2){
+										iconStatus ='<i class="layui-icon layui-icon-close" data-no=""></i>';
+										strStatus ='<div class="check-item-status">拒绝</div>';
+										break;
+									}
+									if(list[f].user_id_info[m].status == 0){
+										iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+										strStatus ='<div class="check-item-status">待审核</div>';
+									}
+								}
+							}
+						}
+						
+						if(sort == list[f].sort && check_status==1){
+							sortClass ='flow-this';
+							iconStatus ='<i class="layui-icon layui-icon-time"></i>';
+							strStatus ='<div class="check-item-status">当前审核</div>';
+						}
+						flowHtml+= '<div class="flow-flexbox check-item flow-flex-row '+sortClass+'" id="flow'+f+'">'+iconStatus+'\
+							<div class="check-item-name">'+checkUser+'</div>'+strStatus+iconRight+'\
+						</div>';
+					}
+					
+					$('#flowList').append(flowHtml);
+
+					for(var f=0;f<list.length;f++){
+						if(list[f].flow_type == 3 || list[f].flow_type == 4){
+							var user_list= '';
+							for(var a=0;a<list[f].user_id_info.length;a++){
+								if(list[f].user_id_info[a].status==0){
+									user_list+='<li><i class="layui-icon layui-icon-time"></i> '+list[f].user_id_info[a].name+'<span>待审核此申请</span></li>';
+								}
+								else if(list[f].user_id_info[a].status==1){
+									user_list+='<li><i class="layui-icon layui-icon-ok-circle" data-ok=""></i><span>'+list[f].user_id_info[a].check_time+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+list[f].user_id_info[a].name+'<span>已通过此申请</span></li>';
+								}else if(list[f].user_id_info[a].status==2){
+									user_list+='<li><i class="layui-icon layui-icon-close" data-no=""></i><span>'+list[f].user_id_info[a].check_time+'</span><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+list[f].user_id_info[a].name+'<span>已拒绝此申请</span></li>';
+								}										
+							}
+							dropdown.render({
+								elem: '#flow'+f
+								,trigger: 'hover'
+								,content: ['<div class="flow-tips">'
+								  ,'<ul>'+user_list+'</ul>'
+								,'</div>'].join('')
+							});
+						}
+					}						
+				}
+			}
+		})
+
+	//监听提交
+	$('#formBtn').on('click','span', function(data){
+		let id=$('[name="id"]').val();
+		let content=$('[name="content"]').val();
+		let check_status=$(this).data('status');
+		
+		let flow_type = $('input[name="flow_type"]').val();
+		let check_node=0,check_admin_ids=0;
+		if(flow_type == 0 && check_status==1){
+			check_node = $('input[name="check_node"]:checked').val();
+			check_admin_ids = $('input[name="check_admin_ids"]').val();
+			if(!check_node){
+				layer.msg('请选择下一审批节点');
+				return false;
+			}
+			if(check_node == 2 && check_admin_ids==''){
+				layer.msg('请选择下一审批人');
+				return false;
+			}
+		}			
+		
+		if(check_status ==1 || check_status==2){
+			if(content==''){
+				layer.msg('请输入审批意见');
+				return false;
+			}
+			let confirmTips='确定通过该审核？';
+			if(check_status==2){
+				confirmTips='确定拒绝该审核？';
+			}				
+			layer.confirm(confirmTips, function(index){
+				$.ajax({
+					url: "/api/index/flow_check",
+					type:'post',
+					data:{
+						id:id,
+						type:3,
+						check_node:check_node,
+						check_admin_ids:check_admin_ids,
+						check:check_status,
+						content:content
+					},
+					success: function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {	
+							tool.sideClose(1000);
+						}
+					}
+				})
+				layer.close(index);
+			});   
+		}
+		else if(check_status == 3){			
+			layer.prompt({
+				formType: 2,
+				title: '请输入撤回理由',
+				area: ['500px', '120px'] //自定义文本域宽高
+			}, function(value, index, elem){
+				if(value==''){
+					layer.msg('请输入撤回理由');
+					return false;
+				}
+				$.ajax({
+					url: "/api/index/flow_check",
+					type:'post',
+					data:{
+						id:id,
+						type:3,
+						check:check_status,
+						content:value
+					},
+					success: function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {	
+							tool.sideClose(1000);
+						}
+					}
+				})
+				layer.close(index);
+			});
+		}
+		return false;
+	});
+}
+</script>
+{/block}
+<!-- /脚本 -->

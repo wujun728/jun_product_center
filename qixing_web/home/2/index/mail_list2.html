@@ -1,0 +1,193 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+  <style>
+	.layui-tree-entry{font-size:15px; line-height:24px}
+	.layui-tree-set{padding:2px 0}
+	.layui-tree-iconClick .layui-icon{color:#1E9FFF;}
+	.layui-icon layui-icon-file{font-size:16px;}
+	.layui-tree-iconClick.layui-tree-icon .layui-icon{color:#1E9FFF;font-size:12px;}
+	.layui-tree-icon {height: 15px; width: 15px; text-align: center;border: 1px solid #1E9FFF; color:#1E9FFF}
+	.layui-tree-line .layui-tree-set .layui-tree-set:after{top:18px;}
+	.tree-left{width:200px; float:left; height:calc(100% - 30px); overflow: scroll; border:1px solid #eeeeee; background-color:#FAFAFA; padding:12px 12px 12px 5px;}
+	.tree-left h3{font-size:16px; height:30px; padding-left:10px; font-weight:800}
+  </style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3" style="height:100%; box-sizing: border-box;">
+	<div class="tree-left">
+		<h3>企业通讯录</h3>
+		<div id="depament"></div>
+	</div>
+	<div class="body-table" style="margin-left:228px; overflow:hidden;">
+		<form class="layui-form gg-form-bar border-t border-x" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:136px">
+				<select name="status">
+					<option value="">选择员工状态</option>
+					<option value="1">正常状态</option>
+					<option value="0">禁止登录</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:240px">
+				<input type="text" name="keywords" placeholder="输入关键字，如：ID/姓名/手机号码" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+			</div>
+		</form>
+		<table class="layui-hide" id="test" lay-filter="test"></table>
+	</div>
+</div>
+
+<script type="text/html" id="thumb">
+	<img src="{{d.thumb}}" width="30" height="30" />
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool,tree = layui.tree,form = layui.form;			
+			$.ajax({
+				url: "/api/index/get_department_tree",
+				type:'get',
+				success:function(res){					
+					//仅节点左侧图标控制收缩
+					tree.render({
+						elem: '#depament',
+						data: res.trees,
+						onlyIconControl: true,  //是否仅允许节点左侧图标控制展开收缩
+						click: function(obj){
+							//layer.msg(JSON.stringify(obj.data));
+							layui.pageTable.reload({
+							   where: {did: obj.data.id}
+							   ,page:{curr:1}
+							});
+							$('[name="keywords"]').val('');
+							$('[name="status"]').val('');
+							$('[name="type"]').val('');
+							layui.form.render('select');
+						}
+					});	
+				}
+			})		
+		
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '通讯录',
+			toolbar: '#toolbarDemo',
+			defaultToolbar:['filter', {title:'导出EXCEL',layEvent: 'LAYTABLE_EXCEL',icon: 'layui-icon-export'}],
+			url: "/home/index/mail_list", //数据接口				
+			page: true, //开启分页
+			limit: 20,
+			cols: [
+				[
+					{
+						field: 'status',
+						title: '状态',
+						align: 'center',
+						width: 80,
+						templet: function (d) {
+							var html = '<span class="layui-badge layui-bg-green">正常</span>';
+							if(d.status == 2){
+								html = '<span class="layui-badge layui-bg-orange">已离职</span>'
+							}
+							else if(d.status == 0){
+								html = '<span class="layui-badge">被禁用</span>'
+							}
+							return html;
+						}
+					},{
+						field: 'thumb',
+						title: '头像',
+						toolbar: '#thumb',
+						align: 'center',
+						width: 60
+					}, {
+						field: 'name',
+						title: '用户姓名',
+						align: 'center',
+						width: 80
+					},{
+						field: 'mobile',
+						title: '手机号码',
+						align: 'center',
+						width: 120
+					},{
+						field: 'email',
+						title: '电子邮箱',
+						align: 'center'
+					},{
+						field: 'sex',
+						title: '性别',
+						align: 'center',
+						width: 60,
+						templet: function (d) {
+							var html = '未知';
+							if(d.sex == 1){
+								html = '男'
+							}
+							else if(d.sex == 2){
+								html = '女'
+							}
+							return html;
+						}
+					},{
+						field: 'department',
+						title: '所在部门',
+						align: 'center',
+						width: 120
+					}, {
+						field: 'position',
+						title: '岗位职称',
+						align: 'center',
+						width: 110
+					}, {
+						field: 'entry_time',
+						title: '入职日期',
+						align: 'center',
+						width: 100
+					}
+				]
+			]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+			var data = checkStatus.data;
+			if(obj.event === 'LAYTABLE_EXCEL'){
+				var formSelect = form.val('barsearchform');
+				formSelect.limit=99999;
+				$.ajax({
+					url: '/home/index/mail_list',
+					data: formSelect,
+					success:function(res){
+						table.exportFile('test', res.data,'xls');
+					}
+				});
+				return;
+			}
+		});
+
+		//监听搜索提交
+		form.on('submit(webform)', function (data) {
+			layui.pageTable.reload({
+				where: {
+					keywords: data.field.keywords,
+					status: data.field.status
+				},
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	}	
+</script>
+{/block}
+<!-- /脚本 -->

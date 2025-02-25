@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<style>
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
+</style>
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-4">
+	<h3 class="pb-1">汇报详情</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">汇报人</td>
+			<td>叶小钗</td>
+			<td class="layui-td-gray">汇报类型</td>
+			<td>周报</td>
+			<td class="layui-td-gray">汇报时间</td>
+			<td>2023-11-30 16:23:43</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">接收人</td>
+			<td colspan="5">素还真</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">已读回执</td>
+			<td colspan="5">素还真</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作内容</td>
+			<td colspan="5">
+				1			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作计划</td>
+			<td colspan="5">
+							</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">其他事项</td>
+			<td colspan="5">
+							</td>
+		</tr>
+			</table>
+		<div class="pt-1" id="commentBox">
+		<h3 class="pb-1">工作点评</h3>	
+				<div class="layui-data-none">暂无工作点评</div>
+			</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+const moduleInit = ['tool','oaTool'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool;	
+    //监听提交
+    form.on('submit(webform)', function (data) {
+		if (data.field.content == '') {
+			layer.msg('请先输入点评内容');
+			return false;
+		}
+		
+        let callback = function (e) {
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				setTimeout(function () {
+					location.reload();
+				}, 1000)
+			}
+		}
+		tool.post("/oa/api"_comment", data.field, callback);
+		return false;
+    });
+	
+	$('#commentBox').on('click','.layui-del', function () {
+		let cid =$(this).data('cid');
+		layer.confirm('确定要删除该评论吗？', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code==0){
+					setTimeout(function () {
+						location.reload();
+					}, 1000)
+				}
+			}
+			let postData = { "id": cid };
+			tool.delete("/oa/api/delete_comment", postData, callback);
+		});
+	})
+
+  }
+</script>
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/layui/layui.js"></script>
+	<script src="/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

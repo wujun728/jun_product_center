@@ -1,0 +1,41 @@
+<div class="pt-3 px-3 bg-white">
+	<div class="comment-input">
+		<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+	</div>
+	<div id="comment_project_{$detail.id}" class="pt-3"></div>
+</div>
+<script>
+function project_comment(){
+	if($('#projectTab').find('li').eq(6).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(6).data('load','true');
+	
+	let tool = layui.tool, comment = layui.oaComment;
+	
+	//评论
+	comment.load(project_id,'project');
+	$('#commentInput').on('click', function () {
+		comment.textarea(0,project_id,0,0,'project','');
+	})
+	//回复
+	$('#comment_project_' + project_id).on('click', '[data-event="replay"]', function () {
+		let pid = $(this).data('id');
+		let padmin_id = $(this).data('uid');
+		comment.textarea(0, project_id, pid, padmin_id, 'project', '');
+	})
+	//编辑
+	$('#comment_project_' + project_id).on('click', '[data-event="edit"]', function () {
+		let id = $(this).data('id');
+		let content = $('#comment_' + id).data('content');
+		comment.textarea(id, project_id, 0, 0, 'project', content);
+	})
+
+	//删除
+	$('#comment_project_' + project_id).on('click', '[data-event="del"]', function () {
+		let id = $(this).data('id');
+		comment.del(id, project_id, 'project');
+	})
+}
+
+</script>
