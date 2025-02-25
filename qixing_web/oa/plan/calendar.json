@@ -1,0 +1,12 @@
+[
+    {
+        "id": 214,
+        "type": "1",
+        "remind_type": 6,
+        "backgroundColor": "#FFD3D3",
+        "borderColor": "#FF9999",
+        "title": "出差到济南",
+        "start": "2024-01-05 09:00:00",
+        "end": "2024-01-25 00:00:00"
+    }
+]

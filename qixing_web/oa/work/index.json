@@ -1,0 +1,52 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 3,
+    "data": [
+        {
+            "id": 85,
+            "type": 2,
+            "type_user": "2",
+            "works": "1",
+            "plans": "",
+            "remark": "",
+            "admin_id": 7,
+            "create_time": "2023-11-30 16:23:43",
+            "update_time": null,
+            "status": 1,
+            "person_name": "素还真",
+            "type_title": "周报",
+            "files": 0
+        },
+        {
+            "id": 84,
+            "type": 1,
+            "type_user": "88",
+            "works": "完成oa部署",
+            "plans": "外出采购",
+            "remark": "",
+            "admin_id": 7,
+            "create_time": "2023-11-29 15:21:25",
+            "update_time": null,
+            "status": 1,
+            "person_name": "枫岫主人",
+            "type_title": "日报",
+            "files": 0
+        },
+        {
+            "id": 67,
+            "type": 1,
+            "type_user": "4",
+            "works": "全新风",
+            "plans": "采购",
+            "remark": "",
+            "admin_id": 7,
+            "create_time": "2023-10-22 11:11:10",
+            "update_time": "2023-11-29 15:19:38",
+            "status": 1,
+            "person_name": "风采铃",
+            "type_title": "日报",
+            "files": 0
+        }
+    ]
+}

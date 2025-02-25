@@ -1,0 +1,151 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<style>
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
+</style>
+{/block}
+{block name="body"}
+<div class="p-4">
+	<h3 class="pb-1">汇报详情</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">汇报人</td>
+			<td>{$detail.person_name}</td>
+			<td class="layui-td-gray">汇报类型</td>
+			<td>{$detail.type_title}</td>
+			<td class="layui-td-gray">汇报时间</td>
+			<td>{$detail.send_time}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">接收人</td>
+			<td colspan="5">{$detail.users}</td>
+		</tr>
+		{notempty name="$detail.read_users"}
+		<tr>
+			<td class="layui-td-gray">已读回执</td>
+			<td colspan="5">{$detail.read_users}</td>
+		</tr>
+		{/notempty}
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作内容</td>
+			<td colspan="5">
+				{:nl2br($detail.works)}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作计划</td>
+			<td colspan="5">
+				{:nl2br($detail.plans)}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">其他事项</td>
+			<td colspan="5">
+				{:nl2br($detail.remark)}
+			</td>
+		</tr>
+		{notempty name="$detail.file_array"}
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top">相关附件</td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row" id="fileList">
+					{volist name="$detail.file_array" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+					{/volist}
+				</div>
+			</td>
+		</tr>
+		{/notempty}
+	</table>
+	{gt name="$detail.update_time" value="0"}
+	<div style="color:#999; padding:10px 0">该汇报于 {$detail.update_time_str} 进行过编辑</div>
+	{/gt}
+	<div class="pt-1" id="commentBox">
+		<h3 class="pb-1">工作点评</h3>	
+		{empty name="$detail.comment"}
+		<div class="layui-data-none">暂无工作点评</div>
+		{/empty}
+		{volist name="$detail.comment" id="vo"}
+		<div class="mt-3 bg-white">
+			<div class="comment-item p-3 border">
+				<div class="comment-avatar" title="{vo.name}">
+					<img src="{$vo.thumb}" alt="{vo.name}" class="comment-image">
+				</div>
+				<div class="comment-body">
+					<div class="comment-meta">
+						<strong class="comment-name">{$vo.name}</strong><span class="ml-2 gray">{$vo.create_time}{$vo.update_time}</span>
+						{eq name="$vo.admin_id" value="$login_admin.id"}
+							<button class="layui-btn layui-btn-xs layui-btn-danger layui-del" data-cid="{$vo.id}">删除</button>
+						{/eq}
+					</div>
+					<div class="comment-content pt-2">{$vo.content}</div>
+				</div>
+			</div>
+		</div>
+		{/volist}	
+		{eq name="$detail.comment_auth" value="1"}
+		<form class="layui-form mt-3">
+			<textarea name="content" placeholder="请输入内容" class="layui-textarea" id="container"></textarea>
+			<input type="hidden" name="work_id" value="{$detail.id}">
+			<div class="py-3">
+			  <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交点评</button>
+			</div>
+		</form>
+		{/eq}
+	</div>
+</div>
+{/block}
+<!-- /主体 -->
+<!-- 脚本 -->
+{block name="script"}
+<script>
+const moduleInit = ['tool','oaTool'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool;	
+    //监听提交
+    form.on('submit(webform)', function (data) {
+		if (data.field.content == '') {
+			layer.msg('请先输入点评内容');
+			return false;
+		}
+		
+        let callback = function (e) {
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				setTimeout(function () {
+					location.reload();
+				}, 1000)
+			}
+		}
+		tool.post("/oa/api/add_comment", data.field, callback);
+		return false;
+    });
+	
+	$('#commentBox').on('click','.layui-del', function () {
+		let cid =$(this).data('cid');
+		layer.confirm('确定要删除该评论吗？', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code==0){
+					setTimeout(function () {
+						location.reload();
+					}, 1000)
+				}
+			}
+			let postData = { "id": cid };
+			tool.delete("/oa/api/delete_comment", postData, callback);
+		});
+	})
+
+  }
+</script>
+</script>
+{/block}

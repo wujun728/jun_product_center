@@ -1,0 +1,362 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">发票信息</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">发票金额</td>
+			<td>
+				{$detail.amount}
+			</td>
+			<td class="layui-td-gray">发票类型</td>
+			<td>
+			{eq name="$detail.invoice_type" value="1"}增值税专用发票{/eq}
+			{eq name="$detail.invoice_type" value="2"}普通发票{/eq}
+			{eq name="$detail.invoice_type" value="3"}专业发票{/eq}
+			</td>
+			<td class="layui-td-gray">发票主体</td>
+			<td>
+				{volist name=":finance_invoice_subject()" id="vo"}
+				{eq name="$vo.id" value="$detail.invoice_subject"}{$vo.title}{/eq}
+				{/volist}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">抬头类型</td>
+			<td>
+				{eq name="$detail.type" value="1"}企业{/eq}
+				{eq name="$detail.type" value="2"}个人{/eq}
+			</td>
+			<td class="layui-td-gray">发票抬头</td>
+			<td>{$detail.invoice_title}</td>
+			<td class="layui-td-gray">电话号码</td>
+			<td>{$detail.invoice_phone}</td>
+		</tr>
+		<tr class="invoice-type" {eq name="$detail.type" value="2"}style="display:none"{/eq}>
+			<td class="layui-td-gray-2">纳税人识别号</td>
+			<td>{$detail.invoice_tax}</td>
+			<td class="layui-td-gray">开户行</td>
+			<td>{$detail.invoice_bank}</td>
+			<td class="layui-td-gray">银行账号</td>
+			<td>{$detail.invoice_account}</td>
+		</tr>
+		<tr class="invoice-type" {eq name="$detail.type" value="2"}style="display:none"{/eq}>
+			<td class="layui-td-gray-2">银行营业网点</td>
+			<td>{$detail.invoice_banking}</td>
+			<td class="layui-td-gray">地址</td>
+			<td colspan="3">{$detail.invoice_address}</td>
+		</tr>
+		{notempty name="$detail.remark"}
+		<tr>
+			<td class="layui-td-gray">备注信息</td>
+			<td colspan="5">{$detail.remark}</td>
+		</tr>
+		{/notempty}
+		<tr>
+			<td class="layui-td-gray">发票状态</td>
+			<td colspan="5">
+				{if condition="($detail.check_status == 0)"}
+					<span class="black">待审核</span>
+				{elseif condition="($detail.check_status == 1)"}
+					<span class="blue">审核中</span>
+				{elseif condition="($detail.check_status == 2)"}
+					<span class="green">审核通过,待开具</span>
+				{elseif condition="($detail.check_status == 3)"}
+					<span class="red">审核不通过</span>
+				{elseif condition="($detail.check_status == 4)"}
+					<span class="red">已撤销</span>
+				{elseif condition="($detail.check_status == 5)"}
+					<span class="green">已开具</span>
+				{elseif condition="($detail.check_status == 10)"}
+					<span class="yellow">已作废</span>
+				{/if}
+			</td>
+		</tr>
+		{if condition="$detail.open_admin_id > 0"}
+		<tr>
+			<td class="layui-td-gray">开票人</td>
+			<td>{$detail.open_admin}</td>
+			<td class="layui-td-gray">开票时间</td>
+			<td>{$detail.open_time}</td>
+			<td class="layui-td-gray">发票号码</td>
+			<td>{$detail.code}</td>
+		</tr>
+		{/if}
+		{notempty name="$detail.file_ids"}
+		<tr>
+			<td class="layui-td-gray">关联附件</td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row">
+					{volist name="$detail.fileArray" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+					{/volist}
+				</div>
+			</td>
+		</tr>
+		{/notempty}
+		<tr>
+			<td class="layui-td-gray">			
+				<div class="layui-input-inline">其他附件</div>
+				<div class="layui-input-inline">
+					<button type="button" class="layui-btn layui-btn-xs" id="uploadBtn"><i class="layui-icon"></i></button>
+				</div>
+			</td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row" id="fileBox">
+					<input type="hidden" data-type="file" name="other_file_ids" value="{$detail.other_file_ids}">
+					{notempty name="$detail.other_file_ids"}
+					{volist name="$detail.fileArrayOther" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo)}</div>
+					{/volist}
+					{/notempty}
+				</div>
+			</td>
+		</tr>
+	</table>
+	
+	<h3 class="py-3">到账信息</h3>
+	<form class="layui-form">
+		<table class="layui-table">
+			<tr>
+				<td class="layui-td-gray">到账状态</td>
+				<td>
+					{if condition="($detail.is_cash == 0)"}
+						<span style="color:#FF5722">未到账</span>
+					{elseif condition="($detail.is_cash == 1)"}
+						<span style="color:#1E9FFF">部分到账</span>
+					{elseif condition="($detail.is_cash == 2)"}
+						<span style="color:#009688">全部到账</span>
+					{/if}
+				</td>
+				<td class="layui-td-gray-2">未到账金额(元)</td>
+				<td style="color:#FF5722">{$detail.not_income}</td>
+				<td class="layui-td-gray-2">已到账金额(元)</td>
+				<td style="color:#1E9FFF">{$detail.enter_amount}</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">到账记录</td>
+				<td colspan="5">
+					<table id="interfix" class="layui-table layui-table-min" style="margin:0">
+						<tr>
+							<th style="width:200px;">到账日期</th>
+							<th style="width:200px;">到帐金额(元)</th>
+							<th>备注</th>
+							<th style="width:100px;">操作</th>
+						</tr>
+						{empty name="$detail.income"}
+						<tr class="none_interfix">
+							<td colspan="4" style="text-align: center;">暂无到账记录</td>
+						</tr>
+						{else/}
+						{volist name="$detail.income" id="vo"}
+						<tr class="more_interfix">
+							<td>{$vo.enter_time | date='Y-m-d'}</td>
+							<td>{$vo.amount}</td>
+							<td style="text-align:left;">{$vo.remarks}</td>
+							<td><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove" data-id="{$vo.id}" data-inid="{$id}">删除</a></td>
+						</tr>
+						{/volist}
+						{/empty}
+					</table>
+					{if condition="($detail.is_cash lt 2)"}
+					<div class="pt-2"><button class="layui-btn layui-btn-sm" type="button" id="addInterfix">+ 添加到账记录</button></div>
+					{/if}
+				</td>
+			</tr>
+		</table>
+		<div class="py-3">
+			<input name="inid" id="inid" type="hidden" value="{$id}">
+			<input name="enter_type" id="enter_type" type="hidden" value="1">
+			{if condition="($detail.is_cash lt 2)"}
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">保存到账记录</button>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			{/if}
+			{if condition="($detail.is_cash eq 0)"}
+			<span class="layui-btn layui-btn-danger" lay-event="all">全部到账</span>
+			{/if}
+			{if condition="($detail.is_cash eq 1)"}
+			<span class="layui-btn layui-btn-danger" lay-event="all">剩余部分全部到账</span>
+			{/if}
+			{if condition="($detail.is_cash gt 0)"}
+			<span class="layui-btn layui-btn-warm" lay-event="refue">全部反到账</span>
+			{/if}
+		</div>
+	</form>
+	<input type="hidden" name="id" value="{$detail.id}">
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+const moduleInit = ['tool','oaTool'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool,laydate = layui.laydate,oaTool = layui.oaTool;
+	oaTool.addFile({
+		isSave:true,
+		uidDelete:true,
+		ajaxSave:function(val){
+			$.ajax({
+				url: "/finance/api/open",
+				type:'post',
+				data:{
+					id:$('[name="id"]').val(),
+					other_file_ids:val
+				},
+				success: function (e) {
+					location.reload();
+				}
+			})
+		},
+		ajaxDelete:function(val){
+			$.ajax({
+				url: "/finance/api/open",
+				type:'post',
+				data:{
+					id:$('[name="id"]').val(),
+					other_file_ids:val
+				},
+				success: function (e) {
+					location.reload();
+				}
+			})
+		}
+	})
+	//添加表格行
+	$('#addInterfix').on('click',function(){
+		var html = '';
+		html += '<tr class="more_interfix">';
+		html += '<td><input type="text" class="layui-input enter-time" name="enter_time[]" readonly lay-verify="required" lay-reqText="请选择到账日期">';
+		html += '<td><input type="text" class="layui-input" name="amount[]" lay-verify="required|number" lay-reqText="请输入到账金额,数字"></td>';
+		html += '<td><input type="text" class="layui-input" name="remarks[]"></td>';
+		html += '<td><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></td>';
+		html += '</tr>';
+		$("#interfix").find('.none_interfix').remove();
+		$("#interfix").append(html);
+		form.render();
+		lay('.enter-time').each(function () {
+			laydate.render({
+				elem: this,
+				trigger: 'click',
+				showBottom:false
+			});
+		});
+	});
+	//删除表格
+	$('#interfix').on('click', '[lay-event="del"]', function() {
+		$(this).parents(".more_interfix").remove();
+		if($("#interfix").find('.more_interfix').length<1){
+			$("#interfix").append('<tr class="none_interfix"><td colspan="4" style="text-align: center;">暂无到账记录</td></tr>');				
+		}
+	});
+
+	//删除到账记录
+	$('#interfix').on('click', '[lay-event="remove"]', function() {
+		var that=$(this);
+		var id=that.data('id');
+		var inid=that.data('inid');
+		layer.confirm('确定要删除该到账记录?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				url: "/finance/income/delete",
+				type:'post',
+				data:{id:id,inid:inid},
+				success:function(res){
+					layer.msg(res.msg);
+					if(res.code==0){
+						parent.layui.pageTable.reload();
+						window.setTimeout(function(){
+							location.reload();
+						},1200)	
+					}
+				}
+			})
+		})
+	});
+
+	//监听提交
+	form.on('submit(webform)', function(data){
+		console.log(data.field);
+		if($("#interfix").find('.enter-time').length<1){
+			layer.msg('请添加到账记录');
+			return false;
+		}
+		$.ajax({
+			url: "/finance/income/add",
+			type:'post',
+			data:data.field,
+			success:function(res){
+				layer.msg(res.msg);
+				if(res.code==0){
+					parent.layui.pageTable.reload();
+					window.setTimeout(function(){
+						location.reload();
+					},1200)	
+				}
+			}
+		})
+		return false;
+	});
+	
+	$('.layui-form').on('click', '[lay-event="refue"]', function () {
+		var inid=$('#inid').val();
+		layer.confirm('确定要全部反到账?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				url: "/finance/income/add",
+				type:'post',
+				data:{inid:inid,enter_type:3},
+				success:function(res){
+					layer.msg(res.msg);
+					if(res.code==0){
+						parent.layui.pageTable.reload();
+						window.setTimeout(function(){
+							location.reload();
+						},1200)	
+					}
+				}
+			})
+		})
+		return false;
+	})
+	$('.layui-form').on('click', '[lay-event="all"]', function () {
+		var inid=$('#inid').val();
+		layer.confirm('确定已经全部到账?', {icon: 3, title:'提示'}, function(idx){
+			layer.prompt({title: '选择到账日期', formType: 3,value :'',success: function(layero, index){
+				$('.layui-layer-input').attr('readonly',true);
+				lay('.layui-layer-input').each(function () {
+					laydate.render({
+						elem: this,
+						trigger: 'click',
+						showBottom:false
+					});
+				});
+				layer.close(idx);
+			}
+		}, function(enter_time, index){
+				if(enter_time ==''){
+					layer.msg('选择到账日期');
+					return false;
+				}
+				$.ajax({
+					url: "/finance/income/add",
+					type:'post',
+					data:{inid:inid,enter_type:2,enter_time:enter_time},
+					success:function(res){
+						layer.msg(res.msg);
+						if(res.code==0){
+							parent.layui.pageTable.reload();
+							window.setTimeout(function(){
+								location.reload();
+							},1200)	
+						}
+					}
+				})
+			})
+		})
+		return false;
+	})
+}
+</script>
+{/block}
+<!-- /脚本 -->

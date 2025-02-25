@@ -1,0 +1,159 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-2">离职档案</h3>
+	{if condition="$id eq 0"}
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">离职员工<font>*</font></td>
+			<td>				
+				<input type="hidden" name="uid" value="0" autocomplete="off">
+				<input type="text" name="name" placeholder="请选择离职员工" lay-reqText="请选择离职员工" lay-verify="required" autocomplete="off" class="layui-input" readonly>
+			</td>
+			<td class="layui-td-gray">所在部门</td>
+			<td>
+				<input type="text" name="department" autocomplete="off" class="layui-input" readonly>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">离职日期<font>*</font></td>
+			<td><input type="text" id="quit_time" name="quit_time" lay-verify="required" autocomplete="off" placeholder="请选择离职日期" lay-reqText="请选择离职日期" readonly class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">部门负责人<font>*</font></td>
+			<td>
+			<input type="text" name="lead_admin_name" autocomplete="off" lay-verify="required" placeholder="请选择部门负责人" lay-reqText="请选择部门负责人" readonly class="layui-input picker-one">
+			<input type="hidden" name="lead_admin_id" autocomplete="off" value="0">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">资料接受人<font>*</font></td>
+			<td>				
+				<input type="text" name="connect_name" autocomplete="off" lay-verify="required" placeholder="请选择资料接受人" lay-reqText="请选择资料接受人" readonly class="layui-input picker-one">
+				<input type="hidden" name="connect_id" class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">参与交接人员<font>*</font></td>
+			<td>				
+				<input type="text" name="connect_names" autocomplete="off" lay-verify="required" placeholder="请选择参与交接人员" lay-reqText="请选择参与交接人员" readonly class="layui-input picker-more">
+				<input type="hidden" name="connect_uids" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">离职原因<font>*</font></td>
+			<td colspan="3">				
+				<textarea name="remark" lay-verify="required" placeholder="请输入离职原因" lay-reqText="请输入离职原因" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+	</table>
+	{else/}
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">离职员工</td>
+			<td>{$detail.name}</td>
+			<td class="layui-td-gray">所在部门</td>
+			<td>{$detail.department}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">离职日期<font>*</font></td>
+			<td><input type="text" id="quit_time" name="quit_time" value="{$detail.quit_time}" lay-verify="required" autocomplete="off" placeholder="请选择离职日期" lay-reqText="请选择离职日期" readonly class="layui-input">
+			</td>
+			<td class="layui-td-gray-2">部门负责人<font>*</font></td>
+			<td>
+			<input type="text" name="lead_admin_name" autocomplete="off" value="{$detail.lead_admin_name}" lay-verify="required" placeholder="请选择部门负责人" lay-reqText="请选择部门负责人" readonly class="layui-input picker-one">
+			<input type="hidden" name="lead_admin_id" autocomplete="off" value="{$detail.lead_admin_id}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">资料接受人<font>*</font></td>
+			<td>				
+				<input type="text" name="connect_name" autocomplete="off" lay-verify="required" placeholder="请选择资料接受人" lay-reqText="请选择资料接受人" readonly class="layui-input picker-one" value="{$detail.connect_name}">
+				<input type="hidden" name="connect_id" class="layui-input" value="{$detail.connect_id}">
+			</td>
+			<td class="layui-td-gray-2">参与交接人员<font>*</font></td>
+			<td>				
+				<input type="text" name="connect_names" autocomplete="off" lay-verify="required" placeholder="请选择参与交接人员" lay-reqText="请选择参与交接人员" readonly class="layui-input picker-more" value="{$detail.connect_names}">
+				<input type="hidden" name="connect_uids" class="layui-input" value="{$detail.connect_uids}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">离职原因<font>*</font></td>
+			<td colspan="3">				
+				<textarea name="remark" lay-verify="required" placeholder="请输入离职原因" lay-reqText="请输入离职原因" class="layui-textarea">{$detail.remark}</textarea>
+			</td>
+		</tr>
+	</table>
+	{/if}
+	<div class="py-3">
+		<input type="hidden" name="id" value="{$id}" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,laydate = layui.laydate,employeepicker = layui.employeepicker;
+		laydate.render({
+			elem: '#quit_time',
+			showBottom:false
+		});
+
+		$('body').on('click','[name="department"]',function(){
+			var val=$(this).val();
+			if(val==''){
+				layer.msg('请选择离职员工');
+			}			
+		});
+		
+		
+		//选择员工弹窗	
+		$('body').on('click','[name="name"]',function () {
+			var ids=$('[name="uid"]').val(),names=$('[name="name"]').val(),departments=$('[name="department"]').val();
+			employeepicker.init({
+				ids:ids,
+				names:names,
+				departments:departments,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				type:0,
+				callback:function(ids,names,dids,departments){
+					$('[name="uid"]').val(ids);
+					$('[name="name"]').val(names);
+					$('[name="department"]').val(departments);
+				}
+			});
+		}); 
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			if(data.field.uid==0){
+				layer.msg('请选择离职员工');
+				return false;
+			}
+			if(data.field.uid==data.field.lead_admin_id){
+				layer.msg('离职员工和部门负责人不能是同一个人');
+				return false;
+			}
+			if(data.field.uid==data.field.connect_id){
+				layer.msg('离职员工和资料接受人不能是同一个人');
+				return false;
+			}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			tool.post("/user/personal/leave_add", data.field, callback);
+			return false;
+		});
+	}
+
+</script>
+{/block}
+<!-- /脚本 -->

@@ -1,0 +1,80 @@
+	<table class="layui-table layui-table-form mt-4">
+		<tr>
+			<td class="layui-td-gray">审核状态</td>
+			<td>{eq name="$detail.check_status" value="0"}<span class="black">待审批</span>{/eq}
+				{eq name="$detail.check_status" value="1"}<span class="blue">审批中</span>{/eq}
+				{eq name="$detail.check_status" value="2"}<span class="green">已通过</span>{/eq}
+				{eq name="$detail.check_status" value="3"}<span class="red">已拒绝</span>{/eq}
+				{eq name="$detail.check_status" value="4"}<span class="yellow">已撤销</span>{/eq}
+			</td>
+			<td class="layui-td-gray-2">当前审核人</td>
+			<td>{$detail.check_user}</td>
+			<td class="layui-td-gray">抄送人</td>
+			<td>{$detail.copy_user}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">审批流程</td>
+			<td colspan="5">
+				<div class="flow-flexbox check-items flow-flex-row" id="flowList">
+					<div class="flow-flexbox check-item flow-flex-row">
+						<i class="layui-icon layui-icon-add-circle" data-ok=""></i>
+						<div class="check-item-name">{$detail.create_user}</div>
+						<div class="check-item-status">创建</div>
+						<span class="layui-icon layui-icon-right"></span>
+					</div>
+				</div>
+			</td>
+		</tr>
+		{notempty name="$check_record"}
+		<tr>
+			<td class="layui-td-gray">审批记录</td>
+			<td colspan="5">
+				<ul class="layui-timeline flow-record pt-2">
+				{volist name="$check_record" id="vo"}		
+					<li class="layui-timeline-item delete-{$vo.delete_time}">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+						<p style="padding-left:24px">{$vo.check_time_str}<span class="black ml-2">{$vo.name}</span><span class="mx-2 layui-color-{$vo.status}">{$vo.status_str}</span>了此申请。操作意见：<span class="green">{$vo.content}</span></p>
+					</li>
+				{/volist}
+				</ul>
+			</td>
+		</tr>
+		{/notempty}
+		{if ( $detail.check_status lt 2) AND ( $is_check_admin eq 1) }
+		{eq name="$flows.flow_type" value="0"}
+		<tr>
+			<td class="layui-td-gray">审批节点 <font>*</font></td>
+			<td colspan="5">
+				<input type="radio" name="check_node" lay-filter="check_node" value="1" title="审核结束">
+				<input type="radio" name="check_node" lay-filter="check_node" value="2" title="下一审批人">
+				<div class="layui-inline">
+				<input type="text" name="check_admin_name" value="" autocomplete="off" placeholder="请选择下一审批人" lay-verify="required" lay-reqText="请选择下一审批人" class="layui-input picker-one"><input type="hidden" name="check_admin_ids" value="">
+				</div>				
+			</td>
+		</tr>
+		{/eq}
+		<tr>
+			<td class="layui-td-gray">审批意见 <font>*</font></td>
+			<td colspan="5">
+				<textarea name="content" placeholder="请输入审批意见" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+		{/if}
+	</table>
+	<input type="hidden" name="id" value="{$detail.id}">
+	<input type="hidden" name="flow_type" value="{$flows.flow_type}">
+	<input type="hidden" name="check_step_sort" value="{$detail.check_step_sort}">
+	<div id="formBtn" style="padding: 10px 0">
+		{if ( $detail.check_status lt 2)}
+			{eq name="$is_check_admin" value='1'}
+			<span class="layui-btn layui-btn-normal" data-status="1"><i class="layui-icon layui-icon-ok"></i> 通过</span>
+			<span class="layui-btn layui-btn-danger" data-status="2"><i class="layui-icon layui-icon-close"></i> {$flows.flow_type == 5?'回退':'拒绝'}</span>
+			{/eq}
+			{eq name="$is_create_admin" value='1'}
+			<span class="layui-btn layui-btn-primary" data-status="3"><i class="layui-icon layui-icon-reduce-circle"></i> 撤回</span>
+			{/eq}
+		{/if}
+		{if ( $detail.check_status gt 2) AND ( $is_create_admin eq 1) }
+		<a class="layui-btn" href="/oa/approve/add?id={$detail.id}">重新编辑</a>
+		{/if}
+    </div>

@@ -1,0 +1,122 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+{include file="/approve/add_style" /}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">采购申请审批</h3>
+	{eq name="$id" value="0"}
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">物品名称<font>*</font></td>
+			<td colspan="2"><input type="text" name="name" value="" autocomplete="off" placeholder="请输入物品名称" lay-verify="required" lay-reqText="请输入物品名称" class="layui-input"></td>
+			<td class="layui-td-gray-2">期望交互日期<font>*</font></td>
+			<td colspan="2">
+				<input id="detail_time" name="detail_time" autocomplete="off" readonly class="layui-input" value="" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">采购数量<font>*</font></td>
+			<td colspan="2"><input type="text" name="num" value="" autocomplete="off" placeholder="请输入采购数量" lay-verify="required|number" lay-reqText="请输入物品数量" class="layui-input"></td>
+			<td class="layui-td-gray">采购金额<font>*</font></td>
+			<td colspan="2"><input type="text" name="amount" value="" autocomplete="off" placeholder="请输入采购金额" lay-verify="required|number" lay-reqText="请输入采购金额" class="layui-input"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">采购事由<font>*</font></td>
+			<td colspan="5">
+				<textarea name="content" placeholder="请输入采购事由" class="layui-textarea" lay-verify="required" lay-reqText="请输入采购事由"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="5">
+				<textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray"><div class="layui-input-inline">附件</div> <div class="layui-input-inline"><button type="button" class="layui-btn layui-btn-xs" id="upFile"><i class="layui-icon"></i></button></div></td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row" id="fileList">
+					<input type="hidden" data-type="file" name="file_ids" value="">
+				</div>
+			</td>
+		</tr>
+	</table>
+	{else/}
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">物品名称<font>*</font></td>
+			<td colspan="2"><input type="text" name="name" value="{$detail.name}" autocomplete="off" placeholder="请输入物品名称" lay-verify="required" lay-reqText="请输入物品名称" class="layui-input"></td>
+			<td class="layui-td-gray-2">期望交互日期<font>*</font></td>
+			<td colspan="2">
+				<input id="detail_time" name="detail_time" autocomplete="off" readonly class="layui-input" value="{$detail.detail_time}" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">采购数量<font>*</font></td>
+			<td colspan="2"><input type="text" name="num" value="{$detail.num}" autocomplete="off" placeholder="请输入采购数量" lay-verify="required|number" lay-reqText="请输入物品数量" class="layui-input"></td>
+			<td class="layui-td-gray">采购金额<font>*</font></td>
+			<td colspan="2"><input type="text" name="amount" value="{$detail.amount}" autocomplete="off" placeholder="请输入采购金额" lay-verify="required|number" lay-reqText="请输入采购金额" class="layui-input"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">采购事由<font>*</font></td>
+			<td colspan="5">
+				<textarea name="content" placeholder="请输入采购事由" class="layui-textarea" lay-verify="required" lay-reqText="请输入采购事由">{$detail.content}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="5">
+				<textarea name="remark" placeholder="请输入备注" class="layui-textarea">{$detail.remark}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray"><div class="layui-input-inline">附件</div> <div class="layui-input-inline"><button type="button" class="layui-btn layui-btn-xs" id="upFile"><i class="layui-icon"></i></button></div></td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row" id="fileList">
+					<input type="hidden" name="file_ids" data-type="file" value="{$detail.file_ids}">
+					{notempty name="$detail.file_ids"}
+					{volist name="$detail.fileArray" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo)}</div>
+					{/volist}
+					{/notempty}
+				</div>
+			</td>
+		</tr>
+	</table>
+	{/eq}
+	{include file="/approve/add_flow" /}
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+const moduleInit = ['tool','employeepicker','oaTool'];
+	function gouguInit() {
+		var form = layui.form,
+			tool=layui.tool,
+			oaTool=layui.oaTool,
+			laydate = layui.laydate;
+			
+		oaTool.addFile({
+			btn: 'upFile',
+			box: 'fileList'
+		});
+			
+		if (typeof (flowStep) == "function") {
+			flowStep();
+		}
+		//日期时间范围
+		laydate.render({
+			elem: '#detail_time',
+			type: 'date',
+			format: 'yyyy-MM-dd',
+			showBottom: false
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->
