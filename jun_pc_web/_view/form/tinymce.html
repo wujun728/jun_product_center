@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>tinyMCE富文本编辑器</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+
+	<link rel="stylesheet" href="../../assets/gougu/css/gougu.css">
+</head>
+
+<body>
+<form class="layui-form p-3">
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">文章标题 <span style="color: red">*</span></td>
+			<td colspan="7"> <input type="text" name="title" lay-verify="required" lay-reqText="请输入文章标题"
+					autocomplete="off" placeholder="请输入文章标题" class="layui-input" value="勾股DEV&mdash;&mdash;研发管理与团队协作的工具软件"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">文章分类<span style="color: red">*</span></td>
+			<td>
+				<select name="article_cate_id" lay-verify="required" lay-reqText="请选择分类">
+					<option value="">请选择分类</option>
+						<option value="1" selected>勾股开源系统</option>
+				</select>
+			</td>
+			<td class="layui-td-gray">关键字<span style="color: red">*</span></td>
+			<td>
+				<input type="text" id="keyword_name" name="keyword_names" autocomplete="off" lay-verify="required"
+					lay-reqText="请选择关键字" placeholder="请选择关键字" class="layui-input" value="勾股DEV"
+					readonly>
+				<input type="hidden" id="keyword_id" name="keywords_id" autocomplete="off"
+					value="6">
+			</td>
+			<td class="layui-td-gray">状态<span style="color: red">*</span></td>
+			<td>
+				<input type="radio" name="status" value="1" title="正常" checked>
+				<input type="radio" name="status" value="0" title="下架" >
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">排序</td>
+			<td>
+				<input type="text" name="sort" placeholder="请输入排序，数字" autocomplete="off" class="layui-input"
+					value="0">
+			</td>
+			<td class="layui-td-gray">首页显示</td>
+			<td>
+				<input type="radio" name="is_home" value="1" title="是" checked>
+				<input type="radio" name="is_home" value="0" title="否" >
+			</td>
+			<td class="layui-td-gray">属性</td>
+			<td>
+				<select name="type">
+					<option value="">请选择属性</option>
+					<option value="1" >精华</option>
+					<option value="2" >热门</option>
+					<option value="3" >推荐</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">是否原创</td>
+			<td>
+				<input type="radio" name="original" value="1" title="是" >
+				<input type="radio" name="original" value="0" title="否" checked>
+			</td>
+			<td class="layui-td-gray">作者/来源</td>
+			<td>
+				<input type="text" name="origin" class="layui-input" autocomplete="off" placeholder="请输入文章来源"
+					value="">
+			</td>
+			<td class="layui-td-gray">来源链接</td>
+			<td>
+				<input type="text" name="origin_url" class="layui-input" autocomplete="off" placeholder="请输入来源链接"
+					value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">摘要</td>
+			<td colspan="3">
+				<textarea name="desc" placeholder="请输入摘要，不能超过200个字" class="layui-textarea">勾股DEV是一款专为IT行业研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。</textarea>
+			</td>
+			<td class="layui-td-gray" style="vertical-align:top;">缩略图</td>
+			<td>
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-normal layui-btn-sm"
+						id="uploadBtn">上传缩略图（尺寸：240x136）</button>
+					<div class="layui-upload-list" id="demo1" style="width: 120px; height:66px; overflow: hidden;">
+						<img src="" style="max-width: 100%; height:66px;" />
+						<input type="hidden" name="thumb" value="0">
+					</div>
+				</div>
+			</td>
+		</tr>
+				<tr>
+			<td colspan="6" class="layui-td-gray" style="text-align:left">文章内容<span style="color: red">*</span><span
+					style="margin-left:30px; color: red">TinyMCE是一款易用、且功能强大的所见即所得的富文本编辑器。接口丰富，可扩展性强，有能力可以无限拓展功能，界面好看，符合现代审美。</span></td>
+		</tr>
+		<tr>
+			<td colspan="6">
+				<textarea placeholder="请输入内容" class="layui-textarea" id="container">&lt;p&gt;勾股DEV是一款专为IT行业研发团队打造的智能化项目管理与团队协作的工具软件，可以在线管理团队的工作、项目和任务，覆盖从需求提出到研发完成上线整个过程的项目协作。&lt;/p&gt;</textarea>
+			</td>
+		</tr>
+			</table>
+	<div class="py-3">
+		<input type="hidden" name="id" value="4">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		<button lay-event="back" class="layui-btn layui-btn-primary">关闭</button>
+	</div>
+</form>
+	
+<script>
+	var moduleInit = ['tool', 'tinymce'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool,upload = layui.upload;
+		
+		//编辑器初始化
+		var editor = layui.tinymce;
+		var edit = editor.render({
+			selector: "#container",
+			height: 600
+		});
+		
+		//封面上传
+		var uploadInst = upload.render({
+			elem: '#uploadBtn'
+			, url: '/admin/api/upload'
+			, done: function (res) {
+				//如果上传失败
+				if (res.code == 1) {
+					return layer.msg('上传失败');
+				}
+				//上传成功
+				$('#demo1 input').attr('value', res.data.id);
+				$('#demo1 img').attr('src', res.data.filepath);
+			}
+		});
+
+		//监听关闭页面
+		$('body').on('click', '[lay-event="back"]', function () {
+			tool.tabClose();
+			return false;
+		});
+			//监听提交
+		form.on('submit(webform)', function (data) {
+			data.field.content = tinyMCE.editors['container'].getContent();
+			if (data.field.content == '') {
+				layer.msg('请先完善文章内容');
+				return false;
+			}
+			let callback = function (e) {
+				if (e.code == 0) {
+					layer.confirm('保存成功,关闭当前页面吗?', { icon: 3, title: '提示' }, function (index) {
+						tool.tabClose();
+						layer.close(index);
+					});
+				} else {
+					layer.msg(e.msg);
+				}
+			}
+			layer.msg(JSON.stringify(data.field));
+			return false;
+		});
+	}
+</script>
+  <script src="../../assets/layui/layui.js"></script>
+  <script src="../../assets/gougu/gouguInit.js"></script>
+</body>
+
+</html>

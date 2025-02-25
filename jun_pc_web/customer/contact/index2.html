@@ -1,0 +1,117 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t" lay-filter="barsearchform">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+	<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test'
+			,toolbar: '#toolbarDemo'
+			,defaultToolbar:['filter', {title:'导出EXCEL',layEvent: 'LAYTABLE_EXCEL',icon: 'layui-icon-export'}]
+			,title:'联系人列表'
+			,url: "/customer/contact/index"
+			,cellMinWidth: 80
+			,page: true //开启分页
+			,limit: 20
+			,cols: [[
+					{field:'id',width:80, title: 'ID号', align:'center'}
+					,{field:'name',width:100,title: '联系人姓名', align:'center'}
+					,{field:'customer',title: '	关联客户'}
+					,{field:'status', title: '性别',width:80,align:'center',templet: function(d){
+						var html='未知';
+						var html1='<span class="green">男</span>';
+						var html2='<span class="blue">女</span>';
+						if(d.sex==1){
+							return html1;
+						}
+						if(d.sex==2){
+							return html2;
+						}
+						else{
+							return html;
+						}
+					}}
+					,{field:'mobile',width:100,title: '手机号码', align:'center'}
+					,{field:'qq',width:100,title: 'QQ号码', align:'center'}
+					,{field:'wechat',width:100,title: '微信号码', align:'center'}
+					,{field:'email',width:120,title: '电子邮箱', align:'center'}
+					,{field:'position',width:120,title: '担任职位', align:'center'}
+					,{field:'department',width:120,title: '部门', align:'center'}
+					,{fixed:'right',width:100,title: '操作', align:'center',templet: function(d){
+						var html = '<div class="layui-btn-group">';
+						var btn='<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>';
+						var btn1='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+						return html+btn+btn1+'</div>';
+					}}
+				]]
+			});
+			
+			table.on('tool(test)',function (obj) {
+				if(obj.event === 'edit'){
+					let url = '/customer/contact/contact_add/id/'+obj.data.id;
+					tool.side(url);
+				}
+				if(obj.event === 'del'){
+					layer.confirm('确定要删除该联系人吗?', {icon: 3, title:'提示'}, function(index){
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								layui.pageTable.reload();
+							}
+						}
+						tool.delete("/customer/contact/contact_del", { id: obj.data.id}, callback);
+						layer.close(index);
+					});
+				}
+			});
+			
+			//表头工具栏事件
+			table.on('toolbar(test)', function(obj){
+				if(obj.event === 'LAYTABLE_EXCEL'){
+					var formSelect = form.val('barsearchform');
+					formSelect.limit=99999;
+					$.ajax({
+						url: '/customer/contact/index',
+						data: formSelect,
+						success:function(res){
+							table.exportFile('test', res.data,'xls');
+						}
+					});
+					return;
+			}
+			})
+			
+			//监听搜索提交
+			form.on('submit(webform)', function(data) {
+				layui.pageTable.reload({
+					where: {
+						keywords: data.field.keywords
+					},
+					page: {
+						curr: 1
+					}
+				});
+				return false;
+			});
+		}
+	</script>
+{/block}
+<!-- /脚本 -->

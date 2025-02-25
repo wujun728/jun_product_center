@@ -1,0 +1,71 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+{include file="/approve/view_style" /}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">资质借用审批</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">借用人</td>
+			<td>{$detail.name}</td>
+			<td class="layui-td-gray-2">借用人手机</td>
+			<td>{$detail.mobile}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">借用部门</td>
+			<td colspan="3">
+				{volist name=":get_department()" id="vo"}
+					{eq name="$detail.department_type" value="$vo.id"}{$vo.title}{/eq}
+				{/volist}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用类型</td>
+			<td>
+				{eq name="$detail.detail_type" value="1"}原件{/eq}
+				{eq name="$detail.detail_type" value="2"}扫描件{/eq}
+				{eq name="$detail.detail_type" value="3"}复印件{/eq}
+			</td>
+			<td class="layui-td-gray">档案类型</td>
+			<td>
+				{eq name="$detail.other_type" value="1"}公司资质{/eq}
+				{eq name="$detail.other_type" value="2"}人员资质{/eq}
+				{eq name="$detail.other_type" value="3"}离职/清退人员资质{/eq}
+				{eq name="$detail.other_type" value="4"}注册人员执业印章{/eq}
+				{eq name="$detail.other_type" value="5"}劳动合同{/eq}
+				{eq name="$detail.other_type" value="6"}社保缴费记录{/eq}
+				{eq name="$detail.other_type" value="7"}收入证明{/eq}
+				{eq name="$detail.other_type" value="8"}其它{/eq}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">所借档案用途</td>
+			<td colspan="3">{$detail.content}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用日期</td>
+			<td>{$detail.start_time|date='Y-m-d'}</td>
+			<td class="layui-td-gray-2">拟归还日期</td>
+			<td>{$detail.end_time|date='Y-m-d'}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">借用档案明细</td>
+			<td colspan="3">{$detail.remark}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">{$detail.remark1}</td>
+		</tr>
+	</table>	
+	{include file="/approve/view_step" /}
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+{include file="/approve/view_script" /}
+{/block}
+<!-- /脚本 -->

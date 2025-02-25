@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="接口测试"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让配置项更专注于业务深度需求的开发，帮助配置项简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4" id="addOrUpdateForm" lay-filter="addOrUpdateForm" >
+	<h3 class="pb-3">接口测试</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray-2">API接口路径<font>*</font></td>
+			<td>				
+				<input type="hidden" name="id" value="" />
+				<input type="text" name="path" lay-verify="required" lay-reqText="请输入API接口路径" autocomplete="off" placeholder="请输入API接口路径：eq /test/test666" class="layui-input" >
+			</td>
+			<td class="layui-td-gray">接口类型<font>*</font></td>
+			<td>
+			  <select name="script_type" lay-verify="required" lay-reqText="请选择接口类型">
+				<option value="">请选择接口类型</option>
+							<option value="1" selected>SQL语句</option>
+							<option value="2" >Java代码</option>
+							<option value="3" >Groovy脚本</option>
+							<!-- <option value="24" >├─水煮</option>
+							<option value="20" >├─实施经济数据</option>
+							<option value="17" >├─0000</option>
+							<option value="28" >&sect;&sect;├─下级</option>
+							<option value="30" >&sect;&sect;&sect;&sect;├─44</option> -->
+						  </select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">接口英文名称<font>*</font></td>
+			<td>				
+				<input type="text" name="beanName" lay-verify="required" lay-reqText="请输入接口名称" autocomplete="off" placeholder="请输入在线接口名称" class="layui-input" >
+			</td>
+			<td class="layui-td-gray">请求类型<font>*</font></td>
+			<td colspan = "3">
+				<input type="checkbox" name="method" title="GET" lay-skin="tag" checked>
+				<input type="checkbox" name="method" title="POST" lay-skin="tag" checked> 
+				<input type="checkbox" name="method" title="DELETE" lay-skin="tag"  > 
+				<input type="checkbox" name="method" title="PUT" lay-skin="tag"  > 
+			</td>
+
+		</tr>
+		<tr>
+			<td class="layui-td-gray">接口中文名称</td>
+			<td>
+				<input type="text" name="name" lay-verify="required" lay-reqText="请输入接口名称" autocomplete="off" placeholder="请输入在线接口名称" class="layui-input" >
+			</td>
+			<td class="layui-td-gray">状态<font>*</font></td>
+			<td colspan = "3">
+								<input type="radio" name="status" value="1" title="正常" checked>
+				<input type="radio" name="status" value="0" title="禁用">
+							</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">执行内容(SQL或者脚本)<font>*</font>
+			</td>
+			<td colspan="5">
+				<textarea name="scriptContent" lay-verify="required" placeholder="请输入执行内容" lay-reqText="请输入执行内容" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+	</table>
+	 
+	<div id="apiTest">
+		<div style="padding:30px 0;">
+			<span class="layui-btn layui-btn-sm" onclick="testLogin();">Api测试登录</span>
+			<span class="layui-btn layui-btn-sm" onclick="testToken();">Token测试</span>
+		</div>
+		<div style="padding:12px 0;word-wrap:break-word">
+			<p class="red">先点击登录，在点击测试，会有好的结果哦！</p>
+			测试结果：
+			<div id="res"></div>
+		</div>
+	</div>
+
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool;
+		debugger;
+		var editData = CoreUtil.getData('config_id');
+        if(editData !== null && editData !== undefined){
+            form.val('addOrUpdateForm', JSON.parse(editData.content));
+			$("#id").val(editData.id);
+			$('input[name="id"]').val(editData.id);
+			isEdit = true;
+		}
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			var content =  JSON.stringify(data.field);
+			var send = {"content":content,"id":data.field.id};
+			tool.post("/api/rest/oa_config/edit", JSON.stringify(send), callback);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+<!-- <script type="text/javascript"  src="../../assets/js/jquery.js"></script> -->
+<script type="text/javascript"  src="../../assets/layui/layui.js"></script>
+<script type="text/javascript"  src="../../assets/gouguInit.js"></script>
+<script type="text/javascript"  src="../../assets/js/core.util.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

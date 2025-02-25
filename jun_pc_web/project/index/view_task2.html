@@ -1,0 +1,138 @@
+<div class="p-3 bg-white">
+	<table class="layui-hide" id="task" lay-filter="task"></table>
+</div>
+<script type="text/html" id="toolbartask">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新建任务</button>
+  </div>
+</script>
+<script>
+function project_task(){
+	if($('#projectTab').find('li').eq(1).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(1).data('load','true');
+	let tool = layui.tool, treeTable = layui.treeTable,table = layui.table;
+	//项目任务
+	layui.taskTable = treeTable.render({
+		elem: '#task',
+		title: '任务列表',
+		toolbar: '#toolbartask',
+		cellMinWidth:80,
+		url: "/project/api/get_project_task",
+		where:{'project_id':project_id},
+		tree: { // treeTable 特定属性集
+			view:{expandAllDefault:true,showIcon:false},
+		},
+		page: false,
+		cols:  [[
+			{field: 'id', title: '任务编号', width: 80, align: 'center', fixed: 'left', templet: function (d) {
+					return 'T' + d.id;
+				}
+			}
+			,{field:'flow_name',title: '状态',align:'center',width: 90,templet:function(d){
+				var html = '<span class="layui-color-'+d.flow_status+'">『'+d.flow_name+'』</span>';
+				return html;
+			}}
+			, { field: 'cate_name', title: '工作类型', width: 90, align: 'center'}
+			, {field:'name',title: '任务主题', minWidth:300,templet:function(d){
+				var html = '<span class="layui-badge layui-bg-'+d.priority+'">'+d.priority_name+'</span> <a class="side-a" lay-event="detail">'+d.title+'</a>';
+				return html;
+			}}
+			, { field: 'before_task', title: '前置任务编号',align: 'center', width: 100, templet: function (d) {
+					var html = '-';
+					if(d.before_task > 0){
+						html = '<a class="blue" lay-event="before" style="cursor:pointer">T' + d.before_task + '</a>';
+					}
+					return html;
+				}
+			  }
+			, { field: 'after_num', title: '后置任务数', align: 'center',width: 90, templet: function (d) {
+					var html = '-';
+					if(d.after_num > 0){
+						html = '<a class="blue" lay-event="more" style="cursor:pointer;">'+d.after_num+'</a>';
+						if(d.after_num == 1){
+							html = ' <a class="blue" style="cursor:pointer" lay-event="after">'+d.after_num+'</a>';
+						}
+					}
+					return html;
+				}
+			}
+			,{field:'director_name',title: '负责人', align:'center',width: 80}
+			,{field:'assist_admin_names',title: '协作人',width: 160}
+			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
+			,{field:'end_time',title: '计划完成日期', width: 150,templet:function(d){
+				var html = d.end_time;	
+				if(d.delay>0){
+					html+= '<span class="red ml-1" style="font-size:12px;">逾期'+d.delay+'天</span>';	
+				}			
+				return html;
+			}}
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(task)', function(obj){
+		var checkStatus = table.checkStatus(obj.config.id);
+		switch(obj.event){
+			case 'add':
+			tool.side('/project/task/add?project_id='+project_id);
+			break;
+		};
+	});
+	
+	treeTable.on('tool(task)', function(obj){
+		var data = obj.data; //获得当前行数据
+		var layEvent = obj.event;
+		 
+		if(layEvent === 'detail'){ //查看
+			let url = '/project/task/view/id/'+data.id;
+			tool.side(url);
+		}
+		if(layEvent === 'before'){ //查看
+			let url = '/project/task/view/id/'+data.before_task;
+			tool.side(url);
+		}
+		if(layEvent === 'after'){ //查看
+			let url = '/project/task/view/id/'+data.after_id;
+			tool.side(url);
+		}
+		if(layEvent === 'more'){
+			layer.open({
+				title: '后置任务列表',
+				area: ['666px', '550px'],
+				type: 1,
+				content: '<div class="picker-table"><div id="taskTable"></div></div>',
+				success: function () {
+					taskTable = table.render({
+						elem: '#taskTable'
+						, url: '/project/api/get_task'
+						, page: true //开启分页
+						, limit: 10
+						, where:{'before_task':obj.data.id}
+						, cols: [[
+							{ field: 'id', width: 90, title: '编号', align: 'center' }
+							, {field: 'title', title: '任务主题',minWidth:240, rowspan: 2, templet: function (d) {
+								var html = '<span class="layui-badge layui-bg-' + d.priority + '">' + d.priority_name + '</span> <a class="blue" style="cursor:pointer" lay-event="tabson">' + d.title + '</a>';
+								return html;
+							}}
+							, { field: 'project_name', width: 200, title: '关联项目' }
+						]]
+					});
+					
+					table.on('tool(taskTable)', function(obj){
+						var data = obj.data; //获得当前行数据
+						switch(obj.event){
+							case 'tabson':
+							let url = '/project/task/view/id/'+data.id;
+							tool.side(url);
+							break;
+						};
+					});
+				}
+			})
+			return;
+		}
+	})
+}
+</script>

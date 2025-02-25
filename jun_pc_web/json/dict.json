@@ -1,0 +1,61 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 6,
+  "data": [
+    {
+      "dictId": 1,
+      "dictName": "专业",
+      "dictCode": "majors",
+      "sortNumber": 1,
+      "comments": "专业",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "dictId": 2,
+      "dictName": "性别",
+      "dictCode": "sex",
+      "sortNumber": 2,
+      "comments": "性别",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "dictId": 3,
+      "dictName": "民族",
+      "dictCode": "nation",
+      "sortNumber": 3,
+      "comments": "民族",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "dictId": 4,
+      "dictName": "政治面貌",
+      "dictCode": "political_landscape",
+      "sortNumber": 4,
+      "comments": "政治面貌",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "dictId": 5,
+      "dictName": "保管期限",
+      "dictCode": "retention",
+      "sortNumber": 5,
+      "comments": "保管期限",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    },
+    {
+      "dictId": 6,
+      "dictName": "密级",
+      "dictCode": "secret",
+      "sortNumber": 6,
+      "comments": "密级",
+      "createTime": "2020/03/06 01:27:00",
+      "updateTime": "2020/03/06 01:27:00"
+    }
+  ]
+}

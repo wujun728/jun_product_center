@@ -1,0 +1,1002 @@
+2024-05-31 13:58:14.893  INFO 18692 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Starting OnlineApplication using Java 1.8.0_161 on DESKTOP-BFKA690 with PID 18692 (D:\workspace\github\jun_product_center\jun_api_online\jun_admin\target\classes started by Administrator in D:\workspace\github\jun_product_center)
+2024-05-31 13:58:14.895  INFO 18692 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : The following 1 profile is active: "local"
+2024-05-31 13:58:15.353  INFO 18692 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-05-31 13:58:15.354  INFO 18692 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-05-31 13:58:17.725  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-05-31 13:58:17.728  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-05-31 13:58:17.753  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 16 ms. Found 0 JDBC repository interfaces.
+2024-05-31 13:58:17.781  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-05-31 13:58:17.783  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-31 13:58:17.799  INFO 18692 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'com.jun.plugin.generator.mapper.GeneratorMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'com.jun.plugin.quartz.mapper.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.106  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'com.jun.plugin.quartz.mapper.SysJobMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'com.jun.plugin.system.mapper.SysContentMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'com.jun.plugin.system.mapper.SysDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'com.jun.plugin.system.mapper.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'com.jun.plugin.system.mapper.SysDictMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'com.jun.plugin.system.mapper.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'com.jun.plugin.system.mapper.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'com.jun.plugin.system.mapper.SysRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'com.jun.plugin.system.mapper.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'com.jun.plugin.system.mapper.SysUserMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.107  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'com.jun.plugin.system.mapper.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.119  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'com.jun.plugin.file.mapper.SysFilesMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.119  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesOssMapper' and 'com.jun.plugin.file.mapper.SysFilesOssMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.120  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.file.mapper]' package. Please check your configuration.
+2024-05-31 13:58:18.122  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.sms.mapper]' package. Please check your configuration.
+2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 13:58:18.128  WARN 18692 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.snakerflow.**.mapper]' package. Please check your configuration.
+2024-05-31 13:58:18.457  INFO 18692 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-05-31 13:58:18.553  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 13:58:18.556  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application-local.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 13:58:18.557  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 13:58:18.557  INFO 18692 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 13:58:18.711  INFO 18692 --- [restartedMain] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-05-31 13:58:18.787  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'com.github.snakerflow.plugin.TransactionManagerConfig' of type [com.github.snakerflow.plugin.TransactionManagerConfig$$EnhancerBySpringCGLIB$$c837d6c7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.012  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.018  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.036  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.052  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'stringOrNumberMigrationVersionConverter' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration$StringOrNumberToMigrationVersionConverter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.062  INFO 18692 --- [restartedMain] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-05-31 13:58:19.065  INFO 18692 --- [restartedMain] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-05-31 13:58:19.070  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2024-05-31 13:58:19.085  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWithMD5AndDES
+2024-05-31 13:58:19.085  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.keyObtentionIterations, using default value: 1000
+2024-05-31 13:58:19.085  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.poolSize, using default value: 1
+2024-05-31 13:58:19.085  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.providerName, using default value: null
+2024-05-31 13:58:19.086  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.providerClassName, using default value: null
+2024-05-31 13:58:19.086  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.saltGeneratorClassname, using default value: org.jasypt.salt.RandomSaltGenerator
+2024-05-31 13:58:19.101  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.ivGeneratorClassname, using default value: org.jasypt.salt.NoOpIVGenerator
+2024-05-31 13:58:19.102  INFO 18692 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.stringOutputType, using default value: base64
+2024-05-31 13:58:19.784  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.885  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'dataSource' of type [com.zaxxer.hikari.HikariDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.908  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.915  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.918  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:19.929  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'transactionManager' of type [org.springframework.jdbc.support.JdbcTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:20.151  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'txAdvice' of type [org.springframework.transaction.interceptor.TransactionInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:20.153  INFO 18692 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'txAdviceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 13:58:21.477  INFO 18692 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2024-05-31 13:58:21.492  INFO 18692 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-31 13:58:21.492  INFO 18692 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2024-05-31 13:58:21.643  INFO 18692 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-31 13:58:21.643  INFO 18692 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6289 ms
+2024-05-31 13:58:23.501  WARN 18692 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class com.jun.plugin.generator.entity.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2024-05-31 13:58:23.585 ERROR 18692 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[com.jun.plugin.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
+2024-05-31 13:58:24.419  INFO 18692 --- [restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
+2024-05-31 13:58:24.435  INFO 18692 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-05-31 13:58:24.759  INFO 18692 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-05-31 13:58:24.855  INFO 18692 --- [restartedMain] o.f.c.i.database.base.DatabaseType       : Database: jdbc:mysql://localhost:3306/db_qixing_bk (MySQL 5.5)
+2024-05-31 13:58:25.001  INFO 18692 --- [restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.049s)
+2024-05-31 13:58:25.019  INFO 18692 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema `db_qixing_bk`: 1.0
+2024-05-31 13:58:25.019  INFO 18692 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Schema `db_qixing_bk` is up to date. No migration necessary.
+2024-05-31 13:58:25.190  INFO 18692 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2024-05-31 13:58:25.217  INFO 18692 --- [restartedMain] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-05-31 13:58:25.218  INFO 18692 --- [restartedMain] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.2 created.
+2024-05-31 13:58:25.219  INFO 18692 --- [restartedMain] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2024-05-31 13:58:25.221  INFO 18692 --- [restartedMain] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-05-31 13:58:25.221  INFO 18692 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-05-31 13:58:25.221  INFO 18692 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.2
+2024-05-31 13:58:25.221  INFO 18692 --- [restartedMain] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@44ad3fcd
+2024-05-31 13:58:28.484  INFO 18692 --- [restartedMain] c.j.p.file.qiniu.utils.PropertyUtil      : 开始加载properties文件内容.......
+2024-05-31 13:58:28.485  INFO 18692 --- [restartedMain] c.j.p.file.qiniu.utils.PropertyUtil      : 加载properties文件内容完成...........
+2024-05-31 13:58:28.485  INFO 18692 --- [restartedMain] c.j.p.file.qiniu.utils.PropertyUtil      : properties文件内容：{ACCESS_KEY=ts0n9OF16ekFkDkZTTlpmyPI-tP3HKQDyw_GR4o2, bucketName=qixing-files, SECRET_KEY=c-OjjwV3ZgzCQwxc6W_bsTFKuDg8qeyqohyJU0RL, type=1, prefix=upload, domain=http://qiniu.hbqxcpa.cn}
+2024-05-31 13:58:28.510  INFO 18692 --- [restartedMain] c.j.p.g.m.http.RequestMappingService     :  RequestMappingService is init .... 
+2024-05-31 13:58:28.841  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test3,path-/api/test33,beanName-test3,BeanType-SQL：
+2024-05-31 13:58:28.841  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test3,path-/api/test33,beanName-test3,BeanType-SQL：
+2024-05-31 13:58:29.949  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test22Bean,path-/api/test22,beanName-test22Bean,BeanType-Class：
+2024-05-31 13:58:30.222  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test23Bean,path-/api/test23,beanName-test23Bean,BeanType-Class：
+2024-05-31 13:58:30.327  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test11Bean,path-/mobile/api/test11,beanName-test11Bean,BeanType-Class：
+2024-05-31 13:58:30.473  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test22Bean1,path-/mobile/api/test22,beanName-test22Bean1,BeanType-Class：
+2024-05-31 13:58:30.473  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeanpage,path-/api/test/page,beanName-testBeanpage,BeanType-SQL：
+2024-05-31 13:58:30.474  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeanpage,path-/api/test/page,beanName-testBeanpage,BeanType-SQL：
+2024-05-31 13:58:30.532  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testdataresult,path-/api/test/testdataresult,beanName-testdataresult,BeanType-Class：
+2024-05-31 13:58:30.698  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testjsonobject,path-/api/test/testjsonobject,beanName-testjsonobject,BeanType-Class：
+2024-05-31 13:58:30.698  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-/api/test/save,path-/api/test/save,beanName-/api/test/save,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-/api/test/save,path-/api/test/save,beanName-/api/test/save,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeandelete,path-/api/test/delete,beanName-testBeandelete,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeandelete,path-/api/test/delete,beanName-testBeandelete,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeanupdate,path-/api/test/update,beanName-testBeanupdate,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeanupdate,path-/api/test/update,beanName-testBeanupdate,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeandeleteandsave,path-/api/test/deleteandsave,beanName-testBeandeleteandsave,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeandeleteandsave,path-/api/test/deleteandsave,beanName-testBeandeleteandsave,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-/api/test/count,path-/api/test/count,beanName-/api/test/count,BeanType-SQL：
+2024-05-31 13:58:30.699  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-/api/test/count,path-/api/test/count,beanName-/api/test/count,BeanType-SQL：
+2024-05-31 13:58:30.773  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-uploadBean,path-/api/test/upload,beanName-uploadBean,BeanType-Class：
+2024-05-31 13:58:30.848  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-downloadBean,path-/api/test/download,beanName-downloadBean,BeanType-Class：
+2024-05-31 13:58:30.912  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-fileListBean,path-/api/test/fileList,beanName-fileListBean,BeanType-Class：
+2024-05-31 13:58:30.969  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testpage,path-/api/test/testpage,beanName-testpage,BeanType-Class：
+2024-05-31 13:58:31.070  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testsave33,path-/api/test/testsave,beanName-testsave33,BeanType-Class：
+2024-05-31 13:58:31.171  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testupdate33,path-/api/test/testupdate,beanName-testupdate33,BeanType-Class：
+2024-05-31 13:58:31.231  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testdelete36,path-/api/test/testdelete,beanName-testdelete36,BeanType-Class：
+2024-05-31 13:58:31.290  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testquery,path-/api/test/testquery,beanName-testquery,BeanType-Class：
+2024-05-31 13:58:31.390  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test22Bean221,path-/api/test221,beanName-test22Bean221,BeanType-Class：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-load,path-/api/test333/load,beanName-test333-load,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-load,path-/api/test333/load,beanName-test333-load,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-count,path-/api/test333/count,beanName-test333-count,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-count,path-/api/test333/count,beanName-test333-count,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-delete,path-/api/test333/delete,beanName-test333-delete,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-delete,path-/api/test333/delete,beanName-test333-delete,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-save,path-/api/test333/save,beanName-test333-save,BeanType-SQL：
+2024-05-31 13:58:31.391  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-save,path-/api/test333/save,beanName-test333-save,BeanType-SQL：
+2024-05-31 13:58:31.392  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-update,path-/api/test333/update,beanName-test333-update,BeanType-SQL：
+2024-05-31 13:58:31.392  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-update,path-/api/test333/update,beanName-test333-update,BeanType-SQL：
+2024-05-31 13:58:31.392  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-page,path-/api/test333/page,beanName-test333-page,BeanType-SQL：
+2024-05-31 13:58:31.392  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-page,path-/api/test333/page,beanName-test333-page,BeanType-SQL：
+2024-05-31 13:58:31.392  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-/test6611,path-/test6611,beanName-/test6611,BeanType-SQL：
+2024-05-31 13:58:31.392  INFO 18692 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-/test6611,path-/test6611,beanName-/test6611,BeanType-SQL：
+2024-05-31 13:58:31.628  WARN 18692 --- [restartedMain] org.snaker.engine.helper.ConfigHelper    : No properties file found in the classpath by filename snaker.properties
+2024-05-31 13:58:31.647  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=start][clazz=org.snaker.engine.parser.impl.StartParser]
+2024-05-31 13:58:31.649  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=task][clazz=org.snaker.engine.parser.impl.TaskParser]
+2024-05-31 13:58:31.650  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=custom][clazz=org.snaker.engine.parser.impl.CustomParser]
+2024-05-31 13:58:31.652  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=decision][clazz=org.snaker.engine.parser.impl.DecisionParser]
+2024-05-31 13:58:31.653  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=subprocess][clazz=org.snaker.engine.parser.impl.SubProcessParser]
+2024-05-31 13:58:31.655  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=fork][clazz=org.snaker.engine.parser.impl.ForkParser]
+2024-05-31 13:58:31.656  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=join][clazz=org.snaker.engine.parser.impl.JoinParser]
+2024-05-31 13:58:31.657  INFO 18692 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=end][clazz=org.snaker.engine.parser.impl.EndParser]
+2024-05-31 13:58:31.971  INFO 18692 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2024-05-31 13:58:32.250  INFO 18692 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-05-31 13:58:33.489  INFO 18692 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2024-05-31 13:58:33.490  INFO 18692 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2024-05-31 13:58:33.517  INFO 18692 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2024-05-31 13:58:33.624  INFO 18692 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2024-05-31 13:58:33.891  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deletedUsingDELETE_1
+2024-05-31 13:58:33.894  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailInfoUsingGET_1
+2024-05-31 13:58:33.939  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deletedUsingDELETE_2
+2024-05-31 13:58:33.940  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailInfoUsingGET_2
+2024-05-31 13:58:33.945  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateDeptUsingPUT_1
+2024-05-31 13:58:33.982  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_1
+2024-05-31 13:58:33.984  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingDELETE_1
+2024-05-31 13:58:33.986  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findListByPageUsingPOST_1
+2024-05-31 13:58:34.003  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateUsingPUT_1
+2024-05-31 13:58:34.014  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_2
+2024-05-31 13:58:34.015  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingDELETE_2
+2024-05-31 13:58:34.017  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findListByPageUsingPOST_2
+2024-05-31 13:58:34.019  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateUsingPUT_2
+2024-05-31 13:58:34.072  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailInfoUsingGET_3
+2024-05-31 13:58:34.085  INFO 18692 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: pageInfoUsingPOST_1
+2024-05-31 13:58:34.148  INFO 18692 --- [restartedMain] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2024-05-31 13:58:34.149  INFO 18692 --- [restartedMain] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-05-31 13:58:34.181  INFO 18692 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Started OnlineApplication in 20.626 seconds (JVM running for 21.864)
+2024-05-31 13:58:34.187  INFO 18692 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : restartedMain获取锁
+2024-05-31 13:58:34.187  INFO 18692 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : 添加连接池成功：main
+2024-05-31 13:58:34.188  INFO 18692 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 资源搜集器111，将项目中所有接口（带@RequestMapping的）都搜集起来 
+2024-05-31 13:58:34.190  INFO 18692 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 缓存资源URL集合完成!资源数量：224
+2024-05-31 13:58:34.195  INFO 18692 --- [restartedMain] c.j.plugin.groovy.plugin.PluginManager   : scan BasePlugin is finish
+2024-05-31 13:58:34.198  INFO 18692 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : 项目启动成功！访问地址: http://192.168.0.12:8082/jun-code-online
+2024-05-31 13:58:34.199  INFO 18692 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : 本机地址: http://localhost:8082
+2024-05-31 13:59:00.072  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:00:00.022  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:01:00.010  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:01:38.471  INFO 18692 --- [http-nio-8082-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-31 14:01:38.472  INFO 18692 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-31 14:01:38.477  INFO 18692 --- [http-nio-8082-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2024-05-31 14:01:38.487  INFO 18692 --- [http-nio-8082-exec-2] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 14:01:38.487  INFO 18692 --- [http-nio-8082-exec-2] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sys/initNew
+2024-05-31 14:01:38.488  INFO 18692 --- [http-nio-8082-exec-2] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 14:01:51.392  INFO 18692 --- [http-nio-8082-exec-1] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 14:01:51.392  INFO 18692 --- [http-nio-8082-exec-1] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/listByPage
+2024-05-31 14:01:51.393  INFO 18692 --- [http-nio-8082-exec-1] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 14:02:00.012  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:03:00.017  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:04:00.017  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:05:00.002  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:06:00.010  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:07:00.003  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:08:00.012  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:09:00.002  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:10:00.015  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:11:00.012  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:12:00.008  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:13:00.017  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:14:00.083  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:15:00.022  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:16:00.010  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:17:00.011  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:18:00.001  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:19:00.002  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:20:00.007  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:21:00.001  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:22:00.003  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:23:00.003  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:24:00.001  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:25:00.014  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:26:00.003  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:27:00.015  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:28:00.004  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:29:00.006  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:30:00.012  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:31:00.015  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:32:00.000  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:33:00.002  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:34:00.003  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:35:00.014  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:36:00.010  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:37:00.001  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:38:00.009  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:39:00.013  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:40:00.012  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:41:00.001  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:42:00.014  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:43:00.010  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:44:00.006  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:45:00.011  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:46:00.001  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:47:00.014  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:48:00.012  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:49:00.001  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:50:00.014  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:51:00.000  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:52:00.005  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:53:00.007  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:54:00.003  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:55:00.001  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:56:00.011  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:57:00.012  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:58:00.005  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 14:59:00.011  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:00:00.001  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:01:00.016  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:02:00.011  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:03:00.003  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:04:00.015  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:05:00.005  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:06:00.002  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:07:00.010  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:08:00.013  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:09:00.001  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:10:00.008  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:11:00.006  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:12:00.003  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:13:00.001  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:14:00.001  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:15:00.007  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:16:00.015  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:17:00.007  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:18:00.001  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:19:00.007  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:20:00.014  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:21:00.017  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:22:00.007  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:23:00.004  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:24:00.012  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:25:00.001  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:26:00.000  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:27:00.015  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:28:00.002  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:29:00.014  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:30:00.004  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:31:00.013  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:32:00.006  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:33:00.001  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:34:00.015  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:35:00.012  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:36:00.015  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:37:00.005  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:38:00.012  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:39:00.014  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:40:00.004  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:41:00.014  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:42:00.004  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:43:00.002  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:44:00.001  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:45:00.013  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:46:00.013  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:47:00.012  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:48:00.008  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:49:00.002  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:50:00.005  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:51:00.012  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:52:00.006  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:53:00.001  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:54:00.007  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:55:00.000  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:56:00.004  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:57:00.002  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:58:00.011  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 15:59:00.010  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:00:00.008  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:01:00.012  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:02:00.001  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:03:00.014  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:04:00.002  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:05:00.006  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:06:00.016  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:07:00.009  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:08:00.016  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:09:00.011  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:10:00.009  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:11:00.007  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:12:00.005  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:13:00.011  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:14:00.011  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:15:00.006  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:16:00.008  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:17:00.009  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:18:00.007  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:19:00.006  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:20:00.005  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:21:00.013  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:22:00.009  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:23:00.003  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:24:00.007  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:25:00.007  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:26:00.009  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:27:00.008  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:28:00.015  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:29:00.005  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:30:00.014  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:31:00.015  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:32:00.016  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:33:00.016  INFO 18692 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:34:00.016  INFO 18692 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:35:00.002  INFO 18692 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:36:00.006  INFO 18692 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:37:00.016  INFO 18692 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:38:00.008  INFO 18692 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:39:00.020  INFO 18692 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:40:00.016  INFO 18692 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:41:00.012  INFO 18692 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:42:00.009  INFO 18692 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 16:42:09.667  INFO 18692 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-05-31 16:42:10.131  INFO 18692 --- [SpringApplicationShutdownHook] o.s.s.quartz.SchedulerFactoryBean        : Shutting down Quartz Scheduler
+2024-05-31 16:42:10.132  INFO 18692 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2024-05-31 16:42:10.132  INFO 18692 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-05-31 16:42:10.132  INFO 18692 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2024-05-31 16:42:10.288  INFO 18692 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-05-31 16:42:10.294  INFO 18692 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-05-31 17:17:34.955  INFO 21056 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Starting OnlineApplication using Java 1.8.0_161 on DESKTOP-BFKA690 with PID 21056 (D:\workspace\github\jun_product_center\jun_api_online\jun_admin\target\classes started by Administrator in D:\workspace\github\jun_product_center)
+2024-05-31 17:17:34.958  INFO 21056 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : The following 1 profile is active: "local"
+2024-05-31 17:17:35.519  INFO 21056 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-05-31 17:17:35.519  INFO 21056 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-05-31 17:17:38.030  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-05-31 17:17:38.035  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-05-31 17:17:38.065  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JDBC repository interfaces.
+2024-05-31 17:17:38.089  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-05-31 17:17:38.091  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-31 17:17:38.113  INFO 21056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'com.jun.plugin.generator.mapper.GeneratorMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'com.jun.plugin.quartz.mapper.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'com.jun.plugin.quartz.mapper.SysJobMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'com.jun.plugin.system.mapper.SysContentMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.435  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'com.jun.plugin.system.mapper.SysDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'com.jun.plugin.system.mapper.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'com.jun.plugin.system.mapper.SysDictMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'com.jun.plugin.system.mapper.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'com.jun.plugin.system.mapper.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'com.jun.plugin.system.mapper.SysRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'com.jun.plugin.system.mapper.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'com.jun.plugin.system.mapper.SysUserMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.436  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'com.jun.plugin.system.mapper.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.447  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'com.jun.plugin.file.mapper.SysFilesMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.448  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.file.mapper]' package. Please check your configuration.
+2024-05-31 17:17:38.451  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.sms.mapper]' package. Please check your configuration.
+2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:17:38.456  WARN 21056 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.snakerflow.**.mapper]' package. Please check your configuration.
+2024-05-31 17:17:38.809  INFO 21056 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-05-31 17:17:38.918  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2024-05-31 17:17:38.921  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 17:17:38.921  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 17:17:38.921  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:17:38.921  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:17:38.922  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 17:17:38.922  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application-local.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:17:38.922  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:17:38.922  INFO 21056 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:17:39.091  INFO 21056 --- [restartedMain] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-05-31 17:17:39.179  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'com.github.snakerflow.plugin.TransactionManagerConfig' of type [com.github.snakerflow.plugin.TransactionManagerConfig$$EnhancerBySpringCGLIB$$e51daed5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:39.446  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:39.452  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:39.477  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:39.482  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'stringOrNumberMigrationVersionConverter' of type [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration$StringOrNumberToMigrationVersionConverter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:39.500  INFO 21056 --- [restartedMain] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-05-31 17:17:39.504  INFO 21056 --- [restartedMain] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-05-31 17:17:39.512  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2024-05-31 17:17:39.532  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWithMD5AndDES
+2024-05-31 17:17:39.533  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.keyObtentionIterations, using default value: 1000
+2024-05-31 17:17:39.533  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.poolSize, using default value: 1
+2024-05-31 17:17:39.533  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.providerName, using default value: null
+2024-05-31 17:17:39.533  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.providerClassName, using default value: null
+2024-05-31 17:17:39.533  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.saltGeneratorClassname, using default value: org.jasypt.salt.RandomSaltGenerator
+2024-05-31 17:17:39.553  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.ivGeneratorClassname, using default value: org.jasypt.salt.NoOpIVGenerator
+2024-05-31 17:17:39.556  INFO 21056 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.stringOutputType, using default value: base64
+2024-05-31 17:17:40.597  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:40.720  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'dataSource' of type [com.zaxxer.hikari.HikariDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:40.753  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:40.761  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:40.764  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:40.794  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'transactionManager' of type [org.springframework.jdbc.support.JdbcTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:41.093  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'txAdvice' of type [org.springframework.transaction.interceptor.TransactionInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:41.095  INFO 21056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'txAdviceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:17:42.742  INFO 21056 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2024-05-31 17:17:42.763  INFO 21056 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-31 17:17:42.763  INFO 21056 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2024-05-31 17:17:42.926  INFO 21056 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-31 17:17:42.926  INFO 21056 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7406 ms
+2024-05-31 17:17:44.888  WARN 21056 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class com.jun.plugin.generator.entity.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2024-05-31 17:17:44.969 ERROR 21056 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[com.jun.plugin.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
+2024-05-31 17:17:45.798  INFO 21056 --- [restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
+2024-05-31 17:17:45.813  INFO 21056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-05-31 17:17:46.102  INFO 21056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-05-31 17:17:46.168  INFO 21056 --- [restartedMain] o.f.c.i.database.base.DatabaseType       : Database: jdbc:mysql://localhost:3306/db_qixing_bk (MySQL 5.5)
+2024-05-31 17:17:46.303  INFO 21056 --- [restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.035s)
+2024-05-31 17:17:46.371  WARN 21056 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sysGeneratorController': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sysGeneratorServiceImpl': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'generatorMapper' defined in URL [jar:file:/D:/Java/.m2/repository/com/jun/plugin/generator/1.0/generator-1.0.jar!/com/jun/plugin/generator/mapper/GeneratorMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionTemplate'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_qixing_bk` but no schema history table. Use baseline() or set baselineOnMigrate to true to initialize the schema history table.
+2024-05-31 17:17:46.400  INFO 21056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-05-31 17:17:46.412  INFO 21056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-05-31 17:17:46.416  INFO 21056 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-05-31 17:17:46.430  INFO 21056 --- [restartedMain] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2024-05-31 17:17:46.466 ERROR 21056 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sysGeneratorController': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sysGeneratorServiceImpl': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'generatorMapper' defined in URL [jar:file:/D:/Java/.m2/repository/com/jun/plugin/generator/1.0/generator-1.0.jar!/com/jun/plugin/generator/mapper/GeneratorMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionTemplate'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_qixing_bk` but no schema history table. Use baseline() or set baselineOnMigrate to true to initialize the schema history table.
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:953)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:780)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:453)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:343)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1370)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1359)
+	at com.jun.plugin.project.OnlineApplication.main(OnlineApplication.java:39)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sysGeneratorServiceImpl': Injection of resource dependencies failed; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'generatorMapper' defined in URL [jar:file:/D:/Java/.m2/repository/com/jun/plugin/generator/1.0/generator-1.0.jar!/com/jun/plugin/generator/mapper/GeneratorMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionTemplate'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_qixing_bk` but no schema history table. Use baseline() or set baselineOnMigrate to true to initialize the schema history table.
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:332)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1389)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1309)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:544)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:520)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$ResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:673)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:228)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:329)
+	... 22 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'generatorMapper' defined in URL [jar:file:/D:/Java/.m2/repository/com/jun/plugin/generator/1.0/generator-1.0.jar!/com/jun/plugin/generator/mapper/GeneratorMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionTemplate'; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_qixing_bk` but no schema history table. Use baseline() or set baselineOnMigrate to true to initialize the schema history table.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1534)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1417)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:619)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.resolveBeanByName(AbstractAutowireCapableBeanFactory.java:479)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.autowireResource(CommonAnnotationBeanPostProcessor.java:550)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.getResource(CommonAnnotationBeanPostProcessor.java:520)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor$ResourceElement.getResourceToInject(CommonAnnotationBeanPostProcessor.java:673)
+	at org.springframework.beans.factory.annotation.InjectionMetadata$InjectedElement.inject(InjectionMetadata.java:228)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:119)
+	at org.springframework.context.annotation.CommonAnnotationBeanPostProcessor.postProcessProperties(CommonAnnotationBeanPostProcessor.java:329)
+	... 38 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Invocation of init method failed; nested exception is org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_qixing_bk` but no schema history table. Use baseline() or set baselineOnMigrate to true to initialize the schema history table.
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:322)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1389)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1309)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireByType(AbstractAutowireCapableBeanFactory.java:1519)
+	... 52 common frames omitted
+Caused by: org.flywaydb.core.api.FlywayException: Found non-empty schema(s) `db_qixing_bk` but no schema history table. Use baseline() or set baselineOnMigrate to true to initialize the schema history table.
+	at org.flywaydb.core.Flyway$1.execute(Flyway.java:196)
+	at org.flywaydb.core.Flyway$1.execute(Flyway.java:165)
+	at org.flywaydb.core.Flyway.execute(Flyway.java:572)
+	at org.flywaydb.core.Flyway.migrate(Flyway.java:165)
+	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800)
+	... 64 common frames omitted
+
+2024-05-31 17:18:20.590  INFO 9352 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Starting OnlineApplication using Java 1.8.0_161 on DESKTOP-BFKA690 with PID 9352 (D:\workspace\github\jun_product_center\jun_api_online\jun_admin\target\classes started by Administrator in D:\workspace\github\jun_product_center)
+2024-05-31 17:18:20.592  INFO 9352 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : The following 1 profile is active: "local"
+2024-05-31 17:18:21.059  INFO 9352 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-05-31 17:18:21.060  INFO 9352 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-05-31 17:18:23.257  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-05-31 17:18:23.261  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-05-31 17:18:23.288  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19 ms. Found 0 JDBC repository interfaces.
+2024-05-31 17:18:23.314  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2024-05-31 17:18:23.316  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-05-31 17:18:23.333  INFO 9352 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'generatorMapper' and 'com.jun.plugin.generator.mapper.GeneratorMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobLogMapper' and 'com.jun.plugin.quartz.mapper.SysJobLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysJobMapper' and 'com.jun.plugin.quartz.mapper.SysJobMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysContentMapper' and 'com.jun.plugin.system.mapper.SysContentMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDeptMapper' and 'com.jun.plugin.system.mapper.SysDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictDetailMapper' and 'com.jun.plugin.system.mapper.SysDictDetailMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysDictMapper' and 'com.jun.plugin.system.mapper.SysDictMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysPermissionMapper' and 'com.jun.plugin.system.mapper.SysPermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.659  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleDeptMapper' and 'com.jun.plugin.system.mapper.SysRoleDeptMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRoleMapper' and 'com.jun.plugin.system.mapper.SysRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysRolePermissionMapper' and 'com.jun.plugin.system.mapper.SysRolePermissionMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserMapper' and 'com.jun.plugin.system.mapper.SysUserMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.660  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysUserRoleMapper' and 'com.jun.plugin.system.mapper.SysUserRoleMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.669  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'sysFilesMapper' and 'com.jun.plugin.file.mapper.SysFilesMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.670  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.file.mapper]' package. Please check your configuration.
+2024-05-31 17:18:23.672  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.sms.mapper]' package. Please check your configuration.
+2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLeaveMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLeaveMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'extLogMapper' and 'com.jun.plugin.snakerflow.ext.mapper.ExtLogMapper' mapperInterface. Bean already defined with the same name!
+2024-05-31 17:18:23.677  WARN 9352 --- [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.jun.plugin.snakerflow.**.mapper]' package. Please check your configuration.
+2024-05-31 17:18:24.025  INFO 9352 --- [restartedMain] ptablePropertiesBeanFactoryPostProcessor : Post-processing PropertySource instances
+2024-05-31 17:18:24.132  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application-local.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:18:24.136  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:18:24.137  INFO 9352 --- [restartedMain] c.u.j.EncryptablePropertySourceConverter : Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2024-05-31 17:18:24.298  INFO 9352 --- [restartedMain] c.u.j.filter.DefaultLazyPropertyFilter   : Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2024-05-31 17:18:24.376  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'com.github.snakerflow.plugin.TransactionManagerConfig' of type [com.github.snakerflow.plugin.TransactionManagerConfig$$EnhancerBySpringCGLIB$$6ddc03fc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:24.615  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$JdbcTransactionManagerConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:24.621  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:24.647  INFO 9352 --- [restartedMain] c.u.j.r.DefaultLazyPropertyResolver      : Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2024-05-31 17:18:24.650  INFO 9352 --- [restartedMain] c.u.j.d.DefaultLazyPropertyDetector      : Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2024-05-31 17:18:24.657  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : String Encryptor custom Bean not found with name 'jasyptStringEncryptor'. Initializing Default String Encryptor
+2024-05-31 17:18:24.672  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.algorithm, using default value: PBEWithMD5AndDES
+2024-05-31 17:18:24.673  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.keyObtentionIterations, using default value: 1000
+2024-05-31 17:18:24.673  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.poolSize, using default value: 1
+2024-05-31 17:18:24.673  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.providerName, using default value: null
+2024-05-31 17:18:24.673  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.providerClassName, using default value: null
+2024-05-31 17:18:24.673  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.saltGeneratorClassname, using default value: org.jasypt.salt.RandomSaltGenerator
+2024-05-31 17:18:24.688  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.ivGeneratorClassname, using default value: org.jasypt.salt.NoOpIVGenerator
+2024-05-31 17:18:24.690  INFO 9352 --- [restartedMain] c.u.j.encryptor.DefaultLazyEncryptor     : Encryptor config not found for property jasypt.encryptor.stringOutputType, using default value: base64
+2024-05-31 17:18:25.373  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.476  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'dataSource' of type [com.zaxxer.hikari.HikariDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.503  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.513  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.515  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.526  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'transactionManager' of type [org.springframework.jdbc.support.JdbcTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.790  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'txAdvice' of type [org.springframework.transaction.interceptor.TransactionInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:25.792  INFO 9352 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'txAdviceAdvisor' of type [org.springframework.aop.support.DefaultPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2024-05-31 17:18:27.178  INFO 9352 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+2024-05-31 17:18:27.195  INFO 9352 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-05-31 17:18:27.195  INFO 9352 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.63]
+2024-05-31 17:18:27.402  INFO 9352 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-05-31 17:18:27.402  INFO 9352 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 6341 ms
+2024-05-31 17:18:29.303  WARN 9352 --- [restartedMain] c.b.m.core.injector.DefaultSqlInjector   : class com.jun.plugin.generator.entity.SysGenerator ,Not found @TableId annotation, Cannot use Mybatis-Plus 'xxById' Method.
+2024-05-31 17:18:29.379 ERROR 9352 --- [restartedMain] c.b.m.core.MybatisConfiguration          : mapper[com.jun.plugin.online.dao.OnlineTableColumnDao.getByTableId] is ignored, because it exists, maybe from xml file
+2024-05-31 17:18:30.175  INFO 9352 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Using default implementation for ThreadExecutor
+2024-05-31 17:18:30.195  INFO 9352 --- [restartedMain] org.quartz.core.SchedulerSignalerImpl    : Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2024-05-31 17:18:30.195  INFO 9352 --- [restartedMain] org.quartz.core.QuartzScheduler          : Quartz Scheduler v.2.3.2 created.
+2024-05-31 17:18:30.196  INFO 9352 --- [restartedMain] org.quartz.simpl.RAMJobStore             : RAMJobStore initialized.
+2024-05-31 17:18:30.197  INFO 9352 --- [restartedMain] org.quartz.core.QuartzScheduler          : Scheduler meta-data: Quartz Scheduler (v2.3.2) 'quartzScheduler' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 10 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2024-05-31 17:18:30.198  INFO 9352 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler 'quartzScheduler' initialized from an externally provided properties instance.
+2024-05-31 17:18:30.198  INFO 9352 --- [restartedMain] org.quartz.impl.StdSchedulerFactory      : Quartz scheduler version: 2.3.2
+2024-05-31 17:18:30.198  INFO 9352 --- [restartedMain] org.quartz.core.QuartzScheduler          : JobFactory set to: org.springframework.scheduling.quartz.SpringBeanJobFactory@7350e0eb
+2024-05-31 17:18:30.364  INFO 9352 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-05-31 17:18:30.677  INFO 9352 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-05-31 17:18:33.226  INFO 9352 --- [restartedMain] c.j.p.file.common.utils.PropertyUtil     : 开始加载properties文件内容.......
+2024-05-31 17:18:33.227  INFO 9352 --- [restartedMain] c.j.p.file.common.utils.PropertyUtil     : 加载properties文件内容完成...........
+2024-05-31 17:18:33.228  INFO 9352 --- [restartedMain] c.j.p.file.common.utils.PropertyUtil     : properties文件内容：{ACCESS_KEY=ts0n9OF16ekFkDkZTTlpmyPI-tP3HKQDyw_GR4o2, bucketName=qixing-files, SECRET_KEY=c-OjjwV3ZgzCQwxc6W_bsTFKuDg8qeyqohyJU0RL, type=1, prefix=upload, domain=http://qiniu.hbqxcpa.cn}
+2024-05-31 17:18:33.376  INFO 9352 --- [restartedMain] c.j.p.g.m.http.RequestMappingService     :  RequestMappingService is init .... 
+2024-05-31 17:18:33.814  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test3,path-/api/test33,beanName-test3,BeanType-SQL：
+2024-05-31 17:18:33.814  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test3,path-/api/test33,beanName-test3,BeanType-SQL：
+2024-05-31 17:18:35.040  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test22Bean,path-/api/test22,beanName-test22Bean,BeanType-Class：
+2024-05-31 17:18:35.282  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test23Bean,path-/api/test23,beanName-test23Bean,BeanType-Class：
+2024-05-31 17:18:35.388  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test11Bean,path-/mobile/api/test11,beanName-test11Bean,BeanType-Class：
+2024-05-31 17:18:35.544  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test22Bean1,path-/mobile/api/test22,beanName-test22Bean1,BeanType-Class：
+2024-05-31 17:18:35.544  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeanpage,path-/api/test/page,beanName-testBeanpage,BeanType-SQL：
+2024-05-31 17:18:35.544  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeanpage,path-/api/test/page,beanName-testBeanpage,BeanType-SQL：
+2024-05-31 17:18:35.591  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testdataresult,path-/api/test/testdataresult,beanName-testdataresult,BeanType-Class：
+2024-05-31 17:18:35.728  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testjsonobject,path-/api/test/testjsonobject,beanName-testjsonobject,BeanType-Class：
+2024-05-31 17:18:35.728  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-/api/test/save,path-/api/test/save,beanName-/api/test/save,BeanType-SQL：
+2024-05-31 17:18:35.728  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-/api/test/save,path-/api/test/save,beanName-/api/test/save,BeanType-SQL：
+2024-05-31 17:18:35.728  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeandelete,path-/api/test/delete,beanName-testBeandelete,BeanType-SQL：
+2024-05-31 17:18:35.728  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeandelete,path-/api/test/delete,beanName-testBeandelete,BeanType-SQL：
+2024-05-31 17:18:35.728  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeanupdate,path-/api/test/update,beanName-testBeanupdate,BeanType-SQL：
+2024-05-31 17:18:35.729  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeanupdate,path-/api/test/update,beanName-testBeanupdate,BeanType-SQL：
+2024-05-31 17:18:35.729  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-testBeandeleteandsave,path-/api/test/deleteandsave,beanName-testBeandeleteandsave,BeanType-SQL：
+2024-05-31 17:18:35.729  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testBeandeleteandsave,path-/api/test/deleteandsave,beanName-testBeandeleteandsave,BeanType-SQL：
+2024-05-31 17:18:35.729  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-/api/test/count,path-/api/test/count,beanName-/api/test/count,BeanType-SQL：
+2024-05-31 17:18:35.729  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-/api/test/count,path-/api/test/count,beanName-/api/test/count,BeanType-SQL：
+2024-05-31 17:18:35.812  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-uploadBean,path-/api/test/upload,beanName-uploadBean,BeanType-Class：
+2024-05-31 17:18:35.881  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-downloadBean,path-/api/test/download,beanName-downloadBean,BeanType-Class：
+2024-05-31 17:18:35.941  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-fileListBean,path-/api/test/fileList,beanName-fileListBean,BeanType-Class：
+2024-05-31 17:18:35.986  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testpage,path-/api/test/testpage,beanName-testpage,BeanType-Class：
+2024-05-31 17:18:36.098  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testsave33,path-/api/test/testsave,beanName-testsave33,BeanType-Class：
+2024-05-31 17:18:36.179  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testupdate33,path-/api/test/testupdate,beanName-testupdate33,BeanType-Class：
+2024-05-31 17:18:36.232  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testdelete36,path-/api/test/testdelete,beanName-testdelete36,BeanType-Class：
+2024-05-31 17:18:36.320  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-testquery,path-/api/test/testquery,beanName-testquery,BeanType-Class：
+2024-05-31 17:18:36.413  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test22Bean221,path-/api/test221,beanName-test22Bean221,BeanType-Class：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-load,path-/api/test333/load,beanName-test333-load,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-load,path-/api/test333/load,beanName-test333-load,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-count,path-/api/test333/count,beanName-test333-count,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-count,path-/api/test333/count,beanName-test333-count,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-delete,path-/api/test333/delete,beanName-test333-delete,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-delete,path-/api/test333/delete,beanName-test333-delete,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-save,path-/api/test333/save,beanName-test333-save,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-save,path-/api/test333/save,beanName-test333-save,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-update,path-/api/test333/update,beanName-test333-update,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-update,path-/api/test333/update,beanName-test333-update,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-test333-page,path-/api/test333/page,beanName-test333-page,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-test333-page,path-/api/test333/page,beanName-test333-page,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前Groovy脚本类型SQL类型脚本1：className-/test6611,path-/test6611,beanName-/test6611,BeanType-SQL：
+2024-05-31 17:18:36.414  INFO 9352 --- [restartedMain] c.j.p.groovy.groovy.GroovyDynamicLoader  : 当前groovyInfo加载成功1,className-/test6611,path-/test6611,beanName-/test6611,BeanType-SQL：
+2024-05-31 17:18:36.639  WARN 9352 --- [restartedMain] org.snaker.engine.helper.ConfigHelper    : No properties file found in the classpath by filename snaker.properties
+2024-05-31 17:18:36.655  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=start][clazz=org.snaker.engine.parser.impl.StartParser]
+2024-05-31 17:18:36.657  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=task][clazz=org.snaker.engine.parser.impl.TaskParser]
+2024-05-31 17:18:36.659  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=custom][clazz=org.snaker.engine.parser.impl.CustomParser]
+2024-05-31 17:18:36.660  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=decision][clazz=org.snaker.engine.parser.impl.DecisionParser]
+2024-05-31 17:18:36.661  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=subprocess][clazz=org.snaker.engine.parser.impl.SubProcessParser]
+2024-05-31 17:18:36.663  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=fork][clazz=org.snaker.engine.parser.impl.ForkParser]
+2024-05-31 17:18:36.664  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=join][clazz=org.snaker.engine.parser.impl.JoinParser]
+2024-05-31 17:18:36.666  INFO 9352 --- [restartedMain] org.snaker.engine.core.ServiceContext    : put new instance[name=end][clazz=org.snaker.engine.parser.impl.EndParser]
+2024-05-31 17:18:36.948  INFO 9352 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2024-05-31 17:18:37.266  INFO 9352 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-05-31 17:18:38.499  INFO 9352 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+2024-05-31 17:18:38.500  INFO 9352 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2024-05-31 17:18:38.543  INFO 9352 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2024-05-31 17:18:38.650  INFO 9352 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2024-05-31 17:18:38.944  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deletedUsingDELETE_1
+2024-05-31 17:18:38.947  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailInfoUsingGET_1
+2024-05-31 17:18:39.010  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deletedUsingDELETE_2
+2024-05-31 17:18:39.012  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailInfoUsingGET_2
+2024-05-31 17:18:39.016  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateDeptUsingPUT_1
+2024-05-31 17:18:39.053  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_1
+2024-05-31 17:18:39.056  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingDELETE_1
+2024-05-31 17:18:39.058  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findListByPageUsingPOST_1
+2024-05-31 17:18:39.079  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateUsingPUT_1
+2024-05-31 17:18:39.087  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: addUsingPOST_2
+2024-05-31 17:18:39.089  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteUsingDELETE_2
+2024-05-31 17:18:39.091  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: findListByPageUsingPOST_2
+2024-05-31 17:18:39.092  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateUsingPUT_2
+2024-05-31 17:18:39.147  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: detailInfoUsingGET_3
+2024-05-31 17:18:39.159  INFO 9352 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: pageInfoUsingPOST_1
+2024-05-31 17:18:39.224  INFO 9352 --- [restartedMain] o.s.s.quartz.SchedulerFactoryBean        : Starting Quartz Scheduler now
+2024-05-31 17:18:39.224  INFO 9352 --- [restartedMain] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED started.
+2024-05-31 17:18:39.257  INFO 9352 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : Started OnlineApplication in 20.061 seconds (JVM running for 21.353)
+2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : restartedMain获取锁
+2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] com.jun.plugin.db.DataSourcePool         : 添加连接池成功：main
+2024-05-31 17:18:39.264  INFO 9352 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 资源搜集器111，将项目中所有接口（带@RequestMapping的）都搜集起来 
+2024-05-31 17:18:39.266  INFO 9352 --- [restartedMain] c.j.p.g.l.ResourceCollectListener        : >>> 缓存资源URL集合完成!资源数量：217
+2024-05-31 17:18:39.270  INFO 9352 --- [restartedMain] c.j.plugin.groovy.plugin.PluginManager   : scan BasePlugin is finish
+2024-05-31 17:18:39.273  INFO 9352 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : 项目启动成功！访问地址: http://192.168.0.12:8082/jun-code-online
+2024-05-31 17:18:39.273  INFO 9352 --- [restartedMain] c.jun.plugin.project.OnlineApplication   : 本机地址: http://localhost:8082
+2024-05-31 17:18:52.449  INFO 9352 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-05-31 17:18:52.449  INFO 9352 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-05-31 17:18:52.481  INFO 9352 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2024-05-31 17:18:52.496  INFO 9352 --- [http-nio-8082-exec-1] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:18:52.496  INFO 9352 --- [http-nio-8082-exec-1] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sys/initNew
+2024-05-31 17:18:52.496  INFO 9352 --- [http-nio-8082-exec-1] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:18:56.798  INFO 9352 --- [http-nio-8082-exec-2] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:18:56.799  INFO 9352 --- [http-nio-8082-exec-2] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/listByPage
+2024-05-31 17:18:56.799  INFO 9352 --- [http-nio-8082-exec-2] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:00.046  INFO 9352 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:19:04.405  INFO 9352 --- [http-nio-8082-exec-3] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:04.405  INFO 9352 --- [http-nio-8082-exec-3] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sys/getVerify
+2024-05-31 17:19:04.405  INFO 9352 --- [http-nio-8082-exec-3] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:05.024  INFO 9352 --- [http-nio-8082-exec-5] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:05.024  INFO 9352 --- [http-nio-8082-exec-5] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sys/getVerify
+2024-05-31 17:19:05.024  INFO 9352 --- [http-nio-8082-exec-5] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:07.638  INFO 9352 --- [http-nio-8082-exec-4] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:07.638  INFO 9352 --- [http-nio-8082-exec-4] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sys/user/login
+2024-05-31 17:19:07.638  INFO 9352 --- [http-nio-8082-exec-4] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:09.227  INFO 9352 --- [http-nio-8082-exec-6] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:09.228  INFO 9352 --- [http-nio-8082-exec-6] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sys/initNew
+2024-05-31 17:19:09.228  INFO 9352 --- [http-nio-8082-exec-6] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:09.804  INFO 9352 --- [http-nio-8082-exec-8] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:09.804  INFO 9352 --- [http-nio-8082-exec-8] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/listByPage
+2024-05-31 17:19:09.804  INFO 9352 --- [http-nio-8082-exec-8] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:37.227  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:37.227  INFO 9352 --- [http-nio-8082-exec-7] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/upload
+2024-05-31 17:19:37.227  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:37.273  INFO 9352 --- [http-nio-8082-exec-7] c.j.p.f.controller.SysFilesController    : null
+2024-05-31 17:19:37.273  INFO 9352 --- [http-nio-8082-exec-7] c.j.p.f.controller.SysFilesController    : null
+2024-05-31 17:19:37.277  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.file.common.utils.QiniuUtils  : sessionService.getCurrentUsername()/微信截图111_20240531171926-20240531171937-sessionService.getCurrentUsername().png
+2024-05-31 17:19:43.428  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.file.common.utils.QiniuUtils  : 上传成功!
+2024-05-31 17:19:43.428  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.file.common.utils.QiniuUtils  : 上传文件路径：http://qiniu.hbqxcpa.cnhttps://up-z2.qiniup.com/
+2024-05-31 17:19:43.430  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.file.common.utils.QiniuUtils  : 下载文件路径：http://qiniu.hbqxcpa.cn/sessionService.getCurrentUsername()/微信截图111_20240531171926-20240531171937-sessionService.getCurrentUsername().png?e=1874827183&token=ts0n9OF16ekFkDkZTTlpmyPI-tP3HKQDyw_GR4o2:tIuRLLre8dLfKWNNaGCCw7TJebw=
+2024-05-31 17:19:43.431  INFO 9352 --- [http-nio-8082-exec-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:19:43.529 ERROR 9352 --- [http-nio-8082-exec-7] c.j.p.c.config.RestExceptionHandler      : Exception,exception:{}
+
+com.jun.plugin.common.exception.BusinessException: 上传文件失败
+	at com.jun.plugin.file.service.impl.SysFilesServiceImpl.saveOssFile(SysFilesServiceImpl.java:240)
+	at com.jun.plugin.file.service.impl.SysFilesServiceImpl.saveFile(SysFilesServiceImpl.java:183)
+	at com.jun.plugin.file.service.impl.SysFilesServiceImpl$$FastClassBySpringCGLIB$$2c57dca5.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
+	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
+	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:704)
+	at com.jun.plugin.file.service.impl.SysFilesServiceImpl$$EnhancerBySpringCGLIB$$ca36c1e9.saveFile(<generated>)
+	at com.jun.plugin.file.controller.SysFilesController.add(SysFilesController.java:70)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.github.xiaoymin.knife4j.spring.filter.ProductionSecurityFilter.doFilter(ProductionSecurityFilter.java:45)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.github.xiaoymin.knife4j.spring.filter.SecurityBasicAuthFilter.doFilter(SecurityBasicAuthFilter.java:90)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2024-05-31 17:19:43.547  INFO 9352 --- [http-nio-8082-exec-9] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:43.548  INFO 9352 --- [http-nio-8082-exec-9] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/listByPage
+2024-05-31 17:19:43.548  INFO 9352 --- [http-nio-8082-exec-9] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:49.576  INFO 9352 --- [http-nio-8082-exec-10] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:19:49.576  INFO 9352 --- [http-nio-8082-exec-10] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/listByPage
+2024-05-31 17:19:49.576  INFO 9352 --- [http-nio-8082-exec-10] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:20:00.016  INFO 9352 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:21:00.014  INFO 9352 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:22:00.010  INFO 9352 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:22:22.908  INFO 9352 --- [http-nio-8082-exec-1] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:22:22.908  INFO 9352 --- [http-nio-8082-exec-1] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/sysFiles/listByPage
+2024-05-31 17:22:22.909  INFO 9352 --- [http-nio-8082-exec-1] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:22:22.915 ERROR 9352 --- [http-nio-8082-exec-1] c.j.p.c.config.RestExceptionHandler      : Exception,exception:{}
+
+org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:253)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:442)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:383)
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:125)
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:67)
+	at org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:498)
+	at org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1261)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1043)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.github.xiaoymin.knife4j.spring.filter.ProductionSecurityFilter.doFilter(ProductionSecurityFilter.java:45)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.github.xiaoymin.knife4j.spring.filter.SecurityBasicAuthFilter.doFilter(SecurityBasicAuthFilter.java:90)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2024-05-31 17:22:57.885  INFO 9352 --- [http-nio-8082-exec-2] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:22:57.885  INFO 9352 --- [http-nio-8082-exec-2] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/filedata
+2024-05-31 17:22:57.885  INFO 9352 --- [http-nio-8082-exec-2] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:22:57.886 ERROR 9352 --- [http-nio-8082-exec-2] c.j.p.c.config.RestExceptionHandler      : Exception,exception:{}
+
+java.lang.NullPointerException: null
+	at com.jun.plugin.file.service.impl.FileServiceImpl.fileList(FileServiceImpl.java:159)
+	at com.jun.plugin.file.controller.FileControl.filedata(FileControl.java:106)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:655)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.github.xiaoymin.knife4j.spring.filter.ProductionSecurityFilter.doFilter(ProductionSecurityFilter.java:45)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.github.xiaoymin.knife4j.spring.filter.SecurityBasicAuthFilter.doFilter(SecurityBasicAuthFilter.java:90)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.OriginFilter.doFilter(OriginFilter.java:33)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.rest.filter.ResourceFilter.doFilter(ResourceFilter.java:61)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at com.jun.plugin.common.filter.EncodingFilter.doFilter(EncodingFilter.java:24)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:890)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1743)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+
+2024-05-31 17:23:00.010  INFO 9352 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:23:36.455  INFO 9352 --- [http-nio-8082-exec-3] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:23:36.455  INFO 9352 --- [http-nio-8082-exec-3] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/filedata
+2024-05-31 17:23:36.455  INFO 9352 --- [http-nio-8082-exec-3] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:23:59.763  INFO 9352 --- [http-nio-8082-exec-5] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:23:59.763  INFO 9352 --- [http-nio-8082-exec-5] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/filedata
+2024-05-31 17:23:59.763  INFO 9352 --- [http-nio-8082-exec-5] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:25:45.316  WARN 9352 --- [HikariPool-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m14s461ms210µs100ns).
+2024-05-31 17:25:45.317  INFO 9352 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:25:45.318  INFO 9352 --- [http-nio-8082-exec-4] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:25:45.318  INFO 9352 --- [http-nio-8082-exec-4] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/filedata
+2024-05-31 17:25:45.318  INFO 9352 --- [http-nio-8082-exec-4] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:26:00.012  INFO 9352 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:27:00.001  INFO 9352 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:27:46.395  INFO 9352 --- [http-nio-8082-exec-6] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:27:46.395  INFO 9352 --- [http-nio-8082-exec-6] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/filedata
+2024-05-31 17:27:46.395  INFO 9352 --- [http-nio-8082-exec-6] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:28:00.011  INFO 9352 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:29:00.029  INFO 9352 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:29:00.801  INFO 9352 --- [http-nio-8082-exec-8] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:29:00.801  INFO 9352 --- [http-nio-8082-exec-8] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/upload
+2024-05-31 17:29:00.802  INFO 9352 --- [http-nio-8082-exec-8] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:29:51.300  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:29:51.300  INFO 9352 --- [http-nio-8082-exec-7] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/upload
+2024-05-31 17:29:51.300  INFO 9352 --- [http-nio-8082-exec-7] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:29:51.307  INFO 9352 --- [http-nio-8082-exec-7] c.j.p.file.service.impl.FileServiceImpl  : 用户:zhangsan上传文件微信截图111_20240531171926 - 副本.png成功
+2024-05-31 17:30:00.010  INFO 9352 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:31:00.027  INFO 9352 --- [quartzScheduler_Worker-2] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:31:36.613  INFO 9352 --- [http-nio-8082-exec-9] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:31:36.613  INFO 9352 --- [http-nio-8082-exec-9] c.jun.plugin.rest.filter.ResourceFilter  : ResourceFilter URL:/public/filedown
+2024-05-31 17:31:36.613  INFO 9352 --- [http-nio-8082-exec-9] c.j.plugin.common.filter.EncodingFilter  : EncodingFilter is setCharacterEncoding UTF-8 
+2024-05-31 17:31:36.615  INFO 9352 --- [http-nio-8082-exec-9] c.j.p.file.service.impl.FileServiceImpl  : 用户:zhangsan下载文件微信截图111_20240531171926 - 副本.png成功
+2024-05-31 17:32:00.011  INFO 9352 --- [quartzScheduler_Worker-3] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:33:00.010  INFO 9352 --- [quartzScheduler_Worker-4] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:34:00.007  INFO 9352 --- [quartzScheduler_Worker-5] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:35:00.003  INFO 9352 --- [quartzScheduler_Worker-6] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:36:00.008  INFO 9352 --- [quartzScheduler_Worker-7] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:37:00.012  INFO 9352 --- [quartzScheduler_Worker-8] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:38:00.007  INFO 9352 --- [quartzScheduler_Worker-9] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:39:00.016  INFO 9352 --- [quartzScheduler_Worker-10] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:40:00.009  INFO 9352 --- [quartzScheduler_Worker-1] c.j.p.p.c.interceptor.MybatisExecutor    : NormalPlugin, methodName; update, commandType: INSERT
+2024-05-31 17:40:02.744  INFO 9352 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-05-31 17:40:06.129  INFO 9352 --- [SpringApplicationShutdownHook] o.s.s.quartz.SchedulerFactoryBean        : Shutting down Quartz Scheduler
+2024-05-31 17:40:06.130  INFO 9352 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2024-05-31 17:40:06.130  INFO 9352 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2024-05-31 17:40:06.151  INFO 9352 --- [SpringApplicationShutdownHook] org.quartz.core.QuartzScheduler          : Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2024-05-31 17:40:06.608  INFO 9352 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-05-31 17:40:06.749  INFO 9352 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

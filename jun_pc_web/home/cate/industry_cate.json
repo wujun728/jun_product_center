@@ -1,0 +1,64 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "工业品企业",
+            "status": 1,
+            "create_time": 1637987189,
+            "update_time": 0
+        },
+        {
+            "id": 2,
+            "title": "互联网企业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "title": "服务行业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 4,
+            "title": "消费品企业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 5,
+            "title": "原材料企业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 6,
+            "title": "农业企业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 7,
+            "title": "科技企业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        },
+        {
+            "id": 8,
+            "title": "其他行业",
+            "status": 1,
+            "create_time": 1637987199,
+            "update_time": 0
+        }
+    ]
+}

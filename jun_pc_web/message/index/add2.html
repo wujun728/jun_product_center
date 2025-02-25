@@ -1,0 +1,326 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">发送消息</h3>
+	{if condition="$id eq 0"}
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray-2">接收人类型</td>
+			<td>
+				<input type="radio" name="type"  lay-filter="type" value="1" title="同事" checked>
+				<input type="radio" name="type"  lay-filter="type" value="2" title="部门">
+				<input type="radio" name="type"  lay-filter="type" value="3" title="岗位">
+				<input type="radio" name="type"  lay-filter="type" value="4" title="全部">
+			</td>
+		</tr>
+		<tr id ="person">
+			<td class="layui-td-gray">收件人<font>*</font></td>
+			<td>
+				<input type="text" name="person_name" value="" lay-verify="required" lay-reqText="请选择收件人" placeholder="请选择收件人" readonly class="layui-input">
+				<input type="hidden" name="uids" value="">
+				<input type="hidden" name="dids" value="">
+				<input type="hidden" name="pids" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">主题<font>*</font></td>
+			<td>
+				<input type="text" name="title" value="" lay-verify="required" lay-reqText="请输入消息主题" placeholder="请输入消息主题" class="layui-input" lay-verify="required">
+			</td>
+		</tr>
+		<tr><td class="layui-td-gray">发送内容<font>*</font></td>
+			<td>
+				<textarea name="content" placeholder="请输入消息内容" class="layui-textarea" style="height: 200px;" lay-verify="required" lay-reqText="请输入消息内容"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray"><div class="layui-input-inline">附件</div> <div class="layui-input-inline"><button type="button" class="layui-btn layui-btn-xs" id="upFile"><i class="layui-icon"></i></button></div></td>
+			<td colspan="5">
+				<div class="layui-row" id="fileList">
+					<input type="hidden" data-type="file" name="file_ids" value="">
+				</div>
+			</td>
+		</tr>
+	</table>
+	{else/}
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray-2">接收人类型</td>
+			<td>
+				<input type="radio" name="type"  lay-filter="type" value="1" title="同事" {eq name="$detail.type" value="1"}checked{/eq}>
+				<input type="radio" name="type"  lay-filter="type" value="2" title="部门" {eq name="$detail.type" value="2"}checked{/eq}>
+				<input type="radio" name="type"  lay-filter="type" value="3" title="岗位" {eq name="$detail.type" value="3"}checked{/eq}>
+				<input type="radio" name="type"  lay-filter="type" value="4" title="全部" {eq name="$detail.type" value="4"}checked{/eq}>
+			</td>
+		</tr>
+		<tr id ="person" {eq name="$detail.type" value="4"}style="display:none;"{/eq}>
+			<td class="layui-td-gray">收件人<font>*</font></td>
+			<td>
+				{eq name="$detail.type" value="3"}
+				<input type="text" name="person_name" value="0" lay-verify="required" lay-reqText="请选择收件人" placeholder="请选择收件人" readonly class="layui-input">
+				{else/}
+				<input type="text" name="person_name" value="{$detail.person_name}" lay-verify="required" lay-reqText="请选择收件人" placeholder="请选择收件人" readonly class="layui-input">
+				{/eq}
+				<input type="hidden" name="uids" value="{$detail.type_user}">
+				<input type="hidden" name="dids" value="{$detail.type_user}">
+				<input type="hidden" name="pids" value="{$detail.type_user}">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">主题<font>*</font></td>
+			<td>
+				<input type="text" name="title" value="{$detail.title}" lay-verify="required" lay-reqText="请输入消息主题" placeholder="请输入消息主题" class="layui-input" lay-verify="required">
+			</td>
+		</tr>
+		<tr><td class="layui-td-gray">发送内容<font>*</font></td>
+			<td>
+				<textarea name="content" placeholder="请输入消息内容" class="layui-textarea" style="height: 200px;" lay-verify="required" lay-reqText="请输入消息内容">{$detail.content}</textarea>
+				{if condition="($detail.fid > 0)"}		
+				<table class="layui-table" style="margin-top:10px">
+				<tr>
+					<td class="layui-td-gray-2">引用消息内容</td>
+					<td>{$detail.from_content}</td>
+				</tr>
+				{notempty name="$detail.from_file_array"}
+				<tr>
+					<td class="layui-td-gray" style="vertical-align:top">引用消息附件</td>
+					<td>
+						<table class="layui-table" style="max-width: 680px;">
+							<thead>
+								<th width="70%">文件名</th>
+								<th width="20%" style="text-align:center">文件大小</th>
+								<th width="10%" style="text-align:center">操作</th>
+							</thead>
+							<tbody>							
+								{volist name="$detail.from_file_array" id="vo"}
+									<tr>
+										<td>{$vo.name}</td>
+										<td style="text-align: center;">{$vo.filesize/1048576|round=2}MB</td>
+										<td style="text-align: center;"><a class="layui-btn layui-btn-xs layui-btn-normal" href="{$vo.filepath}" target="_blank">下载</a></td>
+									</tr>
+								{/volist}
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				{/notempty}
+				</table>
+				{/if}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray"><div class="layui-input-inline">附件</div> <div class="layui-input-inline"><button type="button" class="layui-btn layui-btn-xs" id="upFile"><i class="layui-icon"></i></button></div></td>
+			<td colspan="5" style="line-height:inherit">
+				<div class="layui-row" id="fileList">
+					<input type="hidden" name="file_ids" data-type="file" value="{$detail.file_ids}">
+					{notempty name="$detail.file_ids"}
+					{volist name="$detail.file_array" id="vo"}
+					<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo)}</div>
+					{/volist}
+					{/notempty}
+				</div>
+			</td>
+		</tr>
+	</table>
+	{/if}
+	<div class="py-3">
+		<input type="hidden" value="{$id}" name="id">
+		<input type="hidden" value="{$fid}" name="fid">
+		<button class="layui-btn" lay-submit="" lay-filter="draftform">存为草稿</button>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即发送</button>
+	</div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','employeepicker','dtree','oaTool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,table=layui.table,laydate = layui.laydate,employeepicker = layui.employeepicker,dtree = layui.dtree,oaTool = layui.oaTool;
+		oaTool.addFile({
+			btn: 'upFile',
+			box: 'fileList'
+		});
+		//监听保存到草稿并发送
+		form.on('submit(webform)', function(data){
+			$.ajax({
+				url: "/message/index/save",
+				type:'post',
+				data:data.field,
+				success:function(e){
+					if(e.code==0){
+						layer.msg('消息保存成功，正在发送中...');
+						$.ajax({
+							url: "/message/index/send",
+							type:'post',
+							data:{'id':e.data},
+							success: function (e) {
+								layer.msg(e.msg);
+								if (e.code == 0) {
+									tool.sideClose(1000);
+								}
+							}
+						})
+					}else{
+					  layer.msg(e.msg);
+					}
+				}
+			})
+			return false;
+		});
+		  
+		//监听保存到草稿
+		form.on('submit(draftform)', function(data){
+			$.ajax({
+				url: "/message/index/save",
+				type:'post',
+				data:data.field,
+				success: function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						tool.sideClose(1000);
+					}
+				}
+			})
+			return false;
+		});
+
+		//选择收件人类型
+		form.on('radio(type)', function (data) {
+			$('[name="person_name"]').val('');
+			$('[name="dids"]').val('');
+			$('[name="uids"]').val('');
+			$('[name="pids"]').val('');
+			if(data.value==4){
+				$('#person').hide();
+				$('[name="person_name"]').val('0');
+			}
+			else{
+				$('#person').show();
+				$('[name="person_name"]').val('');
+			}
+		});	
+
+		//选择对应人
+		$('[name="person_name"]').on('click',function(){
+			type = $("input[name='type']:checked").val();
+			if(type == 1){
+			   addEmployee();
+			}else if(type == 2){
+			   selectDepartment();
+			}else if(type == 3){
+			  selectAuditor();
+			}
+		});
+
+		//添加人员		
+		function addEmployee(){
+			var ids=$('[name="uids"]').val(),names=$('[name="person_name"]').val(),idsArray=[],namesArray=[];
+			if(ids!=''){
+				idsArray=ids.split(',');
+				namesArray=names.split(',');
+			}
+			employeepicker.init({
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				ids:idsArray,
+				names:namesArray,
+				callback:function(ids,names){
+					$('[name="uids"]').val(ids.join(',')),
+					$('[name="person_name"]').val(names.join(','));
+				}
+			});
+		}
+
+		//选择部门		
+		function selectDepartment(){				
+			var tpl='<div style="width:382px; height:338px;overflow-y: auto;">\
+						<div id="checkemployeetree" style="padding:10px 0;"></div>\
+					</div>';
+			layer.open({
+				type:1,
+				title:'选择部门',
+				area:['400px','450px'],
+				content:tpl,
+				success:function(){
+					$.ajax({
+						url: "/api/index/get_department_tree",
+						type:'get',
+						success:function(res){					
+							dtree.render({
+								elem: "#checkemployeetree",
+								data: res.trees,
+								icon: "2",  //修改二级图标样式
+								checkbarType: "no-all", // 默认就是all，其他的值为： no-all  p-casc   self  only
+								checkbar: true  //开启复选框
+							});
+						}
+					});
+				},
+				btn: ['确定'],
+				btnAlign:'c',
+				yes: function(){
+					var ids=[],names=[];
+					var check=dtree.getCheckbarNodesParam("checkemployeetree");
+					if(check.length==0){
+						layer.msg('请选择部门');
+						return;
+					}
+					for(var m=0; m<check.length; m++){
+						ids.push(check[m].nodeId);
+						names.push(check[m].context);
+					}
+					$('[name="person_name"]').val(names.join(','));
+					$('[name="dids"]').val(ids.join(','));
+					layer.closeAll();
+				}
+			})	
+		}
+
+		//选择角色	
+		function selectAuditor(){
+			layer.open({
+				title:'选择岗位',
+				type:1,
+				area:['360px','480px'],
+				content:'<div style="padding:5px 12px"><div id="vaeservice"></div></div>',
+				success:function(){
+					tableid=table.render({
+						elem: '#vaeservice'
+						,url: "/api/index/get_position"
+						,page: false //开启分页
+						,cols: [[
+						   {type:'checkbox',title: '选择'}
+						  ,{field:'id', width:80, title: '编号', align:'center'}
+						  ,{field:'name',title: '岗位名称'}
+						]]
+					  });			
+				},
+				btn: ['确定'],
+				btnAlign:'c',
+				yes: function(){
+					var checkStatus = table.checkStatus(tableid.config.id);
+					var data = checkStatus.data,val = [],title=[];
+					if(data.length>0){
+						for ( var i = 0; i <data.length; i++){
+							val.push(data[i].id);
+							title.push(data[i].name);
+						}
+						$('[name="person_name"]').val(title.join(','));
+						$('[name="pids"]').val(val.join(','));
+						layer.closeAll();
+					}else{
+						layer.msg('请选择角色');
+						return;
+					}
+				}
+			})		
+		}
+		
+	}		
+	</script>
+{/block}
+<!-- /脚本 -->
