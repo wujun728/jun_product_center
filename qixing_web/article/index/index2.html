@@ -1,0 +1,84 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t">
+		<div class="layui-input-inline">
+			<select name="cate_id">
+				<option value="">请选择知识文章分类</option>
+				{volist name=":set_recursion(article_cate())" id="v"}
+				<option value="{$v.id}">{$v.title}</option>
+				{/volist}
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="keywords" placeholder="标题/分类/描述/内容" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-search-reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="barDemo">
+<div class="layui-btn-group"><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span></div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','tablePlus'];
+	function gouguInit() {
+		var table = layui.tablePlus, tool = layui.tool ,form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '文章列表',
+			url: "/article/index/index", //数据接口
+			cols: [
+				[ //表头
+					{
+						field: 'id',
+						title: '编号',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'sort',
+						title: '排序',
+						align: 'center',
+						width: 66
+					}, {
+						field: 'cate_title',
+						title: '分类',
+						align: 'center',
+						width: 120
+					}, {
+						field: 'title',
+						title: '文章标题',
+						templet: '<div><a data-href="/article/index/view/id/{{d.id}}.html" class="side-a">{{d.title}}</a></div>'
+					},{
+						field: 'read',
+						title: '阅读量',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'user',
+						title: '发布人',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'department',
+						title: '部门',
+						align: 'center',
+						width: 100
+					}
+				]
+			]
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

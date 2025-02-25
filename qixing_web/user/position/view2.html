@@ -1,0 +1,79 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<style>
+.left-note{font-weight:800; vertical-align:top; padding-top:28px!important; text-align:center}
+.left-note .layui-checkbox-disabled span {color: #808080!important;}
+
+.layui-form-checked.layui-checkbox-disabled i{background-color:#ababab!important;color: #ffffff!important;border-color:#ababab!important;}
+.layui-form-checked.layui-checkbox-disabled[lay-skin=primary] i{background-color:#ababab!important;}
+.right-note .layui-checkbox-disabled span {color: #808080!important;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">岗位信息</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">岗位名称</td>
+			<td>
+				{$detail.title}
+			</td>
+			<td class="layui-td-gray-2">岗位工时单价</td>
+			<td>
+				{$detail.work_price}
+			</td>
+			<td class="layui-td-gray">状态</td>
+			<td>
+				{eq name="$detail.status" value="1" }正常{/eq}
+				{eq name="$detail.status" value="0" }禁止登录{/eq}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">用户角色</td>
+			<td colspan="5">
+				{volist name="$group" id="v"}
+					{eq name="$v.checked" value="1" }{$v.title},{/eq} 
+				{/volist}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">岗位备注</td>
+			<td colspan="5">
+				{$detail.remark}
+			</td>
+		</tr>
+	</table>
+	<h3 class="py-3">岗位权限</h3>
+	<table class="layui-table layui-table-form">
+		{volist name="role_rule" id="vo"}
+		<tr>
+			<td class="left-note">
+			  <input type="checkbox" disabled value="{$vo.id}" title="{$vo.title}" {eq name="$vo.checked" value="true" }checked{/eq}>
+			</td>
+			{notempty name="vo.children"}
+				<td class="right-note">
+					<div style="padding:0 0 0 10px;">
+					{volist name="vo.children" key="k" id="voo"}
+						<div class="checkbox16" style="padding:10px 0;">
+							<input type="checkbox" disabled lay-filter="rule" name="rule[]" value="{$voo.id}" lay-skin="primary" title="{$voo.title}" {eq name="$voo.checked" value="true" }checked{/eq}>
+						</div>
+						{notempty name="voo.children"}
+							<div style="padding:0 0 3px; {if condition='$k != count($vo.children)'}margin-bottom:3px; padding-bottom:16px; border-bottom:1px solid #eee;{/if}">
+							{volist name="voo.children" id="vooo"}
+								<div class="layui-input-inline" style="margin-right:10px;">
+									<input type="checkbox" disabled data-rule="{$voo.id}" name="rule[]" value="{$vooo.id}" lay-skin="primary" title="{$vooo.title}" {eq name="$vooo.checked" value="true" }checked{/eq}>
+								</div>
+							{/volist}
+							</div>
+						{/notempty}
+					{/volist}
+					</div>
+				</td>
+			{/notempty}
+		</tr>
+		{/volist}
+	</table>
+</form>
+{/block}
+<!-- /主体 -->

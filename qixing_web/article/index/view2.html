@@ -1,0 +1,134 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+<link rel="stylesheet" href="{__GOUGU__}/third_party/prism/prism.css"/>
+<style>
+.text-detial-ops{line-height: 30px; color:#999; font-size: 12px; padding: 12px 0;}
+.text-detial-ops span{margin-right: 20px;}
+.text-detial-ops a{margin-right:10px;}
+.text-detial-content{padding: 8px 0; color:#333; word-break: break-all; border-top:1px solid #e8e8e8;font-size: 16px!important; line-height: 1.72!important;}
+.text-detial-content p{padding: 8px 0;}
+.text-detial-content img{max-width:98%!important; margin:0 auto; display:block; border: 1px solid #e6e6e6; -webkit-box-shadow: 0 2px 6px rgba(26,26,26,.08); box-shadow: 0 2px 6px rgba(26,26,26,.08); border-radius: 4px;}
+.text-detial-content h1,.text-detial-content h2,.text-detial-content h3,.text-detial-content h4,.text-detial-content h5{margin-top:10px;}
+.text-detial-content a{color:#186AF2; font-style:italic;}
+.text-detial-content a:hover{text-decoration:underline;}
+
+.text-detial-content p code,.blog-detial-content pre{margin:0 3px;font-size: 14px; font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #f6f6f6; padding: 10px; border-radius: 2px;}
+.text-detial-content p code{border: 1px solid #eee;padding: 2px 4px;}
+.text-detial-content table {border-collapse: collapse; border-spacing: 0; display: block; width: 100%; overflow: auto;  word-break: normal;word-break: keep-all; margin-top: 0;margin-bottom: 16px;}
+.text-detial-content table tr {background-color: #fff;border-top: 1px solid #ccc;}
+.text-detial-content table tr:nth-child(2n) {background-color: #f8f8f8;}
+.text-detial-content table td, .blog-detial-content table th { padding: 6px 12px;border: 1px solid #ddd; font-size:14px; }
+.text-detial-content table th {font-weight: 800;}
+.text-detial-content li {list-style: initial;margin-left: 20px;}
+:not(pre)>code[class*=language-], pre[class*=language-]{background:#fff!important;border:1px solid #e8e8e8!important; border-radius:3px;}
+
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+</style>
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-4">
+	<h1>{$detail.title}</h1>
+	<div class="text-detial-ops">
+		<span>发表于：{$detail.create_time | date='Y-m-d H:i:s'}</span>
+		<span>发布人：{$detail.user}</span>
+		<span>部门：{$detail.department}</span>
+		<span>分类：{$detail.cate_title}</span>
+	</div>
+	<div class="text-detial-content">
+	{$detail.content|raw}
+	</div>
+	{notempty name="$detail.file_ids"}
+	<h3 class="py-3">相关附件</h3>
+	<div class="layui-row" id="fileBox">
+		{volist name="$detail.fileArray" id="vo"}
+		<div class="layui-col-md4" id="uploadImg{$vo.id}">{:file_card($vo,'view')}</div>
+		{/volist}
+	</div>
+	{/notempty}
+</div>
+<div class="px-4" id="commentBox">
+	<h3 class="py-3">相关评论</h3>	
+	{volist name="$detail.comment" id="vo"}
+	<div class="pt-3">
+		<div class="comment-item py-3 border-t">
+			<div class="comment-avatar" title="{vo.name}">
+				<img src="{$vo.thumb}" alt="{vo.name}" class="comment-image">
+			</div>
+			<div class="comment-body">
+				<div class="comment-meta">
+					<strong class="comment-name">{$vo.name}</strong><span class="ml-2 gray">{$vo.create_time}{$vo.update_time}</span>
+					{eq name="$vo.admin_id" value="$login_admin.id"}
+						<button class="layui-btn layui-btn-xs layui-btn-danger layui-del" data-cid="{$vo.id}">删除</button>
+					{/eq}
+				</div>
+				<div class="comment-content py-2">{$vo.content}</div>
+			</div>
+		</div>
+	</div>
+	{/volist}	
+	
+	<form class="layui-form">
+		<textarea name="content" placeholder="请输入内容" class="layui-textarea" id="container"></textarea>
+		<input type="hidden" name="article_id" value="{$detail.id}">
+		<div class="py-3">
+		  <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">提交评论</button>
+		</div>
+	</form>
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script src="{__GOUGU__}/third_party/prism/prism.js"></script>
+<script>
+const moduleInit = ['tool','oaTool'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool;	
+    //监听提交
+    form.on('submit(webform)', function (data) {
+		if (data.field.content == '') {
+			layer.msg('请先输入评论内容');
+			return false;
+		}
+		
+        let callback = function (e) {
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				setTimeout(function () {
+					location.reload();
+				}, 1000)
+			}
+		}
+		tool.post("/article/api/add_comment", data.field, callback);
+		return false;
+    });
+	
+	$('#commentBox').on('click','.layui-del', function () {
+		let cid =$(this).data('cid');
+		layer.confirm('确定要删除该评论吗？', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code==0){
+					setTimeout(function () {
+						location.reload();
+					}, 1000)
+				}
+			}
+			let postData = { "id": cid };
+			tool.delete("/article/api/delete_comment", postData, callback);
+		});
+	})
+
+  }
+</script>
+{/block}
+<!-- /脚本 -->

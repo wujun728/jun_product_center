@@ -1,0 +1,29 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1,
+    "data": [
+        {
+            "id": 3,
+            "title": "个人法国人",
+            "cid": 1006,
+            "contact_id": 7,
+            "services_id": 0,
+            "stage": 1,
+            "content": "个人",
+            "discovery_time": "2023-07-25",
+            "expected_time": "2023-07-26",
+            "expected_amount": "15648.00",
+            "admin_id": 4,
+            "belong_uid": 4,
+            "assist_ids": "",
+            "create_time": "1970-01-01 08:32:50",
+            "update_time": null,
+            "delete_time": 0,
+            "customer": "济南",
+            "belong_name": "风采铃",
+            "stage_name": "立项评估",
+            "services_name": null
+        }
+    ]
+}

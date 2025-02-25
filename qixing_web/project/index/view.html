@@ -1,0 +1,1695 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/static/assets/css/gougu.css?v=1.0.24" media="all">
+
+
+<style>
+.hover-view i,.hover-edit i{margin-left:4px; font-weight:800; cursor:pointer; opacity:0}
+.hover-edit.hover-on i{opacity:1}
+.layui-tab-title .layui-this{background-color:#fff;}
+.layui-tab-card,.layui-card{box-shadow:0 0 0 0 rgb(0 0 0 / 10%); border-radius:0;}
+.layui-card-tips {color: #969696;}
+.layui-card-value {padding: 4px 0 16px;font-size: 18px;color: #1E9FFF;}
+
+.log-timeline{ position: relative; min-height:600px; padding-left: 48px; background-color:#fff;}
+.log-timeline:after {content: ""; position: absolute; top: 0; left: 24px; width: 1px; height: 100%; background: #e3e9ed;}
+.log-timeline dl{padding-bottom: 8px; position: relative;}
+.log-timeline dt{font-size: 16px; line-height: 2.4; color: #323232; font-weight:600}
+.log-timeline dd{font-size: 14px; line-height: 1.6; padding:5px 0}
+.log-timeline .date-second-point{width: 10px; height: 10px; display: block; border-radius: 50%; border: 3px solid #FBBC05; background: #fff; position: absolute; z-index: 99; left:-32px; top:9px}
+.log-timeline .log-thumb{width: 24px; height: 24px; border-radius: 50%; margin-right:4px;}
+.log-timeline .open-a{margin:0 4px;}
+.log-item i{font-weight:800; color:#323232}
+.log-content strong{margin:0 4px; color:#323232}
+.layui-timeline-item{color:#c9c9c9; padding-bottom:8px}
+.layui-timeline-item.delete_0{color:#646464;}
+
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
+
+.check-items{overflow-x: auto; padding: 2px 0;}
+.flow-flex-row {box-direction: row;
+	box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.flow-flexbox { width: 100%;text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    box-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+	flex-wrap: wrap;
+}
+.check-item{width: auto; -ms-flex-negative: 0; flex-shrink: 0; padding:4px 0;}
+.check-item i{font-size:20px; margin-right:3px;}
+.check-item span{color:#999;margin:0 1px;}
+.layui-icon[data-ok]{color:#34a853}
+.layui-icon[data-no]{color:#FF5722;}
+.layui-icon[data-on]{color:#4285f4;}
+.check-item-status{color:#969696; font-size:12px; margin-left:3px;}
+.check-item:last-child .layui-icon-right{display:none;}
+
+tr[data-level="1"] td{
+  background-color: #f9f9f9;
+}
+tr[data-level="2"] td{
+  background-color: #fbfbfb;
+}
+tr[data-level="2"] td{
+  background-color: #fdfdfd;
+}
+</style>
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+	<div class="p-3">
+		<h2 class="pb-3 hover-edit">
+			<span class="font20" id="name_1051" data-val="">OA办公软件</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-id="1051" data-name="name"></i>
+		</h2>
+		<div>
+			<span class="layui-badge layui-bg-gray">#P1051</span>
+			<span class="mx-2">叶小钗</span>
+			<span class="gray">创建于2023-10-13<span id="editTips">，最近更新于 2023-11-30</span></span>
+						<span class="layui-btn layui-btn-xs layui-btn-danger ml-4" id="delProject"><i
+					class="layui-icon">&#xe640;</i>删除</span>
+					</div>
+	</div>
+
+	<div class="layui-tab layui-tab-card" style="margin:0;" lay-filter="project" id="projectTab">
+		<ul class="layui-tab-title">
+			<li class="layui-this" data-load="true">项目概览</li>
+			<li data-load="">项目任务</li>
+			<li data-load="">工作记录</li>
+			<li data-load="">项目文档</li>
+			<li data-load="">项目人员</li>
+			<li data-load="">项目动态</li>
+			<li data-load="">项目评论</li>
+		</ul>
+		<div class="layui-tab-content" style="padding:0">
+			<div class="layui-tab-item layui-show">
+				<div class="layui-card border-b">
+	<div class='layui-card-body hover-edit'>
+		<div class="py-1">
+			<span class="gray">项目状态：</span>
+			<span class="layui-color-2" id="status_1051"
+			data-val="2">『进行中』</span>
+			<span class="gray" style="margin-left:32px">负责人：</span>
+			<span id="director_uid_1051" data-val="5">玉辞心</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-id="1051" data-name="director_uid"></i>
+			<span class="gray" style="margin-left:32px">项目成员：</span>玉辞心,叶小钗,照世明灯,屈世途		</div>
+		<div class="py-1">
+			<span class="gray">计划完成周期：</span>
+			<span id="start_time_1051" data-val="">2023-10-13</span>
+			<i class="iconfont icon-wodedianping" title="修改计划开始日期" 	data-name="start_time"></i> 至&nbsp;&nbsp;&nbsp;&nbsp; <span id="end_time_1051"
+				data-val="">2023-12-31</span><i class="iconfont icon-wodedianping"
+				title="修改计划结束日期" data-name="end_time"></i>
+							<span class="gray" style="margin-left:32px">关联合同：</span>
+				<span id="contract_id_1051" data-val="0"></span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-id="1051" data-name="contract_id"></i>
+					</div>
+		<div class="py-1">
+			<span class="gray">项目简介：</span>
+			<span id="content_1051" data-val="OA办公软件">OA办公软件</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-id="1051" data-name="content"></i>
+		</div>
+	</div>
+</div>
+
+<div class="layui-card border-y">
+	<div class="layui-card-header" style="height:45px;">
+		<div class="layui-row">
+			<div class="layui-col-md6">
+				<strong>项目阶段</strong>
+			</div>
+						<div class="layui-col-md6" style="text-align:right">
+				<a href="/project/index/edit/id/1051" class="layui-btn layui-btn-normal layui-btn-sm">编辑项目阶段</a>
+			</div>
+					</div>
+	</div>
+		<div class="p-3 border-b">
+		<span class="gray">当前阶段：</span>立项阶段		<span class="gray" style="margin-left:20px">负责人：</span>叶小钗		<span class="gray" style="margin-left:20px">成员：</span>符应女,照世明灯		<span class="gray" style="margin-left:20px">周期：</span>2023-10-13 到 2023-10-20		<div class="pt-3">
+			<span class="layui-btn layui-btn-normal layui-btn-sm" data-event="step" data-check="1">确认</span>
+					</div>
+			</div>
+		<div class="px-3 py-1 border-b">
+		<div class="flow-flexbox check-items flow-flex-row">
+						<div class="flow-flexbox check-item flow-flex-row">
+								<i class="layui-icon layui-icon-username" data-on=""></i>
+								<div class="check-item-name">立项阶段</div>
+				<div class="check-item-status">叶小钗</div>
+				<span class="layui-icon layui-icon-right"></span>
+			</div>
+						<div class="flow-flexbox check-item flow-flex-row">
+								<i class="layui-icon layui-icon-time"></i>
+								<div class="check-item-name">测试</div>
+				<div class="check-item-status">谈无欲</div>
+				<span class="layui-icon layui-icon-right"></span>
+			</div>
+					</div>
+	</div>
+	<div class="p-3">
+		<p><strong>阶段流转记录</strong></p>
+				<div class="layui-data-none">暂无记录</div>
+			</div>
+</div>
+
+<div class="layui-card border-y">
+	<div class="layui-card-header" style="height:45px;">
+		<div class="layui-row">
+			<div class="layui-col-md6">
+				<strong>项目附件</strong>
+			</div>
+			<div class="layui-col-md6" style="text-align:right">
+				<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="uploadBtn">上传附件</button>
+			</div>
+		</div>
+	</div>
+	<div class="layui-row p-2" id="fileBox">
+				<div class="layui-data-none">暂无附件</div>
+			</div>
+</div>
+
+<div class="layui-card border-y">
+	<div class="layui-card-header" style="height:45px;">
+		<div class="layui-row">
+			<div class="layui-col-md6">
+				<strong>关联链接</strong>
+			</div>
+			<div class="layui-col-md6" style="text-align:right">
+				<button type="button" class="layui-btn layui-btn-sm layui-btn-sm2" id="linkBtn">新增链接</button>
+			</div>
+		</div>
+	</div>
+	<div class="layui-card-body">
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th width="50%">链接URL</th>
+					<th width="30%" style="text-align:center">链接说明</th>
+					<th width="10%" style="text-align:center">添加人</th>
+					<th width="10%" style="text-align:center">操作</th>
+				</tr>
+			</thead>
+			<tbody id="linkList">
+								<tr>
+					<td><a href="https://www.baidu.com" target="_blank">https://www.baidu.com</a></td>
+					<td>百度</td>
+					<td style="text-align: center;">叶小钗</td>
+					<td style="text-align: center;">
+						<div class="layui-btn-group" style="width:66px">
+							<button type="button" class="layui-btn layui-btn-xs link-edit" data-id="9" data-url="https://www.baidu.com" data-desc="百度"><i class="layui-icon"></i></button>
+							<button type="button" class="layui-btn layui-btn-danger layui-btn-xs link-delete" data-id="9"><i class="layui-icon"></i></button>
+						</div>
+					</td>
+				</tr>
+							</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="layui-row mb-3 border-y">
+	<div class="layui-col-xs6 layui-col-md4">
+		<div class="layui-card">
+			<div class="layui-card-header">
+				<strong>项目概况</strong>
+			</div>
+			<div class="p-3">
+				<dl>
+					<dt>任务 <span class="gray">(已完成/全部)</span></dt>
+					<dd class="layui-card-value" title="已完成/总任务">0 / 1</dd>
+				</dl>
+			</div>
+			<div class="pt-2 px-3">
+				<dl>
+					<dt>项目工时 <span class="gray">(实际/计划)</span></dt>
+					<dd class="layui-card-value" title="实际工时/计划工时">0.5 / 2</dd>
+				</dl>
+			</div>
+			<div class="pt-2 px-3">
+				<dl>
+					<dt>工作记录</dt>
+					<dd class="layui-card-value" title="工作记录数">1</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-xs6 layui-col-md8">
+		<div class="layui-card border-l">
+			<div class="layui-card-header">
+				<strong>项目进度</strong>
+			</div>
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md6">
+						<div id="progress" class="gougu-data-none" style="width:100%; height:200px;"></div>
+					</div>
+					<div class="layui-col-md6">
+						<div id="delay" class="gougu-data-none" style="width:100%; height:200px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="layui-card border-y">
+	<div class="layui-card-header">
+		<strong>项目燃尽图</strong>
+	</div>
+	<div class="layui-card-body">
+		<div id="cross" class="gougu-data-none" style="width:100%; height:360px;"
+			data-tips="任务数：1，已完成：0，未完成：1">
+		</div>
+	</div>
+</div>
+
+<div class="layui-row border-y">
+	<div class="layui-col-xs6 layui-col-md6">
+		<div class="layui-card  border-r">
+			<div class="layui-card-header">
+				<strong>任务分配情况</strong>
+			</div>
+			<div class="layui-card-body">
+				<div id="plan" class="gougu-data-none" style="width:100%; height:150px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="layui-col-xs6 layui-col-md6">
+		<div class="layui-card">
+			<div class="layui-card-header">
+				<strong>工时登记情况</strong>
+			</div>
+			<div class="layui-card-body">
+				<div id="work" class="gougu-data-none" style="width:100%; height:150px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+function overview(){
+	let form = layui.form,tool = layui.tool,table = layui.table, comment = layui.oaComment, edit = layui.oaEdit,oaTool = layui.oaTool;
+	$('.hover-edit').hover(function () {
+		$(this).addClass('hover-on');
+	}, function () {
+		$(this).removeClass('hover-on');
+	})
+
+	$('.hover-edit').on('click', 'i', function () {
+		let name = $(this).data('name');
+		let show_txt = $('#' + name + '_' + project_id).text().replace(/[\r\n\t]/g, "");
+		let real_txt = $('#' + name + '_' + project_id).data('val');
+		if (real_txt === '') {
+			real_txt = show_txt;
+		}
+		editShow(project_id, name, show_txt, real_txt);
+	})
+
+	let loading = false;
+	let editPost = function (id, name, show_val, real_val) {
+		let callback = function (e) {
+			layer.closeAll();
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				setTimeout(function () {
+					location.reload();
+				}, 1000)
+			}
+		}
+		let postData = { id: id };
+		postData[name] = real_val;
+		tool.post("/project/index/edit", postData, callback);
+	}
+
+	function editShow(id, name, show_txt, real_txt) {
+		if (loading == true) {
+			return false;
+		}
+		if (name == "name") {
+			edit.text(id, name, real_txt, editPost);
+		}
+		if (name == "start_time" || name == "end_time") {
+			edit.date(id, name, real_txt, editPost);
+		}
+		if (name == "director_uid") {
+			edit.employee_one(id, name, show_txt, real_txt, editPost);
+		}
+		if (name == "status") {
+			edit.dropdown(id, name, real_txt, opsData[name], editPost);
+		}
+		if (name == "content") {
+			edit.textarea(id, name, real_txt, editPost);
+		}
+		if (name == "contract_id") {
+			layer.open({
+				title: '选择合同',
+				area: ['600px', '580px'],
+				type: 1,
+				content: '<div class="picker-table">\
+					<form class="layui-form pb-2">\
+						<div class="layui-input-inline" style="width:480px;">\
+						<input type="text" name="keywords"  placeholder="合同名称" class="layui-input" autocomplete="off" />\
+						</div>\
+						<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="search_form">提交搜索</button>\
+					</form>\
+					<div id="contractTable"></div></div>',
+				success: function () {
+					contractTable = table.render({
+						elem: '#contractTable'
+						, url: '/contract/api/get_contract'
+						, page: true //开启分页
+						, limit: 10
+						, cols: [[
+							{ type: 'radio', title: '选择' }
+							, { field: 'id', width: 100, title: '编号', align: 'center' }
+							, { field: 'name', title: '合同名称' }
+						]]
+					});
+					//项目搜索提交
+					form.on('submit(search_form)', function (data) {
+						contractTable.reload({ where: { keywords: data.field.keywords }, page: { curr: 1 } });
+						return false;
+					});
+				},
+				btn: ['确定'],
+				btnAlign: 'c',
+				yes: function () {
+					var checkStatus = table.checkStatus(contractTable.config.id);
+					var data = checkStatus.data;
+					if (data.length > 0) {
+						let callback = function (e) {
+							layer.closeAll();
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								setTimeout(function () {
+									location.reload();
+								}, 1000)
+							}
+						}
+						let postData = { id: id, contract_id:data[0].id, customer_id:data[0].customer_id };
+						tool.post("/project/index/edit", postData, callback);
+					}
+					else {
+						layer.msg('请先选择合同');
+						return false;
+					}
+				}
+			})
+		}
+	}	
+
+	$('#delProject').on('click', function () {
+		layer.confirm('确定要删除该项目吗？请慎重', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code==0){
+					setTimeout(function () {
+						location.href='/project/index/index';
+					}, 1000)
+				}
+			}
+			let postData = { "id": project_id };
+			tool.delete("/project/index/delete", postData, callback);
+		});
+	})
+	
+	$('body').on('click','[data-event="step"]',function(){
+		let check = $(this).data('check');
+		let callback = function (e) {
+			layer.msg(e.msg);
+			if(e.code==0){
+				parent.layui.pageTable.reload();
+				setTimeout(function(){
+					location.reload();
+				},2000)
+			}
+		}
+		if(check == 2){
+			layer.open({
+				type: 1,
+				title: '请输入退回的原因或理由',
+				area: ['800px', '360px'],
+				content: '<div style="padding:5px;"><textarea class="layui-textarea" id="remarkTextarea" style="width: 100%; height: 240px;"></textarea></div>',
+				btnAlign: 'c',
+				btn: ['提交保存'],
+				yes: function () {
+					let remark = $("#remarkTextarea").val();
+					if (remark != '') {
+						tool.post("/project/api/step_check", {id: project_id,check:check,content:remark}, callback);
+					} else {
+						layer.msg('请输入原因或理由');
+					}
+				}
+			})
+		}
+		else{
+			layer.confirm('确认已完成该阶段工作，进入下个阶段？', {
+				icon: 3,
+				title: '提示'
+			},
+			function(index) {
+				tool.post("/project/api/step_check", {id: project_id,check:check}, callback);
+			})
+		}
+	});
+
+	oaTool.addFile({
+		type:1,
+		isSave:true,
+		ajaxDelete:function(file_id){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {						
+					$('#fileItem' + file_id).remove();
+				}
+			}
+			tool.delete("/project/api/delete_file", {id: file_id}, callback);			
+		},
+		ajaxSave:function(res){
+			let callback = function (e) {
+				layer.msg('上传成功');
+				setTimeout(function(){
+					location.reload();
+				},2000)	
+			}
+			tool.post("/project/api/add_file", { 'topic_id': project_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'project' }, callback);
+		}
+	});
+
+	$('#linkBtn').on('click', function () {
+		comment.addLink(0, project_id, 'project', '', '');
+	})
+	$('#linkList').on('click', '.link-edit', function () {
+		let id = $(this).data('id');
+		let url = $(this).data('url');
+		let desc = $(this).data('desc');
+		comment.addLink(id, project_id, 'project', url, desc);
+	})
+	$('#linkList').on('click', '.link-delete', function () {
+		let id = $(this).data('id');
+		layer.confirm('确定要删除该链接吗?', { icon: 3, title: '提示' }, function (index) {
+			let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				setTimeout(function(){
+					location.reload();
+				},2000)	
+			}
+			let postData = { "id": id };
+			tool.delete("/project/api/delete_link", postData, callback);
+		});
+	})
+
+	let callback = function (res) {
+		if (res.data.date_tasks instanceof Array == false) {
+			optionA.title.text = res.data.task_pie.ok_lv + '%';
+			optionA.series = [
+				{
+					type: 'pie',
+					radius: ['60%', '80%'],
+					center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						show: false
+					},
+					data: [
+						{ value: res.data.task_pie.count - res.data.task_pie.count_ok, name: '待处理' },
+						{ value: res.data.task_pie.count_ok, name: '已完成' }
+					]
+				}
+			];
+			optionA && progressChart.setOption(optionA);
+
+			optionB.title.text = res.data.task_pie.delay_lv + '%';
+			optionB.series = [
+				{
+					type: 'pie',
+					radius: ['60%', '80%'],
+					center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						show: false
+					},
+					data: [{
+						value: res.data.task_pie.delay,
+						name: '延迟',
+						itemStyle: {
+							color: "#ED6666",
+						}
+					},
+					{
+						value: (res.data.task_pie.count - res.data.task_pie.delay),
+						name: '未延迟',
+						itemStyle: {
+							color: "#91CC75",
+						}
+					}
+					]
+				}
+			];
+			optionB && delayChart.setOption(optionB);
+
+			var dataD = cross_count(res.data.date_tasks, res.data.date_tasks_ok);
+			var tips = $('#cross').data('tips');
+			optionD.title = {
+				text: '',
+				subtext: tips,
+				top: -10,
+			},
+			optionD.xAxis = {
+				type: 'category',
+				boundaryGap: false,
+				splitLine: {
+					show: true,
+					lineStyle: {
+						type: 'dashed'
+					}
+				},
+				data: dataD.x,
+				axisLabel: {
+					rotate: 30,
+					formatter: function (value, index) {
+						return value.slice(5);
+					}
+				}
+			};
+			optionD.series = [
+				{
+					name: '任务计划剩余',
+					type: 'line',
+					showSymbol: false,
+					markLine: {
+						data: [{ type: 'average', name: 'Avg' }],
+					},
+					lineStyle: {
+						width: 2
+					},
+					data: dataD.y
+				},
+				{
+					name: '任务实际剩余',
+					type: 'line',
+					showSymbol: false,
+					areaStyle: {
+						opacity: 0.1
+					},
+					markLine: {
+						data: [{ type: 'average', name: 'Avg' }],
+					},
+					lineStyle: {
+						width: 2
+					},
+					data: dataD.y2
+				}
+			]
+			optionD && crossChart.setOption(optionD)
+
+			var dataE = getCalendarData(res.data.date_tasks);
+			optionE.calendar.range = dataE.range,
+				optionE.series = {
+					type: 'heatmap',
+					coordinateSystem: 'calendar',
+					data: dataE.data
+				}
+			optionE && planChart.setOption(optionE);
+
+			if (res.data.date_schedules instanceof Array == false) {
+				var dataF = getCalendarData(res.data.date_schedules);
+				optionF.calendar.range = dataF.range,
+					optionF.series = {
+						type: 'heatmap',
+						coordinateSystem: 'calendar',
+						data: dataF.data
+					}
+				optionF && workChart.setOption(optionF);
+			}
+		}
+	}
+	tool.get('/project/api/get_chart_data', { 'project_id': project_id }, callback);
+
+	window.onresize = function () {
+		progressChart.resize();
+		delayChart.resize();
+		crossChart.resize();
+		planChart.resize();
+		workChart.resize();
+	}
+}
+</script>
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="p-3 bg-white">
+	<table class="layui-hide" id="task" lay-filter="task"></table>
+</div>
+<script type="text/html" id="toolbartask">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新建任务</button>
+  </div>
+</script>
+<script>
+function project_task(){
+	if($('#projectTab').find('li').eq(1).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(1).data('load','true');
+	let tool = layui.tool, treeTable = layui.treeTable,table = layui.table;
+	//项目任务
+	layui.taskTable = treeTable.render({
+		elem: '#task',
+		title: '任务列表',
+		toolbar: '#toolbartask',
+		cellMinWidth:80,
+		url: "/project/api/get_project_task",
+		where:{'project_id':project_id},
+		tree: { // treeTable 特定属性集
+			view:{expandAllDefault:true,showIcon:false},
+		},
+		page: false,
+		cols:  [[
+			{field: 'id', title: '任务编号', width: 80, align: 'center', fixed: 'left', templet: function (d) {
+					return 'T' + d.id;
+				}
+			}
+			,{field:'flow_name',title: '状态',align:'center',width: 90,templet:function(d){
+				var html = '<span class="layui-color-'+d.flow_status+'">『'+d.flow_name+'』</span>';
+				return html;
+			}}
+			, { field: 'cate_name', title: '工作类型', width: 90, align: 'center'}
+			, {field:'name',title: '任务主题', minWidth:300,templet:function(d){
+				var html = '<span class="layui-badge layui-bg-'+d.priority+'">'+d.priority_name+'</span> <a class="side-a" lay-event="detail">'+d.title+'</a>';
+				return html;
+			}}
+			, { field: 'before_task', title: '前置任务编号',align: 'center', width: 100, templet: function (d) {
+					var html = '-';
+					if(d.before_task > 0){
+						html = '<a class="blue" lay-event="before" style="cursor:pointer">T' + d.before_task + '</a>';
+					}
+					return html;
+				}
+			  }
+			, { field: 'after_num', title: '后置任务数', align: 'center',width: 90, templet: function (d) {
+					var html = '-';
+					if(d.after_num > 0){
+						html = '<a class="blue" lay-event="more" style="cursor:pointer;">'+d.after_num+'</a>';
+						if(d.after_num == 1){
+							html = ' <a class="blue" style="cursor:pointer" lay-event="after">'+d.after_num+'</a>';
+						}
+					}
+					return html;
+				}
+			}
+			,{field:'director_name',title: '负责人', align:'center',width: 80}
+			,{field:'assist_admin_names',title: '协作人',width: 160}
+			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
+			,{field:'end_time',title: '计划完成日期', width: 150,templet:function(d){
+				var html = d.end_time;	
+				if(d.delay>0){
+					html+= '<span class="red ml-1" style="font-size:12px;">逾期'+d.delay+'天</span>';	
+				}			
+				return html;
+			}}
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(task)', function(obj){
+		var checkStatus = table.checkStatus(obj.config.id);
+		switch(obj.event){
+			case 'add':
+			tool.side('/project/task/add?project_id='+project_id);
+			break;
+		};
+	});
+	
+	treeTable.on('tool(task)', function(obj){
+		var data = obj.data; //获得当前行数据
+		var layEvent = obj.event;
+		 
+		if(layEvent === 'detail'){ //查看
+			let url = '/project/task/view/id/'+data.id;
+			tool.side(url);
+		}
+		if(layEvent === 'before'){ //查看
+			let url = '/project/task/view/id/'+data.before_task;
+			tool.side(url);
+		}
+		if(layEvent === 'after'){ //查看
+			let url = '/project/task/view/id/'+data.after_id;
+			tool.side(url);
+		}
+		if(layEvent === 'more'){
+			layer.open({
+				title: '后置任务列表',
+				area: ['666px', '550px'],
+				type: 1,
+				content: '<div class="picker-table"><div id="taskTable"></div></div>',
+				success: function () {
+					taskTable = table.render({
+						elem: '#taskTable'
+						, url: '/project/api/get_task'
+						, page: true //开启分页
+						, limit: 10
+						, where:{'before_task':obj.data.id}
+						, cols: [[
+							{ field: 'id', width: 90, title: '编号', align: 'center' }
+							, {field: 'title', title: '任务主题',minWidth:240, rowspan: 2, templet: function (d) {
+								var html = '<span class="layui-badge layui-bg-' + d.priority + '">' + d.priority_name + '</span> <a class="blue" style="cursor:pointer" lay-event="tabson">' + d.title + '</a>';
+								return html;
+							}}
+							, { field: 'project_name', width: 200, title: '关联项目' }
+						]]
+					});
+					
+					table.on('tool(taskTable)', function(obj){
+						var data = obj.data; //获得当前行数据
+						switch(obj.event){
+							case 'tabson':
+							let url = '/project/task/view/id/'+data.id;
+							tool.side(url);
+							break;
+						};
+					});
+				}
+			})
+			return;
+		}
+	})
+}
+</script>				
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="p-3 bg-white">
+<table class="layui-hide" id="scheduleApi" lay-filter="schedule"></table>
+</div>
+<script>
+function project_schedule(){
+	if($('#projectTab').find('li').eq(2).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(2).data('load','true');
+	let form = layui.form,tool = layui.tool,table = layui.table,work = layui.oaSchedule,employeepicker=layui.employeepicker;
+	//项目工作记录
+	layui.scheduleTable = table.render({
+		elem: '#scheduleApi',
+		title: '工作记录列表',
+		cellMinWidth: 80,
+		url: "/oa/schedule/index", //数据接口
+		where: { 'tid': project_id },
+		page: true, //开启分页
+		limit: 20,
+		cols: [[ //表头
+			{ field: 'id', title: '序号', width: 60, align: 'center' }
+			, {
+				field: 'start_time', title: '工作时间范围', align: 'center', width: 180, templet: function (d) {
+					var html = d.start_time + '至' + d.end_time;
+					return html;
+				}
+			}
+			, { field: 'labor_time', title: '工时', style: 'color: #91CC75;', align: 'center', width: 60 }
+			, { field: 'labor_type_string', title: '工作类型', align: 'center', width: 90,templet:function(d){
+				var html = '<span class="layui-color-'+d.labor_type+'">'+d.labor_type_string+'</span>';
+				return html;
+			}}
+			, { field: 'work_cate', title: '工作类别', align: 'center', width: 100 }
+			, { field: 'title', title: '工作内容' }
+			, { field: 'name', title: '执行员工', align: 'center', width: 80 }
+			, { field: 'department', title: '所在部门', align: 'center', width: 100 }
+			, { field: 'create_time', title: '记录时间', align: 'center', width: 150 }
+			, {title: '操作',fixed:'right', align: 'center', width: 100, templet: function (d) {
+					return '<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="edit">修改</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>';
+				}
+			}
+		]]
+	});
+
+	// 选择员工
+	$('.gg-form-bar').on('click', '[data-event="select"]', function () {
+		var that = $(this);
+		var names = that.val(), ids = $('[name="uid"]').val();
+		employeepicker.init({
+			ids: ids,
+			names: names,
+			type: 0,
+			department_url: "/api/index/get_department_tree",
+			employee_url: "/api/index/get_employee",
+			callback: function (ids, names, dids, departments) {
+				$('[name="uid"]').val(ids);
+				that.val(names);
+				$('[lay-filter="webform"]').click();
+			}
+		})
+	});
+
+	//监听搜索提交
+	form.on('submit(webform)', function (data) {
+		let f = data.field;
+		layui.scheduleTable.reload({ where: { keywords: f.keywords, uid: f.uid, tid: project_id }, page: { curr: 1 } });
+		return false;
+	});
+	$('body').on('click', '[lay-filter="clear"]', function () {
+		setTimeout(function () {
+			$('[lay-filter="webform"]').click();
+		}, 10)
+	})
+	//监听行工具事件		
+	table.on('tool(schedule)', function (obj) {
+		if (obj.event === 'edit') {
+			work.add(0, obj.data);
+		}
+		if (obj.event === 'view') {
+			work.view(obj.data);
+		}
+		return false;
+	})
+}
+</script>				
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="p-3 bg-white">
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbardocument">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新建文档</button>
+  </div>
+</script>
+<script>
+function project_document(){
+	if($('#projectTab').find('li').eq(3).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(3).data('load','true');
+	let tool = layui.tool, table = layui.table;
+	//项目任务
+	layui.documentTable = table.render({
+		elem: '#document',
+		title: '文档列表',
+		toolbar: '#toolbardocument',
+		cellMinWidth:80,
+		url: "/project/document/index",
+		where:{'project_id':project_id},
+		page: true, //开启分页
+		limit: 20,
+		cols:  [[
+			{field: 'id', title: '文档编号', width: 80, align: 'center', templet: function (d) {
+					return 'D' + d.id;
+				}
+			}
+			, {
+					field: 'title', title: '文档主题', templet: function (d) {
+						var html = '<a class="side-a" lay-event="detail">' + d.title + '</a>';
+						return html;
+					}
+				}
+			,{field:'admin_name',title: '创建人', align:'center',width: 80}			
+			,{field:'create_time',title: '创建时间', align:'center', width: 150}
+			,{
+				field: 'right',
+				fixed:'right',
+				title: '操作',
+				width: 100,
+				align: 'center',
+				templet: function (d) {
+					var html = '<div class="layui-btn-group">';
+					var btn1='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+					var btn2='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+					return html+btn1+btn2+'</div>';
+				}						
+			}
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(document)', function(obj){
+	  var checkStatus = table.checkStatus(obj.config.id);
+	  switch(obj.event){
+		case 'add':
+		  tool.side('/project/document/add?project_id='+project_id);
+		break;
+	  };
+	});
+	
+	table.on('tool(document)', function(obj){
+		var data = obj.data; //获得当前行数据		
+		if(obj.event === 'detail'){ //查看
+			let url = '/project/document/view/id/'+data.id;
+			tool.side(url);
+		}
+		if(obj.event === 'edit'){
+			tool.side('/project/document/add?id='+data.id);
+			return;
+		}
+		if (obj.event === 'del') {
+			layer.confirm('确定要删除吗?', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						obj.del();
+					}
+				}
+				tool.delete("/project/document/delete", {id: data.id}, callback);
+				layer.close(index);
+			});
+		}
+	})
+}
+</script>				
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="p-3 bg-white">
+	<table class="layui-hide" id="user" lay-filter="user"></table>
+</div>
+<script type="text/html" id="toolbaruser">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增项目成员</button>
+  </div>
+</script>
+<script>
+function project_user(){
+	if($('#projectTab').find('li').eq(4).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(4).data('load','true');
+	let tool = layui.tool, table = layui.table,employeepicker=layui.employeepicker;
+	//项目成员
+	layui.userTable = table.render({
+		elem: '#user',
+		title: '项目成员列表',
+		cellMinWidth: 80,
+		toolbar: '#toolbaruser',
+		url: "/project/api/project_user", //数据接口
+		where: { 'tid': project_id },
+		page: false, //开启分页
+		limit: 20,
+		cols: [[ //表头
+			{ field: 'name', fixed: 'left', title: '成员姓名', width: 90, align: 'center', rowspan: 2 }
+			, { field: 'create_time', title: '进入项目日期', width: 110, align: 'center', rowspan: 2 }
+			, { field: 'role', title: '角色', align: 'center', width: 90, rowspan: 2, templet: function (d) {
+				var html='<span style="color: #4285F4;">普通成员</span>';
+				if(d.role==1){
+					html='<span style="color: #EE6666;">项目创建人</span>';
+				}
+				if(d.role==2){
+					html='<span style="color: #91CC75;">项目负责人</span>';
+				}
+				return html;
+			}}
+			, { field: 'position', title: '职位', align: 'center', width: 100, rowspan: 2 }
+			, { field: 'department', title: '所在部门', align: 'center', width: 120, rowspan: 2 }
+			, { field: 'mobile', title: '手机号码', align: 'center', width: 110, rowspan: 2 }
+			, { field: 'email', title: '电子邮箱', align: 'center', rowspan: 2 }
+			, { align: 'center', title: '工作记录', colspan: 2 }
+			, { align: 'center', title: '项目任务', colspan: 3 }
+			, { field: 'delete_time', title: '移除日期', align: 'center', width: 110, rowspan: 2 }
+			, { field: 'status',fixed: 'right', title: '状态', align: 'center', width: 60, rowspan: 2, templet: function (d) {
+					var html = '<span style="color:#EE6666">✘</span>';
+					if(d.delete_time == '-')
+						html = '<span style="color:#91CC75">✔</span>';
+					return html;
+				}}				
+			, {title: '操作',fixed: 'right', align: 'center', width: 60, rowspan: 2, templet: function (d) {
+					var html = '<span class="layui-btn layui-btn-xs" lay-event="recover">恢复</span>';
+					if(d.delete_time == '-')
+						html = '<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove">移除</span>';
+					return html;
+				}
+			}
+		], [
+			{ field: 'schedules', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '记录' }
+			, { field: 'labor_times', align: 'center', style: 'color: #4285F4;', width: 70, 'title': '工时' }
+			, { field: 'tasks_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+			, { field: 'tasks_finish', align: 'center', style: 'color: #FAC858;', width: 70, 'title': '已完成' }
+			, { field: 'tasks_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(user)', function(obj){
+		var checkStatus = table.checkStatus(obj.config.id);
+		switch(obj.event){
+			case 'add':
+			  employeepicker.init({
+				type: 0,
+				department_url: "/api/index/get_department_tree",
+				employee_url: "/api/index/get_employee",
+				callback: function (ids, names, dids, departments) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if(e.code == 0){
+							layui.userTable.reload();
+						}						
+					}
+					tool.post("/project/api/add_user", {uid: ids,project_id: project_id}, callback);
+				}
+			})			
+			break;
+		};
+	});
+
+	//监听行工具事件
+	table.on('tool(user)', function (obj) {
+		let postData = { "id": obj.data.id };
+		let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code == 0){
+					layui.userTable.reload();
+				}
+			}
+		if (obj.event === 'remove') {
+			layer.confirm('确定要移除该项目成员吗?', { icon: 3, title: '提示' }, function (index) {
+				tool.delete("/project/api/remove_user", postData, callback);
+			});
+		}
+		if (obj.event === 'recover') {
+			layer.confirm('确定要恢复该项目成员吗?', { icon: 3, title: '提示' }, function (index) {
+				tool.post("/project/api/recover_user", postData, callback);
+			});
+		}
+		return;
+	});
+}
+</script>		
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="bg-white">
+	<div id="logList" class="log-timeline p-3"></div>
+</div>
+<script>	
+function  project_log(){
+	if($('#projectTab').find('li').eq(5).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(5).data('load','true');
+	let tool = layui.tool;	
+	
+	//日志	
+	let callback = function(res){
+		$('.log-more').remove();
+		if(res.code==0 && res.data.length>0){
+			let itemLog = '',log_time='';					
+			$.each(res.data, function (index, item) {
+				let link="",detail = "";
+				if(log_time != item.create_time){
+					if(log_time==''){
+						itemLog+='<dl><dt><span class="date-second-point"></span>'+item.create_time+'</dt>'
+					}
+					else{
+						itemLog+='</dl><dl><dt><span class="date-second-point"></span>'+item.create_time+'</dt>'
+					}
+					log_time = 	item.create_time;			
+				}
+				
+				if(item.topic_title != ''){
+					link='<a class="'+item.module+' open-a" data-url="'+item.url+'">'+item.topic+' '+item.topic_title+'</a>';
+				}
+				if(item.field =='new' || item.field =='delete'){
+					detail= `
+						<span class="log-content gray">${item.action}了项目${item.module_name}${link}</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span>
+					`;
+				}
+				else if(item.field =='content'){
+					detail= `
+						<span class="log-content gray">${item.action}了<strong>${item.title}</strong><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="ml-4 gray" title="${item.create_time}">${item.times}</span></span>
+					`;
+				}
+				else if(item.field =='file'|| item.field =='link' || item.field =='user'){
+					detail= `
+						<span class="log-content gray">${item.action}了${item.title}<strong>${item.new_content}</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span></span>
+					`;
+				}
+				else if(item.field =='document'){
+					if(item.action =='修改'){
+						detail= `
+							<span class="log-content gray">项目${item.module_name}${link}${item.action}了${item.title}<strong>${item.remark}</strong><i title="对比查看" class="iconfont icon-yuejuan" style="color:#1E9FFF; cursor: pointer;"></i> <span class="ml-4 font-gray" title="${item.create_time}">${item.times}</span></span>
+						`;
+					}
+					else{
+						detail= `
+							<span class="log-content gray">项目${item.module_name}${link}${item.action}了${item.title}<strong>${item.remark}</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span></span>
+						`;
+					}
+				}
+				else{
+					detail= `
+						<span class="log-content gray">将项目${item.module_name}${link}<strong>${item.title}</strong>从 ${item.old_content} ${item.action}为<strong>${item.new_content}</strong><span class="ml-4 gray" title="${item.create_time}">${item.times}</span></span>
+					`;
+				}				
+				itemLog+= `
+					<dd><img src="${item.thumb}" class="log-thumb" /><span class="log-name">${item.name}</span>${detail}</dd>
+				`;
+			});
+			
+			itemLog+='</dl>';
+			if(res.data.length>19){
+				itemLog+='<div class="py-3 log-more"><button class="layui-btn layui-btn-normal layui-btn-sm" type="button">查看更多项目动态</button></div>';
+			}
+			$("#logList").append(itemLog);
+		}
+		else{
+			if(project_page ==1){
+				$("#logList").html('<div class="layui-data-none">暂无动态</div>');
+			}
+		}
+	}
+	
+	let project_page=1;
+	tool.get("/project/api/project_log",{topic_id:project_id,page:project_page},callback);
+	$('#logList').on('click','.log-more',function(){
+		project_page++;
+		tool.get("/project/api/project_log",{topic_id:project_id,page:project_page},callback);
+	});
+	
+	$('#logList').on('click','.open-a',function(){
+		let url = $(this).data('url');
+		parent.layui.tool.side(url);
+	});
+}
+</script>	
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="pt-3 px-3 bg-white">
+	<div class="comment-input">
+		<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+	</div>
+	<div id="comment_project_1051" class="pt-3"></div>
+</div>
+<script>
+function project_comment(){
+	if($('#projectTab').find('li').eq(6).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(6).data('load','true');
+	
+	let tool = layui.tool, comment = layui.oaComment;
+	
+	//评论
+	comment.load(project_id,'project');
+	$('#commentInput').on('click', function () {
+		comment.textarea(0,project_id,0,0,'project','');
+	})
+	//回复
+	$('#comment_project_' + project_id).on('click', '[data-event="replay"]', function () {
+		let pid = $(this).data('id');
+		let padmin_id = $(this).data('uid');
+		comment.textarea(0, project_id, pid, padmin_id, 'project', '');
+	})
+	//编辑
+	$('#comment_project_' + project_id).on('click', '[data-event="edit"]', function () {
+		let id = $(this).data('id');
+		let content = $('#comment_' + id).data('content');
+		comment.textarea(id, project_id, 0, 0, 'project', content);
+	})
+
+	//删除
+	$('#comment_project_' + project_id).on('click', '[data-event="del"]', function () {
+		let id = $(this).data('id');
+		comment.del(id, project_id, 'project');
+	})
+}
+
+</script>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script src="/static/assets/third_party/echart/echarts.min.js"></script>
+<script>
+	var project_id = '1051';
+	var project_start_time = '2023-10-13';
+	const opsData = {
+		status: [
+			{ 'id': 1, 'title': '未开始' },
+			{ 'id': 2, 'title': '进行中' },
+			{ 'id': 3, 'title': '已完成' },
+			{ 'id': 4, 'title': '已关闭' }
+		]
+	}
+
+	var chartProgress = document.getElementById('progress');
+	var progressChart = echarts.init(chartProgress);
+	var optionA;
+	optionA = {
+		backgroundColor: "#ffffff",
+		title: {
+			text: '67.45%',//主标题文本
+			subtext: '任务完成率',//副标题文本
+			x: 'center',
+			y: '39%',
+			textStyle: {
+				fontWeight: 'normal',
+				fontSize: 18,
+				color: '#FF974C',
+				align: 'center'
+			},
+			subtextStyle: {
+				fontSize: 12,
+				color: '#6c7a89',
+			}
+		},
+		tooltip: {
+			trigger: "item",
+			formatter: '{b}：<br/><strong>{c}</strong>',
+			show: true,
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				center: ['50%', '50%'],
+				avoidLabelOverlap: false,
+				label: {
+					show: false
+				},
+				data: [
+					{ value: 1048, name: '待处理' },
+					{ value: 735, name: '已完成' }
+				]
+			}
+		]
+	};
+
+	var chartDelay = document.getElementById('delay');
+	var delayChart = echarts.init(chartDelay);
+	var optionB;
+	optionB = {
+		backgroundColor: "#ffffff",
+		title: {
+			text: '40.25%',//主标题文本
+			subtext: '任务延迟率',//副标题文本
+			x: 'center',
+			y: '39%',
+			textStyle: {
+				fontWeight: 'normal',
+				fontSize: 18,
+				color: '#FF974C',
+				align: 'center',
+				marginLeft: '-10px'
+			},
+			subtextStyle: {
+				fontSize: 12,
+				color: '#6c7a89',
+			}
+		},
+		tooltip: {
+			trigger: "item",
+			formatter: '{b}：<br/><strong>{c}</strong>',
+			show: true,
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				center: ['50%', '50%'],
+				avoidLabelOverlap: false,
+				label: {
+					show: false
+				},
+				data: [{
+					value: 1048,
+					name: '延迟',
+					itemStyle: {
+						color: "#ED6666",
+					}
+				},
+				{
+					value: 735,
+					name: '未延迟',
+					itemStyle: {
+						color: "#91CC75",
+					}
+				}
+				]
+			}
+		]
+	};
+
+
+	var chartCross = document.getElementById('cross');
+	var crossChart = echarts.init(chartCross);
+	var optionD;
+	optionD = {
+		backgroundColor: "#ffffff",
+		color: ['#8C92A4', '#2C7EF8'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				label: {
+					backgroundColor: '#6a7985'
+				}
+			}
+		},
+		legend: {
+			data: ['任务计划剩余', '任务实际剩余']
+		},
+		grid: {
+			top: 36,
+			left: 8,
+			right: 36,
+			bottom: 0,
+			containLabel: true
+		},
+		xAxis: [
+			{
+				type: 'category',
+				boundaryGap: false,
+				splitLine: {
+					show: true,
+					lineStyle: {
+						type: 'dashed'
+					}
+				}
+			}
+		],
+		yAxis: [{
+			axisLine: {
+				show: true
+			},
+			boundaryGap: false,
+			splitLine: {
+				show: true,
+				lineStyle: {
+					type: 'dashed'
+				}
+			},
+			type: 'value'
+		}
+		]
+	};
+
+
+	var chartPlan = document.getElementById('plan');
+	var planChart = echarts.init(chartPlan);
+	var optionE;
+
+	optionE = {
+		backgroundColor: "#ffffff",
+		title: {
+			top: 0,
+			left: 0,
+			text: ''
+		},
+		tooltip: {
+			padding: 6,
+			formatter: function (obj) {
+				var value = obj.value;
+				var tips = '<div style="font-size: 12px;">' + value[0] + '<br>';
+				tips += '共 ' + value[1] + ' 个工作任务';
+				tips += '</div>';
+				return tips;
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			show: false,
+			inRange: {
+				color: ['#fafafa', '#20BF3F']
+			}
+		},
+		calendar: {
+			top: 24,
+			left: 36,
+			right: 4,
+			cellSize: ['auto', 16],
+			range: ['2022-03-01', '2022-08-01'],
+			splitLine: {
+				lineStyle: {
+					color: '#333',
+					type: 'dashed',
+				}
+			},
+			itemStyle: {
+				borderWidth: 0.5
+			},
+			yearLabel: { show: false },
+			monthLabel: {
+				nameMap: 'cn',
+				fontSize: 12
+			},
+			dayLabel: {
+				show: true,
+				formatter: '{start}  1st',
+				fontWeight: 'lighter',
+				nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+				fontSize: 12
+			}
+		},
+		series: {
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: []
+		}
+	};
+
+
+	var chartWork = document.getElementById('work');
+	var workChart = echarts.init(chartWork);
+	var optionF;
+
+	optionF = {
+		backgroundColor: "#ffffff",
+		title: {
+			top: 0,
+			left: 0,
+			text: ''
+		},
+		tooltip: {
+			padding: 6,
+			formatter: function (obj) {
+				var value = obj.value;
+				var tips = '<div style="font-size: 12px;">' + value[0] + '<br>';
+				tips += '共 ' + value[1] + ' 个工时';
+				tips += '</div>';
+				return tips;
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			show: false,
+			inRange: {
+				color: ['#fafafa', '#359AEF']
+			}
+		},
+		calendar: {
+			top: 24,
+			left: 36,
+			right: 4,
+			cellSize: ['auto', 16],
+			range: ['2022-03-01', '2022-08-01'],
+			splitLine: {
+				lineStyle: {
+					color: '#333',
+					type: 'dashed',
+				}
+			},
+			itemStyle: {
+				borderWidth: 0.5
+			},
+			yearLabel: { show: false },
+			monthLabel: {
+				nameMap: 'cn',
+				fontSize: 12
+			},
+			dayLabel: {
+				show: true,
+				formatter: '{start}  1st',
+				fontWeight: 'lighter',
+				nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+				fontSize: 12
+			}
+		},
+		series: {
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: []
+		}
+	};
+
+
+	function getCalendarData(arr) {
+		var rangeArray = [];
+		for (var property in arr) {
+			rangeArray.push(property);
+		}
+		var rangeArray = [rangeArray[0], rangeArray[rangeArray.length - 1]];
+		var start = +echarts.number.parseDate(rangeArray[0]);
+		var end = +echarts.number.parseDate(rangeArray[1]);
+		if (start + 7776000000 > end) {
+			end = start + 8640000000;
+			rangeArray[1] = echarts.format.formatTime('yyyy-MM-dd', end);
+		}
+		var dayTime = 3600 * 24 * 1000;
+		var data = [];
+		for (var time = start; time < end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			if (arr[this_date]) {
+				data.push([this_date, arr[this_date]]);
+			} else {
+				data.push([this_date, 0]);
+			}
+		}
+		var res = { 'range': rangeArray, 'data': data };
+		return res;
+	}
+
+	//燃尽图统计
+	function cross_count(arr, arr2) {
+		var planArray = [], doArray = [];
+		var today = new Date();
+		var todayStr = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		for (var a in arr) {
+			planArray.push(a);
+		}
+		var rangeArray = [planArray[0], planArray[planArray.length - 1]];
+		if (arr2 instanceof Array == false) {
+			for (var b in arr2) {
+				doArray.push(b);
+			}
+			if ((+echarts.number.parseDate(doArray[doArray.length - 1])) < (+echarts.number.parseDate(todayStr))) {
+				doArray.push(todayStr);
+			}
+			if ((+echarts.number.parseDate(planArray[planArray.length - 1])) < (+echarts.number.parseDate(doArray[doArray.length - 1]))) {
+				rangeArray[1] = doArray[doArray.length - 1];
+			}
+		}
+		var start = +echarts.number.parseDate(rangeArray[0]);
+		var end = +echarts.number.parseDate(rangeArray[1]);
+		var todayInt = +echarts.number.parseDate(todayStr);
+		var dayTime = 3600 * 24 * 1000;
+		var xArray = [], yArray = [], yArray2 = [], done = 0, doneArray = [];
+		for (var time = start; time <= end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			xArray.push(this_date);
+			var plan = cross_recursion(time, end, arr);
+			yArray.push(plan);
+
+			if (arr2[this_date]) {
+				done += arr2[this_date];
+			}
+			if (time <= todayInt) {
+				doneArray.push(done);
+			}
+		}
+		for (var i = 0; i < doneArray.length; i++) {
+			yArray2.push(yArray[0] - doneArray[i]);
+		}
+		var start_time = +echarts.number.parseDate(project_start_time), tem_x_array = [], tem_y_array = [];
+		if (start_time < start) {
+			for (var tem_time = start_time; tem_time < start; tem_time += dayTime) {
+				var this_date = echarts.format.formatTime('yyyy-MM-dd', tem_time);
+				tem_x_array.push(this_date);
+				tem_y_array.push(yArray[0]);
+			}
+			xArray = tem_x_array.concat(xArray);
+			yArray = tem_y_array.concat(yArray);
+			yArray2 = tem_y_array.concat(yArray2);
+		}
+		return { 'x': xArray, 'y': yArray, 'y2': yArray2 };
+	}
+
+	function cross_recursion(start, end, arr) {
+		var count = 0;
+		var dayTime = 3600 * 24 * 1000;
+		for (var time = start; time <= end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			if (arr[this_date]) {
+				count += arr[this_date];
+			}
+		}
+		return count;
+	}
+
+	const moduleInit = ['tool','oaEdit','oaSchedule','oaComment','oaTool'];
+	
+	function gouguInit() {
+		var element = layui.element;
+		overview();		
+		element.on('tab(project)', function(data){
+			let index = data.index;
+			if(index == 1){
+				project_task();	
+			}
+			else if(index == 2){
+				project_schedule();	
+			}
+			else if(index == 3){
+				project_document();	
+			}
+			else if(index == 4){
+				project_user();	
+			}
+			else if(index == 5){
+				project_log();	
+			}
+			else if(index == 6){
+				project_comment();	
+			}
+		});
+	}	
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

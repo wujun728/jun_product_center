@@ -1,0 +1,210 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t" lay-filter="barsearchform">
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" class="layui-input" id="diff_time" placeholder="选择时间区间" readonly name="diff_time">
+		</div>
+		<div class="layui-input-inline">
+			<select name="is_cash">
+				<option value="">请选择状态</option>
+				<option value="0">未到账</option>
+				<option value="1">部分到账</option>
+				<option value="2">全部到账</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+<div class="layui-btn-container">
+    <h3 class="h3-title" style="height:32px;">到账列表</h3>
+</div>
+</script>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const auth = "{$auth}";
+	const moduleInit = ['tool','laydatePlus'];
+	function gouguInit() {
+		var form = layui.form,table = layui.table,tool=layui.tool, laydatePlus = layui.laydatePlus;
+		//日期范围
+		var diff_time = new laydatePlus({'target':'diff_time'});
+		
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '到账列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar:['filter', {title:'导出EXCEL',layEvent: 'LAYTABLE_EXCEL',icon: 'layui-icon-export'}],
+			url: "/finance/income/index", //数据接口	
+			cellMinWidth: 80,			
+			page: true, //开启分页
+			limit: 20,
+			cols: [
+				[
+					{
+						field: 'id',
+						title: 'ID号',
+						align: 'center',
+						width: 80
+					},{
+						field: 'is_cash',
+						title: '到账状态',
+						align: 'center',
+						width: 90,
+						templet:function(d){
+							var html='<span class="red">未到账</span>';
+							if(d.is_cash==1){
+								html='<span class="blue">部分到账</span>';
+							}
+							else if(d.is_cash==2){
+								html='<span class="green">全部到账</span>';
+							}
+							return html;
+						}
+					},{
+						field: 'enter_amount',
+						title: '到账金额(元)',
+						align: 'right',
+						width: 100,
+					},{
+						field: 'enter_time',
+						title: '最新到账时间',
+						align: 'center',
+						width: 136
+					}, {
+						field: 'invoice_title',
+						minWidth: 240,		
+						title: '发票抬头',
+						templet:function(d){
+							var html='';
+							if(d.type==1){
+								html='<span class="layui-badge layui-bg-blue">企业</span> '+d.invoice_title;
+							}
+							else if(d.type==2){
+								html='<span class="layui-badge layui-bg-green">个人</span> '+d.invoice_title;
+							}
+							return html;
+						}
+					},{
+						field: 'amount',
+						title: '发票金额(元)',
+						align: 'right',
+						width: 100,
+					},{
+						field: 'invoice_type',
+						title: '开票类型',
+						align: 'center',
+						width: 120,
+						templet:function(d){
+							var html='-';
+							if(d.invoice_type==1){
+								html='<span style="color:#1E9FFF">增值税专用发票</span>';
+							}
+							else if(d.invoice_type==2){
+								html='<span style="color:#5FB878">普通发票</span>';
+							}
+							else if(d.invoice_type==3){
+								html='<span style="color:#FFB800">专用发票</span>';
+							}
+							else{
+								html='<span style="color:#666666">无需开票</span>';
+							}
+							return html;
+						}
+					},{
+						field: 'user',
+						title: '申请开票人',
+						align: 'center',
+						width: 100
+					},{
+						field: 'department',
+						title: '所属部门',
+						align: 'center',
+						width: 120
+					},{
+						field: 'create_time',
+						title: '申请时间',
+						align: 'center',
+						width: 150
+					},{
+						field: 'code',
+						title: '发票号码',
+						align: 'center',
+						width: 120
+					},{
+						field: 'open_time',
+						title: '开票时间',
+						align: 'center',
+						width: 136
+					}, {
+						field: 'right',
+						fixed: 'right',
+						title: '操作',
+						width: 142,
+						align: 'center',
+						templet:function(d){
+							var html='<div class="layui-btn-group">';
+							var btn1='<span class="layui-btn layui-btn-xs" lay-event="add">到账管理</span>';
+							var btn2='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">到账详情</span>';
+							if(auth == 1){
+								return html+btn1+btn2+'</div>';
+							}
+							else{
+								return html+btn2+'</div>';
+							}
+						}
+					}
+				]
+			]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if(obj.event === 'LAYTABLE_EXCEL'){
+				var formSelect = form.val('barsearchform');
+				formSelect.limit=99999;
+				$.ajax({
+					url: '/finance/income/index',
+					data: formSelect,
+					success:function(res){
+						table.exportFile('test', res.data,'xls');
+					}
+				});
+				return;
+			}
+		})
+
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'add') {
+				tool.side("/finance/income/add?id="+data.id);
+				return;
+			}
+			if (obj.event === 'view') {
+				tool.side("/finance/income/view?id="+data.id);
+				return;
+			}
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

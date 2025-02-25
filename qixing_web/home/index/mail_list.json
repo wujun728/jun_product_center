@@ -1,0 +1,42 @@
+{
+    "code": 0,
+    "msg": "",
+    "count": 1,
+    "data": [
+        {
+            "id": 1,
+            "username": "admin",
+            "pwd": "59734b9f7407e26714ea0fd764cbd96c",
+            "salt": "o3cimkgw8r0xzt74jnhl",
+            "reg_pwd": "",
+            "name": "超级员工",
+            "email": "gouguoa@gougucms.com",
+            "mobile": 13800138000,
+            "sex": 1,
+            "nickname": "超级员工",
+            "thumb": "\/static\/home\/images\/icon.png",
+            "theme": "blue",
+            "did": 1,
+            "position_id": 1,
+            "type": 1,
+            "age": 0,
+            "native_place": "",
+            "idcard": "",
+            "education": "",
+            "bank_account": "",
+            "bank_info": "",
+            "desc": null,
+            "is_hide": 0,
+            "entry_time": "2024-01-17",
+            "create_time": "2024-01-17 17:53:42",
+            "update_time": "2024-01-17 17:53:42",
+            "last_login_time": 1705485232,
+            "login_num": 1,
+            "last_login_ip": "::1",
+            "is_lock": 0,
+            "status": 1,
+            "department": "董事会",
+            "position": "超级岗位"
+        }
+    ]
+}

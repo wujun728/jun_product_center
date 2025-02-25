@@ -1,0 +1,37 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+{include file="/approve/view_style" /}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">会议室预定审批</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">会议室</td>
+			<td>
+				{volist name=":oa_meeting_cate()" id="vo"}
+				{eq name="$detail.detail_type" value="$vo.id"}{$vo.title}{/eq}
+				{/volist}
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">预定时间</td>
+			<td>{$detail.start_time_hour} 至 {$detail.end_time_hour}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">{$detail.remark}</td>
+		</tr>
+	</table>
+	
+	{include file="/approve/view_step" /}
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+{include file="/approve/view_script" /}
+{/block}
+<!-- /脚本 -->
