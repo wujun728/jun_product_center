@@ -19,6 +19,7 @@
         <module>jun_generator</module>
         <module>jun_lowcode</module>
         <module>jun_qixing</module>
+        <module>jun_api</module>
         <module>jun_admin</module>
     </modules>
     <packaging>pom</packaging>

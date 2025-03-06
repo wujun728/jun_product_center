@@ -1,101 +1,168 @@
-## 扩展的内容：
-* 在若依v3.8.5的版本上增加了Lombok和mybatis-plus
-* 本项目参考了 [范生德 / ruoyi-mybatis-plus](https://gitee.com/sou100/ruoyi-mybatis-plus)
+# ruoyi-vue-nocode项目简介
 
-<p align="center">
-	<img alt="logo" src="https://oscimg.oschina.net/oscnet/up-d3d0a9303e11d522a06cd263f3079027715.png">
-</p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">RuoYi v3.8.5</h1>
-<h4 align="center">基于SpringBoot+Vue前后端分离的Java快速开发框架</h4>
-<p align="center">
-	<a href="https://gitee.com/y_project/RuoYi-Vue/stargazers"><img src="https://gitee.com/y_project/RuoYi-Vue/badge/star.svg?theme=dark"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue"><img src="https://img.shields.io/badge/RuoYi-v3.8.5-brightgreen.svg"></a>
-	<a href="https://gitee.com/y_project/RuoYi-Vue/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg"></a>
-</p>
+#### 介绍
+零代码，十分钟即可搞定一个简单应用。以ruoyi-vue为基础，整合activiti7、mongodb、form-making、bpmn.js等技术组件，具有表单设计与管理、流程绘制、应用发起与处理、数据配置与展示等功能。
 
-## 平台简介
+各位如果觉得好用请随手给个⭐
 
-若依是一套全部开源的快速开发平台，毫无保留给个人及企业免费使用。
+#### 版本说明
+当前同步至ruoyi-vue最新版本（2022年10月13日），已覆盖ruoyi-vue v3.8.4版本
 
-* 前端采用Vue、Element UI。
-* 后端采用Spring Boot、Spring Security、Redis & Jwt。
-* 权限认证使用Jwt，支持多终端认证系统。
-* 支持加载动态权限菜单，多方式轻松权限控制。
-* 高效率开发，使用代码生成器可以一键生成前后端代码。
-* 提供了技术栈（[Vue3](https://v3.cn.vuejs.org) [Element Plus](https://element-plus.org/zh-CN) [Vite](https://cn.vitejs.dev)）版本[RuoYi-Vue3](https://github.com/yangzongzhuan/RuoYi-Vue3)，保持同步更新。
-* 提供了单应用版本[RuoYi-Vue-fast](https://github.com/yangzongzhuan/RuoYi-Vue-fast)，Oracle版本[RuoYi-Vue-Oracle](https://github.com/yangzongzhuan/RuoYi-Vue-Oracle)，保持同步更新。
-* 不分离版本，请移步[RuoYi](https://gitee.com/y_project/RuoYi)，微服务版本，请移步[RuoYi-Cloud](https://gitee.com/y_project/RuoYi-Cloud)
-* 特别鸣谢：[element](https://github.com/ElemeFE/element)，[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)，[eladmin-web](https://github.com/elunez/eladmin-web)。
-* 阿里云折扣场：[点我进入](http://aly.ruoyi.vip)，腾讯云秒杀场：[点我进入](http://txy.ruoyi.vip)&nbsp;&nbsp;
-* 阿里云优惠券：[点我领取](https://www.aliyun.com/minisite/goods?userCode=brki8iof&share_source=copy_link)，腾讯云优惠券：[点我领取](https://cloud.tencent.com/redirect.php?redirect=1025&cps_key=198c8df2ed259157187173bc7f4f32fd&from=console)&nbsp;&nbsp;
+#### 内置功能
 
-## 内置功能
+1.  表单中心：表单设计、表单管理
 
-1.  用户管理：用户是系统操作者，该功能主要完成系统用户配置。
-2.  部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。
-3.  岗位管理：配置系统用户所属担任职务。
-4.  菜单管理：配置系统菜单，操作权限，按钮权限标识等。
-5.  角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。
-6.  字典管理：对系统中经常使用的一些较为固定的数据进行维护。
-7.  参数管理：对系统动态配置常用参数。
-8.  通知公告：系统通知公告信息发布维护。
-9.  操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。
-10. 登录日志：系统登录日志记录查询包含登录异常。
-11. 在线用户：当前系统中活跃用户状态监控。
-12. 定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。
-13. 代码生成：前后端代码的生成（java、html、xml、sql）支持CRUD下载 。
-14. 系统接口：根据业务代码自动生成相关的api接口文档。
-15. 服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。
-16. 缓存监控：对系统的缓存信息查询，命令统计等。
-17. 在线构建器：拖动表单元素生成相应的HTML代码。
-18. 连接池监视：监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。
+2.  流程中心：流程设计、流程管理
 
-## 在线体验
+3.  应用中心：应用列表（发起流程）、代办任务、我发起的
 
-- admin/admin123  
-- 陆陆续续收到一些打赏，为了更好的体验已用于演示服务器升级。谢谢各位小伙伴。
+4.  数据中心：数据列表、数据配置、数据展示
 
-演示地址：http://vue.ruoyi.vip  
-文档地址：http://doc.ruoyi.vip
+5.  ruoyi-vue自带的用户、菜单、权限管理等功能
 
-## 演示图
+#### 安装教程
 
-<table>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/cd1f90be5f2684f4560c9519c0f2a232ee8.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/1cbcf0e6f257c7d3a063c0e3f2ff989e4b3.jpg"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8074972883b5ba0622e13246738ebba237a.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-9f88719cdfca9af2e58b352a20e23d43b12.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-39bf2584ec3a529b0d5a3b70d15c9b37646.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-936ec82d1f4872e1bc980927654b6007307.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-b2d62ceb95d2dd9b3fbe157bb70d26001e9.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d67451d308b7a79ad6819723396f7c3d77a.png"/></td>
-    </tr>	 
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/5e8c387724954459291aafd5eb52b456f53.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/644e78da53c2e92a95dfda4f76e6d117c4b.jpg"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-8370a0d02977eebf6dbf854c8450293c937.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-49003ed83f60f633e7153609a53a2b644f7.png"/></td>
-    </tr>
-	<tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-d4fe726319ece268d4746602c39cffc0621.png"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-c195234bbcd30be6927f037a6755e6ab69c.png"/></td>
-    </tr>
-    <tr>
-        <td><img src="https://oscimg.oschina.net/oscnet/b6115bc8c31de52951982e509930b20684a.jpg"/></td>
-        <td><img src="https://oscimg.oschina.net/oscnet/up-5e4daac0bb59612c5038448acbcef235e3a.png"/></td>
-    </tr>
-</table>
+1.  安装mongodb 5.0.9，可以选择使用docker安装：
 
+    * docker pull mongo:5.0.9
 
-## 若依前后端分离交流群
+    * docker run -d --name mongodb -v /home/mongo:/data/db -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin --privileged=true mongo:5.0.9
 
-QQ群： [![加入QQ群](https://img.shields.io/badge/已满-937441-blue.svg)](https://jq.qq.com/?_wv=1027&k=5bVB1og) [![加入QQ群](https://img.shields.io/badge/已满-887144332-blue.svg)](https://jq.qq.com/?_wv=1027&k=5eiA4DH) [![加入QQ群](https://img.shields.io/badge/已满-180251782-blue.svg)](https://jq.qq.com/?_wv=1027&k=5AxMKlC) [![加入QQ群](https://img.shields.io/badge/已满-104180207-blue.svg)](https://jq.qq.com/?_wv=1027&k=51G72yr) [![加入QQ群](https://img.shields.io/badge/已满-186866453-blue.svg)](https://jq.qq.com/?_wv=1027&k=VvjN2nvu) [![加入QQ群](https://img.shields.io/badge/已满-201396349-blue.svg)](https://jq.qq.com/?_wv=1027&k=5vYAqA05) [![加入QQ群](https://img.shields.io/badge/已满-101456076-blue.svg)](https://jq.qq.com/?_wv=1027&k=kOIINEb5) [![加入QQ群](https://img.shields.io/badge/已满-101539465-blue.svg)](https://jq.qq.com/?_wv=1027&k=UKtX5jhs) [![加入QQ群](https://img.shields.io/badge/已满-264312783-blue.svg)](https://jq.qq.com/?_wv=1027&k=EI9an8lJ) [![加入QQ群](https://img.shields.io/badge/已满-167385320-blue.svg)](https://jq.qq.com/?_wv=1027&k=SWCtLnMz) [![加入QQ群](https://img.shields.io/badge/已满-104748341-blue.svg)](https://jq.qq.com/?_wv=1027&k=96Dkdq0k) [![加入QQ群](https://img.shields.io/badge/已满-160110482-blue.svg)](https://jq.qq.com/?_wv=1027&k=0fsNiYZt) [![加入QQ群](https://img.shields.io/badge/170801498-blue.svg)](https://jq.qq.com/?_wv=1027&k=7xw4xUG1) 点击按钮入群。
+    * # 放开 TCP 端口 27017
+    sudo iptables -A INPUT -p tcp --dport 27017 -j ACCEPT
+
+    # 放开 UDP 端口 27017
+    sudo iptables -A INPUT -p udp --dport 27017 -j ACCEPT
+2.
+2.  创建mongodb 数据库与数据集（数据集的名称必须为**form_data**）
+
+    * 使用compass等工具连接至mongodb
+
+    * 创建名为 **nocode** 的database
+
+    * 在 **nocode** 数据库中创建名为 **form_data** 的collection
+
+3.  配置application.yml
+
+    *  打开 ruoyi-admin/src/main/resources/application.yml 文件
+
+    *  修改spring.data.mongodb的相关配置项
+
+    *  配置样例：
+    *  ![输入图片说明](images/mongodb%E9%85%8D%E7%BD%AE.png)
+
+4.  按照ruoyi官方文档进行部署配置，完成后启动前、后端项目
+
+    *  可参考：[若依前后端分离版文档](https://doc.ruoyi.vip/ruoyi-vue/)
+
+5.  启动项目后，运行零代码初始化脚本（因为activiti会在第一次启动后生成工作流相关表，所以零代码的sql脚本需要在项目启动后再运行）
+
+    *  使用datagrip等工具执行脚本： sql/零代码初始化脚本（第一次运行后再引入）.sql
+
+    *  脚本运行成功后刷新主页面，可以看到多出四个菜单：
+    *  ![输入图片说明](images/%E5%A4%9A%E5%87%BA%E5%9B%9B%E4%B8%AA%E8%8F%9C%E5%8D%95.png)
+
+#### 使用说明
+
+    本项目通过对表单、流程进行通用化的解析和处理来达到零代码开发的效果。如果有非常复杂的流程或极度定制化的表单需求，
+    可以参考通用实现来编写相关代码进而达到定制化开发的效果
+    
+    下面以创建一个请假应用为例来展示零代码开发的过程
+
+1.  创建两个演示账号
+
+    * zhangsan：普通角色
+
+    * lisi：普通角色、hr岗位
+
+    * 给“普通角色”赋予“应用中心”菜单权限
+
+2.  表单设计
+
+    * 进入“表单中心-表单设计”页面，拖拽生成表单，完成后点击“保存”。其中图片组件的上传地址可配置为：http://后端服务ip:后端服务端口/nocode/form/upload
+    * ![输入图片说明](images/%E8%A1%A8%E5%8D%95%E8%AE%BE%E8%AE%A1.png)
+
+    * 完成后可以在“表单中心-表单管理”页面看到刚刚创建的表单
+    * ![输入图片说明](images/%E8%A1%A8%E5%8D%95%E7%AE%A1%E7%90%86.png)
+
+3.  流程设计
+
+    * 进入“流程中心-流程定义”页面，点击“在线绘制流程”
+
+    * 定义流程编号、流程名称
+    * ![输入图片说明](images/%E6%B5%81%E7%A8%8B%E7%BC%96%E5%8F%B7%E4%B8%8E%E5%90%8D%E7%A7%B0.png)
+
+    * 绘制流程：建议做两个用户节点，分别是部门经理审批和hr归档
+
+    * 设置候选人员
+    * ![输入图片说明](images/%E5%80%99%E9%80%89%E4%BA%BA%E5%91%98.png)
+
+    * 设置候选组
+    * ![输入图片说明](images/%E5%80%99%E9%80%89%E7%BB%84.png)
+
+    * 设置通过条件（系统预设“通过”为：pass==1）
+    * ![输入图片说明](images/%E9%80%9A%E8%BF%87%E6%9D%A1%E4%BB%B6.png)
+
+    * 设置不通过条件（系统预设“不通过”为：pass==0）
+    * ![输入图片说明](images/%E4%B8%8D%E9%80%9A%E8%BF%87%E6%9D%A1%E4%BB%B6.png)
+
+    * 流程绘制完成后点击“部署”
+    * ![输入图片说明](images/%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B.png)
+
+4.  绑定表单与流程
+
+    * 进入“表单中心-表单管理”页面，在“请假管理”行点击“修改”，输入要绑定的流程key
+    * ![输入图片说明](images/%E7%BB%91%E5%AE%9A%E6%B5%81%E7%A8%8B.png)
+
+5.  发起、处理、查看流程
+
+    * 进入“应用中心-应用列表”页面，在“请假管理”行点击“发起”
+    * ![输入图片说明](images/%E5%8F%91%E8%B5%B7%E6%B5%81%E7%A8%8B.png)
+
+    * 流程发起后可以切换账号在“代办任务”页面进行流程的审批
+    * ![输入图片说明](images/%E5%AE%A1%E6%89%B9.png)
+
+    * 在“我发起的”页面中可以看到审批详情与审批进度
+    * ![输入图片说明](images/%E8%BF%9B%E5%BA%A6%E6%9F%A5%E8%AF%A2.png)
+
+6.  数据配置
+
+    * 进入“数据中心-数据列表”页面，选择“请假管理”数据集点击“编辑属性”对字段的名称、显隐、顺序进行配置
+    * ![输入图片说明](images/%E5%B1%9E%E6%80%A7%E9%85%8D%E7%BD%AE.png)
+
+    * 进入“数据中心-数据列表”页面，选择“请假管理”数据集点击“查看数据”看下数据展示是否正常
+    * ![输入图片说明](images/%E6%95%B0%E6%8D%AE%E6%9F%A5%E7%9C%8B.png)
+
+7.  菜单配置
+
+    * 进入“应用中心-应用列表”页面，在“请假管理”行点击“外链地址”，将表单的外链记录下来
+    * ![输入图片说明](images/%E8%A1%A8%E5%8D%95%E5%A4%96%E9%93%BE.png)
+
+    * 进入“数据中心-数据列表”页面，选择“请假管理”数据集点击“外链地址”，将列表的外链记录下来
+    * ![输入图片说明](images/%E5%88%97%E8%A1%A8%E5%A4%96%E9%93%BE.png)
+
+    * 进入“系统管理”-“菜单管理”，新建“请假管理”目录
+    * ![输入图片说明](images/%E8%AF%B7%E5%81%87%E7%AE%A1%E7%90%86.png)
+
+    * 在“请假管理”目录下新建“我要请假”菜单，将“路由地址”设置为表单的外链
+    * ![输入图片说明](images/%E6%88%91%E8%A6%81%E8%AF%B7%E5%81%87.png)
+
+    * 在“请假管理”目录下新建“请假列表”菜单，将“路由地址”设置为列表的外链
+    * ![输入图片说明](images/%E8%AF%B7%E5%81%87%E5%88%97%E8%A1%A8.png)
+
+    * 刷新页面，可以看到“请假管理”应用
+    * ![输入图片说明](images/%E6%88%91%E8%A6%81%E8%AF%B7%E5%81%87-1.png)
+    * ![输入图片说明](images/%E8%AF%B7%E5%81%87%E5%88%97%E8%A1%A8-1.png)
+
+#### 参与贡献
+
+1.  Fork 本仓库
+2.  新建 Feat_xxx 分支
+3.  提交代码
+4.  新建 Pull Request
+
+#### 其他说明
+
+1.  本项目开发过程中参考了RuoYi-Vue和ruoyi-vue-activiti的部分功能逻辑
+2.  觉得好用请给⭐
+
