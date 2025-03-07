@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.github.wujun728</groupId>
         <artifactId>jun_springboot_vue</artifactId>
-        <version>1.0.18</version>
+        <version>1.0.22</version>
     </parent>
     <artifactId>jun_qixing_test</artifactId>
 

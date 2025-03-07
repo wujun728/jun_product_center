@@ -6,7 +6,7 @@
 	
     <groupId>io.github.wujun728</groupId>
     <artifactId>jun_springboot_vue</artifactId>
-    <version>1.0.18</version>
+    <version>1.0.22</version>
 <!--    <version>3.8.6</version>-->
 
     <description>管理系统</description>
@@ -29,7 +29,7 @@
     </dependencies>
     
     <properties>
-        <ruoyi.version>1.0.18</ruoyi.version>
+        <ruoyi.version>1.0.22</ruoyi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
