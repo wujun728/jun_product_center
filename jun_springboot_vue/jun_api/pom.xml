@@ -15,43 +15,53 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- collections工具类 -->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+        </dependency>
 
         <!-- 通用工具-->
-        <!--<dependency>
+        <dependency>
             <groupId>io.github.wujun728</groupId>
-            <artifactId>qixing_common</artifactId>
-        </dependency>-->
+            <artifactId>jun_common</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- xml解析-->
+        <dependency>
+            <groupId>org.dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>${dom4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.wujun728</groupId>
+            <artifactId>jun_system</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.wujun728</groupId>
+            <artifactId>jun_lowcode</artifactId>
         </dependency>
         <dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-db-activerecord</artifactId>
             <version>1.0.22</version>
         </dependency>
-
-        <!-- SpringBoot Web容器 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.2.1-jre</version>
         </dependency>
-        <!-- SpringBoot集成thymeleaf模板 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
         </dependency>
-
-        <!-- spring-boot-devtools -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional> <!-- 表示依赖不会传递 -->
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
         </dependency>
-
     </dependencies>
 
-    <build>
-        <finalName>${project.artifactId}</finalName>
-    </build>
 </project>

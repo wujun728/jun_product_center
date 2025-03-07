@@ -1,4 +1,4 @@
-package com.ruoyi.qixing.controller;
+package com.ruoyi.web.controller.qixing;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjUtil;

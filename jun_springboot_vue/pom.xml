@@ -221,6 +221,11 @@
             </dependency>
             <dependency>
                 <groupId>io.github.wujun728</groupId>
+                <artifactId>jun_api</artifactId>
+                <version>${ruoyi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.wujun728</groupId>
                 <artifactId>jun_lowcode</artifactId>
                 <version>${ruoyi.version}</version>
             </dependency>

@@ -1,7 +1,7 @@
 package com.ruoyi;
 
 import com.ruoyi.common.utils.spring.SpringUtils;
-import com.ruoyi.qixing.controller.QixingController;
+import com.ruoyi.web.controller.qixing.QixingController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;

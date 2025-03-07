@@ -74,7 +74,7 @@
             cols: [
                 [
                     {type: 'checkbox'},
-                    {field: 'menuName', title: '菜单名称', width: 300},
+                    {field: 'menuName', title: '菜单名称' },
                     {field: 'id', title: 'id', hide:true},
                     {field: 'menuId', title: 'menuId', hide:true},
                     {field: 'parentId', title: 'parentId', hide:true},
@@ -88,10 +88,10 @@
                     {field: 'orderNum', title: '排序'},
                     {field: 'perms', title: '权限标识', width: 200},
                     {field: 'component', title: '菜单路径', width: 200},
-                    {field: 'path', title: '组件路径', width: 200},
+                    {field: 'path', title: '组件路径' },
                     {field: 'status', title: '状态', templet: function (d) { return xnUtil.rendDataTableDict(d.status, 'sys_normal_disable'); } },
                     {field: 'createTime', title: '创建时间', width: 200},
-                    {title: '操作', toolbar: '#tableBar', align: 'center', width: 200, minWidth: 200}
+                    {title: '操作', toolbar: '#tableBar', align: 'center' }
                 ]
             ]
         });
