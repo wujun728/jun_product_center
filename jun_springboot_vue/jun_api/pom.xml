@@ -17,10 +17,10 @@
     <dependencies>
 
         <!-- 通用工具-->
-        <dependency>
+        <!--<dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>qixing_common</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-db-activerecord</artifactId>
-            <version>1.0.20</version>
+            <version>1.0.22</version>
         </dependency>
 
         <!-- SpringBoot Web容器 -->
