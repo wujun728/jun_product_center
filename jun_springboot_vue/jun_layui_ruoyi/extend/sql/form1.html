@@ -1,0 +1,173 @@
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+<form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+    <!-- 表单开始 -->
+    <input name="id" type="hidden"/>
+    <input name="groupId" type="hidden"/>
+    <div class="layui-row">
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">上级分组:</label>
+                <div class="layui-input-block">
+                    <div id="leftEditParentSel" class="ew-xmselect-tree"></div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">分组名称:</label>
+                <div class="layui-input-block">
+                    <input name="name" placeholder="请输入分组名称" class="layui-input"
+                           lay-verType="tips" lay-verify="required" required/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label ">分组全称:</label><!-- layui-form-required -->
+                <div class="layui-input-block">
+                    <input name="fullName" placeholder="请输入分组全称" class="layui-input"
+                           lay-verType="tips" /><!-- lay-verify="required" required -->
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label ">分组类型:</label><!-- layui-form-required -->
+                <div class="layui-input-block">
+                    <select name="type" lay-verType="tips" ><!-- lay-verify="required" required -->
+                        <option value="">请选择分组类型</option>
+                        <option value="1">开发</option>
+                        <option value="2">测试</option>
+                        <option value="3">灰度</option>
+                        <option value="4">生产</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label  ">排序号:</label><!-- layui-form-required -->
+                <div class="layui-input-block">
+                    <input name="sort" placeholder="请输入排序号" class="layui-input" type="number"
+                           lay-verType="tips"  /><!-- lay-verify="required" required -->
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">备注:</label>
+                <div class="layui-input-block">
+                    <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="layui-form-item text-right">
+        <button class="layui-btn" lay-filter="groupEditSubmit" lay-submit>保存</button>
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+    </div> -->
+    <!-- 表单结束 -->
+    <div class="layui-form-item text-right">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'form', 'admin', 'xnUtil', 'xmSelect','treeTable'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var admin = layui.admin;
+        var xnUtil = layui.xnUtil;
+        var xmSelect = layui.xmSelect;
+        var treeTable = layui.treeTable;
+        var selObj, treeData;  // 左树选中数据
+
+        var editData = admin.getLayerData('#addOrUpdateForm').data;
+
+        form.val('addOrUpdateForm', editData);
+
+        /* 渲染树形 */
+        function renderTree() {
+            $.ajax({
+                type: "get",
+                headers: {"Authorization": localStorage.getItem("Authorization")},
+                url: '/api/rest/apiGroup/list',
+                //data: JSON.stringify(data.field),
+                success: function (res) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        res.data[i].title = res.data[i].name;
+                        res.data[i].id = res.data[i].id;
+                        res.data[i].spread = true;
+                    }
+                    treeData = layui.treeTable.pidToChildren(res.data, 'id', 'pid');
+
+                    var pid = "1";
+                    // 渲染下拉树
+                    var insXmSel = xmSelect.render({
+                        el: '#leftEditParentSel',
+                        name: 'pid',
+                        layVerify: 'required',
+                        layVerType: 'tips',
+                        height: '250px',
+                        data: treeData,
+                        initValue: editData ? [editData.pid] : (pid ? [pid] : []),
+                        model: {label: {type: 'text'}},
+                        prop: {
+                            name: 'name',
+                            value: 'id'
+                        },
+                        radio: true,
+                        clickClose: true,
+                        tree: {
+                            show: true,
+                            indent: 15,
+                            strict: false,
+                            expandedKeys: true
+                        }
+                    });
+                },
+                error: function(error) {
+                    // 处理提交失败的情况
+                    console.log("提交失败");
+                }
+            });
+        }
+
+        renderTree();
+
+
+        // 表单提交事件
+        form.on('submit(formSubmitBtn)', function (data) {
+            /* layer.load(2);
+            var method = editData ? 'PUT' : 'POST';
+            var url = '/dev-api/system/dept';
+            admin.req(url, JSON.stringify(data.field), function(res){
+                if(res.code == 200 || res.code == 0 ){
+                    layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                        admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                        admin.closeDialog('#addOrUpdateForm');
+                    });
+                }else{
+                    layer.msg(res.msg, {icon: 2, time: 1000}, function () {  });
+                }
+            }, method);
+            return false; */
+            var loadIndex = layer.load(2);
+            //var url = editData ? getProjectUrl() + 'sysOrg/edit' : getProjectUrl() + 'sysOrg/add';
+            var method = editData ? 'PUT' : 'POST';
+            var url = '/dev-api/rest/apiGroup';
+            if(data.field.pid == 0 ){
+                layer.msg("禁止修改顶级节点");
+                return;
+            }
+            admin.req(url, JSON.stringify(data.field), function(res){
+                if(res.code == 200 || res.code == 0 ){
+                    layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                        //admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                        admin.closeDialog('#addOrUpdateForm');
+                        layer.close(dIndex);
+                        renderTree();
+                    });
+                }else{
+                    layer.msg(res.msg, {icon: 2, time: 1000}, function () {  });
+                }
+            }, method);
+            return false;
+        });
+
+    });
+</script>

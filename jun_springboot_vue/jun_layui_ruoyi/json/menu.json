@@ -1,0 +1,148 @@
+[{
+		"id": 1,
+		"title": "推荐页面",
+		"icon": "bi-house",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 11,
+			"title": "勾股DEV",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/home/gougudev.html"
+		}, {
+			"id": 12,
+			"title": "勾股OA",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/home/gouguoa.html"
+		},{
+			"id": 13,
+			"title": "勾股BLOG",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/home/gougublog.html"
+		} , {
+			"id": 14,
+			"title": "数据统计",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/home/analysis.html"
+		}, {
+			"id": 15,
+			"title": "内嵌页面",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "https://cn.bing.com"
+		}]
+	},{
+		"id": 2,
+		"title": "基础组件",
+		"icon": "bi-box",
+		"type": 0,
+		"children": [
+		{
+			"id": 201,
+			"title": "Layout 布局",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/layout.html"
+		},
+		{
+			"id": 202,
+			"title": "Button 按钮",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/button.html"
+		}, {
+			"id": 203,
+			"title": "Icon 图标",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "assets/icon/index.html"
+		}, {
+			"id": 204,
+			"title": "Image 图片",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/image.html"
+		},{
+			"id": 205,
+			"title": "Badge 徽标数",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/badge.html"
+		}, {
+			"id": 206,
+			"title": "Tag 标签",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/base/tag.html"
+		}]
+	}, {
+		"id": 3,
+		"title": "表单组件",
+		"icon": "bi-card-text",
+		"type": 0,
+		"children": [{
+			"id": 301,
+			"title": "普通表单",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/index.html"
+		},{
+			"id": 302,
+			"title": "表单校验",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/verify.html"
+		},{
+			"id": 303,
+			"title": "富文本编辑器",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/tinymce.html"
+		},{
+			"id": 304,
+			"title": "Mardown编辑器",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/form/editormd.html"
+		}]
+	}, {
+		"id": 4,
+		"title": "数据组件",
+		"icon": "bi-layers",
+		"type": 0,
+		"children": [{
+			"id": 401,
+			"title": "数据表格",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/table/index.html"
+		},{
+			"id": 402,
+			"title": "树形表格",
+			"icon": "",
+			"type": 1,
+			"target": "_iframe",
+			"href": "view/table/tree_table.html"
+		}]
+	}
+]
