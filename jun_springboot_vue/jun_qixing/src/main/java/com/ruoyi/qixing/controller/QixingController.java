@@ -14,10 +14,12 @@ import io.github.wujun728.db.utils.RecordUtil;
 import io.github.wujun728.db.utils.TreeBuildUtil;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,9 +36,10 @@ import java.util.stream.Collectors;
 public class QixingController extends BaseController
 {
 
-    @Autowired
-    private ISysMenuService menuService;
-
+    @PostConstruct
+    public void init() {
+        Db.init("main", SpringUtils.getBean(DataSource.class));
+    }
 
     @GetMapping("getRouters1")
     public AjaxResult getRouters1() throws IOException {
@@ -51,7 +54,7 @@ public class QixingController extends BaseController
         where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0
         order by m.parent_id, m.order_num*/
         //ActiveRecordUtil.initActiveRecordPlugin("main", SpringUtils.getBean(DataSource.class));
-        Db.init("main", SpringUtils.getBean(DataSource.class));
+
         List<Record> apps = Db.use().find(" SELECT * from sys_menu where parent_id = 0 ");
         List apps1 = RecordUtil.recordToMaps(apps,true);
         List<Record> menus = Db.use().find(" SELECT * from sys_menu where menu_type != 'F' ORDER BY parent_id,order_num ");
@@ -87,7 +90,7 @@ public class QixingController extends BaseController
     @GetMapping("getRouters")
     public R getRouters() throws IOException {
         //ActiveRecordUtil.initActiveRecordPlugin("main", SpringUtils.getBean(DataSource.class));
-        Db.init("main",SpringUtils.getBean(DataSource.class));
+        //Db.init("main",SpringUtils.getBean(DataSource.class));
         List<Record> apps = Db.use().find(" SELECT * from sys_menu where parent_id = 0 ");
         List<Map<String, Object>> apps1 = RecordUtil.recordToMaps(apps,true);
         List<Record> menus = Db.use().find(" SELECT * from sys_menu where menu_type != 'F' ORDER BY parent_id,order_num ");

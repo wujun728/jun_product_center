@@ -24,7 +24,7 @@
         <div class="layui-fluid">
             <div class="layui-card">
                 <!--search form-->
-                <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
+                <form class="layui-form toolbar" id="searchForm">
                     <div class="layui-form-item">
                         <div class="layui-inline">
                             <label class="layui-form-label">角色名称</label>
@@ -70,16 +70,16 @@
                 <!--table actcion-->
                 <div class="layui-card-body">
                     <script type="text/html" id="table_role_toolbar">
-                    <div class="layui-btn-group" shiro:hasPermission="system:user:add">
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-role-add" shiro:hasPermission="system:role:add"><i class="layui-icon">&#xe654;</i>新增</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-role-remove" shiro:hasPermission="system:role:add"><i class="layui-icon">&#xe640;</i>删除</button>
+                    <div class="layui-table-tool-temp" perm-show="system:user:add">
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-role-add" perm-show="system:role:add"><i class="layui-icon">&#xe654;</i>新增</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-role-remove" perm-show="system:role:add"><i class="layui-icon">&#xe640;</i>删除</button>
                     </div>
                 </script>
                     <table id="table_role" lay-filter="table_role"></table>
                     <script type="text/html" id="col_operation">
-                    <a shiro:hasPermission="system:role:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:role:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:role:edit" href="javascript:;" lay-event="data">数据权限</a>
+                    <a perm-show="system:role:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
+                    <a perm-show="system:role:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
+                    <a perm-show="system:role:edit" href="javascript:;" lay-event="data">数据权限</a>
                 </script>
                     <script type="text/html" id="tmplRoleStatus">
                     {{#  if(d.status == 1){ }}
@@ -96,7 +96,7 @@
     <script src="/assets/libs/layui/layui.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/core.util.js"></script>
-    <script lang="javascript"> var ctx = "/api/"; </script>
+    <script lang="javascript"> var ctx = "/dev-api/"; </script>
     <script lang="javascript">
         var editFlag = true;//[[${@permission.hasPermi('system:user:edit')}]];
         var removeFlag = true;// [[${@permission.hasPermi('system:user:remove')}]];

@@ -17,57 +17,57 @@
 <div class="layui-layout layui-layout-iframe">
     <div class="layui-fluid">
         <div class="layui-card">
-            <!--search form-->
-            <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">登录地址</label>
-                        <div class="layui-input-inline">
-                            <input class="layui-input" type="text" name="ipaddr" placeholder="" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">用户名</label>
-                        <div class="layui-input-inline">
-                            <input class="layui-input" type="text" name="userName" placeholder="" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">状态</label>
-                        <div class="layui-input-inline input-sm">
-                            <select name="status" th:with="type=${@dict.getType('sys_common_status')}">
-                                <option value="">所有</option>
-                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline mt5">
-                        <label class="layui-form-label">登录时间</label>
-                        <div class="layui-input-inline input-sm">
-                            <input class="layui-input" type="text" name="params[beginTime]" id="startTime" placeholder="开始时间" />
-                        </div>
-                        <span class="layui-form-mid">-</span>
-                        <div class="layui-input-inline input-sm">
-                            <input class="layui-input" type="text" name="params[endTime]" id="endTime" placeholder="结束时间"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
-                    </div>
-                </div>
-            </form>
             <!--table actcion-->
             <div class="layui-card-body">
+                <!--search form-->
+                <form class="layui-form toolbar" id="searchForm">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">登录地址</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" type="text" name="ipaddr" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户名</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" type="text" name="userName" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">状态</label>
+                            <div class="layui-input-inline input-sm">
+                                <select name="status" th:with="type=${@dict.getType('sys_common_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline mt5">
+                            <label class="layui-form-label">登录时间</label>
+                            <div class="layui-input-inline input-sm">
+                                <input class="layui-input" type="text" name="params[beginTime]" id="startTime" placeholder="开始时间" />
+                            </div>
+                            <span class="layui-form-mid">-</span>
+                            <div class="layui-input-inline input-sm">
+                                <input class="layui-input" type="text" name="params[endTime]" id="endTime" placeholder="结束时间"/>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
+                        </div>
+                    </div>
+                </form>
                 <script type="text/html" id="table_logininfor_toolbar">
-                    <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-logininfor-remove"><i class="layui-icon">&#xe640;</i>删除</button>
+                    <div class="layui-table-tool-temp">
+                        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="toolbar-logininfor-remove"  perm-show="monitor:logininfor:remove" ><i class="layui-icon">&#xe640;</i>删除</button>
                         <!-- <button class="layui-btn layui-btn-sm" lay-event="toolbar-logininfor-clear"><i class="layui-icon">&#xe640;</i>清空</button> -->
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-logininfor-export"><i class="layui-icon">&#xe640;</i>导出</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-logininfor-export"  perm-show="monitor:logininfor:export" ><i class="layui-icon">&#xe640;</i>导出</button>
                     </div>
                 </script>
                 <table id="table_logininfor" lay-filter="table_logininfor"></table>
                 <script type="text/html" id="col_operation">
-                    <a  href="javascript:;" lay-event="del">删除</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" perm-show="monitor:logininfor:remove"  href="javascript:;" lay-event="del">删除</a>
                 </script>
             </div>
         </div>
@@ -80,7 +80,7 @@
 <script src="/assets/js/jquery.js"></script>
 <script src="/assets/js/common.js"></script>
 <script src="/assets/js/core.util.js"></script>
-<script lang="javascript"> var ctx = "/api/"; </script>
+<script lang="javascript"> var ctx = "/dev-api/"; </script>
 
 <script th:inline="javascript">
     var editFlag = true;//[[${@permission.hasPermi('system:user:edit')}]];
@@ -178,13 +178,13 @@
             }
             , page: true
             , cols: new Array([
-            { type: 'checkbox', width: 40 },
+            { type: 'checkbox' },
                 {field: 'infoId', title: '访问编号'}
                 , {field: 'userName', title: '用户名'}
                 , {field: 'ipaddr', title: '登录地址',width:100}
                 , {field: 'loginLocation', title: '登录地点'}
                 , {field: 'browser', title: '浏览器'}
-                , {field: 'os', title: '操作系统',width: 100}
+                , {field: 'os', title: '操作系统' }
                 , {
                     field: 'status', title: '状态', width: 80, align: 'center',
                     templet: function (item) {

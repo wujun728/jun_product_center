@@ -12,59 +12,68 @@
     <link rel="stylesheet" href="/assets/css/common.css">
     <!-- <link rel="stylesheet" href="/assets/css/gougu.css"> -->
 	<style>
-		.layui-layer-tab .layui-layer-title span.layui-this { height: 51px; border-left-color: #eee; border-right-color: #eee; 
-			background-color: #607D8B; z-index: 10; }
+		/* .layui-layer-tab .layui-layer-title span.layui-this { height: 51px; border-left-color: #eee; border-right-color: #eee; 
+			background-color: #607D8B; z-index: 10; } */
+
+		.layui-layer-tab .layui-layer-title span.layui-this {
+			height: 51px;
+			border-left-color: #eee;
+			border-right-color: #eee;
+			background-color: #8c8c8c;
+			z-index: 10;
+		}
 	</style>
 </head>
 <body>
 <div class="layui-layout layui-layout-iframe">
 	<div class="layui-fluid">
 		<div class="layui-card">
-			<!--search form-->
-			<form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-label">表名称</label>
-						<div class="layui-input-inline">
-							<input class="layui-input" type="text" name="tableName" placeholder="" autocomplete="off">
-						</div>
-					</div>
-					<div class="layui-inline">
-						<label class="layui-form-label">表描述</label>
-						<div class="layui-input-inline">
-							<input class="layui-input" type="text" name="tableComment" placeholder="" autocomplete="off">
-						</div>
-					</div>
-					<div class="layui-inline mt5">
-						<label class="layui-form-label">创建时间</label>
-						<div class="layui-input-inline input-sm">
-							<input class="layui-input" type="text" name="params[beginTime]" id="startTime" placeholder="开始时间" />
-						</div>
-						<span class="layui-form-mid">-</span>
-						<div class="layui-input-inline input-sm">
-							<input class="layui-input" type="text" name="params[endTime]" id="endTime" placeholder="结束时间"/>
-						</div>
-					</div>
-					<div class="layui-inline">
-						<button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
-					</div>
-				</div>
-			</form>
+			
 			<!--table actcion-->
 			<div class="layui-card-body">
+				<!--search form-->
+				<form class="layui-form toolbar" id="searchForm">
+					<div class="layui-form-item">
+						<div class="layui-inline">
+							<label class="layui-form-label">表名称</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text" name="tableName" placeholder="" autocomplete="off">
+							</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-label">表描述</label>
+							<div class="layui-input-inline">
+								<input class="layui-input" type="text" name="tableComment" placeholder="" autocomplete="off">
+							</div>
+						</div>
+						<div class="layui-inline mt5">
+							<label class="layui-form-label">创建时间</label>
+							<div class="layui-input-inline input-sm">
+								<input class="layui-input" type="text" name="params[beginTime]" id="startTime" placeholder="开始时间" />
+							</div>
+							<span class="layui-form-mid">-</span>
+							<div class="layui-input-inline input-sm">
+								<input class="layui-input" type="text" name="params[endTime]" id="endTime" placeholder="结束时间"/>
+							</div>
+						</div>
+						<div class="layui-inline">
+							<button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
+						</div>
+					</div>
+				</form>
 				<script type="text/html" id="table_gen_toolbar">
-					<div class="layui-btn-group" shiro:hasPermission="system:dict:add">
-						<button class="layui-btn layui-btn-sm" lay-event="batch-gencode" shiro:hasPermission="tool:gen:code"><i class="layui-icon">&#xe654;</i>生成</button>
+					<div class="layui-table-tool-temp" perm-show="system:dict:add">
+						<button class="layui-btn layui-btn-sm" lay-event="batch-gencode" perm-show="tool:gen:code"><i class="layui-icon">&#xe654;</i>生成</button>
 						<button class="layui-btn layui-btn-sm" lay-event="import"><i class="layui-icon">&#xe654;</i>导入</button>
-						<button class="layui-btn layui-btn-sm" lay-event="batch-remove" shiro:hasPermission="tool:gen:remove"><i class="layui-icon">&#xe640;</i>删除</button>
+						<button class="layui-btn layui-btn-sm  layui-btn-danger" lay-event="batch-remove" perm-show="tool:gen:remove"><i class="layui-icon">&#xe640;</i>删除</button>
 					</div>
 				</script>
 				<table id="table_gen" lay-filter="table_gen"></table>
 				<script type="text/html" id="col_operation">
-					<a shiro:hasPermission="system:dict:edit"  href="javascript:;" lay-event="preview">预览</a><span class="splitor">|</span>
-					<a shiro:hasPermission="system:dict:edit"  href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
-					<a shiro:hasPermission="system:dict:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
-					<a shiro:hasPermission="system:dict:remove" href="javascript:;" lay-event="gencode">生成代码</a>
+					<a class="layui-btn layui-btn-primary layui-btn-xs"  perm-show="system:dict:edit"  href="javascript:;" lay-event="preview">预览</a><span class="splitor"></span>
+					<a class="layui-btn layui-btn-primary layui-btn-xs"  perm-show="system:dict:edit"  href="javascript:;" lay-event="edit">编辑</a><span class="splitor"></span>
+					<a class="layui-btn layui-btn-danger layui-btn-xs"  perm-show="system:dict:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor"></span>
+					<a class="layui-btn layui-btn-primary layui-btn-xs"  perm-show="system:dict:remove" href="javascript:;" lay-event="gencode">生成代码</a>
 				</script>
 			</div>
 		</div>
@@ -77,7 +86,7 @@
 <script src="/assets/js/core.util.js"></script>
 <script lang="javascript"></script>
 <script lang="javascript">
-	var ctx = "/api/";
+	var ctx = "/dev-api/";
     var editFlag = true;//[[${@permission.hasPermi('system:user:edit')}]];
     var removeFlag = true;// [[${@permission.hasPermi('system:user:remove')}]];
 	var prefix = ctx + "tool/gen";

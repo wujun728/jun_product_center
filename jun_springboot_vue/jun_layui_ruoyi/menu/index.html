@@ -17,7 +17,7 @@
     <div class="layui-fluid">
         <div class="layui-card">
             <!--search form-->
-            <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
+            <form class="layui-form toolbar" id="searchForm">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">菜单名称</label>
@@ -42,16 +42,16 @@
             <!--table actcion-->
             <div class="layui-card-body">
                 <script type="text/html" id="table_menu_toolbar">
-                    <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-menu-add" shiro:hasPermission="system:dept:add"><i class="layui-icon">&#xe654;</i>新增</button>
+                    <div class="layui-table-tool-temp">
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-menu-add" perm-show="system:dept:add"><i class="layui-icon">&#xe654;</i>新增</button>
                         <button class="layui-btn layui-btn-sm" lay-event="toolbar-menu-expand" data-value="expand">折叠/展开</button>
                     </div>
                 </script>
                 <table id="table_menu" lay-filter="table_menu"></table>
                 <script type="text/html" id="col_operation">
-                    <a shiro:hasPermission="system:dept:add"  href="javascript:;" lay-event="addChild">新增</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:dept:edit"  href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:dept:remove" href="javascript:;" lay-event="del">删除</a>
+                    <a perm-show="system:dept:add"  href="javascript:;" lay-event="addChild">新增</a><span class="splitor">|</span>
+                    <a perm-show="system:dept:edit"  href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
+                    <a perm-show="system:dept:remove" href="javascript:;" lay-event="del">删除</a>
                 </script>
             </div>
         </div>
@@ -61,7 +61,7 @@
 <script src="/assets/libs/layui/layui.js"></script>
 <script src="/assets/js/common.js"></script>
 <script src="/assets/js/core.util.js"></script>
-<script lang="javascript"> var ctx = "/api/"; </script>
+<script lang="javascript"> var ctx = "/dev-api/"; </script>
 <script lang="javascript">
     var editFlag = true;//[[${@permission.hasPermi('system:user:edit')}]];
     var removeFlag = true;// [[${@permission.hasPermi('system:user:remove')}]];

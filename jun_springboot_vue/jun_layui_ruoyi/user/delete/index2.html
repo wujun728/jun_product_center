@@ -147,8 +147,8 @@
 </script>
 <!-- 列表操作列 -->
 <script type="text/html" id="col_operation">
-    <a shiro:hasPermission="system:user:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
-    <a shiro:hasPermission="system:user:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
+    <a perm-show="system:user:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
+    <a perm-show="system:user:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
     <a href="javascript:;" lay-event="reset">重置密码</a>
 </script>
 

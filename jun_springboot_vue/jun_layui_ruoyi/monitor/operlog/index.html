@@ -22,88 +22,90 @@
 </head>
 
 <body>
-    <div class="layui-layout layui-layout-iframe">
+    <!-- <div class="layui-layout layui-layout-iframe"> -->
         <div class="layui-fluid">
             <div class="layui-card">
-                <!--search form-->
-                <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">系统模块</label>
-                            <div class="layui-input-inline">
-                                <input class="layui-input" type="text" name="title" placeholder="" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">操作人员</label>
-                            <div class="layui-input-inline">
-                                <input class="layui-input" type="text" name="operName" placeholder=""
-                                    autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">操作类型</label>
-                            <div class="layui-input-inline">
-                                <select id="businessTypes"  name="businessTypes" th:with="type=${@dict.getType('sys_oper_type')}">
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                        th:value="${dict.dictValue}"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">操作状态</label>
-                            <div class="layui-input-inline">
-                                <select id="status" name="status" th:with="type=${@dict.getType('sys_common_status')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-                                        th:value="${dict.dictValue}"></option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="layui-inline mt5">
-                            <label class="layui-form-label">操作时间</label>
-                            <div class="layui-input-inline input-sm">
-                                <input class="layui-input" type="text" name="params[beginTime]" id="startTime"
-                                    placeholder="开始时间" />
-                            </div>
-                            <span class="layui-form-mid">-</span>
-                            <div class="layui-input-inline input-sm">
-                                <input class="layui-input" type="text" name="params[endTime]" id="endTime"
-                                    placeholder="结束时间" />
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <button type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit
-                                lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
-                        </div>
-                    </div>
-                </form>
+                
                 <!--table actcion-->
                 <div class="layui-card-body">
+                     <!--search form-->
+                    <form class="layui-form toolbar" id="searchForm">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">系统模块</label>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" type="text" name="title" placeholder="" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">操作人员</label>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" type="text" name="operName" placeholder=""
+                                        autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">操作类型</label>
+                                <div class="layui-input-inline">
+                                    <select id="businessTypes"  name="businessTypes" th:with="type=${@dict.getType('sys_oper_type')}">
+                                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                            th:value="${dict.dictValue}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="display: none;">
+                                <label class="layui-form-label">操作状态</label>
+                                <div class="layui-input-inline">
+                                    <select id="status" name="status" th:with="type=${@dict.getType('sys_common_status')}">
+                                        <option value="">所有</option>
+                                        <option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+                                            th:value="${dict.dictValue}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-inline mt5">
+                                <label class="layui-form-label">操作时间</label>
+                                <div class="layui-input-inline input-sm">
+                                    <input class="layui-input" type="text" name="params[beginTime]" id="startTime"
+                                        placeholder="开始时间" />
+                                </div>
+                                <span class="layui-form-mid">-</span>
+                                <div class="layui-input-inline input-sm">
+                                    <input class="layui-input" type="text" name="params[endTime]" id="endTime"
+                                        placeholder="结束时间" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit
+                                    lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
+                            </div>
+                        </div>
+                    </form>
                     <script type="text/html" id="table_operlog_toolbar">
-                    <div class="layui-btn-group">
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-operlog-remove"><i class="layui-icon">&#xe640;</i>删除</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-operlog-clear"><i class="layui-icon">&#xe640;</i>清空</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-operlog-export"><i class="layui-icon">&#xe640;</i>导出</button>
+                    <div class="layui-table-tool-temp">
+                    <!-- <div class="layui-table-tool-temp"> -->
+                        <button class="layui-btn layui-btn-sm icon-btn  layui-btn-warm " lay-event="toolbar-operlog-remove"  perm-show="monitor:operlog:remove" ><i class="layui-icon">&#xe640;</i>删除</button> 
+                        <button class="layui-btn layui-btn-sm icon-btn  layui-btn-danger " lay-event="toolbar-operlog-clear" perm-show="monitor:operlog:remove" ><i class="layui-icon">&#xe640;</i>清空</button> 
+                        <button class="layui-btn layui-btn-sm icon-btn" lay-event="toolbar-operlog-export"><i class="layui-icon"  perm-show="monitor:operlog:export" >&#xe640;</i>导出</button>
                     </div>
-                </script>
-                    <table id="table_operlog" lay-filter="table_operlog"></table>
-                    <script type="text/html" id="col_operation">
-                    <a  href="javascript:;" lay-event="detail">详细</a>
-                    <a  href="javascript:;" lay-event="del">删除</a>
-                </script>
+                    </script>
+                        <table id="table_operlog" lay-filter="table_operlog"></table>
+                        <script type="text/html" id="col_operation">
+                        <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show=""   href="javascript:;" lay-event="detail">详细</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" perm-show="monitor:operlog:remove"  href="javascript:;" lay-event="del">删除</a>
+                    </script>
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
     <!-- js部分 -->
     <script src="/assets/libs/layui/layui.js"></script>
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/core.util.js"></script>
-    <script lang="javascript"> var ctx = "/api/"; </script>
+    <script lang="javascript"> var ctx = "/dev-api/"; </script>
 
     <script lang="javascript">
         var editFlag = true; 
@@ -226,7 +228,7 @@
                     };
                 }
                 , cols: new Array([
-                    { type: 'checkbox', width: 40 }
+                    { type: 'checkbox'  }
                     , { field: 'operId', title: '日志编号' }
                     , { field: 'title', title: '系统模块' }
                     , {

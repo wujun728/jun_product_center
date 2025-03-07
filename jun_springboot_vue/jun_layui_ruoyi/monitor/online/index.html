@@ -19,36 +19,37 @@
 <div class="layui-layout layui-layout-iframe">
     <div class="layui-fluid">
         <div class="layui-card">
-            <!--search form-->
-            <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">登录地址</label>
-                        <div class="layui-input-inline">
-                            <input class="layui-input" type="text" name="ipaddr" placeholder="" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">登录名称</label>
-                        <div class="layui-input-inline">
-                            <input class="layui-input" type="text" name="userName" placeholder="" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
-                    </div>
-                </div>
-            </form>
+            
             <!--table actcion-->
             <div class="layui-card-body">
+                <!--search form-->
+                <form class="layui-form toolbar" id="searchForm">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">登录地址</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" type="text" name="ipaddr" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">登录名称</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" type="text" name="userName" placeholder="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search"><i class="layui-icon">&#xe615;</i>搜索</button>
+                        </div>
+                    </div>
+                </form>
                 <script type="text/html" id="table_online_toolbar">
-                    <div class="layui-btn-group" shiro:hasPermission="monitor:online:batchForceLogout">
+                    <div class="layui-table-tool-temp" perm-show="monitor:online:batchForceLogout">
                         <button class="layui-btn layui-btn-sm" lay-event="batch-logout">强退</button>
                     </div>
                 </script>
                 <table id="table_online" lay-filter="table_online"></table>
                 <script type="text/html" id="col_operation">
-                    <a href="javascript:;" shiro:hasPermission="monitor:online:batchForceLogout" lay-event="logout">强退</a>
+                    <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show=""   href="javascript:;" perm-show="monitor:online:batchForceLogout" lay-event="logout">强退</a>
                 </script>
             </div>
         </div>
@@ -59,7 +60,7 @@
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/core.util.js"></script>
-    <script lang="javascript"> var ctx = "/api/"; </script>
+    <script lang="javascript"> var ctx = "/dev-api/"; </script>
 
     <script lang="javascript">
         var editFlag = true; 

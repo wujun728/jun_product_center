@@ -11,7 +11,7 @@
     <div class="layui-fluid">
         <div class="layui-card">
             <!--search form-->
-            <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
+            <form class="layui-form toolbar" id="searchForm">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">任务名称</label>
@@ -57,14 +57,14 @@
             <!--table actcion-->
             <div class="layui-card-body">
                 <script type="text/html" id="table_jobLog_toolbar">
-                    <div class="layui-btn-group" shiro:hasPermission="system:job:add">
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-jobLog-remove" shiro:hasPermission="monitor:job:remove"><i class="layui-icon">&#xe640;</i>删除</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-log-clear" shiro:hasPermission="monitor:job:remove"><i class="layui-icon">&#x1006;</i>清空</button>
+                    <div class="layui-table-tool-temp" perm-show="system:job:add">
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-jobLog-remove" perm-show="monitor:job:remove"><i class="layui-icon">&#xe640;</i>删除</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-log-clear" perm-show="monitor:job:remove"><i class="layui-icon">&#x1006;</i>清空</button>
                     </div>
                 </script>
                 <table id="table_jobLog" lay-filter="table_jobLog"></table>
                 <script type="text/html" id="col_operation">
-                    <a shiro:hasPermission="system:job:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
+                    <a perm-show="system:job:remove" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
                     <a href="javascript:;" lay-event="detail">详细</a>
                 </script>
             </div>

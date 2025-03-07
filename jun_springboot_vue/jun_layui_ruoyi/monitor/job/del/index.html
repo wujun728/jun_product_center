@@ -20,7 +20,7 @@
     <div class="layui-fluid">
         <div class="layui-card">
             <!--search form-->
-            <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
+            <form class="layui-form toolbar" id="searchForm">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">任务名称</label>
@@ -54,19 +54,19 @@
             <!--table actcion-->
             <div class="layui-card-body">
                 <script type="text/html" id="table_job_toolbar">
-                    <div class="layui-btn-group" shiro:hasPermission="system:job:add">
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-add" shiro:hasPermission="system:job:add"><i class="layui-icon">&#xe654;</i>新增</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-remove" shiro:hasPermission="system:job:remove"><i class="layui-icon">&#xe640;</i>删除</button>
+                    <div class="layui-table-tool-temp" perm-show="system:job:add">
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-add" perm-show="system:job:add"><i class="layui-icon">&#xe654;</i>新增</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-remove" perm-show="system:job:remove"><i class="layui-icon">&#xe640;</i>删除</button>
                         <button class="layui-btn layui-btn-sm" lay-event="toolbar-job-log"><i class="layui-icon">&#xe60a;</i>日志</button>
                     </div>
                 </script>
                 <table id="table_job" lay-filter="table_job"></table>
                 <script type="text/html" id="col_operation">
-                    <a shiro:hasPermission="system:job:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:job:edit" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:job:edit" href="javascript:;" lay-event="exec">执行</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:job:edit" href="javascript:;" lay-event="detail">详细</a><span class="splitor">|</span>
-                    <a shiro:hasPermission="system:job:edit" href="javascript:;" lay-event="log">日志</a>
+                    <a perm-show="system:job:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
+                    <a perm-show="system:job:edit" href="javascript:;" lay-event="del">删除</a><span class="splitor">|</span>
+                    <a perm-show="system:job:edit" href="javascript:;" lay-event="exec">执行</a><span class="splitor">|</span>
+                    <a perm-show="system:job:edit" href="javascript:;" lay-event="detail">详细</a><span class="splitor">|</span>
+                    <a perm-show="system:job:edit" href="javascript:;" lay-event="log">日志</a>
                 </script>
 
             </div>
@@ -78,7 +78,7 @@
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/common.js"></script>
     <script src="/assets/js/core.util.js"></script>
-    <script lang="javascript"> var ctx = "/api/"; </script>
+    <script lang="javascript"> var ctx = "/dev-api/"; </script>
 
     <script lang="javascript">
         var editFlag = true; 
