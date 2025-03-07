@@ -102,7 +102,7 @@ layui.define(['tool'], function (exports) {
 					layer.msg('上传中...', {icon: 16, time: 0});
 				},
 				done: function(res){
-					if (res.code == 0) {
+					if(res.code == 0 || res.code == 200){
 						//上传成功
 						if(opts.type==0){
 							let idsStr = boxInput.val(),idsArray = [];

@@ -15,6 +15,18 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+		/* .layui-layer-tab .layui-layer-title span.layui-this { height: 51px; border-left-color: #eee; border-right-color: #eee; 
+			background-color: #607D8B; z-index: 10; } */
+
+		.layui-layer-tab .layui-layer-title span.layui-this {
+			height: 51px;
+			border-left-color: #eee;
+			border-right-color: #eee;
+			background-color: #8c8c8c;
+			z-index: 10;
+		}
+	</style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -218,6 +230,10 @@
                     //menuName: '<i class="layui-icon layui-icon-home"></i>'
                 });
             });
+        });
+        CoreUtil.sendGet("/dev-api/getInfo", param, function (res) { 
+            //将用户信息缓存到本地
+            layui.data(admin.setter.tableName, {key: 'loginUser', value: res});
         });
     });
 </script>

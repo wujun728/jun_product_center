@@ -276,7 +276,7 @@ let options = {
 		}
 	});
 let callback = function(res) {
-	if (res.code == 0) {
+	if(res.code == 0 || res.code == 200){
 		layer.msg('问题提交成功，我们会尽快回复您。');
 		setTimeout(function() {
 			window.location.href = '/home/user/my_ask.html'
@@ -300,7 +300,7 @@ let options = {
 		}
 	});
 let callback = function(res) {
-	if (res.code == 0) {
+	if(res.code == 0 || res.code == 200){
 		layer.msg('问题提交成功，我们会尽快回复您。');
 		setTimeout(function() {
 			window.location.href = '/home/user/my_ask.html'

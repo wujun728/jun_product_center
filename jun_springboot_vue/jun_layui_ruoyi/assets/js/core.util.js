@@ -112,7 +112,7 @@ var CoreUtil = (function () {
             }
         })
     };
-    
+
 
     /*存入本地缓存*/
     coreUtil.setData = function(key, value){
@@ -222,7 +222,7 @@ var CoreUtil = (function () {
                         var reAsync = async;
                         /*刷新token  然后存入缓存*/
                         CoreUtil.sendAjax("/sys/user/token", null, function (res) {
-                            if (res.code == 0) {
+                            if(res.code == 0 || res.code == 200){
                                 CoreUtil.setData("access_token", res.data);
                                 /*刷新成功后继续重复请求*/
                                 CoreUtil.sendAjax(reUrl, reParams, reFt, reMethod, reHeaders, reNoAuthorityFt, reContentType, reAsync);
@@ -231,7 +231,7 @@ var CoreUtil = (function () {
                                 top.window.location.href = "/index/login"
                             }
                         }, "GET", true)
-                    } else if (res.code == 0) {
+                    } else if (res.code == 0 || res.code == 200) {
                         if (ft != null && ft != undefined) {
                             ft(res);
                         }
@@ -508,3 +508,26 @@ function timeFormat(timestamp) {
 function add0(m) {
     return m < 10 ? '0' + m : m
 };
+
+function toTree(data) {
+    let result = []
+    if (!Array.isArray(data)) {
+      return result
+    }
+    data.forEach(item => {
+        delete item.children;
+    });
+    let map = {};
+    data.forEach(item => {
+        map[item.id] = item;
+    });
+    data.forEach(item => {
+      let parent = map[item.pid];
+      if (parent) {
+          (parent.children || (parent.children = [])).push(item);
+      } else {
+          result.push(item);
+      }
+    });
+    return result;
+  }

@@ -38,7 +38,7 @@ public class QixingController extends BaseController
 
     @PostConstruct
     public void init() {
-        Db.init("main", SpringUtils.getBean(DataSource.class));
+        //Db.init("main", SpringUtils.getBean(DataSource.class));
     }
 
     @GetMapping("getRouters1")

@@ -166,7 +166,7 @@
 			, cols: new Array([
 				{type: 'checkbox'}
 				, {field: 'id', title: 'id', hide:true}
-				, {field: 'tableId', title: 'tableId', hide:true}
+				, {field: 'tableId', title: 'tableId'}
 				, {field: 'tableName', title: '表名称'}
 				, {field: 'tableComment', title: '表描述'}
 				, {field: 'className', title: '实体类名称'}
@@ -202,7 +202,7 @@
 						title: '导入表结构',
 						shade: false,
 						fixed: false,
-						area: ['1000px', '600px'],
+						area: ['1000px', '650px'],
 						content: "/tool/gen/importTable.html",
 						btn: ["保存", "取消"],
 						yes: function (index, layero) {
@@ -241,7 +241,7 @@
 					break;
 				case 'edit':
 					var url = '/tool/gen/edit.html';//+obj.data.tableId;
-					admin.putTempData('codeGenId', obj.data.id);
+					admin.putTempData('codeGenId', obj.data.tableId);
                 	window.location.href = getProjectUrl() + url;
 					//parent.addTab('修改代码生成配置',url,parent.getTabId(url));
 					//index.openTab({'url':url,'title':'修改代码生成配置'});

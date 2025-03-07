@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>部门管理</title>
+    <title>自定义SQL</title>
     <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
     <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
     <!--[if lt IE 9]>
@@ -13,13 +13,13 @@
     <![endif]-->
     <style>
         /* 左树 */
-        #organizationTreeBar {
+        #leftTreeBar {
             padding: 10px 15px;
             border: 1px solid #e6e6e6;
             background-color: #f2f2f2;
         }
 
-        #organizationTree {
+        #leftTree {
             border: 1px solid #e6e6e6;
             border-top: none;
             padding: 10px 5px;
@@ -41,12 +41,12 @@
         }
 
         /* 右表搜索表单 */
-        #organizationUserTbSearchForm .layui-form-label {
+        #rightDataListTbSearchForm .layui-form-label {
             box-sizing: border-box !important;
             width: 90px !important;
         }
 
-        #organizationUserTbSearchForm .layui-input-block {
+        #rightDataListTbSearchForm .layui-input-block {
             margin-left: 90px !important;
         }
     </style>
@@ -55,32 +55,32 @@
 <!-- 正文开始 -->
 <div class="layui-fluid" style="padding-bottom: 0;">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md3">
+        <div class="layui-col-md2">
             <div class="layui-card">
                 <div class="layui-card-body" style="padding: 10px;">
                     <!-- 树工具栏 -->
-                    <div class="layui-form toolbar" id="organizationTreeBar">
-                        <button id="organizationAddBtn" class="layui-btn layui-btn-sm icon-btn">
+                    <div class="layui-form toolbar" id="leftTreeBar">
+                        <button id="leftAddBtn" class="layui-btn layui-btn-sm icon-btn">
                             <i class="layui-icon">&#xe654;</i>添加
                         </button>&nbsp;
-                        <button id="organizationEditBtn" class="layui-btn layui-btn-sm layui-btn-warm icon-btn">
+                        <button id="leftEditBtn" class="layui-btn layui-btn-sm layui-btn-warm icon-btn">
                             <i class="layui-icon">&#xe642;</i>修改
                         </button>&nbsp;
-                        <button id="organizationDelBtn"
+                        <button id="leftDelBtn"
                                 class="layui-btn layui-btn-sm layui-btn-danger icon-btn">
                             <i class="layui-icon">&#xe640;</i>删除
                         </button>
                     </div>
                     <!-- 左树 -->
-                    <div id="organizationTree"></div>
+                    <div id="leftTree"></div>
                 </div>
             </div>
         </div>
-        <div class="layui-col-md9">
+        <div class="layui-col-md10">
             <div class="layui-card">
                 <div class="layui-card-body" style="padding: 10px;">
                     <!-- 数据表格 -->
-                    <table id="organizationUserTable" lay-filter="organizationUserTable"></table>
+                    <table id="rightDataTable" lay-filter="rightDataTable"></table>
                 </div>
             </div>
         </div>
@@ -88,74 +88,25 @@
 </div>
 
 <!-- 表单弹窗1 -->
-<!-- <script type="text/html" id="organizationEditDialog">
-    <form id="organizationEditForm" lay-filter="organizationEditForm" class="layui-form model-form"
+<script type="text/html" id="groupEditDialog">
+    <form id="groupEditForm" lay-filter="groupEditForm" class="layui-form model-form"
           style="padding-right: 20px;">
-        <input name="organizationId" type="hidden"/>
-        <div class="layui-row">
-            <div class="layui-col-md6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-form-required">上级机构:</label>
-                    <div class="layui-input-block">
-                        <div id="organizationEditParentSel" class="ew-xmselect-tree"></div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-form-required">机构名称:</label>
-                    <div class="layui-input-block">
-                        <input name="organizationName" placeholder="请输入机构名称" class="layui-input"
-                               lay-verType="tips" lay-verify="required" required/>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-form-required">机构全称:</label>
-                    <div class="layui-input-block">
-                        <input name="organizationFullName" placeholder="请输入机构全称" class="layui-input"
-                               lay-verType="tips" lay-verify="required" required/>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-form-required">机构类型:</label>
-                    <div class="layui-input-block">
-                        <select name="organizationType" lay-verType="tips" lay-verify="required" required>
-                            <option value="">请选择机构类型</option>
-                            <option value="1">公司</option>
-                            <option value="2">子公司</option>
-                            <option value="3">部门</option>
-                            <option value="4">小组</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md6">
-                <div class="layui-form-item">
-                    <label class="layui-form-label layui-form-required">排序号:</label>
-                    <div class="layui-input-block">
-                        <input name="sortNumber" placeholder="请输入排序号" class="layui-input" type="number"
-                               lay-verType="tips" lay-verify="required" required/>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">备注:</label>
-                    <div class="layui-input-block">
-                        <textarea name="comments" placeholder="请输入备注" class="layui-textarea"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item text-right">
-            <button class="layui-btn" lay-filter="organizationEditSubmit" lay-submit>保存</button>
-            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
-        </div>
     </form>
-</script> -->
+</script>
+
+
+<!-- //************************************************************************************************************************************
+//************************************************************************************************************************************
+//************************************************************************************************************************************ -->
+
+
 <!-- 表格操作列 -->
-<script type="text/html" id="organizationUserTbBar">
+<script type="text/html" id="rightDataListTbBar">
     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <!-- 表格工具列 -->
-<script type="text/html" id="organizationUserTbToolBar">
+<script type="text/html" id="rightDataListTbToolBar">
     <button lay-event="add" class="layui-btn layui-btn-sm icon-btn">
         <i class="layui-icon">&#xe654;</i>添加
     </button>&nbsp;
@@ -169,7 +120,7 @@
         <div class="dropdown-menu-nav dropdown-bottom-right"
              style="width: 300px;padding: 15px 15px 0 0;">
             <div class="dropdown-anchor"></div>
-            <div class="layui-form" id="organizationUserTbSearchForm">
+            <div class="layui-form" id="rightDataListTbSearchForm">
                 <div class="layui-form-item">
                     <label class="layui-form-label">账&emsp;号:</label>
                     <div class="layui-input-block">
@@ -193,7 +144,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item text-right">
-                    <button class="layui-btn icon-btn" lay-filter="organizationUserTbSearch" lay-submit>
+                    <button class="layui-btn icon-btn" lay-filter="rightDataListTbSearch" lay-submit>
                         <i class="layui-icon">&#xe615;</i>搜索
                     </button>
                 </div>
@@ -201,46 +152,77 @@
         </div>
     </div>
 </script>
-
-
 <!-- 表单弹窗 -->
-<script type="text/html" id="organizationUserEditDialog">
-    <form id="organizationUserEditForm" lay-filter="organizationUserEditForm" class="layui-form model-form">
-        <input name="userId" type="hidden"/>
-        <div class="layui-form-item">
-            <label class="layui-form-label layui-form-required">账号:</label>
-            <div class="layui-input-block">
-                <input name="username" placeholder="请输入账号" class="layui-input"
-                       lay-verType="tips" lay-verify="required" required/>
+<script type="text/html" id="rightDataListEditDialog">
+    <form id="rightDataListEditForm" lay-filter="rightDataListEditForm" class="layui-form model-form">
+    <div class="layui-row">
+        <div class="layui-col-md6">
+            <input name="id" type="hidden"/>
+            <input name="userId" type="hidden"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">接口名称:</label>
+                <div class="layui-input-block">
+                    <input name="name" placeholder="请输入账号" class="layui-input"
+                        lay-verType="tips" lay-verify="required" required/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">映射路径:</label>
+                <div class="layui-input-block">
+                    <input name="path" placeholder="请输入用户名" class="layui-input"
+                        lay-verType="tips" lay-verify="required" required/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">请求类型:</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="method" value="GET" title="GET" checked/>
+                    <input type="radio" name="method" value="POST" title="POST"/>
+                    <input type="radio" name="method" value="PUT" title="PUT"/>
+                    <input type="radio" name="method" value="DELETE" title="DELETE"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">分组:</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="groupId" value="男" title="男" checked/>
+                    <input type="radio" name="groupId" value="女" title="女"/>
+                </div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label layui-form-required">用户名:</label>
-            <div class="layui-input-block">
-                <input name="nickName" placeholder="请输入用户名" class="layui-input"
-                       lay-verType="tips" lay-verify="required" required/>
+        <div class="layui-col-md6">
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">数据源:</label>
+                <div class="layui-input-block">
+                    <select name="datasourceId" lay-verType="tips" lay-verify="required">
+                        <option value="">请选择角色</option>
+                        <option value="0">默认数据源</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-form-required">SQL脚本:</label>
+                <div class="layui-input-block">
+                    <input name="sql" placeholder="请输入用户名" class="layui-input"
+                        lay-verType="tips" lay-verify="required" required/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label  ">SQL参数:</label>
+                <div class="layui-input-block">
+                    <input name="params" placeholder="请输入用户名" class="layui-input" lay-verType="tips"  />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label  ">备注:</label>
+                <div class="layui-input-block">
+                    <input name="remark" placeholder="请输入备注" class="layui-input" lay-verType="tips"  />
+                </div>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label layui-form-required">性别:</label>
-            <div class="layui-input-block">
-                <input type="radio" name="sex" value="男" title="男" checked/>
-                <input type="radio" name="sex" value="女" title="女"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label layui-form-required">角色:</label>
-            <div class="layui-input-block">
-                <select name="roleId" lay-verType="tips" lay-verify="required">
-                    <option value="">请选择角色</option>
-                    <option value="1">管理员</option>
-                    <option value="2">普通用户</option>
-                    <option value="3">游客</option>
-                </select>
-            </div>
-        </div>
+    </div>
         <div class="layui-form-item text-right">
-            <button class="layui-btn" lay-filter="organizationUserEditSubmit" lay-submit>保存</button>
+            <button class="layui-btn" lay-filter="rightDataListEditSubmit" lay-submit>保存</button>
             <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
         </div>
     </form>
@@ -249,6 +231,7 @@
 <!-- js部分 -->
 <script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
 <script type="text/javascript" src="../../assets/js/common.js?v=318"></script> 
+<script type="text/javascript" src="/assets/js/core.util.js"></script> 
 <script type="text/javascript" src="../../assets/module/treeTable.js?v=318"></script>
 <script>
     layui.use(['layer', 'form', 'table', 'util', 'admin', 'tree', 'dropdown', 'xmSelect', 'treeTable'], function () {
@@ -260,43 +243,53 @@
         var admin = layui.admin;
         var tree = layui.tree;
         var xmSelect = layui.xmSelect;
-        var selObj, treeData;  // 左树选中数据
+        var selObj,treeData;  // 左树选中数据
 
-        /* 渲染树形 */      
+        /* 渲染树形 */
         function renderTree() {
-            // headers: {"Authorization": localStorage.getItem("Authorization"),"_method":"DELETE"},
             $.ajax({
-                // url: '/dev-api/api/apiGroupList',
-                url: '/dev-api/rest/apiGroup/list',
-                type: 'GET',
-                headers: {"Authorization": localStorage.getItem("Authorization")/* ,"_method":"DELETE" */},
-                success: function(res) {
-                // $.get('organization.json', function (res) {
+                type: "get",
+                headers: {"Authorization": localStorage.getItem("Authorization")},
+                // url: 'organization.json',
+                url: '/api/rest/apiGroup/list',
+                //data: JSON.stringify(data.field),
+                success: function (res) {
                     for (var i = 0; i < res.data.length; i++) {
                         res.data[i].title = res.data[i].name;
+                        res.data[i].pid = res.data[i].pid;
                         res.data[i].id = res.data[i].id;
                         res.data[i].spread = true;
                     }
-                    treeData = layui.treeTable.pidToChildren(res.data, 'id', 'pid');
+                    /* 
+                    var treeData = layui.treeTable.pidToChildren(res.data, 'id', 'pid'); 
+                    for (var i = 0; i < res.data.length; i++) {
+                        res.data[i].title = res.data[i].name;
+                        res.data[i].id = res.data[i].organizationId;
+                        res.data[i].pid = res.data[i].pid;
+                        res.data[i].spread = true;
+                    } */
+                    var treeData = layui.treeTable.pidToChildren(res.data, 'id', 'pid');
+                    // var treeData = toTree(res.data);  
                     tree.render({
-                        elem: '#organizationTree',
+                        elem: '#leftTree',
                         onlyIconControl: true,
                         data: treeData,
                         click: function (obj) {
                             selObj = obj;
-                            $('#organizationTree').find('.ew-tree-click').removeClass('ew-tree-click');
+                            $('#leftTree').find('.ew-tree-click').removeClass('ew-tree-click');
                             $(obj.elem).children('.layui-tree-entry').addClass('ew-tree-click');
                             insTb.reload({
-                                where: {organizationId: obj.data.organizationId},
+                                where: {group_id: obj.data.id},
                                 page: {curr: 1},
-                                url: 'user.json'
+                                url: '/api/rest/apiSql/page'
                             });
                         }
                     });
-                    $('#organizationTree').find('.layui-tree-entry:first>.layui-tree-main>.layui-tree-txt').trigger('click');
+                    $('#leftTree').find('.layui-tree-entry:first>.layui-tree-main>.layui-tree-txt').trigger('click');
                 },
-                error: function(xhr, status, error) {
-                    // 请求失败的回调函数
+                error: function(error) {
+                    // 处理提交失败的情况
+                    console.log("提交失败");
                 }
             });
         }
@@ -304,54 +297,100 @@
         renderTree();
 
         /* 添加 */
-        $('#organizationAddBtn').click(function () {
-            showEditModel(null, selObj ? selObj.data.parentId : null);
+        $('#leftAddBtn').click(function () {
+            // showEditModel(null, selObj ? selObj.data.parentId : null);
+            showAddOrUpdateModel();
         });
 
         /* 修改 */
-        $('#organizationEditBtn').click(function () {
-            if (!selObj) return layer.msg('未选择机构', {icon: 2});
-            showEditModel(selObj.data);
+        $('#leftEditBtn').click(function () {
+            if (!selObj) return layer.msg('未选择分组', {icon: 2});
+            // showEditModel(selObj.data);
+            if(selObj.data.pid == 0 ){
+                layer.msg("禁止操作顶级节点");
+                return;
+            }
+            showAddOrUpdateModel(selObj.data);
         });
 
         /* 删除 */
-        $('#organizationDelBtn').click(function () {
-            if (!selObj) return layer.msg('未选择机构', {icon: 2});
+        $('#leftDelBtn').click(function () {
+            if (!selObj) return layer.msg('未选择分组', {icon: 2});
+            if(selObj.data.pid == 0 ){
+                layer.msg("禁止操作顶级节点");
+                return;
+            }
             doDel(selObj);
         });
 
+
+        // 显示表单弹窗
+        function showAddOrUpdateModel(data) {
+            if(data){
+                data['treeData'] = treeData;
+            }
+            var layIndex = admin.open({
+                title: (data ? '修改' : '添加') + '职位',
+                url: getProjectUrl() + 'extend/sql/form1.html',
+                area: '600px',
+                data: { data: data },     // 传递数据到表单页面
+                end: function () {
+                    var layerData = admin.getLayerData(layIndex, 'formOk');
+                    if (layerData) {  // 判断表单操作成功标识
+                        insTb.reload();  // 成功刷新表格
+                    }
+                },
+                success: function (layero, dIndex) {
+                    // 弹窗超出范围不出现滚动条
+                    //$(layero).children('.layui-layer-content').css('overflow', 'visible');
+                    $(layero).find('[lay-submit]').focus();
+                }
+            });
+        }
+
+
         /* 显示表单弹窗 */
-        function showEditModel(mData, pid) {
+        /* function showEditModel(editData, pid) {
             admin.open({
                 type: 1,
                 area: '600px',
-                title: (mData ? '修改' : '添加') + '机构',
-                content: $('#organizationEditDialog').html(),
+                title: (editData ? '修改' : '添加') + '分组',
+                content: $('#groupEditDialog').html(),
                 success: function (layero, dIndex) {
                     // 回显表单数据
-                    form.val('organizationEditForm', mData);
+                    form.val('groupEditForm', editData);
                     // 表单提交事件
-                    form.on('submit(organizationEditSubmit)', function (data) {
-                        data.field.parentId = insXmSel.getValue('valueStr');
+                    // 表单提交事件
+                    form.on('submit(groupEditSubmit)', function (data) {
                         var loadIndex = layer.load(2);
-                        $.get(mData ? '../../json/ok.json' : '../../json/ok.json', data.field, function (res) {
-                            layer.close(loadIndex);
-                            if (200 === res.code) {
-                                layer.close(dIndex);
-                                layer.msg(res.msg, {icon: 1});
-                                renderTree();
-                            } else {
-                                layer.msg(res.msg, {icon: 2});
+                        //var url = editData ? getProjectUrl() + 'sysOrg/edit' : getProjectUrl() + 'sysOrg/add';
+                        var method = editData ? 'PUT' : 'POST';
+                        var url = '/dev-api/rest/apiGroup';
+
+                        admin.req(url, JSON.stringify(data.field), function(res){
+                            if(res.code == 200 || res.code == 0 ){
+                                layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                                    //admin.putLayerData('formOk', true, '#groupEditDialog');
+                                    admin.closeDialog('#groupEditDialog');
+                                    layer.close(dIndex);
+                                    renderTree();
+                                });
+                            }else{
+                                layer.msg(res.msg, {icon: 2, time: 1000}, function () {  });
                             }
-                        }, 'json');
+                        }, method);
                         return false;
                     });
+
                     // 渲染下拉树
                     var insXmSel = xmSelect.render({
-                        el: '#organizationEditParentSel',
+                        el: '#leftEditParentSel',
+                        name: 'pid',
+                        layVerify: 'required',
+                        layVerType: 'tips',
                         height: '250px',
                         data: treeData,
-                        initValue: mData ? [mData.pid] : (pid ? [pid] : []),
+                        initValue: editData ? [editData.pid] : (pid ? [pid] : []),
                         model: {label: {type: 'text'}},
                         prop: {
                             name: 'name',
@@ -370,18 +409,23 @@
                     $(layero).children('.layui-layer-content').css('overflow', 'visible');
                 }
             });
-        }
+        } */
 
         /* 删除 */
         function doDel(obj) {
-            layer.confirm('确定要删除此机构吗？', {
+            layer.confirm('确定要删除此分组吗？', {
                 skin: 'layui-layer-admin',
                 shade: .1
             }, function (i) {
                 layer.close(i);
                 var loadIndex = layer.load(2);
-                $.get('../../json/ok.json', {
-                    id: obj.data.organizationId,
+                admin.req(getProjectUrl() + '/dev-api/rest/apiGroup/'+obj.data.id, JSON.stringify([{'id': obj.data.noticeId}]), function(res){
+                        layer.msg(res.msg, {icon: 1, time: 1000}, function () {
+                            renderTree();
+                        });
+                    }, 'delete');
+                /* $.get('../../json/ok.json', {
+                    id: obj.data.groupId,
                 }, function (res) {
                     layer.close(loadIndex);
                     if (200 === res.code) {
@@ -390,42 +434,57 @@
                     } else {
                         layer.msg(res.msg, {icon: 2});
                     }
-                }, 'json');
+                }, 'json'); */
             });
         }
 
 
-
-        //***************************************************************************************************************************************
-        //***************************************************************************************************************************************
-        //***************************************************************************************************************************************
+        //************************************************************************************************************************************
+        //************************************************************************************************************************************
+        //************************************************************************************************************************************
+        //************************************************************************************************************************************
+        //************************************************************************************************************************************
 
         /* 渲染表格 */
         var insTb = table.render({
-            elem: '#organizationUserTable',
+            elem: '#rightDataTable',
+            headers: {"Authorization": localStorage.getItem("Authorization")},
+            parseData: function(res){
+                return {
+                    "code": res.code==200?0:res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    // "count": res.total, //解析数据长度
+                    "data": res.data //解析数据列表
+                };
+            },
+            request: {
+                // pageName: 'pageNum', // 页码的参数名称，默认：page
+                // limitName: 'pageSize' // 每页数据条数的参数名，默认：limit
+            },
             data: [],
             height: 'full-52',
             page: true,
-            toolbar: '#organizationUserTbToolBar',
+            toolbar: '#rightDataListTbToolBar',
             cellMinWidth: 100,
             cols: [[
                 {type: 'checkbox'},
-                {type: 'numbers'},
-                {field: 'username', title: '账号', sort: true},
-                {field: 'nickName', title: '用户名', sort: true},
-                {field: 'sex', title: '性别', sort: true},
-                {field: 'phone', title: '手机号', sort: true},
-                {field: 'roleName', title: '角色', sort: true},
-                {
-                    field: 'createTime', title: '创建时间', templet: function (d) {
+                {type: 'numbers', title: '序号'},
+                {field: 'datasourceId', title: 'datasourceId', hide:true, sort: true},
+                {field: 'pid', title: 'pid', hide:true, sort: true},
+                {field: 'name', title: '接口名称', sort: true},
+                {field: 'method', title: '请求类型', sort: true},
+                {field: 'path', title: '请求路径', sort: true},
+                {field: 'sql', title: 'SQL', sort: true},
+                {field: 'status', title: '状态', sort: true},
+                {field: 'createdTime', title: '创建时间', templet: function (d) {
                         return util.toDateString(d.createTime);
                     }, sort: true
                 },
-                {title: '操作', toolbar: '#organizationUserTbBar', align: 'center', width: 120, minWidth: 120}
+                {title: '操作', toolbar: '#rightDataListTbBar', align: 'center', width: 120, minWidth: 120}
             ]],
             done: function () {
                 // 表格搜索
-                form.on('submit(organizationUserTbSearch)', function (data) {
+                form.on('submit(rightDataListTbSearch)', function (data) {
                     insTb.reload({where: data.field, page: {curr: 1}});
                     return false;
                 });
@@ -433,7 +492,7 @@
         });
 
         /* 表格工具条点击事件 */
-        table.on('tool(organizationUserTable)', function (obj) {
+        table.on('tool(rightDataTable)', function (obj) {
             if (obj.event === 'edit') { // 修改
                 showEditModel2(obj.data);
             } else if (obj.event === 'del') { // 删除
@@ -442,11 +501,11 @@
         });
 
         /* 表格头工具栏点击事件 */
-        table.on('toolbar(organizationUserTable)', function (obj) {
+        table.on('toolbar(rightDataTable)', function (obj) {
             if (obj.event === 'add') { // 添加
                 showEditModel2();
             } else if (obj.event === 'del') { // 删除
-                var checkRows = table.checkStatus('organizationUserTable');
+                var checkRows = table.checkStatus('rightDataTable');
                 if (checkRows.data.length === 0) {
                     layer.msg('请选择要删除的数据', {icon: 2});
                     return;
@@ -462,14 +521,15 @@
         function showEditModel2(mData) {
             admin.open({
                 type: 1,
-                title: (mData ? '修改' : '添加') + '用户',
-                content: $('#organizationUserEditDialog').html(),
+                area: '800px',
+                title: (mData ? '修改' : '添加') + 'SQL',
+                content: $('#rightDataListEditDialog').html(),
                 success: function (layero, dIndex) {
                     // 回显表单数据
-                    form.val('organizationUserEditForm', mData);
+                    form.val('rightDataListEditForm', mData);
                     // 表单提交事件
-                    form.on('submit(organizationUserEditSubmit)', function (data) {
-                        data.field.organizationId = selObj ? selObj.data.organizationId : undefined;
+                    form.on('submit(rightDataListEditSubmit)', function (data) {
+                        data.field.groupId = selObj ? selObj.data.groupId : undefined;
                         var loadIndex = layer.load(2);
                         $.get(mData ? '../../json/ok.json' : '../../json/ok.json', data.field, function (res) {
                             layer.close(loadIndex);
