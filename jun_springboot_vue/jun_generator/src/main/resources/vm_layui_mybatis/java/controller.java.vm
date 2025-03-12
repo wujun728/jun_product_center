@@ -1,7 +1,7 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,7 +39,7 @@ public class ${ClassName}Controller extends BaseController
     @Autowired
     private I${ClassName}Service ${className}Service;
 
-    @RequiresPermissions("${permissionPrefix}:view")
+    @PreAuthorize("${permissionPrefix}:view")
     @GetMapping()
     public String ${businessName}()
     {
@@ -50,7 +50,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 查询${functionName}列表
      */
-    @RequiresPermissions("${permissionPrefix}:list")
+    @PreAuthorize("${permissionPrefix}:list")
     @PostMapping("/list")
     @ResponseBody
     public TableDataInfo list(${ClassName} ${className})
@@ -63,7 +63,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 查询${functionName}树列表
      */
-    @RequiresPermissions("${permissionPrefix}:list")
+    @PreAuthorize("${permissionPrefix}:list")
     @PostMapping("/list")
     @ResponseBody
     public List<${ClassName}> list(${ClassName} ${className})
@@ -76,7 +76,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 导出${functionName}列表
      */
-    @RequiresPermissions("${permissionPrefix}:export")
+    @PreAuthorize("${permissionPrefix}:export")
     @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
@@ -114,7 +114,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 新增保存${functionName}
      */
-    @RequiresPermissions("${permissionPrefix}:add")
+    @PreAuthorize("${permissionPrefix}:add")
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
@@ -137,7 +137,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 修改保存${functionName}
      */
-    @RequiresPermissions("${permissionPrefix}:edit")
+    @PreAuthorize("${permissionPrefix}:edit")
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
@@ -150,7 +150,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 删除${functionName}
      */
-    @RequiresPermissions("${permissionPrefix}:remove")
+    @PreAuthorize("${permissionPrefix}:remove")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
@@ -162,7 +162,7 @@ public class ${ClassName}Controller extends BaseController
     /**
      * 删除
      */
-    @RequiresPermissions("${permissionPrefix}:remove")
+    @PreAuthorize("${permissionPrefix}:remove")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
     @GetMapping("/remove/{${pkColumn.javaField}}")
     @ResponseBody

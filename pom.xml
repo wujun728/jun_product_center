@@ -15,7 +15,7 @@
 	</properties>
 
 	<modules> 
-		<module>jun_springboot_vue</module>
+		<module>jun_springboot_vue</module> 
 	</modules>
 
 	<dependencies>

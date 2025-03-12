@@ -18,7 +18,9 @@
         <module>jun_quartz</module>
         <module>jun_generator</module>
         <module>jun_lowcode</module>
-        <module>jun_qixing</module>
+        <module>jun_common_core</module>
+        <module>jun_plugins</module>
+        <module>jun_modules</module>
         <module>jun_api</module>
         <module>jun_admin</module>
     </modules>
