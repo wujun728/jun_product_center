@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class FileServiceImpl implements FileService {
 
     //@Value("${filepath}")
-    private String file_root = "aaa";
+    private String file_root = "D:/files/";
 
 
     @Override

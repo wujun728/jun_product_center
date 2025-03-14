@@ -6,21 +6,16 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.common.utils.spring.SpringUtils;
-import com.ruoyi.system.service.ISysMenuService;
 import io.github.wujun728.db.record.Db;
 import io.github.wujun728.db.record.Record;
 import io.github.wujun728.db.utils.RecordUtil;
 import io.github.wujun728.db.utils.TreeBuildUtil;
 import org.apache.commons.compress.utils.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +60,7 @@ public class QixingController extends BaseController
             }
         }
         menus1 = (List) menus1.stream().map(item->{return item;}).collect(Collectors.toList());
-        List menus2 = TreeBuildUtil.listToTree(menus1,"0","menu_id","parent_id");
+        List<Map<String, Object>> menus2 = TreeBuildUtil.listToTree(menus1,"0","menu_id","parent_id");
         Map data = new HashMap<>();
         data.put("apps",apps1);
         data.put("menus",menus2);
