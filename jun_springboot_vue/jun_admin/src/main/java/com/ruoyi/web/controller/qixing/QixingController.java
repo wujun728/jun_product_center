@@ -163,7 +163,7 @@ public class QixingController extends BaseController
                 "m.menu_id AS 'value',  1 AS 'weight',  m.parent_id AS 'pid' \n" +
                 "FROM  sys_menu m  WHERE  menu_type != 'F'  ";
         List<Record> recordList = Db.use().find(sql);
-        List<Map<String, Object>> mapList = RecordUtil.recordToMaps(recordList,true);
+        List<Map<String, Object>> mapList = RecordUtil.recordToMaps(recordList);
         mapList = (List) mapList.stream().map(item->{return item;}).collect(Collectors.toList());
         List tree = TreeBuildUtil.listToTree(mapList,"0","id","parentId");
         return R.ok(tree);
