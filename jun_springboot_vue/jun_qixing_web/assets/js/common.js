@@ -2,11 +2,11 @@ window.rootPath = (function (src) {
 	src = document.currentScript
 		? document.currentScript.src
 		: document.scripts[document.scripts.length - 1].src;
-		console.log("src="+src);
+		//console.log("src="+src);
 	return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 window.rootPath = getProjectUrl() + 'assets/';
-console.log("rootPath="+rootPath);
+//console.log("rootPath="+rootPath);
 if (typeof $ == "undefined") {
 	window.jQuery = layui.jquery;
 	window.$ = layui.jquery;
@@ -15,7 +15,7 @@ if (typeof moduleInit == "undefined") {
 	window.moduleInit = [];
 	//window.moduleInit = ['tool'];
 } 
-console.log("moduleInit="+moduleInit);
+//console.log("moduleInit="+moduleInit);
 var module = {
 	steps: 'steps/steps',
     notice: 'notice/notice',
@@ -46,7 +46,7 @@ if (moduleInit.length > 0) {
 	}
 }
 moduleInit.push('admin','xnUtil','tool','index');
-console.log("moduleInit="+moduleInit);
+//console.log("moduleInit="+moduleInit);
 
 /** EasyWeb iframe v3.1.8 date:2020-05-04 License By http://xiaonuo.vip */
 layui.config({  // common.js是配置layui扩展模块的目录，每个页面都需要引入
@@ -137,7 +137,7 @@ function getProjectUrl() {
         layuiDir = jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
     }
     var projectUrl = layuiDir.substring(0, layuiDir.indexOf('assets'));
-    console.log("projectUrl="+projectUrl);
+    //console.log("projectUrl="+projectUrl);
     return projectUrl;
 }
 
