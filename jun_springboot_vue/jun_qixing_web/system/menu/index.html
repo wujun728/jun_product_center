@@ -75,22 +75,21 @@
                 [
                     {type: 'checkbox'},
                     {field: 'menuName', title: '菜单名称' },
-                    {field: 'id', title: 'id', hide:true},
+                    // {field: 'id', title: 'id', hide:true},
                     {field: 'menuId', title: 'menuId', hide:true},
                     {field: 'parentId', title: 'parentId', hide:true},
                     {field: 'isFrame', title: 'isFrame', hide:true},
-                    {field: 'parentId', title: 'parentId', hide:true},
                     {field: 'visible', title: 'visible', hide:true},
                     {field: 'query', title: 'query', hide:true},
                     
                     {field: 'menuType', title: '菜单类型', templet: function (d) { return xnUtil.rendDataTableDict(d.menuType, 'sys_menu_type'); }},
                     // {field: 'icon', title: '菜单图标', templet: '<p><i class="layui-icon {{d.icon}}"></i></p>'},
                     {field: 'orderNum', title: '排序'},
-                    {field: 'perms', title: '权限标识', width: 200},
-                    {field: 'component', title: '菜单路径', width: 200},
+                    {field: 'perms', title: '权限标识'/* , width: 200 */},
+                    {field: 'component', title: '菜单路径'/* , width: 200 */},
                     {field: 'path', title: '组件路径' },
                     {field: 'status', title: '状态', templet: function (d) { return xnUtil.rendDataTableDict(d.status, 'sys_normal_disable'); } },
-                    {field: 'createTime', title: '创建时间', width: 200},
+                    {field: 'createTime', title: '创建时间'/* , width: 200 */},
                     {title: '操作', toolbar: '#tableBar', align: 'center' }
                 ]
             ]
