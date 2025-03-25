@@ -1,5 +1,6 @@
 @import url("../../libs/layui/css/layui.css");
-@import url("../icon/bootstrap-icons.css");
+/* @import url("../icon/bootstrap-icons.css"); */
+@import url("../icon/iconfont.css");
 /* @import url("./layout.css"); */
 
 /*reset layui*/

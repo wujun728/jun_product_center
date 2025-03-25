@@ -18,7 +18,7 @@ if (moduleInit.length > 0) {
 	}
 }
 layui.config({
-	base: /* rootPath +  */"/assets/module/",
+	base: /* rootPath +  */     "/assets/module/",
 	version: "1.0.0"
 }).extend(module).use(moduleInit, function () {
 	if (typeof gouguInit === 'function') {

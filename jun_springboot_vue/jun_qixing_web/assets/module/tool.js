@@ -4,9 +4,6 @@ layui.define([], function (exports) {
 		loading: false,
 		//右侧iframe的方式打开页面，参考勾股CMS、勾股OA
 		side: function (url, width) {
-			this.side(url, width, function () {});
-		}, 
-		side: function (url, width, ft) {
 			let that = this;
 			if (that.loading == true) {
 				return false;
@@ -22,7 +19,7 @@ layui.define([], function (exports) {
 			if(window.innerWidth<=1000){
 				sideWidth = '93.8%';
 			}
-			var layIndex = layer.open({
+			layer.open({
 				type: 2,
 				title: false,
 				offset: 'r',
@@ -34,10 +31,7 @@ layui.define([], function (exports) {
 				end: function(){
 					$('body').removeClass('right-open');
 					if (layui.pageTable) {
-						//layui.pageTable.resize('test');
-					}
-					if(ft){
-						ft();
+						layui.pageTable.resize();
 					}
 				},
 				success: function (obj, index) {
@@ -49,54 +43,7 @@ layui.define([], function (exports) {
 						layer.close(index);
 					})
 				}
-			});
-			return layIndex;
-		},
-		side2: function (url, width, ft) {
-			let that = this;
-			if (that.loading == true) {
-				return false;
-			}
-			that.loading = true;
-			sideWidth = '80%';
-			if(window.innerWidth>1400 && window.innerWidth<=1600){
-				sideWidth = '85%';
-			}
-			if(window.innerWidth>1000 && window.innerWidth<=1440){
-				sideWidth = '92%';
-			}
-			if(window.innerWidth<=1000){
-				sideWidth = '93.8%';
-			}
-			var layIndex = layer.open({
-				type: 1,
-				title: false,
-				offset: 'r',
-				anim: 'slideLeft',
-				closeBtn: 0,
-				content: url,
-				area: [sideWidth, '100%'],
-				skin:'layui-layer-gougu-admin',
-				end: function(){
-					$('body').removeClass('right-open');
-					if (layui.pageTable) {
-						//layui.pageTable.resize('test');
-					}
-					if(ft){
-						ft();
-					}
-				},
-				success: function (obj, index) {
-					var btn = '<div data-index="'+index+'" class="express-close" title="关闭">关闭</div>';
-					obj.append(btn);
-					$('body').addClass('right-open');
-					that.loading = false;
-					obj.on('click','.express-close', function () {					
-						layer.close(index);
-					})
-				}
-			});
-			return layIndex;
+			})
 		},
 		box: function (url,title="内容", width=720,height=405) {
 			let that = this;
@@ -314,19 +261,8 @@ layui.define([], function (exports) {
 			}		
 		},
 		tabAdd:function(url,title,id){
-			//if(parent.layui.admin){
-			//	parent.layui.admin.sonAdd(url,title,id);
-			//}
-			if(parent.layui.index){
-				//parent.layui.index.openTab(title,url,id);
-				var end ;
-				try {
-					if (end) end = new Function(end);
-					else end = undefined;
-				} catch (e) {
-					console.error(e);
-				}
-				parent.layui.index.openTab({title: title || '', url: url, end: end});
+			if(parent.layui.admin){
+				parent.layui.admin.sonAdd(url,title,id);
 			}
 			else{
 				console.log('父页面没引用admin模块');
