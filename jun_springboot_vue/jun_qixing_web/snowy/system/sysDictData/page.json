@@ -1,0 +1,35 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 2,
+    "data": [
+        {
+            "createTime": "2020-08-06 23:20:41",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1291393766048989186",
+            "typeId": "1291393441594408961",
+            "value": "否",
+            "code": "false",
+            "sort": 100,
+            "remark": "未结束",
+            "status": 0
+        },
+        {
+            "createTime": "2020-08-06 23:20:22",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1291393684314587138",
+            "typeId": "1291393441594408961",
+            "value": "是",
+            "code": "true",
+            "sort": 100,
+            "remark": "已结束",
+            "status": 0
+        }
+    ]
+}

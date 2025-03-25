@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>区域管理</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body layui-bg-cyan">
+            <span>
+                中国五级行政区，爬取自国家统计局2019年的行政区域数据(截止2019年10月31日)，共78万多条记录。
+                <a href="https://github.com/kakuilan/china_area_mysql" target="_blank" style="color: dodgerblue;cursor: pointer">https://github.com/kakuilan/china_area_mysql</a>
+            </span>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!-- 数据表格 -->
+            <table id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+<script>
+    layui.use(['layer', 'table', 'notice', 'xnUtil', 'treeTable'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        var admin = layui.admin;
+        var form = layui.form;
+        var treeTable = layui.treeTable;
+        var notice = layui.notice;
+        var xnUtil = layui.xnUtil;
+
+        /* 渲染表格 */
+        var insTb = treeTable.render({
+            elem: '#dataTable',
+            url: getProjectUrl() + 'sysArea/page',
+            request: {pidName: 'parentCode'},// 懒加载请求携带的参数名称
+            cellMinWidth: 100,
+            tree: {
+                iconIndex: 1,
+                idName: 'areaCode',
+                pidName: 'parentCode',
+            },
+            cols: [
+                [
+                    {field: 'id', title: 'id', hide:true},
+                    {field: 'name', title: '名称', width: 300},
+                    {field: 'levelCode', title: '层级'},
+                    {field: 'shortName', title: '简称'},
+                    {field: 'mergerName', title: '组合名'},
+                    {field: 'pinyin', title: '拼音'},
+                    {field: 'zipCode', title: '邮编'},
+                    {field: 'lng', title: '经度'},
+                    {field: 'lat', title: '纬度'}
+                ]
+            ],
+            reqData: function(data, callback) {
+                console.log(data);
+                // data是当前行的数据，通过callback回调子集数据
+                callback([]);
+            },
+        });
+    });
+</script>
+</body>
+</html>

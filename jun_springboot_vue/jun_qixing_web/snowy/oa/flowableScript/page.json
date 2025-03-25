@@ -1,0 +1,48 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 3,
+    "data": [
+        {
+            "createTime": "2020-08-16 15:28:27",
+            "createUser": "1265476890672672808",
+            "updateTime": "2020-08-16 18:23:26",
+            "updateUser": "1265476890672672808",
+            "id": "1294898800718163970",
+            "name": "打印内容",
+            "type": 1,
+            "lang": 1,
+            "content": "System.out.println(\"这是打印的内容\");",
+            "remark": "打印内容",
+            "status": 0
+        },
+        {
+            "createTime": "2020-09-11 15:36:41",
+            "createUser": "1265476890672672808",
+            "updateTime": "2020-09-11 16:55:02",
+            "updateUser": "1265476890672672808",
+            "id": "1304322960072609794",
+            "name": "设置会签人员",
+            "type": 1,
+            "lang": 1,
+            "content": "import cn.hutool.core.collection.CollectionUtil;\nimport vip.xiaonuo.flowable.core.utils.BpmScriptUtil;\n\nList<Long> userIdList = CollectionUtil.newArrayList();\nuserIdList.add(1275735541155614721);\nuserIdList.add(1280700700074041345);\nuserIdList.add(1280709549107552257);\n\n//调用脚本工具类，给执行实例设置会签人员\nBpmScriptUtil.setVariableForInstance(execution, \"pers\", userIdList);\n//调用脚本工具类，给执行实例设置多实例基数为会签人员数量\nBpmScriptUtil.setVariableForInstance(execution, \"num\", 3);",
+            "remark": "流程启动时给流程实例设置会签人员",
+            "status": 0
+        },
+        {
+            "createTime": "2021-01-04 10:52:16",
+            "createUser": "1265476890672672808",
+            "updateTime": "2021-01-11 17:52:16",
+            "updateUser": "1265476890672672808",
+            "id": "1345925988436881410",
+            "name": "获取表单数据",
+            "type": 1,
+            "lang": 1,
+            "content": "import vip.xiaonuo.flowable.core.utils.BpmScriptUtil;\n//此处仅打印表单数据，请参见后台启动日志，执行此脚本会将表单数据获取并打印出来\nBpmScriptUtil.getFormData(execution);",
+            "remark": "获取表单数据",
+            "status": 0
+        }
+    ]
+}

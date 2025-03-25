@@ -1,0 +1,19 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 1,
+    "data": [
+        {
+            "createTime": "2020-09-04 11:29:51",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1301724123547000811",
+            "name": "总公司（管理单位）",
+            "code": "default",
+            "dbName": "master"
+        }
+    ]
+}

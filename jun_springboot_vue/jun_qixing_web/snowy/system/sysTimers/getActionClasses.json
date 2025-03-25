@@ -1,0 +1,15 @@
+{
+    "success": true,
+    "code": 200,
+    "message": "请求成功",
+    "data": [
+        {
+            "code": "vip.xiaonuo.sys.modular.timer.tasks.RefreshConstantsTaskRunner",
+            "value": "vip.xiaonuo.sys.modular.timer.tasks.RefreshConstantsTaskRunner"
+        },
+        {
+            "code": "vip.xiaonuo.sys.modular.timer.tasks.SystemOutTaskRunner",
+            "value": "vip.xiaonuo.sys.modular.timer.tasks.SystemOutTaskRunner"
+        }
+    ]
+}

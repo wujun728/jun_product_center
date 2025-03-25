@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>请假填写单</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        #addOrUpdateForm {
+            margin: 20px 0;
+        }
+        table,tr,td {
+            margin: 0 auto;
+            text-align: left;
+            border: 1px solid #000000;
+        }
+        td {
+            padding: 2px;
+        }
+        h1 {
+            text-align: center;
+            display: block;
+            margin: 20px 0;
+        }
+        #qrBox {
+            float: right;
+            width: 100px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+            <table>
+                <tr>
+                    <td colspan="3">
+                        <h1>
+                            请假申请单
+                        </h1>
+                    </td>
+                    <td>
+                        <div id="qrBox">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <input name="id" type="hidden"/>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="layui-form-label layui-form-required">姓名</label>
+                    </td>
+                    <td>
+                        <input name="name" class="layui-input" placeholder="请输入姓名" lay-verType="tips" lay-verify="required" required/>
+                    </td>
+                    <td>
+                        <label class="layui-form-label layui-form-required">部门</label>
+                    </td>
+                    <td>
+                        <input name="orgName" class="layui-input" placeholder="请输入部门" lay-verType="tips" lay-verify="required" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="layui-form-label layui-form-required">请假类型</label>
+                    </td>
+                    <td>
+                        <div id="typeBox"></div>
+                    </td>
+                    <td>
+                        <label class="layui-form-label layui-form-required">请假天数</label>
+                    </td>
+                    <td>
+                        <input name="days" class="layui-input" placeholder="请输入请假天数" lay-verType="tips" lay-verify="required" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="layui-form-label layui-form-required">请假时间</label>
+                    </td>
+                    <td colspan="3">
+                        <input id="beginEndTime" name="beginEndTime" class="layui-input icon-date" placeholder="请输入请假时间" lay-verType="tips" lay-verify="required" required autocomplete="off"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="layui-form-label">备注</label>
+                    </td>
+                    <td colspan="3">
+                        <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+<script>
+    layui.use(['layer', 'table', 'tableX', 'notice', 'xnUtil', 'laydate', 'util', 'QRCode'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        var tableX = layui.tableX;
+        var admin = layui.admin;
+        var form = layui.form;
+        var notice = layui.notice;
+        var xnUtil = layui.xnUtil;
+        var laydate = layui.laydate;
+        var util = layui.util;
+        var QRCode = layui.QRCode;
+
+        // 渲染字典下拉
+        var typeDataRenderIns = xmSelect.render({
+            el: '#typeBox',
+            name: 'typeTemp',
+            data: xnUtil.getDictDataByDictTypeCode('leave_type', null),
+            layVerify: 'required',
+            layVerType: 'tips',
+            radio: true,
+            clickClose: true,
+            model: { icon:'hidden', label: { type: 'text' }},
+            prop: {
+                name: 'name',
+                value: 'code'
+            },
+            tips: '请选择请假类型'
+        });
+
+        /* 渲染时间选择 */
+        laydate.render({
+            elem: '#beginEndTime',
+            type: 'date',
+            range: '~',
+            trigger: 'click'
+        });
+
+        // 数据回填
+        var formData = admin.getTempData('formData');
+        if(formData !== null && formData !== undefined) {
+            form.val('addOrUpdateForm', formData);
+            typeDataRenderIns.setValue([formData.type]);
+            $('#qrBox').attr(formData.qr);
+            $('#qrBox').html('<img src="' + formData.qr + '" />');
+        } else {
+            var qrcode = new QRCode(document.getElementById("qrBox"), {
+                width : 50,
+                height : 50
+            });
+            qrcode.makeCode(util.toDateString(new Date(), 'yyyyMMddHHmmss'));
+        }
+
+        function getFormData() {
+            var data = {};
+            var field = form.val('addOrUpdateForm');
+            data.field = field;
+            xnUtil.handleRangeDateSelectResult(data, '#beginEndTime', 'beginTime', 'endTime');
+            data.field.type = data.field.typeTemp;
+            data.field.qr = $($('#qrBox').find('img')[0]).attr('src');
+            delete data.field.typeTemp;
+            return data.field;
+        }
+
+        function verifyForm() {
+            return form.doVerify('addOrUpdateForm');
+        }
+
+        function reset() {
+            $("#addOrUpdateForm")[0].reset();
+            typeDataRenderIns.setValue(['']);
+        }
+
+        window.verifyForm = verifyForm;
+        window.getFormData = getFormData;
+        window.reset = reset;
+    });
+</script>
+</body>
+</html>

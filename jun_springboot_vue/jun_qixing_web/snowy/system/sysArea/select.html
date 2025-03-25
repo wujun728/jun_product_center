@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>区域选择</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">级联选择</li>
+                <li>地图选择</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show" style="padding-top: 20px;">
+                    <div class="layui-col-md-6">
+                        <!--省市区选择city-picker-->
+                        <div class="layui-card">
+                            <div class="layui-card-header">省市区选择city-picker，此插件来自于GitHub，<a href="https://github.com/tshi0912/city-picker" target="_blank" style="color: dodgerblue;cursor: pointer">https://github.com/tshi0912/city-picker</a>。</div>
+                            <div class="layui-card-body" style="padding: 20px 20px 30px 20px;height: 200px;box-sizing: border-box;">
+                                <div style="position: relative;max-width: 400px;">
+                                    <input id="otherCitySel" class="layui-input" placeholder="请选择" data-toggle="city-picker"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md-6">
+                        <!--级联选择-->
+                        <div class="layui-card">
+                            <div class="layui-card-header">省市区级联选择</div>
+                            <div class="layui-card-body" style="padding: 20px 20px 30px 20px;height: 200px;box-sizing: border-box;">
+                                <div style="position: relative;max-width: 400px;">
+                                    <input id="cascadePicker" placeholder="请选择" class="layui-hide"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item" style="padding-top: 20px;height: 400px">
+                    <div class="layui-row layui-col-space30">
+                        <div class="layui-card">
+                            <div class="layui-card-body" style="padding: 20px 20px 30px 20px;height: 400px;box-sizing: border-box;">
+                                <button id="geoSelectBtn" class="layui-btn layui-btn-normal icon-btn">
+                                    <i class="layui-icon">&#xe715;</i>地图选择位置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+<script src="/assets/module/cascader/citys-data.js"></script>
+<script>
+    layui.use(['layer', 'table', 'tableX', 'notice', 'xnUtil', 'element', 'citypicker', 'cascader'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+        var citypicker = layui.citypicker;
+        var cascader = layui.cascader;
+
+        // 省市区级联选择
+        cascader.render({
+            elem: '#cascadePicker',
+            data: citysData,
+            itemHeight: '250px',
+            filterable: true,
+            onChange: function (values, data) { }
+        });
+
+        // 地图选择位置
+        $('#geoSelectBtn').click(function () {
+            admin.chooseLocation({
+                needCity: true,
+                onSelect: function (res) {
+                    layer.msg(JSON.stringify(res), {icon: 1});
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

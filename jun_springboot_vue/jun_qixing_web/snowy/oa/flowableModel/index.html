@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>模型管理</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!-- 表格工具栏 -->
+            <form class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">模型名称:</label>
+                        <div class="layui-input-inline">
+                            <input name="name" class="layui-input" placeholder="请输入模型名称"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">&emsp;
+                        <button class="layui-btn icon-btn" lay-filter="tableSearch" lay-submit>
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </button>
+                    </div>
+                    <div class="layui-inline">&emsp;
+                        <button type="reset" class="layui-btn layui-btn-primary icon-btn">
+                            <i class="layui-icon">&#xe669;</i>重置
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- 数据表格 -->
+            <table id="dataTable" lay-filter="dataTable"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show="flowableModel:edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" perm-show="flowableModel:delete" lay-event="delete">删除</a>
+    <a class="layui-btn layui-btn-xs" data-dropdown="#dataTableDrop{{d.LAY_INDEX}}" no-shade="true">
+        更多<i class="layui-icon layui-icon-drop" style="font-size: 12px;margin-right: 0;"></i></a>
+    <!-- 下拉菜单 -->
+    <ul class="dropdown-menu-nav dropdown-bottom-right layui-hide" id="dataTableDrop{{d.LAY_INDEX}}">
+        <div class="dropdown-anchor"></div>
+        <li perm-show="flowableModel:preview"><a lay-event="preview">预览</a></li>
+        <li perm-show="flowableModel:design"><a lay-event="design">设计</a></li>
+        <li perm-show="flowableDefinition:deploy"><a lay-event="deploy">部署</a></li>
+    </ul>
+</script>
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+<script>
+    layui.use(['layer', 'table', 'tableX', 'upload', 'notice', 'xnUtil', 'dropdown', 'code'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        var tableX = layui.tableX;
+        var upload = layui.upload;
+        var admin = layui.admin;
+        var form = layui.form;
+        var notice = layui.notice;
+        var xnUtil = layui.xnUtil;
+        var dropdown = layui.dropdown;
+        var code = layui.code;
+
+        /* 渲染表格 */
+        var insTb = tableX.render({
+            elem: '#dataTable',
+            url: getProjectUrl() + 'flowableModel/list',
+            page: false,
+            toolbar: ['<p>',
+                '<button lay-event="add" perm-show="flowableModel:add" class="layui-btn layui-btn-sm icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&nbsp;',
+                '<button lay-event="delete" perm-show="flowableModel:delete" class="layui-btn layui-btn-sm layui-btn-danger icon-btn"><i class="layui-icon">&#xe640;</i>删除</button>',
+                '<button lay-event="import" perm-show="flowableModel:importModel" id="file-btn-upload" class="layui-btn layui-btn-sm layui-btn-warm icon-btn"><i class="layui-icon">&#xe681;</i>导入</button>',
+                '</p>'].join(''),
+            cellMinWidth: 100,
+            cols: [
+                [
+                    {type: 'checkbox'},
+                    {field: 'id', title: 'id', hide:true},
+                    {field: 'modelId', title: 'modelId', hide:true},
+                    {field: 'name', title: '模型名称'},
+                    {field: 'key', title: '模型编码'},
+                    {field: 'version', title: '模型版本', templet: function (d) { return '<a style="color:dodgerblue;cursor: pointer" perm-show="flowableModel:version" lay-event="version">V' + d.version +'.0</a>'; }},
+                    {field: 'created', title: '创建时间'},
+                    {field: 'description', title: '备注'},
+                    {title: '操作', toolbar: '#tableBar', align: 'center', width: 200, minWidth: 200}
+                ]
+            ],
+            done: function(res, curr, count) {
+                xnUtil.tableDone(insTb, res, curr, count);
+                // 上传
+                upload.render({
+                    elem: '#file-btn-upload',
+                    accept: 'file',
+                    exts: 'xml',
+                    acceptMime: 'application/xml',
+                    url: getProjectUrl() + 'flowableModel/importModel',
+                    done: function(res){
+                        handleNetworkError(res);
+                        if(res.success) {
+                            layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                                insTb.reload({page: {curr: 1}});
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+        /* 表格搜索 */
+        form.on('submit(tableSearch)', function (data) {
+            insTb.reload({where: data.field, page: {curr: 1}});
+            return false;
+        });
+
+        /* 表格工具条点击事件 */
+        table.on('tool(dataTable)', function (obj) {
+            /* 删除 */
+            if (obj.event === 'delete') {
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    admin.req(getProjectUrl() + 'flowableModel/delete', JSON.stringify([{'id': obj.data.id}]), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            insTb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+            /* 编辑 */
+            if (obj.event === 'edit') {
+                showAddOrUpdateModel(obj.data);
+            }
+
+            /* 版本 */
+            if (obj.event === 'version') {
+                admin.putTempData('queryFlowableModelId', obj.data.id);
+                window.location.href = getProjectUrl() + 'flowableModel/versionHtml';
+            }
+
+            /* 预览 */
+            if (obj.event === 'preview') {
+                admin.req(getProjectUrl() + 'flowableModel/preview?id=' + obj.data.id, function(res){
+                    admin.open({
+                        title: '模型xml文件预览',
+                        content: '<pre id="codeBox" class="layui-code" lay-skin="notepad" lay-height="380px"></pre>',
+                        area: ['800px', '600px'],
+                        end: function () { },
+                        success: function (layero, dIndex) {
+                            $("#codeBox").text(res.data);
+                            // 代码修饰器
+                            layui.code({
+                                elem: 'pre', //默认值为.layui-code
+                                encode: false, //是否转义html标签。默认不开启
+                                about: false //剔除右上角关于文字
+                            });
+                            // 弹窗超出范围出现滚动条
+                            $(layero).children('.layui-layer-content').css('overflow', 'scroll');
+                            $(layero).find('[lay-submit]').focus();
+                        }
+                    });
+                });
+            }
+
+            /* 设计 */
+            if (obj.event === 'design') {
+                window.location.href = getProjectUrl() + 'designer/index.html?modelId=' + obj.data.modelId + '&token=' + layui.data(admin.setter.tableName).token;
+            }
+
+            /* 部署 */
+            if (obj.event === 'deploy') {
+                var layIndex = admin.open({
+                    title: '部署模型',
+                    url: getProjectUrl() + 'flowableModel/deploy',
+                    area: ['500px', '300px'],
+                    data: { data: obj.data },     // 传递数据到表单页面
+                    end: function () {
+                        var layerData = admin.getLayerData(layIndex, 'formOk');
+                        if (layerData) {  // 判断表单操作成功标识
+                            insTb.reload();  // 成功刷新表格
+                        }
+                    },
+                    success: function (layero, dIndex) {
+                        // 弹窗超出范围不出现滚动条
+                        $(layero).children('.layui-layer-content').css('overflow', 'visible');
+                        $(layero).find('[lay-submit]').focus();
+                    }
+                });
+            }
+        });
+
+        /* 表格头工具栏点击事件 */
+        table.on('toolbar(dataTable)', function (obj) {
+            if (obj.event === 'add') { // 添加
+                showAddOrUpdateModel();
+            }
+            if (obj.event === 'delete') { // 删除
+                var checkRows = table.checkStatus('dataTable');
+                if (checkRows.data.length === 0) {
+                    notice.msg('请选择要操作的数据', {icon: 2});
+                    return;
+                }
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    var ids = checkRows.data.map(function (d) {
+                        return {"id": d.id};
+                    });
+                    admin.req(getProjectUrl() + 'flowableModel/delete', JSON.stringify(ids), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            insTb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+        });
+
+        // 显示表单弹窗
+        function showAddOrUpdateModel(data) {
+            var layIndex = admin.open({
+                title: (data ? '修改' : '添加') + '模型',
+                url: getProjectUrl() + 'flowableModel/form',
+                data: { data: data },     // 传递数据到表单页面
+                end: function () {
+                    var layerData = admin.getLayerData(layIndex, 'formOk');
+                    if (layerData) {  // 判断表单操作成功标识
+                        insTb.reload();  // 成功刷新表格
+                    }
+                },
+                success: function (layero, dIndex) {
+                    // 弹窗超出范围不出现滚动条
+                    $(layero).children('.layui-layer-content').css('overflow', 'visible');
+                    $(layero).find('[lay-submit]').focus();
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+    <form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">脚本名称</label>
+            <div class="layui-input-block">
+                <input name="name" id="nameInput" class="layui-input" placeholder="请输入脚本名称" lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">脚本类别</label>
+            <div class="layui-input-block">
+                <div id="typeBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">脚本语言</label>
+            <div class="layui-input-block">
+                <div id="langBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">脚本内容</label>
+            <div class="layui-input-block">
+                <textarea name="content" placeholder="请输入脚本内容" class="layui-textarea" lay-verType="tips" lay-verify="required" required></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+            <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+        </div>
+    </form>
+    
+    <script>
+        layui.use(['layer', 'form', 'admin', 'xnUtil', 'code'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var xnUtil = layui.xnUtil;
+    
+            // 渲染字典下拉
+            var typeRenderIns = xmSelect.render({
+                el: '#typeBox',
+                name: 'type',
+                data: xnUtil.getDictDataByDictTypeCode('script_type', null),
+                layVerify: 'required',
+                layVerType: 'tips',
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'code'
+                },
+                tips: '请选择脚本类型'
+            });
+    
+            // 渲染字典下拉
+            var langRenderIns = xmSelect.render({
+                el: '#langBox',
+                name: 'lang',
+                data: xnUtil.getDictDataByDictTypeCode('script_language_type', null),
+                layVerify: 'required',
+                layVerType: 'tips',
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'code'
+                },
+                tips: '请选择脚本语言'
+            });
+    
+            var editData = admin.getLayerData('#addOrUpdateForm').data;
+            if(editData !== null && editData !== undefined) {
+                form.val('addOrUpdateForm', editData);
+                typeRenderIns.setValue([editData.type]);
+                langRenderIns.setValue([editData.lang]);
+            }
+    
+            // 表单提交事件
+            form.on('submit(formSubmitBtn)', function (data) {
+                layer.load(2);
+                var url = editData ? getProjectUrl() + 'flowableScript/edit' : getProjectUrl() + 'flowableScript/add';
+                admin.req(url, JSON.stringify(data.field), function(res){
+                    layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                        admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                        admin.closeDialog('#addOrUpdateForm');
+                    });
+                }, 'post');
+                return false;
+            });
+    
+        });
+    </script>

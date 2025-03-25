@@ -1,0 +1,89 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 8,
+    "data": [
+        {
+            "sessionId": "767d272c-5907-4435-912d-3abf9dc63e1b",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 15:32:25",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "Safari",
+            "lastLoginOs": "OSX"
+        },
+        {
+            "sessionId": "667a4d23-a958-4aa7-8bc8-2ad113d8007b",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 15:23:07",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "MSEdge",
+            "lastLoginOs": "Windows 10 or Windows Server 2016"
+        },
+        {
+            "sessionId": "e72278ba-ef54-4282-9062-2387aeb8ab7e",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 15:13:21",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "Safari",
+            "lastLoginOs": "-"
+        },
+        {
+            "sessionId": "6bfd04b2-60bf-4707-9cd1-39d014a2e568",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 14:50:40",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "MSEdge",
+            "lastLoginOs": "Windows 10 or Windows Server 2016"
+        },
+        {
+            "sessionId": "45892f22-4c86-4d83-829c-f965d8e4bf4c",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 14:03:23",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "Chrome",
+            "lastLoginOs": "Windows 10 or Windows Server 2016"
+        },
+        {
+            "sessionId": "30ba8717-9d4a-4f8c-9e63-4d76816f3166",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 13:54:47",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "Chrome",
+            "lastLoginOs": "Windows 10 or Windows Server 2016"
+        },
+        {
+            "sessionId": "fbbeb75d-d120-4da9-822e-ce1e8f7ba913",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 13:53:34",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "Chrome",
+            "lastLoginOs": "Windows 10 or Windows Server 2016"
+        },
+        {
+            "sessionId": "baca1059-594e-4ead-ad1e-36f9465ca365",
+            "account": "superAdmin",
+            "nickName": "超级管理员",
+            "lastLoginIp": "127.0.0.1",
+            "lastLoginTime": "2024-07-15 13:45:48",
+            "lastLoginAddress": "-",
+            "lastLoginBrowser": "MSEdge",
+            "lastLoginOs": "Windows 10 or Windows Server 2016"
+        }
+    ]
+}

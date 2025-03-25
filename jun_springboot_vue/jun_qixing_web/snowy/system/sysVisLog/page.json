@@ -1,0 +1,74 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 5,
+    "data": [
+        {
+            "id": "1483349123770982401",
+            "name": "登出",
+            "success": "Y",
+            "message": "登出成功",
+            "ip": "182.150.28.176",
+            "location": "-",
+            "browser": "Chrome",
+            "os": "Windows 10 or Windows Server 2016",
+            "visType": 2,
+            "visTime": "2022-01-18 16:02:45",
+            "account": "superAdmin"
+        },
+        {
+            "id": "1483349097472696321",
+            "name": "登录",
+            "success": "Y",
+            "message": "登录成功",
+            "ip": "124.117.245.66",
+            "location": "-",
+            "browser": "Chrome",
+            "os": "Windows 10 or Windows Server 2016",
+            "visType": 1,
+            "visTime": "2022-01-18 16:02:39",
+            "account": "superAdmin"
+        },
+        {
+            "id": "1483348959446540289",
+            "name": "登录",
+            "success": "Y",
+            "message": "登录成功",
+            "ip": "182.150.28.176",
+            "location": "-",
+            "browser": "Chrome",
+            "os": "Windows 10 or Windows Server 2016",
+            "visType": 1,
+            "visTime": "2022-01-18 16:02:06",
+            "account": "superAdmin"
+        },
+        {
+            "id": "1483346339608764417",
+            "name": "登出",
+            "success": "Y",
+            "message": "登出成功",
+            "ip": "182.150.28.176",
+            "location": "-",
+            "browser": "Chrome",
+            "os": "Windows 10 or Windows Server 2016",
+            "visType": 2,
+            "visTime": "2022-01-18 15:51:41",
+            "account": "superAdmin"
+        },
+        {
+            "id": "1483346117365178369",
+            "name": "登录",
+            "success": "Y",
+            "message": "登录成功",
+            "ip": "182.150.28.176",
+            "location": "-",
+            "browser": "Chrome",
+            "os": "Windows 10 or Windows Server 2016",
+            "visType": 1,
+            "visTime": "2022-01-18 15:50:48",
+            "account": "superAdmin"
+        }
+    ]
+}

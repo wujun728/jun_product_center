@@ -1,0 +1,57 @@
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+<form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">角色名称</label>
+        <div class="layui-input-block">
+            <input name="name" class="layui-input" placeholder="请输入角色名称" lay-verType="tips" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">角色编码</label>
+        <div class="layui-input-block">
+            <input name="code" class="layui-input" placeholder="请输入角色编码" lay-verType="tips" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">排序</label>
+        <div class="layui-input-block">
+            <input name="sort" class="layui-input" type="number" placeholder="请输入排序" lay-verType="tips" lay-verify="required" required/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item text-right">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'form', 'admin', 'xnUtil'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var admin = layui.admin;
+
+        var editData = admin.getLayerData('#addOrUpdateForm').data;
+        form.val('addOrUpdateForm', editData);
+        // 表单提交事件
+        form.on('submit(formSubmitBtn)', function (data) {
+            layer.load(2);
+            var url = editData ? getProjectUrl() + 'sysRole/edit' : getProjectUrl() + 'sysRole/add';
+            admin.req(url, JSON.stringify(data.field), function(res){
+                layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                    admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                    admin.closeDialog('#addOrUpdateForm');
+                });
+            }, 'post');
+            return false;
+        });
+
+    });
+</script>

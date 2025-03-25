@@ -1,0 +1,117 @@
+
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+    <form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <input name="processDefinitionId" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">活动节点</label>
+            <div class="layui-input-block">
+                <div id="actBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">按钮</label>
+            <div class="layui-input-block">
+                <div id="btnSelectBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+            <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+        </div>
+    </form>
+    
+    <script>
+        layui.use(['layer', 'form', 'admin', 'xnUtil'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+    
+            var btnJson = [{'name':'提交','value':'submitBtn'},{'name':'保存','value':'saveBtn'},{'name':'退回','value':'backBtn'},{'name':'转办','value':'turnBtn'},
+                {'name':'指定','value':'nextBtn'},{'name':'委托','value':'entrustBtn'},{'name':'终止','value':'endBtn'},{'name':'追踪','value':'traceBtn'},
+                {'name':'挂起','value':'suspendBtn'},{'name':'跳转','value':'jumpBtn'},{'name':'加签','value':'addSignBtn'},{'name':'减签','value':'deleteSignBtn'}]
+    
+            var editData = admin.getLayerData('#addOrUpdateForm').data;
+            // 渲染远程数据下拉
+            var remoteDataRenderIns = {};
+            admin.req(getProjectUrl() + 'flowableDefinition/userTasks?id=' + editData.processDefinitionId, function(res){
+                remoteDataRenderIns = xmSelect.render({
+                    el: '#actBox',
+                    name: 'actId',
+                    data: res.data,
+                    layVerify: 'required',
+                    layVerType: 'tips',
+                    radio: true,
+                    clickClose: true,
+                    model: { icon:'hidden', label: { type: 'text' }},
+                    prop: {
+                        name: 'name',
+                        value: 'id'
+                    },
+                    tips: '请选择活动节点'
+                });
+            }, {async: false});
+    
+            // 渲染远程数据下拉
+            var btnRenderIns = xmSelect.render({
+                el: '#btnSelectBox',
+                name: 'btnArr',
+                data: btnJson,
+                layVerify: 'required',
+                layVerType: 'tips',
+                toolbar: {
+                    show: true
+                },
+                filterable: true,
+                paging: false,
+                radio: false,
+                prop: {
+                    name: 'name',
+                    value: 'value'
+                },
+                model: {
+                    label: {
+                        type: 'block'
+                    }
+                },
+                tips: '请选择按钮'
+            });
+            form.val('addOrUpdateForm', editData);
+            if(editData.id !== null && editData.id !== undefined) {
+                remoteDataRenderIns.setValue([editData.actId]);
+                var checkedItem = [];
+                btnJson.forEach(function (item) {
+                    var checked = editData[item.value];
+                    if(checked === 'Y') {
+                        checkedItem.push(item.value);
+                    }
+                })
+                btnRenderIns.setValue(checkedItem);
+            }
+    
+            // 表单提交事件
+            form.on('submit(formSubmitBtn)', function (data) {
+                data.field.actName = remoteDataRenderIns.getValue()[0].name;
+                var checkedItem = data.field.btnArr.split(',');
+                btnJson.forEach(function (item) {
+                    data.field[item.value] = 'N';
+                })
+                checkedItem.forEach(function (item) {
+                    data.field[item] = 'Y';
+                })
+                delete data.field.btnArr;
+                layer.load(2);
+                var url = editData.id ? getProjectUrl() + 'flowableButton/edit' : getProjectUrl() + 'flowableButton/add';
+                admin.req(url, JSON.stringify(data.field), function(res){
+                    layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                        admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                        admin.closeDialog('#addOrUpdateForm');
+                    });
+                }, 'post');
+                return false;
+            });
+    
+        });
+    </script>
+    

@@ -1,0 +1,152 @@
+
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+<form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+    <input name="id" type="hidden"/>
+    <input name="processDefinitionId" type="hidden"/>
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">选择表单</label>
+        <div class="layui-input-block">
+            <div id="formBox"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-form-required">节点类型</label>
+        <div class="layui-input-block">
+            <div id="nodeTypeBox"></div>
+        </div>
+    </div>
+    <div class="layui-form-item" hidden id="actDivBox">
+        <label class="layui-form-label layui-form-required">活动节点</label>
+        <div class="layui-input-block">
+            <div id="actBox"></div>
+        </div>
+    </div>
+    <div class="layui-form-item text-right">
+        <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'form', 'admin', 'xnUtil', 'xmSelect'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var admin = layui.admin;
+        var xmSelect = layui.xmSelect;
+        var xnUtil = layui.xnUtil;
+
+        var editData = admin.getLayerData('#addOrUpdateForm').data;
+
+        // 渲染远程数据下拉
+        var formDataRenderIns = {};
+        admin.req(getProjectUrl() + 'flowableFormResource/list', function(res){
+            formDataRenderIns = xmSelect.render({
+                el: '#formBox',
+                name: 'formId',
+                data: res.data,
+                layVerify: 'required',
+                layVerType: 'tips',
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'id'
+                },
+                tips: '请选择表单'
+            });
+        }, {async: false});
+
+        // 渲染字典下拉
+        var nodeTypeDataRenderIns = xmSelect.render({
+            el: '#nodeTypeBox',
+            name: 'nodeTypeTemp',
+            data: xnUtil.getDictDataByDictTypeCode('form_type', null),
+            layVerify: 'required',
+            layVerType: 'tips',
+            radio: true,
+            clickClose: true,
+            model: { icon:'hidden', label: { type: 'text' }},
+            prop: {
+                name: 'name',
+                value: 'code'
+            },
+            tips: '请选择表单节点类型',
+            on: function (data) {
+                if(data.arr.length !== 0) {
+                    remoteDataRenderIns.setValue([]);
+                    handleActView(data.arr[0].code);
+                }
+            }
+        });
+
+        // 渲染远程数据下拉
+        var remoteData = {};
+        var remoteDataRenderIns = {};
+        admin.req(getProjectUrl() + 'flowableDefinition/userTasks?id=' + editData.processDefinitionId, function(res){
+            remoteData = res.data;
+            remoteDataRenderIns = renderActBox(remoteData, false);
+        }, {async: false});
+
+        function renderActBox(data, required) {
+            var options = {
+                el: '#actBox',
+                name: 'actId',
+                data: data,
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'id'
+                },
+                tips: '请选择活动节点'
+            }
+            if(required) {
+                options.layVerify = 'required';
+                options.layVerType = 'tips';
+            }
+            return xmSelect.render(options);
+        }
+
+        function handleActView(nodeType) {
+            var actDivBox = $('#actDivBox');
+            actDivBox.attr('hidden', true);
+            renderActBox(remoteData, false);
+            if(nodeType === '3') {
+                renderActBox(remoteData, true);
+                actDivBox.removeAttr('hidden');
+            }
+        }
+        console.log(editData);
+        form.val('addOrUpdateForm', editData);
+
+        if(editData.id !== null && editData.id !== undefined) {
+            formDataRenderIns.setValue([editData.formId]);
+            nodeTypeDataRenderIns.setValue([editData.nodeType]);
+            handleActView(editData.nodeType.toString());
+            remoteDataRenderIns.setValue([editData.actId]);
+        }
+
+        // 表单提交事件
+        form.on('submit(formSubmitBtn)', function (data) {
+            data.field.nodeType = data.field.nodeTypeTemp;
+            delete data.field.nodeTypeTemp;
+            delete data.field.formBox;
+            if(data.field.nodeType === '3') {
+                data.field.actName = remoteDataRenderIns.getValue()[0].name;
+            }
+            layer.load(2);
+            var url = editData.id ? getProjectUrl() + 'flowableForm/edit' : getProjectUrl() + 'flowableForm/add';
+            admin.req(url, JSON.stringify(data.field), function(res){
+                layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                    admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                    admin.closeDialog('#addOrUpdateForm');
+                });
+            }, 'post');
+            return false;
+        });
+
+    });
+</script>

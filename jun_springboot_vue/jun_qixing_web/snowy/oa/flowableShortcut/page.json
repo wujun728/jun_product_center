@@ -1,0 +1,25 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 1,
+    "data": [
+        {
+            "createTime": "2022-01-18 16:10:54",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1483351175892934657",
+            "processDefinitionId": "leave_01:1:1483350677429264386",
+            "name": "请假管理",
+            "category": "xingzheng",
+            "categoryName": "行政类",
+            "description": "请假管理",
+            "version": 1,
+            "icon": "layui-icon-login-qq",
+            "sort": 1,
+            "status": 0
+        }
+    ]
+}

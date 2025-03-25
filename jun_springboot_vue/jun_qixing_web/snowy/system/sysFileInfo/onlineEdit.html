@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>在线文档</title>
+    <link rel="icon" href="/assets/module/onlyoffice/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/assets/module/onlyoffice/css/editor.css"/>
+    <script src="${docServiceApiUrl}"></script>
+
+</head>
+<body>
+    <div class="form">
+        <div lay-data='${sysOnlineFileInfoResult}' id="dataBox"></div>
+        <div id="iframeEditor">编辑器加载中</div>
+    </div>
+    <!-- js部分 -->
+    <script src="/assets/libs/layui/layui.js"></script>
+    <script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+    <!-- js部分 -->
+    <script>
+            var sysOnlineFileInfoResult = document.getElementById("dataBox").getAttribute("lay-data");
+            var docEditor;
+
+            var innerAlert = function (message) {
+                if (console && console.log)
+                    console.log(message);
+            };
+
+            var onAppReady = function () {
+                innerAlert("Document editor ready");
+            };
+
+            var onDocumentStateChange = function (event) {
+                var title = document.title.replace(/\*$/g, "");
+                document.title = title + (event.data ? "*" : "");
+            };
+
+            var onRequestEditRights = function () {
+                location.href = location.href.replace(RegExp("mode=view\&?", "i"), "");
+            };
+
+            var onError = function (event) {
+                if (event)
+                    innerAlert(event.data);
+            };
+
+            var onOutdatedVersion = function (event) {
+                location.reload(true);
+            };
+
+            var replaceActionLink = function(href, linkParam) {
+                var link;
+                var actionIndex = href.indexOf("&actionLink=");
+                if (actionIndex != -1) {
+                    var endIndex = href.indexOf("&", actionIndex + "&actionLink=".length);
+                    if (endIndex != -1) {
+                        link = href.substring(0, actionIndex) + href.substring(endIndex) + "&actionLink=" + encodeURIComponent(linkParam);
+                    } else {
+                        link = href.substring(0, actionIndex) + "&actionLink=" + encodeURIComponent(linkParam);
+                    }
+                } else {
+                    link = href + "&actionLink=" + encodeURIComponent(linkParam);
+                }
+                return link;
+            }
+
+            var onMakeActionLink = function (event) {
+                var actionData = event.data;
+                var linkParam = JSON.stringify(actionData);
+                docEditor.setActionLink(replaceActionLink(location.href, linkParam));
+            };
+
+            var config = eval('(' + sysOnlineFileInfoResult + ')');
+            config.document.url = getProjectUrl() + config.document.url;
+            config.editorConfig.callbackUrl = getProjectUrl() + config.editorConfig.callbackUrl;
+            config.width = "100%";
+            config.height = "100%";
+            config.events = {
+                "onAppReady": onAppReady,
+                "onDocumentStateChange": onDocumentStateChange,
+                'onRequestEditRights': onRequestEditRights,
+                "onError": onError,
+                "onOutdatedVersion": onOutdatedVersion,
+                "onMakeActionLink": onMakeActionLink,
+            };
+            if(config.history[0].length !== 0 && config.history[1].length !== 0) {
+                config.events['onRequestHistory'] = function () {
+                    docEditor.refreshHistory(config.history[0]);
+                };
+                config.events['onRequestHistoryData'] = function (event) {
+                    var ver = event.data;
+                    var histData = config.history[1];
+                    docEditor.setHistoryData(histData[ver]);
+                };
+                config.events['onRequestHistoryClose'] = function () {
+                    document.location.reload();
+                };
+            }
+
+            var сonnectEditor = function () {
+                docEditor = new DocsAPI.DocEditor("iframeEditor", config);
+            };
+
+            if (window.addEventListener) {
+                window.addEventListener("load", сonnectEditor);
+            } else if (window.attachEvent) {
+                window.attachEvent("load", сonnectEditor);
+            }
+    </script>
+</body>
+</html>

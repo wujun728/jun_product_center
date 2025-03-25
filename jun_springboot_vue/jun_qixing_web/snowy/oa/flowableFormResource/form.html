@@ -1,0 +1,131 @@
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+    <form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">表单名称</label>
+            <div class="layui-input-block">
+                <input name="name" id="nameInput" class="layui-input" placeholder="请输入表单名称" lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">表单编码</label>
+            <div class="layui-input-block">
+                <input name="code" id="codeInput" class="layui-input" placeholder="请输入表单编码" lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">表单分类</label>
+            <div class="layui-input-block">
+                <div id="categoryBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">表单类型</label>
+            <div class="layui-input-block">
+                <div id="formTypeBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item" id="urlBox" hidden>
+            <label class="layui-form-label layui-form-required ">表单地址</label>
+            <div class="layui-input-block">
+                <input name="formUrl" class="layui-input" placeholder="请输入表单地址"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+            <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+        </div>
+    </form>
+    
+    <script>
+        layui.use(['layer', 'form', 'admin', 'xnUtil'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var xnUtil = layui.xnUtil;
+    
+            // 渲染远程数据下拉
+            var remoteDataRenderIns = {};
+            admin.req(getProjectUrl() + 'flowableCategory/list', function(res){
+                remoteDataRenderIns = xmSelect.render({
+                    el: '#categoryBox',
+                    name: 'category',
+                    data: res.data,
+                    layVerify: 'required',
+                    layVerType: 'tips',
+                    radio: true,
+                    clickClose: true,
+                    model: { icon:'hidden', label: { type: 'text' }},
+                    prop: {
+                        name: 'name',
+                        value: 'code'
+                    },
+                    tips: '请选择分类'
+                });
+            }, {async: false});
+    
+            // 渲染字典下拉
+            var formTypeDataRenderIns = xmSelect.render({
+                el: '#formTypeBox',
+                name: 'type',
+                data: xnUtil.getDictDataByDictTypeCode('form_resource_type', null),
+                layVerify: 'required',
+                layVerType: 'tips',
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'code'
+                },
+                tips: '请选择表单类型',
+                on: function (data) {
+                    if(data.arr.length !== 0) {
+                        $('input[name="formUrl"]').val("");
+                        handleFormTypeView(data.arr[0].code);
+                    }
+                }
+            });
+    
+            var editData = admin.getLayerData('#addOrUpdateForm').data;
+            if(editData !== null && editData !== undefined) {
+                form.val('addOrUpdateForm', editData);
+                remoteDataRenderIns.setValue([editData.category]);
+                formTypeDataRenderIns.setValue([editData.type]);
+                handleFormTypeView(editData.type.toString());
+            }
+    
+            function handleFormTypeView(type) {
+                var urlBox = $('#urlBox');
+                var urlInput = $($(urlBox.find('input'))[0]);
+                urlBox.attr('hidden', true);
+                urlInput.removeAttr('lay-verType lay-verify required');
+                if(type === '1') {
+                    urlBox.removeAttr('hidden');
+                    urlInput.attr({'lay-verType': 'tips', 'lay-verify': 'required' , 'required':'true'});
+                }
+            }
+    
+            // 表单提交事件
+            form.on('submit(formSubmitBtn)', function (data) {
+                data.field.categoryName = remoteDataRenderIns.getValue()[0].name;
+                layer.load(2);
+                var url = editData ? getProjectUrl() + 'flowableFormResource/edit' : getProjectUrl() + 'flowableFormResource/add';
+                admin.req(url, JSON.stringify(data.field), function(res){
+                    layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                        admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                        admin.closeDialog('#addOrUpdateForm');
+                    });
+                }, 'post');
+                return false;
+            });
+    
+        });
+    </script>

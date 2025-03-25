@@ -1,0 +1,19 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 1,
+    "data": [
+        {
+            "id": "1806021908290912258",
+            "dbName": "master",
+            "jdbcDriver": "com.mysql.cj.jdbc.Driver",
+            "userName": "snowy-layui",
+            "password": "***",
+            "jdbcUrl": "jdbc:mysql://localhost:3306/snowy-layui?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT&nullCatalogMeansCurrent=true",
+            "remark": "主数据源，项目启动数据源！",
+            "createTime": "2024-06-27 01:49:11.000"
+        }
+    ]
+}

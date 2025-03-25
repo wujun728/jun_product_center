@@ -1,0 +1,83 @@
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+<form id="detailForm" lay-filter="detailForm" class="layui-form model-form">
+    <div class="layui-col-md6">
+        <input name="id" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">日志名称</label>
+            <div class="layui-input-block">
+                <input name="name" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">访问类型</label>
+            <div class="layui-input-block">
+                <input name="visType" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">访问时间</label>
+            <div class="layui-input-block">
+                <input name="visTime" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">访问人</label>
+            <div class="layui-input-block">
+                <input name="account" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">具体消息</label>
+            <div class="layui-input-block">
+                <input name="message" class="layui-input"/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-md6">
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否成功</label>
+            <div class="layui-input-block">
+                <input name="success" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">ip地址</label>
+            <div class="layui-input-block">
+                <input name="ip" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">定位</label>
+            <div class="layui-input-block">
+                <input name="location" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">浏览器</label>
+            <div class="layui-input-block">
+                <input name="browser" class="layui-input"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">操作系统</label>
+            <div class="layui-input-block">
+                <input name="os" class="layui-input"/>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    layui.use(['layer', 'form', 'admin', 'xnUtil'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var admin = layui.admin;
+        var xnUtil = layui.xnUtil;
+
+        var detailData = admin.getLayerData('#detailForm').data;
+        detailData.success = xnUtil.rendDataTableDict(detailData.success, 'yes_or_no');
+        detailData.visType = xnUtil.rendDataTableDict(detailData.visType, 'vis_type');
+        form.val('detailForm', detailData);
+    });
+</script>

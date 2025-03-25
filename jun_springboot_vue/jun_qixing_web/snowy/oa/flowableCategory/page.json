@@ -1,0 +1,45 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 3,
+    "data": [
+        {
+            "createTime": "2020-09-22 21:41:40",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1308401074679459841",
+            "name": "差旅类",
+            "code": "travel",
+            "sort": 100,
+            "remark": "差旅类",
+            "status": 0
+        },
+        {
+            "createTime": "2020-08-04 23:26:56",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1290670559956320258",
+            "name": "行政类",
+            "code": "xingzheng",
+            "sort": 100,
+            "remark": "行政类",
+            "status": 0
+        },
+        {
+            "createTime": "2020-08-03 12:19:37",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1290140237082759170",
+            "name": "考勤类",
+            "code": "kaoqin",
+            "sort": 100,
+            "remark": "考勤类",
+            "status": 0
+        }
+    ]
+}

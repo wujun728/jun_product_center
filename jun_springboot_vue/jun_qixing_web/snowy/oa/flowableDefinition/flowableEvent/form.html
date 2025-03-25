@@ -1,0 +1,197 @@
+
+<!-- 注意这里不需要写`<html><body>`这些东西，它是一个html片段，不是完整的html页面 -->
+    <form id="addOrUpdateForm" lay-filter="addOrUpdateForm" class="layui-form model-form">
+        <input name="id" type="hidden"/>
+        <input name="processDefinitionId" type="hidden"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="width: 100px">事件名称</label>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <input name="name" class="layui-input" placeholder="请输入事件名称" lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="width: 100px">事件节点类型</label>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <div id="nodeTypeBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item" hidden id="actDivBox">
+            <label class="layui-form-label layui-form-required" style="width: 100px">活动节点</label>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <div id="actBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="width: 100px">事件类型</label>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <div id="typeBox"></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="width: 100px">脚本</label>
+            <div class="layui-input-block" style="margin-left: 130px;margin-bottom: 5px">
+                <div id="scriptBox"></div>
+            </div>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <textarea name="script" placeholder="请输入脚本" class="layui-textarea" lay-verType="tips" lay-verify="required" required></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="width: 100px">执行顺序</label>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <input name="execSort" class="layui-input" type="number" placeholder="请输入执行排序" lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 100px">备注</label>
+            <div class="layui-input-block" style="margin-left: 130px">
+                <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+            <button class="layui-btn" lay-filter="formSubmitBtn" lay-submit>保存</button>
+        </div>
+    </form>
+    
+    <script>
+        layui.use(['layer', 'form', 'admin', 'xnUtil', 'xmSelect'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var admin = layui.admin;
+            var xnUtil = layui.xnUtil;
+            var xmSelect = layui.xmSelect;
+    
+            var editData = admin.getLayerData('#addOrUpdateForm').data;
+    
+            // 渲染远程数据下拉
+            var remoteData = {};
+            var remoteDataRenderIns = {};
+            admin.req(getProjectUrl() + 'flowableDefinition/userTasks?id=' + editData.processDefinitionId, function(res){
+                remoteData = res.data;
+                remoteDataRenderIns = renderActBox(remoteData, false);
+            }, {async: false});
+    
+            // 渲染远程数据下拉
+            admin.req(getProjectUrl() + 'flowableScript/list', function(res){
+                xmSelect.render({
+                    el: '#scriptBox',
+                    name: 'scriptBox',
+                    data: res.data,
+                    radio: true,
+                    clickClose: true,
+                    model: { icon:'hidden', label: { type: 'text' }},
+                    prop: {
+                        name: 'name',
+                        value: 'content'
+                    },
+                    tips: '选择已有脚本',
+                    on: function (data) {
+                        if(data.arr.length !== 0) {
+                            $('textarea[name="script"]').val(data.arr[0].content);
+                        }
+                    }
+                });
+            }, {async: false});
+    
+            // 渲染字典下拉
+            var nodeTypeDataRenderIns = xmSelect.render({
+                el: '#nodeTypeBox',
+                name: 'nodeTypeTemp',
+                data: xnUtil.getDictDataByDictTypeCode('event_node_type', null),
+                layVerify: 'required',
+                layVerType: 'tips',
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'code'
+                },
+                tips: '请选择事件节点类型',
+                on: function (data) {
+                    if(data.arr.length !== 0) {
+                        remoteDataRenderIns.setValue([]);
+                        handleActView(data.arr[0].code);
+                    }
+                }
+            });
+    
+            // 渲染字典下拉
+            var typeDataRenderIns = xmSelect.render({
+                el: '#typeBox',
+                name: 'type',
+                data: xnUtil.getDictDataByDictTypeCode('event_type', null),
+                layVerify: 'required',
+                layVerType: 'tips',
+                radio: true,
+                clickClose: true,
+                model: { icon:'hidden', label: { type: 'text' }},
+                prop: {
+                    name: 'name',
+                    value: 'code'
+                },
+                tips: '请选择事件类型'
+            });
+    
+            form.val('addOrUpdateForm', editData);
+    
+            if(editData.id !== null && editData.id !== undefined) {
+                nodeTypeDataRenderIns.setValue([editData.nodeType]);
+                typeDataRenderIns.setValue([editData.type]);
+                handleActView(editData.type.toString());
+                remoteDataRenderIns.setValue([editData.actId]);
+            }
+    
+            function handleActView(nodeType) {
+                var actDivBox = $('#actDivBox');
+                actDivBox.attr('hidden', true);
+                renderActBox(remoteData, false);
+                if(nodeType === '2') {
+                    renderActBox(remoteData, true);
+                    actDivBox.removeAttr('hidden');
+                }
+            }
+    
+            function renderActBox(data, required) {
+                var options = {
+                    el: '#actBox',
+                    name: 'actId',
+                    data: data,
+                    radio: true,
+                    clickClose: true,
+                    model: { icon:'hidden', label: { type: 'text' }},
+                    prop: {
+                        name: 'name',
+                        value: 'id'
+                    },
+                    tips: '请选择活动节点'
+                }
+                if(required) {
+                    options.layVerify = 'required';
+                    options.layVerType = 'tips';
+                }
+                return xmSelect.render(options);
+            }
+            // 表单提交事件
+            form.on('submit(formSubmitBtn)', function (data) {
+                data.field.nodeType = data.field.nodeTypeTemp;
+                delete data.field.nodeTypeTemp;
+                delete data.field.scriptBox;
+                if(data.field.nodeType === '2') {
+                    data.field.actName = remoteDataRenderIns.getValue()[0].name;
+                }
+                layer.load(2);
+                var url = editData.id ? getProjectUrl() + 'flowableEvent/edit' : getProjectUrl() + 'flowableEvent/add';
+                admin.req(url, JSON.stringify(data.field), function(res){
+                    layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                        admin.putLayerData('formOk', true, '#addOrUpdateForm');
+                        admin.closeDialog('#addOrUpdateForm');
+                    });
+                }, 'post');
+                return false;
+            });
+    
+        });
+    </script>

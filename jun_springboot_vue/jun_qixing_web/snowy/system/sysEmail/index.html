@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>邮件发送</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">发送邮件</li>
+                <li>发送html邮件</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show" style="padding-top: 20px;">
+                    <div class="layui-row layui-col-space30" id="sendEmailBox">
+                        <form id="sendEmailForm" lay-filter="sendEmailForm" class="layui-form model-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-form-required">收件人</label>
+                                <div class="layui-input-block">
+                                    <input name="to" class="layui-input" placeholder="请输入收件人" lay-verType="tips" lay-verify="required|emailX" required/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-form-required">邮件标题</label>
+                                <div class="layui-input-block">
+                                    <input name="title" class="layui-input" placeholder="请输入邮件标题" lay-verType="tips" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-form-required">邮件内容</label>
+                                <div class="layui-input-block">
+                                    <textarea name="content" placeholder="请输入邮件内容" class="layui-textarea" lay-verType="tips" lay-verify="required" required></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item text-right">
+                                <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+                                <button class="layui-btn" lay-filter="sendEmailFormSubmitBtn" lay-submit>保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="layui-tab-item" style="padding-top: 20px;">
+                    <div class="layui-row layui-col-space30" id="sendHtmlEmailBox">
+                        <form id="sendHtmlEmailForm" lay-filter="sendHtmlEmailForm" class="layui-form model-form">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-form-required">收件人</label>
+                                <div class="layui-input-block">
+                                    <input name="to" class="layui-input" placeholder="请输入收件人" lay-verType="tips" lay-verify="required|emailX" required/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-form-required">邮件标题</label>
+                                <div class="layui-input-block">
+                                    <input name="title" class="layui-input" placeholder="请输入邮件标题" lay-verType="tips" lay-verify="required" required/>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label layui-form-required">邮件内容</label>
+                                <div class="layui-input-block">
+                                    <textarea name="content" id="contentEditor" placeholder="请输入邮件内容" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item text-right">
+                                <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+                                <button class="layui-btn" lay-filter="sendHtmlEmailFormSubmitBtn" lay-submit>保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+<script src="/assets/libs/tinymce/tinymce.min.js"></script>
+<script>
+    layui.use(['layer', 'table', 'tableX', 'notice', 'xnUtil', 'element'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var admin = layui.admin;
+        var form = layui.form;
+
+        // 渲染富文本编辑器
+        tinymce.init({
+            selector: '#contentEditor',
+            height: 525,
+            branding: false,
+            language: 'zh_CN',
+            plugins: 'code print preview fullscreen paste searchreplace save autosave link autolink image imagetools media table codesample lists advlist hr charmap emoticons anchor directionality pagebreak quickbars nonbreaking visualblocks visualchars wordcount',
+            toolbar: 'fullscreen preview code | undo redo | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | formatselect fontselect fontsizeselect | link image media emoticons charmap anchor pagebreak codesample | ltr rtl',
+            toolbar_drawer: 'sliding',
+            file_picker_types: 'media',
+            relative_urls : false,
+            remove_script_host : false,
+            document_base_url : getProjectUrl(),
+            images_upload_handler: function (blobInfo, success, failure, progress) {
+                var xhr, formData;
+                var file = blobInfo.blob();//转化为易于理解的file对象
+                xhr = new XMLHttpRequest();
+                xhr.withCredentials = false;
+                xhr.open('POST', getProjectUrl() + 'sysFileInfo/upload');
+                xhr.upload.onprogress = function(e){
+                    progress(e.loaded / e.total * 100);
+                }
+                xhr.onload = function() {
+                    var res = JSON.parse(xhr.responseText);
+                    if(!res.success) {
+                        layui.notice.msg(res.message, {icon: 2});
+                        return false;
+                    } else {
+                        success(getProjectUrl() + 'sysFileInfo/preview?id=' + res.data);
+                    }
+                };
+                xhr.onerror = function () {
+                    layui.notice.msg(xhr.responseText, {icon: 2});
+                }
+                formData = new FormData();
+                formData.append('file', file, file.name );//此处与源文档不一样
+                xhr.send(formData);
+            }
+        });
+
+        // 表单提交事件
+        form.on('submit(sendEmailFormSubmitBtn)', function (data) {
+            layer.load(2);
+            admin.req(getProjectUrl() + 'sysEmail/sendEmail', JSON.stringify(data.field), function(res){
+                layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                    admin.closeDialog('#sendEmailForm');
+                });
+            }, 'post');
+            return false;
+        });
+
+        // 表单提交事件
+        form.on('submit(sendHtmlEmailFormSubmitBtn)', function (data) {
+            var content = tinymce.get('contentEditor').getContent();
+            if(content === null || content === undefined || content === '') {
+                layui.notice.msg('邮件内容不能为空', {icon: 2});
+                return false;
+            }
+            layer.load(2);
+            data.field.content = content;
+            admin.req(getProjectUrl() + 'sysEmail/sendEmailHtml', JSON.stringify(data.field), function(res){
+                layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                    admin.closeDialog('#sendHtmlEmailForm');
+                });
+            }, 'post');
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

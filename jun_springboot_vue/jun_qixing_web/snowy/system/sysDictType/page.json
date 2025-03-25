@@ -1,0 +1,129 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 36,
+    "data": [
+        {
+            "createTime": "2020-08-06 23:19:24",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1291393441594408961",
+            "name": "是否结束",
+            "code": "ended_status",
+            "sort": 100,
+            "remark": "是否结束",
+            "status": 0
+        },
+        {
+            "createTime": "2020-07-03 12:41:49",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1278911800547147777",
+            "name": "通知公告类型",
+            "code": "notice_type",
+            "sort": 100,
+            "remark": "通知公告类型",
+            "status": 0
+        },
+        {
+            "createTime": "2020-05-27 10:28:45",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1265469962873610241",
+            "name": "事件类型",
+            "code": "event_type",
+            "sort": 100,
+            "remark": "事件类型",
+            "status": 0
+        },
+        {
+            "createTime": "2020-05-27 10:27:43",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1265469702042427393",
+            "name": "表单类型",
+            "code": "form_type",
+            "sort": 100,
+            "remark": "表单类型",
+            "status": 0
+        },
+        {
+            "createTime": "2020-05-27 10:21:04",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1265468028632571905",
+            "name": "数据范围类型",
+            "code": "data_scope_type",
+            "sort": 100,
+            "remark": "数据范围类型",
+            "status": 0
+        },
+        {
+            "createTime": "2020-07-02 16:30:27",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1278606951432855553",
+            "name": "运行状态",
+            "code": "run_status",
+            "sort": 100,
+            "remark": "定时任务运行状态",
+            "status": 0
+        },
+        {
+            "createTime": "2020-05-27 10:13:36",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1265466149622128641",
+            "name": "发送类型",
+            "code": "send_type",
+            "sort": 100,
+            "remark": "发送类型",
+            "status": 0
+        },
+        {
+            "createTime": "2020-05-27 10:16:00",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1265466752209395713",
+            "name": "打开方式",
+            "code": "open_type",
+            "sort": 100,
+            "remark": "打开方式",
+            "status": 0
+        },
+        {
+            "createTime": "2020-05-27 10:25:43",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1265469198583341057",
+            "name": "脚本类型",
+            "code": "script_type",
+            "sort": 100,
+            "remark": "脚本类型",
+            "status": 0
+        },
+        {
+            "createTime": "2020-12-04 10:55:30",
+            "createUser": "1265476890672672808",
+            "updateTime": null,
+            "updateUser": null,
+            "id": "1334692775158104065",
+            "name": "阅读状态",
+            "code": "read_status",
+            "sort": 100,
+            "remark": "阅读状态",
+            "status": 0
+        }
+    ]
+}

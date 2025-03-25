@@ -1,0 +1,20 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 10,
+    "count": 1,
+    "data": [
+        {
+            "id": "leave_01:1:1483350677429264386",
+            "key": "leave_01",
+            "name": "请假管理",
+            "category": "xingzheng",
+            "categoryName": "行政类",
+            "description": "请假管理",
+            "version": 1,
+            "suspended": false,
+            "deploymentId": "1483350676443602946"
+        }
+    ]
+}

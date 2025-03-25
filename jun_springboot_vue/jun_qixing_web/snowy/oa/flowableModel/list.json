@@ -1,0 +1,21 @@
+{
+    "code": 0,
+    "msg": "请求成功",
+    "page": 1,
+    "limit": 20,
+    "count": 0,
+    "data": [
+        {
+            "id": "969bde8f-7835-11ec-8675-5254008a911d",
+            "modelId": "969bde8f-7835-11ec-8675-5254008a911d",
+            "key": "leave_01",
+            "name": "休假管理",
+            "description": "休假",
+            "created": "2022-01-18 16:06:49",
+            "createdBy": "superAdmin",
+            "lastUpdated": "2024-06-20 14:40:48",
+            "lastUpdatedBy": "superAdmin",
+            "version": 2
+        }
+    ]
+}

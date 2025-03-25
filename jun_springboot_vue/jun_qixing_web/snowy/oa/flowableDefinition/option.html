@@ -1,0 +1,559 @@
+
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>定义配置</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!-- 表格工具栏 -->
+            <form class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">&emsp;
+                        <button class="layui-btn icon-btn" lay-filter="tableBack" lay-submit>
+                            <i class="layui-icon">&#xe65c;</i>返回
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="layui-tab layui-tab-brief" lay-filter="dataTab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">选项</li>
+                    <li>按钮</li>
+                    <li>事件</li>
+                    <li>表单</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" style="padding-top: 20px;">
+                        <!-- 数据表格 -->
+                        <table id="optionTable" lay-filter="optionTable"></table>
+                    </div>
+                    <div class="layui-tab-item" style="padding-top: 20px;">
+                        <!-- 数据表格 -->
+                        <table id="btnTable" lay-filter="btnTable"></table>
+                    </div>
+                    <div class="layui-tab-item" style="padding-top: 20px;">
+                        <!-- 数据表格 -->
+                        <table id="eventTable" lay-filter="eventTable"></table>
+                    </div>
+                    <div class="layui-tab-item" style="padding-top: 20px;">
+                        <!-- 数据表格 -->
+                        <table id="formTable" lay-filter="formTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="optionTableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show="flowableOption:edit" lay-event="edit">编辑</a>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="btnTableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show="flowableButton:edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" perm-show="flowableButton:delete" lay-event="delete">删除</a>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="eventTableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show="flowableEvent:edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" perm-show="flowableEvent:delete" lay-event="delete">删除</a>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="formTableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" perm-show="flowableForm:edit" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" perm-show="flowableForm:delete" lay-event="delete">删除</a>
+    <a class="layui-btn layui-btn-xs" perm-show="flowableForm:preview" lay-event="preview">预览</a>
+</script>
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project_snowy.js"></script>
+<script src="/assets/libs/tinymce/tinymce.min.js"></script>
+<script>
+    layui.use(['layer', 'table', 'tableX', 'notice', 'xnUtil', 'element'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        var tableX = layui.tableX;
+        var admin = layui.admin;
+        var form = layui.form;
+        var notice = layui.notice;
+        var xnUtil = layui.xnUtil;
+        var element = layui.element;
+
+        var definitionId = admin.getTempData('queryFlowableDefinitionId');
+
+        var optionInstb = {};
+        var btnInstb = {};
+        var eventInstb = {};
+        var formInstb = {};
+
+        /* 表格返回 */
+        form.on('submit(tableBack)', function (data) {
+            window.location.href = getProjectUrl() + 'flowableDefinition/index';
+            return false;
+        });
+
+        renderOptionTable(definitionId);
+
+        element.on('tab(dataTab)', function(data){
+            var index = data.index;
+            if(index === 0) {
+                if(JSON.stringify(optionInstb) === '{}') {
+                    renderOptionTable(definitionId);
+                } else {
+                    optionInstb.reload();
+                }
+            }
+            if(index === 1) {
+                if(JSON.stringify(btnInstb) === '{}') {
+                    renderBtnTable(definitionId);
+                } else {
+                    btnInstb.reload();
+                }
+            }
+            if(index === 2) {
+                if(JSON.stringify(eventInstb) === '{}') {
+                    renderEventTable(definitionId);
+                } else {
+                    eventInstb.reload();
+                }
+            }
+            if(index === 3) {
+                if(JSON.stringify(formInstb) === '{}') {
+                    renderFormTable(definitionId);
+                } else {
+                    formInstb.reload();
+                }
+            }
+        });
+
+        function renderOptionTable(definitionId) {
+            /* 渲染表格 */
+            var insTb = tableX.render({
+                elem: '#optionTable',
+                url: getProjectUrl() + 'flowableOption/list?processDefinitionId=' + definitionId,
+                page: false,
+                toolbar: [],
+                cellMinWidth: 100,
+                cols: [
+                    [
+                        {field: 'id', title: 'id', hide:true},
+                        {field: 'processDefinitionId', title: 'processDefinitionId', hide:true},
+                        {field: 'title', title: '标题规则'},
+                        {field: 'jumpFirst', title: '自动完成第一个任务', templet: function (d) {  return xnUtil.rendDataTableDict(d.jumpFirst, 'yes_or_no'); } },
+                        {field: 'smartComplete', title: '跳过相同处理人', templet: function (d) {  return xnUtil.rendDataTableDict(d.smartComplete, 'yes_or_no'); } },
+                        {title: '操作', toolbar: '#optionTableBar', align: 'center', width: 200, minWidth: 200}
+                    ]
+                ],
+                done: function(res, curr, count) {
+                    xnUtil.tableDone(insTb, res, curr, count);
+                }
+            });
+            optionInstb = insTb;
+        }
+
+        function renderBtnTable(definitionId) {
+            /* 渲染表格 */
+            var insTb = tableX.render({
+                elem: '#btnTable',
+                url: getProjectUrl() + 'flowableButton/list?processDefinitionId=' + definitionId,
+                page: false,
+                toolbar: ['<p>',
+                    '<button lay-event="add" perm-show="flowableButton:add" class="layui-btn layui-btn-sm icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&nbsp;',
+                    '<button lay-event="delete" perm-show="flowableButton:delete" class="layui-btn layui-btn-sm layui-btn-danger icon-btn"><i class="layui-icon">&#xe640;</i>删除</button>',
+                    '</p>'].join(''),
+                cellMinWidth: 100,
+                cols: [
+                    [
+                        {type: 'checkbox'},
+                        {field: 'id', title: 'id', hide:true},
+                        {field: 'processDefinitionId', title: 'processDefinitionId', hide:true},
+                        {field: 'actId', title: 'actId', hide:true},
+                        {field: 'actName', title: '节点名称'},
+                        {field: 'submit', title: '提交', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.submitBtn, 'yes_or_no');
+                                if(d.submitBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'save', title: '保存', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.saveBtn, 'yes_or_no');
+                                if(d.saveBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'back', title: '退回', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.backBtn, 'yes_or_no');
+                                if(d.backBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'turn', title: '转办', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.turnBtn, 'yes_or_no');
+                                if(d.turnBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'next', title: '指定', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.nextBtn, 'yes_or_no');
+                                if(d.nextBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'entrust', title: '委托', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.entrustBtn, 'yes_or_no');
+                                if(d.entrustBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'end', title: '终止', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.endBtn, 'yes_or_no');
+                                if(d.endBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'trace', title: '追踪', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.traceBtn, 'yes_or_no');
+                                if(d.traceBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'suspend', title: '挂起', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.suspendBtn, 'yes_or_no');
+                                if(d.suspendBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'jump', title: '跳转', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.jumpBtn, 'yes_or_no');
+                                if(d.jumpBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'addSign', title: '加签', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.addSignBtn, 'yes_or_no');
+                                if(d.addSignBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {field: 'deleteSign', title: '减签', templet: function (d) {  var result = xnUtil.rendDataTableDict(d.deleteSignBtn, 'yes_or_no');
+                                if(d.deleteSignBtn === 'Y') {return '<span class="layui-badge layui-bg-blue">' + result + '</span>'}
+                                else { return '<span class="layui-badge layui-bg-gray">' + result + '</span>'} } },
+                        {title: '操作', toolbar: '#btnTableBar', align: 'center', width: 200, minWidth: 200}
+                    ]
+                ],
+                done: function(res, curr, count) {
+                    xnUtil.tableDone(insTb, res, curr, count);
+                }
+            });
+            btnInstb = insTb;
+        }
+
+        function renderEventTable(definitionId) {
+            /* 渲染表格 */
+            var insTb = tableX.render({
+                elem: '#eventTable',
+                url: getProjectUrl() + 'flowableEvent/list?processDefinitionId=' + definitionId,
+                page: false,
+                toolbar: ['<p>',
+                    '<button lay-event="add" perm-show="flowableEvent:add" class="layui-btn layui-btn-sm icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&nbsp;',
+                    '<button lay-event="delete" perm-show="flowableEvent:delete" class="layui-btn layui-btn-sm layui-btn-danger icon-btn"><i class="layui-icon">&#xe640;</i>删除</button>',
+                    '</p>'].join(''),
+                cellMinWidth: 100,
+                cols: [
+                    [
+                        {type: 'checkbox'},
+                        {field: 'id', title: 'id', hide:true},
+                        {field: 'processDefinitionId', title: 'processDefinitionId', hide:true},
+                        {field: 'name', title: '事件名称'},
+                        {field: 'nodeType', title: '事件节点类型', templet: function (d) {  return xnUtil.rendDataTableDict(d.nodeType, 'event_node_type'); } },
+                        {field: 'type', title: '事件类型', templet: function (d) {  return xnUtil.rendDataTableDict(d.type, 'event_type'); } },
+                        {field: 'execSort', title: '执行顺序'},
+                        {field: 'remark', title: '备注'},
+                        {title: '操作', toolbar: '#eventTableBar', align: 'center', width: 200, minWidth: 200}
+                    ]
+                ],
+                done: function(res, curr, count) {
+                    xnUtil.tableDone(insTb, res, curr, count);
+                }
+            });
+            eventInstb = insTb;
+        }
+
+        function renderFormTable(definitionId) {
+            /* 渲染表格 */
+            var insTb = tableX.render({
+                elem: '#formTable',
+                url: getProjectUrl() + 'flowableForm/list?processDefinitionId=' + definitionId,
+                page: false,
+                toolbar: ['<p>',
+                    '<button lay-event="add" perm-show="flowableForm:add" class="layui-btn layui-btn-sm icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&nbsp;',
+                    '<button lay-event="delete" perm-show="flowableForm:delete" class="layui-btn layui-btn-sm layui-btn-danger icon-btn"><i class="layui-icon">&#xe640;</i>删除</button>',
+                    '</p>'].join(''),
+                cellMinWidth: 100,
+                cols: [
+                    [
+                        {type: 'checkbox'},
+                        {field: 'id', title: 'id', hide:true},
+                        {field: 'processDefinitionId', title: 'processDefinitionId', hide:true},
+                        {field: 'formId', title: 'formId', hide:true},
+                        {field: 'actId', title: 'actId', hide:true},
+                        {field: 'flowableFormResource.name', title: '表单名称', templet: function (d) {  return d.flowableFormResource.name; } },
+                        {field: 'nodeType', title: '表单节点类型', templet: function (d) {  return xnUtil.rendDataTableDict(d.nodeType, 'form_type'); } },
+                        {field: 'actName', title: '活动节点名称', templet: function (d) {  if(d.actName) { return d.actName; } else { return '-'; } } },
+                        {field: 'flowableFormResource.remark', title: '表单备注', templet: function (d) {  return d.flowableFormResource.remark; } },
+                        {title: '操作', toolbar: '#formTableBar', align: 'center', width: 200, minWidth: 200}
+                    ]
+                ],
+                done: function(res, curr, count) {
+                    xnUtil.tableDone(insTb, res, curr, count);
+                }
+            });
+            formInstb = insTb;
+        }
+
+        /* 表格工具条点击事件 */
+        table.on('tool(optionTable)', function (obj) {
+            /* 编辑 */
+            if (obj.event === 'edit') {
+                showAddOrUpdateModelOption(obj.data);
+            }
+        });
+
+        /* 表格工具条点击事件 */
+        table.on('tool(btnTable)', function (obj) {
+            /* 删除 */
+            if (obj.event === 'delete') {
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    admin.req(getProjectUrl() + 'flowableButton/delete', JSON.stringify([{'id': obj.data.id}]), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            btnInstb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+            /* 编辑 */
+            if (obj.event === 'edit') {
+                showAddOrUpdateModelBtn(obj.data);
+            }
+        });
+
+        /* 表格工具条点击事件 */
+        table.on('tool(eventTable)', function (obj) {
+            /* 删除 */
+            if (obj.event === 'delete') {
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    admin.req(getProjectUrl() + 'flowableEvent/delete', JSON.stringify([{'id': obj.data.id}]), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            eventInstb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+            /* 编辑 */
+            if (obj.event === 'edit') {
+                showAddOrUpdateModelEvent(obj.data);
+            }
+        });
+
+        /* 表格工具条点击事件 */
+        table.on('tool(formTable)', function (obj) {
+            /* 删除 */
+            if (obj.event === 'delete') {
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    admin.req(getProjectUrl() + 'flowableForm/delete', JSON.stringify([{'id': obj.data.id}]), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            formInstb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+            /* 编辑 */
+            if (obj.event === 'edit') {
+                showAddOrUpdateModelForm(obj.data);
+            }
+            /* 预览 */
+            if (obj.event === 'preview') {
+                admin.req(getProjectUrl() + 'flowableFormResource/detail?id=' + obj.data.formId, function(res){
+                    //自主开发的表单
+                    if(res.data.type === 1) {
+                        admin.putTempData('formData');
+                        window.open(res.data.formUrl);
+                    } else {
+                        notice.msg('暂不支持在线设计类型的表单预览', {icon: 2});
+                    }
+                });
+            }
+        });
+
+        /* 表格头工具栏点击事件 */
+        table.on('toolbar(btnTable)', function (obj) {
+            if (obj.event === 'add') { // 添加
+                showAddOrUpdateModelBtn();
+            }
+            if (obj.event === 'delete') { // 删除
+                var checkRows = table.checkStatus('btnTable');
+                if (checkRows.data.length === 0) {
+                    notice.msg('请选择要操作的数据', {icon: 2});
+                    return;
+                }
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    var ids = checkRows.data.map(function (d) {
+                        return {"id": d.id};
+                    });
+                    admin.req(getProjectUrl() + 'flowableButton/delete', JSON.stringify(ids), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            btnInstb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+        });
+
+        /* 表格头工具栏点击事件 */
+        table.on('toolbar(eventTable)', function (obj) {
+            if (obj.event === 'add') { // 添加
+                showAddOrUpdateModelEvent();
+            }
+            if (obj.event === 'delete') { // 删除
+                var checkRows = table.checkStatus('eventTable');
+                if (checkRows.data.length === 0) {
+                    notice.msg('请选择要操作的数据', {icon: 2});
+                    return;
+                }
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    var ids = checkRows.data.map(function (d) {
+                        return {"id": d.id};
+                    });
+                    admin.req(getProjectUrl() + 'flowableEvent/delete', JSON.stringify(ids), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            eventInstb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+        });
+
+        /* 表格头工具栏点击事件 */
+        table.on('toolbar(formTable)', function (obj) {
+            if (obj.event === 'add') { // 添加
+                showAddOrUpdateModelForm();
+            }
+            if (obj.event === 'delete') { // 删除
+                var checkRows = table.checkStatus('formTable');
+                if (checkRows.data.length === 0) {
+                    notice.msg('请选择要操作的数据', {icon: 2});
+                    return;
+                }
+                layer.confirm('确定要操作该数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function () {
+                    var ids = checkRows.data.map(function (d) {
+                        return {"id": d.id};
+                    });
+                    admin.req(getProjectUrl() + 'flowableForm/delete', JSON.stringify(ids), function(res){
+                        layer.msg(res.message, {icon: 1, time: 1000}, function () {
+                            formInstb.reload();
+                        });
+                    }, 'post');
+                });
+            }
+        });
+
+        function showAddOrUpdateModelOption(data) {
+            var layIndex = admin.open({
+                title:'修改选项',
+                url: getProjectUrl() + 'flowableOption/form',
+                area: ['800px', '400px'],
+                data: { data: data },     // 传递数据到表单页面
+                end: function () {
+                    var layerData = admin.getLayerData(layIndex, 'formOk');
+                    if (layerData) {  // 判断表单操作成功标识
+                        optionInstb.reload();  // 成功刷新表格
+                    }
+                },
+                success: function (layero, dIndex) {
+                    // 弹窗超出范围不出现滚动条
+                    $(layero).children('.layui-layer-content').css('overflow', 'visible');
+                    $(layero).find('[lay-submit]').focus();
+                }
+            });
+        }
+
+        function showAddOrUpdateModelBtn(data) {
+            var btnData = data;
+            if(btnData === null || btnData === undefined) {
+                btnData = {'processDefinitionId': definitionId};
+            }
+            var layIndex = admin.open({
+                title: (data ? '修改' : '添加') + '按钮',
+                url: getProjectUrl() + 'flowableButton/form',
+                area: ['800px', '600px'],
+                data: { data: btnData },     // 传递数据到表单页面
+                end: function () {
+                    var layerData = admin.getLayerData(layIndex, 'formOk');
+                    if (layerData) {  // 判断表单操作成功标识
+                        btnInstb.reload();  // 成功刷新表格
+                    }
+                },
+                success: function (layero, dIndex) {
+                    // 弹窗超出范围不出现滚动条
+                    $(layero).children('.layui-layer-content').css('overflow', 'visible');
+                    $(layero).find('[lay-submit]').focus();
+                }
+            });
+        }
+
+        function showAddOrUpdateModelEvent(data) {
+            var eventData = data;
+            if(eventData === null || eventData === undefined) {
+                eventData = {'processDefinitionId': definitionId};
+            }
+            var layIndex = admin.open({
+                title: (data ? '修改' : '添加') + '事件',
+                url: getProjectUrl() + 'flowableEvent/form',
+                area: ['800px', '700px'],
+                data: { data: eventData },     // 传递数据到表单页面
+                end: function () {
+                    var layerData = admin.getLayerData(layIndex, 'formOk');
+                    if (layerData) {  // 判断表单操作成功标识
+                        eventInstb.reload();  // 成功刷新表格
+                    }
+                },
+                success: function (layero, dIndex) {
+                    // 弹窗超出范围不出现滚动条
+                    $(layero).children('.layui-layer-content').css('overflow', 'visible');
+                    $(layero).find('[lay-submit]').focus();
+                }
+            });
+        }
+
+        function showAddOrUpdateModelForm(data) {
+            var formData = data;
+            if(formData === null || formData === undefined) {
+                formData = {'processDefinitionId': definitionId};
+            }
+            var layIndex = admin.open({
+                title: (data ? '修改' : '添加') + '表单',
+                url: getProjectUrl() + 'flowableForm/form',
+                area: ['800px', '400px'],
+                data: { data: formData },     // 传递数据到表单页面
+                end: function () {
+                    var layerData = admin.getLayerData(layIndex, 'formOk');
+                    if (layerData) {  // 判断表单操作成功标识
+                        formInstb.reload();  // 成功刷新表格
+                    }
+                },
+                success: function (layero, dIndex) {
+                    // 弹窗超出范围不出现滚动条
+                    $(layero).children('.layui-layer-content').css('overflow', 'visible');
+                    $(layero).find('[lay-submit]').focus();
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
