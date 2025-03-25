@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=4.0.24" media="all">
+
+
+  <style>
+	.layui-tree-entry{font-size:15px; line-height:24px}
+	.layui-tree-set{padding:2px 0}
+	.layui-tree-iconClick .layui-icon{color:#1E9FFF;}
+	.layui-icon layui-icon-file{font-size:16px;}
+	.layui-tree-iconClick.layui-tree-icon .layui-icon{color:#1E9FFF;font-size:12px;}
+	.layui-tree-icon {height: 15px; width: 15px; text-align: center;border: 1px solid #1E9FFF; color:#1E9FFF}
+	.layui-tree-line .layui-tree-set .layui-tree-set:after{top:18px;}
+	.tree-left{width:200px; float:left; height:calc(100% - 30px); overflow: scroll; border:1px solid #eeeeee; background-color:#FAFAFA; padding:12px 12px 12px 5px;}
+	.tree-left h3{font-size:16px; height:30px; padding-left:10px; font-weight:800}
+  </style>
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3" style="height:100%; box-sizing: border-box;">
+	<div class="tree-left">
+		<h3>企业通讯录</h3>
+		<div id="depament"></div>
+	</div>
+	<div class="body-table" style="margin-left:228px; overflow:hidden;">
+		<form class="layui-form gg-form-bar border-t border-x" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:240px">
+				<input type="text" name="keywords" placeholder="输入关键字，如：ID/姓名" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+			</div>
+		</form>
+		<table class="layui-hide" id="test" lay-filter="test"></table>
+	</div>
+</div>
+
+<script type="text/html" id="thumb">
+	<img src="{{d.thumb}}" width="30" height="30" />
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool,tree = layui.tree,form = layui.form;			
+			$.ajax({
+				url: "/home/index/get_department_tree.json",
+				type:'get',
+				success:function(res){					
+					//仅节点左侧图标控制收缩
+					tree.render({
+						elem: '#depament',
+						data: res.trees,
+						onlyIconControl: true,  //是否仅允许节点左侧图标控制展开收缩
+						click: function(obj){
+							//layer.msg(JSON.stringify(obj.data));
+							layui.pageTable.reload({
+							   where: {did: obj.data.id}
+							   ,page:{curr:1}
+							});
+							$('[name="keywords"]').val('');
+							$('[name="type"]').val('');
+							layui.form.render('select');
+						}
+					});	
+				}
+			})		
+		
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '通讯录',
+			toolbar: '#toolbarDemo',
+			defaultToolbar:['filter', {title:'导出EXCEL',layEvent: 'LAYTABLE_EXCEL',icon: 'layui-icon-export'}],
+			url: "/home/index/mail_list.json", //数据接口				
+			page: true, //开启分页
+			limit: 20,
+			cols: [
+				[
+					{
+						field: 'thumb',
+						title: '头像',
+						toolbar: '#thumb',
+						align: 'center',
+						width: 60
+					}, {
+						field: 'name',
+						title: '用户姓名',
+						align: 'center',
+						width: 80
+					},{
+						field: 'mobile',
+						title: '手机号码',
+						align: 'center',
+						width: 120
+					},{
+						field: 'email',
+						title: '电子邮箱'
+					},{
+						field: 'sex',
+						title: '性别',
+						align: 'center',
+						width: 60,
+						templet: function (d) {
+							var html = '未知';
+							if(d.sex == 1){
+								html = '男'
+							}
+							else if(d.sex == 2){
+								html = '女'
+							}
+							return html;
+						}
+					},{
+						field: 'department',
+						title: '所在部门',
+						align: 'center',
+						width: 120
+					}, {
+						field: 'position',
+						title: '岗位职称',
+						align: 'center',
+						width: 110
+					}, {
+						field: 'entry_time',
+						title: '入职日期',
+						align: 'center',
+						width: 100
+					}
+				]
+			]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+			var data = checkStatus.data;
+			if(obj.event === 'LAYTABLE_EXCEL'){
+				var formSelect = form.val('barsearchform');
+				formSelect.limit=99999;
+				$.ajax({
+					url: '/home/index/mail_list.json',
+					data: formSelect,
+					success:function(res){
+						table.exportFile('test', res.data,'xls');
+					}
+				});
+				return;
+			}
+		});
+
+		//监听搜索提交
+		form.on('submit(webform)', function (data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	}	
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+	<script src="/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

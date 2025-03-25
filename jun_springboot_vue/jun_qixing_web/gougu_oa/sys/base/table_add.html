@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- <link rel="stylesheet" href="../../../component/pear/css/pear.css"/> -->
+    <link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=1.0.24" media="all">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">账号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="userName" lay-verify="title|required" autocomplete="off"
+                               placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="nickName" lay-verify="title|required" autocomplete="off"
+                               placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码</label>
+                    <div class="layui-input-block">
+                        <input type="password" name="password" lay-verify="required" autocomplete="off"
+                               placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">电话</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="phone" lay-verify="phone" autocomplete="off" placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="1" title="男" checked>
+                        <input type="radio" name="sex" value="2" title="女">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">启用</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="enable" value="1" title="是" checked>
+                        <input type="radio" name="enable" value="0" title="否">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">部门</label>
+                    <div class="layui-input-block">
+                        <ul id="selectParent" name="deptId" class="dtree" data-id="0"></ul>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色</label>
+                    <div id="view11" class="layui-input-block">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit="" lay-filter="save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="pear-btn pear-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<!-- <script src="../../../component/layui/layui.js"></script>
+<script src="../../../component/pear/pear.js"></script> -->
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+
+<script id="demo" type="text/html">
+    {{# layui.each(d.data, function(index, item){ }}
+    <input value="{{ item.roleId }}" title="{{ item.roleName }}"
+           type="checkbox" name="roleIds" lay-skin="primary">
+    {{# }); }}
+</script>
+
+
+<script>
+    layui.use(['form', 'jquery', 'laytpl', 'dtree', 'easyAdmin'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let dtree = layui.dtree;
+        var laytpl = layui.laytpl;
+        var easyAdmin = layui.easyAdmin;
+
+        easyAdmin.httpGet("/sys/user/getRoles", function (result) {
+            var getTpl = demo.innerHTML;
+            var view = document.getElementById('view11');
+            laytpl(getTpl).render(result, function (html) {
+                view.innerHTML = html;
+            });
+
+            form.render();
+        });
+
+        easyAdmin.httpGet("/sys/dept/tree", function (treeData) {
+            dtree.renderSelect({
+                elem: "#selectParent",
+                data: treeData.data,
+                selectCardHeight: "150",
+                selectInputName: {nodeId: "deptId", context: "deptName"},
+                // skin: "layui",
+                dataFormat: "list",
+                response: {treeId: "deptId", parentId: "pid", title: "deptName"},
+                selectInitVal: "1"
+            });
+        })
+
+
+        form.on('submit(save)', function (data) {
+            let roleIds = "";
+            $('input[type=checkbox]:checked').each(function () {
+                roleIds += $(this).val() + ",";
+            });
+            roleIds = roleIds.substr(0, roleIds.length - 1);
+            data.field.roleIds = roleIds;
+            easyAdmin.http({
+                url: '/sys/user',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg,
+                            {
+                                icon: 1,
+                                time: 1000,
+                                area: ['100px', '80px'],
+                                content: "新增成功"
+                            }
+                            , function () {
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                parent.layui.table.reload("user-table");
+                            });
+                    } else {
+                        layer.msg(result.msg,
+                            {icon: 2, time: 1000, area: ['260px', '80px']}
+                        );
+                    }
+                }
+            })
+            return false;
+        });
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

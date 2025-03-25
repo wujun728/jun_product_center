@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">审批类型</h3>
+		<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">所属分类<font>*</font></td>
+			<td>
+				<select name="type" lay-verify="required" lay-reqText="请选择所属分类">
+				  <option value="">--请选择--</option>
+				  				  <option value="1">假勤</option>
+				  				  <option value="2">行政</option>
+				  				  <option value="3">财务</option>
+				  				  <option value="4">人事</option>
+				  				  <option value="5">其他</option>
+				  				  <option value="6">报销</option>
+				  				  <option value="7">发票</option>
+				  				  <option value="8">合同</option>
+				  				</select>
+			</td>
+			<td class="layui-td-gray">名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" autocomplete="off" placeholder="请输入审批类型名称" lay-verify="required" lay-reqText="请输入审批类型名称" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">应用部门</td>
+			<td colspan="3">
+				<div class="layui-input-inline" style="width:360px;">
+					<select id="department_ids" name="department_ids" xm-selected="" xm-select="select1" xm-select-skin="default"></select>
+				</div>
+				<span class="red" style="font-size:12px;">（如果不选，默认是全公司）</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">标识<font>*</font></td>
+			<td>
+				<input type="text" name="name" placeholder="请输入审批类型标识" value="" autocomplete="off" lay-verify="required" lay-reqText="请输入审批类型标识" class="layui-input">
+			</td>
+			<td class="layui-td-gray">图标<font>*</font></td>
+			<td>
+				<input style="width:200px; display:inline" class="layui-input" type="text" name="icon" value="" placeholder="请输入审批类型图标" lay-verify="required" lay-reqText="请输入审批类型图标" >			
+				如：icon-jichupeizhi<a href="/assets/icon/index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<span style="color: red; font-size: 12px;">注意：新增审批类型以后，需要对应新增模板文件，模板文件名称需与标识名称一致，建议复制现有的审批类型模板文件，然后根据需求修改对应的表单即可。</span>
+			</td>
+		</tr>
+	</table>
+		<div class="py-3">
+		<input type="hidden" name="id" value="0">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','formSelects'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,formSelects=layui.formSelects;
+		//选择应用部门
+		var selcted = $('#department_ids').attr('xm-selected');
+		formSelects.data('select1', 'server', {
+			url: '/api/index/get_department_select',
+			keyword: selcted,
+		});		
+		//监听提交
+		form.on('submit(webform)', function(data){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);				
+				}
+			}
+			tool.post("/home/cate/flow_type_add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+	<script src="/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

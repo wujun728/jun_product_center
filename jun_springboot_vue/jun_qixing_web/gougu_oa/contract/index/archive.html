@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t">
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="cate_id">
+				<option value="">请选择合同类别</option>
+								<option value="47">嘻嘻嘻</option>
+								<option value="46">..</option>
+								<option value="45">111</option>
+								<option value="44">23</option>
+								<option value="43">1111</option>
+								<option value="42">qq12</option>
+								<option value="41">55</option>
+								<option value="40">kkk1111111111</option>
+								<option value="39">aaa</option>
+								<option value="38">	 销售合同</option>
+								<option value="37">12</option>
+								<option value="35">AD</option>
+								<option value="32">25464</option>
+								<option value="31">11</option>
+								<option value="30">威威</option>
+								<option value="29">普通合同</option>
+								<option value="28">普通</option>
+								<option value="27">lll</option>
+								<option value="26">买卖合同</option>
+								<option value="25">测试类别1</option>
+								<option value="23">啊啊啊协议</option>
+								<option value="21">k;lk;</option>
+								<option value="20">劳动合同</option>
+								<option value="15">222</option>
+								<option value="14">房孺复</option>
+								<option value="13">是</option>
+								<option value="12">测试</option>
+								<option value="11">测试合同</option>
+								<option value="10">22</option>
+								<option value="9">应酬合同</option>
+								<option value="8">发票合同</option>
+								<option value="7">123</option>
+								<option value="6">其他合同</option>
+								<option value="5">代理协议</option>
+								<option value="4">委托协议</option>
+								<option value="3">租赁合同</option>
+								<option value="2">采购合同</option>
+								<option value="1">销售合同12</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="type">
+				<option value="">请选择合同性质</option>
+				<option value="1">普通合同</option>
+				<option value="2">框架合同</option>
+				<option value="3">补充协议</option>
+				<option value="4">其他合同</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:240px;">
+			<input type="text" name="keywords" placeholder="输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool ,form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '合同归档列表',
+			url: "archive.json", //数据接口
+			cellMinWidth: 80,
+			page: true, //开启分页
+			limit: 20,
+			cols: [
+				[ //表头
+					{
+						field: 'id',
+						title: '编号',
+						align: 'center',
+						width: 80
+					},{ field: 'check_status', title: '状态', align: 'center', width: 80, templet: function (d) {
+						var html = '<span class="layui-btn layui-btn-xs layui-bg-' + d.check_status + '">' + d.status_name + '</span>';
+						return html;
+						}
+					},{
+						field: 'code',
+						title: '合同编号',
+						width: 160
+					},{
+						field: 'name',
+						title: '合同名称',
+						minWidth:240,
+						templet: '<div><a data-href="/contract/index/view/id/{{d.id}}.html" class="side-a">{{d.name}}</a></div>'
+					}, {
+						field: 'cate_title',
+						title: '合同类别',
+						align: 'center',
+						width: 100
+					}, {
+						field: 'type_name',
+						title: '合同性质',
+						align: 'center',
+						width: 80,
+						templet: function (d) {
+							var html = '<span class="layui-color-' + d.type + '">' + d.type_name + '</span>';
+							return html;
+						}
+					},{
+						field: 'cost',
+						title: '合同金额/元',
+						align: 'right',
+						width: 100
+					}, {
+						field: 'sign_name',
+						title: '签定人',
+						align: 'center',
+						width: 80
+					},{
+						field: 'keeper_name',
+						title: '保管人',
+						align: 'center',
+						width: 80
+					}, {
+						field: 'sign_time',
+						title: '签订时间',
+						align: 'center',
+						width: 100
+					}, {
+						field: 'right',
+						fixed:'right',
+						title: '操作',
+						width: 100,
+						align: 'center',
+						templet: function (d) {
+							return '<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span>';
+						}
+					}
+				]
+			]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if (obj.event === 'add') {
+				selectType();
+				return;
+			}
+		});
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if(obj.event === 'view'){
+				tool.side('/contract/index/view?id='+data.id);
+				return;
+			}
+		});
+		
+
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: {
+					keywords: data.field.keywords,
+					cate_id: data.field.cate_id,
+					type: data.field.type
+				},
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+	<script src="/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

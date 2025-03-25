@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Editormd Mardown编辑器</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css">
+</head>
+
+<body>
+	<form class="layui-form p-3">
+		<table class="layui-table layui-table-form">
+			<tr>
+				<td class="layui-td-gray">商品标题 <span style="color: red">*</span></td>
+				<td colspan="3"><input type="text" name="title" lay-verify="required" lay-reqText="请输入商品标题"
+						placeholder="请输入商品标题" class="layui-input" value="勾股CMS定制开发方案"></td>
+				<td class="layui-td-gray">状态 <span style="color: red">*</span></td>
+				<td>
+					<input type="radio" name="status" value="1" title="正常" checked>
+					<input type="radio" name="status" value="0" title="下架" >
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">关键字 <span style="color: red">*</span></td>
+				<td colspan="3">
+					<input type="text" id="keyword_name" name="keyword_names" lay-verify="required" lay-reqText="请选择关键字"
+						placeholder="请选择关键字" class="layui-input" value="勾股CMS,勾股博客" readonly>
+					<input type="hidden" id="keyword_id" name="keyword_ids" value="1,2">
+				</td>
+				<td class="layui-td-gray">商品分类<span style="color: red">*</span></td>
+				<td>
+					<select name="cate_id" lay-verify="required" lay-reqText="请选择商品分类">
+						<option value="">请选择商品分类</option>
+							<option value="1" selected>勾股科技</option>
+						</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">商品卖点 <span style="color: red">*</span></td>
+				<td colspan="3">
+					<input type="text" name="tips" lay-verify="required" lay-reqText="请输入商品卖点" placeholder="一句话描述商品卖点，30字以内" value="赠送一年免费维护服务" class="layui-input">
+				</td>
+				<td class="layui-td-gray" rowspan="3">缩略图 <span style="color: red">*</span></td>
+				<td rowspan="3" style="vertical-align:top">
+					<div class="layui-upload" style="text-align:center;">
+						<button type="button" class="layui-btn layui-btn-sm" id="uploadBtn">上传商品封面图(尺寸：750x560)</button>
+						<div class="layui-upload-list" id="demo1">
+							<img src="" style="width:200px;max-width:200px" />
+							<input type="hidden" name="thumb" value="1">
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray" style="vertical-align:top;">商品简介</td>
+				<td colspan="3">
+					<textarea name="desc" placeholder="请输入商品简介，200字以内" class="layui-textarea">勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案。</textarea>
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">商品标签 <span style="color: red">*</span></td>
+				<td colspan="3">
+					<input type="checkbox" name="tag_values[]" title="正品保证" lay-skin="primary" value="1" checked />
+					<input type="checkbox" name="tag_values[]" title="一年保修" lay-skin="primary" value="2" checked />
+					<input type="checkbox" name="tag_values[]" title="七天退换（拆封后不支持）" lay-skin="primary" value="3"  />
+					<input type="checkbox" name="tag_values[]" title="赠运费险" lay-skin="primary" value="4"  />
+					<input type="checkbox" name="tag_values[]" title="闪电发货" lay-skin="primary" value="5"  />
+					<input type="checkbox" name="tag_values[]" title="售后无忧" lay-skin="primary" value="6" checked />
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">市场价格 <span style="color: red">*</span></td>
+				<td>
+					<input type="text" name="base_price" lay-verify="required|number" lay-reqText="请输入市场价格"
+						placeholder="请输入市场价格" class="layui-input" value="1999.00">
+				</td>
+				<td class="layui-td-gray">实际价格 <span style="color: red">*</span></td>
+				<td>
+					<input type="text" name="price" lay-verify="required|number" lay-reqText="请输入实际价格" placeholder="请输入实际价格"
+						class="layui-input" value="1888.00">
+				</td>
+				<td class="layui-td-gray">是否包邮 <span style="color: red">*</span></td>
+				<td>
+					<input type="radio" name="is_mail" value="1" title="是" checked>
+					<input type="radio" name="is_mail" value="0" title="否" >
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">首页显示</td>
+				<td>
+					<input type="radio" name="is_home" value="1" title="是" checked>
+					<input type="radio" name="is_home" value="0" title="否" >
+				</td>
+				<td class="layui-td-gray">属性</td>
+				<td>
+					<select name="type">
+						<option value="">请选择属性</option>
+						<option value="1" selected>精华</option>
+						<option value="2" >热门</option>
+						<option value="3" >推荐</option>
+					</select>
+				</td>
+				<td class="layui-td-gray">排序</td>
+				<td>
+					<input type="text" name="sort" placeholder="请输入排序，数字" lay-verify="number" class="layui-input"
+						value="1">
+				</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">商品图集</td>
+				<td colspan="5">
+					<div class="layui-upload">
+						<button type="button" class="layui-btn layui-btn-sm" id="uploadBtn2">上传轮播图</button>
+						<div class="layui-upload-list" id="demo2">
+							<input type="hidden" name="banner" value="">
+						</div>
+					</div>
+				</td>
+			</tr>
+					<tr>
+				<td colspan="6" class="layui-td-gray" style="text-align:left">商品介绍<span style="color: red">*</span><span
+						style="margin-left:30px; color: red">当前为EditorMD Mardown编辑器</span></td>
+			</tr>
+			<tr>
+				<td colspan="6">
+					<div>
+						<textarea id="mdContent" style="display:none;">勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案勾股CMS定制开发方案。</textarea>
+						<div id="docContent"></div>
+					</div>
+				</td>
+			</tr>
+						</table>
+		<div class="py-3">
+			<input type="hidden" name="id" value="1">
+			<button class="layui-btn" lay-submit="" lay-filter="webform">立即提交</button>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			<button lay-event="back" class="layui-btn layui-btn-primary">关闭</button>
+		</div>
+	</form>
+		
+	<script>
+		var moduleInit = ['tool', 'tagpicker', 'editormd'];
+	
+		function gouguInit() {
+			var form = layui.form, tool = layui.tool, upload = layui.upload;	
+			//初始化编辑器
+			var editor = layui.editormd;
+			var edit = editor.render('docContent', {
+				markdown: document.getElementById('mdContent').value
+			});
+			
+			//缩略图上传
+			var uploadInst = upload.render({
+				elem: '#uploadBtn'
+				, url: '/admin/api/upload'
+				, done: function (res) {
+					//如果上传失败
+					if (res.code == 1) {
+						return layer.msg('上传失败');
+					}
+					//上传成功
+					$('#demo1 input').attr('value', res.data.id);
+					$('#demo1 img').attr('src', res.data.filepath);
+				}
+			});
+	
+			//广告图上传
+			var uploadInst2 = upload.render({
+				elem: '#uploadBtn2'
+				, url: '/admin/api/upload'
+				, done: function (res) {
+					//如果上传失败
+					if (res.code == 1) {
+						return layer.msg('上传失败');
+					}
+					//上传成功
+					var idsStr = $('#demo2 input').val();
+					var idsArray = [];
+					if (idsStr != '') {
+						idsArray = idsStr.split(",");
+					}
+					idsArray.push(res.data.id);
+					$('#demo2 input').attr('value', idsArray.join(','));
+					$('#demo2').append('<div class="upload-img img-cover" id="uploadImg' + res.data.id + '"><div class="gg-img-cover cover-4-3"><img src="' + res.data.filepath + '"><div class="upload-close"><a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="delimg" data-id="' + res.data.id + '">删除</a></div></div>');
+				}
+			});
+	
+			$('#demo2').on('click', '[lay-event="delimg"]', function () {
+				var _id = $(this).data('id');
+				var idsStr = $('#demo2 input').val();
+				var idsArray = [];
+				if (idsStr != '') {
+					idsArray = idsStr.split(",");
+				}
+				idsArray.remove(_id);
+				$('#demo2 input').attr('value', idsArray.join(','));
+				$('#uploadImg' + _id).remove();
+			})
+	
+			//监听返回
+			$('body').on('click', '[lay-event="back"]', function () {
+				tool.tabClose();
+				return false;
+			});
+	
+				
+			//监听提交
+			form.on('submit(webform)', function (data) {
+				if (data.field.mdContent == '') {
+					layer.msg('请先完善商品内容');
+					return false;
+				}
+				let callback = function (e) {
+					if (e.code == 0) {
+						layer.confirm('保存成功,关闭当前页面?', { icon: 3, title: '提示' }, function (index) {
+							tool.tabClose();
+							layer.close(index);
+						});
+					} else {
+						layer.msg(e.msg);
+					}
+				}
+				layer.msg(JSON.stringify(data.field));
+				return false;
+			});
+		}
+	</script>
+  <script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+  <script src="/assets/gougu/gouguInit.js"></script>
+</body>
+
+</html>

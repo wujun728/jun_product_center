@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>勾股Admin - 通用后台管理模板</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale,maximum-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/assets/gougu/css/gougu.css">
+    <link rel="stylesheet" href="/assets/gougu/css/layout.css">
+    <script>
+        /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
+    </script>
+     
+</head>
+
+<body class="layui-layout-body">
+    <div id="GouguApp">
+        <div class="layui-layout gg-layout">
+            <div class="layui-header">
+                <!-- 头部区域 -->
+                <div class="layui-layout-left">
+                    <span class="gg-head-item">
+                        <a href="javascript:;" gg-event="shrink" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right"></i>
+                        </a>
+                    </span>
+					
+					   
+					
+                    <span class="gg-head-item">
+                        <a href="https://www.gougucms.com/" target="_blank" title="前台首页">
+						UI组件
+                            <i class="layui-icon layui-icon-website"></i>
+                        </a>
+                    </span>
+					<span class="gg-head-item">
+                         
+						测试菜单
+                            <i class="layui-icon layui-icon-website"></i> 
+                    </span>
+                </div>
+
+                <div class="layui-layout-right">
+                    <span class="gg-head-item gg-head-refresh">
+                        <a href="javascript:;" class="refreshThis" gg-event="refresh" title="刷新">
+                            <i class="layui-icon layui-icon-refresh"></i>
+                        </a>
+                    </span>
+                    <span class="gg-head-item gg-head-screen">
+                        <a href="javascript:;" gg-event="screen" data-screen="full">
+                            <i class="fullScreen layui-icon layui-icon-screen-full"></i>
+                        </a>
+                    </span>
+					<span class="gg-head-item gg-head-set">
+                        <a href="javascript:;" id="theme">
+                            <i class="layui-icon layui-icon-set"></i>
+                        </a>
+                    </span>
+                    <span class="gg-head-item gg-head-message">
+                        <a data-text="消息中心" data-url="view/app/message/index.html" gg-event="message" title="消息中心">
+                            <i class="layui-icon layui-icon-notice"></i>
+                            <!-- 如果有新消息，则显示 -->
+                            <div class="gg-message-num"><span>99</span></div>
+                        </a>
+                    </span>
+                    <span class="gg-head-item gg-head-avatar">
+                        <ul class="layui-nav">
+                            <li class="layui-nav-item">
+                                <a href="javascript:;">
+                                    <img src="https://dev.gougucms.com/static/home/images/icon.png">
+                                    <cite>勾股挨踢</cite>
+                                </a>
+                                <dl class="layui-nav-child" style="text-align: center;">
+                                    <dd><a data-url="view/user/info.html" data-id="0101" data-title="基本资料" class="side-menu-item">基本资料</a></dd>
+                                    <dd><a data-url="view/user/password.html" data-id="0102" data-title="修改密码" class="side-menu-item">修改密码</a></dd>
+                                    <hr>
+                                    <dd gg-event="logout"><a>退出</a></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu layui-side-black">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo" gg-event="closeAllTabs">
+                        <img src="/assets/gougu/images/gouguadmin.png" style="height: 40px;">
+                    </div>
+
+                    <ul id="menuList" class="layui-nav layui-nav-tree layui-inline" lay-shrink="all"></ul>
+
+                    <ul id="menuList2" class="layui-nav layui-nav-tree layui-inline" lay-shrink="all">
+                        <li class="layui-nav-item menu-li">
+                            <a href="javascript:;" class="side-menu-item layui-this" data-href="/home/index/main.html" data-id="0" style="padding-top:0; padding-bottom:0;"><i class="iconfont icon-xueshuguanli"></i> 工 作 台</a>
+                        </li>
+                            <li class="layui-nav-item menu-li">
+                            <a href="javascript:;" lay-tips="系统管理" lay-direction="2" data-id="1" data-title="系统管理" data-href="/"><i class="iconfont icon-jichupeizhi"></i> 系统管理</a>
+                                            <dl class="layui-nav-child">
+                                                    <dd>
+                                    <a href="javascript:;" class="side-menu-item" data-id="9" data-title="系统配置" data-href="/home/conf/index">系统配置</a>
+                                                        </dd>
+                                                    <dd>
+                                    <a href="javascript:;" class="side-menu-item" data-id="13" data-title="功能模块" data-href="/home/module/index">功能模块</a>
+                                                        </dd>
+                                                    <dd>
+                                    <a href="javascript:;" class="side-menu-item" data-id="17" data-title="功能节点" data-href="/home/rule/index">功能节点</a>
+                                                        </dd>
+                                                    <dd>
+                                    <a href="javascript:;" class="side-menu-item" data-id="20" data-title="角色权限" data-href="/home/role/index">角色权限</a>
+                                                        </dd>
+                                                    <dd>
+                                    <a href="javascript:;" class="side-menu-item" data-id="23" data-title="数据权限" data-href="/home/dataauth/index">数据权限</a>
+                                                        </dd>
+                                                </dl>
+                                    </li>	 		
+                            <li class="layui-nav-item menu-li">
+                        </ul>
+                </div>
+            </div>
+
+            <!-- 页面标签 -->
+            <div id="pageTabs" class="page-tabs">
+                <div class="layui-icon gg-tabs-control layui-icon-prev" gg-event="tabRollLeft"></div>
+                <div class="layui-icon gg-tabs-control layui-icon-next" gg-event="tabRollRight"></div>
+                <div class="layui-icon gg-tabs-control layui-icon-down">
+                    <ul class="layui-nav gg-tabs-select">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;"></a>
+                            <dl class="layui-nav-child layui-anim-fadein">
+                                <dd gg-event="closeThisTabs"><a href="javascript:;">关闭当前</a></dd>
+                                <dd gg-event="closeOtherTabs"><a href="javascript:;">关闭其它</a></dd>
+                                <dd gg-event="closeAllTabs"><a href="javascript:;">关闭全部</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-tab gg-admin-tab" lay-unauto lay-allowClose="true" lay-filter="gg-admin-tab">
+                    <ul class="layui-tab-title" id="pageTabUl">
+                        <li lay-id="0" lay-attr="home/index/main.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 主体内容 -->
+            <div class="layui-body" id="GouguAppBody">
+                <div class="gg-tab-page layui-show">
+                    <iframe id="0" data-frameid="0" name="myiframe" src="home/index/main.html" frameborder="0" align="left" width="100%" height="100%" scrolling="yes"></iframe>
+                </div>
+            </div>
+            <!-- 辅助元素，用于移动设备下遮罩 -->
+            <div class="gg-body-shade" gg-event="shade"></div>
+        </div>
+    </div>
+    <script>
+        var buildMenu = function (data) {
+            var menu = '';
+            data.forEach(function (item, index) {
+                var isopen = index==0?'layui-nav-itemed':''
+                if (item.type == 0) {
+                    if (item.children) {
+                        menu += `<li class="menu-li layui-nav-item ${isopen}">
+                            <a href="javascript:;" lay-tips="${item.title}" lay-direction="2">
+                                <i class="iconfont ${item.icon}"></i> 
+                                <cite>${item.title}</cite>
+                            </a>
+                            <dl class="layui-nav-child">`;
+                        menu += buildMenu(item.children);
+                        menu += `</dl></li>`;
+                    } else {
+                        menu += `<li class="menu-li layui-nav-item">
+                                    <a href="javascript:;" lay-tips="${item.title}" lay-direction="2">
+                                        <i class="iconfont ${item.icon}"></i>
+                                        <cite>${item.title}</cite>
+                                    </a>
+                                </li>`;
+                    }
+                }
+                else {
+                    if (item.children) {
+                        menu += `<dd><a href="javascript:;">${item.title}</a><dl class="layui-nav-child">`
+                        menu += buildMenu(item.children);
+                        menu += `</dl></dd>`;
+                    } else {
+                        if(item.target=='_blank'){
+                            menu += `<dd><a target='_blank' class="side-menu-item" data-id="${item.id}" data-title="${item.title}" href="${item.href}">${item.title}</a></dd>`;
+                        }
+                        else{
+                            menu += `<dd><a href="javascript:;" class="side-menu-item" data-id="${item.id}" data-title="${item.title}" data-href="${item.href}">${item.title}</a></dd>`;
+                        }                        
+                    }
+                }
+            })
+            return menu;
+        }
+		
+		//需要加载的模块
+		const moduleInit = ['tool', 'ggadmin'];
+		//初始化操作
+        function gouguInit() {
+            var tool = layui.tool, element = layui.element;
+            tool.get('json/menu.json', {}, function (data) {
+                $('#menuList').html(buildMenu(data));
+                element.init();
+            });
+			//切换主题
+			layui.dropdown.render({
+			elem: '#theme',
+			trigger: 'mousedown',
+			align: 'center',
+			data: [{
+				title: '经典黑',
+				theme: 'black'
+			},{
+				title: '简约白',
+				theme: 'white'
+			}],
+			click: function(data, othis){
+				if(data.theme == 'black'){
+					$('.layui-side-menu').removeClass('layui-side-white').addClass('layui-side-black'); 
+				}
+				else{
+					$('.layui-side-menu').removeClass('layui-side-black').addClass('layui-side-white'); 
+				}
+			}
+		});
+        }
+    </script>
+    <script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+    <script src="/assets/gougu/gouguInit.js"></script>
+</body>
+
+</html>

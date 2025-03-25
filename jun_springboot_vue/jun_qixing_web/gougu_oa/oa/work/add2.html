@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理、消息管理、审批管理、日常办公、客户管理、合同管理、项目管理、财务管理、知识管理、附件管理等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=4.0.24" media="all">
+
+
+<script>
+	const login_admin=1;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">工作汇报</h3>
+		<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">接收人<font>*</font></td>
+			<td>
+				<input type="text" name="person_name" value="" lay-verify="required" lay-reqText="请选择接收人" placeholder="请选择接收人" readonly class="layui-input picker-more">
+				<input type="hidden" name="uids" value="">
+			</td>
+			<td class="layui-td-gray">汇报类型</td>
+			<td>
+				周报			</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">本周工作<font>*</font></td>
+			<td colspan="3">
+				<textarea name="works" placeholder="请输入本周工作内容" class="layui-textarea" style="height: 120px;" lay-verify="required" lay-reqText="请输入本周工作内容"></textarea>
+			</td>
+		</tr>
+		<tr><td class="layui-td-gray">下周计划</td>
+			<td colspan="3">
+				<textarea name="plans" placeholder="请输入下周计划" class="layui-textarea" style="height: 120px;"></textarea>
+			</td>
+		</tr>
+				<tr><td class="layui-td-gray">其它事项</td>
+			<td colspan="3">
+				<textarea name="remark" placeholder="请输入其它事项" class="layui-textarea" style="height: 120px;"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray"><div class="layui-input-inline">附件</div> <div class="layui-input-inline"><button type="button" class="layui-btn layui-btn-xs" id="upFile"><i class="layui-icon"></i></button></div></td>
+			<td colspan="3" style="line-height:inherit">
+				<div class="layui-row" id="fileList">
+					<input type="hidden" data-type="file" name="file_ids" value="">
+				</div>
+			</td>
+		</tr>
+	</table>
+	<div style="padding:10px 0;">
+		<input type="hidden" value="0" name="id">
+		<input type="hidden" value="2" name="type">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即发送</button>
+	</div>
+	</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+const moduleInit = ['tool','employeepicker','oaTool'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,  oaTool = layui.oaTool;
+		oaTool.addFile({
+			btn: 'upFile',
+			box: 'fileList'
+		});	
+		//监听发送
+		form.on('submit(webform)', function(data){
+			if(data.field.uids==login_admin){
+				layer.msg('接收人不能是自己');
+				return false;
+			}
+			$.ajax({
+				url: "/oa/work/send",
+				type:'post',
+				data:data.field,
+				success:function(e){
+					layer.msg(e.msg);
+					if (e.code == 0) {						
+						setTimeout(function(){
+							parent.location.reload();
+						},1000);
+					}
+				}
+			})
+			return false;
+		});
+		
+		//监听保存
+		form.on('submit(webform1)', function(data){
+			$.ajax({
+				url: "/oa/work/add",
+				type:'post',
+				data:data.field,
+				success:function(e){
+					layer.msg(e.msg);
+					if (e.code == 0) {						
+						setTimeout(function(){
+							parent.location.reload();
+						},1000);
+					}
+				}
+			})
+			return false;
+		});
+
+	}		
+	</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+	<script src="/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

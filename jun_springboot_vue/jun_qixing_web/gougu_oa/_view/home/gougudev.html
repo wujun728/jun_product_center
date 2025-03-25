@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>勾股DEV</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css">
+	<style>
+		.home-desc{clear:both;line-height:36px; font-size:14px;}
+		.home-desc dt{width:72px;float:left;}
+		.home-desc dd{margin-left:88px;}
+		.home-desc img{width:72px; height:72px; border-radius:50%}
+		.dashboard-num table {width: 100%;}
+		.dashboard-num td {text-align: center;padding: 16px 0;width: 25%;border-left: 1px solid #f1f1f1; position:relative;}
+		.dashboard-num td:nth-child(1) {border-left: none}
+		.dashboard-num .num-title {padding-bottom: 10px;color: #999;}
+		.dashboard-num .blue {font-size: 18px;font-weight: 300;}
+		.dashboard-num td .badge{position:absolute; top:0; right:0;}
+		.dashboard-num td .badge span{padding:2px 4px; font-size:12px; border-radius:0 0 0 4px;}
+		.dashboard-total td{border-top:1px solid #f1f1f1}
+		.dashboard-logs .layui-timeline-item {padding-bottom: 1px;}
+		.info-td{width:90px; text-align:right; background-color:#fafafa; color:#999; padding:5px 3px;}
+	</style>
+</head>
+
+<body>
+	<div class="p-3">
+		<div class="layui-row layui-col-space12">
+			<div class="layui-col-md8">
+				<div class="layui-row layui-col-space12">
+					<div class="layui-col-md12">
+						<div class="layui-card">
+							<dl class="home-desc p-4">
+								<dt><img src="https://dev.gougucms.com/static/home/images/icon.png"></dt>
+								<dd class="h3">Hi 勾股挨踢，我是勾股DEV，是您工作中必不可少的伙伴！</dd>
+								<dd>勾股DEV是一款敏捷研发协作系统工具，帮助研发团队透明化工作进展，提升协作效率，推动项目进度。</dd>
+							</dl>
+						</div>
+						<div class="layui-card">
+							<div class="layui-card-title">最新企业公告</div>
+							<div class="p-3">
+								<table class="layui-table">
+									<colgroup>
+										<col width="80">
+										<col width="90">
+										<col>
+										<col width="136">
+									</colgroup>
+									<thead>
+										<tr>
+											<th style="text-align:center">编号ID</th>
+											<th style="text-align:center">公告分类</th>
+											<th>公告标题</th>
+											<th style="text-align:center">发布时间</th>
+										</tr>
+									</thead>
+									<tbody class="layui-table-body">
+										<tr>
+											<td align="center">N1001</td>
+											<td align="center">普通公告</td>
+											<td><a class="open-a" data-url="/home/index/note_detail/id/1001">勾股DEV研发项目管理系统
+													v1.0正式版发布</a></td>
+											<td align="center">2022-04-24 :08:46</td>
+										</tr>
+										<tr>
+											<td align="center">N1000</td>
+											<td align="center">紧急公告</td>
+											<td><a class="open-a" data-url="/home/index/note_detail/id/1000">勾股DEV开放使用通知</a>
+											</td>
+											<td align="center">2022-04-12 :16:39</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="layui-card">
+							<div class="layui-card-title">我参与的项目</div>
+							<div class="p-3">
+								<table class="layui-table">
+									<colgroup>
+										<col width="80">
+										<col width="70">
+										<col>
+										<col width="80">
+										<col width="60">
+										<col width="180">
+									</colgroup>
+									<thead>
+										<tr>
+											<th style="text-align:center">编号ID</th>
+											<th style="text-align:center">状态</th>
+											<th>项目主题</th>
+											<th style="text-align:center">负责人</th>
+											<th style="text-align:center">任务</th>
+											<th style="text-align:center">计划工期</th>
+										</tr>
+									</thead>
+									<tbody class="layui-table-body">
+										<tr>
+											<td align="center">M1005</td>
+											<td align="center"><span class="layui-badge layui-bg-2">进行中</span></td>
+											<td><a class="open-link" href="/project/index/view/id/1005">勾股DEV（PRO版）</a>
+											</td>
+											<td align="center">勾股挨踢</td>
+											<td align="center">3</td>
+											<td align="center">2022-05-15至2022-05-31</td>
+										</tr>
+										<tr>
+											<td align="center">M1004</td>
+											<td align="center"><span class="layui-badge layui-bg-1">未开始</span></td>
+											<td><a class="open-link" href="/project/index/view/id/1004">勾股BLOG3.0</a>
+											</td>
+											<td align="center">勾股挨踢</td>
+											<td align="center">0</td>
+											<td align="center">2022-06-15至2022-06-30</td>
+										</tr>
+										<tr>
+											<td align="center">M1003</td>
+											<td align="center"><span class="layui-badge layui-bg-1">未开始</span></td>
+											<td><a class="open-link" href="/project/index/view/id/1003">勾股CMS3.0</a>
+											</td>
+											<td align="center">勾股挨踢</td>
+											<td align="center">0</td>
+											<td align="center">2022-05-25至2022-06-10</td>
+										</tr>
+										<tr>
+											<td align="center">M1002</td>
+											<td align="center"><span class="layui-badge layui-bg-1">未开始</span></td>
+											<td><a class="open-link" href="/project/index/view/id/1002">勾股OA3.0开发</a>
+											</td>
+											<td align="center">勾股挨踢</td>
+											<td align="center">2</td>
+											<td align="center">2022-02-18至2022-05-20</td>
+										</tr>
+										<tr>
+											<td align="center">M1001</td>
+											<td align="center"><span class="layui-badge layui-bg-2">进行中</span></td>
+											<td><a class="open-link" href="/project/index/view/id/1001">勾股DEV二期开发</a>
+											</td>
+											<td align="center">勾股挨踢</td>
+											<td align="center">13</td>
+											<td align="center">2022-04-25至2022-05-15</td>
+										</tr>
+										<tr>
+											<td align="center">M1000</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span></td>
+											<td><a class="open-link" href="/project/index/view/id/1000">勾股DEV一期开发</a>
+											</td>
+											<td align="center">勾股挨踢</td>
+											<td align="center">27</td>
+											<td align="center">2022-03-01至2022-04-20</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="layui-card">
+							<div class="layui-card-title">我参与的任务</div>
+							<div class="p-3">
+								<table class="layui-table">
+									<colgroup>
+										<col width="80">
+										<col width="70">
+										<col>
+										<col width="60">
+										<col width="80">
+										<col width="110">
+									</colgroup>
+									<thead>
+										<tr>
+											<th style="text-align:center">编号ID</th>
+											<th style="text-align:center">状态</th>
+											<th>任务主题</th>
+											<th style="text-align:center">类型</th>
+											<th style="text-align:center">预估工时</th>
+											<th style="text-align:center">计划完成日期</th>
+										</tr>
+									</thead>
+									<tbody class="layui-table-body">
+										<tr>
+											<td align="center">T1045</td>
+											<td align="center"><span class="layui-badge layui-bg-2">进行中</span>
+											</td>
+											<td><span class="layui-badge layui-bg-2">中</span>
+												<a class="open-a" data-url="/task/index/view/id/1045">工作记录关联项目计划功能开发</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">56.0</td>
+											<td align="center">2022-05-20</td>
+										</tr>
+										<tr>
+											<td align="center">T1014</td>
+											<td align="center"><span class="layui-badge layui-bg-2">进行中</span>
+											</td>
+											<td><span class="layui-badge layui-bg-1">低</span>
+												<a class="open-a" data-url="/task/index/view/id/1014">系统消息模板制定</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">5.0</td>
+											<td align="center">2022-05-10</td>
+										</tr>
+										<tr>
+											<td align="center">T1037</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-3">高</span>
+												<a class="open-a" data-url="/task/index/view/id/1037">二期项目模块修改调整</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">8.0</td>
+											<td align="center">2022-05-09</td>
+										</tr>
+										<tr>
+											<td align="center">T1036</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-3">高</span>
+												<a class="open-a" data-url="/task/index/view/id/1036">二期的任务模块修改调整</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">5.0</td>
+											<td align="center">2022-05-07</td>
+										</tr>
+										<tr>
+											<td align="center">T1035</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-3">高</span>
+												<a class="open-a" data-url="/task/index/view/id/1035">二期的产品模块修改调整</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">8.0</td>
+											<td align="center">2022-05-08</td>
+										</tr>
+										<tr>
+											<td align="center">T1032</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-3">高</span>
+												<a class="open-a" data-url="/task/index/view/id/1032">知识库列表页收藏数功能调整</a>
+											</td>
+											<td align="center">设计</td>
+											<td align="center">1.0</td>
+											<td align="center">2022-04-25</td>
+										</tr>
+										<tr>
+											<td align="center">T1030</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-2">中</span>
+												<a class="open-a"
+													data-url="/task/index/view/id/1030">把列表页的&ldquo;操作&rdquo;去除，改成点击标题查看详情</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">2.0</td>
+											<td align="center">2022-04-24</td>
+										</tr>
+										<tr>
+											<td align="center">T1020</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-2">中</span>
+												<a class="open-a"
+													data-url="/task/index/view/id/1020">实现在文档编写时候，直接粘贴图片的截屏功能</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">5.0</td>
+											<td align="center">2022-04-30</td>
+										</tr>
+										<tr>
+											<td align="center">T1016</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-3">高</span>
+												<a class="open-a" data-url="/task/index/view/id/1016">任务页面缺少分页功能</a>
+											</td>
+											<td align="center">设计</td>
+											<td align="center">2.0</td>
+											<td align="center">2022-04-18</td>
+										</tr>
+										<tr>
+											<td align="center">T1015</td>
+											<td align="center"><span class="layui-badge layui-bg-3">已完成</span>
+											</td>
+											<td><span class="layui-badge layui-bg-2">中</span>
+												<a class="open-a" data-url="/task/index/view/id/1015">各个模块详情页浏览统一打开</a>
+											</td>
+											<td align="center">需求</td>
+											<td align="center">10.0</td>
+											<td align="center">2022-04-20</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="layui-card">
+							<div class="layui-card-title">最新知识文档</div>
+							<div class="p-3">
+								<table class="layui-table">
+									<colgroup>
+										<col width="80">
+										<col width="90">
+										<col>
+										<col width="60">
+										<col width="80">
+										<col width="136">
+									</colgroup>
+									<thead>
+										<tr>
+											<th style="text-align:center">编号ID</th>
+											<th style="text-align:center">所属分类</th>
+											<th>知识主题</th>
+											<th style="text-align:center">阅览数</th>
+											<th style="text-align:center">创建员工</th>
+											<th style="text-align:center">创建时间</th>
+										</tr>
+									</thead>
+									<tbody class="layui-table-body">
+										<tr>
+											<td align="center">K1003</td>
+											<td align="center">行业技能</td>
+											<td><a class="open-link"
+													href="/knowledge/index/doc_detail/kid/1003">勾股OA在线文档</a>
+											</td>
+											<td align="center">144</td>
+											<td align="center">欧阳产品</td>
+											<td align="center">2022-04-25 17:08</td>
+										</tr>
+										<tr>
+											<td align="center">K1002</td>
+											<td align="center">行业技能</td>
+											<td><a class="open-link"
+													href="/knowledge/index/doc_detail/kid/1002">勾股BLOG在线文档</a>
+											</td>
+											<td align="center">25</td>
+											<td align="center">欧阳产品</td>
+											<td align="center">2022-04-25 17:02</td>
+										</tr>
+										<tr>
+											<td align="center">K1001</td>
+											<td align="center">行业技能</td>
+											<td><a class="open-link"
+													href="/knowledge/index/doc_detail/kid/1001">勾股CMS在线文档</a>
+											</td>
+											<td align="center">49</td>
+											<td align="center">欧阳产品</td>
+											<td align="center">2022-04-25 16:56</td>
+										</tr>
+										<tr>
+											<td align="center">K1000</td>
+											<td align="center">行业技能</td>
+											<td><a class="open-link"
+													href="/knowledge/index/doc_detail/kid/1000">勾股DEV的使用说明</a>
+											</td>
+											<td align="center">145</td>
+											<td align="center">超级员工</td>
+											<td align="center">2022-04-14 17:21</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="layui-card">
+							<div id="chartView" style="width: 100%; height:300px;"></div>
+						</div>
+						<div class="layui-card">
+							<div id="chartYear" style="width: 100%; height:240px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card dashboard-num">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<div class="num-title">产品</div>
+									<div class="blue">5</div>
+								</td>
+								<td>
+									<div class="num-title">项目</div>
+									<div class="blue">7</div>
+								</td>
+								<td>
+									<div class="num-title">任务</div>
+									<div class="blue">46</div>
+								</td>
+								<td>
+									<div class="num-title">知识库</div>
+									<div class="blue">4</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="layui-card">
+					<div class="layui-card-title">系统信息</div>
+					<div class="layui-card-body">
+						<table class="layui-table" lay-skin="" lay-size="sm">
+							<tr>
+								<td colspan="4" style="color: #E94335; background-color:#fafafa">
+									提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
+							</tr>
+							<tr>
+								<td class="info-td">服务器系统</td>
+								<td>Linux</td>
+								<td class="info-td">PHP版本</td>
+								<td>7.2.33</td>
+							</tr>
+							<tr>
+								<td class="info-td">上传附件限制</td>
+								<td>50M</td>
+								<td class="info-td">执行时间限制</td>
+								<td>300秒 </td>
+							</tr>
+							<tr>
+								<td class="info-td">ThinkPHP版本</td>
+								<td>6.0.8</td>
+								<td class="info-td">Layui版本</td>
+								<td>2.6.8</td>
+							</tr>
+							<tr>
+								<td class="info-td">勾股DEV</td>
+								<td colspan="3">2.5.15<a class="layui-badge layui-bg-blue" style="margin-left:8px"
+										href="https://blog.gougucms.com/home/book/detail/bid/7.html"
+										target="_blank">勾股DEV文档</a></td>
+							</tr>
+							<tr>
+								<td class="info-td">BUG反馈</td>
+								<td colspan="3"><a href="mailto:hdm58@qq.com" target="_blank">hdm58@qq.com</a></td>
+							</tr>
+							<tr>
+								<td class="info-td">QQ交流群</td>
+								<td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I"
+										target="_blank" rel="nofollow"><img border="0"
+											src="//pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群"
+											title="gougucms交流群" style="vertical-align:middle"></a></td>
+							</tr>
+							<tr>
+								<td class="info-td">同系列开源软件</td>
+								<td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:8px"
+										href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a
+										class="layui-badge layui-bg-blue" style="margin-right:8px"
+										href="https://gitee.com/gougucms/blog.git" target="_blank">勾股BLOG</a><a
+										class="layui-badge layui-bg-blue" style="margin-right:16px"
+										href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a></td>
+							</tr>
+							<tr>
+								<td class="info-td">🍗🍗🍗<br />给作者加鸡腿<br />🍗🍗🍗</td>
+								<td colspan="3">
+									<img src="https://www.gougucms.com/static/home/images/zfb.png" data-event="pay"
+										style="width:50%; max-width:100%; cursor:pointer;" align=center /><img
+										src="https://www.gougucms.com/static/home/images/wx.png" data-event="pay"
+										style="width:50%; max-width:100%; cursor:pointer;" align=center />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<div class="layui-card dashboard-total">
+					<div class="layui-card-title mb-3">我的工作情况</div>
+					<div class="layui-card dashboard-num">
+						<table>
+							<tbody>
+								<tr>
+									<td>
+										<div class="num-title">参与项目</div>
+										<div class="blue">7</div>
+									</td>
+									<td>
+										<div class="num-title">已完成</div>
+										<div class="blue">1</div>
+									</td>
+									<td>
+										<div class="num-title">未完成</div>
+										<div class="blue">6</div>
+									</td>
+									<td>
+										<div class="num-title">完成率</div>
+										<div class="blue">14.29%</div>
+										<div class="badge"><span class="layui-bg-blue">影响力</span></div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="num-title">参与任务</div>
+										<div class="blue">21</div>
+									</td>
+									<td>
+										<div class="num-title">已完成</div>
+										<div class="blue">19</div>
+									</td>
+									<td>
+										<div class="num-title">未完成</div>
+										<div class="blue">2</div>
+									</td>
+									<td>
+										<div class="num-title">完成率</div>
+										<div class="blue">90.48%</div>
+										<div class="badge"><span class="layui-bg-blue">拼效率</span></div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="num-title">工作记录</div>
+										<div class="blue">36</div>
+									</td>
+									<td>
+										<div class="num-title">总工时</div>
+										<div class="blue">94</div>
+									</td>
+									<td>
+										<div class="num-title">任务延期</div>
+										<div class="blue">19</div>
+									</td>
+									<td>
+										<div class="num-title">延期率</div>
+										<div class="blue">90.48%</div>
+										<div class="badge"><span class="layui-bg-blue">勤奋度</span></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="layui-card">
+					<div class="layui-card-title">最活跃员工<span
+							style="color:#999; font-size:14px; font-weight:400; margin-left:5px">最近30天前十的活跃度</span>
+					</div>
+					<div class="layui-card-body">
+						<div id="logChart" style="width: 100%; height:300px;"></div>
+					</div>
+				</div>
+				<div class="layui-card">
+					<div class="layui-card-title">员工最新动态</div>
+					<div class="layui-card-body dashboard-logs py-4">
+						<ul class="layui-timeline" id="logs">
+							<li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="232">22分钟前</span>，勾股挨踢登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="231">23分钟前</span>，超级员工登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="230">3小时前</span>，勾股技术登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="229">6小时前</span>，欧阳产品查看了知识库文档</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="228">7小时前</span>，欧阳产品登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="227">7小时前</span>，欧阳产品登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="226">13小时前</span>，勾股技术登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="225">13小时前</span>，勾股技术查看了知识库文档</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="224">13小时前</span>，勾股技术查看了知识库文档</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="223">13小时前</span>，勾股技术登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="222">昨天</span>，欧阳产品登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="221">昨天</span>，李工登录了系统</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="220">昨天</span>，勾股技术查看了知识库文档</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="219">昨天</span>，勾股技术查看了知识库文档</div>
+								</div>
+							</li><li class="layui-timeline-item">
+								<i class="layui-icon layui-timeline-axis"></i>
+								<div class="layui-timeline-content layui-text">
+										<div class="layui-timeline-title"><span title="218">昨天</span>，勾股技术查看了知识库文档</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/assets/third_party/echart/echarts.min.js"></script>
+	<script>
+		const moduleInit = ['tool'];
+		function gouguInit() {
+			var tool = layui.tool;
+            tool.get('../../json/dev.json', {}, function (data) {
+                viewChart(data);
+            });
+			
+			$('body').on('click', '[data-event="pay"]', function () {
+				var src = $(this).attr('src');
+				layer.open({
+					type: 1,
+					title: '感谢您给作者加鸡腿🍗🍗',
+					content: '<img src="' + src + '" style="width:100%" align=center />',
+				});
+			})
+		}
+
+
+		function setHour(num) {
+			var str = num + ':00';
+			if (num < 10) {
+				str = '0' + num + ':00';
+			}
+			return str;
+		}
+		var archiveCalendar = {};
+		function getRange() {
+			let today = new Date();
+			let tYear = today.getFullYear();
+			let tMonth = today.getMonth() + 1;
+			let tDate = today.getDate();
+			let dateFirst = tYear + "-" + tMonth + "-" + tDate;
+			let datelast = (tYear - 1) + "-" + tMonth + "-" + tDate;
+			let dataRange = [];
+			dataRange.push(dateFirst);
+			dataRange.push(datelast);
+			return dataRange;
+		}
+
+		function getDay() {
+			var today = new Date();
+			var dayArray = [];
+			for (var i = 0; i < 366; i++) {
+				var targetday_milliseconds = today.getTime() - 1000 * 60 * 60 * 24 * i;
+				var date = new Date(targetday_milliseconds);
+				dayArray.push(retunDay(date));
+			}
+			return dayArray;
+		}
+
+		function retunDay(day) {
+			var tYear = day.getFullYear();
+			var tMonth = day.getMonth();
+			var tDate = day.getDate();
+			tMonth = tMonth + 1;
+			if (tMonth.toString().length == 1) {
+				tMonth = "0" + tMonth;
+			}
+			if (tDate.toString().length == 1) {
+				tDate = "0" + tDate;
+			}
+			var dateStr = tYear + "-" + tMonth + "-" + tDate;
+			var dateArray = [];
+			dateArray.push(dateStr);
+			if (archiveCalendar[dateStr]) {
+				dateArray.push(archiveCalendar[dateStr]);
+			}
+			else {
+				dateArray.push(0);
+			}
+			return dateArray;
+		}
+
+		var chartView = echarts.init(document.getElementById('chartView'));
+		var chartYear = echarts.init(document.getElementById('chartYear'));
+		var logChart = echarts.init(document.getElementById('logChart'));
+		function viewChart(data) {
+			var data_first = data.data_first;
+			var data_second = data.data_second;
+			archiveCalendar = data.data_three;
+			var data_logs = data.data_logs;
+			var myDate = new Date();
+			var nowHour = myDate.getHours(); //获取当前小时数(0-23)
+			var xData = [];
+			var yData1 = [];
+			var yData2 = [];
+			var logItem = [];
+			$.each(data_first, function (key, value) {
+				if (key <= nowHour) {
+					yData1.push(value);
+				}
+			});
+
+			$.each(data_second, function (key, value) {
+				xData.push(setHour(key));
+				yData2.push(value);
+			});
+
+			$.each(data_logs, function (key, value) {
+				let item = {
+					value: value.count,
+					name: value.name
+				};
+				logItem.push(item);
+			});
+
+			let opsA = {
+				title: {
+					top: '12px',
+					text: '今日与昨日员工活跃度',
+					left: '8px',
+					textStyle: {
+						fontSize: '18',
+						color: '#333',
+					}
+				},
+				color: ["#1AAD19", "#1890FF"],
+				grid: {
+					left: '16px',
+					right: '30px',
+					bottom: '12px',
+					top: '60px',
+					containLabel: true
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				toolbox: {
+					show: true,
+				},
+				legend: {
+					data: ["今日", "昨日"],
+					top: '16px',
+				},
+				xAxis: [{
+					type: "category",
+					boundaryGap: !1,
+					data: xData,
+					axisLine: {
+						lineStyle: {
+							color: '#999999',
+							width: 1,
+						}
+					},
+				}],
+				yAxis: [{
+					type: "value",
+					axisLine: {
+						show: true,
+						lineStyle: {
+							color: '#999999',
+							width: 1,
+						}
+					},
+				}],
+				series: [{
+					name: "今日",
+					type: "line",
+					smooth: !0,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								type: "default",
+								opacity: 0.2
+							}
+						}
+					},
+					data: yData1
+				}, {
+					name: "昨日",
+					type: "line",
+					smooth: !0,
+					itemStyle: {
+						normal: {
+							areaStyle: {
+								type: "default",
+								opacity: 0.2
+							}
+						}
+					},
+					data: yData2
+				}]
+			}
+			chartView.setOption(opsA);
+
+			let opsB = {
+				title: {
+					top: '12px',
+					text: '近一年员工活跃度',
+					left: '8px',
+					textStyle: {
+						fontSize: '18',
+						color: '#333',
+					}
+				},
+				tooltip: {
+					padding: 6,
+					formatter: function (obj) {
+						var value = obj.value;
+						return '<div style="font-size: 12px;">' + value[0] + '员工活跃度：' + value[1] + '</div>';
+					}
+				},
+				visualMap: {
+					min: 0,
+					max: 300,
+					show: false,
+					inRange: {
+						color: ['#fafafa', '#1890FF']
+					}
+				},
+				calendar: {
+					top: 72,
+					left: 52,
+					right: 20,
+					range: getRange(),
+					cellSize: ['auto', 21],
+					splitLine: {
+						lineStyle: {
+							color: '#aaa',
+							type: 'dashed'
+						}
+					},
+					itemStyle: {
+						borderWidth: 0.5
+					},
+					yearLabel: { show: false },
+					monthLabel: {
+						nameMap: 'cn',
+						fontSize: 12
+					},
+					dayLabel: {
+						show: true,
+						formatter: '{start}  1st',
+						fontWeight: 'lighter',
+						nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+						fontSize: 12
+					}
+				},
+				series: [{
+					type: 'heatmap',
+					coordinateSystem: 'calendar',
+					calendarIndex: 0,
+					data: getDay()
+				}]
+			};
+			chartYear.setOption(opsB);
+
+			let optC = {
+				tooltip: {
+					trigger: 'item',
+					formatter: '{a} <br/>{b} :{d}%'
+				},
+				legend: {
+					top: '1%',
+					left: 'center'
+				},
+				series: [
+					{
+						name: '活跃度',
+						type: 'pie',
+						radius: '50%',
+						center: ['50%', '60%'],
+						data: logItem,
+						emphasis: {
+							itemStyle: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			};
+			logChart.setOption(optC);
+		}
+
+		window.onresize = function () {
+			chartView.resize();
+			chartYear.resize();
+			logChart.resize();
+		}
+	</script>
+  <script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+  <script src="/assets/gougu/gouguInit.js"></script>
+</body>
+</html>

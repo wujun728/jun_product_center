@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=1.0.24" media="all">
+
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+	<table class="layui-hide" id="role" lay-filter="role"></table>
+</div>
+
+<script type="text/html" id="status">
+  <i class="layui-icon {{#  if(d.status == 1){ }}green layui-icon-ok{{#  } else { }}red layui-icon-close{{#  } }}"></i>
+</script>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add">+ 添加权限组</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool, form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#role',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: false,
+			url: "index.json", //数据接口
+			page: false, //开启分页
+			limit: 20,
+			cols: [[ //表头
+				{ field: 'id', title: 'ID号', align: 'center', width: 80 }
+				, { field: 'title', title: '权限组名称', width: 200 }
+				, { field: 'desc', title: '备注' }
+				, { field: 'status', title: '状态', toolbar: '#status', align: 'center', width: 80 }
+				, {	width: 100,title: '操作',align: 'center',templet: function (d) {
+						var html = '<div class="layui-btn-group"><button class="layui-btn  layui-btn-normal layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></div>';
+						return html;
+					}
+				}
+			]]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(role)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("add.html");
+				return;
+			}
+		});
+		//监听行工具事件
+		table.on('tool(role)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'edit') {
+				tool.side('edit.html?id='+obj.data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要删除该权限组吗？', { icon: 3, title: '提示' }, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layer.msg(res.msg);
+							obj.del();
+						}
+					}
+					tool.delete("/home/role/delete", { id: obj.data.id }, callback);
+					layer.close(index);
+				});
+			}
+		});
+	}
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+	<script src="/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

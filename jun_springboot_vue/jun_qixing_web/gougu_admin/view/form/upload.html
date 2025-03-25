@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>表单页面</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport"content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css">
+	<style>
+		.layui-upload-img{width:160px; height:160px; border:1px solid #f8f8f8; margin:10px 0;}
+		.layui-upload-img img{width:200px; height:200px;}
+	</style>
+</head>
+
+<body>
+	<div class="p-3">
+		<div class="layui-row layui-col-space12">
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>文件上传</h3></div>
+					<div class="layui-card-body">
+						<button class="layui-btn upload-more" data-id="1">上传图片</button>
+						<div><img class="layui-upload-img" id="img1"></div>
+						<button class="layui-btn upload-more" data-id="2">上传图片</button>
+						<div><img class="layui-upload-img" id="img2"></div>
+						<button class="layui-btn upload-more" data-id="3">上传图片</button>
+						<div><img class="layui-upload-img" id="img3"></div>
+					</div>
+				</div>
+				<div class="layui-card layui-form">
+					<div class="layui-card-header"><h3>文件上传</h3></div>
+					<div class="layui-card-body">
+					
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>文件上传</h3></div>
+					<div class="layui-card-body">
+						
+					</div>
+				</div>
+
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>文件上传</h3></div>
+					<div class="layui-card-body">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const moduleInit = ['tool'];
+		function gouguInit() {
+			var form = layui.form, upload = layui.upload;
+			//同时绑定多个元素，并将属性设定在元素上
+			upload.render({
+				elem: '.upload-more',
+				url:'upload/uploadimg',
+				done: function(res, index, upload){
+					var item = this.item;
+					console.log(item);
+				}
+			})
+		}
+	</script>
+  <script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+  <script src="/assets/gougu/gouguInit.js"></script>
+</body>
+
+</html>

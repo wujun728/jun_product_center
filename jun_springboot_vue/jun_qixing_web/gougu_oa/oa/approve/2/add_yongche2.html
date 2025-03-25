@@ -1,0 +1,193 @@
+{extend name="../../base/view/common/base" /}
+{block name="style"}
+{include file="/approve/add_style" /}
+{/block}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4" lay-filter="demo-val-filter">
+	<h3 class="pb-3">用车审批</h3>
+	{eq name="$id" value="0"}
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">开始时间<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:120px; margin-right:16px;">
+					<input id="start_time" name="start_time" autocomplete="off" class="layui-input select-time" value="" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+				</div>
+				<div class="layui-input-inline">
+					<input type="radio" name="start_time_span" value="1" title="上午" checked lay-filter="starttype">
+					<input type="radio" name="start_time_span" value="2" title="下午" lay-filter="starttype">
+				</div>
+			</td>
+			<td class="layui-td-gray">结束时间<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:120px; margin-right:16px;">
+					<input id="end_time" name="end_time" autocomplete="off" class="layui-input select-time" value="" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+				</div>
+				<div class="layui-input-inline">
+					<input type="radio" name="end_time_span" value="1" title="上午" lay-filter="endtype">
+					<input type="radio" name="end_time_span" value="2" title="下午" checked lay-filter="endtype">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">用车天数</td>
+			<td colspan="3"><span id="days">-</span><input type="hidden" id="duration" name="duration" value="0"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">用车目的地<font>*</font></td>
+			<td><input type="text" name="address" value="" autocomplete="off" placeholder="请输入用车目的地" lay-verify="required" lay-reqText="请输入用车目的地" class="layui-input"></td>
+			<td class="layui-td-gray">车辆选择<font>*</font></td>
+			<td>
+				<select name="detail_type" lay-verify="required" lay-reqText="请选择">
+				  <option value="">--请选择--</option>
+				  {volist name=":oa_car_cate()" id="vo"}
+				  <option value="{$vo.id}">{$vo.title}[{$vo.name}]</option>
+				  {/volist}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">用车事由<font>*</font></td>
+			<td colspan="3">
+				<textarea name="content" placeholder="请输入用车事由" class="layui-textarea" lay-verify="required" lay-reqText="请输入用车事由"></textarea>
+			</td>
+		</tr>
+	</table>
+	{else/}
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">开始时间<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:120px; margin-right:16px;">
+					<input id="start_time" name="start_time" autocomplete="off" class="layui-input select-time" value="{$detail.start_time|date='Y-m-d'}" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+				</div>
+				<div class="layui-input-inline">
+					<input type="radio" name="start_time_span" value="1" title="上午" lay-filter="starttype" {eq name="$detail.start_time_span" value="1"} checked{/eq}>
+					<input type="radio" name="start_time_span" value="2" title="下午" lay-filter="starttype" {eq name="$detail.start_time_span" value="2"} checked{/eq}>
+				</div>
+			</td>
+			<td class="layui-td-gray">结束时间<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:120px; margin-right:16px;">
+					<input id="end_time" name="end_time" autocomplete="off" class="layui-input select-time" value="{$detail.end_time|date='Y-m-d'}" readonly lay-verify="required" placeholder="请选择时间" lay-reqText="请选择时间">
+				</div>
+				<div class="layui-input-inline">
+					<input type="radio" name="end_time_span" value="1" title="上午" lay-filter="endtype" {eq name="$detail.end_time_span" value="1"} checked{/eq}>
+					<input type="radio" name="end_time_span" value="2" title="下午" lay-filter="endtype" {eq name="$detail.end_time_span" value="2"} checked{/eq}>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">用车天数</td>
+			<td colspan="3">共 <span id="days">{$detail.duration|default='-'}</span> 天<input type="hidden" id="duration" name="duration" value="{$detail.duration|default='0'}"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">用车目的地<font>*</font></td>
+			<td><input type="text" name="address" value="{$detail.address}" autocomplete="off" placeholder="请输入用车目的地" lay-verify="required" lay-reqText="请输入用车目的地" class="layui-input"></td>
+			<td class="layui-td-gray">车辆选择<font>*</font></td>
+			<td>
+				<select name="detail_type" lay-verify="required" lay-reqText="请选择">
+				  <option value="">--请选择--</option>
+				  {volist name=":oa_car_cate()" id="vo"}
+				  <option value="{$vo.id}" {eq name="$detail.detail_type" value="$vo.id"}selected=""{/eq}>{$vo.title}[{$vo.name}]</option>
+				  {/volist}
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">用车事由<font>*</font></td>
+			<td colspan="3">
+				<textarea name="content" placeholder="请输入用车理由" class="layui-textarea" lay-verify="required" lay-reqText="请输入用车理由">{$detail.content}</textarea>
+			</td>
+		</tr>
+	</table>
+	{/eq}
+	{include file="/approve/add_flow" /}
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+/*
+ * 时长计算
+  */
+function daysBetweenDates(date1, date2) {
+	var date1 = $('#start_time').val();
+	var date2 = $('#end_time').val();
+	if(date1=='' || date2==''){
+		return -1;
+	}
+    var startDate = new Date(date1);
+    var endDate = new Date(date2);
+    var millisecondsPerDay = 24 * 60 * 60 * 1000;
+    var differenceInMilliseconds = endDate - startDate;
+    var differenceInDays = differenceInMilliseconds / millisecondsPerDay;
+    return Math.round(differenceInDays);
+}
+
+const moduleInit = ['tool','employeepicker','oaTool'];
+	function gouguInit() {
+		var form = layui.form,
+			tool=layui.tool,
+			oaTool=layui.oaTool,
+			laydate = layui.laydate;
+			
+		oaTool.addFile({
+			btn: 'upFile',
+			box: 'fileList'
+		});
+	
+		if (typeof (flowStep) == "function") {
+			flowStep();
+		}
+		
+		function countDuration(){
+			let hours = daysBetweenDates();
+			if(hours < 0){
+				$('#duration').val(0);
+				$('#days').html('-');
+			}
+			else{
+				let formData = form.val('demo-val-filter');
+				if(formData.start_time_span==1){
+					hours=hours+1;
+				}
+				if(formData.start_time_span==2){
+					hours=hours+0.5;
+				}
+				if(formData.end_time_span==1){
+					hours=hours-0.5;
+				}
+				if(hours<0){
+					hours=0;
+				}
+				$('#duration').val(hours);
+				$('#days').html(hours);
+			}
+		}
+		
+		
+		//日期时间范围
+		lay('.select-time').each(function () {
+			laydate.render({
+				elem: this,
+				trigger: 'click',
+				done:function(){
+					countDuration();
+				}
+			});
+		});
+		
+		form.on('radio(starttype)',function(data){
+			countDuration();
+		});
+		form.on('radio(endtype)',function(data){
+			countDuration();
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

@@ -1,0 +1,265 @@
+<div class="layui-card" style="box-shadow: none;border: none;">
+    <div class="layui-tab layui-tab-brief">
+        <ul class="layui-tab-title" style="text-align: center;">
+            <li class="layui-this" id="noticeTitleBox">通知(${noticeMessageList.~size})</li>
+            <li>私信(${privateMessageList.~size})</li>
+            <li>待办(${todoMessageList.~size})</li>
+        </ul>
+        <div class="layui-tab-content" style="padding: 0;">
+            <!-- tab1 -->
+            <div class="layui-tab-item layui-show ${noticeMessageList.~size==0?'show-empty':''}">
+                <div class="message-list">
+                    <% for(message in noticeMessageList) { %>
+                    <a class="message-list-item notice-list-box" href="javascript:;">
+                        <i class="layui-icon layui-icon-speaker message-item-icon"></i>
+                        <div class="message-item-right">
+                            <span class="messageIdBox" lay-data="${message.id}" style="display: none"></span>
+                            <span class="businessDataBox" lay-data="${message.businessData}" style="display: none"></span>
+                            <h2 class="message-item-title">${message.title}</h2>
+                            <p class="message-item-text">${message.sendTime,'yyyy-MM-dd HH:mm:ss'}</p>
+                        </div>
+                    </a>
+                    <% } %>
+                </div>
+                <!-- 列表为空 -->
+                <div class="message-list-empty">
+                    <i class="layui-icon layui-icon-notice"></i>
+                    <div>没有通知</div>
+                </div>
+                <% if(noticeMessageList.~size != 0) { %>
+                <a id="messageClearBtn1" class="message-btn-clear">全部标记已读</a>
+                <% } %>
+            </div>
+            <!-- tab2 -->
+            <div class="layui-tab-item ${privateMessageList.~size==0?'show-empty':''}">
+                <div class="message-list">
+                    <% for(message in privateMessageList) { %>
+                    <a class="message-list-item private-message-list-box" href="javascript:;">
+                        <i class="layui-icon layui-icon-speaker message-item-icon"></i>
+                        <div class="message-item-right">
+                            <span class="messageIdBox" lay-data="${message.id}" style="display: none"></span>
+                            <span class="businessDataBox" lay-data="${message.businessData}" style="display: none"></span>
+                            <h2 class="message-item-title">${message.title}</h2>
+                            <p class="message-item-text">${message.sendTime,'yyyy-MM-dd HH:mm:ss'}</p>
+                        </div>
+                    </a>
+                    <% } %>
+                </div>
+                <!-- 列表为空 -->
+                <div class="message-list-empty">
+                    <i class="layui-icon layui-icon-dialogue"></i>
+                    <div>没有消息</div>
+                </div>
+                <% if(privateMessageList.~size != 0) { %>
+                <a id="messageClearBtn2" class="message-btn-clear">清空消息</a>
+                <% } %>
+            </div>
+            <!-- tab3 -->
+            <div class="layui-tab-item ${todoMessageList.~size==0?'show-empty':''}">
+                <div class="message-list">
+
+                    <% for(message in todoMessageList) { %>
+                    <a class="message-list-item todo-message-list-box" href="javascript:;">
+                        <i class="layui-icon layui-icon-speaker message-item-icon"></i>
+                        <div class="message-item-right">
+                            <span class="messageIdBox" lay-data="${message.id}" style="display: none"></span>
+                            <span class="businessDataBox" lay-data="${message.businessData}" style="display: none"></span>
+                            <h2 class="message-item-title">${message.title}</h2>
+                            <p class="message-item-text">${message.sendTime,'yyyy-MM-dd HH:mm:ss'}</p>
+                        </div>
+                    </a>
+                    <% } %>
+                </div>
+                <!-- 列表为空 -->
+                <div class="message-list-empty">
+                    <i class="layui-icon layui-icon-flag"></i>
+                    <div>没有待办</div>
+                </div>
+                <% if(todoMessageList.~size != 0) { %>
+                <a id="messageClearBtn3" class="message-btn-clear">清空待办</a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['admin', 'notice', 'index'], function () {
+        var $ = layui.jquery;
+        var admin = layui.admin;
+        var index = layui.index;
+
+        /* 清空通知消息点击事件 */
+        $('#messageClearBtn1').click(function () {
+            var btnItem = $(this);
+            var items = $($(this).parents('.layui-tab-item')).find('.notice-list-box');
+            var ids = [];
+            items.each(function (index, item) {
+                var messageId = $($(item).find('.messageIdBox')[0]).attr('lay-data');
+                var tempObj = {'id': messageId};
+                ids.push(tempObj);
+            })
+            admin.req(getProjectUrl() + 'sysMessage/read', JSON.stringify(ids), function(res) {
+                btnItem.parents('.layui-tab-item').addClass('show-empty');
+                $('#noticeTitleBox').text('通知(0)');
+            }, 'post', {async: false});
+        });
+
+        /* 清空私信消息点击事件 */
+        $('#messageClearBtn2').click(function () {
+            $(this).parents('.layui-tab-item').addClass('show-empty');
+        });
+
+        /* 清空待办消息点击事件 */
+        $('#messageClearBtn3').click(function () {
+            $(this).parents('.layui-tab-item').addClass('show-empty');
+        });
+
+        /* 通知消息点击事件 */
+        $('.notice-list-box').click(function () {
+            var businessData = $($(this).find('.businessDataBox')[0]).attr('lay-data');
+            var messageId = $($(this).find('.messageIdBox')[0]).attr('lay-data');
+            if(businessData !== null && businessData !== undefined) {
+                admin.req(getProjectUrl() + 'sysMessage/read', JSON.stringify([{'id': messageId}]), function(res) {
+                    var jsonBusinessData = JSON.parse(businessData);
+                    admin.putTempData('formNoticeId', jsonBusinessData.id);
+                    index.openTab({
+                        title: '通知详情',
+                        url: getProjectUrl() + 'sysNotice/detailPage'
+                    });
+                }, 'post', {async: false});
+            } else {
+                layui.notice.msg('数据错误', {icon: 2});
+            }
+        });
+
+        /* 私信消息点击事件 */
+        $('.private-message-list-box').click(function () {
+            //修改此处代码为你的业务逻辑
+            alert('你点击了私信消息');
+        });
+
+        /* 待办消息点击事件 */
+        $('.todo-message-list-box').click(function () {
+            //修改此处代码为你的业务逻辑
+            alert('你点击了待办消息');
+        });
+    });
+</script>
+
+<style>
+    /** 消息列表样式 */
+    .message-list {
+        position: absolute;
+        top: 48px;
+        left: 0;
+        right: 0;
+        bottom: 45px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .message-list-item {
+        display: block;
+        padding: 10px 20px;
+        line-height: 24px;
+        position: relative;
+        border-bottom: 1px solid #e8e8e8;
+    }
+
+    .message-list-item:hover, .message-btn-clear:hover, .message-btn-more:hover {
+        background: #F2F2F2;
+    }
+
+    .message-list-item .message-item-icon {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        margin-top: -20px;
+        border-radius: 50%;
+        position: absolute;
+        left: 20px;
+        top: 50%;
+    }
+
+    .message-list-item .message-item-icon.layui-icon {
+        color: #fff;
+        font-size: 22px;
+        text-align: center;
+        background-color: #FE5D58;
+    }
+
+    .message-list-item .message-item-icon + .message-item-right {
+        margin-left: 55px;
+    }
+
+    .message-list-item .message-item-title {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .message-list-item .message-item-text {
+        color: #999;
+        font-size: 12px;
+    }
+
+    .message-list-item > .layui-badge {
+        position: absolute;
+        right: 20px;
+        top: 12px;
+    }
+
+    .message-list-item > .layui-badge + .message-item-right {
+        margin-right: 50px;
+    }
+
+    .message-btn-clear, .message-btn-more {
+        color: #666;
+        display: block;
+        padding: 10px 5px;
+        line-height: 24px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .message-btn-clear {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-top: 1px solid #e8e8e8;
+    }
+
+    .message-btn-more {
+        color: #666;
+        font-size: 13px;
+    }
+
+    .message-btn-more.ew-btn-loading > .ew-btn-loading-text {
+        font-size: 13px !important;
+    }
+
+    .message-list-empty {
+        color: #999;
+        padding: 100px 0;
+        text-align: center;
+        display: none;
+    }
+
+    .message-list-empty > .layui-icon {
+        color: #ccc;
+        display: block;
+        font-size: 45px;
+        margin-bottom: 15px;
+    }
+
+    .show-empty .message-list-empty {
+        display: block;
+    }
+
+    .show-empty .message-btn-clear, .show-empty .message-list {
+        display: none;
+    }
+
+    /** //消息列表样式结束 */
+</style>

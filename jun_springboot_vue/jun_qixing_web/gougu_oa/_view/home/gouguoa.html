@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>勾股OA</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css">
+	<style>
+		.layui-short-menu li { text-align: center;}
+		.layui-short-menu li .bi {display: inline-block; width: 100%; height: 60px; line-height: 60px; margin-bottom:3px; text-align: center;border-radius: 2px; font-size: 30px; background-color: #F8F8F8; color: #333;transition: all .3s; -webkit-transition: all .3s;}
+		.layui-short-menu li cite {color: #767a82;}
+		.layui-matter-item li a{display: block; padding: 12px; background-color: #f8f8f8; color: #999; border-radius: 2px; transition: all .3s;-webkit-transition: all .3s;}
+		.layui-matter-item li cite {font-style: normal;font-size: 24px;font-weight: 300;color: #1E9FFF;}
+		.info-td{width:90px; text-align:right; background-color:#fafafa; color:#999; padding:5px 3px;}
+		.layui-takerates {padding-top: 5px}
+		.layui-takerates .layui-progress {margin: 50px 0 60px}
+		.layui-takerates .layui-progress:last-child {margin-bottom: 10px}
+		.layui-takerates .layui-progress h3 {position: absolute; right: 0;top: -32px; color: #999; font-size: 14px}
+		.layui-takerates .layui-progress-bar {text-align: left}
+		.layui-takerates .layui-progress-text {top: -35px;line-height: 26px; font-size: 22px}
+	</style>
+</head>
+
+<body>
+	<div class="p-3">
+		<div class="layui-row layui-col-space12">
+			<div class="layui-col-md8">
+				<div class="layui-row layui-col-space12">
+					<div class="layui-col-md6">
+						<div class="layui-card">
+							<div class="layui-card-header"><h3>快捷申请</h3><a href="#" class="pull-right blue">更多</a></div>
+							<div class="layui-card-body layui-short-menu p-3">
+								<ul class="layui-row layui-col-space12">
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-calendar-check"></i>
+											<cite>请假申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-outlet"></i>
+											<cite>出差申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-easel"></i>
+											<cite>加班申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-people"></i>
+											<cite>外出申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-cart-plus"></i>
+											<cite>采购申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-cash-coin"></i>
+											<cite>借款申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-bicycle"></i>
+											<cite>用车申请</cite>
+										</a>
+									</li>
+									<li class="layui-col-xs3">
+										<a href="javascript:;">
+											<i class="bi bi-joystick"></i>
+											<cite>用章申请</cite>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md6">
+						<div class="layui-card">
+							<div class="layui-card-header"><h3>待办事项</h3></div>
+							<div class="layui-card-body layui-matter-item p-3">
+								<ul class="layui-row layui-col-space12">
+									<li class="layui-col-xs6">
+										<a href="javascript:;">
+											<p>待审审批</p>
+											<p class="pt-3"><cite>66</cite></p>
+										</a>
+									</li>
+									<li class="layui-col-xs6">
+										<a href="javascript:;">
+											<p>待审发票</p>
+											<p class="pt-3"><cite>12</cite></p>
+										</a>
+									</li>
+									<li class="layui-col-xs6">
+										<a href="javascript:;">
+											<p>待审报销</p>
+											<p class="pt-3"><cite>99</cite></p>
+										</a>
+									</li>
+									<li class="layui-col-xs6">
+										<a href="javascript:;">
+											<p>待回款</p>
+											<p class="pt-3"><cite>20</cite></p>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="layui-col-md12">
+						<div class="layui-card">
+							<div class="layui-tab layui-tab-brief layadmin-latestData">
+								<ul class="layui-tab-title">
+									<li class="layui-this"><h3>企业公告</h3></li>
+									<li><h3>知识列表</h3></li>
+								</ul>
+								<div class="layui-tab-content p-3">
+									<div class="layui-tab-item layui-show">
+										<table id="note" lay-filter="note" class="layui-hide"></table>
+									</div>
+									<div class="layui-tab-item">
+										<table id="article" lay-filter="article" class="layui-hide"></table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="layui-card">
+							<div id="chartView" style="width: 100%;height:300px;"></div>
+						</div>
+						<div class="layui-card">
+							<div id="chartYear" style="width: 100%;height:240px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						<h3>系统介绍</h3>
+						<i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
+					</div>
+					<div class="layui-card-body layui-text layadmin-text">
+						<p>勾股OA是一款实用的企业办公系统框架。集成了系统设置、人事管理、消息管理、审批管理、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。</p>
+					</div>
+				</div>
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>系统信息</h3></div>
+					<div class="layui-card-body layui-text">
+						<table class="layui-table" lay-skin="" lay-size="sm">
+						<tr>
+							<td colspan="4" style="color: #E94335; background-color:#f8f8f8">提醒：发现app目录下的install文件夹没删除，为了系统的安全,请手动去删除。</td>
+						</tr>
+						<tr>
+						<td class="info-td">服务器系统</td>
+						<td>Linux</td>
+						<td class="info-td">PHP版本</td>
+						<td>7.2.33</td>
+					</tr>
+					<tr>
+						<td class="info-td">上传附件限制</td>
+						<td>50M</td>
+						<td class="info-td">执行时间限制</td>
+						<td>300秒 </td>
+					</tr>
+					<tr>
+						<td class="info-td">勾股BLOG版本</td>
+						<td colspan="3">2.4.26<a class="layui-badge layui-bg-blue" style="margin-left:8px"
+							href="https://blog.gougucms.com/home/book/detail/bid/2.html" target="_blank">勾股BLOG文档</a></td>
+					</tr>
+					<tr>
+						<td class="info-td">ThinkPHP版本</td>
+						<td colspan="3">6.0.12LTS<a class="layui-badge layui-bg-blue" style="margin-left:8px" href="https://www.kancloud.cn/manual/thinkphp6_0" target="_blank">TP6文档</a></td>
+					</tr>
+					<tr>
+						<td class="info-td">Layui版本</td>
+						<td colspan="3">2.6.8<a class="layui-badge layui-bg-blue" style="margin-left:8px" href="https://www.layui.site/doc/" target="_blank">Layui文档</a></td>
+					</tr>
+					<tr>
+						<td class="info-td">BUG反馈</td>
+						<td colspan="3"><a href="mailto:hdm58@qq.com" target="_blank">hdm58@qq.com</a></td>
+					</tr>
+					<tr>
+						<td class="info-td">QQ交流群</td>
+						<td colspan="3">搜Q群：24641076，或点击 <a href="https://jq.qq.com/?_wv=1027&k=pxshRv6I" target="_blank" rel="nofollow"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="gougucms交流群" title="gougucms交流群" style="vertical-align:middle"></a></td>
+					</tr>
+					<tr>
+						<td class="info-td">同系列开源软件</td>
+						<td colspan="3"><a class="layui-badge layui-bg-blue" style="margin-right:8px" href="https://gitee.com/gougucms/gougucms" target="_blank">勾股CMS</a><a class="layui-badge layui-bg-blue" style="margin-right:8px" href="https://gitee.com/gougucms/office" target="_blank">勾股OA</a><a class="layui-badge layui-bg-blue" href="https://gitee.com/gougucms/dev" target="_blank">勾股DEV</a></td>
+					</tr>
+					<tr>
+						<td class="info-td">🍗🍗<br/>给作者加鸡腿<br/>🍗🍗</td>
+						<td colspan="3">
+							<img src="https://www.gougucms.com/static/home/images/zfb.png" data-event="pay" style="width:50%; max-width:100%; cursor:pointer;" align=center /><img src="https://www.gougucms.com/static/home/images/wx.png" data-event="pay" style="width:50%; max-width:100%; cursor:pointer;"  align=center />
+						</td>
+					</tr>
+				</table>
+					</div>
+				</div>
+
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>项目报告</h3></div>
+					<div class="layui-card-body layui-takerates">
+						<div class="layui-progress" lay-showPercent="yes">
+							<h3>完成率（日同比 28% <span class="layui-edge layui-edge-top" lay-tips="增长"
+									lay-offset="-15"></span>）</h3>
+							<div class="layui-progress-bar" lay-percent="65%"></div>
+						</div>
+						<div class="layui-progress" lay-showPercent="yes">
+							<h3>回款率（日同比 11% <span class="layui-edge layui-edge-bottom" lay-tips="下降"
+									lay-offset="-15"></span>）</h3>
+							<div class="layui-progress-bar" lay-percent="32%"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-card">
+					<div class="layui-card-header"><h3>实时监控</h3></div>
+					<div class="layui-card-body layui-takerates">
+						<div class="layui-progress" lay-showPercent="yes">
+							<h3>CPU使用率</h3>
+							<div class="layui-progress-bar" lay-percent="58%"></div>
+						</div>
+						<div class="layui-progress" lay-showPercent="yes">
+							<h3>内存占用率</h3>
+							<div class="layui-progress-bar layui-bg-red" lay-percent="90%"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script src="/assets/third_party/echart/echarts.min.js"></script>
+	<script>
+		const moduleInit = ['tool'];
+		function gouguInit() {
+			var table = layui.table;
+			//公告
+			table.render({
+				elem: '#note'
+				, url: "../../json/note.json" //数据接口
+				, page: false //开启分页
+				, cols: [[ //表头
+					{ field: 'cate_title', title: '公告分类', align: 'center','width': 90 },
+					{ field: 'title', title: '公告标题'},
+					{ field: 'view', title: '操作','width': 60 , align: 'center', templet:function(d){
+						var html='<button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</button>';
+						return html;
+					}},
+					{ field: 'create_time', title: '发布时间', align: 'center','width': 136}
+				]]
+			});
+			//文章
+			table.render({
+				elem: '#article'
+				, url: "../../json/article.json" //数据接口
+				, page: false //开启分页
+				, cols: [[ //表头
+					{ field: 'cate_title', title: '知识分类', align: 'center','width': 90 },
+					{ field: 'title', title: '知识标题'},
+					{ field: 'read', title: '访问量', align: 'center','width': 80 },
+					{ field: 'view', title: '操作','width': 60 , align: 'center', templet:function(d){
+						var html='<button class="layui-btn layui-btn-xs layui-btn-normal" lay-event="view">详情</button>';
+						return html;
+					}},
+					{ field: 'create_time', title: '发布时间', align: 'center','width': 136}
+				]]
+			});
+			
+			$('body').on('click','[data-event="pay"]',function(){
+				var src=$(this).attr('src');
+				layer.open({
+					type:1,
+					title:'感谢您给作者加鸡腿🍗🍗',
+					content:'<img src="'+src+'" style="width:100%" align=center />',
+				});
+			})
+			
+			get_view_data();
+		}
+			
+			
+			
+	function setHour(num) {
+		var str = num + ':00';
+		if (num < 10) {
+			str = '0' + num + ':00';
+		}
+		return str;
+	}
+	
+	var chartView = echarts.init(document.getElementById('chartView'));
+	function get_view_data() {
+		$.ajax({
+			url: "../../json/oa_data.json",
+			type: 'get',
+			data: {},
+			success: function (e) {
+				if (e.code == 0) {
+					var data_first = e.data.data_first;
+					var data_second = e.data.data_second;
+					archiveCalendar = e.data.data_three;
+					var myDate = new Date();
+					var nowHour = myDate.getHours(); //获取当前小时数(0-23)
+					var xData = [];
+					var yData1 = [];
+					var yData2 = [];
+					$.each(data_first, function (key, value) {
+						if (key <= nowHour) {
+							yData1.push(value);
+						}
+					});
+					$.each(data_second, function (key, value) {
+						xData.push(setHour(key));
+						yData2.push(value);
+					});
+					var ops = {
+						title: {
+							top: '12px',
+							text: '今日与昨日员工活跃度',
+							left: '12px',
+							textStyle: {
+								fontSize: '16',
+								color: '#333',
+							}
+						},
+						color: ["#1AAD19", "#1890FF"],
+						grid: {
+							left: '16px',
+							right: '30px',
+							bottom: '12px',
+							top: '60px',
+							containLabel: true
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+								type: 'cross',
+								crossStyle: {
+									color: '#999'
+								}
+							}
+						},
+						toolbox: {
+							show: true,
+						},
+						legend: {
+							data: ["今日", "昨日"],
+							top: '16px',
+						},
+						xAxis: [{
+							type: "category",
+							boundaryGap: !1,
+							data: xData,
+							axisLine: {
+								lineStyle: {
+									color: '#999999',
+									width: 1,
+								}
+							},
+						}],
+						yAxis: [{
+							type: "value",
+							axisLine: {
+								show: true,
+								lineStyle: {
+									color: '#999999',
+									width: 1,
+								}
+							},
+						}],
+						series: [{
+							name: "今日",
+							type: "line",
+							smooth: !0,
+							itemStyle: {
+								normal: {
+									areaStyle: {
+										type: "default",
+										opacity: 0.2
+									}
+								}
+							},
+							data: yData1
+						}, {
+							name: "昨日",
+							type: "line",
+							smooth: !0,
+							itemStyle: {
+								normal: {
+									areaStyle: {
+										type: "default",
+										opacity: 0.2
+									}
+								}
+							},
+							data: yData2
+						}]
+					}
+					chartView.setOption(ops);
+
+
+					let myChart = echarts.init(document.getElementById('chartYear'));
+					let option = {
+						title: {
+							top: '12px',
+							text: '近一年员工活跃度',
+							left: '10px',
+							textStyle: {
+								fontSize: '16',
+								color: '#333',
+							}
+						},
+						tooltip: {
+							padding: 6,
+							formatter: function (obj) {
+								var value = obj.value;
+								return '<div style="font-size: 12px;">' + value[0] + '员工活跃度：' + value[1] + '</div>';
+							}
+						},
+						visualMap: {
+							min: 0,
+							max: 300,
+							show: false,
+							inRange: {
+								color: ['#fafafa', '#1AAD19']
+							}
+						},
+						calendar: {
+							top: 75,
+							left: 52,
+							right: 20,
+							range: getRange(),
+							cellSize: ['auto', 21],
+							splitLine: {
+								lineStyle: {
+									color: '#aaa',
+									type: 'dashed'
+								}
+							},
+							itemStyle: {
+								borderWidth: 0.5
+							},
+							yearLabel: { show: false },
+							monthLabel: {
+								nameMap: 'cn',
+								fontSize: 12
+							},
+							dayLabel: {
+								show: true,
+								formatter: '{start}  1st',
+								fontWeight: 'lighter',
+								nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+								fontSize: 12
+							}
+						},
+						series: [{
+							type: 'heatmap',
+							coordinateSystem: 'calendar',
+							calendarIndex: 0,
+							data: getDay()
+						}]
+					};
+					myChart.setOption(option);
+
+					setTimeout(function () {
+						window.onresize = function () {
+							chartView.resize();
+							myChart.resize();
+						}
+					})
+					console.log(e.data);
+				}
+			}
+		})
+	}
+
+		var archiveCalendar = {};
+		function getRange() {
+			let today = new Date();
+			let tYear = today.getFullYear();
+			let tMonth = today.getMonth() + 1;
+			let tDate = today.getDate();
+			let dateFirst = tYear + "-" + tMonth + "-" + tDate;
+			let datelast = (tYear - 1) + "-" + tMonth + "-" + tDate;
+			let dataRange = [];
+			dataRange.push(dateFirst);
+			dataRange.push(datelast);
+			return dataRange;
+		}
+
+		function getDay() {
+			var today = new Date();
+			var dayArray = [];
+			for (var i = 0; i < 366; i++) {
+				var targetday_milliseconds = today.getTime() - 1000 * 60 * 60 * 24 * i;
+				var date = new Date(targetday_milliseconds);
+				dayArray.push(retunDay(date));
+			}
+			return dayArray;
+		}
+
+		function retunDay(day) {
+			var tYear = day.getFullYear();
+			var tMonth = day.getMonth();
+			var tDate = day.getDate();
+			tMonth = tMonth + 1;
+			if (tMonth.toString().length == 1) {
+				tMonth = "0" + tMonth;
+			}
+			if (tDate.toString().length == 1) {
+				tDate = "0" + tDate;
+			}
+			var dateStr = tYear + "-" + tMonth + "-" + tDate;
+			var dateArray = [];
+			dateArray.push(dateStr);
+			if (archiveCalendar[dateStr]) {
+				dateArray.push(archiveCalendar[dateStr]);
+			}
+			else {
+				dateArray.push(0);
+			}
+			return dateArray;
+		}
+	</script>
+  <script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+  <script src="/assets/gougu/gouguInit.js"></script>
+</body>
+
+</html>

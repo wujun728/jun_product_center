@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="../../component/pear/css/pear.css" rel="stylesheet"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="" lay-filter="nginx">
+
+            <div class="layui-form-item adminj-sort-item" id="did_1629876782412_1" cpt_id="textarea"
+                 style="width: 100%;">
+                <label class="layui-form-label"></label>
+                <div class="layui-input-inline" style="width: 66%;">
+                    <textarea id="nginxContent" name="context" class="layui-textarea"
+                              style="width: 99%; height: 500px"></textarea>
+                </div>
+
+            </div>
+
+            <div class="layui-form-item" style="width: 100%;">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="save">保存</button>
+                <button id="cancle" class="layui-btn layui-btn-danger">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+
+<script src="../../component/layui/layui.js"></script>
+<script src="../../component/pear/pear.js"></script>
+<script>
+    layui.use(['easyAdmin', 'form'], function () {
+        let easyAdmin = layui.easyAdmin;
+        var $ = layui.$; //使用jQuery 重点处
+        let form = layui.form;
+        let processId = easyAdmin.getQueryString("processId");
+        getConfContent(processId);
+        form.on('submit(save)', function (data) {
+            console.log(data)
+            easyAdmin.http({
+                type: 'POST',
+                url: "/flow/process/deployXml",
+                data: "model=" + data.field.context + "&id=" + processId + "&xmlHearder=true",
+                async: false,
+                globle: false,
+                error: function () {
+                    alert('数据处理错误！');
+                    return false;
+                },
+                success: function (data) {
+                    if (data == true) {
+                        parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                        parent.layui.table.reload("user-table");
+                    } else {
+                        layer.msg("没有修改权限哦！flow.update", {
+                            icon: 2,
+                            time: 1000,
+                            area: ['300px', '65px']
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+
+        function getConfContent(processId) {
+            easyAdmin.httpGet("/flow/getXml?id=" + processId, function (res) {
+                if (res.success) {
+                    $('#nginxContent').val(res.data);
+                } else {
+                    layer.msg(res.msg,
+                        {icon: 2, time: 2000, area: ['230px', '65px']}
+                    );
+                }
+            });
+        }
+
+        $("#cancle").click(function () {
+            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+            parent.layui.table.reload("user-table");
+        });
+
+    })
+</script>
+</html>

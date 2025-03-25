@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=1.0.24" media="all">
+
+
+  <style>	
+	.gougu-upload-files{background-color: #ffffff; border:1px solid #e4e7ed;color: #c0c4cc;cursor: not-allowed; padding:0 12px; width:180px; box-sizing: border-box; display: inline-block; font-size: inherit; height: 38px; line-height: 35px; margin-right:8px; border-radius:2px;}
+	.gougu-upload-tips{color:#969696}
+	.layui-form-item{margin-bottom:8px;}
+	.layui-input-block{min-height:24px;}
+  </style>
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t">
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="source_id">
+				<option value="">请选择渠道来源</option>
+								<option value="1">独立开发</option>
+								<option value="2">微信公众号</option>
+								<option value="3">今日头条</option>
+								<option value="4">百度搜索</option>
+								<option value="5">销售活动</option>
+								<option value="6">电话来访</option>
+								<option value="7">客户介绍</option>
+								<option value="8">其他来源</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="industry_id">
+				<option value="">请选择行业</option>
+								<option value="1">工业品企业</option>
+								<option value="2">互联网企业</option>
+								<option value="3">服务行业</option>
+								<option value="4">消费品企业</option>
+								<option value="5">原材料企业</option>
+								<option value="6">农业企业</option>
+								<option value="7">科技企业</option>
+								<option value="8">其他行业</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:240px;">
+			<input type="text" name="keywords" placeholder="输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+<div class="layui-btn-container">
+   <button class="layui-btn layui-btn-sm" title="添加客户" lay-event="add">+ 添加公海客户</button>
+   <button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="import"><i class="layui-icon">&#xe66f;</i>批量导入</button>
+</div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','employeepicker'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool ,form = layui.form, employeepicker = layui.employeepicker,upload=layui.upload;
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '公海客户列表',
+			defaultToolbar: false,
+			toolbar: '#toolbarDemo',
+			url: "sea.json", //数据接口
+			cellMinWidth: 80,
+			page: true, //开启分页
+			limit: 20,
+			cols: [
+				[ //表头
+					{
+						field: 'id',title: '编号',align: 'center',width: 80,templet: function (d) {
+							return'C' + d.id;
+						}
+					},{
+						field: 'name',
+						title: '客户名称',
+						minWidth:240,
+						templet: '<div><a data-href="/customer/index/view/id/{{d.id}}.html" class="side-a">{{d.name}}</a></div>'
+					},{
+						field: 'user',
+						title: '联系人',
+						align: 'center',
+						width: 80
+					},{
+						field: 'mobile',
+						title: '手机号码',
+						align: 'center',
+						width: 100
+					},{
+						field: 'qq',
+						title: 'QQ号',
+						align: 'center',
+						width: 100
+					},{
+						field: 'wechat',
+						title: '微信号',
+						align: 'center',
+						width: 90
+					},{
+						field: 'create_time',
+						title: '创建时间',
+						align: 'center',
+						width: 136
+					},{
+						field: 'update_time',
+						title: '最后编辑时间',
+						align: 'center',
+						width: 136
+					},{
+						field: 'source',
+						title: '来源渠道',
+						align: 'center',
+						width: 100
+					}, {
+						field: 'industry',
+						title: '客户所属行业',
+						align: 'center',
+						width: 120
+					},{
+						field: 'right',
+						fixed:'right',
+						title: '操作',
+						width: 200,
+						align: 'center',
+						templet: function (d) {
+							var html = '<div class="layui-btn-group">';
+							var btn='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+							var btn0='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="distribute">分配</span>';
+							var btn1='<span class="layui-btn layui-btn-xs" lay-event="get">领取</span>';
+							var btn2='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">转入废弃池</span>';
+							return html+btn+btn0+btn1+btn2+'</div>';
+						}						
+					}
+				]
+			]
+		});
+		
+		//表头工具栏事件
+		table.on('toolbar(test)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/customer/index/add?sea=1");
+				return;
+			}
+			if (obj.event === 'import') {
+				uploadImport();	
+				return;				
+			}
+		});
+		
+		let uploadFiles;
+		function clearFile() {
+			for (let x in uploadFiles) {
+				delete uploadFiles[x];
+			}
+			$('#gougu-upload-choosed').html('');
+		}
+		function uploadImport(){
+			layer.open({
+				'title':'批量导入客户',
+				'type':1,
+				'area': ['640px', '320px'],
+				'content':'<div class="layui-form p-3">\
+						<div id="uploadType1">\
+							<div class="layui-form-item">\
+								<label class="layui-form-label">文件：</label>\
+								<div class="layui-input-block">\
+									<span class="gougu-upload-files">.xls,.xlsx</span><button type="button" class="layui-btn layui-btn-normal" id="uploadSelect">选择文件</button><a href="../../home/file/勾股OA客户导入模板.xlsx" class="layui-btn ml-4">Execl表格模板下载</a>\
+								</div>\
+							</div>\
+							<div class="layui-form-item">\
+								<label class="layui-form-label"></label>\
+								<div class="layui-input-block">\
+									<span class="gougu-upload-tips">1、只有超级管理员才能进行批量导入操作；<br>2、只能上传 .xls、.xlsx文件；<br>3、数据请勿放在合并的单元格中；<br>4、文件大小请勿超过2MB，导入数据不能超过3000条</span>\
+								</div>\
+							</div>\
+							<div class="layui-form-item">\
+								<label class="layui-form-label"></label>\
+								<div class="layui-input-block green" id="gougu-upload-choosed"></div>\
+							</div>\
+							<div class="layui-form-item">\
+								<label class="layui-form-label"></label>\
+								<div class="layui-input-block red" id="gougu-upload-note"></div>\
+							</div>\
+							<div class="layui-form-item layui-form-item-sm">\
+								<label class="layui-form-label"></label>\
+								<div class="layui-input-block">\
+									<button type="button" class="layui-btn" id="uploadAjax">上传并导入</button>\
+								</div>\
+							</div>\
+						</div> \
+				</div>',
+				success: function(layero, idx){
+					form.render();
+					//选文件
+					let uploadImport = upload.render({
+						elem: '#uploadSelect'
+						,url: '/api/import/import_customer'
+						,auto: false
+						,accept: 'file' //普通文件
+						,acceptMime: 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // 此处设置上传的文件格式
+						,exts: 'xls|xlsx' //只允许上传文件格式
+						,bindAction: '#uploadAjax'
+						,choose: function(obj){
+							uploadFiles = obj.pushFile();
+							// 清空,防止多次上传
+							clearFile();
+							obj.preview(function(index, file, result){
+								obj.pushFile();// 再添加
+								$('#gougu-upload-choosed').html('已选择：'+file.name);
+							});
+						}
+						,before: function(obj){
+						}
+						,progress: function(n, elem, e){
+							$('#gougu-upload-note').html('文件上转中...');
+							if(n==100){
+								$('#gougu-upload-note').html('数据导入中...');
+							}
+						}
+						,error: function(index, upload){
+							clearFile();
+							$('#gougu-upload-note').html('数据导入失败，请关闭重试');
+						}
+						,done: function(res, index, upload){
+							clearFile();
+							layer.msg(res.msg);
+							$('#gougu-upload-note').html(res.msg);
+							if(res.code==0){
+								layer.close(idx);
+								layui.pageTable.reload();
+							}						
+						}
+					});
+				}
+			});	
+		}
+		
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if(obj.event === 'view'){
+				tool.side('/customer/index/view?id='+data.id);
+			}
+			if(obj.event === 'edit'){
+				tool.side('/customer/index/add?sea=1&id='+data.id);
+			}
+			if (obj.event === 'distribute') {
+				//选择归属人人弹窗	
+				employeepicker.init({
+					type:0,
+					department_url: "/api/index/get_department_tree",
+					employee_url: "/api/index/get_employee",
+					callback:function(ids,names,dids,departments){
+						layer.confirm('确定要把该客户分配给'+names+'?', {
+							icon: 3,
+							title: '提示'
+						}, function(index) {
+							let callback = function (e) {
+								layer.msg(e.msg);
+								if (e.code == 0) {
+									layui.pageTable.reload();
+								}
+							}
+							tool.post("/customer/api/distribute", {id: data.id,uid:ids,did:dids}, callback);
+							layer.close(index);
+						});
+					}
+				});
+			}
+			if (obj.event === 'get') {
+				layer.confirm('确定要领取该客户?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pageTable.reload();
+						}
+					}
+					tool.post("/customer/index/get", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要把客户转入废弃池吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pageTable.reload();
+						}
+					}
+					tool.delete("/customer/index/to_trash", {id: data.id,type:1}, callback);
+					layer.close(index);
+				});
+			}
+			return;
+		});
+
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/project.js"></script>
+<script src="/assets/js/core.util.js"></script>
+	<script src="/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

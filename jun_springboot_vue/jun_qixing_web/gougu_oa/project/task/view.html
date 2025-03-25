@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、人事管理模块、消息管理模块、日常办公、财务管理等基础模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。   "/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=1.0.24" media="all">
+
+
+<style>
+.hover-view i,.hover-edit i{margin-left:4px; font-weight:800; cursor:pointer; opacity:0}
+.hover-edit.hover-on i{opacity:1}
+.layui-tab-title .layui-this{background-color:#fff;}
+.layui-tab-card,.layui-card{box-shadow:0 0 0 0 rgb(0 0 0 / 10%); border-radius:0; border-top:none;}
+.layui-card-tips {color: #969696;}
+.layui-card-value {padding: 4px 0 16px;font-size: 18px;color: #1E9FFF;}
+
+.content-content{line-height:1.6;}
+.content-content p{margin-bottom:6px;}
+.content-content img{max-width:100%; padding:8px; box-sizing: border-box;}
+
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
+
+.log-item i{font-weight:800; color:#323232}
+.log-content strong{margin:0 4px; color:#323232}
+.layui-unselect dl {max-height:188px;}
+.layui-table-form{margin-top:8px;}
+
+.task-son{padding:3px 0;}
+.task-son .del-son{margin-left:8px; cursor:pointer; display:none;}
+.task-son:hover .del-son{display:inline;}
+</style>
+
+<script>
+	const login_admin=7;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div>
+	<div class="p-3 border-b">
+		<h2 class="pb-3 hover-edit">
+			<span class="font20" id="title_1116" data-val="">测试</span>
+			<i class="iconfont icon-wodedianping" title="编辑" data-name="title"></i>
+		</h2>
+		<div>
+			<span class="layui-badge layui-bg-gray">#T1116</span>
+			<span class="mx-2">叶小钗</span>
+			<span class="gray">创建于2023-12-27<span id="editTips">，最近更新于 2023-12-27</span></span>
+						<span class="layui-btn layui-btn-xs layui-btn-danger ml-4" id="delBtn"><i class="layui-icon">&#xe640;</i>删除</span>
+					</div>
+	</div>
+	<div class="layui-row border-b" style="background-color:#fff;">
+		<div class="layui-col-md9 px-3 py-1 border-r">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">任务负责人</td>
+					<td class="hover-edit"><span id="director_uid_1116"
+							data-val="95">张三</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="director_uid"></i></td>
+					<td class="layui-td-gray">协作人</td>
+					<td class="hover-edit" colspan="5"><span id="assist_admin_ids_1116"
+							data-val="63,64">不了情,巧天工</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="assist_admin_ids"></i></td>
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray-2">计划完成日期</td>
+					<td class="hover-edit"><span id="end_time_1116" data-val="">2023-12-29</span><span class="layui-badge ml-2">逾期
+							17 天</span><i class="iconfont icon-wodedianping" title="编辑"
+							data-name="end_time"></i></td>
+					<td class="layui-td-gray">预估工时</td>
+					<td class="hover-edit"><span id="plan_hours_1116" data-val="">11.0</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="plan_hours"></i></td>		
+					<td class="layui-td-gray">工作类型</td>
+					<td class="hover-edit"><span id="cate_1116"
+							data-val="5">需求沟通</span><i class="iconfont icon-wodedianping"
+							title="编辑" data-name="cate"></i></td>	
+					<td class="layui-td-gray">优先级</td>
+					<td class="hover-edit"><span class="layui-color-1" id="priority_1116"
+							data-val="1">低</span><i
+							class="iconfont icon-wodedianping" title="编辑" data-name="priority"></i>
+					</td>
+				</tr>
+				<tr>	
+					<td class="layui-td-gray-2">实际完成日期</td>
+					<td class="hover-edit">-</td>	
+					<td class="layui-td-gray">实际工时</td>
+					<td class="hover-edit">13.5					</td>	
+					<td class="layui-td-gray">任务状态</td>
+					<td class="hover-edit">
+						<span class="layui-color-1" id="flow_status_1116" data-val="1">『未开始』</span><i class="iconfont icon-wodedianping" title="编辑" data-name="flow_status"></i>
+					</td>					
+					<td class="layui-td-gray">完成进度</td>
+					<td class="hover-edit"><span class="layui-color-0" id="done_ratio_1116" data-val="0">0%</span><i class="iconfont icon-wodedianping" title="编辑" data-name="done_ratio"></i>					</td>						
+				</tr>
+				<tr>
+					<td class="layui-td-gray-2">前置任务</td>
+					<td colspan="7" class="hover-edit">					
+					<span id="project_id_1116" data-val="1067">
+										<span class="layui-badge layui-bg-gray">#T1067</span><span class="layui-color-1">『未开始』</span><a href="/project/task/view/id/1067">摄像头安装</a>
+										</span>
+					<i class="iconfont icon-wodedianping" title="编辑" data-name="before_task"></i>
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray-2">子任务<span class="layui-btn layui-btn-xs add-son">+ 新增</span></td>
+					<td colspan="7">					
+													<p class="task-son"><span class="layui-badge layui-bg-gray">#T1036</span><span class="layui-color-1">『未开始』</span><a href="/project/task/view/id/1036">任务功能测试2</a><span class="del-son red" title="取消父子关系" data-id="1036">✘</span></p>
+														<p class="task-son"><span class="layui-badge layui-bg-gray">#T1089</span><span class="layui-color-1">『未开始』</span><a href="/project/task/view/id/1089">11</a><span class="del-son red" title="取消父子关系" data-id="1089">✘</span></p>
+																		</td>
+				</tr>
+			</table>
+			<div class="content hover-edit">
+				<h3 class="py-4">任务描述<i class="iconfont icon-wodedianping" title="编辑" data-name="content"></i></h3>
+				<div class="content-content" id="content_1116" data-val="&lt;p&gt;测试&lt;/p&gt;"><p>测试</p></div>
+			</div>
+			<div class="detail-file">
+				<h3 class="py-4">文件附件 <button type="button" class="layui-btn layui-btn-normal layui-btn-xs" id="uploadBtn" style="font-weight:400;">+ 上传</button></h3>
+				<div class="layui-row pb-2" id="fileBox">
+										<div style="line-height:1.5">
+						<div class="layui-data-none">暂无附件文件</div>
+					</div>
+									</div>
+			</div>
+		</div>
+		<div class="layui-col-md3 p-4">
+			<div class="pb-4 hover-edit">
+				<p class="gray mb-2">关联项目</p>
+				<span id="project_id_1116" data-val="1073">
+					测试项目都市时尚大方				</span>
+				<i class="iconfont icon-wodedianping" title="编辑" data-name="project_id"></i>
+			</div>
+
+			<div class="pb-4 mt-3">
+				<h5 class="mb-1">工作记录<span class="layui-btn layui-btn-xs add-schedule right">+ 工作记录</span></h5>
+				<div id="schedule_1116" style="line-height:1.5">
+					<div class="layui-data-none">暂无工作记录</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="layui-tab layui-tab-card" style="margin:0;" lay-filter="docDemoTabBrief">
+		<ul class="layui-tab-title">
+			<li class="layui-this">员工评论(0)</li>
+			<li>操作日志(3)</li>
+		</ul>
+		<div class="layui-tab-content py-1 px-3" style="background-color:#fff;">
+			<div class="layui-tab-item comment-list layui-show">
+				<div class="comment-input my-2">
+					<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+				</div>
+				<div id="comment_task_1116"></div>
+			</div>
+			<div class="layui-tab-item logs-list">
+				<div id="log_task_1116"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const admin_id = '7';
+	const detail_id = '1116';
+	const moduleInit = ['tool','employeepicker','oaEdit','oaSchedule','oaComment','oaTool'];
+	function gouguInit() {
+		const opsData = {
+			flow_status: [
+				{ 'id': 1, 'title': '未开始' },
+				{ 'id': 2, 'title': '进行中' },
+				{ 'id': 3, 'title': '已完成' },
+				{ 'id': 4, 'title': '不解决' },
+				{ 'id': 5, 'title': '已关闭' }
+			],
+			type: [
+				{ 'id': 1, 'title': '需求' },
+				{ 'id': 2, 'title': '设计' },
+				{ 'id': 3, 'title': '研发' },
+				{ 'id': 4, 'title': '缺陷' }
+			],
+			priority: [
+				{ 'id': 1, 'title': '低' },
+				{ 'id': 2, 'title': '中' },
+				{ 'id': 3, 'title': '高' },
+				{ 'id': 4, 'title': '紧急' }
+			],
+			done_ratio: [
+				{ 'id': 0, 'title': '0%' },
+				{ 'id': 20, 'title': '20%' },
+				{ 'id': 40, 'title': '40%' },
+				{ 'id': 50, 'title': '50%' },
+				{ 'id': 60, 'title': '60%' },
+				{ 'id': 80, 'title': '80%' }
+			]
+		}
+		const edit = layui.oaEdit,work = layui.oaSchedule,comment = layui.oaComment, oaTool = layui.oaTool, tool = layui.tool;
+
+		$('.hover-edit').hover(function () {
+			$(this).addClass('hover-on');
+		}, function () {
+			$(this).removeClass('hover-on');
+		})
+
+		$('.hover-edit').on('click', 'i', function () {
+			let name = $(this).data('name');
+			let show_txt = $('#' + name + '_' + detail_id).text().replace(/[\r\n\t]/g, "");
+			let real_txt = $('#' + name + '_' + detail_id).data('val');
+			if (real_txt === '') {
+				real_txt = show_txt;
+			}
+			editShow(detail_id, name, show_txt, real_txt);
+		})
+
+		$('#delBtn').on('click', function () {
+			layer.confirm('确定要删除该任务吗？请慎重', { icon: 3, title: '提示' }, function (index) {
+				let callback = function (e) {
+					layer.closeAll();
+					layer.msg(e.msg);
+					parent.layui.taskTable.reload();
+					if (e.code == 0) {
+						parent.layui.tool.close(1000);
+					}
+				}
+				let postData = { "id": detail_id };
+				tool.delete("/project/task/delete", postData, callback);
+			});
+		})
+		
+		$('.add-son').on('click', function () {
+			let callback = function(data){
+				if(data.id!=0){
+					tool.post("/project/api/task_add_son", {'pid': detail_id, 'id': data.id}, function(e){
+						layer.msg(e.msg);
+						if(e.code==0){
+							location.reload();
+						}
+					})
+				}
+			}
+			oaTool.taskPicker(callback,{set_pid:detail_id});			
+		});
+		
+		$('.del-son').on('click', function () {
+			let id = $(this).data('id');
+			layer.confirm('确定取消该任务的父子关系吗?', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						location.reload();
+					}
+				}
+				tool.delete("/project/api/task_del_son", {id: id}, callback);
+				layer.close(index);
+			});	
+		});
+
+		oaTool.addFile({
+			type:1,
+			isSave:true,
+			uidDelete:true,
+			colmd:6,
+			ajaxDelete:function(file_id){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {						
+						$('#fileItem' + file_id).remove();
+					}
+				}
+				tool.delete("/project/api/delete_file", {id: file_id}, callback);			
+			},
+			ajaxSave:function(res){
+				let callback = function (e) {
+					location.reload();
+				}
+				tool.post("/project/api/add_file", {'topic_id': detail_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'task' }, callback);
+			}
+		});
+		//工作记录相关
+		work.load(detail_id);
+		$('.add-schedule').on('click', function () {
+			work.add(detail_id,{'id':0});	
+		})
+		
+		//任务日志
+		comment.log(detail_id,'task');
+
+		//评论
+		comment.load(detail_id,'task');
+		$('#commentInput').on('click', function () {
+			comment.textarea(0,detail_id,0,0,'task','');
+		})
+		//回复
+		$('#comment_task_' + detail_id).on('click', '[data-event="replay"]', function () {
+			let pid = $(this).data('id');
+			let padmin_id = $(this).data('uid');
+			comment.textarea(0, detail_id, pid, padmin_id, 'task', '');
+		})
+		//编辑
+		$('#comment_task_' + detail_id).on('click', '[data-event="edit"]', function () {
+			let id = $(this).data('id');
+			let content = $('#comment_' + id).data('content');
+			comment.textarea(id, detail_id, 0, 0, 'task', content);
+		})
+
+		//删除
+		$('#comment_task_' + detail_id).on('click', '[data-event="del"]', function () {
+			let id = $(this).data('id');
+			comment.del(id, detail_id, 'task');
+		})
+
+		let loading = false;
+		let editPost = function (id, name, show_val, real_val) {
+			let callback = function (e) {
+				layer.closeAll();
+				if (e.code == 0) {
+					setTimeout(function () {
+						location.reload();
+					}, 400)
+					if (parent.layui.taskTable) {
+						parent.layui.taskTable.reload();
+					}
+				}
+				else {
+					layer.msg(e.msg);
+				}
+			}
+			let postData = { id: id };
+			postData[name] = real_val;
+			tool.post("/project/task/add", postData, callback);
+		}
+
+		function editShow(id, name, show_txt, real_txt) {
+			if (loading == true) {
+				return false;
+			}
+			if (name == "title" || name == "plan_hours") {
+				edit.text(id, name, real_txt, editPost);
+			}
+			if (name == "end_time") {
+				if (admin_id == login_admin) {
+					edit.date(id, name, real_txt, editPost);
+				} else {
+					layer.msg('您没权限修改，请联系创建人修改');
+				}
+			}
+			if (name == "director_uid") {
+				edit.employee_one(id, name, show_txt, real_txt, editPost);
+			}
+			if (name == "assist_admin_ids") {
+				edit.employee_more(id, name, show_txt, real_txt, editPost);
+			}
+			if (name == "flow_status" || name == "priority" || name == "done_ratio" || name == "type") {
+				edit.dropdown(id, name, real_txt, opsData[name], editPost);
+			}
+			if (name == "cate") {
+				loading = true;
+				tool.get("/api/index/get_work_cate", {}, function (res) {
+					let data = res.data;
+					loading = false;
+					edit.dropdown(id, name, real_txt, data, editPost, 0);
+				});
+			}
+			if (name == "project_id") {
+				if (admin_id == login_admin) {
+					edit.select_table(id, name, real_txt, editPost, 1);
+				} else {
+					layer.msg('您没权限修改，请联系创建人或负责人修改');
+				}
+			}
+			if (name == "before_task") {
+				if (admin_id == login_admin) {
+					edit.select_task(id, name, real_txt, editPost, 1);
+				} else {
+					layer.msg('您没权限修改，请联系创建人或负责人修改');
+				}
+			}
+			if (name == "content") {
+				edit.editor(id, name, real_txt, editPost);
+			}
+		}
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js"></script>
+	<!-- 统计代码 -->
+	
+	<!-- /统计代码 -->
+</body>
+</html>

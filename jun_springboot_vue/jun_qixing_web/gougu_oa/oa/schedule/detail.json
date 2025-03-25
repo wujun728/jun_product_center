@@ -1,0 +1,30 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "id": 1,
+        "title": "111",
+        "cid": 1,
+        "cmid": 0,
+        "ptid": 0,
+        "tid": 0,
+        "admin_id": 1,
+        "did": 1,
+        "start_time": "2024-01-16",
+        "end_time": "2024-01-16",
+        "labor_time": "0.50",
+        "labor_type": 1,
+        "remark": "11",
+        "delete_time": 0,
+        "create_time": "2024-01-18 11:25:29",
+        "update_time": 0,
+        "start_time_1": "09:00",
+        "end_time_1": "09:30",
+        "name": "超级员工",
+        "labor_type_string": "案头工作",
+        "department": "董事会",
+        "work_cate": "其他"
+    }
+}

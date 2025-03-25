@@ -1,0 +1,168 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-x border-t">
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="source_id">
+				<option value="">请选择渠道来源</option>
+				{volist name=":customer_source()" id="v"}
+				<option value="{$v.id}">{$v.title}</option>
+				{/volist}
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="industry_id">
+				<option value="">请选择行业</option>
+				{volist name=":get_industry()" id="v"}
+				<option value="{$v.id}">{$v.title}</option>
+				{/volist}
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:240px;">
+			<input type="text" name="keywords" placeholder="输入关键字" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool ,form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '废弃客户列表',
+			toolbar: '#toolbarDemo',
+			defaultToolbar: false,
+			url: "/customer/index/trash", //数据接口
+			cellMinWidth: 80,
+			page: true, //开启分页
+			limit: 20,
+			cols: [
+				[ //表头
+					{
+						field: 'id',title: '编号',align: 'center',width: 80,templet: function (d) {
+							return'C' + d.id;
+						}
+					},{
+						field: 'name',
+						title: '客户名称',
+						minWidth:240,
+						templet: '<div><a data-href="/customer/index/view/id/{{d.id}}.html" class="side-a">{{d.name}}</a></div>'
+					},{
+						field: 'user',
+						title: '联系人',
+						align: 'center',
+						width: 80
+					},{
+						field: 'mobile',
+						title: '手机号码',
+						align: 'center',
+						width: 100
+					},{
+						field: 'qq',
+						title: 'QQ号码',
+						align: 'center',
+						width: 100
+					},{
+						field: 'wechat',
+						title: '微信号',
+						align: 'center',
+						width: 90
+					},{
+						field: 'create_time',
+						title: '创建时间',
+						align: 'center',
+						width: 136
+					},{
+						field: 'update_time',
+						title: '最后编辑时间',
+						align: 'center',
+						width: 136
+					},{
+						field: 'source',
+						title: '来源渠道',
+						align: 'center',
+						width: 100
+					}, {
+						field: 'industry',
+						title: '客户所属行业',
+						align: 'center',
+						width: 120
+					},{
+						field: 'right',
+						fixed:'right',
+						title: '操作',
+						width: 150,
+						align: 'center',
+						templet: function (d) {
+							var html = '<div class="layui-btn-group">';
+							var btn1='<span class="layui-btn layui-btn-xs" lay-event="back">拉回公海</span>';
+							var btn2='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">彻底删除</span>';
+							return html+btn1+btn2+'</div>';
+						}						
+					}
+				]
+			]
+		});
+		
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if(obj.event === 'view'){
+				tool.side('/customer/index/view?id='+data.id);
+			}
+			if (obj.event === 'back') {
+				layer.confirm('确定要把该客户拉回公海吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pageTable.reload();
+						}
+					}
+					tool.post("/customer/index/revert", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要彻底删除该客户吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pageTable.reload();
+						}
+					}
+					tool.delete("/customer/index/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+			return;
+		});
+
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->

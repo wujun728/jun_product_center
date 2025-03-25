@@ -1,0 +1,702 @@
+{
+    "success": true,
+    "code": 200,
+    "message": "请求成功",
+    "data": {
+        "id": "1265476890672672808",
+        "account": "superAdmin",
+        "nickName": "超级管理员",
+        "name": "超级管理员",
+        "avatar": "1483349964083011585",
+        "birthday": "2020-03-18 00:00:00.000",
+        "sex": 1,
+        "email": "superAdmin@qq.com",
+        "phone": "15228937093",
+        "tel": "1234567890",
+        "adminType": 1,
+        "lastLoginIp": "127.0.0.1",
+        "lastLoginTime": "2024-07-15 11:24:33",
+        "lastLoginAddress": "-",
+        "lastLoginBrowser": "Chrome",
+        "lastLoginOs": "Windows 10 or Windows Server 2016",
+        "loginEmpInfo": {
+            "jobNum": null,
+            "orgId": null,
+            "orgName": null,
+            "extOrgPos": [],
+            "positions": []
+        },
+        "apps": [
+            {
+                "code": "system",
+                "name": "系统应用",
+                "active": true
+            },
+            {
+                "code": "office",
+                "name": "在线办公",
+                "active": false
+            },
+            {
+                "code": "experience",
+                "name": "高级体验",
+                "active": false
+            },
+            {
+                "code": "systool",
+                "name": "系统工具",
+                "active": false
+            }
+        ],
+        "roles": [],
+        "permissions": [],
+        "menus": [
+            {
+                "code": "system",
+                "value": [
+                    {
+                        "id": "1264622039642255311",
+                        "parentId": "0",
+                        "title": "主控面板",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-home",
+                        "weight": 1,
+                        "children": [
+                            {
+                                "id": "1264622039642255321",
+                                "parentId": "1264622039642255311",
+                                "title": "分析页",
+                                "value": "/other/dashboard.html",
+                                "icon": null,
+                                "weight": 1,
+                                "children": [],
+                                "pid": "1264622039642255311"
+                            },
+                            {
+                                "id": "1264622039642255331",
+                                "parentId": "1264622039642255311",
+                                "title": "工作台",
+                                "value": "/other/workplace.html",
+                                "icon": null,
+                                "weight": 2,
+                                "children": [],
+                                "pid": "1264622039642255311"
+                            },
+                            {
+                                "id": "1264622039642255332",
+                                "parentId": "1264622039642255311",
+                                "title": "控制台",
+                                "value": "/other/console.html",
+                                "icon": null,
+                                "weight": 3,
+                                "children": [],
+                                "pid": "1264622039642255311"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642255341",
+                        "parentId": "0",
+                        "title": "组织架构",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-user",
+                        "weight": 2,
+                        "children": [
+                            {
+                                "id": "1264622039642255351",
+                                "parentId": "1264622039642255341",
+                                "title": "用户管理",
+                                "value": "/system/sysUser/index.html",
+                                "icon": null,
+                                "weight": 3,
+                                "children": [],
+                                "pid": "1264622039642255341"
+                            },
+                            {
+                                "id": "1264622039642255521",
+                                "parentId": "1264622039642255341",
+                                "title": "机构管理",
+                                "value": "/system/sysOrg/index.html",
+                                "icon": null,
+                                "weight": 4,
+                                "children": [],
+                                "pid": "1264622039642255341"
+                            },
+                            {
+                                "id": "1264622039642255601",
+                                "parentId": "1264622039642255341",
+                                "title": "职位管理",
+                                "value": "/system/sysPos/index.html",
+                                "icon": null,
+                                "weight": 5,
+                                "children": [],
+                                "pid": "1264622039642255341"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642255671",
+                        "parentId": "0",
+                        "title": "权限管理",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-auz",
+                        "weight": 3,
+                        "children": [
+                            {
+                                "id": "1264622039642255681",
+                                "parentId": "1264622039642255671",
+                                "title": "应用管理",
+                                "value": "/system/sysApp/index.html",
+                                "icon": null,
+                                "weight": 6,
+                                "children": [],
+                                "pid": "1264622039642255671"
+                            },
+                            {
+                                "id": "1264622039642255761",
+                                "parentId": "1264622039642255671",
+                                "title": "菜单管理",
+                                "value": "/system/sysMenu/index.html",
+                                "icon": null,
+                                "weight": 7,
+                                "children": [],
+                                "pid": "1264622039642255671"
+                            },
+                            {
+                                "id": "1264622039642255851",
+                                "parentId": "1264622039642255671",
+                                "title": "角色管理",
+                                "value": "/system/sysRole/index.html",
+                                "icon": null,
+                                "weight": 8,
+                                "children": [],
+                                "pid": "1264622039642255671"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642255961",
+                        "parentId": "0",
+                        "title": "开发管理",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-code-circle",
+                        "weight": 4,
+                        "children": [
+                            {
+                                "id": "1264622039642255971",
+                                "parentId": "1264622039642255961",
+                                "title": "系统配置",
+                                "value": "/system/sysConfig/index.html",
+                                "icon": null,
+                                "weight": 9,
+                                "children": [],
+                                "pid": "1264622039642255961"
+                            },
+                            {
+                                "id": "1264622039642256041",
+                                "parentId": "1264622039642255961",
+                                "title": "邮件发送",
+                                "value": "/system/sysEmail/index.html",
+                                "icon": null,
+                                "weight": 10,
+                                "children": [],
+                                "pid": "1264622039642255961"
+                            },
+                            {
+                                "id": "1264622039642256071",
+                                "parentId": "1264622039642255961",
+                                "title": "短信管理",
+                                "value": "/system/sysSms/index.html",
+                                "icon": null,
+                                "weight": 11,
+                                "children": [],
+                                "pid": "1264622039642255961"
+                            },
+                            {
+                                "id": "1264622039642256111",
+                                "parentId": "1264622039642255961",
+                                "title": "字典管理",
+                                "value": "/system/sysDictType/index.html",
+                                "icon": null,
+                                "weight": 12,
+                                "children": [],
+                                "pid": "1264622039642255961"
+                            },
+                            {
+                                "id": "1264622039642256271",
+                                "parentId": "1264622039642255961",
+                                "title": "接口文档",
+                                "value": "/doc.html",
+                                "icon": null,
+                                "weight": 13,
+                                "children": [],
+                                "pid": "1264622039642255961"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642256281",
+                        "parentId": "0",
+                        "title": "日志管理",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-log",
+                        "weight": 5,
+                        "children": [
+                            {
+                                "id": "1264622039642256291",
+                                "parentId": "1264622039642256281",
+                                "title": "访问日志",
+                                "value": "/system/sysVisLog/index.html",
+                                "icon": null,
+                                "weight": 14,
+                                "children": [],
+                                "pid": "1264622039642256281"
+                            },
+                            {
+                                "id": "1264622039642256321",
+                                "parentId": "1264622039642256281",
+                                "title": "操作日志",
+                                "value": "/system/sysOpLog/index.html",
+                                "icon": null,
+                                "weight": 15,
+                                "children": [],
+                                "pid": "1264622039642256281"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642256351",
+                        "parentId": "0",
+                        "title": "系统监控",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-chart-screen",
+                        "weight": 6,
+                        "children": [
+                            {
+                                "id": "1264622039642256361",
+                                "parentId": "1264622039642256351",
+                                "title": "服务监控",
+                                "value": "/system/sysMachine/index.html",
+                                "icon": null,
+                                "weight": 16,
+                                "children": [],
+                                "pid": "1264622039642256351"
+                            },
+                            {
+                                "id": "1264622039642256381",
+                                "parentId": "1264622039642256351",
+                                "title": "在线用户",
+                                "value": "/system/sysOnlineUser/index.html",
+                                "icon": null,
+                                "weight": 17,
+                                "children": [],
+                                "pid": "1264622039642256351"
+                            },
+                            {
+                                "id": "1264622039642256411",
+                                "parentId": "1264622039642256351",
+                                "title": "数据监控",
+                                "value": "/druid",
+                                "icon": null,
+                                "weight": 18,
+                                "children": [],
+                                "pid": "1264622039642256351"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642256421",
+                        "parentId": "0",
+                        "title": "通知公告",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-speaker",
+                        "weight": 7,
+                        "children": [
+                            {
+                                "id": "1264622039642256431",
+                                "parentId": "1264622039642256421",
+                                "title": "公告管理",
+                                "value": "/system/sysNotice/index.html",
+                                "icon": null,
+                                "weight": 19,
+                                "children": [],
+                                "pid": "1264622039642256421"
+                            },
+                            {
+                                "id": "1264622039642256501",
+                                "parentId": "1264622039642256421",
+                                "title": "已收公告",
+                                "value": "/system/sysNotice/receivedPage",
+                                "icon": null,
+                                "weight": 20,
+                                "children": [],
+                                "pid": "1264622039642256421"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642256521",
+                        "parentId": "0",
+                        "title": "文件管理",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-file",
+                        "weight": 8,
+                        "children": [
+                            {
+                                "id": "1264622039642256531",
+                                "parentId": "1264622039642256521",
+                                "title": "系统文件",
+                                "value": "/system/sysFileInfo/index.html",
+                                "icon": null,
+                                "weight": 21,
+                                "children": [],
+                                "pid": "1264622039642256521"
+                            },
+                            {
+                                "id": "1264622039642256602",
+                                "parentId": "1264622039642256521",
+                                "title": "在线文档",
+                                "value": "/system/sysFileInfo/onlineindex.html",
+                                "icon": null,
+                                "weight": 21,
+                                "children": [],
+                                "pid": "1264622039642256521"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642256712",
+                        "parentId": "0",
+                        "title": "系统区域",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-location",
+                        "weight": 100,
+                        "children": [
+                            {
+                                "id": "1264622039642256713",
+                                "parentId": "1264622039642256712",
+                                "title": "区域管理",
+                                "value": "/system/sysArea/index.html",
+                                "icon": null,
+                                "weight": 100,
+                                "children": [],
+                                "pid": "1264622039642256712"
+                            },
+                            {
+                                "id": "1264622039642256714",
+                                "parentId": "1264622039642256712",
+                                "title": "区域选择",
+                                "value": "/system/sysArea/select",
+                                "icon": null,
+                                "weight": 100,
+                                "children": [],
+                                "pid": "1264622039642256712"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642256611",
+                        "parentId": "0",
+                        "title": "定时任务",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-console",
+                        "weight": 100,
+                        "children": [
+                            {
+                                "id": "1264622039642256621",
+                                "parentId": "1264622039642256611",
+                                "title": "任务管理",
+                                "value": "/system/sysTimers/index.html",
+                                "icon": null,
+                                "weight": 22,
+                                "children": [],
+                                "pid": "1264622039642256611"
+                            }
+                        ],
+                        "pid": "0"
+                    }
+                ]
+            },
+            {
+                "code": "office",
+                "value": [
+                    {
+                        "id": "1264622039642256721",
+                        "parentId": "0",
+                        "title": "业务流程",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-template",
+                        "weight": 9,
+                        "children": [
+                            {
+                                "id": "1264622039642256731",
+                                "parentId": "1264622039642256721",
+                                "title": "模型管理",
+                                "value": "/flowableModel/index.html",
+                                "icon": null,
+                                "weight": 24,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            },
+                            {
+                                "id": "1264622039642256741",
+                                "parentId": "1264622039642256721",
+                                "title": "定义管理",
+                                "value": "/flowableDefinition/index.html",
+                                "icon": null,
+                                "weight": 24,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            },
+                            {
+                                "id": "1264622039642257041",
+                                "parentId": "1264622039642256721",
+                                "title": "分类管理",
+                                "value": "/flowableCategory/index.html",
+                                "icon": null,
+                                "weight": 25,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            },
+                            {
+                                "id": "1264622039642257111",
+                                "parentId": "1264622039642256721",
+                                "title": "表单管理",
+                                "value": "/flowableFormResource/index.html",
+                                "icon": null,
+                                "weight": 26,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            },
+                            {
+                                "id": "1264622039642257171",
+                                "parentId": "1264622039642256721",
+                                "title": "脚本管理",
+                                "value": "/flowableScript/index.html",
+                                "icon": null,
+                                "weight": 27,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            },
+                            {
+                                "id": "1264622039642257232",
+                                "parentId": "1264622039642256721",
+                                "title": "入口管理",
+                                "value": "/flowableShortcut/index.html",
+                                "icon": null,
+                                "weight": 28,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            },
+                            {
+                                "id": "1264622039642257241",
+                                "parentId": "1264622039642256721",
+                                "title": "实例管理",
+                                "value": "/flowableInstance/index.html",
+                                "icon": null,
+                                "weight": 29,
+                                "children": [],
+                                "pid": "1264622039642256721"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642257321",
+                        "parentId": "0",
+                        "title": "在线办公",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-survey",
+                        "weight": 10,
+                        "children": [
+                            {
+                                "id": "1264622039642257331",
+                                "parentId": "1264622039642257321",
+                                "title": "我的任务",
+                                "value": "javascript:;",
+                                "icon": null,
+                                "weight": 30,
+                                "children": [
+                                    {
+                                        "id": "1264622039642257341",
+                                        "parentId": "1264622039642257331",
+                                        "title": "待办任务",
+                                        "value": "/flowableTodoTask/index.html",
+                                        "icon": null,
+                                        "weight": 1,
+                                        "children": [],
+                                        "pid": "1264622039642257331"
+                                    },
+                                    {
+                                        "id": "1264622039642257471",
+                                        "parentId": "1264622039642257331",
+                                        "title": "已办任务",
+                                        "value": "/flowableDoneTask/index.html",
+                                        "icon": null,
+                                        "weight": 2,
+                                        "children": [],
+                                        "pid": "1264622039642257331"
+                                    }
+                                ],
+                                "pid": "1264622039642257321"
+                            },
+                            {
+                                "id": "1264622039642257491",
+                                "parentId": "1264622039642257321",
+                                "title": "我的申请",
+                                "value": "javascript:;",
+                                "icon": null,
+                                "weight": 31,
+                                "children": [
+                                    {
+                                        "id": "1264622039642257501",
+                                        "parentId": "1264622039642257491",
+                                        "title": "起草申请",
+                                        "value": "/flowableShortcut/applyindex.html",
+                                        "icon": null,
+                                        "weight": 100,
+                                        "children": [],
+                                        "pid": "1264622039642257491"
+                                    },
+                                    {
+                                        "id": "1264622039642257522",
+                                        "parentId": "1264622039642257491",
+                                        "title": "申请草稿",
+                                        "value": "/flowableDraft/index.html",
+                                        "icon": null,
+                                        "weight": 100,
+                                        "children": [],
+                                        "pid": "1264622039642257491"
+                                    },
+                                    {
+                                        "id": "1264622039642257531",
+                                        "parentId": "1264622039642257491",
+                                        "title": "已发申请",
+                                        "value": "/flowableInstance/myindex.html",
+                                        "icon": null,
+                                        "weight": 100,
+                                        "children": [],
+                                        "pid": "1264622039642257491"
+                                    }
+                                ],
+                                "pid": "1264622039642257321"
+                            }
+                        ],
+                        "pid": "0"
+                    }
+                ]
+            },
+            {
+                "code": "experience",
+                "value": [
+                    {
+                        "id": "1264622039642257671",
+                        "parentId": "0",
+                        "title": "支付管理",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-rmb",
+                        "weight": 100,
+                        "children": [
+                            {
+                                "id": "1264622039642257681",
+                                "parentId": "1264622039642257671",
+                                "title": "支付体验",
+                                "value": "/pay/index.html",
+                                "icon": "",
+                                "weight": 100,
+                                "children": [],
+                                "pid": "1264622039642257671"
+                            },
+                            {
+                                "id": "1264622039642257691",
+                                "parentId": "1264622039642257671",
+                                "title": "支付订单",
+                                "value": "/aliPayMgr/index.html",
+                                "icon": null,
+                                "weight": 100,
+                                "children": [],
+                                "pid": "1264622039642257671"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642257641",
+                        "parentId": "0",
+                        "title": "多数据源",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-app",
+                        "weight": 100,
+                        "children": [
+                            {
+                                "id": "1264622039642257642",
+                                "parentId": "1264622039642257641",
+                                "title": "数据源管理",
+                                "value": "/databaseInfo/index.html",
+                                "icon": null,
+                                "weight": 100,
+                                "children": [],
+                                "pid": "1264622039642257641"
+                            }
+                        ],
+                        "pid": "0"
+                    },
+                    {
+                        "id": "1264622039642257651",
+                        "parentId": "0",
+                        "title": "SaaS租户",
+                        "value": "javascript:;",
+                        "icon": "layui-icon-templeate-1",
+                        "weight": 100,
+                        "children": [
+                            {
+                                "id": "1264622039642257652",
+                                "parentId": "1264622039642257651",
+                                "title": "租户管理",
+                                "value": "/tenantInfo/index.html",
+                                "icon": null,
+                                "weight": 100,
+                                "children": [],
+                                "pid": "1264622039642257651"
+                            }
+                        ],
+                        "pid": "0"
+                    }
+                ]
+            },
+            {
+                "code": "systool",
+                "value": [
+                    {
+                        "id": "1338864007892807681",
+                        "parentId": "0",
+                        "title": "代码生成",
+                        "value": "/generate/index.html",
+                        "icon": "layui-icon-app",
+                        "weight": 1,
+                        "children": [],
+                        "pid": "0"
+                    }
+                ]
+            }
+        ],
+        "dataScopes": [],
+        "tenants": null,
+        "enabled": true,
+        "password": null,
+        "authorities": [],
+        "username": "superAdmin",
+        "accountNonExpired": true,
+        "accountNonLocked": true,
+        "credentialsNonExpired": true
+    }
+}

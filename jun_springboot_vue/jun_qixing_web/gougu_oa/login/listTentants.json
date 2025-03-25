@@ -1,0 +1,17 @@
+{
+    "success": true,
+    "code": 200,
+    "message": "请求成功",
+    "data": [
+        {
+            "createTime": null,
+            "createUser": null,
+            "updateTime": null,
+            "updateUser": null,
+            "id": null,
+            "name": "总公司（管理单位）",
+            "code": "default",
+            "dbName": null
+        }
+    ]
+}

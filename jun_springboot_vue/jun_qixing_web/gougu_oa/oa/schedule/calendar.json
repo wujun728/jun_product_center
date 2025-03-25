@@ -1,0 +1,28 @@
+[
+    {
+        "id": 198,
+        "labor_time": "3.00",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[3.00工时] 111",
+        "start": "2024-01-12 09:00:00",
+        "end": "2024-01-12 12:00:00"
+    },
+    {
+        "id": 199,
+        "labor_time": "6.00",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[6.00工时] 333",
+        "start": "2024-01-12 13:00:00",
+        "end": "2024-01-12 19:00:00"
+    },
+    {
+        "backgroundColor": "#eeeeee",
+        "borderColor": "#eeeeee",
+        "id": 0,
+        "title": "【当天总工时：9】",
+        "start": "2024-01-12",
+        "end": "2024-01-12"
+    }
+]

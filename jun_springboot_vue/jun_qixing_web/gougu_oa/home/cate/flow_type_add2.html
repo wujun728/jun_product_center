@@ -1,0 +1,123 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<form class="layui-form p-4">
+	<h3 class="pb-3">审批类型</h3>
+	{eq name="$id" value="0"}
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">所属分类<font>*</font></td>
+			<td>
+				<select name="type" lay-verify="required" lay-reqText="请选择所属分类">
+				  <option value="">--请选择--</option>
+				  {volist name="$type" id="vo"}
+				  <option value="{$vo.id}">{$vo.title}</option>
+				  {/volist}
+				</select>
+			</td>
+			<td class="layui-td-gray">名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" autocomplete="off" placeholder="请输入审批类型名称" lay-verify="required" lay-reqText="请输入审批类型名称" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">应用部门</td>
+			<td colspan="3">
+				<div class="layui-input-inline" style="width:360px;">
+					<select id="department_ids" name="department_ids" xm-selected="" xm-select="select1" xm-select-skin="default"></select>
+				</div>
+				<span class="red" style="font-size:12px;">（如果不选，默认是全公司）</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">标识<font>*</font></td>
+			<td>
+				<input type="text" name="name" placeholder="请输入审批类型标识" value="" autocomplete="off" lay-verify="required" lay-reqText="请输入审批类型标识" class="layui-input">
+			</td>
+			<td class="layui-td-gray">图标<font>*</font></td>
+			<td>
+				<input style="width:200px; display:inline" class="layui-input" type="text" name="icon" value="" placeholder="请输入审批类型图标" lay-verify="required" lay-reqText="请输入审批类型图标" >			
+				如：icon-jichupeizhi<a href="{__GOUGU__}/icon/index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				<span style="color: red; font-size: 12px;">注意：新增审批类型以后，需要对应新增模板文件，模板文件名称需与标识名称一致，建议复制现有的审批类型模板文件，然后根据需求修改对应的表单即可。</span>
+			</td>
+		</tr>
+	</table>
+	{else/}
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">所属分类<font>*</font></td>
+			<td>
+				<select name="type" lay-verify="required" lay-reqText="请选择所属分类">
+				  <option value="">--请选择--</option>
+				  {volist name="$type" id="vo"}
+				  <option value="{$vo.id}" {eq name="$detail.type" value="$vo.id"}selected=""{/eq}>{$vo.title}</option>
+				  {/volist}
+				</select>
+			</td>
+			<td class="layui-td-gray">名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" value="{$detail.title}" placeholder="请输入审批类型名称" lay-verify="required" lay-reqText="请输入审批类型名称" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">应用部门</td>
+			<td colspan="3">
+				<div class="layui-input-inline" style="width:360px;">
+					<select id="department_ids" name="department_ids" xm-selected="{$detail.department_ids}" xm-select="select1" xm-select-skin="default"></select>
+				</div>
+				<span class="red" style="font-size:12px;">（如果不选，默认是全公司）</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">标识<font>*</font></td>
+			<td>
+				<input type="text" name="name" placeholder="请输入审批类型标识" value="{$detail.name}" autocomplete="off" lay-verify="required" lay-reqText="请输入审批类型标识" class="layui-input">
+			</td>
+			<td class="layui-td-gray">图标<font>*</font></td>
+			<td>
+				<input style="width:200px; display:inline" class="layui-input" type="text" name="icon" value="{$detail.icon}" placeholder="请输入审批类型图标" lay-verify="required" lay-reqText="请输入审批类型图标" >			
+				<strong class="iconfont {$detail.icon}"></strong><a href="{__GOUGU__}/icon/index.html" target="_blank" style="margin-left:10px; color:#007AFF">[查看图标]</a>
+			</td>
+		</tr>
+	</table>
+	{/eq}
+	<div class="py-3">
+		<input type="hidden" name="id" value="{$id}">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','formSelects'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,formSelects=layui.formSelects;
+		//选择应用部门
+		var selcted = $('#department_ids').attr('xm-selected');
+		formSelects.data('select1', 'server', {
+			url: '/api/index/get_department_select',
+			keyword: selcted,
+		});		
+		//监听提交
+		form.on('submit(webform)', function(data){
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);				
+				}
+			}
+			tool.post("/home/cate/flow_type_add", data.field, callback);
+			return false;
+		});
+	}
+</script>
+{/block}
+<!-- /脚本 -->
