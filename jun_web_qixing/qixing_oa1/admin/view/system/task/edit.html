@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../component/pear/css/pear.css"/>
+</head>
+<body>
+<form class="layui-form" action="" lay-filter="edit">
+    <div class="mainBox">
+        <div class="main-container">
+
+            <!-- id隐藏列 -->
+            <div class="layui-form-item layui-hide">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="taskId">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务编码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="taskCode" lay-verify="title" autocomplete="off"
+                           placeholder="请输入"
+                           class="layui-input layui-disabled" disabled>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="taskName" lay-verify="title" autocomplete="off"
+                           placeholder="请输入"
+                           class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">任务类名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="taskClassName" lay-verify="title" autocomplete="off"
+                           placeholder="请输入"
+                           class="layui-input layui-disabled" disabled>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">cron表达式</label>
+                <div class="layui-input-block">
+                    <input type="text" name="taskCron" lay-verify="title" autocomplete="off"
+                           placeholder="请输入"
+                           class="layui-input">
+                </div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">启用状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="enable" value="1" title="开启">
+                    <input type="radio" name="enable" value="0" title="关闭">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit lay-filter="save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="pear-btn pear-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="../../../component/layui/layui.js"></script>
+<script src="../../../component/pear/pear.js"></script>
+
+<script>
+    layui.use(['easyAdmin'], function () {
+        let module = "task";
+        let uri = "/sys/" + module;
+        let easyAdmin = layui.easyAdmin;
+        easyAdmin.FormVal(uri);
+        easyAdmin.FormSave(uri);
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

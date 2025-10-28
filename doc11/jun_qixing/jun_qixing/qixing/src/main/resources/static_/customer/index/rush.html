@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="layui-row gg-form-bar border-x border-t">
+		<div class="layui-input-inline"><button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="webform">换一批客户</button></div>
+		<div class="layui-input-inline red">每点击一次随机获取20个公海客户的信息，每天最多可抢<strong class="mx-1">100</strong>个客户，你今天已抢了<strong class="mx-1" id="count">1</strong>个客户</div>
+    </div>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var table = layui.table, tool = layui.tool ,form = layui.form;
+		layui.pageTable = table.render({
+			elem: '#test',
+			title: '抢客宝列表',
+			toolbar: false,
+			defaultToolbar: false,
+			url: "/customer/index/rush.json", //数据接口
+			cellMinWidth: 80,
+			page: false, //开启分页
+			limit: 20,
+			height: 'full-114',
+			cols: [
+				[ //表头
+					{
+						field: 'id',title: 'ID号',align: 'center',width: 80
+					},{
+						field: 'name',
+						title: '客户名称',
+						minWidth:240,
+						templet: '<div><a data-href="/customer/customer/view/id/{{d.id}}.html" class="side-a">{{d.name}}</a></div>'
+					},{
+						field: 'contact_name',
+						title: '联系人',
+						align: 'center',
+						width: 80
+					},{
+						field: 'contact_mobile',
+						title: '手机号码',
+						align: 'center',
+						width: 100
+					},{
+						field: 'contact_email',
+						title: '电子邮箱',
+						width: 200
+					},{
+						field: 'grade',
+						title: '客户等级',
+						align: 'center',
+						width: 100
+					},{
+						field: 'source',
+						title: '来源渠道',
+						align: 'center',
+						width: 100
+					},{
+						field: 'industry',
+						title: '所属行业',
+						align: 'center',
+						width: 120
+					},{
+						field: 'create_time',
+						title: '创建时间',
+						align: 'center',
+						width: 150
+					},{
+						field: 'update_time',
+						title: '最后编辑时间',
+						align: 'center',
+						width: 150
+					},{
+						field: 'right',
+						fixed:'right',
+						title: '操作',
+						width: 80,
+						align: 'center',
+						templet: function (d) {
+							if(login_admin==1){
+								return '-';
+							}
+							else{
+								return '<span class="layui-btn layui-btn-xs" lay-event="get">领取客户</span>';
+							}
+						}						
+					}
+				]
+			]
+		});
+		
+		//监听行工具事件
+		table.on('tool(test)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'get') {
+				layer.confirm('确定要获取该客户?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pageTable.reload();
+							let count =$('#count').text();
+							$('#count').html(++count);
+						}
+					}
+					tool.post("/customer/index/to_get", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+		});
+
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload();
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

@@ -1,0 +1,9 @@
+baseDAOPackage
+baseServicePackage
+baseServiceImplPackage
+basePackage
+
+
+entityName
+entityName_first_lowcase
+entityName_all_lowcase

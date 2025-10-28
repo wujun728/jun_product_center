@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">新增办公用品申领</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">办公用品名称<font>*</font></td>
+			<td>
+				<input type="text" name="offiecProductName" id="offiecProductName" lay-verify="required" lay-reqText="请输入办公用品名称" placeholder="请输入办公用品名称" class="layui-input" lay-max="255">
+			</td>
+			<td class="layui-td-gray">办公用品类型<font>*</font></td>
+			<td>
+				<select id="dictProductType" name="dictProductType" lay-verify="required" lay-reqText="请选择办公用品类型">
+					<option value="">请选择办公用品类型</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">办公用品用途</td>
+			<td>
+				<textarea name="officeTodo" id="officeTodo" placeholder="请输入办公用品用途" class="layui-textarea" lay-max="255"></textarea>
+			</td>
+			<td class="layui-td-gray">需求数量</td>
+			<td>
+				<input type="text" name="reqNum" id="reqNum" placeholder="请输入需求数量" class="layui-input" lay-max="255">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">申请原因</td>
+			<td colspan="3">
+				<textarea name="whyDesc" id="whyDesc" placeholder="请输入申请原因" class="layui-textarea" lay-max="255"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">
+				<textarea name="remark" id="remark" placeholder="请输入备注" class="layui-textarea" lay-max="255"></textarea>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-4">
+		<input type="hidden" name="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="btn_cancel">取消</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','oaPicker'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, xnUtil = layui.xnUtil;
+		var numberInput = layui.numberInput;
+		
+		//加载办公用品类型字典数据
+		var dictProductTypeData = xnUtil.getDictDataByDictTypeCode('dict_product_type', null);
+		var dictProductTypeSelect = xnUtil.renderDictSelect("dictProductType", dictProductTypeData);
+		
+		//数字输入框初始化
+		numberInput.render("#reqNum", {
+			autoSelcet: false,
+			max: 10000000,
+			min: 0,
+			step: 1,
+			precision: 0
+		});
+		
+		//表单验证规则
+		form.verify({
+			offiecProductName: function(value, item){
+				var max = item.getAttribute('lay-max');
+				if(value.length > max){
+					return '办公用品名称不能大于'+max+'个字符的长度！';
+				}
+			}
+			, dictProductType: function(value, item){
+				var max = item.getAttribute('lay-max');
+				if(value.length > max){
+					return '办公用品类型不能大于'+max+'个字符的长度！';
+				}
+			}
+			, officeTodo: function(value, item){
+				var max = item.getAttribute('lay-max');
+				if(value.length > max){
+					return '办公用品用途不能大于'+max+'个字符的长度！';
+				}
+			}
+			, reqNum: function(value, item){
+				var max = item.getAttribute('lay-max');
+				if(value.length > max){
+					return '需求数量不能大于'+max+'个字符的长度！';
+				}
+			}
+			, whyDesc: function(value, item){
+				var max = item.getAttribute('lay-max');
+				if(value.length > max){
+					return '申请原因不能大于'+max+'个字符的长度！';
+				}
+			}
+			, remark: function(value, item){
+				var max = item.getAttribute('lay-max');
+				if(value.length > max){
+					return '备注不能大于'+max+'个字符的长度！';
+				}
+			}
+		});
+		
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000,'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/qixing_oa1/oaofficecount2/add", data.field, callback, clickbtn);
+			return false;
+		});
+		
+		//取消按钮事件
+		$("#btn_cancel").click(function() {
+			tool.sideClose();
+			return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

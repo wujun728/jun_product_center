@@ -1,0 +1,282 @@
+{
+    "trees": [
+        {
+            "id": 1,
+            "title": "董事会",
+            "pid": 0,
+            "leader_ids": "10",
+            "phone": "",
+            "sort": 0,
+            "remark": "",
+            "status": 1,
+            "create_time": 0,
+            "update_time": 1734567369,
+            "checkArr": {
+                "type": 0,
+                "isChecked": 0
+            },
+            "spread": true,
+            "level": 1,
+            "children": [
+                {
+                    "id": 2,
+                    "title": "人事部",
+                    "pid": 1,
+                    "leader_ids": "2",
+                    "phone": "",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1734567061,
+                    "checkArr": {
+                        "type": 0,
+                        "isChecked": 0
+                    },
+                    "spread": false,
+                    "level": 2
+                },
+                {
+                    "id": 3,
+                    "title": "财务部",
+                    "pid": 1,
+                    "leader_ids": "6",
+                    "phone": "",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1734567307,
+                    "checkArr": {
+                        "type": 0,
+                        "isChecked": 0
+                    },
+                    "spread": false,
+                    "level": 2
+                },
+                {
+                    "id": 4,
+                    "title": "市场部",
+                    "pid": 1,
+                    "leader_ids": "8",
+                    "phone": "",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1734567315,
+                    "checkArr": {
+                        "type": 0,
+                        "isChecked": 0
+                    },
+                    "spread": false,
+                    "level": 2
+                },
+                {
+                    "id": 5,
+                    "title": "销售部",
+                    "pid": 1,
+                    "leader_ids": "24",
+                    "phone": "",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1734567323,
+                    "checkArr": {
+                        "type": 0,
+                        "isChecked": 0
+                    },
+                    "spread": false,
+                    "level": 2,
+                    "children": [
+                        {
+                            "id": 8,
+                            "title": "销售一部",
+                            "pid": 5,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 0,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        },
+                        {
+                            "id": 9,
+                            "title": "销售二部",
+                            "pid": 5,
+                            "leader_ids": "",
+                            "phone": "   ",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1747184477,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        },
+                        {
+                            "id": 10,
+                            "title": "销售三部",
+                            "pid": 5,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 1747184470,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        }
+                    ]
+                },
+                {
+                    "id": 6,
+                    "title": "技术部",
+                    "pid": 1,
+                    "leader_ids": "23",
+                    "phone": "",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1734567335,
+                    "checkArr": {
+                        "type": 0,
+                        "isChecked": 0
+                    },
+                    "spread": false,
+                    "level": 2,
+                    "children": [
+                        {
+                            "id": 11,
+                            "title": "产品部",
+                            "pid": 6,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 0,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        },
+                        {
+                            "id": 12,
+                            "title": "设计部",
+                            "pid": 6,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 0,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        },
+                        {
+                            "id": 13,
+                            "title": "研发部",
+                            "pid": 6,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 0,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        }
+                    ]
+                },
+                {
+                    "id": 7,
+                    "title": "客服部",
+                    "pid": 1,
+                    "leader_ids": "74",
+                    "phone": "",
+                    "sort": 0,
+                    "remark": "",
+                    "status": 1,
+                    "create_time": 0,
+                    "update_time": 1734567344,
+                    "checkArr": {
+                        "type": 0,
+                        "isChecked": 0
+                    },
+                    "spread": false,
+                    "level": 2,
+                    "children": [
+                        {
+                            "id": 14,
+                            "title": "客服一部",
+                            "pid": 7,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 0,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        },
+                        {
+                            "id": 15,
+                            "title": "客服二部",
+                            "pid": 7,
+                            "leader_ids": "",
+                            "phone": "",
+                            "sort": 0,
+                            "remark": "",
+                            "status": 1,
+                            "create_time": 0,
+                            "update_time": 0,
+                            "checkArr": {
+                                "type": 0,
+                                "isChecked": 0
+                            },
+                            "spread": false,
+                            "level": 3
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

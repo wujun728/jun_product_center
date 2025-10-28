@@ -1,0 +1,32 @@
+﻿{
+  "base": {
+    "name": "苹果大数据后台管理系统",  
+    "url": "http://192.168.1.6:8124/appleBackStageManagement/html/produce_world.html", 
+    "desc": "便于管理苹果大数据前台页面的展示,监控苹果生产,销售等过程中的风险"
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-09-25",
+    "actualEndTime": "未定",
+    "estimatedStartTime": "2017-09-25",
+    "estimatedEndTime": "2017-10-30",
+    "process":70,                    
+    "delay": false,
+    "technology":["jquery","echarts"]
+  },
+  "resources": {
+    "demander": "农业部信息中心",     
+    "type":"独立纵队",			
+    "manager":"陈乃赫",                 
+    "charge": "李鹏飞",                 
+    "affiliate": ["彭庆凯","邵金东"]
+  },
+  "bug": {
+    "total": 0,                
+    "resolved": 0,             
+    "unsolved": 0                
+  },
+  "others": {
+    "remark": "暂无"
+  }
+}

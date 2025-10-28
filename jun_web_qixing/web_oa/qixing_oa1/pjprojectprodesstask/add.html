@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>新增生产任务 - 勾股OA</title>			
+
+
+	<meta name="keywords" content="生产任务,新增生产任务,勾股OA"/>
+	<meta name="description" content="勾股OA系统 - 生产任务新增页面"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">新增生产任务</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">项目名称<font>*</font>
+			</td>
+			<td colspan="3">
+				<input type="text" name="refProjectName" id="refProjectName" lay-verify="required" lay-reqText="请输入项目名称" placeholder="请输入项目名称" class="layui-input" readonly value="">
+				<input type="hidden" name="refProjectCode" id="refProjectCode" value="" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">任务名称<font>*</font>
+			</td>
+			<td colspan="3">
+				<input type="text" name="taskName" id="taskName" lay-verify="required" lay-reqText="请输入任务名称" placeholder="请输入任务名称" class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">任务内容</td>
+			<td colspan="3">
+				<textarea name="taskContent" id="taskContent" placeholder="请输入任务内容" class="layui-textarea" style="height:150px;"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">耗时(小时)</td>
+			<td>
+				<input type="text" name="costTime" id="costTime" placeholder="请输入耗时(小时)" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">费用(元)</td>
+			<td>
+				<input type="text" name="costMoney" id="costMoney" placeholder="请输入费用(元)" class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">任务进度(%)</td>
+			<td>
+				<input type="text" name="taskProgress" id="taskProgress" placeholder="请输入任务进度(%)" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">任务状态</td>
+			<td>
+				<select id="taskStatus" name="taskStatus" lay-filter="taskStatus">
+					<option value="">请选择任务状态</option>
+					<option value="未开始">未开始</option>
+					<option value="进行中">进行中</option>
+					<option value="已完成">已完成</option>
+					<option value="已逾期">已逾期</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">开始时间</td>
+			<td>
+				<input type="text" name="taskTimeStart" id="taskTimeStart" placeholder="请选择开始时间" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">结束时间</td>
+			<td>
+				<input type="text" name="taskTimeEnd" id="taskTimeEnd" placeholder="请选择结束时间" class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">备注</td>
+			<td colspan="3">
+			  <textarea name="remark" placeholder="请输入备注" class="layui-textarea" id="remark" style="height:100px;"></textarea>
+			</td>
+		</tr>
+	</table>
+		<div class="pt-4">
+		<input type="hidden" name="id" id="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tableSelect','numberInput','laydate'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,laydate=layui.laydate;
+		var numberInput = layui.numberInput;
+		
+		//日期选择器
+		laydate.render({
+			elem: '#taskTimeStart'
+		});
+		laydate.render({
+			elem: '#taskTimeEnd'
+			,type: 'date'
+		});
+
+		//数值输入框
+		numberInput.render({
+			elem: '#costTime'
+			,min: 0
+			,max: 999999999
+			,step: 0.5
+		});
+		numberInput.render({
+			elem: '#costMoney'
+			,min: 0
+			,max: 999999999
+			,step: 0.01
+		});
+		numberInput.render({
+			elem: '#taskProgress'
+			,min: 0
+			,max: 100
+			,step: 1
+		});
+
+		//项目选择
+		$("#refProjectName").on('click', function() {
+			tool.tableSelect({
+				title: '选择项目',
+				url: "/qixing_oa1/pjproject/listBySelect",
+				cols: [[
+					{type: 'radio'},
+					{field: 'projectName', title: '项目名称'},
+					{field: 'projectCode', title: '项目编号'}
+				]],
+				done: function(data) {
+					if(data.length > 0) {
+						$("#refProjectName").val(data[0].projectName);
+						$("#refProjectCode").val(data[0].projectCode);
+					}
+				}
+			});
+		});
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000,'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/qixing_oa1/pjprojectprodesstask/add", data.field, callback, clickbtn);
+			return false;
+		});
+
+		//返回按钮
+		$("#btn_cancel").click(function() {
+			tool.sideClose();
+			return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

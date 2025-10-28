@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "潍坊政务进度APP",
+    "url": "http://192.168.1.6:8124/ProcessApp/html/index.html",
+    "desc": "以手机便捷办公方式，贯穿招商项目的提报、推送、审批、调度、分析、督查、反馈、决策等全业务流程；分步实施系统数据，先重大项目，后其他项目，对市领导、部门领导关注的项目实时推送；统筹全市招商工作流程相关数据的实时联动，加快推进全市招商项目的洽谈、落地和建设。",
+    "mobile":true
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-09-21",
+    "actualEndTime": "",
+    "estimatedStartTime": "2017-09-15",
+    "estimatedEndTime": "2017-10-15",
+    "process": 80,
+    "delay": false,
+    "technology":["jQuery","rem"]
+  },
+  "resources": {
+    "demander": "",
+    "type":"合资公司",
+    "manager":"张国良",
+    "charge": "褚甜甜",
+    "affiliate": ["李妮"]
+  },
+  "bug": {
+    "total": 0,
+    "resolved": 0,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "已优化部分，部分色值已和项目经理确认不做修改.新增需求还在讨论中"
+  }
+}

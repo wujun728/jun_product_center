@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.tab-1 .user-name,.tab-2 .user-name{display:none;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+
+<div class="p-page">
+	<div class="layui-card border-x border-t" style="margin-bottom:0; box-shadow:0 0 0 0 rgb(5 32 96 / 0%)">
+		<div class="body-table layui-tab layui-tab-brief" lay-filter="tab">
+			<ul class="layui-tab-title">
+				<li class="layui-this">全部客户</li>
+				<li>我的客户</li>				
+				<li >下属客户</li>				
+				<li>共享客户</li>
+			</ul>
+		</div>
+	</div>
+	<form class="layui-form gg-form-bar border-x tab-0" id="barsearchform" lay-filter="barsearchform">
+		<div class="layui-input-inline" style="width:172px;">
+			<input type="text" class="layui-input" data-range="~" placeholder="最近跟进日期" readonly name="follow_time" id="follow_time">
+		</div>
+		<div class="layui-input-inline" style="width:172px;">
+			<input type="text" class="layui-input" data-range="~" placeholder="下次跟进日期" readonly name="next_time" id="next_time">
+		</div>
+		<div class="layui-input-inline" style="width:100px;">
+			<select name="industry_id">
+				<option value="">所属行业</option>
+								<option value="1">工业品企业</option>
+								<option value="2">互联网企业</option>
+								<option value="3">服务行业</option>
+								<option value="4">消费品企业</option>
+								<option value="5">原材料企业</option>
+								<option value="6">农业企业</option>
+								<option value="7">科技企业</option>
+								<option value="8">其他行业</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:100px;">
+			<select name="grade_id">
+				<option value="">客户等级</option>
+								<option value="1">普通客户</option>
+								<option value="2">VIP客户</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:100px;">
+			<select name="source_id">
+				<option value="">渠道来源</option>
+								<option value="1">独立开发</option>
+								<option value="2">微信公众号</option>
+								<option value="3">今日头条</option>
+								<option value="4">百度搜索</option>
+								<option value="5">销售活动</option>
+								<option value="6">电话来访</option>
+								<option value="7">客户介绍</option>
+								<option value="8">其他来源</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:100px;">
+			<select name="customer_status">
+				<option value="">客户状态</option>
+								<option value="1">新进客户</option>
+								<option value="2">跟进客户</option>
+								<option value="3">正式客户</option>
+								<option value="4">流失客户</option>
+								<option value="5">成交客户</option>
+							</select>
+		</div>
+		<div class="layui-input-inline" style="width:100px;">
+			<select name="intent_status">
+				<option value="">客户意向</option>
+								<option value="6">意向不明</option>
+								<option value="7">意向一般</option>
+								<option value="8">意向强烈</option>
+							</select>
+		</div>
+				<div class="layui-input-inline user-name" style="width:100px;">
+			<input type="text" name="username" placeholder="下属员工" class="layui-input picker-sub" readonly />
+			<input type="text" name="uid" value="" style="display:none" />	
+		</div>
+				<div class="layui-input-inline" style="width:188px;">
+			<input type="text" name="keywords" placeholder="输入关键字,客户名称" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:148px">
+			<input type="hidden" name="tab" value="0" />
+			<input type="hidden" name="order_field" value=''>
+			<input type="hidden" name="order_type" value=''>
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="table_customer" lay-filter="table_customer"></table>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+<div class="layui-btn-group">
+  	<button class="layui-btn layui-btn-sm tool-add" type="button" data-href="/customer/customer/add.html">+ 添加客户</button>
+	<button class="layui-btn layui-btn-normal layui-btn-sm" lay-event="import"><i class="layui-icon">&#xe66f;</i>批量导入</button>
+  </div>
+</script>
+
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const is_leader = '1';
+	const moduleInit = ['tool','tablePlus','oaPicker','uploadPlus','laydatePlus'];
+	function gouguInit() {
+		var table = layui.tablePlus, tool = layui.tool ,form = layui.form,element = layui.element, oaPicker = layui.oaPicker,uploadPlus=layui.uploadPlus,laydatePlus=layui.laydatePlus;
+		var follow_time = new laydatePlus({'target':'follow_time'});
+		var next_time = new laydatePlus({'target':'next_time'});
+		//tab切换
+		element.on('tab(tab)', function(data){
+			$('[name="tab"]').val(data.index);
+			$("#barsearchform")[0].reset();
+			$("#barsearchform").attr('class','layui-form gg-form-bar border-x tab-'+data.index);
+			let searchObject = form.val('barsearchform');
+			layui.pageTable.reload({where:searchObject,page:{curr:1}});
+			return false;
+		});
+		layui.pageTable = table.render({
+			elem: "#table_customer"
+			,title: '公海客户列表'
+			,toolbar: "#toolbarDemo"
+			// ,url: "/customer/customer/datalist.json"
+			,url: "/dev-api/rest/pjCustomer/page/"
+			,page: true
+			,limit: 20
+			,cellMinWidth: 80
+			,height: 'full-154'
+			,autoSort: false
+			,cols:[
+				[ //表头
+					{
+						field: 'id',title: 'ID号',align: 'center',sort: true,width: 80
+					},{
+						field: 'customerName',
+						title: '客户名称',
+						minWidth:300,
+						templet: function (d) {
+							// return '<span class="layui-color-' + d.grade_id + '">『' + d.grade + '』</span>'+d.customerName
+							return  d.customerName
+						}
+					},
+					
+					{field: 'id', title: '客户ID', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerName', title: '客户名称', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerCode', title: '客户编码', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'dictCustomerType', title: '客户类型', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'phone', title: '公司电话', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'financialManager', title: '财务经理', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'fphone', title: '财务经理电话', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerLinks', title: '客户联系信息', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerBusiness', title: '客户营业信息', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'busineslicense', title: '营业执照', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'conpanyName', title: '公司全称', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'busineslicenseNo', title: '营业执照编码', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'legalRepresentative', title: '法定代表人', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'registeredCapital', title: '注册资本', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerAddress', title: '客户地址', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'dictCompanyType', title: '公司类型', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'companyBegin', title: '公司始建于', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'paiclupCapital', title: '实收资本', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'businesscope', title: '经营范围', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'businesterstart', title: '营业期限开始', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'businesterend', title: '营业期限结束', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'registrationAuthority', title: '登记机关', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'licensingDay', title: '执照发放日', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerBillingInformation', title: '客户开票信息', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'taxRegNumber', title: '纳税人识别号', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'dutyParagraph', title: '税号', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'openingBank', title: '开户行', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'accountNumber', title: '账号', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'telephone', title: '电话', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'companyAddress', title: '公司地址', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'dictIoldCustomer', title: '是否老客户', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerRespPerson', title: '客户对接责任人', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'customerRelationPerson', title: '客户关系维护责任人', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'remark', title: '备注信息', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'creator', title: '', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'createTime', title: '创建时间', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'createId', title: '创建人', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'updateTime', title: '更新时间', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'updateId', title: '更新人', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'deleted', title: '是否弃用', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'financialManager1', title: '财务经理1', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'fphone1', title: '财务经理电话1', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'financialManager2', title: '财务经理2', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'fphone2', title: '财务经理电话2', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'orderId', title: '', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'orderStatus', title: '', align: 'center', width: 100,sort: true,hide: false},  
+                    {field: 'editor', title: '编辑权限人员', align: 'center', width: 100,sort: true,hide: false}, 
+					
+					
+					{
+						field: 'belong_name',
+						title: '所属员工',
+						align: 'center',
+						width: 80
+					},{
+						field: 'belong_department',
+						title: '所属部门',
+						align: 'center',
+						width: 90
+					},{
+						field: 'create_time',
+						title: '创建时间',
+						align: 'center',
+						width: 150
+					},{
+						field: 'right',
+						fixed:'right',
+						title: '操作',
+						width: 142,
+						align: 'center',
+						templet: function (d) {
+							var html = '<div class="layui-btn-group">';
+							var btn0='<span class="layui-btn layui-btn-xs layui-bg-blue" lay-event="view">查看</span>';
+							var btn1='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+							var btn2='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove">移入公海</span>';
+							if(d.belong_uid == login_admin && d.is_lock==0){
+								return html+btn0+btn1+btn2+'</div>';
+							}
+							else{
+								return html+btn0+'</div>';
+							}
+						}						
+					}
+				]
+			]
+		});
+			
+		//表头工具栏事件
+		table.on('toolbar(table_customer)', function(obj){
+			if (obj.event === 'import') {
+				let importUpload = new uploadPlus({
+					"title":'批量导入客户',
+					"use":'import',
+					"url":'/api/import/import_customer/type/my',
+					"import":{
+						"template":'/static/home/file/勾股OA客户导入模板.xlsx',
+						"tips":'如果导入失败，请根据提示注意检查表格数据，客户来源、所属行业、需要是系统中存在的数据，如果不存在的话可能会导入失败。'
+					},
+					callback:function(res){
+						layui.pageTable.reload();
+					}
+				});	
+				return;				
+			}
+		});	
+			
+		table.on('tool(table_customer)',function (obj) {
+			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/customer/customer/view.html?id="+data.id);
+				return;
+			}
+			if (obj.event === 'edit') {
+				tool.side("/customer/customer/add.html?id="+data.id);
+				return;
+			}
+			if (obj.event === 'remove') {
+				layer.confirm('确定把该客户移入公海吗?', { icon: 3, title: '提示' }, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/customer/index/to_sea.html", { id: data.id }, callback);
+					layer.close(index);
+				});
+				return;
+			}
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

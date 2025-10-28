@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online表单开发工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background-color: #f0f2f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1E9FFF 0%, #096dd9 100%);
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+        .features {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+        .features h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1E9FFF;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .feature-item {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #1E9FFF;
+        }
+        .feature-item i {
+            font-size: 32px;
+            color: #1E9FFF;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .feature-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .feature-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .panel {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        .panel h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        .form-type-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .form-type-item {
+            padding: 20px;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-type-item:hover {
+            border-color: #1E9FFF;
+            background-color: #f0f8ff;
+            transform: translateX(5px);
+        }
+        .form-type-item h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-type-item p {
+            color: #666;
+            font-size: 13px;
+        }
+        .form-type-item .tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #1E9FFF;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .action-btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .action-btn.primary {
+            background: linear-gradient(135deg, #1E9FFF 0%, #096dd9 100%);
+            color: white;
+        }
+        .action-btn.primary:hover {
+            background: linear-gradient(135deg, #096dd9 0%, #1E9FFF 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 159, 255, 0.3);
+        }
+        .action-btn.secondary {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #e8e8e8;
+        }
+        .action-btn.secondary:hover {
+            background-color: #f5f5f5;
+            border-color: #1E9FFF;
+            transform: translateY(-1px);
+        }
+        .action-btn i {
+            font-size: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 13px;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 30px;
+        }
+        /* 简单的图标替代方案 */
+        .icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            background-color: #f0f8ff;
+            border-radius: 50%;
+            text-align: center;
+            margin-right: 15px;
+        }
+        .card-icon {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            font-size: 24px;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border-radius: 50%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Online表单开发工具</h1>
+            <p>快速构建企业级表单应用，支持单表、树表、一对一、一对多等多种数据结构，提供丰富的表单组件和扩展能力，真正实现零代码开发</p>
+        </div>
+        
+        <div class="features">
+            <h2>核心功能</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="card-icon">📝</div>
+                    <h3>多表结构支持</h3>
+                    <p>支持单表、树表、一对一、一对多等多种数据结构，满足复杂业务需求</p>
+                </div>
+                <div class="feature-item">
+                    <div class="card-icon">🎨</div>
+                    <h3>丰富表单组件</h3>
+                    <p>提供文本框、下拉框、日期选择器、开关、数字输入等多种表单组件</p>
+                </div>
+                <div class="feature-item">
+                    <div class="card-icon">🔧</div>
+                    <h3>自定义按钮</h3>
+                    <p>支持添加自定义按钮，配置按钮行为和样式，满足个性化需求</p>
+                </div>
+                <div class="feature-item">
+                    <div class="card-icon">⚡</div>
+                    <h3>JS增强能力</h3>
+                    <p>支持JavaScript脚本增强，实现复杂的业务逻辑和交互效果</p>
+                </div>
+                <div class="feature-item">
+                    <div class="card-icon">🔋</div>
+                    <h3>Java增强</h3>
+                    <p>支持Java代码增强，实现服务端复杂业务逻辑处理</p>
+                </div>
+                <div class="feature-item">
+                    <div class="card-icon">🚀</div>
+                    <h3>零代码开发</h3>
+                    <p>无需编写代码，通过可视化配置即可完成表单开发，无需部署和重启服务</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="panel">
+                <h2>表单类型</h2>
+                <div class="form-type-list">
+                    <div class="form-type-item" onclick="location.href='form.html?type=single'">
+                        <h3>单表表单</h3>
+                        <p>最简单的表单类型，用于管理单一数据表的记录</p>
+                        <span class="tag">基础</span>
+                    </div>
+                    <div class="form-type-item" onclick="location.href='form.html?type=tree'">
+                        <h3>树表表单</h3>
+                        <p>支持树形结构数据展示和管理，适用于分类、层级等场景</p>
+                        <span class="tag">高级</span>
+                    </div>
+                    <div class="form-type-item" onclick="location.href='form.html?type=one2one'">
+                        <h3>一对一表单</h3>
+                        <p>管理两个关联数据表的记录，实现数据的联动展示和编辑</p>
+                        <span class="tag">高级</span>
+                    </div>
+                    <div class="form-type-item" onclick="location.href='form.html?type=one2many'">
+                        <h3>一对多表单</h3>
+                        <p>管理主表和从表的一对多关系数据，支持嵌套表格编辑</p>
+                        <span class="tag">高级</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>快速操作</h2>
+                <div class="quick-actions">
+                    <button class="action-btn primary" onclick="location.href='form.html?new=true'">
+                        <span><div class="icon">+</div>创建新表单</span>
+                        <i>→</i>
+                    </button>
+                    <button class="action-btn secondary" onclick="location.href='form.html?list=true'">
+                        <span><div class="icon">📋</div>表单管理</span>
+                        <i>→</i>
+                    </button>
+                    <button class="action-btn secondary" onclick="location.href='form.html?template=true'">
+                        <span><div class="icon">🧩</div>表单模板</span>
+                        <i>→</i>
+                    </button>
+                    <button class="action-btn secondary" onclick="location.href='form.html?help=true'">
+                        <span><div class="icon">❓</div>使用帮助</span>
+                        <i>→</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 Online表单开发工具 | 零代码快速构建企业级表单应用</p>
+        </div>
+    </div>
+    
+    <script>
+        // 添加动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为菜单项添加点击效果
+            document.querySelectorAll('.form-type-item, .action-btn').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 如果有onclick属性，则不阻止默认行为
+                    if (this.getAttribute('onclick')) {
+                        return;
+                    }
+                    e.preventDefault();
+                    alert('此功能正在开发中...');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

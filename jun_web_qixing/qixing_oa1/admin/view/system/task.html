@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="../../component/pear/css/pear.css" rel="stylesheet"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyWord" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="dict-type-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="table" lay-filter="table-filter"></table>
+    </div>
+</div>
+
+</body>
+
+<script type="text/html" id="record-toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">
+        编辑
+    </button>
+
+    <button class="pear-btn pear-btn-success pear-btn-sm" lay-event="start">
+        开启
+    </button>
+
+    <button class="pear-btn  pear-btn-sm" lay-event="stop">
+        暂停
+    </button>
+
+    <button class="pear-btn pear-btn-warming pear-btn-sm" lay-event="tasklog">
+        日志
+    </button>
+</script>
+
+
+<script src="../../component/layui/layui.js"></script>
+<script src="../../component/pear/pear.js"></script>
+<script>
+    layui.use(['easyAdmin', 'table'], function () {
+        let easyAdmin = layui.easyAdmin;
+        let table = layui.table;
+        let cols = [
+                [
+                    {
+                        title: '任务的编码',
+                        field: 'taskCode',
+                        align: 'center',
+                        width: 120
+                    },
+                    {
+                        title: '任务的名称',
+                        field: 'taskName',
+                        align: 'center',
+                        width: 120
+                    },
+                    {
+                        title: '任务的类名称',
+                        field: 'taskClassName',
+                        align: 'center'
+                    },
+                    {
+                        title: '任务的cron表达式',
+                        field: 'taskCron',
+                        align: 'center',
+                        width: 120
+                    },
+                    {
+                        title: '任务状态',
+                        field: 'taskState',
+                        align: 'center',
+                        width: 120,
+                        templet: function (d) {
+                            if (d.taskState === 'START') {
+                                return '<button type="button" class="tag-item layui-btn layui-btn-primary layui-btn-sm">启用</button>';
+                            }
+                            return '<button type="button" class="tag-item tag-item-warm layui-btn layui-btn-primary layui-btn-sm">暂停</button>';
+                        }
+                    },
+                    {
+                        title: '启用状态',
+                        field: 'enable',
+                        align: 'center',
+                        width: 120,
+                        templet: function (d) {
+                            if (d.enable) {
+                                return '<button type="button" class="tag-item layui-btn layui-btn-primary layui-btn-sm">启用</button>';
+                            }
+                            return '<button type="button" class="tag-item tag-item-warm layui-btn layui-btn-primary layui-btn-sm">暂停</button>';
+                        }
+                    },
+                    {
+                        title: '操作',
+                        toolbar: '#record-toolbar',
+                        align: 'center',
+                        width: 250
+                    }
+                ]
+            ]
+        ;
+
+
+        let module = "task";
+        let uri = "/sys/" + module;
+        easyAdmin.tableRender({
+            url: uri,
+            cols: cols,
+            toolbar: null,
+            defaultToolbar: null
+        });
+
+        table.on('tool(table-filter)', function (obj) {
+            if (obj.event === 'stop') {
+                easyAdmin.httpGet(uri + "/stop?taskCode=" + obj.data.taskCode, function (result) {
+                    layer.msg(result.msg,
+                        {
+                            icon: 1,
+                            time: 1000,
+                            area: ['100px', '65px'],
+                            content: "操作成功"
+                        }
+                        , function () {
+                            table.reload('table');
+                        });
+                });
+            } else if (obj.event === 'start') {
+                easyAdmin.httpGet(uri + "/start?taskCode=" + obj.data.taskCode, function (result) {
+                    if (result.success) {
+
+                        layer.msg(result.msg,
+                            {
+                                icon: 1,
+                                time: 1000,
+                                area: ['100px', '65px'],
+                                content: "操作成功"
+                            }
+                            , function () {
+                                table.reload('table');
+                            });
+                    } else {
+                        layer.msg(result.msg,
+                            {
+                                icon: 2,
+                                time: 1000,
+                                area: ['220px', '70px']
+                            });
+                    }
+                });
+            } else if (obj.event === 'edit') {
+                easyAdmin.JumpEdit(module, obj.data[module + 'Id']);
+            } else if (obj.event === 'tasklog') {
+                layer.open({
+                    type: 2,
+                    skin: 'layui-layer-admin',
+                    title: '详情',
+                    shade: 0.1,
+                    area: ['1000px', '700px'],
+                    content: [module + '/tasklog.html?id=' + obj.data.taskCode, 'no']
+                });
+            }
+        });
+        easyAdmin.FormQuery();
+    })
+</script>
+</html>

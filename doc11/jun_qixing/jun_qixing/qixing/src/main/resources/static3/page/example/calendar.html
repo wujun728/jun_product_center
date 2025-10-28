@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>日历插件实例</title>
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+    <link rel='stylesheet' href='../../assets/libs/fullcalendar/core/main.css'/>
+    <link rel='stylesheet' href='../../assets/libs/fullcalendar/daygrid/main.css'/>
+    <link rel='stylesheet' href='../../assets/libs/fullcalendar/timegrid/main.css'/>
+    <style>
+        /** 日历样式设置 */
+        .fc-time-grid-event {
+            cursor: pointer;
+        }
+
+        .fc-event-container > a:nth-child(odd) {
+            background-color: #f05261;
+            border-color: #f05261;
+        }
+
+        .fc-event-container > a:nth-child(even) {
+            background-color: #48a8e4;
+            border-color: #48a8e4;
+        }
+
+        .fc-event-container > a:nth-child(3) {
+            background-color: #ffd061;
+            border-color: #ffd061;
+        }
+
+        .fc-event-container > a:nth-child(4) {
+            background-color: #52db9a;
+            border-color: #52db9a;
+        }
+
+        .fc-event-container > a:nth-child(5) {
+            background-color: #70d3e6;
+            border-color: #70d3e6;
+        }
+
+        /* 去掉下面空白部分 */
+        .fc-widget-content > .fc-scroller.fc-time-grid-container {
+            height: auto !important;
+        }
+
+        .fc-time-grid .fc-slats + .fc-divider.fc-widget-header {
+            display: none;
+        }
+
+        /** //日历样式设置end */
+    </style>
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-btn-group">
+                            <button id="eCalendarPrevBtn" class="layui-btn icon-btn">
+                                <i class="layui-icon">&#xe65a;</i>
+                            </button>
+                            <button id="eCalendarNextBtn" class="layui-btn icon-btn">
+                                <i class="layui-icon">&#xe65b;</i>
+                            </button>
+                        </div>
+                        <button id="eCalendarRefreshBtn" class="layui-btn icon-btn">
+                            <i class="layui-icon">&#xe669;</i>
+                        </button>
+                        <button class="layui-btn icon-btn">
+                            <i class="layui-icon">&#xe654;</i>添加排课
+                        </button>
+                    </div>
+                    <div class="layui-inline pull-right" style="margin-right: 0;">
+                        <div class="layui-btn-group">
+                            <button class="layui-btn icon-btn layui-btn-disabled"
+                                    style="border-left: 1px solid #e6e6e6;border-right: none;">
+                                <i class="layui-icon">&#xe637;</i>显示一周
+                            </button>
+                            <a href="calendar-2week.html" class="layui-btn icon-btn" style="border-left: none;">
+                                <i class="layui-icon">&#xe62d;</i>显示两周
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="overflow: auto;">
+                <div id="eCalendarTable" style="min-width: 800px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../assets/js/common.js?v=318"></script>
+<script src='../../assets/libs/fullcalendar/core/main.js'></script>
+<script src='../../assets/libs/fullcalendar/daygrid/main.js'></script>
+<script src='../../assets/libs/fullcalendar/timegrid/main.js'></script>
+<script>
+    layui.use(['layer', 'form', 'util', 'admin'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var util = layui.util;
+        var admin = layui.admin;
+        var mDataList = [];  // 当前的数据
+
+        // 渲染日历
+        var calendar = new FullCalendar.Calendar(document.getElementById('eCalendarTable'), {
+            plugins: ['timeGrid'],
+            defaultView: 'timeGridWeek',
+            locale: 'zh-cn',
+            firstDay: 1,
+            header: false,
+            allDaySlot: false,
+            columnHeaderFormat: {month: 'numeric', day: 'numeric', omitCommas: true, weekday: 'short'},
+            minTime: '08:00:00',
+            maxTime: '23:00:00',
+            events: function (option, callback) {
+                console.log(option.start);  // 当前选中周的第一天
+                layer.load(2);
+                $.get('../../json/e-calendar.json', {
+                    date: util.toDateString(option.start, 'yyyy-MM-dd')   // 此参数传给后端做数据筛选
+                }, function (res) {
+                    layer.closeAll('loading');
+                    var dataList = [];
+                    if (res.code == 200) {
+                        mDataList = res.data;
+                        mDataList = processData(mDataList);
+                        for (var i = 0; i < mDataList.length; i++) {
+                            var one = mDataList[i];
+                            dataList.push({
+                                start: util.toDateString(one.startDate, 'yyyy-MM-dd') + ' ' + one.startTime,
+                                end: util.toDateString(one.endDate, 'yyyy-MM-dd') + ' ' + one.endTime,
+                                title: one.courseName,
+                                id: one.courseId
+                            });
+                        }
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
+                    callback(dataList);
+                }, 'json');
+            },
+            eventClick: function (info) {
+                console.log(info.event.id);  // 点击的数据id
+                // 根据id获取对应的数据
+                for (var i = 0; i < mDataList.length; i++) {
+                    if (info.event.id == mDataList[i].courseId) {
+                        layer.alert(JSON.stringify(mDataList[i]), {title: '你点击的数据是：', shadeClose: true});
+                        break;
+                    }
+                }
+            }
+        });
+        calendar.render();
+
+        // 上一周
+        $('#eCalendarPrevBtn').click(function () {
+            calendar.prev();
+        });
+
+        // 下一周
+        $('#eCalendarNextBtn').click(function () {
+            calendar.next();
+        });
+
+        // 刷新
+        $('#eCalendarRefreshBtn').click(function () {
+            calendar.refetchEvents();
+        });
+
+        // 处理静态数据，修改数据的日期，以保证演示系统一进入就有数据
+        function processData(data) {
+            var nowDate = new Date();
+            var day = nowDate.getDay() || 7;
+            var monday = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate() + 1 - day);
+            for (var i = 0; i < data.length; i++) {
+                var tDate = new Date(monday.getTime() + 1000 * 60 * 60 * 24 * i);
+                if (i > 1) {
+                    tDate = new Date(monday.getTime() + 1000 * 60 * 60 * 24 * (i - 1));
+                }
+                data[i].startDate = util.toDateString(tDate, 'yyyy-MM-dd');
+                data[i].endDate = data[i].startDate;
+            }
+            return data;
+        }
+
+    });
+</script>
+</body>
+</html>

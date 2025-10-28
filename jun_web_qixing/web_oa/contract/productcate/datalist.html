@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+ 
+<script>
+	const login_admin=2;
+</script>
+ 
+</head>
+<body class="main-body">
+<div class="p-3">
+	<div class="gg-form-bar border-t border-x" style="padding-bottom:10px;">
+		<button class="layui-btn layui-btn-sm add-menu">+ 添加产品分类</button>
+    </div>
+    <div>
+      <table class="layui-hide" id="treeTable" lay-filter="treeTable"></table>
+    </div> 
+</div>
+<script type="text/html" id="switchStatus">
+	<input type="checkbox" name="status" value="{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="status" {{ d.status == 1 ? 'checked' : '' }}>
+</script>
+  
+<!-- /主体 -->
+
+<!-- 脚本 -->
+  
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var treeTable = layui.treeTable, tool = layui.tool;
+		
+		layui.pageTable = treeTable.render({
+			elem: '#treeTable'
+			,url: "/contract/productcate/datalist.json"
+			,tree: { // treeTable 特定属性集
+				customName: {name:'title'},
+				data: {},
+				view: {
+					showIcon:false,
+					expandAllDefault:true
+				},
+				async: {},
+					callback: {}
+				}
+				,cols: [[
+					{field:'id',width:80, title: 'ID号', align:'center'}
+					,{field: 'sort', title: '排序',align:'center', width:80}
+					,{field:'title', width:240, title: '分类名称'}
+					,{field:'pid', title: '父级ID', width:80, align:'center'}
+					,{field:'desc', title: '描述', }
+					,{width:160,title: '操作', align:'center',templet: function(d){
+						var html = '<span class="layui-btn-group"><button class="layui-btn layui-btn-normal layui-btn-xs" lay-event="add">添加子分类</button><button class="layui-btn layui-btn-xs" lay-event="edit">编辑</button><button class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</button></span>';
+					return html;
+					  }
+					}
+				]]
+				,page:false
+				//,skin:'line'
+			});
+			
+			//表头工具栏事件
+			$('.add-menu').on('click', function(){
+				tool.side('/contract/productcate/add');
+				return;
+			});
+			
+			//操作按钮
+			treeTable.on('tool(treeTable)', function (obj) {
+				if (obj.event === 'add') {
+					tool.side('/contract/productcate/add?pid='+obj.data.id);
+					return;
+				}
+				if (obj.event === 'edit') {
+					tool.side('/contract/productcate/add?id='+obj.data.id);
+					return;
+				}
+				if (obj.event === 'del') {
+					layer.confirm('确定要删除吗?', { icon: 3, title: '提示' }, function (index) {
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								obj.del();
+							}
+						}
+						tool.delete('/contract/productcate/del', { id: obj.data.id }, callback);
+						layer.close(index);
+					});
+				}
+			});
+		}
+	</script>
+<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+	<script src="/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>
+</html>

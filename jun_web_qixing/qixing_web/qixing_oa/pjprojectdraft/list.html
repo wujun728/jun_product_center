@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <!--<blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>项目底稿</strong></span>进行上传及归档!上传底稿前请先归档底稿记录，归档后，点击附件，上传底稿即可！ 若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+      <br>
+      提示：项目底稿无需单独提交审批，请在[项目报告]中提交(项目报告提交会自动带上关联的项目底稿)！
+   </blockquote>-->
+  <div id="searchParam"  shiro:hasPermission="pjProjectDraft:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="draftName" name="draftNameCondition"  id="draftNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入底稿名称">
+      </div>
+      <div class="layui-input-inline">
+    <input type="dictDraftType" name="dictDraftTypeCondition" style="display: none;"  id="dictDraftTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入底稿类型">
+      </div>
+      <div class="layui-input-inline">
+    <input type="refProjectName" name="refProjectNameCondition"  id="refProjectNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目名称">
+      </div>
+      <div class="layui-input-block ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+        <button class="layui-btn layui-btn-primary layui-border-blue" onclick="openFlow()" >查看审批流程图</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="pjProjectDraft:add">新增</button>
+	<button class="layui-btn layui-btn-sm" lay-event="update"  shiro:hasPermission="pjProject:update">修改</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="pjProjectDraft:delete">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="pjProjectDraft:submit">提交</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <!--<a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProjectDraft:update">编辑</a>-->
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProjectDraft:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <!--<a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProjectDraft:update">编辑</a>-->
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="pjProjectDraft:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProjectDraft:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/dev-api/pjProjectDraft/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [ [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: '底稿ID', sort: true ,hide: true }, 
+          {field: 'draftName', title: '底稿名称', sort: true }, 
+          {field: 'dictDraftType', title: '底稿类型', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+              var datas = xnUtil.getDictDataByDictTypeCode('dict_draft_type', null); 
+	            if(item.dictDraftType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDraftType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDraftType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictDraftType);
+            }
+}, 
+          {field: 'refProjectCode', title: '', sort: true ,hide: true }, 
+          {field: 'refProjectName', title: '项目名称', sort: true }, 
+          {field: 'draftDesc', title: '底稿描述', sort: true ,hide: false }, 
+          {field: 'draftTime', title: '底稿输出时间', sort: true ,hide: false }, 
+          {field: 'refDraftBy', title: '底稿输出责任人(承做)', sort: true ,hide: false }, 
+          {field: 'dictDraftStatus', title: '底稿整理进度', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+              var datas = xnUtil.getDictDataByDictTypeCode('dict_draft_status', null); 
+	            if(item.dictDraftStatus%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDraftStatus)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDraftStatus)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictDraftStatus);
+            }
+}, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+          // 流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          { title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+                  if (d.orderState == 0) {
+                      return '<span style="color: #eb7350;">审批完成</span>'
+                  }else if (d.orderState == 1) {
+	                  return '<span style="color: #00b487;">审批中</span>'
+                  }else{
+	                  return '<span style="color: blue;">草稿</span>'
+                  }
+              }
+          },
+          { title: '当前节点', field: 'taskName', align: 'center' ,width:105},
+          { title: '当前处理人', field: 'taskOperatorName', align: 'center' ,width:90},{field: 'isOwner', title: 'isOwner',hide:true },
+          // 流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          {field: 'creator', title: '', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+     
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'submit':
+        	layer.msg("提示：项目底稿无需单独提交审批，请在[项目报告]中提交(项目报告提交会自动带上关联的项目底稿)！");
+  		  	return;
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            if(data.length==0){
+              layer.msg("请选择要提交的记录");
+            }else if(data.length > 1){
+              layer.msg("请选择要提交的记录（one row each times）");
+            }else {
+//           	  window.checkPromission(data[0].createId);
+          	  data[0]['processName'] = "draft";
+          	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+          	  CoreUtil.setData("data_doSubmit",data[0]);
+          	  console.log("data="+data);
+                layer.open({
+                    type: 2,
+                    skin: 'layui-layer-admin',
+                    title: "提交流程",
+                    shadeClose : false,
+                    area: ['880px', '500px'], //宽高
+                    shade: 0.6, //遮罩透明度
+                    maxmin: true, //允许全屏最小化
+                    anim: 1, //0-6的动画形式，-1不开启
+                    content:  '/table/doSubmit.html',
+                    end: function(){
+                  	  search();
+                    }
+                });
+            }
+            break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $(".table_div").hide();
+//           $(".operation").show();
+//           $(".title").html("新增");
+//           $(".operation input[name=id]").val("");
+//           $(".operation input[name=draftName]").val("");
+//           $(".operation select[name=dictDraftType]").val("");
+//           $(".operation input[name=refProjectCode]").val("");
+//           $(".operation input[name=refProjectName]").val("");
+//           $(".operation textarea[name=draftDesc]").val("");
+//           $(".operation input[name=draftTime]").val("");
+//           $(".operation input[name=refDraftBy]").val("");
+//           $(".operation select[name=dictDraftStatus]").val("");
+//           $(".operation textarea[name=remark]").val("");
+// 			  layerAdd = layer.open({
+//               type: 1,
+//           skin: 'layui-layer-admin',
+//               area: ['80%', '80%'],
+//               shift: 1,
+//               shadeClose: true,
+//               scrollbar: true,
+//               maxmin: true,
+//               shade: false,
+//               title:  ['新增项目底稿' , false],
+//               content: $(".operation"),
+//           });
+		  layerAdd = layer.open({
+              type: 2,
+
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增项目底稿' , false],
+              content: '/qixing_oa/pjprojectdraft/edit.html',
+              id: 'pjprojectdraft_add',
+          });
+          break;
+        case 'update':
+     	   var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            if(data.length==0){
+              layer.msg("请选择要修改的的列信息！");
+            }else {
+              var ids = [];
+              $(data).each(function (index,item) {
+                ids.push(item.id);
+              });
+              layerAdd = layer.open({
+                  type: 2,
+                  area: ['80%', '80%'],
+                  skin: 'layui-layer-admin',
+                  shift: 1,
+                  shadeClose: true,
+                  scrollbar: true,
+                  maxmin: true,
+                  shade: false,
+                  title:  ['修改项目信息' , false],
+                  content: '/qixing_oa/pjprojectdraft/edit.html?id='+ids[0],
+                  id: 'pjprojectdraft_add',
+              });
+            }
+           break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+//         case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $(".operation input[name=id]").val(data.id);
+//           $(".operation input[name=draftName]").val(data.draftName);
+//           $(".operation select[name=dictDraftType]").val(data.dictDraftType);
+//           $(".operation input[name=refProjectCode]").val(data.refProjectCode);
+//           $(".operation input[name=refProjectName]").val(data.refProjectName);
+//           $(".operation textarea[name=draftDesc]").val(data.draftDesc);
+//           $(".operation input[name=draftTime]").val(data.draftTime);
+//           $(".operation input[name=refDraftBy]").val(data.refDraftBy);
+//           $(".operation select[name=dictDraftStatus]").val(data.dictDraftStatus);
+//           $(".operation textarea[name=remark]").val(data.remark);
+// 			  form.render();
+// 		  layerAdd = layer.open({
+//               type: 1,
+//           skin: 'layui-layer-admin',
+//               area: ['80%', '80%'],
+//               shift: 2,
+//               shadeClose: true,
+//               scrollbar: true,
+//               maxmin: true,
+//               shade: false,
+//               title:  ['修改项目底稿' , false],
+//               content: $(".operation"),
+//           });
+//           break;
+        case 'file':
+        	data['dictBiztype']='项目底稿';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/dev-api/pjProjectDraft/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/dev-api/pjProjectDraft/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+//       $(".table_div").show();
+//       $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjProjectDraft/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjProjectDraft/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,draftName: $("#draftNameCondition").val()
+		,dictDraftType: $("#dictDraftTypeCondition").val()
+		,refProjectName: $("#refProjectNameCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+
+    function openFlow() {
+      layer.open({
+          type: 2,
+          skin: 'layui-layer-admin',
+          title: "审批流程",
+          shadeClose : false,
+          area: ['1200px', '600px'], //宽高
+          shade: 0.6, //遮罩透明度
+          maxmin: true, //允许全屏最小化
+          anim: 1, //0-6的动画形式，-1不开启
+          content:  '/admin/view/flow/design2.html?processId=0ac15bd4f79f4e55883718a201e422cd',
+          end: function(){ }
+      });
+　　};
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+draftName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictDraftType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿输出时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refDraftBy: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿输出责任人(承做)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictDraftStatus: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿整理进度不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  	    });
+</script>

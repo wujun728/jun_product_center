@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "一带一路数字丝绸之路",             
+    "url": "http://192.168.1.6:8124/digitalSilkRoad/index.html",           
+    "desc": "",                           
+    "mobile":true                        
+  },
+  "schedule": {
+    "status": "暂停开发",                  
+    "actualStartTime": "2017-09-18",    
+    "actualEndTime": "",      
+    "estimatedStartTime": "2017-09-18", 
+    "estimatedEndTime": "2017-10-30",   
+    "process": 30,                     
+    "delay": true,                      
+    "technology":["vue","element-ui"]               
+  },
+  "resources": {
+    "demander": "九次方大数据",                    
+    "type":"内部研发平台",				            
+    "manager":"崔志华",                  
+    "charge": "冯彦文",                  
+    "affiliate": ["柳杨","吕颖萍","颜庭光","王斌彦"]       
+  },
+  "bug": {
+    "total": 0,                     
+    "resolved": 0,                  
+    "unsolved": 0                     
+  },
+  "others": {
+    "remark": "前端暂停开发，十一之后会重新改版"                  
+  }
+}

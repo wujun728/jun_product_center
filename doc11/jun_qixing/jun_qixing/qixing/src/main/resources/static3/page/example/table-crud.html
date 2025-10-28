@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title></title>
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <button id="eTbCrudAddBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加
+                        </button>
+                        <button id="eTbCrudSubmitBtn" class="layui-btn icon-btn"><i class="layui-icon">&#xe609;</i>提交
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <table id="eTbCrudTable" lay-filter="eTbCrudTable"></table>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-body">
+            这是一个纯前端对表格进行CRUD的例子。
+        </div>
+    </div>
+</div>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="eTbCrudEditDialog">
+    <form id="eTbCrudEditForm" lay-filter="eTbCrudEditForm" class="layui-form model-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="请输入姓名" type="text" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input name="phone" placeholder="请输入手机号" type="text" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="男" title="男" checked/>
+                <input type="radio" name="sex" value="女" title="女"/>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+            <button class="layui-btn" lay-filter="eTbCrudEditSubmit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="eTbCrudTbBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- js部分 -->
+<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'table', 'admin', 'form'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var table = layui.table;
+        var admin = layui.admin;
+        var form = layui.form;
+
+        var mDataList = [];
+
+        var insTb = table.render({
+            elem: '#eTbCrudTable',
+            data: [],
+            page: true,
+            cellMinWidth: 100,
+            cols: [[
+                {type: 'numbers', title: '#'},
+                {field: 'name', title: '姓名'},
+                {field: 'phone', title: '手机号'},
+                {field: 'sex', title: '性别'},
+                {align: 'center', toolbar: '#eTbCrudTbBar', title: '操作', minWidth: 200}
+            ]]
+        });
+
+        $('#eTbCrudAddBtn').click(function () {
+            showEditModel();
+        });
+
+        // 工具条点击事件
+        table.on('tool(eTbCrudTable)', function (obj) {
+            var data = obj.data;
+            var layEvent = obj.event;
+            if (layEvent === 'edit') { // 修改
+                showEditModel(data);
+            } else if (layEvent === 'del') { // 删除
+                for (var i = 0; i < mDataList.length; i++) {
+                    if (mDataList[i].id == data.id) {
+                        mDataList.splice(i, 1);
+                        break;
+                    }
+                }
+                insTb.reload({data: mDataList});
+            }
+        });
+
+        //
+        function showEditModel(mData) {
+            admin.open({
+                type: 1,
+                title: mData ? '修改' : '添加',
+                content: $('#eTbCrudEditDialog').html(),
+                success: function (layero, dIndex) {
+                    form.val('eTbCrudEditForm', mData);
+                    form.on('submit(eTbCrudEditSubmit)', function (data) {
+                        if (mData) {
+                            for (var i = 0; i < mDataList.length; i++) {
+                                if (mDataList[i].id == mData.id) {
+                                    for (var f in data.field) {
+                                        mDataList[i][f] = data.field[f];
+                                    }
+                                    break;
+                                }
+                            }
+                        } else {
+                            data.field.id = new Date().getTime();
+                            mDataList.push(data.field);
+                        }
+                        insTb.reload({data: mDataList});
+                        layer.close(dIndex);
+                        return false;
+                    });
+                }
+            });
+        }
+
+        $('#eTbCrudSubmitBtn').click(function () {
+            layer.alert(JSON.stringify(mDataList));
+        });
+
+    });
+</script>
+</body>
+</html>

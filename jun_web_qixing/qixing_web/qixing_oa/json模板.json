@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "一带一路安易行",             //项目名称(必填)
+    "url": "./xxx/index.html",           //项目url,xxx为项目文件夹名称(必填)
+    "desc": "",                           //项目描述
+    "mobile":true                        //是否为移动端显示 true:是，false:否
+  },
+  "schedule": {
+    "status": "开发中",                  //项目状态(开发中、已提测、已结束、已冻结、暂停开发)(必填)
+    "actualStartTime": "2021-09-18",    //实际开始时间(必填)
+    "actualEndTime": "2021-09-19",      //实际结束时间(若未定则填写未定)
+    "estimatedStartTime": "2021-09-18", //预计开始时间(必填)
+    "estimatedEndTime": "2021-09-19",   //预计结束时间(必填)
+    "process": 50,                      //项目进度(必填)
+    "delay": false,                      //是否延期,true:是,false:否(必填)
+    "technology":["a","b"]               //项目使用技术,如["jquery","html5","css3","百度地图","bootstrap","layui","vuejs","element-ui","mint-ui","threejs","d3","echart","gulp","webpack","less","sass","handlebar","nodejs","angularjs","reactjs","font-awesome","iconfont"]
+  },
+  "resources": {
+    "demander": "",                     //需求方(必填)
+    "type":"",				            //项目类别(合资公司、独立纵队、总部平台、内部研发平台)(必填)
+    "manager":"张三",                  //项目经理(必填)
+    "charge": "张三",                  //负责人(前端)(必填)
+    "affiliate": ["李雷","韩梅梅"]       //参与人
+  },
+  "bug": {
+    "total": 100,                     //总bug数 若处于开发阶段则填0
+    "resolved": 100,                  //已解决  若处于开发阶段则填0
+    "unsolved": 0                     //未解决  若处于开发阶段则填0
+  },
+  "others": {
+    "remark": ""                  //备注，若有登录页面，账户名和密码填写在备注里，格式：账户名(aaa),密码(123456)
+  }
+}

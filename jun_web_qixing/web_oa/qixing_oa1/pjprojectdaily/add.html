@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/>
+	<title>新增项目日报周报 - 勾股OA</title> 	
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	<div class="p-page">
+		<form class="layui-form" id="dailyform" lay-filter="dailyform">
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label required">日报标题</label>
+								<div class="layui-input-inline" style="width: 360px;">
+									<input type="text" name="planName" placeholder="请输入日报标题" class="layui-input" lay-verify="required|maxLength100" autocomplete="off" maxlength="100" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label required">项目名称</label>
+								<div class="layui-input-inline" style="width: 360px;">
+									<input type="text" name="refProjectName" placeholder="请选择项目名称" readonly class="layui-input picker-oa" data-types="project" autocomplete="off" lay-verify="required" />
+									<input type="hidden" name="refProjectCode" id="refProjectCode" value="" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label required">日报/周报</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<select name="dictDailyType" lay-verify="required">
+										<option value="daily">日报</option>
+										<option value="weekly">周报</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label required">日期</label>
+								<div class="layui-input-inline" style="width: 160px;">
+									<input type="text" name="dailyDate" placeholder="请选择日期" class="layui-input" id="dailyDate" lay-verify="required" autocomplete="off" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label required">工作内容描述</label>
+							<div class="layui-input-block">
+								<textarea class="layui-textarea" name="dailyDetail" id="dailyDetail" placeholder="请输入工作内容描述" lay-verify="required|maxLength2000" maxlength="2000"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<label class="layui-form-label required">投入工时</label>
+								<div class="layui-input-inline" style="width: 120px;">
+									<input type="number" name="costTime" placeholder="0.0" class="layui-input" lay-verify="required|number" step="0.5" min="0" max="24" autocomplete="off" />
+								</div>
+								<span class="layui-form-mid">小时</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item layui-form-text">
+							<label class="layui-form-label">备注</label>
+							<div class="layui-input-block">
+								<textarea class="layui-textarea" name="remark" id="remark" placeholder="请输入备注" maxlength="500"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg12">
+					<div class="layui-input-block">
+						<div class="layui-form-item">
+							<div class="layui-inline">
+								<button type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="form-submit">提交</button>
+								<button type="button" class="layui-btn layui-btn-primary" id="form-cancel">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- 脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script>
+		const moduleInit = ['layer', 'form', 'tool', 'laydate', 'oaPicker'];
+		function gouguInit() {
+			var form = layui.form, tool = layui.tool, laydate = layui.laydate, layer = layui.layer;
+
+			// 初始化日期选择器
+			laydate.render({
+				elem: '#dailyDate',
+				type: 'date',
+				format: 'yyyy-MM-dd',
+				value: new Date() // 默认当前日期
+			});
+
+			// 表单验证
+			form.verify({
+				maxLength100: function(value) {
+					if (value.length > 100) {
+						return '标题长度不能超过100个字符';
+					}
+				},
+				maxLength2000: function(value) {
+					if (value.length > 2000) {
+						return '工作内容描述长度不能超过2000个字符';
+					}
+				}
+			});
+
+			// 表单提交
+			form.on('submit(form-submit)', function(data) {
+				let callback = function(e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						top.layer.closeAll();
+						top.layui.pjProjectDailyTable.reload();
+					}
+				};
+
+				tool.post('/dev-api/pjProjectDaily/add', data.field, callback);
+				return false;
+			});
+
+			// 取消
+			$('#form-cancel').click(function() {
+				top.layer.closeAll();
+			});
+			
+			// 处理复制功能
+			var id = tool.getUrlParam('id');
+			if (id) {
+				// 获取原始数据
+				tool.get('/dev-api/pjProjectDaily/findOne', {id: id}, function(e) {
+					if (e.code == 0) {
+						var data = e.data;
+						// 填充表单数据，但排除ID等不需要复制的字段
+						delete data.id;
+						delete data.orderState;
+						delete data.creator;
+						delete data.createTime;
+						delete data.updateTime;
+						// 设置表单值
+						form.val('dailyform', data);
+					}
+				});
+			}
+		}
+	</script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+</body>
+</html>

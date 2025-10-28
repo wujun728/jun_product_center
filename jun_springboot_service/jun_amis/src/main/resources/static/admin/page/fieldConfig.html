@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>首页 - 光年(Light Year Admin)后台管理系统模板</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="keywords" content="LightYear,光年,后台模板,后台管理系统,光年HTML模板">
+<meta name="description" content="LightYear是一个基于Bootstrap v3.3.7的后台管理系统的HTML模板。">
+<meta name="author" content="yinqi">
+<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/materialdesignicons.min.css" rel="stylesheet">
+<link href="../css/style.min.css" rel="stylesheet">
+	<style>
+		body{
+			background: white;
+		}
+		tbody td,tbody th{
+			height:100px;
+		}
+	</style>
+</head>
+
+<body>
+
+
+<div class="container-fluid" style="background:white;">
+
+	<div style="margin-bottom:5px;">
+		<button class="btn btn-sm btn-primary addBtn">添加</button>
+		<button class="btn btn-sm btn-primary saveBtn">保存</button>
+	</div>
+	<div style="width:100%;">
+		<table id="headLeftTable" style="width:580px;margin-bottom:0px;float:left;table-layout: fixed;"  class="table table-bordered">
+			<thead>
+			<tr>
+				<th style="width:80px;">操作</th>
+				<th style="width:60px;">序号</th>
+				<th style="width:120px;">字段</th>
+				<th style="width:120px;">名称</th>
+			</tr>
+			</thead>
+		</table>
+		<div id="headRight" style="float:left;width:calc( 100% - 600px );overflow:hidden;">
+			<table id="headRightTable" style="width:4000px;margin-bottom:0px;table-layout: fixed;"  class="table table-bordered">
+				<thead>
+				<tr>
+					<th style="width:100px;">宽度</th>
+					<th style="width:140px;">字段类型</th>
+					<th style="width:300px;">格式化</th>
+					<th style="width:160px;">组件类型</th>
+					<th style="width:120px;">是否隐藏</th>
+					<th style="width:120px;">是否多选</th>
+					<th style="width:120px;">是否必填</th>
+					<th style="width:120px;">是否只读</th>
+					<th style="width:200px;">默认值</th>
+					<th style="width:200px;">标签提示</th>
+					<th style="width:160px;">校验重复类型</th>
+					<th style="width:200px;">校验重复配置</th>
+					<th style="width:200px;">校验重复提示</th>
+					<th style="width:200px;">表单项校验</th>
+					<th style="width:400px;">选项sql</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+	<div style="width:100%;">
+		<div id="itemsLeft" style="width:580px;float:left;height:500px;overflow:hidden;">
+			<table id="itemsLeftTable" style="margin-bottom:5px;" class="table table-bordered">
+				<tbody>
+				<tr id="copyLeftTr" style="display:none;">
+					<td style="width:80px;">
+						<button class="btn btn-sm btn-primary addBtn" >添加</button>
+						<button class="btn btn-sm btn-danger deleteBtn" >删除</button>
+					</td>
+					<td scope="row"  style="width:60px;"><input class="form-control" type="text" name="seq" placeholder="序号"></td>
+					<td style="width:120px;"><input class="form-control" type="text" name="field" placeholder="字段"></td>
+					<td style="width:120px;"><input class="form-control" type="text" name="label" placeholder="名称"></td>
+				</tr>
+				</tbody>
+			</table>
+			<div style="clear:both;"></div>
+		</div>
+		<div id="itemsRight" style="overflow:scroll;float:left;width: calc( 100% - 580px );height:520px;">
+			<table id="itemsRightTable" style="width:4000px;margin-bottom:5px;table-layout: fixed;" class="table table-bordered">
+				<tbody>
+				<tr id="copyRightTr" style="display:none;">
+					<td style="width:100px;"><input class="form-control" type="text" name="width" placeholder="宽度"></td>
+					<td style="width:140px;">
+						<select class="form-control" id="example-select" name="type" size="1">
+							<option value="">请选择</option>
+							<option value="string">字符串</option>
+							<option value="long-string">长文本</option>
+							<option value="big-string">超长文本</option>
+							<option value="sql">SQL</option>
+							<option value="js">js脚本</option>
+							<option value="article">文章</option>
+							<option value="int">短整数</option>
+							<option value="long">长整数</option>
+							<option value="double">小数</option>
+							<option value="date">日期</option>
+							<option value="dic">数据字典</option>
+							<option value="selector">选择器</option>
+						</select>
+					</td>
+					<td style="width:300px;"><input class="form-control" type="text" name="format" placeholder="格式化"></td>
+					<td style="width:160px;">
+						<select class="form-control" name="componentType" size="1">
+							<option value="">请选择</option>
+							<option value="input-text">文本框 </option>
+							<option value="textarea">多行文本</option>
+							<option value="select">下拉框</option>
+							<option value="checkboxes">复选框</option>
+							<option value="input-number">数字</option>
+							<option value="radios">单选框</option>
+							<option value="static">静态展示</option>
+							<option value="input-date">日期</option>
+							<option value="selector">选择器</option>
+							<option value="input-datetime">日期时间</option>
+							<option value="location-picker">地理位置</option>
+							<option value="input-password">密码框</option>
+							<option value="input-rich-text">富文本编辑器</option>
+							<option value="switch">开关</option>
+							<option value="input-date-range">日期范围</option>
+							<option value="input-province">省份选择</option>
+							<option value="input-excel">excel解析</option>
+							<option value="input-datetime-range">日期时间范围</option>
+							<option value="input-color">颜色选择</option>
+							<option value="input-month">月份</option>
+							<option value="input-month-range">月份范围</option>
+							<option value="input-time">时间</option>
+							<option value="input-time-range">时间范围</option>
+							<option value="input-year">年</option>
+							<option value="input-year-range">年范围</option>
+							<option value="input-quarter">季度</option>
+							<option value="input-quarter-range">季度范围</option>
+							<option value="input-image">图片</option>
+							<option value="input-file">文件上传</option>
+							<option value="input-rating">评分</option>
+							<option value="input-range">滑块选择</option>
+							<option value="input-repeat">重复率选择器</option>
+							<option value="input-tag">标签选择器</option>
+							<option value="button-group-select">按钮点选</option>
+							<option value="formula">公式</option>
+							<option value="editor">编辑器</option>
+							<option value="input-formula">公式编辑器</option>
+							<option value="input-province_city">省市选择</option>
+							<option value="input-province-city-county">省市区/县</option>
+							<option value="selector-pop">选择器-弹出</option>
+							<option value="input-tree">选择树</option>
+							<option value="tree-select">下拉树</option>
+							<option value="input-table">表格InputTable</option>
+						</select>
+					</td>
+					<td style="width:120px;">
+						<select class="form-control" name="hidden" size="1">
+							<option value="">请选择</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</td>
+					<td style="width:120px;">
+						<select class="form-control" name="multi" size="1">
+							<option value="">请选择</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</td>
+					<td style="width:120px;">
+						<select class="form-control" name="must" size="1">
+							<option value="">请选择</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</td>
+					<td style="width:120px;">
+						<select class="form-control" name="disabled" size="1">
+							<option value="">请选择</option>
+							<option value="YES">YES</option>
+							<option value="NO">NO</option>
+						</select>
+					</td>
+					<td style="width:200px;"><input class="form-control" type="text" name="value" placeholder="默认值"/></td>
+					<td style="width:200px;"><input class="form-control" type="text" name="labelRemark" placeholder="标签提示"/></td>
+					<td style="width:160px;">
+						<select class="form-control" name="checkRepeatType" size="1">
+							<option value="">请选择</option>
+							<option value="notCheck">不校验</option>
+							<option value="global">全局唯一</option>
+							<option value="enterprise">企业内唯一</option>
+							<option value="fields">多字段联合唯一</option>
+							<option value="sql">sql校验唯一</option>
+						</select>
+					</td>
+					<td style="width:200px;"><input class="form-control" type="text" name="checkRepeatConfig" placeholder="校验重复配置"/></td>
+					<td style="width:200px;"><input class="form-control" type="text" name="checkRepeatTip" placeholder="校验重复提示"/></td>
+					<td style="width:200px;"><input class="form-control" type="text" name="validations" placeholder="表单项校验"/></td>
+					<td style="width:400px;">
+						<textarea class="form-control" name="optionSql" rows="3" placeholder="选项sql"></textarea>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<!--对话框-->
+<script src="../js/jconfirm/jquery-confirm.min.js"></script>
+<!--对话框-->
+<link rel="stylesheet" href="../js/jconfirm/jquery-confirm.min.css">
+
+<!--图表插件-->
+<script type="text/javascript">
+(function (original) {
+jQuery.fn.clone = function () {
+var result = original.apply(this, arguments),
+my_textareas = this.find('textarea').add(this.filter('textarea')),
+result_textareas = result.find('textarea').add(result.filter('textarea')),
+my_selects = this.find('select').add(this.filter('select')),
+result_selects = result.find('select').add(result.filter('select'));
+
+for (var i = 0, l = my_textareas.length; i < l; ++i) $(result_textareas[i]).val($(my_textareas[i]).val());
+for (var i = 0, l = my_selects.length; i < l; ++i) result_selects[i].selectedIndex = my_selects[i].selectedIndex;
+
+return result;
+};
+}) (jQuery.fn.clone);
+// 获取页面 url 参数
+$.getUrlParam = function (name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]);
+	return null;
+}
+// 使用
+$.getUrlParam('id');
+
+
+$(document).ready(function(e) {
+   let copyLeftTr = $("#copyLeftTr");
+   let tbodyLeft = $("#itemsLeftTable tbody");
+
+   let copyRightTr = $("#copyRightTr");
+   let tbodyRight = $("#itemsRightTable tbody");
+   for(let i=0;i<30;i++){
+		//addRow();
+   }
+
+   function addRow(index){
+		let trLeft = copyLeftTr.clone();
+		trLeft.removeAttr("id");
+		if(index){
+			trLeft.find("input[name=seq]").val((index+1)*10);
+		}else{
+			trLeft.find("input[name=seq]").val(tbodyLeft.find("tr").size()*10);
+		}
+		trLeft.show();
+
+		if(index){
+			tbodyLeft.find("tr").eq(index).after(trLeft);
+		}else{
+			tbodyLeft.append(trLeft);
+		}
+
+
+		let trRight = copyRightTr.clone();
+		trRight.removeAttr("id");
+		trRight.show();
+		if(index){
+			tbodyRight.find("tr").eq(index).after(trRight);
+		}else{
+			tbodyRight.append(trRight);
+		}
+		reIndex();
+	   return {
+		   left:trLeft,
+		   right:trRight
+	   };
+   }
+
+   function reIndex(){
+		for(let i=1;i<tbodyLeft.find("tr").size();i++){
+			tbodyLeft.find("tr").eq(i).find("input[name=seq]").val(i*10);
+		}
+   }
+
+   $("#itemsRight").scroll(function(){
+		$("#itemsLeft").scrollTop($("#itemsRight").scrollTop());
+
+		$("#headRight").scrollLeft($("#itemsRight").scrollLeft());
+   })
+
+   $("body").on("click",".addBtn",function(){
+		let index = tbodyLeft.find(".addBtn").index($(this));
+		if(index >=0 ){
+			addRow(index);
+		}else{
+			addRow();
+		}
+   })
+   $("body").on("click",".deleteBtn",function(){
+		let tr = $(this).parent().parent();
+		tbodyRight.find("tr").eq(tr.parent().find("tr").index(tr)).remove();
+		tr.remove();
+		reIndex();
+   });
+   $("body").on("change","input[name=seq]",function(){
+
+		let seq = parseInt($(this).val());
+		let tr = $(this).parent().parent();
+		let nTr = tr.clone();
+
+		let trRight = tbodyRight.find("tr").eq(tbodyLeft.find("tr").index(tr));
+		let nTrRight = trRight.clone();
+
+
+		for(let i=1;i<tbodyLeft.find("tr").size();i++){
+			let cTr = tbodyLeft.find("tr").eq(i);
+			let cSeq = parseInt(cTr.find("input[name=seq]").val());
+
+			if(cSeq > seq){
+				cTr.before(nTr);
+				tr.remove();
+
+				tbodyRight.find("tr").eq(i).before(nTrRight);
+				trRight.remove();
+
+				reIndex();
+				return;
+			}
+		}
+		tbodyLeft.append(nTr);
+		tr.remove();
+
+		tbodyRight.append(nTrRight);
+		trRight.remove();
+
+		reIndex();
+
+   })
+
+
+	function resize(){
+		//$("#itemsLeft").height($(window).height() - 100);
+		//$("#itemsRight").height($(window).height() - 80);
+	}
+	resize();
+	$(window).resize(function(){
+		resize();
+	});
+
+	let formId = $.getUrlParam("id");
+	$.ajax({
+		url:"/admin/form/get?id="+formId,
+		dataType:"json",
+		success:function(data){
+			let fields = data.data.formFields;
+			for(let i=0;i<fields.length;i++){
+				let row = addRow();
+				let item = fields[i];
+				setValues(row.left,{
+					field:item.field,
+					label:item.label
+				});
+				setValues(row.right,item);
+			}
+		}
+	});
+
+	function setValues(div,values){
+		for(let key in values){
+			div.find("*[name="+key+"]").val(values[key]);
+		}
+	}
+	function getValues(div,params){
+		params = params || {};
+		let inputs = div.find("input,select,textarea");
+		for(let i=0;i<inputs.size();i++){
+			let input = inputs.eq(i);
+			let name = input.attr("name");
+			if(name){
+				params[name] = input.val();
+			}
+		}
+		return params;
+	}
+	$(".saveBtn").click(function(){
+		let items = [];
+		for(let i=1;i<tbodyLeft.find("tr").size();i++){
+			let item = {};
+			let left = getValues(tbodyLeft.find("tr").eq(i),item);
+			let right = getValues(tbodyRight.find("tr").eq(i),item);
+			items.push(item);
+		}
+		$.ajax({
+			url :"/admin/form/saveFields",
+			method:"post",
+			data:{
+				id:formId,
+				fields:JSON.stringify(items)
+			},
+			success:function(data){
+				$.confirm({
+					title: '提示信息',
+					content: '保存成功',
+					type: 'green',
+					buttons: {
+						close: {
+							text: '关闭',
+						}
+					}
+				});
+			}
+		})
+	})
+});
+</script>
+</body>
+</html>

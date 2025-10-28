@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>笔记管理 - 勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:240px;">
+			<input type="text" name="titleCondition" placeholder="标题" class="layui-input" autocomplete="off" />
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" name="contentCondition" placeholder="发布内容" class="layui-input" autocomplete="off" />
+		</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增笔记</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">批量删除</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="publish">发布</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.documentTable = table.render({
+			elem: '#document',
+			title: '文档列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/oanotesinfo/datalist.json",
+			cols: [[
+				{ type: 'checkbox', fixed: 'left' }
+				, {
+					field: 'id', title: '笔记编号', width: 90, align: 'center'
+				}
+				, {
+					field: 'title', title: '笔记标题', minWidth: 240, templet: function (d) {
+						var html = '<a class="side-a" data-href="/qixing_oa1/oanotesinfo/view.html?id=' + d.id + '">' + d.title + '</a>';
+						return html;
+					}
+				}
+				, { field: 'dictMsgType', title: '发布信息类型', width: 120, align: 'center' }
+				, { field: 'dictIsDraft', title: '是否草稿', width: 80, align: 'center' }
+				, { field: 'publishDate', title: '发布时间', width: 120, align: 'center' }
+				, { field: 'createTime', title: '创建时间', width: 150, align: 'center' }
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 120,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						return html+btn1+btn2+btn3+'</div>';
+					}						
+				}
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(document)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/qixing_oa1/oanotesinfo/add.html");
+				return;
+			}
+			// 批量删除
+			if(obj.event === 'batchDeleted'){
+				var checkStatus = table.checkStatus('document');
+				if(checkStatus.data.length === 0){
+					layer.msg('请选择要删除的数据');
+					return;
+				}
+				var ids = checkStatus.data.map(function(item){
+					return item.id;
+				}).join(',');
+				layer.confirm('确定要删除选中的笔记吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index){
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 200) {
+							layui.documentTable.reload();
+						}
+					}
+					tool.delete("/qixing_oa1/oanotesinfo/delete", {ids: ids}, callback);
+					layer.close(index);
+				});
+				return;
+			}
+			// 批量发布
+			if(obj.event === 'publish'){
+				var checkStatus = table.checkStatus('document');
+				if(checkStatus.data.length === 0){
+					layer.msg('请选择要发布的数据');
+					return;
+				}
+				var ids = checkStatus.data.map(function(item){
+					return item.id;
+				}).join(',');
+				layer.confirm('确定要发布选中的笔记吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index){
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 200) {
+							layui.documentTable.reload();
+						}
+					}
+					tool.post("/qixing_oa1/oanotesinfo/publish", {ids: ids}, callback);
+					layer.close(index);
+				});
+				return;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(document)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/qixing_oa1/oanotesinfo/view.html?id="+data.id);
+				return;
+			}
+			if(obj.event === 'edit'){
+				tool.side('/qixing_oa1/oanotesinfo/edit.html?id='+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要删除吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 200) {
+							obj.del();
+						}
+					}
+					tool.delete("/qixing_oa1/oanotesinfo/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			}
+		});
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

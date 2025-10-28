@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>项目复核新增 - 勾股OA</title>
+	<link rel="mobile-prefetch" href=""/>
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">项目复核新增</h3>
+	<table class="layui-table layui-table-form">
+		<input type="hidden" name="id" />
+		<tr>
+			<td class="layui-td-gray">项目名称<span class="text-danger">*</span></td>
+			<td>
+				<input type="text" name="refPname" placeholder="请选择项目名称" readonly class="layui-input" autocomplete="off" />
+				<input type="hidden" name="refPid" />
+			</td>
+			<td class="layui-td-gray">项目经理名称<span class="text-danger">*</span></td>
+			<td>
+				<input type="text" name="refPmanager" placeholder="请选择项目经理" readonly class="layui-input" autocomplete="off" />
+				<input type="hidden" name="refPmanagerId" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">项目报告</td>
+			<td>
+				<input type="text" name="refPjrName" placeholder="请选择项目报告" readonly class="layui-input" autocomplete="off" />
+				<input type="hidden" name="refPjrId" />
+			</td>
+			<td class="layui-td-gray">项目复核责任人<span class="text-danger">*</span></td>
+			<td>
+				<input type="text" name="recheckMan" placeholder="请选择项目复核责任人" readonly class="layui-input" autocomplete="off" />
+				<input type="hidden" name="recheckManId" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">项目复核意见</td>
+			<td colspan="3">
+				<textarea type="text" name="recheckAdvice" placeholder="请输入项目复核意见" class="layui-textarea" rows="4" autocomplete="off"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">项目复核状态</td>
+			<td>
+				<select name="recheckState" lay-search>
+					<option value="">请选择</option>
+					<option value="0">未开始</option>
+					<option value="1">进行中</option>
+					<option value="2">已完成</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">备注</td>
+			<td colspan="3">
+				<textarea type="text" name="remark" placeholder="请输入备注" class="layui-textarea" rows="4" autocomplete="off"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">附件</td>
+			<td colspan="3">
+				<div id="fileUploadDiv">
+					<input type="hidden" value="项目复核" name="dictBiztype" />
+					<div id="fileUpload" class="layui-upload-drag" biz="projectRecheck" bizId="">
+						<i class="layui-icon"></i>
+						<p>点击上传，或将文件拖拽到此处</p>
+						<p style="color: #FF5722; font-size: 12px;">提示：支持JPG/GIF/PNG/PDF等格式，单个文件不超过10MB，最多上传10个文件</p>
+					</div>
+					<div class="file-box" style="margin-top: 10px;">
+						<div id="fileList" class="layui-upload-list">
+							<!-- 这里会动态展示已上传的文件列表 -->
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+		<div class="pt-4">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即新增</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="back">返回</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','form','tableSelect','fileupload'];
+	function gouguInit() {
+		var form = layui.form,
+			tool = layui.tool,
+			tableSelect = layui.tableSelect;
+
+		// 初始化项目名称选择器
+		tableSelect.render({
+			elem: "input[name='refPname']",
+			checkedKey: 'id',
+			searchKey: 'key',
+			table: {
+				url: '/qixing_oa1/pjprojectrecheck/listByPage',
+				cols: [
+					[
+						{type: 'radio', width: 40},
+						{field: 'refPname', title: '项目名称', width: 300}
+					]
+				]
+			},
+			done: function (elem, data) {
+				var NEWJSON = [];
+				layui.each(data.data, function (index, item) {
+					NEWJSON.push(item.refPname);
+					$('input[name="refPid"]').val(item.refPid);
+				});
+				elem.val(NEWJSON.join("、"));
+			}
+		});
+
+		// 初始化项目经理选择器
+		tableSelect.render({
+			elem: "input[name='refPmanager']",
+			checkedKey: 'id',
+			searchKey: 'key',
+			table: {
+				url: '/qixing_oa1/pjprojectrecheck/listByPage',
+				cols: [
+					[
+						{type: 'radio', width: 40},
+						{field: 'refPmanager', title: '项目经理', width: 300}
+					]
+				]
+			},
+			done: function (elem, data) {
+				var NEWJSON = [];
+				layui.each(data.data, function (index, item) {
+					NEWJSON.push(item.refPmanager);
+					$('input[name="refPmanagerId"]').val(item.refPmanagerId);
+				});
+				elem.val(NEWJSON.join("、"));
+			}
+		});
+
+		// 初始化项目报告选择器
+		tableSelect.render({
+			elem: "input[name='refPjrName']",
+			checkedKey: 'id',
+			searchKey: 'key',
+			table: {
+				url: '/qixing_oa1/pjprojectrecheck/listByPage',
+				cols: [
+					[
+						{type: 'radio', width: 40},
+						{field: 'refPjrName', title: '项目报告', width: 300}
+					]
+				]
+			},
+			done: function (elem, data) {
+				var NEWJSON = [];
+				layui.each(data.data, function (index, item) {
+					NEWJSON.push(item.refPjrName);
+					$('input[name="refPjrId"]').val(item.refPjrId);
+				});
+				elem.val(NEWJSON.join("、"));
+			}
+		});
+
+		// 初始化项目复核责任人选择器
+		tableSelect.render({
+			elem: "input[name='recheckMan']",
+			checkedKey: 'id',
+			searchKey: 'key',
+			table: {
+				url: '/qixing_oa1/pjprojectrecheck/listByPage',
+				cols: [
+					[
+						{type: 'radio', width: 40},
+						{field: 'recheckMan', title: '项目复核责任人', width: 300}
+					]
+				]
+			},
+			done: function (elem, data) {
+				var NEWJSON = [];
+				layui.each(data.data, function (index, item) {
+					NEWJSON.push(item.recheckMan);
+					$('input[name="recheckManId"]').val(item.recheckManId);
+				});
+				elem.val(NEWJSON.join("、"));
+			}
+		});
+
+		// 表单验证
+		form.verify({
+			refPname: [/^.{1,50}$/, '项目名称长度在1-50之间'],
+			refPmanager: [/^.{1,20}$/, '项目经理名称长度在1-20之间'],
+			refPjrName: [/^.{0,50}$/, '项目报告长度在0-50之间'],
+			recheckMan: [/^.{1,20}$/, '项目复核责任人长度在1-20之间'],
+			recheckAdvice: [/^.{0,500}$/, '项目复核意见长度在0-500之间'],
+			remark: [/^.{0,500}$/, '备注长度在0-500之间']
+		});
+
+		// 监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000, 'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post('/qixing_oa1/pjprojectrecheck/add', data.field, callback, clickbtn);
+			return false;
+		});
+
+		// 返回按钮
+		$('#back').on('click', function () {
+			tool.sideClose();
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	<script src="/static/assets/js/fileupload/fileupload.js" charset="utf-8"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>新增面试汇总 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA,面试汇总"/>
+	<meta name="description" content="面试汇总管理页面，用于新增面试记录信息。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">新增面试汇总</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">候选人<font>*</font></td>
+			<td>
+				<input type="text" name="userName" placeholder="请选择候选人" readonly class="layui-input picker-oa" data-types="hrUserResume" autocomplete="off" />
+				<input type="hidden" name="userId" value="" />
+			</td>
+			<td class="layui-td-gray">面试时间</td>
+			<td>
+				<input type="text" name="interviewTime" placeholder="请选择面试时间" class="layui-input" id="interviewTime" autocomplete="off" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">面试方式</td>
+			<td>
+				<div id="interviewWay" class="xm-select-demo"></div>
+				<input type="hidden" name="interviewWay" value="" />
+			</td>
+			<td class="layui-td-gray">面试结果</td>
+			<td>
+				<div id="interviewResult" class="xm-select-demo"></div>
+				<input type="hidden" name="interviewResult" value="" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">面试官</td>
+			<td colspan="3">
+				<div id="interviewers" class="xm-select-demo"></div>
+				<input type="hidden" name="interviewers" value="" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">工作年限</td>
+			<td>
+				<input type="text" name="workYears" placeholder="请输入工作年限" class="layui-input" autocomplete="off" />
+			</td>
+			<td class="layui-td-gray">期望薪资</td>
+			<td>
+				<input type="text" name="expectedSalary" placeholder="请输入期望薪资" class="layui-input" autocomplete="off" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">面试评价</td>
+			<td colspan="3">
+				<textarea name="interviewComment" placeholder="请输入面试评价" class="layui-textarea" rows="5"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">备注</td>
+			<td colspan="3">
+				<textarea name="remark" placeholder="请输入备注信息" class="layui-textarea" rows="3"></textarea>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-4">
+		<input type="hidden" name="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="backBtn">返回</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','xmSelect','laydate','tableSelect','oaPicker'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, xmSelect = layui.xmSelect, laydate = layui.laydate, tableSelect = layui.tableSelect;
+		
+		// 加载字典数据
+		let dicts = {};
+		tool.sendGet('/api/dict/listByTypeCode', {typeCodes: 'interview_way,interview_result'}, function(res) {
+			if(res.code == 0) {
+				dicts = res.data;
+				
+				// 初始化面试方式选择器
+				var interviewWaySelect = xmSelect.render({
+					elem: '#interviewWay',
+					name: 'interviewWay',
+					filterable: true,
+					model: {
+						label: {
+							type: 'text'
+						}
+					},
+					data: dicts.interview_way ? dicts.interview_way.map(item => ({name: item.dictName, value: item.dictValue})) : [],
+					on: {
+						change: function(data) {
+							$('input[name="interviewWay"]').val(data.arr.length > 0 ? data.arr[0].value : '');
+						}
+					}
+				});
+				
+				// 初始化面试结果选择器
+				var interviewResultSelect = xmSelect.render({
+					elem: '#interviewResult',
+					name: 'interviewResult',
+					filterable: true,
+					model: {
+						label: {
+							type: 'text'
+						}
+					},
+					data: dicts.interview_result ? dicts.interview_result.map(item => ({name: item.dictName, value: item.dictValue})) : [],
+					on: {
+						change: function(data) {
+							$('input[name="interviewResult"]').val(data.arr.length > 0 ? data.arr[0].value : '');
+						}
+					}
+				});
+			}
+		});
+		
+		// 初始化面试官选择器
+		var interviewersSelect = xmSelect.render({
+			elem: '#interviewers',
+			name: 'interviewers',
+			filterable: true,
+			multiple: true,
+			model: {
+				label: {
+					type: 'text'
+				}
+			},
+			data: [],
+			on: {
+				change: function(data) {
+					$('input[name="interviewers"]').val(data.arr.map(item => item.value).join(','));
+				}
+			}
+		});
+		
+		// 点击面试官选择器时弹出表格选择
+		$('#interviewers').parent().click(function() {
+			tableSelect.render({
+				title: '选择面试官',
+				url: '/sys/users/listByPage',
+				cols: [
+					[{type: 'checkbox'},{field: 'userName', title: '用户名'},{field: 'realName', title: '姓名'},{field: 'deptName', title: '部门'},{field: 'postName', title: '职位'}]
+				],
+				page: true,
+				done: function(data) {
+					var result = data.data.map(item => ({name: item.realName, value: item.userId}));
+					interviewersSelect.update({
+						data: result
+					});
+					$('input[name="interviewers"]').val(result.map(item => item.value).join(','));
+				}
+			});
+		});
+		
+		// 初始化日期选择器
+		laydate.render({
+			elem: '#interviewTime',
+			type: 'datetime',
+			format: 'yyyy-MM-dd HH:mm'
+		});
+		
+		// 表单验证规则
+		form.verify({
+			userName: function(value) {
+				if(!value) {
+					return '请选择候选人';
+				}
+			},
+			workYears: function(value) {
+				if(value && !/^\d+(\.\d+)?$/.test(value)) {
+					return '工作年限请输入数字';
+				}
+			},
+			expectedSalary: function(value) {
+				if(value && !/^\d+(\.\d+)?$/.test(value)) {
+					return '期望薪资请输入数字';
+				}
+			},
+			interviewComment: function(value) {
+				if(value && value.length > 500) {
+					return '面试评价不能超过500个字符';
+				}
+			},
+			remark: function(value) {
+				if(value && value.length > 200) {
+					return '备注不能超过200个字符';
+				}
+			}
+		});
+
+		// 监听提交
+		form.on('submit(webform)', function(data) {
+			let callback = function(e) {
+				layer.msg(e.msg);
+				if(e.code == 0) {
+					tool.sideClose(1000, 'hrUserInterviewTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/hrUserInterview/add", data.field, callback, clickbtn);
+			return false;
+		});
+		
+		// 返回按钮事件
+		$('#backBtn').click(function() {
+			tool.sideClose(0, 'hrUserInterviewTable');
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

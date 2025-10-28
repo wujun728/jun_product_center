@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-page">
+	<h3 class="pb-3">编辑项目</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">项目名称<font>*</font></td>
+			<td colspan="3"><input type="text" name="name" lay-verify="required" lay-reqText="请输入项目名称" placeholder="请输入项目名称" class="layui-input" value="1111"></td>
+			<td class="layui-td-gray">项目类别<font>*</font></td>
+			<td>
+				<select name="cate_id" lay-verify="required" lay-reqText="请选择项目类别">
+					<option value="">请选择</option>
+										<option value="1"  selected>普通项目</option>
+										<option value="2" >工程项目</option>
+										<option value="3" >服务项目</option>
+									</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">项目经理<font>*</font></td>
+			<td>
+				<input type="text" name="director_name" placeholder="请选择项目经理(负责人)" readonly class="layui-input" value="一页书" lay-verify="required" readonly lay-reqText="请选择项目经理(负责人)">
+				<input type="hidden" name="director_uid" value="3">
+				<input type="hidden" name="did" value="2">
+			</td>
+			<td class="layui-td-gray">归属部门<font>*</font></td>
+			<td><input type="text" name="department" value="人事部" autocomplete="off" readonly class="layui-input"></td>
+			<td class="layui-td-gray">始止日期<span style="color: red">*</span></td>
+			<td><input type="text" name="range_time" value="2025-05-29 到 2025-06-29" class="layui-input tool-time" data-range="到" readonly placeholder="开始 到 结束" lay-verify="required" lay-reqText="请选择计划完成周期"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">关联合同</td>
+			<td colspan="5">
+				<input type="text" class="layui-input picker-oa" data-types="contract" name="contract_name" placeholder="请选择需要关联的合同" readonly value="">		
+				<input type="hidden" class="layui-input" name="contract_id" value="0">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">项目简介</td>
+			<td colspan="5">
+				<textarea name="content" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+				<tr>
+			<td colspan="6" style="background-color:#FAFAFA;"><strong>项目阶段</strong><span style="color: red">*</span> <span class="layui-btn layui-btn-xs" id="stepAdd">+ 添加阶段</span></td>
+		</tr>
+		<tr>
+			<td colspan="6">
+				<table id="stepTable" class="layui-table layui-table-min" style="margin:0">
+					<tr>
+						<th width="60">序号</th>
+						<th width="180">阶段名称</th>
+						<th width="80">阶段负责人</th>
+						<th width="180">阶段成员</th>
+						<th width="162">阶段周期</th>
+						<th>阶段说明</th>
+						<th width="120">操作</th>
+					</tr>
+										<tr class="step-tr">
+						<td class="step-key">第 <strong>1</strong> 阶段</td>
+						<td><input type="text" name="step_title[]" value="立项阶段" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称"></td>
+						<td>
+							<input type="text" value="鸳鸯镜" class="layui-input layui-input-readonly picker-admin" lay-verify="required" lay-reqText="请选择阶段负责人" readonly>
+							<input type="hidden" name="step_director_uid[]" value="84" readonly>
+						</td>
+						<td>
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" data-type="2">
+							<input type="hidden" name="step_uids[]" value="">
+						</td>
+						<td><input type="text" name="step_cycle_time[]" value="2025-05-29 到 2025-06-29" class="layui-input layui-input-readonly tool-time" data-range="到" lay-verify="required" lay-reqText="请选择阶段周期" readonly></td>
+						<td><input type="text" name="step_remark[]" value="" class="layui-input"></td>
+						<td>
+							<input type="hidden" name="step_id[]" value="620" class="layui-input">
+							<div class="layui-btn-group">
+								<span class="layui-btn layui-btn-xs step-up">上移</span>
+								<span class="layui-btn layui-btn-normal layui-btn-xs step-down">下移</span>
+								<span class="layui-btn layui-btn-danger layui-btn-xs step-del" data-id="620">删除</span>
+							</div>
+						</td>
+					</tr>
+															<tr class="step-tr">
+						<td class="step-key">第 <strong>2</strong> 阶段</td>
+						<td><input type="text" name="step_title[]" value="规划阶段" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称"></td>
+						<td>
+							<input type="text" value="独梦君" class="layui-input layui-input-readonly picker-admin" lay-verify="required" lay-reqText="请选择阶段负责人" readonly>
+							<input type="hidden" name="step_director_uid[]" value="73" readonly>
+						</td>
+						<td>
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" data-type="2">
+							<input type="hidden" name="step_uids[]" value="">
+						</td>
+						<td><input type="text" name="step_cycle_time[]" value="2025-05-29 到 2025-06-29" class="layui-input layui-input-readonly tool-time" data-range="到" lay-verify="required" lay-reqText="请选择阶段周期" readonly></td>
+						<td><input type="text" name="step_remark[]" value="" class="layui-input"></td>
+						<td>
+							<input type="hidden" name="step_id[]" value="621" class="layui-input">
+							<div class="layui-btn-group">
+								<span class="layui-btn layui-btn-xs step-up">上移</span>
+								<span class="layui-btn layui-btn-normal layui-btn-xs step-down">下移</span>
+								<span class="layui-btn layui-btn-danger layui-btn-xs step-del" data-id="621">删除</span>
+							</div>
+						</td>
+					</tr>
+															<tr class="step-tr">
+						<td class="step-key">第 <strong>3</strong> 阶段</td>
+						<td><input type="text" name="step_title[]" value="执行阶段" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称"></td>
+						<td>
+							<input type="text" value="藏剑生" class="layui-input layui-input-readonly picker-admin" lay-verify="required" lay-reqText="请选择阶段负责人" readonly>
+							<input type="hidden" name="step_director_uid[]" value="66" readonly>
+						</td>
+						<td>
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" data-type="2">
+							<input type="hidden" name="step_uids[]" value="">
+						</td>
+						<td><input type="text" name="step_cycle_time[]" value="2025-05-29 到 2025-06-29" class="layui-input layui-input-readonly tool-time" data-range="到" lay-verify="required" lay-reqText="请选择阶段周期" readonly></td>
+						<td><input type="text" name="step_remark[]" value="" class="layui-input"></td>
+						<td>
+							<input type="hidden" name="step_id[]" value="622" class="layui-input">
+							<div class="layui-btn-group">
+								<span class="layui-btn layui-btn-xs step-up">上移</span>
+								<span class="layui-btn layui-btn-normal layui-btn-xs step-down">下移</span>
+								<span class="layui-btn layui-btn-danger layui-btn-xs step-del" data-id="622">删除</span>
+							</div>
+						</td>
+					</tr>
+															<tr class="step-tr">
+						<td class="step-key">第 <strong>4</strong> 阶段</td>
+						<td><input type="text" name="step_title[]" value="监控与控制阶段" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称"></td>
+						<td>
+							<input type="text" value="风僧白云剑" class="layui-input layui-input-readonly picker-admin" lay-verify="required" lay-reqText="请选择阶段负责人" readonly>
+							<input type="hidden" name="step_director_uid[]" value="25" readonly>
+						</td>
+						<td>
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" data-type="2">
+							<input type="hidden" name="step_uids[]" value="">
+						</td>
+						<td><input type="text" name="step_cycle_time[]" value="2025-05-29 到 2025-06-29" class="layui-input layui-input-readonly tool-time" data-range="到" lay-verify="required" lay-reqText="请选择阶段周期" readonly></td>
+						<td><input type="text" name="step_remark[]" value="" class="layui-input"></td>
+						<td>
+							<input type="hidden" name="step_id[]" value="623" class="layui-input">
+							<div class="layui-btn-group">
+								<span class="layui-btn layui-btn-xs step-up">上移</span>
+								<span class="layui-btn layui-btn-normal layui-btn-xs step-down">下移</span>
+								<span class="layui-btn layui-btn-danger layui-btn-xs step-del" data-id="623">删除</span>
+							</div>
+						</td>
+					</tr>
+															<tr class="step-tr">
+						<td class="step-key">第 <strong>5</strong> 阶段</td>
+						<td><input type="text" name="step_title[]" value="收尾阶段" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称"></td>
+						<td>
+							<input type="text" value="风霁月" class="layui-input layui-input-readonly picker-admin" lay-verify="required" lay-reqText="请选择阶段负责人" readonly>
+							<input type="hidden" name="step_director_uid[]" value="74" readonly>
+						</td>
+						<td>
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" data-type="2">
+							<input type="hidden" name="step_uids[]" value="">
+						</td>
+						<td><input type="text" name="step_cycle_time[]" value="2025-05-29 到 2025-06-29" class="layui-input layui-input-readonly tool-time" data-range="到" lay-verify="required" lay-reqText="请选择阶段周期" readonly></td>
+						<td><input type="text" name="step_remark[]" value="" class="layui-input"></td>
+						<td>
+							<input type="hidden" name="step_id[]" value="624" class="layui-input">
+							<div class="layui-btn-group">
+								<span class="layui-btn layui-btn-xs step-up">上移</span>
+								<span class="layui-btn layui-btn-normal layui-btn-xs step-down">下移</span>
+								<span class="layui-btn layui-btn-danger layui-btn-xs step-del" data-id="624">删除</span>
+							</div>
+						</td>
+					</tr>
+														</table>
+			</td>
+		</tr>
+			</table>
+	<div class="pt-3">
+		<input type="hidden" name="id" value="1186"/>
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	var moduleInit = ['tool','oaPicker'];
+
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool,oaPicker = layui.oaPicker;
+		//选择项目经理
+		$('body').on('click','[name="director_name"]',function () {
+			var ids=$('[name="director_uid"]').val(),names=$('[name="director_name"]').val();
+			oaPicker.employeeInit({
+				ids:ids,
+				names:names,
+				type:1,
+				callback:function(data){
+					let select_id=[],select_name=[],select_did=[],select_dname=[];
+					for(var a=0; a<data.length;a++){
+						select_id.push(data[a].id);
+						select_name.push(data[a].name);
+						select_did.push(data[a].did);
+						select_dname.push(data[a].department);
+					}
+					$('[name="director_uid"]').val(select_id.join(','));
+					$('[name="director_name"]').val(select_name.join(','));
+					$('[name="did"]').val(select_did.join(','));
+					$('[name="department"]').val(select_dname.join(','));
+				}
+			});
+		});	
+		//添加阶段信息表格
+		$('#stepAdd').on('click',function(){
+			var html = '';
+			html += '<tr class="step-tr">\
+						<td class="step-key">第 <strong>0</strong> 阶段</td>\
+						<td><input type="text" name="step_title[]" value="" class="layui-input" lay-verify="required" lay-reqText="请输入阶段名称"></td>\
+						<td>\
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" lay-verify="required" lay-reqText="请选择阶段负责人" readonly>\
+							<input type="hidden" name="step_director_uid[]" value="0" readonly>\
+						</td>\
+						<td>\
+							<input type="text" value="" class="layui-input layui-input-readonly picker-admin" data-type="2">\
+							<input type="hidden" name="step_uids[]" value="">\
+						</td>\
+						<td><input type="text" name="step_cycle_time[]" value="" class="layui-input layui-input-readonly tool-time" data-range="到" lay-verify="required" lay-reqText="请选择服务周期" readonly></td>\
+						<td><input type="text" name="step_remark[]" value="" class="layui-input"></td>\
+						<td>\
+							<input type="hidden" name="step_id[]" value="0" class="layui-input">\
+							<div class="layui-btn-group">\
+								<span class="layui-btn layui-btn-xs step-up">上移</span>\
+								<span class="layui-btn layui-btn-normal layui-btn-xs step-down">下移</span>\
+								<span class="layui-btn layui-btn-danger layui-btn-xs step-del" data-id="0">删除</span>\
+							</div>\
+						</td>\
+					</tr>';
+			$('#stepTable').append(html).find('.tr-none').remove();
+			$('#stepTable').find('.step-key').each(function(index,item){
+				$(this).html('第 <strong>'+(index+1)+'</strong> 阶段');
+			})
+			form.render();
+		});
+		$('#stepTable').on('click','.layui-btn-danger',function(){
+			if($('.step-tr').length<2){
+				layer.msg('至少保留一个项目阶段');
+				return false;
+			}
+			let that=$(this);
+			let id = that.data('id');
+			if(id==0){
+				that.parents('.step-tr').remove();
+				$('#stepTable').find('.step-key').each(function(index,item){
+					$(this).html('第 <strong>'+(index+1)+'</strong> 阶段');
+				})
+			}
+			else{
+				layer.confirm('确定要删除该项目阶段吗?', { icon: 3, title: '提示' }, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							that.parents('.step-tr').remove();
+							$('#stepTable').find('.step-key').each(function(index,item){
+								$(this).html('第 <strong>'+(index+1)+'</strong> 阶段');
+							})
+						}
+					}
+					tool.delete("/project/api/step_del", { id: id }, callback);
+					layer.close(index);
+				});
+			}
+		});
+		
+		$('#stepTable').on('click','.step-up',function(e){
+			let obj = $(e.target).closest('tr');
+            tr_pre($(obj[0]));
+		})
+		
+		$('#stepTable').on('click','.step-down',function(e){
+			var obj = $(e.target).closest('tr');
+            tr_next($(obj[0]));
+		})
+		
+		
+		function tr_pre(o) {
+			var pres = o.prevAll('tr.step-tr');
+			if (pres.length > 0) {
+				var tmp = o.clone(true);
+				var oo = pres[0];
+				o.remove();
+				$(oo).before(tmp);
+				$('#stepTable').find('.step-key').each(function(index,item){
+					$(this).html('第 <strong>'+(index+1)+'</strong> 阶段');
+				})
+			}
+			else{
+				layer.msg('已经第一个了');
+			}
+		}
+
+		function tr_next(o) {
+			var nexts = o.nextAll('tr.step-tr');
+			if (nexts.length > 0) {
+				var tmp = o.clone(true);
+				var oo = nexts[0];
+				o.remove();
+				$(oo).after(tmp);
+				$('#stepTable').find('.step-key').each(function(index,item){
+					$(this).html('第 <strong>'+(index+1)+'</strong> 阶段');
+				})
+			}else{
+				layer.msg('已经最后一个了');
+			}
+		}
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/project/index/add", data.field, callback,clickbtn);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

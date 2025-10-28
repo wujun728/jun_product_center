@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online表单设计器</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+      background-color: #f5f7fa;
+      line-height: 1.6;
+    }
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      height: 60px;
+      background-color: #1E9FFF;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .header .actions {
+      display: flex;
+      gap: 10px;
+    }
+    .header .actions button {
+      padding: 6px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    .header .actions .primary-btn {
+      background-color: #fff;
+      color: #1E9FFF;
+    }
+    .header .actions .primary-btn:hover {
+      background-color: #f0f8ff;
+    }
+    .header .actions .secondary-btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+    .header .actions .secondary-btn:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+    .main-content {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 260px;
+      background-color: #fff;
+      border-right: 1px solid #e8e8e8;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .nav-tabs {
+      border-bottom: 1px solid #e8e8e8;
+    }
+    .nav-tab {
+      padding: 15px 20px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      color: #666;
+      position: relative;
+    }
+    .nav-tab:hover {
+      background-color: #f5f7fa;
+    }
+    .nav-tab.active {
+      border-left-color: #1E9FFF;
+      background-color: #f0f8ff;
+      color: #1E9FFF;
+      font-weight: 500;
+    }
+    .nav-tab i {
+      margin-right: 8px;
+    }
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .form-tabs {
+      background-color: #fff;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      overflow-x: auto;
+    }
+    .form-tab {
+      padding: 15px 25px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+    .form-tab:hover {
+      color: #1E9FFF;
+    }
+    .form-tab.active {
+      color: #1E9FFF;
+      border-bottom-color: #1E9FFF;
+      font-weight: 500;
+    }
+    .form-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #fafafa;
+    }
+    .form-card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      margin-bottom: 20px;
+    }
+    .form-card h3 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #1E9FFF;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(30, 159, 255, 0.2);
+    }
+    .form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .checkbox-group,
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .checkbox-item,
+    .radio-item {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .checkbox-item input,
+    .radio-item input {
+      margin-right: 5px;
+      flex-shrink: 0;
+    }
+    .grid-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .component-panel {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      margin-bottom: 20px;
+    }
+    .component-panel h3 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+    .component-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .component-item {
+      padding: 12px;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      background-color: #fafafa;
+    }
+    .component-item:hover {
+      border-color: #1E9FFF;
+      background-color: #f0f8ff;
+      transform: translateY(-1px);
+    }
+    .component-item i {
+      font-size: 24px;
+      margin-bottom: 8px;
+      display: block;
+      color: #1E9FFF;
+    }
+    .component-item span {
+      font-size: 12px;
+      color: #666;
+    }
+    .form-builder {
+      background-color: #fff;
+      border: 2px dashed #d9d9d9;
+      border-radius: 8px;
+      min-height: 400px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .form-builder.empty::after {
+      content: "拖拽组件到这里开始设计表单";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #999;
+      font-size: 16px;
+    }
+    .form-element {
+      padding: 15px;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      background-color: #fff;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .form-element:hover {
+      border-color: #1E9FFF;
+      box-shadow: 0 2px 8px rgba(30, 159, 255, 0.1);
+    }
+    .form-element .element-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .form-element .element-title {
+      font-weight: 500;
+      color: #333;
+    }
+    .form-element .element-actions {
+      display: none;
+      gap: 5px;
+    }
+    .form-element:hover .element-actions {
+      display: flex;
+    }
+    .form-element .action-btn {
+      padding: 2px 6px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+      background-color: #f5f5f5;
+      color: #666;
+      transition: all 0.3s ease;
+    }
+    .form-element .action-btn:hover {
+      background-color: #1E9FFF;
+      color: #fff;
+    }
+    .tabs-content > div {
+      display: none;
+    }
+    .tabs-content > div.active {
+      display: block;
+    }
+    /* 简单的图标替代方案 */
+    .icon {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      font-size: 16px;
+    }
+    .alert {
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .alert-info {
+      background-color: #e6f7ff;
+      color: #1890ff;
+      border: 1px solid #91d5ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 顶部导航 -->
+    <div class="header">
+      <h1>Online表单设计器</h1>
+      <div class="actions">
+        <button class="secondary-btn" id="previewBtn">预览</button>
+        <button class="secondary-btn" id="saveBtn">保存</button>
+        <button class="primary-btn" id="publishBtn">发布</button>
+      </div>
+    </div>
+    
+    <!-- 主内容区 -->
+    <div class="main-content">
+      <!-- 左侧边栏 -->
+      <div class="sidebar">
+        <div class="nav-tabs">
+          <div class="nav-tab active" data-tab="form-design">
+            <i class="icon">🎨</i>表单设计
+          </div>
+          <div class="nav-tab" data-tab="table-config">
+            <i class="icon">📊</i>表格配置
+          </div>
+          <div class="nav-tab" data-tab="data-source">
+            <i class="icon">🔌</i>数据源
+          </div>
+          <div class="nav-tab" data-tab="custom-btn">
+            <i class="icon">🔘</i>自定义按钮
+          </div>
+          <div class="nav-tab" data-tab="js-enhance">
+            <i class="icon">⚡</i>JS增强
+          </div>
+          <div class="nav-tab" data-tab="java-enhance">
+            <i class="icon">🔋</i>Java增强
+          </div>
+        </div>
+      </div>
+      
+      <!-- 右侧内容区 -->
+      <div class="content-area">
+        <!-- 表单类型选项卡 -->
+        <div class="form-tabs">
+          <div class="form-tab active" data-form-type="single">单表</div>
+          <div class="form-tab" data-form-type="tree">树表</div>
+          <div class="form-tab" data-form-type="one2one">一对一</div>
+          <div class="form-tab" data-form-type="one2many">一对多</div>
+        </div>
+        
+        <!-- 表单内容区 -->
+        <div class="form-content">
+          <!-- 表单设计选项卡内容 -->
+          <div class="tabs-content">
+            <!-- 表单基本信息 -->
+            <div class="form-card">
+              <h3>表单基本信息</h3>
+              <div class="grid-layout">
+                <div class="form-group">
+                  <label for="formName">表单名称</label>
+                  <input type="text" id="formName" placeholder="请输入表单名称">
+                </div>
+                <div class="form-group">
+                  <label for="formCode">表单编码</label>
+                  <input type="text" id="formCode" placeholder="请输入表单编码">
+                </div>
+                <div class="form-group">
+                  <label for="formType">表单类型</label>
+                  <select id="formType">
+                    <option value="single">单表</option>
+                    <option value="tree">树表</option>
+                    <option value="one2one">一对一</option>
+                    <option value="one2many">一对多</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="formLayout">表单布局</label>
+                  <select id="formLayout">
+                    <option value="1">一列</option>
+                    <option value="2">两列</option>
+                    <option value="3">三列</option>
+                    <option value="4">四列</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="formDescription">表单描述</label>
+                <textarea id="formDescription" placeholder="请输入表单描述"></textarea>
+              </div>
+            </div>
+            
+            <!-- 表单组件 -->
+            <div class="component-panel">
+              <h3>表单组件</h3>
+              <div class="component-list">
+                <div class="component-item" data-type="text">
+                  <i>📝</i>
+                  <span>文本框</span>
+                </div>
+                <div class="component-item" data-type="number">
+                  <i>🔢</i>
+                  <span>数字输入</span>
+                </div>
+                <div class="component-item" data-type="select">
+                  <i>📋</i>
+                  <span>下拉框</span>
+                </div>
+                <div class="component-item" data-type="date">
+                  <i>📅</i>
+                  <span>日期选择器</span>
+                </div>
+                <div class="component-item" data-type="time">
+                  <i>⏰</i>
+                  <span>时间选择器</span>
+                </div>
+                <div class="component-item" data-type="checkbox">
+                  <i>☑️</i>
+                  <span>复选框</span>
+                </div>
+                <div class="component-item" data-type="radio">
+                  <i>⚪</i>
+                  <span>单选框</span>
+                </div>
+                <div class="component-item" data-type="switch">
+                  <i>🚦</i>
+                  <span>开关</span>
+                </div>
+                <div class="component-item" data-type="textarea">
+                  <i>📜</i>
+                  <span>文本域</span>
+                </div>
+                <div class="component-item" data-type="file">
+                  <i>📎</i>
+                  <span>文件上传</span>
+                </div>
+                <div class="component-item" data-type="image">
+                  <i>🖼️</i>
+                  <span>图片上传</span>
+                </div>
+                <div class="component-item" data-type="cascader">
+                  <i>📊</i>
+                  <span>级联选择</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 表单设计区域 -->
+            <div class="form-builder empty" id="formBuilder">
+              <!-- 表单元素会在这里动态生成 -->
+            </div>
+            
+            <!-- 表单验证设置 -->
+            <div class="form-card">
+              <h3>表单验证设置</h3>
+              <div class="form-group">
+                <label>验证模式</label>
+                <div class="radio-group">
+                  <label class="radio-item">
+                    <input type="radio" name="validateMode" value="submit" checked> 提交时验证
+                  </label>
+                  <label class="radio-item">
+                    <input type="radio" name="validateMode" value="change"> 变更时验证
+                  </label>
+                  <label class="radio-item">
+                    <input type="radio" name="validateMode" value="blur"> 失去焦点时验证
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>提交前确认</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-item">
+                    <input type="checkbox" id="confirmBeforeSubmit"> 启用提交前确认提示
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // 等待DOM加载完成
+    document.addEventListener('DOMContentLoaded', function() {
+      // 初始化变量
+      let currentFormType = 'single';
+      let formElements = [];
+      let currentElementId = 0;
+      
+      // 获取DOM元素
+      const formBuilder = document.getElementById('formBuilder');
+      const formTypeTabs = document.querySelectorAll('.form-tab');
+      const navTabs = document.querySelectorAll('.nav-tab');
+      const componentItems = document.querySelectorAll('.component-item');
+      const saveBtn = document.getElementById('saveBtn');
+      const previewBtn = document.getElementById('previewBtn');
+      const publishBtn = document.getElementById('publishBtn');
+      
+      // 切换表单类型
+      formTypeTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // 移除所有标签的active类
+          formTypeTabs.forEach(t => t.classList.remove('active'));
+          // 添加当前标签的active类
+          this.classList.add('active');
+          // 更新当前表单类型
+          currentFormType = this.getAttribute('data-form-type');
+          // 显示对应表单类型的配置信息
+          showFormTypeConfig(currentFormType);
+        });
+      });
+      
+      // 切换导航标签
+      navTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          // 移除所有标签的active类
+          navTabs.forEach(t => t.classList.remove('active'));
+          // 添加当前标签的active类
+          this.classList.add('active');
+          // 获取标签ID
+          const tabId = this.getAttribute('data-tab');
+          // 显示对应标签的内容
+          showTabContent(tabId);
+        });
+      });
+      
+      // 添加组件到表单设计器
+      componentItems.forEach(item => {
+        item.addEventListener('click', function() {
+          const componentType = this.getAttribute('data-type');
+          addFormElement(componentType);
+        });
+      });
+      
+      // 保存表单配置
+      saveBtn.addEventListener('click', function() {
+        saveFormConfig();
+      });
+      
+      // 预览表单
+      previewBtn.addEventListener('click', function() {
+        previewForm();
+      });
+      
+      // 发布表单
+      publishBtn.addEventListener('click', function() {
+        publishForm();
+      });
+      
+      // 显示表单类型配置
+      function showFormTypeConfig(formType) {
+        // 根据表单类型显示不同的配置项
+        console.log('切换到表单类型:', formType);
+        
+        // 清空表单设计器
+        formBuilder.innerHTML = '';
+        formElements = [];
+        
+        // 根据不同表单类型添加默认字段
+        if (formType === 'single') {
+          // 单表表单添加基础字段
+          addFormElement('text', {label: '名称', required: true});
+          addFormElement('text', {label: '描述'});
+          addFormElement('number', {label: '排序'});
+          addFormElement('switch', {label: '状态'});
+        } else if (formType === 'tree') {
+          // 树表表单添加基础字段
+          addFormElement('text', {label: '名称', required: true});
+          addFormElement('select', {label: '上级分类', required: true});
+          addFormElement('text', {label: '描述'});
+          addFormElement('number', {label: '排序'});
+          addFormElement('switch', {label: '状态'});
+        } else if (formType === 'one2one') {
+          // 一对一表单添加基础字段
+          addFormElement('text', {label: '主表名称', required: true});
+          addFormElement('text', {label: '主表描述'});
+          // 添加从表标记
+          const relationDiv = document.createElement('div');
+          relationDiv.className = 'form-element';
+          relationDiv.innerHTML = `
+            <div class="element-header">
+              <div class="element-title">关联从表</div>
+              <div class="element-actions">
+                <button class="action-btn" title="编辑">📝</button>
+                <button class="action-btn" title="删除">🗑️</button>
+              </div>
+            </div>
+            <div style="color: #999; font-size: 12px;">此处将显示一对一关联的从表字段</div>
+          `;
+          formBuilder.appendChild(relationDiv);
+          formBuilder.classList.remove('empty');
+        } else if (formType === 'one2many') {
+          // 一对多表单添加基础字段
+          addFormElement('text', {label: '主表名称', required: true});
+          addFormElement('text', {label: '主表描述'});
+          // 添加从表标记
+          const relationDiv = document.createElement('div');
+          relationDiv.className = 'form-element';
+          relationDiv.innerHTML = `
+            <div class="element-header">
+              <div class="element-title">关联从表（一对多）</div>
+              <div class="element-actions">
+                <button class="action-btn" title="编辑">📝</button>
+                <button class="action-btn" title="删除">🗑️</button>
+              </div>
+            </div>
+            <div style="color: #999; font-size: 12px;">此处将显示一对多关联的从表表格</div>
+          `;
+          formBuilder.appendChild(relationDiv);
+          formBuilder.classList.remove('empty');
+        }
+      }
+      
+      // 显示标签内容
+      function showTabContent(tabId) {
+        // 根据标签ID显示不同的内容
+        console.log('切换到标签:', tabId);
+        // 实际项目中这里应该显示对应标签的内容
+      }
+      
+      // 添加表单元素
+      function addFormElement(type, options = {}) {
+        // 生成元素ID
+        currentElementId++;
+        const elementId = 'form_element_' + currentElementId;
+        
+        // 获取元素标签
+        const elementLabel = options.label || getDefaultLabel(type);
+        
+        // 创建元素容器
+        const elementDiv = document.createElement('div');
+        elementDiv.className = 'form-element';
+        elementDiv.setAttribute('data-id', elementId);
+        elementDiv.setAttribute('data-type', type);
+        
+        // 根据元素类型生成不同的HTML
+        let elementHTML = `
+          <div class="element-header">
+            <div class="element-title">${elementLabel} ${options.required ? '<span style="color: red;">*</span>' : ''}</div>
+            <div class="element-actions">
+              <button class="action-btn" title="编辑">📝</button>
+              <button class="action-btn" title="复制">📋</button>
+              <button class="action-btn" title="删除">🗑️</button>
+            </div>
+          </div>
+        `;
+        
+        // 根据不同类型添加不同的表单控件
+        switch(type) {
+          case 'text':
+            elementHTML += `<input type="text" placeholder="请输入${elementLabel}">`;
+            break;
+          case 'number':
+            elementHTML += `<input type="number" placeholder="请输入${elementLabel}">`;
+            break;
+          case 'select':
+            elementHTML += `
+              <select>
+                <option value="">请选择${elementLabel}</option>
+              </select>
+            `;
+            break;
+          case 'date':
+            elementHTML += `<input type="date" placeholder="请选择${elementLabel}">`;
+            break;
+          case 'time':
+            elementHTML += `<input type="time" placeholder="请选择${elementLabel}">`;
+            break;
+          case 'checkbox':
+            elementHTML += `
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" value="1"> 选项1
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" value="2"> 选项2
+                </label>
+              </div>
+            `;
+            break;
+          case 'radio':
+            elementHTML += `
+              <div class="radio-group">
+                <label class="radio-item">
+                  <input type="radio" name="radio_${elementId}" value="1"> 选项1
+                </label>
+                <label class="radio-item">
+                  <input type="radio" name="radio_${elementId}" value="2"> 选项2
+                </label>
+              </div>
+            `;
+            break;
+          case 'switch':
+            elementHTML += `
+              <label class="checkbox-item">
+                <input type="checkbox" value="1" checked> 启用
+              </label>
+            `;
+            break;
+          case 'textarea':
+            elementHTML += `<textarea placeholder="请输入${elementLabel}"></textarea>`;
+            break;
+          case 'file':
+            elementHTML += `<input type="file">`;
+            break;
+          case 'image':
+            elementHTML += `<input type="file" accept="image/*">`;
+            break;
+          case 'cascader':
+            elementHTML += `
+              <select>
+                <option value="">请选择一级选项</option>
+              </select>
+              <select style="margin-top: 8px;">
+                <option value="">请选择二级选项</option>
+              </select>
+            `;
+            break;
+        }
+        
+        // 设置元素HTML
+        elementDiv.innerHTML = elementHTML;
+        
+        // 添加到表单设计器
+        formBuilder.appendChild(elementDiv);
+        formBuilder.classList.remove('empty');
+        
+        // 保存元素信息
+        formElements.push({
+          id: elementId,
+          type: type,
+          label: elementLabel,
+          required: options.required || false
+        });
+        
+        // 添加元素操作事件
+        addElementActions(elementDiv);
+      }
+      
+      // 获取默认标签
+      function getDefaultLabel(type) {
+        const labels = {
+          text: '文本',
+          number: '数字',
+          select: '选择',
+          date: '日期',
+          time: '时间',
+          checkbox: '多选',
+          radio: '单选',
+          switch: '开关',
+          textarea: '多行文本',
+          file: '文件',
+          image: '图片',
+          cascader: '级联选择'
+        };
+        return labels[type] || '字段';
+      }
+      
+      // 添加元素操作事件
+      function addElementActions(elementDiv) {
+        // 获取操作按钮
+        const editBtn = elementDiv.querySelector('.action-btn[title="编辑"]');
+        const copyBtn = elementDiv.querySelector('.action-btn[title="复制"]');
+        const deleteBtn = elementDiv.querySelector('.action-btn[title="删除"]');
+        
+        // 编辑按钮事件
+        if (editBtn) {
+          editBtn.addEventListener('click', function() {
+            const elementId = elementDiv.getAttribute('data-id');
+            editFormElement(elementId);
+          });
+        }
+        
+        // 复制按钮事件
+        if (copyBtn) {
+          copyBtn.addEventListener('click', function() {
+            const elementId = elementDiv.getAttribute('data-id');
+            copyFormElement(elementId);
+          });
+        }
+        
+        // 删除按钮事件
+        if (deleteBtn) {
+          deleteBtn.addEventListener('click', function() {
+            const elementId = elementDiv.getAttribute('data-id');
+            deleteFormElement(elementId);
+          });
+        }
+      }
+      
+      // 编辑表单元素
+      function editFormElement(elementId) {
+        console.log('编辑元素:', elementId);
+        // 实际项目中这里应该显示元素编辑弹窗
+        alert('编辑元素功能开发中...');
+      }
+      
+      // 复制表单元素
+      function copyFormElement(elementId) {
+        console.log('复制元素:', elementId);
+        // 查找要复制的元素
+        const elementToCopy = formElements.find(el => el.id === elementId);
+        if (elementToCopy) {
+          // 创建新元素
+          addFormElement(elementToCopy.type, {
+            label: elementToCopy.label + '(复制)',
+            required: elementToCopy.required
+          });
+        }
+      }
+      
+      // 删除表单元素
+      function deleteFormElement(elementId) {
+        console.log('删除元素:', elementId);
+        // 从DOM中移除元素
+        const elementDiv = formBuilder.querySelector(`[data-id="${elementId}"]`);
+        if (elementDiv) {
+          formBuilder.removeChild(elementDiv);
+        }
+        
+        // 从数组中移除元素
+        formElements = formElements.filter(el => el.id !== elementId);
+        
+        // 如果没有元素了，显示空状态
+        if (formElements.length === 0) {
+          formBuilder.classList.add('empty');
+        }
+      }
+      
+      // 保存表单配置
+      function saveFormConfig() {
+        // 获取表单基本信息
+        const formName = document.getElementById('formName').value;
+        const formCode = document.getElementById('formCode').value;
+        const formType = document.getElementById('formType').value;
+        const formLayout = document.getElementById('formLayout').value;
+        const formDescription = document.getElementById('formDescription').value;
+        
+        // 验证表单信息
+        if (!formName) {
+          alert('请输入表单名称');
+          return;
+        }
+        
+        if (!formCode) {
+          alert('请输入表单编码');
+          return;
+        }
+        
+        // 构建表单配置对象
+        const formConfig = {
+          name: formName,
+          code: formCode,
+          type: formType,
+          layout: formLayout,
+          description: formDescription,
+          elements: formElements,
+          validateMode: document.querySelector('input[name="validateMode"]:checked').value,
+          confirmBeforeSubmit: document.getElementById('confirmBeforeSubmit').checked
+        };
+        
+        console.log('保存表单配置:', formConfig);
+        
+        // 这里应该发送AJAX请求保存表单配置到后端
+        // 模拟保存成功
+        alert('表单配置保存成功！');
+      }
+      
+      // 预览表单
+      function previewForm() {
+        console.log('预览表单');
+        // 实际项目中这里应该打开一个新窗口或弹窗显示表单预览
+        alert('表单预览功能开发中...');
+      }
+      
+      // 发布表单
+      function publishForm() {
+        console.log('发布表单');
+        // 实际项目中这里应该发送AJAX请求发布表单
+        alert('表单发布成功！');
+      }
+      
+      // 初始化时加载默认表单类型配置
+      showFormTypeConfig(currentFormType);
+    });
+  </script>
+</body>
+</html>

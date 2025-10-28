@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "丽江旅游大数据平台",
+    "url": "http://192.168.1.6:8124/ljTourismBigData/html/index.html",
+    "desc": "丽江旅游大数据平台风险预警平台APP",
+    "mobile":true
+  },
+  "schedule": {
+    "status": "已完成",
+    "actualStartTime": "2017-09-27",
+    "actualEndTime": "2017-09-30",
+    "estimatedStartTime": "2017-09-27",
+    "estimatedEndTime": "2017-10-10",
+    "process": 100,
+    "delay": false,
+    "technology":["vue"]
+  },
+  "resources": {
+    "demander": "九次方",
+    "type":"独立纵队",
+    "manager":"刘子杰",
+    "charge": "柳杨",
+    "affiliate": []
+  },
+  "bug": {
+    "total": 5,
+    "resolved": 5,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "是APP开发的项目，我们只是配合制作一个首页"                 
+  }
+}

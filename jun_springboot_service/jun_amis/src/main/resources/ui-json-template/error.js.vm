@@ -1,0 +1,7 @@
+AMIS_JSON={
+    "type": "page",
+    "cssVars": {
+        "--text-color": "red"
+    },
+    "body":"${errMsg}"
+}

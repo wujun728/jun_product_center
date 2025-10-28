@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('字典新增')" />
+</head>
+<body>
+<div class="container">
+    <form class="layui-form mt20" lay-filter="form-dict_data">
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>字典标签：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="dictLabel" lay-verify="required" lay-verType="tips" placeholder="" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>字典键值：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="dictValue" lay-verify="required" lay-verType="tips" placeholder="" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">字典类型：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="dictType" th:value="${dictType}" readonly/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">样式属性：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" name="cssClass" placeholder="" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>字典排序：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" name="dictSort" lay-verify="required|number" lay-verType="tips" placeholder="" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">回显样式：</label>
+            <div class="layui-input-block min-select">
+                <select name="listClass">
+                    <option value="">---请选择---</option>
+                    <option value="default">默认</option>
+                    <option value="primary">主要</option>
+                    <option value="success">成功</option>
+                    <option value="info">   信息</option>
+                    <option value="warning">警告</option>
+                    <option value="danger"> 危险</option>
+                </select>
+                <p class="form-tip"><i class="layui-icon layui-icon-tips"></i>table表格字典列显示样式属性</p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">系统默认：</label>
+            <div class="layui-input-block">
+                <span th:each="dict : ${@dict.getType('sys_yes_no')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="isDefault" th:value="${dict.dictValue}" th:title="${dict.dictLabel}" th:checked="${dict.isDefault == 'Y' ? true : false}" />
+                </span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <span th:each="dict : ${@dict.getType('sys_normal_disable')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:title="${dict.dictLabel}" th:checked="${dict.isDefault == 'Y' ? true : false}" />
+                </span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea min-input" rows="5" type="text" name="remark" placeholder="" autocomplete="off"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="btn-add" id="btn-add">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:src="@{/js/system/dict_dataform.js}"></script>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:dict_data:edit')}]];
+</script>
+</body>
+</html>

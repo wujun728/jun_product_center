@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title> Easy Admin</title>
+    <!-- 依 赖 样 式 -->
+    <link rel="stylesheet" href="component/pear/css/pear.css"/>
+    <!-- 加 载 样 式-->
+    <link rel="stylesheet" href="admin/css/load.css"/>
+    <!-- 布 局 样 式 -->
+    <link rel="stylesheet" href="admin/css/admin.css"/>
+</head>
+<!-- 结 构 代 码 -->
+<body class="layui-layout-body pear-admin">
+<!-- 布 局 框 架 -->
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <!-- 顶 部 左 侧 功 能 -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="collaspe layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
+            <li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1" loading=600></a></li>
+        </ul>
+        <!-- 多 系 统 菜 单 -->
+        <div id="control" class="layui-layout-control"></div>
+        <!-- 顶 部 右 侧 菜 单 -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs"><a href="#"
+                                                        class="fullScreen layui-icon layui-icon-screen-full"></a></li>
+            <!--            <li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.com"-->
+            <!--                                                        class="layui-icon layui-icon-website"></a></li>-->
+            <li class="layui-nav-item layui-hide-xs message"></li>
+            <li class="layui-nav-item user">
+                <!-- 头 像 -->
+                <a href="javascript:;">
+                    <img src="admin/images/avatar.jpg" class="layui-nav-img">
+                </a>
+                <!-- 功 能 菜 单 -->
+                <dl class="layui-nav-child">
+                    <dd><a user-menu-url="view/system/user/center.html" user-menu-id="5555"
+                           user-menu-title="基本资料">基本资料</a>
+                    </dd>
+                    <dd><a user-menu-url="view/system/user/password.html" user-menu-id="6666" user-menu-title="修改密码">修改密码</a>
+                    </dd>
+                    <dd><a href="javascript:void(0);" class="logout">注销登录</a></dd>
+                </dl>
+            </li>
+            <!-- 主 题 配 置 -->
+            <li class="layui-nav-item setting"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>
+        </ul>
+    </div>
+    <!-- 侧 边 区 域 -->
+    <div class="layui-side layui-bg-black">
+        <!-- 菜 单 顶 部 -->
+        <div class="layui-logo">
+            <!-- 图 标 -->
+            <img class="logo"></img>
+            <!-- 标 题 -->
+            <span class="title"></span>
+        </div>
+        <!-- 菜 单 内 容 -->
+        <div class="layui-side-scroll">
+            <div id="sideMenu"></div>
+        </div>
+    </div>
+    <!-- 视 图 页 面 -->
+    <div class="layui-body">
+        <!-- 内 容 页 面 -->
+        <div id="content"></div>
+    </div>
+    <!-- 遮 盖 层 -->
+    <div class="pear-cover"></div>
+    <!-- 加 载 动 画-->
+    <div class="loader-main">
+        <div class="loader"></div>
+    </div>
+</div>
+<!-- 移 动 端 便 捷 操 作 -->
+<div class="pear-collasped-pe collaspe">
+    <a href="#" class="layui-icon layui-icon-shrink-right"></a>
+</div>
+<!-- 依 赖 脚 本 -->
+<script src="component/layui/layui.js"></script>
+<script src="component/pear/pear.js"></script>
+<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+<!-- 框 架 初 始 化 -->
+<script>
+    layui.use(['admin', 'jquery', 'notice', 'popup', 'easyAdmin', 'util'], function () {
+        var admin = layui.admin;
+        var $ = layui.jquery;
+        var notice = layui.notice;
+        var popup = layui.popup;
+        var easyAdmin = layui.easyAdmin;
+        let util = layui.util;//引入util
+
+        // 在登录的时候塞入的值
+        var user = layui.data('user');
+        // 用于判断未登录跳转到登录页
+        if (JSON.stringify(user) == "{}") {
+            console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
+            location.href = "login.html";
+        }
+
+        // 获取用户信息，用户名、昵称、头像等
+        easyAdmin.http({
+            url: "/api/v1/userInfo",
+            dataType: 'json',
+            success: function (data) {
+                admin.setAvatar("admin/images/avatar.jpg", data.data.nickName);
+            },
+            error: function () {
+                // 用于验证前端信息 对应到不对的会话情况
+                // 清空本地存储
+                console.log("当前浏览器存储中没有用户信息,清空本地存储,讲跳转到login.html")
+                layui.data('user', null);
+                location.href = "login.html";
+            }
+        });
+
+        // 读取配置文件yml、json2种方式
+        admin.setConfigType("yml");
+        admin.setConfigPath("config/pear.config.yml");
+        // 动态设置配置文件中菜单树接口地址
+        let readConfig = admin.readConfig();
+        // 动态加载菜单树
+        easyAdmin.httpGet("/sys/menu/tree", function (data) {
+            readConfig.menu.data = data;
+        }, true, false);
+        // 渲染
+        admin.render(readConfig);
+
+        // 登出逻辑
+        admin.logout(function () {
+
+            easyAdmin.httpGet("/api/v1/loginOut");
+
+
+            popup.success("注销成功", function () {
+                // 清空本地存储
+                layui.data('user', null);
+                location.href = "login.html";
+            })
+            // 注销逻辑 返回 true / false
+            return true;
+        })
+
+        // 初始化消息回调
+        admin.message();
+
+        // 实现消息回调 [消息列表点击事件]
+        // admin.message(function(id, title, context, form) {});
+
+        //固定块
+        util.fixbar({
+            bar1: true
+            , bar2: true
+            , css: {right: 20, bottom: 20}
+            , bgcolor: '#393D49'
+            , click: function (type) {
+                if (type === 'bar1') {
+                    layer.msg("功能开发中，敬请期待");
+                } else if (type === 'bar2') {
+                    // 公告层
+                    layer.open({
+                        type: 1,
+                        skin: 'layui-layer-admin',
+                        title: false //不显示标题栏
+                        ,
+                        closeBtn: false,
+                        area: '300px;',
+                        shade: 0.8,
+                        id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                        ,
+                        btn: ['火速支援', '残忍拒绝'],
+                        btnAlign: 'c',
+                        moveType: 1 //拖拽模式，0或者1
+                        ,
+                        content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 200;">' +
+                            '工作时间久了' +
+                            '<br> 总想搞点骚东西，这是即' +
+                            '<br>写博客csdn:【lakernote】，' +
+                            '<br>搞公众号【Java大厂面试官】的又一个尝试' +
+                            '<br>拒绝白嫖，从我做起<br>' +
+                            '<br>来点个<a style="color: red">star</a>支持下作者吧' +
+                            '</div>'
+                        ,
+                        success: function (layero) {
+                            var btn = layero.find('.layui-layer-btn');
+                            btn.find('.layui-layer-btn0').attr({
+                                href: 'https://gitee.com/lakernote/easy-admin'
+                                , target: '_blank'
+                            });
+                        }
+                    });
+                }
+            }
+        });
+
+        // 初始化配置，同一样式只需要配置一次，非必须初始化，有默认配置
+        notice.options = {
+            closeButton: true,//显示关闭按钮
+            debug: false,//启用debug
+            positionClass: "toast-top-right",//弹出的位置,
+            showDuration: "1000",//显示的时间
+            hideDuration: "1000",//消失的时间
+            timeOut: "10000",//停留的时间
+            extendedTimeOut: "1000",//控制时间
+            showEasing: "swing",//显示时的动画缓冲方式
+            hideEasing: "linear",//消失时的动画缓冲方式
+            iconClass: 'toast-info', // 自定义图标，有内置，如不需要则传空 支持layui内置图标/自定义iconfont类名
+            onclick: null, // 点击关闭回调
+        };
+
+        var url = easyAdmin.GetAdminServerUrl() + '/chatroom?' + easyAdmin.GetTokenQueryString();
+        var sock = new SockJS(url);  //创建SockJS连接。
+        var stomp = Stomp.over(sock);//创建STOMP客户端实例。实际上封装了SockJS,这样就能在WebSocket连接上发送STOMP消息。
+        stomp.connect({}, function (frame) {
+            stomp.subscribe('/topic/status', function (message) {
+                notice.info(JSON.parse(message.body).content);
+            });
+        }, function (frame) {
+            notice.error(frame);
+        });
+
+
+    })
+</script>
+</body>
+</html>

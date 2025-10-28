@@ -1,0 +1,221 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	font-size: 12px;
+	font-family: "宋体";
+	color: #555555;
+}
+
+ul, ol, li {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+img {
+	border: none;
+}
+
+html, body {
+	margin: 0px;
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-size: cover;
+	overflow: hidden;
+}
+
+.login-main {
+	margin-top: 150px;
+	display: block;
+	font-family: "Microsoft YaHei";
+	width: auto;
+}
+
+.login-main a{
+	color : #00bbee	
+}
+
+.login-banner {
+	text-align: center;
+	height: 20%;
+	font-weight: 700;
+	font-size: 40px;
+	margin-bottom: 25px;
+}
+
+.login-banner small {
+	font-size: 16px;
+	margin-left: 10px;
+}
+
+.login-content {
+	width: 400px;
+	background: #fff;
+	margin-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 2px solid #425f8c;
+}
+
+.login-copyright {
+	padding-top: 10px;
+	text-align: center;
+}
+
+h2 {
+	text-align: center;
+	height: 50px;
+	line-height: 50px;
+	background: #eee;
+	margin:1px;
+}
+
+.login-info {
+	width: 320px;
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	background: #ffffff;
+	border: 2px solid #f0f7fb;
+	margin-top: 20px;
+	border: 1px solid #ddd;
+}
+
+.login-info span.user {
+	float: left;
+	width: 40px;
+	height: 30px;
+	margin: 5px auto 5px auto;
+	background: url(../images/icon-user.gif) no-repeat center center;
+	border-right: 1px solid #a9a9a9
+}
+
+.login-info span.pwd {
+	float: left;
+	width: 40px;
+	height: 30px;
+	margin: 5px auto 5px auto;
+	background: url(../images/icon-pwd.png) no-repeat center center;
+	border-right: 1px solid #a9a9a9
+}
+
+.login-info .captcha-img {
+	height: 40px;
+	width: 80px;
+	float: right;
+	cursor: pointer;
+}
+
+.login-info .captcha-btn{
+	height: 40px;
+	width: 80px;
+	float: right;
+	cursor: pointer;
+	border: 1px solid #00bbee;
+	color: #00bbee;
+	background: white;
+}
+
+.login-info .captcha-btn[disabled]{
+	border: 1px solid #DDD;
+    background-color: #F5F5F5;
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.login-info span.captcha {
+	float: left;
+	width: 40px;
+	height: 30px;
+	margin: 5px auto 5px auto;
+	background: url(../images/icon-captcha.png) no-repeat center center;
+	border-right: 1px solid #a9a9a9
+}
+
+.login-input {
+	width: 257px;
+	line-height: 40px;
+	height: 40px;
+	background: #ffffff;
+	border: none;
+	margin: 0;
+	padding: 0;
+	padding-left: 20px;
+}
+
+.login-oper {
+	width: 325px;
+	height: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+}
+
+.login-btn {
+	width: 150px;
+	height: 30px;
+	border: none;
+	background: #00bbee;
+	color: #ffffff;
+	margin-left: 2px;
+}
+
+.login-reset {
+	float: right;
+	width: 150px;
+	height: 30px;
+	border: none;
+	background: #7c7777;
+	color: #ffffff;
+	margin-right: 2px;
+}
+
+.button {
+	cursor: pointer;
+}
+
+.bottom {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	text-align: right;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 24px;
+	margin-top: 80px;
+	padding-right: 40px;
+}
+.login-link{
+	font-size: 13.3px;
+	width: 325px;
+	height: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+}
+.login-link span{
+		float: right;
+}
+
+.login-error{
+	width: 325px;
+	height: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+}
+#errorPlacement {
+	margin-top: 10px;
+	color: red;
+}

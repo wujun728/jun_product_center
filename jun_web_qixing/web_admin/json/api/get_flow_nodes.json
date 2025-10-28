@@ -1,0 +1,108 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "id": 1029,
+        "admin_id": 5,
+        "check_status": 2,
+        "check_flow_id": 9,
+        "check_step_sort": 0,
+        "check_uids": "",
+        "check_copy_uids": "",
+        "is_creater": 0,
+        "admin_name": "玉辞心",
+        "is_checker": 0,
+        "check_record": [
+            {
+                "id": 2769,
+                "action_id": 1029,
+                "check_table": "ticket",
+                "flow_id": 9,
+                "step_id": 0,
+                "check_uid": 5,
+                "check_time": 1744528208,
+                "check_status": 0,
+                "content": "提交申请",
+                "delete_time": 0,
+                "name": "玉辞心",
+                "check_time_str": "2025-04-13 15:10",
+                "status_str": "提交"
+            },
+            {
+                "id": 2770,
+                "action_id": 1029,
+                "check_table": "ticket",
+                "flow_id": 9,
+                "step_id": 1765,
+                "check_uid": 5,
+                "check_time": 1744528215,
+                "check_status": 1,
+                "content": "123",
+                "delete_time": 0,
+                "name": "玉辞心",
+                "check_time_str": "2025-04-13 15:10",
+                "status_str": "审核通过"
+            }
+        ],
+        "check_unames": "-",
+        "copy_unames": "-",
+        "nodes": [
+            {
+                "id": 1765,
+                "flow_name": "自由审批",
+                "action_id": 1029,
+                "flow_id": 9,
+                "check_role": 0,
+                "check_position_id": 0,
+                "check_uids": "5",
+                "check_types": 1,
+                "sort": 0,
+                "create_time": 1744528208,
+                "delete_time": 0,
+                "check_uids_info": [
+                    {
+                        "id": 5,
+                        "name": "玉辞心",
+                        "thumb": "\/storage\/avatars\/avatar_256_ej14hy9f8o1724864029.png",
+                        "check_time": "2025-04-13 15:10",
+                        "content": "123",
+                        "check_status": 1
+                    }
+                ],
+                "check_position": "",
+                "check_list": [
+                    {
+                        "id": 2770,
+                        "action_id": 1029,
+                        "check_table": "ticket",
+                        "flow_id": 9,
+                        "step_id": 1765,
+                        "check_uid": 5,
+                        "check_time": 1744528215,
+                        "check_status": 1,
+                        "content": "123",
+                        "delete_time": 0,
+                        "name": "玉辞心",
+                        "check_time_str": "2025-04-13 15:10",
+                        "status_str": "审核通过"
+                    }
+                ]
+            }
+        ],
+        "step": {
+            "id": 1765,
+            "flow_name": "自由审批",
+            "action_id": 1029,
+            "flow_id": 9,
+            "check_role": 0,
+            "check_position_id": 0,
+            "check_uids": "5",
+            "check_types": 1,
+            "sort": 0,
+            "create_time": 1744528208,
+            "delete_time": 0
+        }
+    }
+}

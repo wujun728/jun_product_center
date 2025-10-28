@@ -1,0 +1,38 @@
+{
+    "trees": [
+        {
+            "id": 1,
+            "title": "采购品分类一",
+            "pid": 0,
+            "sort": 0,
+            "desc": "",
+            "status": 1,
+            "admin_id": 0,
+            "create_time": 1724945042,
+            "update_time": 0,
+            "checkArr": {
+                "type": 0,
+                "isChecked": 0
+            },
+            "spread": false,
+            "level": 2
+        },
+        {
+            "id": 2,
+            "title": "采购品分类二",
+            "pid": 0,
+            "sort": 0,
+            "desc": "",
+            "status": 1,
+            "admin_id": 0,
+            "create_time": 1724945048,
+            "update_time": 0,
+            "checkArr": {
+                "type": 0,
+                "isChecked": 0
+            },
+            "spread": false,
+            "level": 2
+        }
+    ]
+}

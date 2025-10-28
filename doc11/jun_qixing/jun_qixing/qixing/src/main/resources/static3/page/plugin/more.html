@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>更多扩展插件</title>
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .ew-field-group .layui-table-view, .layui-elem-field .layui-table-view {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">垂直选项卡</div>
+                <div class="layui-card-body" style="padding: 0;min-height: 216px;">
+                    <div class="layui-tab layui-tab-vertical">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this"><i class="layui-icon layui-icon-set"></i>系统管理</li>
+                            <li><i class="layui-icon layui-icon-username"></i>用户管理</li>
+                            <li><i class="layui-icon layui-icon-auz"></i>权限分配</li>
+                            <li><i class="layui-icon layui-icon-fire"></i>商品管理</li>
+                            <li><i class="layui-icon layui-icon-rmb"></i>订单管理</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">内容1</div>
+                            <div class="layui-tab-item">内容2</div>
+                            <div class="layui-tab-item">内容3</div>
+                            <div class="layui-tab-item">内容4</div>
+                            <div class="layui-tab-item">
+                                <div class="layui-row" style="float: left;width: 100%;">
+                                    <div class="layui-col-md6">
+                                        内容5
+                                    </div>
+                                    <div class="layui-col-md6">
+                                        内容使用栅格
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">tooltips文本提示</div>
+                <div class="layui-card-body text-center"
+                     style="padding: 46px 0;min-height: 216px;box-sizing: border-box;">
+                    <button lay-tips="Tips Top 提示" lay-direction="1" class="layui-btn layui-btn-primary">&emsp;上&emsp;
+                    </button>&emsp;
+                    <button lay-tips="Tips Right 提示" lay-direction="2" class="layui-btn layui-btn-primary">&emsp;右&emsp;
+                    </button>&emsp;
+                    <button lay-tips="Tips Bottom 提示" lay-direction="3" class="layui-btn layui-btn-primary">&emsp;下&emsp;
+                    </button>&emsp;
+                    <button lay-tips="Tips Left 提示" lay-direction="4" class="layui-btn layui-btn-primary">&emsp;左&emsp;
+                    </button>
+                    <br/><br/><br/>
+                    <button lay-tips="Hello Word!" lay-bg="#1890ff" class="layui-btn layui-btn-primary">自定义颜色
+                    </button>&emsp;
+                    <button class="layui-btn layui-btn-primary" lay-tips="Hello Word!" lay-bg="#803ed9"
+                            lay-bgImg="linear-gradient(to right,#8510FF,#D025C2,#FF8B2D,#F64E2C)">使用渐变色
+                    </button>&emsp;
+                    <button lay-tips="<img src='../../assets/images/head.jpg' style='width:24px;height:24px;border-radius: 50%;'/>&nbsp;&nbsp;管理员"
+                            class="layui-btn layui-btn-primary">自定义内容
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">加载层</div>
+                <div class="layui-card-body" id="divLoading"
+                     style="padding: 28px 15px;box-sizing: border-box;min-height: 126px;">
+                    <p class="layui-text" style="margin-bottom: 18px;">调用admin.showLoading()方法。</p>
+                    <button id="btnShowLoading1" class="layui-btn layui-btn-sm">样式一</button>
+                    <button id="btnShowLoading2" class="layui-btn layui-btn-sm">样式二</button>
+                    <button id="btnShowLoading3" class="layui-btn layui-btn-sm">样式三</button>
+                    <button id="btnShowLoading4" class="layui-btn layui-btn-sm">样式四</button>
+                    <button id="btnLoading" class="layui-btn layui-btn-sm">按钮loading</button>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">动画数字
+                    <button id="demoAnimNumBtn" class="layui-btn layui-btn-xs pull-right" style="margin-top: 10px;">开始动画
+                    </button>
+                </div>
+                <div class="layui-card-body" style="padding-left: 25px;min-height: 126px;box-sizing: border-box;">
+                    <h2 id="demoAnimNum1" style="margin: 5px 0 12px 0;">12345</h2>
+                    <h2 id="demoAnimNum2" style="margin-bottom: 12px;">￥2373467.342353</h2>
+                    <h2 id="demoAnimNum3" style="margin-bottom: 5px;">上浮99.98%</h2>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">折叠面板</div>
+                <div class="layui-card-body" style="min-height: 240px;">
+                    <div class="layui-collapse" lay-shrink="_all">
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">徽章扩展</h2>
+                            <div class="layui-colla-content layui-show">
+                                <span class="layui-badge layui-badge-green">绿色</span>&nbsp;
+                                <span class="layui-badge layui-badge-blue">蓝色</span>&nbsp;
+                                <span class="layui-badge layui-badge-red">红色</span>&nbsp;
+                                <span class="layui-badge layui-badge-yellow">黄色</span>&nbsp;
+                                <span class="layui-badge layui-badge-gray">灰色</span>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">折叠面板</h2>
+                            <div class="layui-colla-content">展开折叠带有过渡效果</div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">垂直导航</h2>
+                            <div class="layui-colla-content">垂直导航展开折叠带有过渡效果</div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">导航箭头</h2>
+                            <div class="layui-colla-content">垂直导航的箭头支持三种样式</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-header">垂直导航</div>
+                <div class="layui-card-body" style="min-height: 240px;white-space: nowrap;overflow-x: auto;">
+                    <ul class="layui-nav layui-nav-tree" lay-shrink="_all"
+                        style="display: inline-block;vertical-align: top;">
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;">默认展开</a>
+                            <dl class="layui-nav-child">
+                                <dd class="layui-this"><a href="javascript:;">选项1</a></dd>
+                                <dd><a href="javascript:;">选项2</a></dd>
+                                <dd><a href="javascript:;">选项3</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">解决方案</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">移动模块</a></dd>
+                                <dd><a href="javascript:;">后台模版</a></dd>
+                                <dd><a href="javascript:;">电商平台</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <ul class="layui-nav layui-nav-tree arrow2 layui-bg-cyan" lay-shrink="_all"
+                        style="display: inline-block;vertical-align: top;">
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;">默认展开</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">选项1</a></dd>
+                                <dd><a href="javascript:;">选项2</a></dd>
+                                <dd><a href="javascript:;">选项3</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">解决方案</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">移动模块</a></dd>
+                                <dd><a href="javascript:;">后台模版</a></dd>
+                                <dd><a href="javascript:;">电商平台</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                    <ul class="layui-nav layui-nav-tree arrow3 layui-bg-blue" lay-shrink="_all"
+                        style="display: inline-block;vertical-align: top;">
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;">默认展开</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">选项1</a></dd>
+                                <dd><a href="javascript:;">选项2</a></dd>
+                                <dd><a href="javascript:;">选项3</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">解决方案</a>
+                            <dl class="layui-nav-child">
+                                <dd><a href="javascript:;">移动模块</a></dd>
+                                <dd><a href="javascript:;">后台模版</a></dd>
+                                <dd><a href="javascript:;">电商平台</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-body no-scrollbar">
+                    <div class="ew-field-group">
+                        <fieldset class="layui-elem-field">
+                            <legend>字段集嵌套表格</legend>
+                        </fieldset>
+                        <div class="ew-field-box">
+                            <table id="demoFieldTb1" lay-filter="demoFieldTb1"></table>
+                        </div>
+                    </div>
+                    <div class="layui-text" style="padding-top: 8px;">使用EasyWeb中增加的字段集辅助类</div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6">
+            <div class="layui-card">
+                <div class="layui-card-body no-scrollbar">
+                    <fieldset class="layui-elem-field" style="margin-bottom: 0;">
+                        <legend>字段集嵌套表格</legend>
+                        <div class="layui-field-box">
+                            <table id="demoFieldTb2" lay-filter="demoFieldTb2"></table>
+                        </div>
+                    </fieldset>
+                    <div class="layui-text" style="padding-top: 8px;">Layui中的字段集嵌套表格列太多时没有滚动条</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- js部分 -->
+<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['admin', 'table', 'element'], function () {
+        var $ = layui.jquery;
+        var admin = layui.admin;
+        var table = layui.table;
+        var element = layui.element;
+
+        // 显示加载层
+        $('#btnShowLoading1').click(function () {
+            admin.showLoading('#divLoading', 1, '.9');
+            setTimeout(function () {
+                admin.removeLoading('#divLoading', true, true);
+            }, 2000);
+        });
+        $('#btnShowLoading2').click(function () {
+            admin.showLoading('#divLoading', 2, '.8');
+            setTimeout(function () {
+                admin.removeLoading('#divLoading', true, true);
+            }, 2000);
+        });
+        $('#btnShowLoading3').click(function () {
+            admin.showLoading('#divLoading', 3, '.8');
+            setTimeout(function () {
+                admin.removeLoading('#divLoading', true, true);
+            }, 2000);
+        });
+        $('#btnShowLoading4').click(function () {
+            admin.showLoading('#divLoading', 4, '.8');
+            setTimeout(function () {
+                admin.removeLoading('#divLoading', true, true);
+            }, 2000);
+        });
+
+        // loading按钮
+        $('#btnLoading').click(function () {
+            admin.btnLoading('#btnLoading');
+            setTimeout(function () {
+                admin.btnLoading('#btnLoading', false);
+            }, 2000);
+        });
+
+        // 动画数字
+        $('#demoAnimNumBtn').click(function () {
+            admin.util.animateNum('#demoAnimNum1');
+            admin.util.animateNum('#demoAnimNum2');
+            admin.util.animateNum('#demoAnimNum3');
+            $(this).hide();
+            setTimeout(function () {
+                $('#demoAnimNumBtn').show();
+            }, 500);
+        });
+
+        // 渲染表格
+        var tbOptions = {
+            url: '../../json/user.json',
+            page: false,
+            height: '180px',
+            cellMinWidth: 90,
+            cols: [[
+                {type: 'numbers'},
+                {field: 'userId', title: 'ID', minWidth: 60, width: 60},
+                {field: 'username', title: '账号'},
+                {field: 'nickName', title: '用户名'},
+                {field: 'sex', title: '性别'},
+                {field: 'createTime', title: '创建时间', minWidth: 145},
+                {field: 'state', title: '状态'}
+            ]]
+        };
+        table.render($.extend(tbOptions, {elem: '#demoFieldTb1'}));
+        table.render($.extend(tbOptions, {elem: '#demoFieldTb2'}));
+    });
+</script>
+</body>
+</html>

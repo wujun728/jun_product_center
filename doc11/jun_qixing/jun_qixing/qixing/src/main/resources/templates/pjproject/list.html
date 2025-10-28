@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+<!--  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">-->
+  <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+  <link rel="stylesheet" href="/assets/module/admin.css"/>
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+  <div class="layuimini-main">
+    <div class="table_div">
+      <!--<blockquote class="layui-elem-quote layui-text">
+        在此你可以对<span class="label-info"><strong>项目信息</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+      </blockquote>-->
+      <div id="searchParam"  shiro:hasPermission="pjProject:list">
+        <div class="layui-form-item">
+          <div class="layui-input-inline" style="display: none;" >
+            <input type="projectCode" name="projectCodeCondition"  id="projectCodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目编码">
+          </div>
+          <div class="layui-input-inline">
+            <input type="projectName" name="projectNameCondition"  id="projectNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目名称">
+          </div>
+          <div class="layui-input-inline"  style="display: none;">
+            <input type="dictProjectType" name="dictProjectTypeCondition"  id="dictProjectTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目类型">
+          </div>
+          <div class="layui-input-inline"  style="display: none;">
+            <input type="dictProjectTypeSub" name="dictProjectTypeSubCondition"  id="dictProjectTypeSubCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目类型细分">
+          </div>
+          <div class="layui-input-inline">
+            <input type="refCusname" name="refCusnameCondition"  id="refCusnameCondition" class="layui-input"  autocomplete="off" placeholder="请输入客户(委托单位)">
+          </div>
+          <div class="layui-input-inline"  style="display: none;">
+            <input type="cusnameTodo" name="cusnameTodoCondition"  id="cusnameTodoCondition" class="layui-input"  autocomplete="off" placeholder="请输入被评估单位">
+          </div>
+          <div class="layui-input-inline" >
+            <input type="refProjectManager" name="refProjectManagerCondition"  id="refProjectManagerCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目经理">
+          </div>
+          <div class="layui-input-inline"  style="display: none;">
+            <input type="dictRiskAssessment" name="dictRiskAssessmentCondition"  id="dictRiskAssessmentCondition" class="layui-input"  autocomplete="off" placeholder="请输入风险评估等级">
+          </div>
+          <div class="layui-input-inline"  style="display: none;">
+            <input type="projectProgress" name="projectProgressCondition"  id="projectProgressCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目进度">
+          </div>
+          <div class="layui-input-block ">
+            <button class="layui-btn" onclick="search()"  id="search">查询</button>
+            <button class="layui-btn"   id="export">导出全部</button>
+            <button class="layui-btn layui-btn-primary layui-border-blue" onclick="openFlow()" >查看审批流程图</button>
+          </div>
+        </div>
+      </div>
+      <!-- 渲染列表，上面的是工具栏 -->
+      <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+    </div>
+  </div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="pjProject:add">项目立项</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-x" lay-event="update"  shiro:hasPermission="pjProject:update">修改项目信息</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="pjProject:delete">删除立项信息</button>
+    <button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="pjProject:submit">提交项目立项申请</button>
+  </div>
+</script>
+
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+  <!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+  <!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+  <!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+<!--  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProject:update">编辑</a>-->
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProject:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+  <!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+<!--  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProject:update">编辑</a>-->
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="pjProject:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProject:file">附件</a>
+  {{#  }else {  }}
+  <!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->
+  {{#  } }}
+</script>
+<script type="text/html" id="showProjectTpl">
+  {{#  if( 0  == 0){ }}
+  <span style="color: #01AAED;">{{ d.projectName }}</span>
+  {{#  } else { }}
+  {{ d.projectName }}
+  {{#  } }}
+</script>
+
+</body>
+</html>
+<!--<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>-->
+
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/core.util.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+
+  var layerAdd;
+  //定义lay全局对象
+
+  layui./*config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).*/use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','slider'], function () {
+    var table = layui.table;
+    var form = layui.form;
+    var layer = layui.layer;
+    var layedit = layui.layedit;
+    var $ = jQuery = layui.jquery;
+    var laydate = layui.laydate;
+    var numberInput = layui.numberInput;
+    var tableSelect = layui.tableSelect;
+
+	numberInput = layui.numberInput;
+	slider = layui.slider;
+	
+    //加载table
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/pjProject/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'} //{type:'radio'}
+          {field: 'id', title: '项目ID', sort: true ,hide:true },
+          {field: 'projectCode', title: '项目编码', sort: true ,hide:true}, 
+          {field: 'projectName', title: '项目名称', sort: true,width:200, templet: '#showProjectTpl' , event: 'showProject' }, 
+          {field: 'dictProjectType', title: '项目类型', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_project_type')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictProjectType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProjectType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProjectType)+'</span>';
+          		}
+            }
+}, 
+          {field: 'dictProjectTypeSub', title: '项目类型细分', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType2('dict_project_type_sub')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictProjectTypeSub%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProjectTypeSub)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProjectTypeSub)+'</span>';
+          		}
+            }
+		  }, 
+          {field: 'refIdCuscode', title: '', sort: true ,hide:true }, 
+          {field: 'refCusname', title: '客户(委托单位)', sort: true,width:170  }, 
+          {field: 'projectStarttime', title: '项目计划开始时间', sort: true ,hide:true }, 
+          {field: 'projectEndtime', title: '项目计划结束时间', sort: true ,hide:true }, 
+          {field: 'cusnameTodo', title: '被评估单位', sort: true,hide:true }, 
+          {field: 'refProjectManager', title: '项目经理', sort: true }, 
+          {field: 'refUndertakePerson', title: '承接(合伙)人', sort: true ,hide:true }, 
+          {field: 'refUndertakTpersonDo', title: '承做(合伙)人', sort: true ,hide:true }, 
+          {field: 'dictRiskAssessment', title: '风险评估等级', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_risk_assessment')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictRiskAssessment%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictRiskAssessment)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictRiskAssessment)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictRiskAssessment);
+            }
+}, 
+          {field: 'dictFirstUndertake', title: '首次承接', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_first_undertake')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictFirstUndertake);
+            }
+}, 
+          {field: 'customerReq', title: '客户诉求', sort: true ,hide:true }, 
+          {field: 'projectProgress', title: '项目进度', sort: true ,width: 200, templet: function (item) {
+            	return '<div class="layui-progress" style="top: 8px"> <div class="layui-progress-bar" lay-percent="'+item.projectProgress+'" style="width: '+item.projectProgress*2+'px;"></div> </div>';
+            }
+          }, 
+          {field: 'dictProjectStatus', title: '立项状态', sort: true ,hide:false , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_project_status')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictProjectStatus%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProjectStatus)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProjectStatus)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictWfState);
+            }
+		  }, 
+		  {field: 'creator', title: '创建人', sort: true ,hide:false }, 
+		  //   流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          { title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+                  if (d.orderState == 0) {
+                      return '<span style="color: #eb7350;">审批完成</span>'
+                  }else if (d.orderState == 1) {
+	                  return '<span style="color: #00b487;">审批中</span>'
+                  }else{
+	                  return '<span style="color: blue;">未审批</span>'
+                  }
+              }
+          },
+          { title: '当前节点', field: 'taskName', align: 'center' ,width:105,hide:false },
+          { title: '当前处理人', field: 'taskOperatorName', align: 'center' ,width:90,hide:false },
+          {field: 'isOwner', title: 'isOwner',hide:true },
+          //   流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          {field: 'remark', title: '备注', sort: true ,hide:true }, 
+          {field: 'isOwner',hide: true  },{field: 'isOwner',hide: true  },
+          {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+   
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj) {
+    	if(obj.event!='add'){
+	    	var checkStatus11 = table.checkStatus(obj.config.id);
+	        var data11 = checkStatus11.data;
+	        if(data11.length==0){
+	          	layer.msg("请选择要操作的数据列！");
+	        }else {
+		          var ids11 = [];
+		          var ids22 = [];
+		          $(data11).each(function (index,item) {
+		        	  if(item.orderState==0 || item.orderState==1){
+		        		  ids11.push(item.orderState);
+		        	  }
+		        	  if(item.isOwner!=1){
+		        		  ids22.push(item.isOwner);
+		        	  }
+		          });
+		          if(ids11.length>0){
+		        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+	        		  return;
+		          }
+		          if(ids22.length>0){
+		        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+	        		  return;
+		          }
+	        }
+    	}
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+          //<!-- 流程flow-mark001,新增流程提交方案的submit的function -->
+        case 'submit':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要提交的记录");
+          }else if(data.length > 1){
+            layer.msg("请选择要提交的记录（one row each times）");
+          }else {
+//         	  window.checkPromission(data[0].createId);
+        	  data[0]['processName'] = "project";
+        	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+        	  CoreUtil.setData("data_doSubmit",data[0]);
+        	  console.log("data="+data);
+              layer.open({
+                  type: 2,
+                  skin: 'layui-layer-admin',
+                  title: "提交流程",
+                  shadeClose : false,
+                  area: ['880px', '500px'], //宽高
+                  shade: 0.6, //遮罩透明度
+                  maxmin: true, //允许全屏最小化
+                  anim: 1, //0-6的动画形式，-1不开启
+                  content:  '/table/doSubmit.html',
+                  end: function(){
+                	  search();
+                  }
+              });
+          }
+          break;
+        case 'add':
+		  layerAdd = layer.open({
+              type: 2,
+              area: ['80%', '80%'],
+              skin: 'layui-layer-admin',
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增项目信息' , false],
+              content: '/public/view/pjProject/add/',
+              id: 'pjProject_add',
+          });
+          break;
+       case 'update':
+    	   var checkStatus = table.checkStatus(obj.config.id);
+           var data = checkStatus.data;
+           if(data.length==0){
+             layer.msg("请选择要修改的的列信息！");
+           }else {
+             var ids = [];
+             $(data).each(function (index,item) {
+               ids.push(item.id);
+             });
+             layerAdd = layer.open({
+                 type: 2,
+                 area: ['80%', '80%'],
+                 skin: 'layui-layer-admin',
+                 shift: 1,
+                 shadeClose: true,
+                 scrollbar: true,
+                 maxmin: true,
+                 shade: false,
+                 title:  ['修改项目信息' , false],
+                 content: '/public/view/pjProject/edit/'+ids[0],
+                 id: 'pjProject_add',
+             });
+           }
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+//         case 'del':
+//           var ids=[];
+//           ids.push(data.id);
+//           tipDialog(ids);
+//           break;
+        case 'showProject':
+        	console.log(data);
+        	if(0 == 0){
+        		window.doProjectDetailV2Show(obj);
+        	}
+            break;
+        // case 'edit':
+        //   layerAdd = layer.open({
+        //     type: 2,
+        //     area: ['80%', '80%'],
+        //     skin: 'layui-layer-admin',
+        //     shift: 1,
+        //     shadeClose: true,
+        //     scrollbar: true,
+        //     maxmin: true,
+        //     shade: false,
+        //     title:  ['修改客户信息' , false],
+        //     content: '/public/view/pjcustomer/edit/'+data.id,
+        //     id: 'pjcustomer_add',
+        //   });
+        //   break;
+        case 'file':
+          data['dictBiztype']='项目立项';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+    
+    
+    window.doProjectDetailV2Show = function (obj) {
+    	rowData = obj;
+        var data = obj.data;
+        CoreUtil.setData("data_doProjectDetail",obj);
+        console.log("data_doProjectDetail="+obj);
+        layerDetail = layer.open({
+            id :  'doProjectDetailV2',
+            type: 2,
+            skin: 'layui-layer-admin',
+            title: "项目明细",
+            shadeClose : false,
+            area: ['100%', '100%'], //宽高
+            shade: 0.6, //遮罩透明度
+            maxmin: true, //允许全屏最小化
+            anim: 1, //0-6的动画形式，-1不开启
+            content:  '/table/doProjectDetailV2.html',
+            success: function(){
+                CoreUtil.setData("layerDetail",layerDetail);
+                console.log("layerDetail="+layerDetail);
+            },
+            end: function(){ },
+            closeBtn : 1,
+            moveOut: false
+        });
+    };
+
+    
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/pjProject/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+    
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        content: "确定要删除么?",
+        skin: 'layui-layer-admin',
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/pjProject/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+//       $(".table_div").show();
+//       $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/pjProject/add",data.field,function (res) {
+	      layer.close(layerAdd);
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/pjProject/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+	      layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,projectCode: $("#projectCodeCondition").val()
+		,projectName: $("#projectNameCondition").val()
+		,dictProjectType: $("#dictProjectTypeCondition").val()
+		,dictProjectTypeSub: $("#dictProjectTypeSubCondition").val()
+		,refCusname: $("#refCusnameCondition").val()
+		,cusnameTodo: $("#cusnameTodoCondition").val()
+		,refProjectManager: $("#refProjectManagerCondition").val()
+		,dictRiskAssessment: $("#dictRiskAssessmentCondition").val()
+		,projectProgress: $("#projectProgressCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+
+     function openFlow() {
+      layer.open({
+          type: 2,
+          skin: 'layui-layer-admin',
+          title: "审批流程",
+          shadeClose : false,
+          area: ['1200px', '600px'], //宽高
+          shade: 0.6, //遮罩透明度
+          maxmin: true, //允许全屏最小化
+          anim: 1, //0-6的动画形式，-1不开启
+          content:  '/admin/view/flow/design2.html?processId=cbca37193ab24de29ab713de7edbc134',
+          end: function(){ }
+      });
+　　};
+</script>
+
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script th:inline="javascript">
+function handel(code){
+	var htmls = '<option value="">请选择</option>'; //全局变量
+	$("#dictProjectTypeSub").html(htmls);
+	form.render();
+	
+	var result = getSelectData1(code);
+   for(var x in result){
+	  htmls += '<option value = "' + result[x].value + '">' + result[x].label + '</option>'
+   }
+   $("#dictProjectTypeSub").html(htmls);
+   form.render();
+};
+
+function getSelectData1(code){
+	var data1 ; //全局变量
+//		$("#dictProjectTypeSub").html(htmls);
+	form.render();
+	$.ajax({
+		url: "/sysDict/getType/"+code,
+		type: "get",
+		dataType : "json",
+		contentType : "application/json",
+		async: false,//这得注意是同步
+		success: function (result) {
+			data1 = result;
+		}
+	});
+	return data1;
+};
+
+    var pkCode = [[${pkCode}]];
+    var flagType = [[${flagType}]];
+    var id = [[${id}]];
+//     console.log(flagType);
+//     console.log(id);
+    if("view"==flagType){
+	     $(".table_div").hide();
+	     $(".operation").show();
+	     $("#buttonSave").hide();
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/pjProject/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	            	 console.log("edit data="+res.data.dictProjectType);
+	       	  	  	 handel("dict_project_type_sub"+res.data.dictProjectType);
+	       	  		 $(".operation select[name=dictProjectTypeSub]").val(res.data.dictProjectTypeSub);
+	                 form.render(); //更新全部
+	             }
+	         });
+	     });
+    }
+</script>

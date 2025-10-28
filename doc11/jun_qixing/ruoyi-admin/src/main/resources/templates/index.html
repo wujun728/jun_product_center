@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('ruoyi-layui后台管理系统')"/>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <!-- header -->
+    <div th:replace="inc/top"></div>
+    <!-- silds -->
+    <div th:replace="inc/left"></div>
+    <!-- main -->
+    <div class="pagetabs">
+        <div class="layui-icon tabs-control layui-icon-prev" onclick="rollTab('left');"></div>
+        <div class="layui-icon tabs-control layui-icon-next" onclick="rollTab('right');"></div>
+        <div class="layui-icon tabs-control layui-icon-down" id="tabs_down">
+            <ul class="layui-nav tabs-select" lay-filter="pagetabs-nav">
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;"></a>
+                    <dl class="layui-nav-child layui-anim-fadein">
+                        <dd layadmin-event="closeThisTabs"><a onclick="refreshCurTabs();">刷新当前标签页</a></dd>
+                        <dd layadmin-event="closeThisTabs"><a onclick="closeCurTabs();">关闭当前标签页</a></dd>
+                        <dd layadmin-event="closeOtherTabs"><a onclick="closeOtherTabs()">关闭其它标签页</a></dd>
+                        <dd layadmin-event="closeAllTabs"><a onclick="closeAllTabs();">关闭全部标签页</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="menu_tabs">
+            <ul class="layui-tab-title" id="tabs_header">
+                <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body" style="bottom:0;" id="tabs_content">
+        <div class="tabsbody-item layui-show">
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:src="@{/js/index.js}"></script>
+
+</body>
+
+</html>

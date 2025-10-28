@@ -1,0 +1,32 @@
+﻿{
+  "base": {
+    "name": "苹果大数据大屏展示项目",  
+    "url": "http://192.168.1.6:8124/appleBigScreen/index.html", 
+    "desc": "对苹果大数据进行专题分析，旨在从全局的角度，对苹果大数据的应用方向、数据源、实施路径、应用效果、应用场景设计、可行性等方面提出实施方案，深入挖掘苹果大数据的价值。"
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-09-25",
+    "actualEndTime": "未定",
+    "estimatedStartTime": "2017-09-25",
+    "estimatedEndTime": "2017-11-30",
+    "process": 15,                    
+    "delay": false,
+    "technology":["vue","echarts","sass"]
+  },
+  "resources": {
+    "demander": "农业部信息中心",     
+    "type":"独立纵队",			
+    "manager":"陈乃赫",                 
+    "charge": "邵金东",                 
+    "affiliate": ["陈胜","彭庆凯","郭志敏","温星月","杨杰","邢玮"]
+  },
+  "bug": {
+    "total": 0,                
+    "resolved": 0,             
+    "unsolved": 0                
+  },
+  "others": {
+    "remark": "暂无"
+  }
+}

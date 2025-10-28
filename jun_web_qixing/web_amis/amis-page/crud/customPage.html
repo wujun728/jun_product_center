@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <title>jqp低代码开发平台</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <!-- <script src="/js/jquery.min.js"></script> -->
+    <script src="/assets/js/jquery.js"></script>
+    <script type="text/javascript">
+        jQuery = $.noConflict();
+    </script>
+    <script src="/amis/common/common.js"></script>
+    <link rel="stylesheet" href="/amis/sdk.css" />
+    <link rel="stylesheet" href="/amis/helper.css" />
+    <link rel="stylesheet" href="/amis/iconfont.css" />
+    <link rel="stylesheet" href="/amis/ang.css" />
+
+    <!-- 这是默认主题所需的，如果是其他主题则不需要 -->
+    <!-- 从 1.1.0 开始 sdk.css 将不支持 IE 11，如果要支持 IE11 请引用这个 css，并把前面那个删了 -->
+    <!-- <link rel="stylesheet" href="sdk-ie11.css" /> -->
+    <!-- 不过 amis 开发团队几乎没测试过 IE 11 下的效果，所以可能有细节功能用不了，如果发现请报 issue -->
+    <style>
+        html,
+        body,
+        .app-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        .cxd-FileControl .disabled .cxd-Button{
+            display: none !important;
+        }
+        .cxd-TreeControl{
+            width: 100% !important;
+            max-height: 100% !important;
+        }
+        .cxd-TreeSelectControl{
+            width : 100% !important;
+        }
+        .cxd-TreeControl{
+            width: 100% !important;
+            max-height: 100% !important;
+        }
+        .auth{
+            display:none !important;
+        }
+        .jqp-top-btn{
+            display:inline-block !important;
+            margin-left:10px !important;
+        }
+        .cxd-Crud-filter{
+            margin-bottom:0px !important;
+        }
+        .noFilter .cxd-Crud-filter .cxd-Panel-body{
+            padding:0px !important;
+            display:none !important;
+        }
+        .noFilter .cxd-Crud-filter{
+            margin-bottom:5px !important;
+        }
+        .my-dropdown-button{
+            border-radius:5px;
+            padding:5px;
+            text-align:center;
+            display:inline-block;
+            width:auto;
+        }
+        .my-dropdown-button:hover{
+            opacity:0.8;
+        }
+        .my-dropdown-button[disabled]{
+            background: #f7f8fa !important;
+            color:#c7c8cd !important;
+        }
+        .my-dropdown{
+            background: white !important;
+        }
+        .my-dropdown .cxd-DropDown-button{
+            height:40px !important;
+        }
+        .my-dropdown li{
+            background: none !important;
+        }
+        .my-dropdown-button-primary{
+            background: #2468f2 !important;
+            color:white !important;
+        }
+        .my-dropdown-button-enhance{
+            background: #ffffff !important;
+            color:#2468f2 !important;
+        }
+        .my-dropdown-button-secondary{
+            background: #b8babf !important;
+            color:white !important;
+        }
+        .my-dropdown-button-info{
+            background: #2468f2 !important;
+            color:white !important;
+        }
+        .my-dropdown-button-success{
+            background: #30bf13 !important;
+            color:white !important;
+        }
+        .my-dropdown-button-warning{
+            background: #ff9326 !important;
+            color:white !important;
+        }
+        .my-dropdown-button-danger{
+            background: #f23d3d !important;
+            color:white !important;
+        }
+        .my-dropdown-button-dark{
+            background: #303540 !important;
+            color:white !important;
+        }
+        .my-dropdown-button-light{
+            background: #e6f0ff !important;
+            color:black !important;
+        }
+        .my-dropdown-button-default{
+            background: #ffffff !important;
+            color:black;
+        }
+        .cxd-Table-table .is-checked{
+            background: #e6f0ff !important;
+            color:black !important;
+        }
+        .rightHeight{
+            height:calc( 100vh - 40px );
+            overflow: auto;
+        }
+    </style>
+    <link rel="stylesheet" href="/dev-api/admin/user/auth.css" />
+</head>
+<body>
+<div id="root" class="app-wrapper"></div>
+<!-- 
+<script th:src="${js}"></script>
+-->
+<!-- <script src="/json/sys/tableInfo.js"></script> -->
+<script src="/dev-api/admin/page/js/customPage.js?_rt=1748566231252"></script>
+
+<script src="/amis/sdk.js"></script>
+<script src="/amis/rest.js"></script>
+<script src="/amis/tinymce.js"></script>
+
+<script type="text/javascript">
+    window.enableAMISDebug = true;
+    //比如 http://xxx.com/?amisDebug=1。
+    (function () {
+        let amis = amisRequire('amis/embed');
+        // 通过替换下面这个配置来生成不同页面
+        // let amisJSON = {
+        //     type: 'page',
+        //     title: '表单页面',
+        //     body: {
+        //         type: 'form',
+        //         mode: 'horizontal',
+        //         api: '/saveForm',
+        //         body: [
+        //             {
+        //                 label: 'Name',
+        //                 type: 'input-text',
+        //                 name: 'name'
+        //             },
+        //             {
+        //                 label: 'Email',
+        //                 type: 'input-email',
+        //                 name: 'email'
+        //             }
+        //         ]
+        //     }
+        // };
+        window.amisScoped = amis.embed('#root', AMIS_JSON,{},{
+            theme: 'ang',
+            // theme: 'antd',
+            responseAdaptor: function(api, response, query, request){
+                if(response.status == 1){
+                    //需要登录;
+                    try {
+                        window.top.location.href;
+                        //前后端不分离的
+                        if(window.top){
+                            window.top.location.href="/";
+                        }else{
+                            window.location.href="/";
+                        }
+                    }catch (e){
+                        //前后端分离的
+                        window.top.postMessage("login","*")
+                    }
+                }
+                return response;
+            }
+        });
+    })();
+</script>
+</body>
+</html>

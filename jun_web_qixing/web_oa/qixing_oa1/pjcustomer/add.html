@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">新增业务约定书</h3>
+	<div class="layui-form-item">
+		<input name="id" id="id" type="hidden"/>
+	</div>
+	
+	<div class="layui-collapse" lay-filter="test" lay-accordion>
+		<!-- 基本信息 -->
+		<div class="layui-colla-item">
+			<h2 class="layui-colla-title">基本信息</h2>
+			<div class="layui-colla-content layui-show">
+				<table class="layui-table layui-table-form">
+					<tr>
+						<td class="layui-td-gray">项目名称<font>*</font></td>
+						<td>
+							<input type="text" name="refProjectName" id="refProjectName" lay-verify="required" placeholder="请输入项目名称" class="layui-input">
+							<input type="hidden" name="refidProjectCodeHide" id="refidProjectCodeHide" />
+						</td>
+						<td class="layui-td-gray">合同类型<font>*</font></td>
+						<td>
+							<div id="dictContractType" name="dictContractType"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">合同标题</td>
+						<td>
+							<input type="text" name="contractName" id="contractName" placeholder="请输入合同标题" class="layui-input">
+						</td>
+						<td class="layui-td-gray">合同号</td>
+						<td>
+							<input type="text" name="contractNo" id="contractNo" placeholder="请输入合同号" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">签约日期<font>*</font></td>
+						<td>
+							<input type="text" name="signTime" id="signTime" lay-verify="required" placeholder="请输入签约日期" class="layui-input">
+						</td>
+						<td class="layui-td-gray">报告数量<font>*</font></td>
+						<td>
+							<input type="text" name="reportCount" id="reportCount" lay-verify="required" placeholder="请输入报告数量" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">约定书金额<font>*</font></td>
+						<td>
+							<input type="text" name="contractMoney" id="contractMoney" lay-verify="required" placeholder="请输入约定书金额" class="layui-input">
+						</td>
+						<td class="layui-td-gray">执业天数</td>
+						<td>
+							<input type="text" name="contractDays" id="contractDays" placeholder="请输入执业天数" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">签约/承诺人<font>*</font></td>
+						<td>
+							<input type="text" name="signBy" id="signBy" lay-verify="required" placeholder="请输入签约/承诺人" class="layui-input">
+						</td>
+						<td class="layui-td-gray"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">报告详细描述</td>
+						<td colspan="3">
+							<textarea name="reportDetail" id="reportDetail" placeholder="请输入报告详细描述" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">约定书详细描述</td>
+						<td colspan="3">
+							<textarea name="contractDetails" id="contractDetails" placeholder="请输入约定书详细描述" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="pt-4">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">保存</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+		const moduleInit = ['tool', 'table', 'form', 'laydate'];
+		function gouguInit() {
+			var form = layui.form, tool = layui.tool, table = layui.table, laydate = layui.laydate;
+			
+			// 初始化日期选择器
+			laydate.render({
+				elem: '#companyBegin',
+				type: 'date'
+			});
+			laydate.render({
+				elem: '#businessTermStart',
+				type: 'date'
+			});
+			laydate.render({
+				elem: '#businessTermEnd',
+				type: 'date'
+			});
+			laydate.render({
+				elem: '#licensingDay',
+				type: 'date'
+			});
+			
+			// 初始化用户选择器
+			$('input[name="customerRespPerson"]').on('click', function() {
+				tool.side('/qixing_oa1/sys/users/select.html', function(data) {
+					if(data && data.realName) {
+						$('input[name="customerRespPerson"]').val(data.realName);
+					}
+				});
+			});
+			
+			$('input[name="customerRelationPerson"]').on('click', function() {
+				tool.side('/qixing_oa1/sys/users/select.html', function(data) {
+					if(data && data.realName) {
+						$('input[name="customerRelationPerson"]').val(data.realName);
+					}
+				});
+			});
+			
+			// 监听提交
+			form.on('submit(webform)', function(data) {
+				let url = '/dev-api/pjCustomer/add';
+				let callback = function(e) {
+					layer.msg(e.msg);
+					if(e.code == 0) {
+						tool.sideClose(1000, 'documentTable');
+					}
+				}
+				let clickbtn = $(this);
+				tool.post(url, data.field, callback, clickbtn);
+				return false;
+			});
+			
+			// 根据数据库字段长度及是否必填属性生成校验表单字段长度
+			form.verify({
+				customerName: function(value, item){
+					var max = item.getAttribute('lay-max');
+					if(value && value.length > max){
+						return '客户名称不能大于'+max+'个字符的长度！';
+					}
+				},
+				customerCode: function(value, item){
+					var max = item.getAttribute('lay-max');
+					if(value && value.length > max){
+						return '客户编码不能大于'+max+'个字符的长度！';
+					}
+				}
+				// 其他字段的验证可以根据需要添加
+			});
+		}
+	</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

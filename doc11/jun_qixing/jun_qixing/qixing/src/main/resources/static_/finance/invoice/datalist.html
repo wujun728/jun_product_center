@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.tab-5 .search-item,.tab-6 .search-item{display:none;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+
+<div class="p-page">
+	<div class="layui-card border-x border-t" style="margin-bottom:0; box-shadow:0 0 0 0 rgb(5 32 96 / 0%)">
+		<div class="body-table layui-tab layui-tab-brief" lay-filter="tab">
+			<ul class="layui-tab-title">
+				<li class="layui-this">全部</li>
+				<li>我申请的</li>
+				<li>待我审批</li>
+				<li>我已审批</li>
+				<li>抄送我的</li>
+				<li>已开具</li>
+				<li>已作废</li>
+			</ul>
+		</div>
+	</div>
+	<form class="layui-form gg-form-bar border-x tab-0" id="barsearchform">
+		<div class="layui-input-inline" style="width:175px;">
+			<input type="text" class="layui-input" id="diff_time" placeholder="选择开票时间区间" readonly name="diff_time">
+		</div>
+		<div class="layui-input-inline  search-item" style="width:120px;">
+			<select name="check_status">
+				<option value="">选择审批状态</option>
+								<option value="0">待提交审批</option>
+								<option value="1">审批中</option>
+								<option value="2">审批通过</option>
+								<option value="3">审批不通过</option>
+								<option value="4">已撤回</option>
+							</select>
+		</div>
+		<div class="layui-input-inline  search-item" style="width:120px;">
+			<select name="open_status">
+				<option value="">开票状态</option>
+				<option value="0">未开票</option>
+				<option value="1">已开票</option>
+				<option value="2">已作废</option>
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px">
+			<input type="hidden" name="tab" value="0"/>
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="table_invoice" lay-filter="table_invoice"></table>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm tool-add" type="button" data-href="/finance/invoice/add">+ 添加开票申请</button>
+  </div>
+</script>
+
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','laydatePlus'];
+	function gouguInit() {
+		var table = layui.tablePlus, tool = layui.tool, laydatePlus = layui.laydatePlus, element = layui.element;
+		//tab切换
+		element.on('tab(tab)', function(data){
+			$('[name="tab"]').val(data.index);
+			$("#barsearchform")[0].reset();
+			$("#barsearchform").attr('class','layui-form gg-form-bar border-x tab-'+data.index);
+			layui.pageTable.reload({where:{tab:data.index},page:{curr:1}});
+			return false;
+		});
+		
+		//日期范围
+		var diff_time = new laydatePlus({'target':'diff_time'});
+		
+		layui.pageTable = table.render({
+			elem: "#table_invoice"
+			,toolbar: "#toolbarDemo"
+			,title: '发票列表'
+			,url: "/finance/invoice/datalist.json"
+			,page: true
+			,limit: 20
+			,cellMinWidth: 80
+			,height: 'full-154'
+			,cols: [[
+				{
+						field: 'id',
+						title: 'ID号',
+						align: 'center',
+						width: 80
+					},{
+						field: 'invoice_title',
+						title: '开票抬头',
+						minWidth: 240,	
+						templet:function(d){
+							var html='<span class="layui-badge layui-bg-blue">企业</span> '+d.invoice_title;
+							if(d.types==2){
+								html='<span class="layui-badge layui-bg-green">个人</span> '+d.invoice_title;
+							}
+							return html;
+						}
+					}, {
+						field: 'amount',
+						title: '发票金额(元)',
+						align: 'right',
+						width: 100,
+					},{
+						field: 'invoice_type',
+						title: '开票类型',
+						align: 'center',
+						width: 120,
+						templet:function(d){
+							var html='-';
+							if(d.invoice_type==1){
+								html='<span class="green">增值税专用发票</span>';
+							}
+							else if(d.invoice_type==2){
+								html='<span class="blue">普通发票</span>';
+							}
+							else if(d.invoice_type==3){
+								html='<span class="red">专业发票</span>';
+							}
+							return html;
+						}
+					},{
+						field:'check_status',title: '审批状态',width:100, align:'center',templet: function(d){
+							var html = '<span class="check-status-color-'+d.check_status+'">『'+d.check_status_str+'』</span>';
+							return html;
+						}
+					},
+					{
+						field: 'admin_name',
+						title: '发票申请员工',
+						align: 'center',
+						width: 100
+					},{
+						field: 'department',
+						title: '发票申请部门',
+						align: 'center',
+						width: 120
+					},{
+						field: 'create_time',
+						title: '申请时间',
+						align: 'center',
+						width: 150
+					},{
+						field: 'check_user',
+						title: '当前审核人'
+					},{
+						field: 'open_status',
+						title: '开票状态',
+						align: 'center',
+						width: 90,
+						templet:function(d){
+							var html='';
+							if(d.check_status==2){
+								html = '<span class="red">『未开票』</span>';
+								if(d.open_status==1){
+									html = '<span class="green">『已开票』</span>';
+								}
+							}
+							else{
+								html='-';
+							}
+							return html;
+						}
+					},{
+						field: 'open_name',
+						title: '开票人',
+						align: 'center',
+						width: 90
+					},{
+						field: 'open_time',
+						title: '开票日期',
+						align: 'center',
+						width: 100
+					},{
+						field: 'code',
+						title: '发票号码',
+						align: 'center',
+						width: 120
+					},{
+						field: 'right',
+						fixed: 'right',
+						title: '操作',
+						width: 130,
+						align: 'center',
+						templet:function(d){
+							var html='<div class="layui-btn-group">';
+							var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详情</span>';
+							var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+							var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+							html+=btn1;
+							if((d.check_status==0 ||d.check_status==4) && d.admin_id==login_admin){
+								html+=btn2+btn3;
+							}
+							html+='</div>';
+							return html;
+						}
+					}
+				]
+			]
+		});
+			
+		table.on('tool(table_invoice)',function (obj) {
+			var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/finance/invoice/view?id="+data.id);
+				return;
+			}
+			if (obj.event === 'edit') {
+				tool.side("/finance/invoice/add?id="+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要删除该内容吗?', { icon: 3, title: '提示' }, function (index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/finance/invoice/del", { id: data.id }, callback);
+					layer.close(index);
+				});
+				return;
+			}
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

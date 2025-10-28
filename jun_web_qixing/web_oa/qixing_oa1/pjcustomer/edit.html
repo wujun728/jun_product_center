@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content=" "/> 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<style>
+.layui-tab-title .layui-this{background-color:#fff;}
+.layui-tab-card,.layui-card{box-shadow:0 0 0 0 rgb(0 0 0 / 10%); border-radius:0;}
+.layui-card-tips {color: #969696;}
+.layui-card-value {padding: 4px 0 5px;font-size: 18px;color: #1E9FFF;}
+
+.check-items{overflow-x: auto; padding: 2px 0;}
+
+.check-item .check-item-icon strong{margin-right:3px; font-size:36px;}
+.check-item strong.blue,.check-item strong.gray{display:none;}
+.check-item.blue strong.black,.check-item.gray strong.black{display:none;}
+.check-item.blue strong.blue{display:block;}
+.check-item.gray strong.gray{display:block;}
+
+.flow-flex-row {box-direction: row;
+	box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.flow-flexbox { width: 100%;text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    box-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+	flex-wrap: wrap;
+}
+.check-item{width: auto; -ms-flex-negative: 0; flex-shrink: 0; padding:8px 0;}
+.check-item i{font-size:20px; margin-right:3px;}
+.layui-icon[data-ok]{color:#34a853}
+.layui-icon[data-no]{color:#FF5722;}
+.layui-icon[data-on]{color:#4285f4;}
+.check-item-time{color:#969696; font-size:12px; margin-left:3px;}
+.check-item .layui-icon.layui-icon-right{font-size:20px;}
+.check-item:last-child .layui-icon-right{display:none;}
+.file-card{line-height:normal;}
+</style>	
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">编辑客户</h3>
+	<div class="layui-form-item">
+		<input name="id" id="id" type="hidden"/>
+	</div>
+	
+	<div class="layui-tabs layui-tab-brief"  >
+  		<ul class="layui-tabs-header border-t border-x bg-white">
+			<li class="layui-this" data-load="true">基本信息</li>
+			<li>营业信息</li>
+			<li>开票信息</li>
+			<li>其他信息</li>
+		</ul>
+		<div class="layui-tabs-body">
+			<!-- 客户基本信息 -->
+			<div class="layui-tab-item layui-show">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					<legend>客户基本信息</legend>
+				</fieldset>
+				<table class="layui-table layui-table-form">
+					<tr>
+						<td class="layui-td-gray">客户名称<font>*</font></td>
+						<td>
+							<input type="text" name="customerName" id="customerName" lay-verify="required" lay-max="128" placeholder="请输入客户名称" class="layui-input">
+						</td>
+						<td class="layui-td-gray">客户编码</td>
+						<td>
+							<input type="text" name="customerCode" id="customerCode" lay-max="128" placeholder="请输入客户编码" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">客户类型</td>
+						<td>
+							<select id="dictCustomerType" name="dictCustomerType" lay-filter="select-type">
+								<option value="">请选择</option>
+								<option value="1">单位客户</option>
+								<option value="2">个人客户</option>
+							</select>
+						</td>
+						<td class="layui-td-gray">公司电话</td>
+						<td>
+							<input type="text" name="phone" id="phone" lay-max="128" placeholder="请输入公司电话" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">财务经理</td>
+						<td>
+							<input type="text" name="financialManager" id="financialManager" lay-max="128" placeholder="请输入财务经理" class="layui-input">
+						</td>
+						<td class="layui-td-gray">财务经理电话</td>
+						<td>
+							<input type="text" name="fmPhone" id="fmPhone" lay-max="128" placeholder="请输入财务经理电话" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">客户联系信息</td>
+						<td colspan="3">
+							<textarea name="customerLinks" id="customerLinks" lay-max="512" placeholder="请输入客户联系信息" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- 客户营业信息 -->
+			<div class="layui-tab-item">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					<legend>客户营业信息</legend>
+				</fieldset>
+				<table class="layui-table layui-table-form">
+					<tr>
+						<td class="layui-td-gray">营业执照</td>
+						<td>
+							<input type="text" name="businessLicense" id="businessLicense" lay-max="128" placeholder="请输入营业执照" class="layui-input">
+						</td>
+						<td class="layui-td-gray">营业执照编码</td>
+						<td>
+							<input type="text" name="businessLicenseNo" id="businessLicenseNo" lay-max="128" placeholder="请输入营业执照编码" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">法定代表人</td>
+						<td>
+							<input type="text" name="legalRepresentative" id="legalRepresentative" lay-max="128" placeholder="请输入法定代表人" class="layui-input">
+						</td>
+						<td class="layui-td-gray">注册资本</td>
+						<td>
+							<input type="text" name="registeredCapital" id="registeredCapital" lay-max="128" placeholder="请输入注册资本" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">客户地址</td>
+						<td>
+							<input type="text" name="customerAddress" id="customerAddress" lay-max="128" placeholder="请输入客户地址" class="layui-input">
+						</td>
+						<td class="layui-td-gray">公司类型</td>
+						<td>
+							<select id="dictCompanyType" name="dictCompanyType">
+								<option value="">请选择</option>
+								<option value="1">股份有限公司</option>
+								<option value="2">有限责任公司</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">公司始建于</td>
+						<td>
+							<input type="text" name="companyBegin" id="companyBegin" lay-max="128" placeholder="请选择公司始建日期" class="layui-input">
+						</td>
+						<td class="layui-td-gray">实收资本</td>
+						<td>
+							<input type="text" name="paiclupCapital" id="paiclupCapital" lay-max="128" placeholder="请输入实收资本" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">经营范围</td>
+						<td colspan="3">
+							<textarea name="businessScope" id="businessScope" lay-max="512" placeholder="请输入经营范围" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">营业期限开始</td>
+						<td>
+							<input type="text" name="businessTermStart" id="businessTermStart" lay-max="128" placeholder="请选择营业期限开始日期" class="layui-input">
+						</td>
+						<td class="layui-td-gray">营业期限结束</td>
+						<td>
+							<input type="text" name="businessTermEnd" id="businessTermEnd" lay-max="128" placeholder="请选择营业期限结束日期" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">登记机关</td>
+						<td>
+							<input type="text" name="registrationAuthority" id="registrationAuthority" lay-max="128" placeholder="请输入登记机关" class="layui-input">
+						</td>
+						<td class="layui-td-gray">执照发放日</td>
+						<td>
+							<input type="text" name="licensingDay" id="licensingDay" lay-max="128" placeholder="请选择执照发放日期" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">统一信用代码</td>
+						<td colspan="3">
+							<textarea name="customerBillingInformation" id="customerBillingInformation" lay-max="512" placeholder="请输入统一信用代码" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- 客户开票信息 -->
+			<div class="layui-tab-item">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					<legend>客户开票信息</legend>
+				</fieldset>
+				<table class="layui-table layui-table-form">
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">公司全称</td>
+						<td colspan="3">
+							<textarea name="conpanyName" id="conpanyName" lay-max="512" placeholder="请输入公司全称" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">纳税人识别号</td>
+						<td>
+							<input type="text" name="taxRegNumber" id="taxRegNumber" lay-max="128" placeholder="请输入纳税人识别号" class="layui-input">
+						</td>
+						<td class="layui-td-gray">税号</td>
+						<td>
+							<input type="text" name="dutyParagraph" id="dutyParagraph" lay-max="128" placeholder="请输入税号" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">开户行</td>
+						<td>
+							<input type="text" name="openingBank" id="openingBank" lay-max="128" placeholder="请输入开户行" class="layui-input">
+						</td>
+						<td class="layui-td-gray">账号</td>
+						<td>
+							<input type="text" name="accountNumber" id="accountNumber" lay-max="128" placeholder="请输入账号" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">电话</td>
+						<td>
+							<input type="text" name="telephone" id="telephone" lay-max="128" placeholder="请输入电话" class="layui-input">
+						</td>
+						<td class="layui-td-gray">公司地址</td>
+						<td>
+							<input type="text" name="companyAddress" id="companyAddress" lay-max="128" placeholder="请输入公司地址" class="layui-input">
+						</td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- 客户其他信息 -->
+			<div class="layui-tab-item">
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+					<legend>客户其他信息</legend>
+				</fieldset>
+				<table class="layui-table layui-table-form">
+					<tr>
+						<td class="layui-td-gray">是否老客户</td>
+						<td>
+							<select id="dictIsOldCustomer" name="dictIsOldCustomer">
+								<option value="">请选择</option>
+								<option value="0">否</option>
+								<option value="1">是</option>
+							</select>
+						</td>
+						<td class="layui-td-gray">客户对接责任人</td>
+						<td>
+							<input type="text" name="customerRespPerson" id="customerRespPerson" lay-max="128" placeholder="请输入客户对接责任人" class="layui-input">
+						</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">客户关系维护人</td>
+						<td>
+							<input type="text" name="customerRelationPerson" id="customerRelationPerson" lay-max="128" placeholder="请输入客户关系维护人" class="layui-input">
+						</td>
+						<td class="layui-td-gray"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray" style="vertical-align:top;">备注信息</td>
+						<td colspan="3">
+							<textarea style="height:160px;" name="remark" id="remark" lay-max="1024" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="pt-4">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">保存</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+		const moduleInit = ['tool', 'table', 'form', 'laydate'];
+		function gouguInit() {
+			var form = layui.form, tool = layui.tool, table = layui.table, laydate = layui.laydate;
+			var id = tool.getUrlParam('id');
+			
+			// 初始化日期选择器
+			laydate.render({
+				elem: '#companyBegin',
+				type: 'date'
+			});
+			laydate.render({
+				elem: '#businessTermStart',
+				type: 'date'
+			});
+			laydate.render({
+				elem: '#businessTermEnd',
+				type: 'date'
+			});
+			laydate.render({
+				elem: '#licensingDay',
+				type: 'date'
+			});
+			
+			// 如果是编辑模式，加载数据
+			if(id) {
+				tool.get('/dev-api/pjCustomer/findOne', {id: id}, function(res) {
+					if(res.code == 0 && res.data) {
+						form.val('layui-form', res.data);
+						form.render(); //更新全部
+					}
+				});
+			}
+			
+			// 初始化用户选择器
+			$('input[name="customerRespPerson"]').on('click', function() {
+				tool.side('/qixing_oa1/sys/users/select.html', function(data) {
+					if(data && data.realName) {
+						$('input[name="customerRespPerson"]').val(data.realName);
+					}
+				});
+			});
+			
+			$('input[name="customerRelationPerson"]').on('click', function() {
+				tool.side('/qixing_oa1/sys/users/select.html', function(data) {
+					if(data && data.realName) {
+						$('input[name="customerRelationPerson"]').val(data.realName);
+					}
+				});
+			});
+			
+			// 监听提交
+			form.on('submit(webform)', function(data) {
+				let url = id ? '/dev-api/pjCustomer/update' : '/dev-api/pjCustomer/add';
+				let method = id ? 'put' : 'post';
+				
+				let callback = function(e) {
+					layer.msg(e.msg);
+					if(e.code == 0) {
+						tool.sideClose(1000, 'documentTable');
+					}
+				}
+				
+				let clickbtn = $(this);
+				tool[method](url, data.field, callback, clickbtn);
+				return false;
+			});
+			
+			// 根据数据库字段长度及是否必填属性生成校验表单字段长度
+			form.verify({
+				customerName: function(value, item){
+					var max = item.getAttribute('lay-max');
+					if(value && value.length > max){
+						return '客户名称不能大于'+max+'个字符的长度！';
+					}
+				},
+				customerCode: function(value, item){
+					var max = item.getAttribute('lay-max');
+					if(value && value.length > max){
+						return '客户编码不能大于'+max+'个字符的长度！';
+					}
+				}
+				// 其他字段的验证可以根据需要添加
+			});
+		}
+	</script>
+
+	<!-- 脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	<script src="http://qixing.hbqxcpa.cn/js/base64.js"></script>
+	
+
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

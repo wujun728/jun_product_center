@@ -1,0 +1,571 @@
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    background: #f7f7f7;
+}
+.header-wrapper {
+    position: fixed;
+    right: 0;
+    width: 100%;
+    background: rgba(48, 52, 65, .9);
+    z-index: 100;
+}
+.header {
+    height: 70px;
+    padding: 12px 0!important;
+}
+.header h1 {
+    height: 45px;
+    padding-left: 55px;
+    margin: 0;
+    background: url(../img/logo.png) no-repeat scroll 0 0 transparent;
+    background-size: 45px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    line-height: 45px;
+    opacity: 0.7;
+}
+.header-wrapper .navbar-nav > li > a {
+    padding: 10px 15px;
+    color: #A3A7B9;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+.header-wrapper .navbar-nav > li > a:hover,
+.header-wrapper .navbar-nav > li > a:focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+.header-wrapper .navbar-nav > .active > a,
+.header-wrapper .navbar-nav > .active > a:hover,
+.header-wrapper .navbar-nav > .active > a:focus {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    color: #EB5055;
+}
+.footer-wrapper {
+    position: relative;
+    width: 100%;
+    background: rgba(48, 52, 65, .9);
+    z-index: 100;
+}
+.footer {
+    padding: 20px 0;
+}
+.footer p {
+
+    font-size: 14px;
+    color: #fff;
+}
+.wrapper {
+    min-height: calc(100% - 115px);
+    padding: 20px 0 20px 0;
+}
+.content-block {
+    margin-top: 5px;
+}
+.list-wrapper {
+    overflow: hidden;
+}
+.list-li {
+    position: relative;
+    padding: 0 30px;
+    margin-top: 15px;
+    border: 1px solid #e6e6e6;
+    /*border-top: 2px solid #eb322c;*/
+    /*border-top: 2px solid #EB323C;*/
+    background: #fff;
+    transition: 0.3s;
+}
+.list-li:last-child {
+    margin-bottom: 0;
+}
+.list-li:hover {
+    /*background: #fafafa;*/
+    box-shadow: 0 0 20px 1px rgba(60,60,60,.3);
+    transition: 0.3s;
+}
+.arrow-pr {
+    position: relative;
+}
+.title-wrapper {
+    position:relative;
+    padding: 5px 0;
+    margin: 0;
+    line-height: 40px;
+
+}
+.title-txt {
+    position: relative;
+    float: left;
+    min-width: 270px;
+    padding: 0 0 0 5px;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+}
+.title-txt .num {
+    padding: 0 5px;
+    font-weight: normal;
+    font-size: 16px;
+}
+.title-txt i {
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 20px;
+    height: 20px;
+    margin: 10px 0 0 10px;
+    background: url(../img/phone2.png) no-repeat;
+    background-size: 100% 100%;
+}
+.title-wrapper:hover .title-txt {
+    text-decoration: none;
+    color: #eb322c;
+}
+.title-wrapper-none-url:hover .title-txt {
+    color: #333;
+}
+.title-wrapper-url {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+.title-wrapper-url-none {
+    color: #ccc;
+}
+.delay {
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    width: 0;
+    height: 0;
+    border: 24px solid  transparent;
+    border-bottom: 24px solid  #ff0000;
+    background-size: 100% 100%;
+    transform:rotate(45deg);
+}
+.delay-txt {
+    position: absolute;
+    top: 1px;
+    right: -2px;
+    font-size: 12px;
+    color: #fff;
+    transform:rotate(45deg) scale(0.8);
+}
+
+.status {
+    float: right;
+    height: 42px;
+    padding: 0;
+    margin-right: 40px;
+    border-radius: 5px;
+    line-height: 42px;
+    font-size: 14px;
+    color: #666;
+    text-align: right;
+}
+.status i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 10px 0 0;
+    background: #3dbc75;
+    border-radius: 20px;
+}
+.developing i {
+    background: #3dbc75;
+}
+.measured i {
+    background: #66ccff;
+}
+.finished i {
+    background: #fd674e;
+}
+.frozen i {
+    background: #bdbdbd;
+}
+.details-wrapper {
+    height: 0;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
+}
+.details-wrapper.active {
+    height: auto;
+}
+.details {
+    padding: 15px 0;
+    border-top: 1px solid #e5e5e5;
+    transition: 0.3s;
+}
+.details.active {
+    transition: 0.3s;
+}
+
+.details li {
+    padding: 0 0 0 10px;
+    line-height: 30px;
+}
+.details li.full-li .l-title {
+    float:left;
+}
+.details li.full-li .r-con{
+    float: left;
+    width:calc(100% - 80px);
+    font-size: 14px;
+    color: #555;
+}
+.l-title {
+    float: left;
+    min-width: 80px;
+    font-size: 14px;
+    color: #555;
+}
+.r-con {
+    float: left;
+    font-size: 14px;
+    color: #555;
+}
+.process-wrapper {
+    float: left;
+}
+.process {
+    height: 8px;
+    margin: 16px 0 0;
+    padding: 0;
+    border-radius: 10px;
+    background: #e6e6e6;
+    overflow: hidden;
+}
+.process span {
+    float: left;
+    width: 0;
+    height: 100%;
+    border-radius: 10px;
+    background: #ee5a50;
+    transition: 0.3s;
+}
+.process span.normal {
+    background: #4dbd74;
+}
+.process span.abnormal {
+    background: #fdb551;
+}
+.down {
+    position: absolute;
+    right: 2px;
+    top: 13px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
+}
+.down i {
+    display: inline-block;
+    width: 15px;
+    height: 16px;
+    margin-top: 6px;
+    background: url(../img/down.png) no-repeat;
+    background-size: 100% 100%;
+    transition: 0.3s;
+}
+.down.active i{
+    transform:rotate(180deg);
+    transition: 0.3s;
+}
+.edit-json {
+  position: absolute;
+  top: 13px;
+  right: 35px;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 100;
+}
+.edit-json:hover {
+    text-decoration: none;
+}
+.hide-li {
+    display: none;
+    transition: 0.3s;
+}
+.hide-li.active {
+    display: block;
+    transition: 0.3s;
+}
+.process-txt {
+    padding:0;
+    font-size: 14px;
+    color: #555;
+}
+.chart-wrapper {
+    margin-bottom: 20px;
+    padding: 0 15px;
+    background: none;
+    border:none;
+}
+.chart-big-wrapper {
+    border: 1px solid #e5e5e5;
+    background: #fff;
+}
+.chart-block {
+    position: relative;
+    padding: 0;
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+}
+
+.chart-block:last-child {
+    border-bottom: none;
+}
+.chart-title {
+    padding-top: 10px;
+    line-height: 40px;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+}
+.chart {
+    width: 100%;
+    height: 250px;
+    padding: 0;
+}
+.chart2 {
+  height: 500px;
+}
+.staff-input {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  z-index: 100;
+  font-size: 14px;
+}
+.staff-input span {
+  margin-left: 10px;
+}
+.develop-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 20px;
+  background: #3dbc75;
+}
+.measured-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border-radius: 20px;
+  background: #66ccff;
+}
+
+
+
+.container>.navbar-header {
+    margin: 0;
+}
+.details-ul li {
+    padding: 0;
+}
+.tech-icon {
+    float: left;
+    margin: 0  2px 0 2px;
+    font-size: 14px;
+}
+.tech-icon:hover {
+    text-decoration: none;
+}
+.jquery-icon {
+    background: url(../img/jquery.png) no-repeat;
+    background-size: 100% 100%;
+}
+.handle-icon {
+    background: url(../img/handlebars.png) no-repeat;
+    background-size: 100% 100%;
+}
+.react-icon {
+    background: url(../img/react.png) no-repeat;
+    background-size: 100% 100%;
+}
+.vue-icon {
+    background: url(../img/vue.png) no-repeat;
+    background-size: 100% 100%;
+}
+.element-icon {
+    background: url(../img/elementui.png) no-repeat;
+    background-size: 100% 100%;
+}
+.d3-icon {
+    background: url(../img/d3.png) no-repeat;
+    background-size: 100% 100%;
+}
+.echart-icon {
+    background: url(../img/echarts.png) no-repeat;
+    background-size: 100% 100%;
+}
+.sass-icon {
+    background: url(../img/sass.png) no-repeat;
+    background-size: 100% 100%;
+}
+.less-icon {
+    background: url(../img/less.png) no-repeat;
+    background-size: 100% 100%;
+}
+.mint-icon {
+    background: url(../img/mintui.png) no-repeat;
+    background-size: 100% 100%;
+}
+.layui-icon {
+    background: url(../img/layui.png) no-repeat;
+    background-size: 100% 100%;
+}
+/* 筛选条件 */
+.condition-wrapper {
+    padding: 10px 0;
+    border: 1px solid #e6e6e6;
+    background: #fff;
+
+}
+.condition-wrapper li {
+    line-height: 40px;
+    font-size: 16px;
+    color: #333;
+}
+.condition-title {
+    float: left;
+    margin-left: 30px;
+}
+.condition-list {
+    margin-left: 115px;
+}
+.condition-list span {
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #777;
+
+}
+.condition-list span.active,
+.condition-list span:hover {
+    color: #fd674e;
+}
+.no-result {
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+}
+
+@media (min-width: 1200px) {
+    .chart-block {
+        border-bottom: 1px solid #e5e5e5;
+        border-right: none;
+    }
+    .modal-lg {
+        width: 900px;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .no-right-border {
+        border-right: none;
+    }
+    .no-bottom-border {
+        border-bottom: none;
+    }
+
+}
+@media (min-width: 768px) and (max-width:991px) {
+
+    .list {
+        margin-top: 20px;
+
+    }
+    .chart-wrapper {
+        padding: 0 15px;
+        border: none;
+        background: none;
+    }
+}
+@media  (max-width:768px) {
+    .container>.navbar-header {
+        margin-left: 20px;
+        font-size: 18px;
+    }
+    .list>li {
+        padding: 0 15px;
+    }
+    .title-wrapper {
+        border: none;
+    }
+    .title-txt {
+        min-width: 210px;
+        font-size: 14px;
+    }
+    a.title-txt:visited,
+    a.title-txt:link,
+    a.title-txt:active {
+        color: #333;
+        text-decoration: none;
+    }
+    .title-txt i {
+        top: 1px;
+        left: -22px;
+        width:16px;
+        height: 16px;
+    }
+    .title-txt .num {
+        font-size: 13px;
+    }
+    .process-wrapper {
+        padding: 0 46px 0 10px;
+        border-top: 1px solid #e5e5e5;
+    }
+    .details-wrapper {
+        margin-top: 0;
+    }
+    .details li {
+        padding: 0;
+    }
+    .chart-title {
+        font-size: 16px;
+    }
+    .status{
+        margin-right: 0;
+        font-size: 12px;
+    }
+    .tech-icon {
+        margin: 7px 5px 0 5px;
+    }
+    .chart-block {
+        border-right: none;
+    }
+    .condition-wrapper  li {
+        line-height: 30px;
+        font-size: 14px;
+    }
+    .condition-title {
+        margin-left: 10px;
+    }
+    .condition-list {
+        margin-left: 82px;
+    }
+    .down,
+    .edit-json {
+        top: 55px;
+    }
+}
+/* 模态框chart*/
+.chart-force {
+    width: 900px;
+    height: 750px;
+    padding: 0;
+}

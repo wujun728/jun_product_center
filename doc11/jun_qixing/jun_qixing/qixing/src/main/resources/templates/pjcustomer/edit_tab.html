@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<link rel="stylesheet" href="/layui/css/layui.css">
+<link rel="stylesheet" href="/css/custom.form.css">
+<link rel="stylesheet" href="/css/public.css" media="all">
+
+</head>
+<body>
+	<div style="display: none;">
+		<p th:text="gid">no message</p>
+	</div>
+	<!-- 新增修改的DIV页面-begin,默认hidden -->
+	<div class="panel panel-default operation">
+		<!--   <div class="panel-heading title"></div> -->
+		<form class="layui-form layuimini-form" action="" lay-filter="info" style="margin-top: 10px">
+			<div class="layui-tab">
+				<ul class="layui-tab-title">
+					<li class="layui-this">客户基本信息</li>
+					<li>客户营业信息</li>
+					<li>客户开票信息</li>
+					<li>客户其他信息</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<fieldset class="layui-elem-field layui-field-title"
+								  style="margin-top: 20px;">
+							<legend>客户基本信息</legend>
+						</fieldset>
+
+						<input name="id" id="id" hidden />
+						<input name="editor" id="editor" hidden />
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  layui-required  ">客户名称</label>
+								<div class=" layui-input-block ">
+									<input type="customerName" name="customerName" id="customerName"
+										   lay-verify="required|customerName" lay-max="128"
+										   placeholder="请输入客户名称" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  layui-required  ">客户编码</label>
+								<div class=" layui-input-block ">
+									<input type="customerCode" name="customerCode" id="customerCode"
+										   lay-verify="required|customerCode" lay-max="128"
+										   placeholder="请输入客户编码" autocomplete="off" class="layui-input">
+									<!-- 	    <tip>客户编码当前自动生成，也可根据期望自行修改。</tip> -->
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  layui-required  ">客户类型</label>
+								<div class=" layui-input-block ">
+									<select id="dictCustomerType" name="dictCustomerType"
+											lay-filter="select-type" lay-verify="required"
+											th:with="type=${@sysDictService.getType('dict_customer_type')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.label}"
+												th:value="${dict.value}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  layui-required  ">公司电话</label>
+								<div class=" layui-input-block ">
+									<input type="phone" name="phone" id="phone"
+										   lay-verify="required|phone|number" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">联系人1</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="financialManager" id="financialManager"
+										   lay-verify="financialManager" lay-max="128"
+										   placeholder="请输入财务经理" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label required:after">联系电话1</label>
+								<div class=" layui-input-block ">
+									<input type="number" name="fmPhone" id="fmPhone"
+										   lay-verify="fmPhone" lay-max="128" placeholder="请输入财务经理电话"
+										   autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">联系人2</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="financialManager1"
+										   id="financialManager1" lay-verify="financialManager"
+										   lay-max="128" placeholder="请输入财务经理" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label required:after">联系电话2</label>
+								<div class=" layui-input-block ">
+									<input type="number" name="fmPhone1" id="fmPhone1"
+										   lay-verify="fmPhone" lay-max="128" placeholder="请输入财务经理电话"
+										   autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">联系人3</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="financialManager2"
+										   id="financialManager2" lay-verify="financialManager"
+										   lay-max="128" placeholder="请输入财务经理" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label required:after">联系电话3</label>
+								<div class=" layui-input-block ">
+									<input type="number" name="fmPhone2" id="fmPhone2"
+										   lay-verify="fmPhone" lay-max="128" placeholder="请输入财务经理电话"
+										   autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item" style="display: none;">
+							<label class="layui-form-label  ">客户联系信息</label>
+							<div class=" layui-input-block ">
+						<textarea class="layui-input" name="customerLinks"
+								  id="customerLinks" lay-verify="customerLinks" lay-max="128"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="layui-tab-item">
+						<fieldset class="layui-elem-field layui-field-title"
+								  style="margin-top: 20px;">
+							<legend>客户营业信息</legend>
+						</fieldset>
+						<div class="layui-form-item" style="display: none;">
+							<label class="layui-form-label  ">客户营业信息</label>
+							<div class=" layui-input-block ">
+						<textarea class="layui-input" name="customerBusiness"
+								  id="customerBusiness" lay-verify="customerBusiness" lay-max="128"></textarea>
+							</div>
+
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">营业执照</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="businessLicense" id="businessLicense"
+										   lay-verify="businessLicense" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">营业执照编码</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="businessLicenseNo"
+										   id="businessLicenseNo" lay-verify="businessLicenseNo"
+										   lay-max="128" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">公司类型</label>
+								<div class=" layui-input-block ">
+									<select id="dictCompanyType" name="dictCompanyType"
+											lay-filter="select-type"
+											th:with="type=${@sysDictService.getType('dict_company_type')}">
+										<option value="">请选择</option>
+										<option th:each="dict : ${type}" th:text="${dict.label}"
+												th:value="${dict.value}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">注册资本</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="registeredCapital"
+										   id="registeredCapital" lay-verify="registeredCapital"
+										   lay-max="128" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item" style="display:none;">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">客户地址</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="customerAddress" id="customerAddress"
+										   lay-verify="customerAddress" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">公司始建于</label>
+								<div class=" layui-input-block ">
+									<input type="companyBegin" name="companyBegin" id="companyBegin"
+										   lay-verify=" date" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">实收资本</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="paiclupCapital" id="paiclupCapital"
+										   lay-verify="paiclupCapital" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md12">
+								<label class="layui-form-label  ">经营范围</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="businessScope" id="businessScope"
+										   lay-verify="businessScope" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">营业期限开始</label>
+								<div class=" layui-input-block ">
+									<input type="businessTermStart" name="businessTermStart"
+										   id="businessTermStart" lay-verify=" date" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">营业期限结束</label>
+								<div class=" layui-input-block ">
+									<input type="businessTermEnd" name="businessTermEnd"
+										   id="businessTermEnd" lay-verify=" date" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">登记机关</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="registrationAuthority"
+										   id="registrationAuthority" lay-verify="registrationAuthority"
+										   lay-max="128" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">执照发放日</label>
+								<div class=" layui-input-block ">
+									<input type="licensingDay" name="licensingDay" id="licensingDay"
+										   lay-verify=" date" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">统一信用代码</label>
+								<div class=" layui-input-block ">
+							<textarea class="layui-input" name="customerBillingInformation"
+									  id="customerBillingInformation"
+									  lay-verify="customerBillingInformation" lay-max="128"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-tab-item">
+
+
+
+						<fieldset class="layui-elem-field layui-field-title"
+								  style="margin-top: 20px;">
+							<legend>客户开票信息</legend>
+						</fieldset>
+						<div class="layui-form-item" >
+							<div class="layui-col-md12">
+								<label class="layui-form-label  ">公司全称</label>
+								<div class=" layui-input-block ">
+							<textarea class="layui-input" name="conpanyName" id="conpanyName"
+									  lay-verify="conpanyName" lay-max="128"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">纳税人识别号</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="taxRegNumber" id="taxRegNumber"
+										   lay-verify="taxRegNumber" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">税号</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="dutyParagraph" id="dutyParagraph"
+										   lay-verify="dutyParagraph" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">开户行</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="openingBank" id="openingBank"
+										   lay-verify="openingBank" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">账号</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="accountNumber" id="accountNumber"
+										   lay-verify="accountNumber" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">电话</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="telephone" id="telephone"
+										   lay-verify="telephone" lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<label class="layui-form-label  ">公司地址</label>
+								<div class=" layui-input-block ">
+									<input type="text" name="companyAddress" id="companyAddress"
+										   lay-verify=companyAddress lay-max="128" autocomplete="off"
+										   class="layui-input">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-tab-item">
+
+						<fieldset class="layui-elem-field layui-field-title"
+								  style="margin-top: 20px;">
+							<legend>客户其他信息</legend>
+						</fieldset>
+
+						<div class="layui-form-item">
+							<div class="layui-form-item"  style="display:none;">
+								<div class="layui-col-md6">
+									<label class="layui-form-label  ">客户对接责任人</label>
+									<div class=" layui-input-block ">
+										<input type="text" name="customerRespPerson"
+											   id="customerRespPerson" lay-verify=customerRespPerson
+											   lay-max="128" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+								<div class="layui-col-md6">
+									<label class="layui-form-label  ">客户关系维护人</label>
+									<div class=" layui-input-block ">
+										<input type="text" name="customerRelationPerson"
+											   id="customerRelationPerson" lay-verify=customerRelationPerson
+											   lay-max="128" autocomplete="off" class="layui-input">
+									</div>
+								</div>
+							</div>
+							<div class="layui-form-item"  >
+								<div class="layui-col-md6">
+									<label class="layui-form-label ">是否老客户</label>
+									<div class=" layui-input-block ">
+										<select id="dictIsOldCustomer" name="dictIsOldCustomer" lay-filter="select-type"
+												th:with="type=${@sysDictService.getType('dict_is_old_customer')}">
+											<option value="">请选择</option>
+											<option th:each="dict : ${type}" th:text="${dict.label}"
+													th:value="${dict.value}"></option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-form-item">
+							<label class="layui-form-label  ">备注信息</label>
+							<div class=" layui-input-block ">
+						<textarea style="height:160px;" class="layui-textarea" name="remark" lay-verify=remark
+								  lay-max="512" id="remark"></textarea>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="form-group-bottom text-right" id="buttonSave">
+				<button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+				<button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+			</div>
+		</form>
+	</div>
+	<!-- 新增修改的DIV页面-end -->
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/core.util.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script th:inline="javascript">
+    var customerCode = [[${customerCode}]];
+
+    var pkCode = [[${pkCode}]];
+    var flagType = [[${flagType}]];
+    var id = [[${id}]];
+//     console.log(flagType);
+//     console.log(id);
+    if(""!=id){
+    	 if("view"==flagType){
+		   	$("#buttonSave").hide();
+    	 }
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/pjCustomer/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+// 	            	 console.log("edit data="+res.data.dictProjectType);
+// 	       	  	  	 handel("dict_project_type_sub"+res.data.dictProjectType);
+// 	       	  		 $(".operation select[name=dictProjectTypeSub]").val(res.data.dictProjectTypeSub);
+	                 form.render(); //更新全部
+	             }
+	         });
+	         $(".operation input[name=customerCode]").val(pkCode);
+	     });
+    }else{
+    	$(".operation input[name=customerCode]").val(pkCode);
+    }
+</script>
+
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+  
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+	    notice: 'notice/notice',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit', 'notice'], function () {
+	  numberInput = layui.numberInput;
+	  var notice = layui.notice;
+
+
+//遍历列，并渲染各种表单组件
+ 	//日期
+	laydate.render({
+	    elem: '#companyBegin'
+	    ,type: 'date'
+    });
+ 	//日期
+	laydate.render({
+	    elem: '#businessTermStart'
+	    ,type: 'date'
+    });
+ 	//日期
+	laydate.render({
+	    elem: '#businessTermEnd'
+	    ,type: 'date'
+    });
+ 	//日期
+	laydate.render({
+	    elem: '#licensingDay'
+	    ,type: 'date'
+    });
+ 	
+	tableSelect.render({
+		elem: '#customerName_',
+		checkedKey: 'id',
+		table: {
+			url: '/pjCustomer/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true,width: 170},
+					{ field: 'customerName', title: '名称' ,width: 200},
+					{ field: 'customerCode', title: '编码',width: 200 }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.customerName);
+				$("#customerCode").val(item.customerCode);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#customerName").val(NEWJSON);
+			form.render();
+		}
+	});
+
+	tableSelect.render({
+		elem: '#customerRespPerson',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				$("#refId").val(item.id);
+				console.log('item.id='+item.id);
+			})
+			elem.val(NEWJSON.join(","))
+			$("#customerRespPerson").val(NEWJSON);
+			form.render();
+		}
+	});
+ 	
+	tableSelect.render({
+		elem: '#customerRelationPerson',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#customerRelationPerson").val(NEWJSON);
+			form.render();
+		}
+	});
+	   
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layer.index);
+    	var index = parent.layer.getFrameIndex(window.name);
+    	parent.layer.close(index);
+       return false;
+    });
+    
+    //执行查询
+    function search() {
+    	window.parent.location.reload();
+    };
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/pjCustomer/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+	       	if(res.code!=0){
+     			//layer.alert(res.msg);
+				notice.error({
+					title: '消息通知',
+					message: res.msg
+				});
+     			return false;
+	     	}else{
+				notice.success({
+					title: '消息通知',
+					message: res.msg
+				});
+			}
+	       	layer.close(layerAdd);
+			search();
+        });
+      }else {
+        CoreUtil.sendPut("/pjCustomer/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+			if(res.code!=0){
+				//layer.alert(res.msg);
+				notice.error({
+					title: '消息通知',
+					message: res.msg
+				});
+				return false;
+			}else{
+				notice.success({
+					title: '消息通知',
+					message: res.msg
+				});
+			}
+        	layer.close(layerAdd);
+			search();
+        });
+      }
+      return false;
+    });
+
+
+
+  });
+
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+			customerName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户编码不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictCustomerType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  phone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '公司电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  financialManager: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '财务经理不能大于'+max+'个字符的长度！';
+            }
+        }  ,  fmPhone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '财务经理电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerLinks: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户联系信息不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerBusiness: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户营业信息不能大于'+max+'个字符的长度！';
+            }
+        }  ,  businessLicense: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '营业执照不能大于'+max+'个字符的长度！';
+            }
+        }  ,  conpanyName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '公司全称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  businessLicenseNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '营业执照编码不能大于'+max+'个字符的长度！';
+            }
+        }  ,  legalRepresentative: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '法定代表人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  registeredCapital: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '注册资本不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerAddress: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户地址不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictCompanyType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '公司类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  companyBegin: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '公司始建于不能大于'+max+'个字符的长度！';
+            }
+        }  ,  paiclupCapital: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '实收资本不能大于'+max+'个字符的长度！';
+            }
+        }  ,  businessScope: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '经营范围不能大于'+max+'个字符的长度！';
+            }
+        }  ,  businessTermStart: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '营业期限开始不能大于'+max+'个字符的长度！';
+            }
+        }  ,  businessTermEnd: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '营业期限结束不能大于'+max+'个字符的长度！';
+            }
+        }  ,  registrationAuthority: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '登记机关不能大于'+max+'个字符的长度！';
+            }
+        }  ,  licensingDay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '执照发放日不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerBillingInformation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '统一信用代码信息不能大于'+max+'个字符的长度！';
+            }
+        }  ,  taxRegNumber: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '纳税人识别号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dutyParagraph: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '税号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  openingBank: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开户行不能大于'+max+'个字符的长度！';
+            }
+        }  ,  accountNumber: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '账号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  telephone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  companyAddress: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '公司地址不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIsOldCustomer: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否老客户不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerRespPerson: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户对接责任人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerRelationPerson: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户关系维护责任人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注信息不能大于'+max+'个字符的长度！';
+            }
+        }    	    });
+</script>

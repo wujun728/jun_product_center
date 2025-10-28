@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>新增项目开票 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="panel panel-default operation">
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<!-- 11111111111111 -->
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+
+<!-- collapse 文件开始 -->
+<div class="layui-collapse"  lay-filter="test" lay-accordion="">
+	<!-- collapse-1 文件开始 -->
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">基本信息</h2>
+    <div class="layui-colla-content layui-show">
+       <!-- collapse-1 -->
+        
+
+      <input name="id" id="id" hidden/>
+      <input name="refCustomerCode" id="refCustomerCode" hidden/>
+      <input name="refProjectCode" id="refProjectCode" hidden/>
+    
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票客户</label>
+      <div class=" layui-input-block " style="z-index: 100;">
+		<input type="text" name="refCustomerName"  id="refCustomerName"  lay-verify="required" lay-max="256"  placeholder="请输入开票客户"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票项目</label>
+      <div class=" layui-input-block " style="z-index: 100;">
+		<input type="text" name="refProjectName"  id="refProjectName"  lay-verify="required" lay-max="256"  placeholder="请输入开票项目"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+</div>  
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票类型</label>
+      <div class=" layui-input-block ">
+	<select id="dictType" name="dictType" lay-filter="dictType">
+        <option value="">请选择</option>
+    </select>
+    </div>
+   </div> 
+    <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票人</label>
+      <div class=" layui-input-block " style="z-index: 100;">
+		<input type="text" name="refInvoiceMan"  id="refInvoiceMan"  lay-verify="required" lay-max="256"  placeholder="请输入开票人"   autocomplete="off" class="layui-input">
+	    </div>
+   </div> 
+ </div>
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票单位名称</label>
+      <div class=" layui-input-block ">
+		<input type="text" name="invoiceCompanyName"  id="invoiceCompanyName"  lay-verify="required" lay-max="512"  placeholder="请输入开票单位名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >纳税人识别号</label>
+      <div class=" layui-input-block ">
+		<input type="text" name="invoiceTaxNo"  id="invoiceTaxNo"  lay-verify="required" lay-max="256"  placeholder="请输入纳税人识别号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " >地址</label>
+      <div class=" layui-input-block ">
+		<input type="text" name="address"  id="address"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >电话</label>
+      <div class=" layui-input-block ">
+		<input type="text" name="telephone"  id="telephone"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label    " >开户行</label>
+      <div class=" layui-input-block ">
+	<select id="dictBank" name="dictBank">
+        <option value="">请选择</option>
+    </select>
+    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label   " >开户行账号</label>
+      <div class=" layui-input-block ">
+		<input type="text" name="bankCardNo"  id="bankCardNo"  lay-max="256"  placeholder="请输入开户行账号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票金额</label>
+      <div class=" layui-input-block ">
+		<input type="text" name="invoiceMoney"  id="invoiceMoney"  lay-verify="required|number" lay-max="999999999"  placeholder="请输入开票金额"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block ">
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+  </div>
+
+    </div>
+  </div>
+    <!-- collapse-1  -->
+
+
+  <!-- collapse-1 end -->
+  
+  <!-- collapse-2 start -->
+  <!-- 文件附件的DIV页面-111111 -->
+  <div class="layui-colla-item" id="fileList">
+    <h2 class="layui-colla-title">附件信息</h2>
+    <div class="layui-colla-content layui-show">
+<!--       <p>222222222</p> -->
+		<div class="table_div1">
+		  <input id="fileRefId" type="text" style="display: none" />
+		  <input id="copy_in" style="display: none" />
+		    <div class="layui-form-item">
+		      <div class="layui-input-block ">
+		      <div class="layui-btn-container">
+		        <button type="button" class="layui-btn" id="upload">
+		          <i class="layui-icon"></i>上传文件
+		        </button>
+			</div>
+		      </div>
+		    </div>
+		  <table class="layui-table" id="showFilesTable" lay-filter="showFilesTable" ></table>
+		</div>
+<!--       <p>222222222</p> -->
+    </div>
+  </div>
+  <!-- collapse-2 end -->
+</div>
+
+    <div class="form-group-bottom text-right" id="buttonSave">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+        <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+    </div>
+</form>
+
+  <script type="text/html" id="toolFiles">
+	<a class="layui-btn layui-btn-xs" lay-event="pre"  >预览</a>
+	<a class="layui-btn layui-btn-xs" lay-event="down" >下载</a>
+	<a class="layui-btn layui-btn-xs" lay-event="copy" >复制URL</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
+  </script>
+  <!-- 文件附件的DIV页面-2222222 -->
+</div>
+<!-- collapse end -->
+<!-- 11111111111111 -->
+</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','table','form','laydate','upload','xnUtil'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, table = layui.table, laydate = layui.laydate, upload = layui.upload;
+		var token = localStorage.getItem("Authorization");
+		var tableIns1Files;
+		var id = '';
+		
+		// 客户选择器
+		table.render({
+			elem: '#refCustomerName',
+			toolbar: true,
+			width: 260,
+			height: 360,
+			url: '/dev-api/cusCustomer/listByPage',
+			where: {
+				pageSize: 1000
+			},
+			cols: [[
+				{type: 'radio'},
+				{field: 'customerName', title: '客户名称'},
+				{field: 'customerCode', title: '客户编号'}
+			]],
+			done: function(res, curr, count){
+				// 选择框点击事件
+				$('.layui-table-body').off('click').on('click', '.layui-table-cell', function(){
+					var tr = $(this).closest('tr');
+					var data = table.cache['refCustomerName'][tr.data('index')];
+					$('#refCustomerName').val(data.customerName);
+					$('#refCustomerCode').val(data.customerCode);
+					layui.layer.closeAll('iframe');
+				});
+			}
+		});
+		
+		// 客户选择器点击事件
+		$('#refCustomerName').on('click', function(){
+			layui.layer.open({
+				type: 1,
+				title: '选择客户',
+				area: ['400px', '400px'],
+				content: $('#refCustomerName').next().next().html(),
+				shade: 0.6
+			});
+		});
+		
+		// 项目选择器
+		table.render({
+			elem: '#refProjectName',
+			toolbar: true,
+			width: 260,
+			height: 360,
+			url: '/dev-api/pjProject/listByPage',
+			where: {
+				pageSize: 1000
+			},
+			cols: [[
+				{type: 'radio'},
+				{field: 'projectName', title: '项目名称'},
+				{field: 'projectCode', title: '项目编号'}
+			]],
+			done: function(res, curr, count){
+				// 选择框点击事件
+				$('.layui-table-body').off('click').on('click', '.layui-table-cell', function(){
+					var tr = $(this).closest('tr');
+					var data = table.cache['refProjectName'][tr.data('index')];
+					$('#refProjectName').val(data.projectName);
+					$('#refProjectCode').val(data.projectCode);
+					layui.layer.closeAll('iframe');
+				});
+			}
+		});
+		
+		// 项目选择器点击事件
+		$('#refProjectName').on('click', function(){
+			layui.layer.open({
+				type: 1,
+				title: '选择项目',
+				area: ['400px', '400px'],
+				content: $('#refProjectName').next().next().html(),
+				shade: 0.6
+			});
+		});
+		
+		// 责任人选择器
+		table.render({
+			elem: '#refInvoiceMan',
+			toolbar: true,
+			width: 260,
+			height: 360,
+			url: '/dev-api/sysAdmin/listByPage',
+			where: {
+				pageSize: 1000
+			},
+			cols: [[
+				{type: 'radio'},
+				{field: 'name', title: '姓名'},
+				{field: 'username', title: '账号'}
+			]],
+			done: function(res, curr, count){
+				// 选择框点击事件
+				$('.layui-table-body').off('click').on('click', '.layui-table-cell', function(){
+					var tr = $(this).closest('tr');
+					var data = table.cache['refInvoiceMan'][tr.data('index')];
+					$('#refInvoiceMan').val(data.name);
+					layui.layer.closeAll('iframe');
+				});
+			}
+		});
+		
+		// 责任人选择器点击事件
+		$('#refInvoiceMan').on('click', function(){
+			layui.layer.open({
+				type: 1,
+				title: '选择开票人',
+				area: ['400px', '400px'],
+				content: $('#refInvoiceMan').next().next().html(),
+				shade: 0.6
+			});
+		});
+		
+		// 加载字典数据
+		loadDictData();
+		
+		function loadDictData() {
+			// 开票类型
+			var dictTypeData = layui.getDictDataByDictTypeCode('dict_type', null);
+			if(dictTypeData && dictTypeData.length > 0) {
+				var dictTypeHtml = '<option value="">请选择</option>';
+				$.each(dictTypeData, function(index, item) {
+					dictTypeHtml += '<option value="' + item.value + '">' + item.label + '</option>';
+				});
+				$('#dictType').html(dictTypeHtml);
+			}
+			
+			// 开户行
+			var dictBankData = layui.getDictDataByDictTypeCode('dict_bank', null);
+			if(dictBankData && dictBankData.length > 0) {
+				var dictBankHtml = '<option value="">请选择</option>';
+				$.each(dictBankData, function(index, item) {
+					dictBankHtml += '<option value="' + item.value + '">' + item.label + '</option>';
+				});
+				$('#dictBank').html(dictBankHtml);
+			}
+			
+			form.render('select');
+		}
+		
+		//附件上传
+		var uploadInst = upload.render({
+			elem: '#upload',
+			url: '/dev-api/sysFilesOss/upload',
+			accept: 'file',
+			texts: {
+				browse: '选择文件',
+				upload: '开始上传',
+				done: '上传完成'
+			},
+			data: {
+				token: token,
+				refBizid: function(){
+					return $('#fileRefId').val();
+				},
+				refBiztype: 'pj_project_invoice'
+			},
+			before: function(obj){
+				layer.load(); //上传loading
+			},
+			done: function(res){
+				layer.closeAll('loading');
+				if(res.code == 0){
+					layer.msg('上传成功');
+					if(id != ''){
+						loadFilesTable();
+					}
+				}else{
+					layer.msg(res.msg);
+				}
+			},
+			error: function(){
+				layer.closeAll('loading');
+				layer.msg('上传失败');
+			}
+		});
+		
+		//监听提交
+		form.on('submit(submit)', function(data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					// 如果有上传的附件，保存后更新附件的refBizid
+					if($('#fileRefId').val() == ''){
+						$('#fileRefId').val(e.data.id);
+						id = e.data.id;
+					}
+					tool.sideClose(1000, 'pjProjectInvoiceTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/dev-api/pjProjectInvoice/add", data.field, callback, clickbtn);
+			return false;
+		});
+		
+		// 返回按钮
+		$('#btn_cancel').on('click', function(){
+			tool.sideClose();
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+</head>
+<body>
+<div class="table_div">
+<!-- <input name="id" id="id" value="667" hidden/> -->
+  <input id="copy_in" style="display: none" />
+  <div id="searchParam"   >
+    <div class="layui-form-item">
+      <div class="layui-input-inline ">
+         <!-- <label class="layui-form-label">文件业务类型</label>
+	      <select name="dictBiztype"  id="dictBiztype" lay-verify="required">
+	        <option selected="selected" value="项目附件">项目附件</option>
+	        <option value="项目底稿">项目底稿</option>
+	        <option value="合同附件">合同附件</option>
+	        <option value="日报周报">日报周报</option>
+	        <option value="发票附件">发票附件</option>
+	        <option value="客户需求附件">客户需求附件</option>
+	        <option value="项目计划附件">项目计划附件</option>
+	      </select> -->
+        <button type="button" class="layui-btn  layui-btn-sm" id="upload">
+          <i class="layui-icon">&#xe67c;</i>上传文件
+        </button>
+         <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" id="batchDeleted" >删除</button>  
+      </div>
+    </div>
+  </div>
+  <table class="layui-table" id="showFilesTable" lay-filter="showFilesTable" ></table>
+</div>
+<!--     <button class="layui-btn layui-btn-sm" lay-event="upload"  id="upload" >上传文件</button> -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="upload" shiro:hasPermission="sysFiles:delete">上传文件</button>
+    <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="sysFiles:delete">删除文件</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="pre" shiro:hasPermission="sysFiles:list">预览</a>
+  <a class="layui-btn layui-btn-xs" lay-event="down" shiro:hasPermission="sysFiles:list">下载</a>
+  <a class="layui-btn layui-btn-xs" lay-event="copy" shiro:hasPermission="sysFiles:list">一键复制</a>
+</script>
+<!--   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sysFiles:delete">删除</a> -->
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="http://qixing.hbqxcpa.cn/js/base64.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script th:inline="javascript">
+var pkCode = [[${pkCode}]];
+var flagType = [[${flagType}]];
+var id = [[${id}]];
+
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var biz_rowdata = CoreUtil.getData("biz_rowdata");
+//   if(biz_rowdata.dictBiztype == undefined ||  biz_rowdata.dictBiztype==null ){
+// 	  biz_rowdata.dictBiztype==undefined?"":1;
+// 	  biz_rowdata['dictBiztype']="通用文件";
+// 	  console.log("biz_rowdata.dictBiztype="+biz_rowdata.dictBiztype);
+//   }
+  //地址栏转义token中的#号
+  var tokenQuery = token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var upload = layui.upload;
+  layui.use(['table', 'layer', 'laydate', 'upload','form'], function () {
+
+    //加载table
+    tableIns1 = table.render({
+      elem: '#showFilesTable'
+      ,id: 'idTest'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/sysFilesOss/listByPageUserProjectID'   //数据接口
+      , where:{refBizid: id /* biz_rowdata.id ,dictBiztype: biz_rowdata.dictBiztype */}
+      , method: 'POST'
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
+          {field: 'fileName', title: '文件名', sort: true},
+          {field: 'createDate', title: '创建时间', sort: true},
+          {field: 'fileSize', title: '文件大小', sort: true},
+          {field: 'isOwner',hide: true  }, 
+          {field: 'creator', title: '操作人', hide: false},
+          {field: 'dictBiztype', title: '文件业务类型', hide: true},
+          {field: 'url', title: 'url', hide: false},
+          {field: 'refBizid', title: '业务ID', hide: true} ,
+          {toolbar: "#tool", title: '操作', width:280} 
+        ]
+      ]
+     // , toolbar: '#toolbar'
+    });
+
+    //执行实例
+    var uploadInst = upload.render({
+      elem: '#upload' //绑定元素
+      ,exts: 'jpg|gif|png|jpeg|txt|sql|pdf|doc|docx|xls|xlsx|ppt|pptx|zip|rar|gz|7z'
+      ,url: '/sysFilesOss/upload?authorization='+tokenQuery //上传接口
+      ,size: 1024*101
+      , accept: 'file'   //video audio images
+      , multiple: false  //多文件上传
+      //, number: 20  //multiple:true时有效
+      ,data: {
+    	  	  bizid: id ,
+        	  biztype: $("#dictBiztype").find("option:selected").text()
+       }
+      ,done: function(res){
+    	  if(res.code!="0"){
+  			layer.alert(res.msg);
+  			return false;
+  		}
+        search();
+        //上传完毕回调
+      }
+      ,error: function(){
+    	  if(res.code!="0"){
+  			layer.alert(res.msg);
+  			return false;
+  		}
+        //请求异常回调
+      }
+    }); 
+    
+    
+    $("#batchDeleted").click(function(){
+        //console.log("$(\"#testclick\").click"); 
+        var checkStatus = table.checkStatus('idTest'); 
+        var data = checkStatus.data;
+        if(data.length==0){
+          layer.msg("请选择要批量删除的列");
+        }else {
+          var ids = [];
+          $(data).each(function (index,item) {
+            ids.push(item.id);
+          });
+          tipDialog(ids);
+        }
+     }); 
+
+
+    //表头工具
+    table.on('toolbar(showFilesTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+        
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'upload':
+       		layerAdd = layer.open({
+               type: 1,
+              skin: 'layui-layer-admin',
+               area: ['60%', '60%'],
+               shift: 1,
+               shadeClose: true,
+               scrollbar: true,
+               maxmin: true,
+               shade: false,
+               title:  ['上传文件' , false],
+               content: $("#searchParam")
+           });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showFilesTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+        	 var data11 = data;
+             if(data11.length==0){
+               	layer.msg("请选择要操作的数据列！");
+             }else {
+       	          var ids11 = [];
+       	          var ids22 = [];
+       	          $(data11).each(function (index,item) {
+       	        	  if(item.orderState==0 || item.orderState==1){
+       	        		  ids11.push(item.orderState);
+       	        	  }
+       	        	  if(item.isOwner!=1){
+       	        		  ids22.push(item.isOwner);
+       	        	  }
+       	          });
+       	          if(ids11.length>0){
+       	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+             		  return;
+       	          }
+       	          if(ids22.length>0){
+       	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+             		  return;
+       	          }
+		          var ids=[];
+		          ids.push(data.id);
+		          tipDialog(ids);
+		          break;
+             }
+             
+        case 'pre':
+          //预览
+          //window.open(data.url,'_blank');
+              window.open('http://119.45.221.36:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(data.url)));
+          break;
+        case 'down':
+          //下载
+          window.open(data.url,'_blank');
+          break;
+        case 'copy':
+          var Url2=data.url;
+          var oInput = document.createElement('input');
+          oInput.value = Url2;
+          document.body.appendChild(oInput);
+          oInput.select(); // 选择对象
+          document.execCommand("Copy"); // 执行浏览器复制命令
+          oInput.className = 'oInput';
+          oInput.style.display='none';
+          layer.msg('已复制成功！');
+          break;
+      }
+    });
+
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/sysFilesOss/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+  });
+
+  //执行查询
+    function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        // key: $("#key").val(),
+        refBizid: id,
+        dictBiztype: $("#dictBiztype").find("option:selected").text()
+      }
+      , page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };  
+</script>

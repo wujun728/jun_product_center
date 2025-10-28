@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>分割面板</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /** 必须先给固定高度，否则无法计算分割的高度 */
+        .split-group {
+            height: 200px;
+        }
+
+        .split-group-vertical {
+            height: 458px;
+        }
+
+        /** //end */
+
+        .layui-card-body {
+            padding: 0;
+        }
+
+        .split-item {
+            padding: 15px;
+        }
+
+        #demoSplit8 {
+            padding: 0;
+        }
+
+        .layui-card-header {
+            border-color: #dcdee2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md7">
+            <div class="layui-card">
+                <div class="layui-card-header">水平分割</div>
+                <div class="layui-card-body">
+                    <div class="split-group">
+                        <div class="split-item" id="demoSplit1">
+                            面板一
+                        </div>
+                        <div class="split-item" id="demoSplit2">
+                            面板二
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card">
+                <div class="layui-card-header">水平分割</div>
+                <div class="layui-card-body">
+                    <div class="split-group">
+                        <div class="split-item" id="demoSplit5">
+                            面板一
+                        </div>
+                        <div class="split-item" id="demoSplit6">
+                            面板二
+                        </div>
+                        <div class="split-item" id="demoSplit7">
+                            面板三
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md5">
+            <div class="layui-card">
+                <div class="layui-card-header">垂直分割</div>
+                <div class="layui-card-body">
+                    <div class="split-group-vertical">
+                        <div class="split-item" id="demoSplit3">
+                            面板一
+                        </div>
+                        <div class="split-item" id="demoSplit4">
+                            面板二
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">垂直水平分割</div>
+                <div class="layui-card-body">
+                    <div class="split-group" style="height: 600px;">
+                        <div class="split-item" id="demoSplit8">
+                            <div class="split-group-vertical">
+                                <div class="split-item" id="demoSplit10">
+                                    面板一
+                                </div>
+                                <div class="split-item" id="demoSplit11">
+                                    面板二
+                                </div>
+                            </div>
+                        </div>
+                        <div class="split-item" id="demoSplit9">
+                            面板三
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'Split'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var Split = layui.Split;
+
+        // 水平分割
+        Split(['#demoSplit1', '#demoSplit2'], {sizes: [25, 75], minSize: 100});
+        // 水平分割
+        Split(['#demoSplit5', '#demoSplit6', '#demoSplit7'], {sizes: [25, 25, 50], minSize: 100});
+
+        // 垂直分割
+        Split(['#demoSplit3', '#demoSplit4'], {direction: 'vertical'});
+
+        // 垂直水平分割
+        Split(['#demoSplit8', '#demoSplit9'], {sizes: [25, 75], minSize: 100});
+        Split(['#demoSplit10', '#demoSplit11'], {direction: 'vertical'});
+
+    });
+</script>
+</body>
+</html>

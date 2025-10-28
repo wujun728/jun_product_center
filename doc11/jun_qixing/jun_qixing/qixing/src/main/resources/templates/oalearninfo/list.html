@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >标题</label>
+      <div class=" layui-input-inline "> 
+		<input type="title" name="title"  id="title"  lay-verify="required|title" lay-max="255"  placeholder="请输入标题"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >发布信息类型</label>
+      <div class=" layui-input-inline "> 
+	<select id="dictMsgType" name="dictMsgType" lay-filter="dictMsgType"  th:with="type=${@sysDictService.getType('dict_msg_type')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >是否草稿</label>
+      <div class=" layui-input-inline "> 
+	<select id="dictIsDraft" name="dictIsDraft" lay-filter="dictIsDraft"  th:with="type=${@sysDictService.getType('dict_is_draft')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+ <div class="layui-form-item"   >
+      <label class="layui-form-label  layui-required  " >发布内容</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="content"  id="content" style="display: none;"></textarea>
+    </div>
+ </div>
+ 
+ <div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >发布时间</label>
+      <div class=" layui-input-inline "> 
+	<input type="publishDate" name="publishDate"  id="publishDate" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >失效时间</label>
+      <div class=" layui-input-inline "> 
+	<input type="invalidDate" name="invalidDate"  id="invalidDate" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ </div>
+ 
+ 
+  	<div class="layui-form-item"  id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button type="submit" class="layui-btn layui-btn-normal"  lay-submit="" lay-filter="publish">发布</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>政策法规</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="oaLearnInfo:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="title" name="titleCondition"  id="titleCondition" class="layui-input"  autocomplete="off" placeholder="请输入标题">
+      </div>
+      <div class="layui-input-inline">
+    <input type="content" name="contentCondition"  id="contentCondition" class="layui-input"  autocomplete="off" placeholder="请输入发布内容">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictMsgType" name="dictMsgTypeCondition"  id="dictMsgTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入发布信息类型">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictIsDraft" name="dictIsDraftCondition"  id="dictIsDraftCondition" class="layui-input"  autocomplete="off" placeholder="请输入是否草稿">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="oaLearnInfo:add">添加</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="oaLearnInfo:delete">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="publish" shiro:hasPermission="oaLearnInfo:publish">发布</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="oaLearnInfo:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="oaLearnInfo:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="oaLearnInfo:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="oaLearnInfo:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="oaLearnInfo:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+	//图片
+    layedit.set({
+        uploadImage: {
+            url: '/sysFilesOss/upload?authorization=' + tokenQuery +"&bizid=0&biztype=content"//接口url
+            , type: 'post' //默认post
+        }
+    });
+    //建立富文本编辑器
+    var editIndex = layedit.build('content');
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/oaLearnInfo/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: '', sort: true ,hide: true }, 
+          {field: 'title', title: '标题', sort: true }, 
+          {field: 'content', title: '发布内容', sort: true }, 
+          {field: 'dictMsgType', title: '发布信息类型', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_msg_type')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictMsgType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictMsgType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictMsgType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictMsgType);
+            }
+}, 
+          {field: 'dictIsDraft', title: '是否草稿', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_is_draft')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictIsDraft%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsDraft)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsDraft)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictIsDraft);
+            }
+}, 
+          {field: 'creator', title: '发布人', sort: true ,hide: false }, 
+          {field: 'refSendDept', title: '', sort: true ,hide: true }, 
+          {field: 'publishDate', title: '发布时间', sort: true ,hide: false }, 
+          {field: 'invalidDate', title: '失效时间', sort: true ,hide: true }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+          {field: 'isOwner',hide: true  }, {width: 220, toolbar: "#tool", title: '操作'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refSendDept',
+		checkedKey: 'id',
+		table: {
+			url: '/oaLearnInfo/listBySelect?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'XXXcusname', title: '标题' },
+					{ field: 'XXXfullname', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.XXXcusname);
+				$("#refId").val(item.XXXid);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	 	//日期
+	laydate.render({
+	    elem: '#publishDate'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#invalidDate'
+	    ,type: 'date'
+    });
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'publish':
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            if(data.length==0){
+              layer.msg("请选择要发布的数据的列");
+            }else {
+              var ids = [];
+              $(data).each(function (index,item) {
+                ids.push(item.id);
+              });
+              publishDialog(ids);
+            }
+            break;
+        case 'add':
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=title]").val("");
+//           $(".operation textarea[name=content]").val("");
+          $(".operation select[name=dictMsgType]").val("");
+          $(".operation select[name=dictIsDraft]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增政策法规' , false],
+              content: $(".operation"),
+              success:function(){
+                	//重新建立编辑器
+                	editIndex = layedit.build('content');
+                	layedit.setContent(editIndex, "");
+//           			editIndex = layedit.build('eyeCycDesc', {
+//           				tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right']
+//           			}); 
+          			//  layedit赋值操作
+          			//layedit.setContent(editIndex, hospInfo.content, false); 
+                  }
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=title]").val(data.title);
+//           $(".operation textarea[name=content]").val(data.content);
+          $(".operation select[name=dictMsgType]").val(data.dictMsgType);
+          $(".operation select[name=dictIsDraft]").val(data.dictIsDraft);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改政策法规' , false],
+              content: $(".operation"),
+              success:function(){
+	            	//重新建立编辑器
+	            	editIndex = layedit.build('content');
+	      			layedit.setContent(editIndex, data.content);
+	//       			editIndex = layedit.build('eyeCycDesc', {
+	//       				tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right']
+	//       			}); 
+	      			//  layedit赋值操作
+	      			//layedit.setContent(editIndex, hospInfo.content, false); 
+	              }
+          });
+          break;
+        case 'preview':
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-admin',
+                title: "预览",
+                shadeClose: true, //开启遮罩关闭
+                area:  ['75%', '75%'],
+                shade: 0.6, //遮罩透明度
+                maxmin: true, //允许全屏最小化
+                anim: 1, //0-6的动画形式，-1不开启
+                content: data.content, //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+                cancel: function () {
+                }
+            });
+            break;
+        case 'file':
+        	data['dictBiztype']='学习';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/oaLearnInfo/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/oaLearnInfo/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+  //发布
+    var publishDialog=function (ids) {
+      layer.open({
+
+        skin: 'layui-layer-admin',
+        content: "确定要发布么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/oaLearnInfo/publish",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+    
+  //监听保存
+    form.on('submit(submit)', function(data){
+    	console.log("submit");
+    	doSaveData(data);
+    });
+    form.on('submit(publish)', function(data){
+    	console.log("publish");
+    	data.field.dictIsDraft = "1";
+    	doSaveData(data);
+    	return false;
+    });
+    function doSaveData(data) {
+	  data.field.content = layedit.getContent(editIndex);
+	  if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+	        CoreUtil.sendPost("/oaLearnInfo/add",data.field,function (res) {
+	          $(".table_div").show();
+	          $(".operation").hide();
+	          layer.close(layerAdd);
+	          search();
+	        });
+	      }else {
+	        CoreUtil.sendPut("/oaLearnInfo/update",data.field,function (res) {
+	          $(".table_div").show();
+	          $(".operation").hide();
+	          layer.close(layerAdd);
+	          search();
+	        });
+	      }
+    }
+
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,title: $("#titleCondition").val()
+		,content: $("#contentCondition").val()
+		,dictMsgType: $("#dictMsgTypeCondition").val()
+		,dictIsDraft: $("#dictIsDraftCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+title: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  content: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '发布内容不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictMsgType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '发布信息类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIsDraft: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否草稿不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

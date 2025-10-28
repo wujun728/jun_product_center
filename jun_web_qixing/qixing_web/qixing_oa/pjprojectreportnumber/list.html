@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-inline">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="refReportnumberCode"  id="refReportnumberCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >项目报告</label>
+      <div class=" layui-input-inline "> 
+		<input type="refReportnumberTitle" name="refReportnumberTitle"  id="refReportnumberTitle"  lay-verify="required|refReportnumberTitle" lay-max="256"  placeholder="请输入项目报告"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >报告文号(生成)</label>
+      <div class=" layui-input-inline "> 
+		<input type="reportnumberCode" name="reportnumberCode"  id="reportnumberCode"  lay-verify="required|reportnumberCode" lay-max="256"  placeholder="请输入报告文号(生成)"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >报告号状态</label>
+      <div class=" layui-input-inline "> 
+	<select id="dictRpStatus" name="dictRpStatus" lay-filter="dictRpStatus"  th:with="type=${@sysDictService.getType('dict_rp_status')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >报告出具人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="refReportnumberMan"  id="refReportnumberMan"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >报告审核人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="refReportnumberCheckMan"  id="refReportnumberCheckMan"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >签字注册会计师</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="refSignatureAccountant"  id="refSignatureAccountant"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <!--<blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>项目报告文号</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>-->
+  <div id="searchParam"  shiro:hasPermission="pjProjectReportnumber:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="refReportnumberTitle" name="refReportnumberTitleCondition"  id="refReportnumberTitleCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目报告">
+      </div>
+      <div class="layui-input-inline">
+    <input type="reportnumberCode" name="reportnumberCodeCondition"  id="reportnumberCodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入报告文号(生成)">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+<!-- 
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="pjProjectReportnumber:add">新增</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="pjProjectReportnumber:delete">删除</button>
+  -->
+  </div>
+</script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProjectReportnumber:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="pjProjectReportnumber:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProjectReportnumber:file">附件</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/dev-api/pjProjectReportnumber/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'refReportnumberCode', title: '', sort: true ,hide: true }, 
+          {field: 'refReportnumberTitle', title: '项目报告', sort: true }, 
+          {field: 'reportnumberCode', title: '报告文号(生成)', sort: true }, 
+          {field: 'dictRpStatus', title: '报告号状态', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+              var datas = xnUtil.getDictDataByDictTypeCode('dict_rp_status', null); 
+	            if(item.dictRpStatus%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictRpStatus)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictRpStatus)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictRpStatus);
+            }
+}, 
+          {field: 'refReportnumberMan', title: '一级审核', sort: false ,hide: false }, 
+          {field: 'refReportnumberCheckMan', title: '二级审核', sort: false ,hide: false }, 
+          {field: 'refSignatureAccountant', title: '三级审核', sort: false ,hide: false }, 
+          {field: 'creator', title: '申请人', sort: true ,hide: false }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right',hide: true}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refReportnumberTitle',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProjectReport/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'refProjectName', title: '标题' },
+					{ field: 'reportName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.reportName);
+				$("#refReportnumberCode").val(item.reportName);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+
+	tableSelect.render({
+		elem: '#refReportnumberMan',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/sys/users/listByPage?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refReportnumberMan").val(NEWJSON);
+			form.render();
+		}
+	});
+
+	tableSelect.render({
+		elem: '#refReportnumberCheckMan',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/sys/users/listByPage?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refReportnumberCheckMan").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+	tableSelect.render({
+		elem: '#refSignatureAccountant',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/sys/users/listByPage?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refSignatureAccountant").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=refReportnumberCode]").val("");
+          $(".operation input[name=refReportnumberTitle]").val("");
+          $(".operation input[name=reportnumberCode]").val("");
+          $(".operation select[name=dictRpStatus]").val("");
+          $(".operation input[name=refReportnumberMan]").val("");
+          $(".operation input[name=refReportnumberCheckMan]").val("");
+          $(".operation input[name=refSignatureAccountant]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              end: function(){
+                  $(".operation").hide();
+                  console.log('弹层已被移除');
+              },
+              title:  ['新增项目报告文号' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=refReportnumberCode]").val(data.refReportnumberCode);
+          $(".operation input[name=refReportnumberTitle]").val(data.refReportnumberTitle);
+          $(".operation input[name=reportnumberCode]").val(data.reportnumberCode);
+          $(".operation select[name=dictRpStatus]").val(data.dictRpStatus);
+          $(".operation input[name=refReportnumberMan]").val(data.refReportnumberMan);
+          $(".operation input[name=refReportnumberCheckMan]").val(data.refReportnumberCheckMan);
+          $(".operation input[name=refSignatureAccountant]").val(data.refSignatureAccountant);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              end: function(){
+                  $(".operation").hide();
+                  console.log('弹层已被移除');
+              },
+              title:  ['修改项目报告文号' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='报告文号';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              type: 2,
+              skin: 'layui-layer-admin',
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/dev-api/pjProjectReportnumber/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+          skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/dev-api/pjProjectReportnumber/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjProjectReportnumber/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjProjectReportnumber/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,refReportnumberTitle: $("#refReportnumberTitleCondition").val()
+		,reportnumberCode: $("#reportnumberCodeCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+refReportnumberCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refReportnumberTitle: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目报告不能大于'+max+'个字符的长度！';
+            }
+        }  ,  reportnumberCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告文号(生成)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictRpStatus: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告号状态不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refReportnumberMan: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告出具人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refReportnumberCheckMan: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告审核人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refSignatureAccountant: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '签字注册会计师不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>打印插件</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">打印当前页面</div>
+        <div class="layui-card-body layui-text">
+            <div class="layui-btn-container" style="margin-top: 15px;">
+                <button id="btnPrint1" class="layui-btn layui-btn-primary">竖屏打印</button>
+                <button id="btnPrint2" class="layui-btn layui-btn-primary">横屏打印</button>
+                <button id="btnPrint3" class="layui-btn layui-btn-primary">在新窗口打印</button>
+                <button id="btnPrint4" class="layui-btn layui-btn-primary">打印时隐藏指定内容</button>
+            </div>
+            <p class="layui-text" style="margin: 5px 0 10px 0;">
+                <span class="text-danger hide-print">此段内容会在所有打印时自动隐藏，打印完自动复原。</span>
+                <a id="demoPrintHide">此段内容在指定打印时才隐藏。</a>
+            </p>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">打印任意内容</div>
+        <div class="layui-card-body layui-text">
+            <div class="layui-btn-container" style="margin-top: 15px;">
+                <button id="btnPrint5" class="layui-btn layui-btn-primary">打印任意内容</button>
+                <button id="btnPrint6" class="layui-btn layui-btn-primary">在新窗口打印</button>
+                <button id="btnPrint7" class="layui-btn layui-btn-primary">分页打印</button>
+                <button id="btnPrint8" class="layui-btn layui-btn-primary">在新窗口分页打印</button>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">常用实例</div>
+        <div class="layui-card-body">
+            <div class="layui-btn-container" style="margin-top: 15px;">
+                <button id="btnPrint9" class="layui-btn">打印条码</button>
+                <button id="btnPrint10" class="layui-btn">打印表格</button>
+                <button id="btnPrint11" class="layui-btn">打印图文</button>
+                <button id="btnPrint12" class="layui-btn">结合模板引擎laytpl使用</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 条码打印 -->
+<div class="layui-hide" id="divCodePrint">
+    <style>
+        .code-group {
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .code-group-title {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .code-group-body {
+            text-align: center;
+            position: relative;
+            padding: 15px 115px 0px 25px;
+            min-height: 90px;
+        }
+
+        .code-group-body > p {
+            margin: 0 0 13px 0;
+            font-size: 15px;
+            font-family: 幼圆;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .code-group-body > img, .code-group-body > span {
+            position: absolute;
+            right: 25px;
+            top: 15px;
+        }
+
+        .code-group-body > span {
+            top: 90px;
+        }
+    </style>
+    <div class="code-group">
+        <div class="code-group-title">EasyWeb授权凭证</div>
+        <div class="code-group-body">
+            <p>手机扫描右侧二维码，或登录</p>
+            <p>网站https://easyweb.vip</p>
+            <p>查询产品真伪</p>
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABqCAYAAABUIcSXAAAFmklEQVR4Xu2d63LqMAyE4f0fmjMdmBIcR6tPtgnlbH8bW9mVVhdMer1cLrfL4r/b7fiI6/Uank4+G62NDplpwyoof1AyUROdxUR1EGgj4b+JqOqDthiOABjJUGsfWUukLzpH2bAKwxfpW3UI2ZeAT9aaqMmSRMAna02UiXpBgKgHcZ5Q+lTZuj1oa6DKUWTfahU1M5ds7SX7kudU+5qohCeYqARI1SXKQ4lEmagOCyOl8RmkRjL/1dJnou7u1pL8cTnKRJmoQ2UcyWdfLX2kfzhqAXryEK2Nxlwm6oFOtcJqwVWAmqhEOUUaXkfUHgHlhKcUEyZqMlGJQOouUSOkWftG+yi5JQPdasNbfU5cnlcPMlFV5J6fQ31U9TgTVUUuSdT49v0dRppYUqRUJUo5Ftl3FYanXG4hD26iHpOKM24hmSged46ozgB0RKo5BblPXG+qjs3tU16l8sN2Y/W1warLmpEClB8cftBEJQAzUQnZcUQ9iglLnw6pPxVRJD/MXEvGRLOqSXKmpvm4id1+VpUK6Rw1E/yoNyIPPlKdVW1QgEb2k/liu4+J6uTJj4yobcOrvhOJQrUqOzvPCX4Co+wjUwwSudVnU60HibDy91GzZMdEJeejjigdW46oDkZIDhqZ/Grp2/ZRq0DSPvtcQSQ1kk2Sz4h9RKrbtUMVo4kaoWl/o3VZxWiiTFQJAUtfH7Z0ea40P9tjKd0meZJMAUbs354zszci9puoDloj32utcjQT9VeIqhYTJGxHylJyDplGk31nDXDJLz92Um2i9pQRQEk5TvY1UYlalABqogqAfrX0Rff6iDZXKyVV7s7KJVX7lL+Q6CM9YrtveK/PRCma9iMkMhgmU3kTBW9CqaGsieo494jskGnDKvlFERVdF6t22STvqLXqUs0RiGpkRGT9HUWKitTwcouJ2rvBSPOunDKKchN14i0kUom+EEUi6F1rSXImeadq/8yI0jXlc4WJSgxlo6SPwBZvgw6Lluqsr+qRrTEjSZ9IhzonKhhM1M9YpHl5/btK7qqjfbz00UjIlrQjlZCyKcpZ1WEqcSxVchPS0zlKgUI8lCR9AjaRQhOVSM4m6o6AIyoxbvpzERXdPSeeT+ZW2Qqr9ToyThrJJVFuIfuO2LuzwUTpTog44aoZYvp/c6jqjDyMI2rvHCpfpb+PIqWmInVWJadsyjqEBGkzUVBrZz1b+RteBcqsmZxqAyKhIi0CmTaQtSZKp5Ldu8IdUeLra0vf3UVU1Uca9PRLq4g2E5lMBEppyQhIVXnFTWyQ+1COiqSDoEcijOz7LkBn5Z2R/swRBT1jZqSSlsZEfQNR1bykpI54Ekm4Vakm9kJeX5ar8VMo5dkrzcRA8uDKeBP1qCBNVHwtOVNmZ51YOWUYUWe8r2/VBCGqzkhkRoCSdKAKDyLV6beLZb0ms85E7VFSDmCiEj8SWDXrc0QlwCcy+RFEfdoL6ldNG6py29qjCgLyLQJxgHTDm8k9R2velZxJwRDJzgipJmryNNpEdcLKEXUHZQSH9J0JIn1qMkHyEJGS6r7RVFvlKHJmtJfCzER1kCY5ykQ9EHBEdWZ9qvSMvIcASkYrpCkkvdFIJJA0MMv+9NvFlHEmSiEE75o3P3ozUTBHaTqOV6h5XqQIJspEPREg/YMqUyOvq+YDFSWkCkRjIfLvLar/SWCoJwDXpGaNhRQZ1eKCOOFIv3a69KlK00R9SHluovqxvMPlDOnL5hk1vonymerVSDtR7c+UDUSOT5E+E0UoOlH6TNRkovh2D/aDfxekKh+Vs6o2kSo1OkPZF0nqyL6nT89V3zRT54/6LHKGiXqgqIBwRMEXVJAGkfRCJqqfPk653FKNCiVRJD9UB6Tqc2TcRHAwUQm0Vs3vEkf/LjFRCbRMVAIk0nN9s/T9Aw46BhCwKW0YAAAAAElFTkSuQmCC"
+                 width="70px" height="70px"/>
+            <span>515AE3X1</span>
+        </div>
+    </div>
+</div>
+
+<!-- 表格打印 -->
+<div class="layui-hide" id="divTablePrint">
+    <style>
+        th, td {
+            text-align: center;
+            line-height: 40px;
+        }
+
+        td {
+            height: 125px;
+        }
+    </style>
+    <h2 style="text-align: center;color: #333;">软工xxxx班课程表</h2>
+    <table class="print-table">
+        <colgroup>
+            <col width="130px"/>
+        </colgroup>
+        <tr>
+            <th style="position: relative;">
+                <span style="position: absolute;right: 20px;top: 10px;line-height: normal;">星期</span>
+                <span style="position: absolute;left: 20px;bottom: 10px;line-height: normal;">时间</span>
+                <div style="height: 1px; width:142px;background-color: #666;position: absolute;left: 0;top: 0;transform: rotate(24deg);transform-origin: 0 0;"></div>
+            </th>
+            <th>周一</th>
+            <th>周二</th>
+            <th>周三</th>
+            <th>周四</th>
+            <th>周五</th>
+        </tr>
+        <tr>
+            <td>8:00-10:00</td>
+            <td>HTML5网页设计<br/>曲丽丽 - 441教室</td>
+            <td>数据库原理及应用<br/>严良 - 716机房</td>
+            <td>JavaSE初级程序设计<br/>肖萧 - 715机房</td>
+            <td></td>
+            <td>JavaScript程序设计<br/>董娜 - 733机房</td>
+        </tr>
+        <tr>
+            <td>10:30-12:30</td>
+            <td></td>
+            <td>JavaScript程序设计<br/>董娜 - 733机房</td>
+            <td></td>
+            <td>锋利的jQuery<br/>程咏 - 303教室</td>
+            <td>JavaEE应用开发<br/>周星 - 303教室</td>
+        </tr>
+        <tr>
+            <td colspan="6" style="height: auto;">午休</td>
+        </tr>
+        <tr>
+            <td>13:30-15:30</td>
+            <td>JavaSE初级程序设计<br/>肖萧 - 715机房</td>
+            <td></td>
+            <td>HTML5网页设计<br/>曲丽丽 - 441教室</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>16:00-18:00</td>
+            <td></td>
+            <td>JavaEE应用开发<br/>周星 - 303教室</td>
+            <td></td>
+            <td>数据库原理及应用<br/>严良 - 716机房</td>
+            <td></td>
+        </tr>
+    </table>
+</div>
+
+<!-- 结合模板引擎laytpl使用 -->
+<script type="text/html" id="demoPrintTpl">
+    <table class="print-table">
+        <colgroup>
+            <col width="80"/>
+        </colgroup>
+        <tr>
+            <td align="center">序号</td>
+            <td align="center">姓名</td>
+            <td align="center">性别</td>
+        </tr>
+        {{# layui.each(d, function(index,item){ }}
+        <tr>
+            <td align="center">{{item.number}}</td>
+            <td align="center">{{item.name}}</td>
+            <td align="center">{{item.sex}}</td>
+        </tr>
+        {{# }); }}
+    </table>
+</script>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'printer', 'admin', 'laytpl'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var printer = layui.printer;
+        var admin = layui.admin;
+        var laytpl = layui.laytpl;
+
+        // 打印当前页面
+        $('#btnPrint1').click(function () {
+            printer.print();
+        });
+
+        // 横向打印
+        $('#btnPrint2').click(function () {
+            printer.print({
+                horizontal: true
+            });
+        });
+
+        // 新窗口打印
+        $('#btnPrint3').click(function () {
+            printer.print({
+                blank: true
+            });
+        });
+
+        // 打印时隐藏指定内容
+        $('#btnPrint4').click(function () {
+            printer.print({
+                hide: ['#demoPrintHide']
+            });
+        });
+
+        // 打印任意内容
+        $('#btnPrint5').click(function () {
+            printer.printHtml({
+                html: '<div style="color: red;text-align: center;">Hello Word !</div>',
+                horizontal: true  // 横向打印
+            });
+        });
+
+        // 打印任意内容(新窗口)
+        $('#btnPrint6').click(function () {
+            printer.printHtml({
+                html: '<div style="color: red;text-align: center;">Hello Word !</div>',
+                blank: true
+            });
+        });
+
+        // 分页打印
+        $('#btnPrint7').click(function () {
+            printer.printPage({
+                htmls: [
+                    '<div>我是第一页</div>',
+                    '<div>我是第二页</div>',
+                    '<div>我是第三页</div>',
+                    '<div>我是第四页</div>',
+                    '<div>我是第五页</div>'
+                ],
+                style: '<style>*{color: red;}</style>'  // 页面样式
+            });
+        });
+
+        // 分页打印(新窗口)
+        $('#btnPrint8').click(function () {
+            printer.printPage({
+                htmls: [
+                    '<div>我是第一页</div>',
+                    '<div>我是第二页</div>',
+                    '<div>我是第三页</div>',
+                    '<div>我是第四页</div>',
+                    '<div>我是第五页</div>'
+                ],
+                style: '<style>*{color: red;}</style>',  // 页面样式
+                blank: true,
+                horizontal: true
+            });
+        });
+
+        // 打印条码
+        $('#btnPrint9').click(function () {
+            printer.printHtml({
+                html: $('#divCodePrint').html(),
+                horizontal: true
+            });
+        });
+
+        // 打印表格
+        $('#btnPrint10').click(function () {
+            printer.printHtml({
+                html: $('#divTablePrint').html(),
+                horizontal: true
+            });
+        });
+
+        // 打印图文
+        $('#btnPrint11').click(function () {
+            admin.open({
+                type: 2,
+                title: '查看详情',
+                area: ['550px', '460px'],
+                content: 'printer-tuwen.html'
+            });
+        });
+
+        // 结合模板引擎laytpl使用
+        $('#btnPrint12').click(function () {
+            var data = [{
+                number: 1,
+                name: '张三',
+                sex: '男'
+            }, {
+                number: 2,
+                name: '李四',
+                sex: '男'
+            }, {
+                number: 3,
+                name: '赵四',
+                sex: '女'
+            }];
+            laytpl($('#demoPrintTpl').html()).render(data, function (html) {
+                printer.printHtml({
+                    html: html
+                });
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

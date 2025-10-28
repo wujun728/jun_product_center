@@ -1,0 +1,30 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "id": 1241,
+        "title": "我的",
+        "type": "4",
+        "cid": 0,
+        "cmid": 0,
+        "ptid": 0,
+        "admin_id": 2,
+        "did": 2,
+        "start_time": "2025-05-23 10:15",
+        "end_time": "2025-05-23 11:45",
+        "remind_type": 1,
+        "remind_time": "2025-05-23 10:10",
+        "remark": "",
+        "file_ids": "",
+        "delete_time": 0,
+        "create_time": "2025-05-23 10:00:31",
+        "update_time": 0,
+        "start_time_a": "2025-05-23",
+        "end_time_a": "2025-05-23",
+        "start_time_b": "10:15",
+        "end_time_b": "11:45",
+        "user": "素还真"
+    }
+}

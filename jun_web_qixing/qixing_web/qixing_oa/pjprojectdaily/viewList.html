@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refProjectCode"  id="refProjectCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >日报标题</label>
+      <div class=" layui-input-block "> 
+		<input type="planName" name="planName"  id="planName"  lay-verify="required|planName" lay-max="256"  placeholder="请输入日报标题"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目名称</label>
+      <div class=" layui-input-block "> 
+		<input type="refProjectName" name="refProjectName"  id="refProjectName"  lay-verify="required|refProjectName" lay-max="255"  placeholder="请输入项目名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >日报周报</label>
+      <div class=" layui-input-block "> 
+	<select id="dictDailyType" name="dictDailyType" lay-filter="required|dictDailyType"  th:with="type=${@sysDictService.getType('dict_daily_type')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >日期</label>
+      <div class=" layui-input-block "> 
+		<input type="dailyDate" name="dailyDate"  id="dailyDate"  lay-verify="required|dailyDate" lay-max="99999999"  placeholder="请输入日期"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  layui-required  " >工作内容描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="dailyDetail"  id="dailyDetail"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >投入工时</label>
+      <div class=" layui-input-block "> 
+		<input type="costTime" name="costTime"  id="costTime"  lay-verify="required|costTime" lay-max="99999999"  placeholder="请输入投入工时"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >风险级别</label>
+      <div class=" layui-input-block "> 
+	<select id="dictRisk" name="dictRisk" lay-filter="dictRisk"  th:with="type=${@sysDictService.getType('dict_risk_assessment')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  " >是否求助</label>
+      <div class=" layui-input-block "> 
+	<select id="dictAskHelp" name="dictAskHelp" lay-filter="dictAskHelp"  th:with="type=${@sysDictService.getType('dict_yes_no')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >是否延迟</label>
+      <div class=" layui-input-block "> 
+	<select id="dictIsDelay" name="dictIsDelay" lay-filter="dictIsDelay"  th:with="type=${@sysDictService.getType('dict_yes_no')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+  	<div class="layui-form-item"  id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text"  style="display: none;">
+      在此你可以对<span class="label-info"><strong>项目日报周报</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="pjProjectDaily:list"  style="display: none;">
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+    <input type="planName" name="planNameCondition"  id="planNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入日报标题">
+      </div>
+      <div class="layui-input-block" style="display: none;">
+    	<input type="refProjectCode" name="refProjectCodeCondition"  id="refProjectNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目名称">
+      </div>
+      <div class="layui-input-block">
+    	<input type="refProjectName" name="refProjectNameCondition"  id="refProjectNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目名称">
+      </div>
+      <div class="layui-input-block"  style="display: none;" >
+    <input type="dailyDate" name="dailyDateCondition"  id="dailyDateCondition" class="layui-input"  autocomplete="off" placeholder="请输入日期">
+      </div>
+      <div class="layui-input-block" >
+    <input type="dailyDetail" name="dailyDetailCondition"  id="dailyDetailCondition" class="layui-input"  autocomplete="off" placeholder="请输入工作内容描述">
+      </div>
+      <div class="layui-input-block" style="display: none;" >
+    <input type="costTime" name="costTimeCondition"  id="costTimeCondition" class="layui-input"  autocomplete="off" placeholder="请输入投入工时">
+      </div>
+      <div class="layui-input-block ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+
+
+
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+    var pkCode = "";
+    var flagType = "";
+    var id = CoreUtil.getData("biz_rowdata")==undefined?"":CoreUtil.getData("biz_rowdata")["id"];
+    var pname = "";
+    /* if("multiview"==flagType){
+	     $(".layui-elem-quote").hide();
+	     $("#searchParam").hide();
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $("#refProjectNameCondition").val(pname);
+	     search();
+    } */
+</script>
+
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html"  id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="pjProjectDaily:add">新增</button>
+    <button class="layui-btn layui-btn-sm" lay-event="copy"  shiro:hasPermission="pjProjectDaily:add">复制</button>
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="pjProjectDaily:delete">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="pjProjectDaily:submit">提交</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProjectDaily:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProjectDaily:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProjectDaily:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="pjProjectDaily:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="pjProjectDaily:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/dev-api/pjProjectDaily/viewListByPage' //数据接口
+   	  , where:{refProjectCode : "" }
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'planName', title: '日报标题', sort: true }, 
+          {field: 'refProjectCode', title: '', sort: true ,hide: true }, 
+          {field: 'refProjectName', title: '项目名称', sort: true }, 
+          {field: 'dictDailyType', title: '日报周报', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+              var datas =  xnUtil.getDictDataByDictTypeCode('dict_daily_type', null); 
+	            if(item.dictDailyType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDailyType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDailyType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictDailyType);
+            }
+}, 
+          {field: 'dailyDate', title: '日期', sort: true }, 
+          {field: 'dailyDetail', title: '工作内容描述', sort: true , event: 'setSign', style:'cursor: pointer;' }, 
+          {field: 'costTime', title: '投入工时', sort: true }, 
+          {field: 'dictRisk', title: '风险级别', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+              var datas =  xnUtil.getDictDataByDictTypeCode('dict_risk_assessment', null); 
+	            if(item.dictRisk%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictRisk)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictRisk)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictRisk);
+            }
+}, 
+          {field: 'dictAskHelp', title: '是否求助', sort: true ,hide: true , templet: function (item) { 	            //获取类型对应的字典label
+              var datas =  xnUtil.getDictDataByDictTypeCode('dict_yes_no', null); 
+	            if(item.dictAskHelp%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictAskHelp)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictAskHelp)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictAskHelp);
+            }
+}, 
+          {field: 'dictIsDelay', title: '是否延迟', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas =  xnUtil.getDictDataByDictTypeCode('dict_yes_no', null); 
+	            if(item.dictIsDelay%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsDelay)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsDelay)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictIsDelay);
+            }
+}, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+          {field: 'creator', title: '填报人', sort: true ,hide: false }, 
+     	  // 流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          { title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+                  if (d.orderState == 0) {
+                      return '<span style="color: #eb7350;">审批完成</span>'
+                  }else if (d.orderState == 1) {
+	                  return '<span style="color: #00b487;">审批中</span>'
+                  }else{
+	                  return '<span style="color: blue;">草稿</span>'
+                  }
+              }
+          },
+//           { title: '当前节点', field: 'taskName', align: 'center' ,width:105},
+//           { title: '当前处理人', field: 'taskOperatorName', align: 'center' ,width:90},
+//           {field: 'isOwner', title: 'isOwner',hide:true },
+          // 流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+	         {field: 'isOwner',hide: true  }
+// 	         , {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refProjectCode',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProjectDaily/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'XXXcusname', title: '标题' },
+					{ field: 'XXXfullname', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.XXXcusname);
+				$("#refId").val(item.XXXid);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	tableSelect.render({
+		elem: '#refProjectName',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProject/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'projectName', title: '名称' },
+					{ field: 'projectCode', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.projectName);
+				$("#refProjectCode").val(item.projectCode);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refProjectName").val(NEWJSON);
+			form.render()
+		}
+	});
+	
+	//日期
+	laydate.render({
+	    elem: '#dailyDate'
+	    ,type: 'date'
+    });
+	numberInput.render("#costTime", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+        
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'submit':
+            var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            if(data.length==0){
+              layer.msg("请选择要提交的记录");
+            }else if(data.length > 1){
+              layer.msg("请选择要提交的记录（one row each times）");
+            }else {
+//           	  window.checkPromission(data[0].createId);
+          	  data[0]['processName'] = "daily";
+          	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+          	  CoreUtil.setData("data_doSubmit",data[0]);
+          	  console.log("data="+data);
+                layer.open({
+                    type: 2,
+                    skin: 'layui-layer-admin',
+                    title: "提交流程",
+                    shadeClose : false,
+                    area: ['880px', '500px'], //宽高
+                    shade: 0.6, //遮罩透明度
+                    maxmin: true, //允许全屏最小化
+                    anim: 1, //0-6的动画形式，-1不开启
+                    content:  '/table/doSubmit.html',
+                    end: function(){
+                  	  search();
+                    }
+                });
+            }
+            break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $(".table_div").hide();
+//           $(".operation").show();
+//           $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=planName]").val("");
+          $(".operation input[name=refProjectCode]").val("");
+          $(".operation input[name=refProjectName]").val("");
+          $(".operation select[name=dictDailyType]").val("");
+          $(".operation input[name=dailyDate]").val("");
+          $(".operation textarea[name=dailyDetail]").val("");
+          $(".operation input[name=costTime]").val("");
+          $(".operation select[name=dictRisk]").val("");
+          $(".operation select[name=dictAskHelp]").val("");
+          $(".operation select[name=dictIsDelay]").val("");
+          $(".operation textarea[name=remark]").val("");
+//           $(".operation input[name=creator]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增项目日报周报' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'copy':
+//          $(".table_div").hide();
+//          $(".operation").show();
+//          $(".title").html("复制");
+        	var checkStatus = table.checkStatus(obj.config.id);
+            var data = checkStatus.data;
+            if(data.length==0){
+              layer.msg("请选择要复制的列!");
+            }else if(data.length > 1){
+              layer.msg("Only can copy one line data each times !");
+            }else{
+            	data = data[0];
+            }
+         $(".operation input[name=id]").val("");
+         $(".operation input[name=planName]").val(data.planName+"-copy");
+         $(".operation input[name=refProjectCode]").val(data.refProjectCode);
+         $(".operation input[name=refProjectName]").val(data.refProjectName);
+         $(".operation select[name=dictDailyType]").val(data.dictDailyType);
+         $(".operation input[name=dailyDate]").val(data.dailyDate);
+         $(".operation textarea[name=dailyDetail]").val(data.dailyDetail);
+         $(".operation input[name=costTime]").val(data.costTime);
+         $(".operation select[name=dictRisk]").val(data.dictRisk);
+         $(".operation select[name=dictAskHelp]").val(data.dictAskHelp);
+         $(".operation select[name=dictIsDelay]").val(data.dictIsDelay);
+         $(".operation textarea[name=remark]").val(data.remark);
+//          $(".operation input[name=creator]").val(data.creator);
+			  form.render();
+		  layerAdd = layer.open({
+             type: 1,
+              skin: 'layui-layer-admin',
+             area: ['80%', '80%'],
+             shift: 2,
+             shadeClose: true,
+             scrollbar: true,
+             maxmin: true,
+             shade: false,
+             title:  ['复制新增项目日报周报' , false],
+             content: $(".operation"),
+         });
+         break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'setSign':
+//             layer.msg(data.dailyDetail, {
+//               time: 10000 //20s后自动关闭
+//             });
+
+// 	var that = this; 
+      //多窗口模式，层叠置顶
+      layer.open({
+        type: 1 //此处以iframe举例
+        ,title: '日报内容'
+          ,skin: 'layui-layer-admin'
+        ,area: ['390px', '260px']
+        ,shade: 0
+        ,maxmin: true
+        ,offset: [ //为了演示，随机坐标
+          Math.random()*($(window).height()-300)
+          ,Math.random()*($(window).width()-390)
+        ] 
+        ,content: data.dailyDetail
+//         ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+        ,yes: function(){ }
+        ,btn2: function(){ }
+        ,zIndex: layer.zIndex //重点1
+        ,success: function(layero, index){ }
+        ,end: function(){ }
+      });
+            
+            
+            
+            
+          break;
+        case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $(".table_div").hide();
+//           $(".operation").show();
+//           $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=planName]").val(data.planName);
+          $(".operation input[name=refProjectCode]").val(data.refProjectCode);
+          $(".operation input[name=refProjectName]").val(data.refProjectName);
+          $(".operation select[name=dictDailyType]").val(data.dictDailyType);
+          $(".operation input[name=dailyDate]").val(data.dailyDate);
+          $(".operation textarea[name=dailyDetail]").val(data.dailyDetail);
+          $(".operation input[name=costTime]").val(data.costTime);
+          $(".operation select[name=dictRisk]").val(data.dictRisk);
+          $(".operation select[name=dictAskHelp]").val(data.dictAskHelp);
+          $(".operation select[name=dictIsDelay]").val(data.dictIsDelay);
+          $(".operation textarea[name=remark]").val(data.remark);
+//           $(".operation input[name=creator]").val(data.creator);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              area: ['80%', '80%'],
+              skin: 'layui-layer-admin',
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改项目日报周报' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='项目日报';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/dev-api/pjProjectDaily/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+
+      skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/dev-api/pjProjectDaily/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+//       $(".table_div").show();
+//       $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjProjectDaily/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjProjectDaily/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+        ,refProjectCode : "" 
+		,planName: $("#planNameCondition").val()
+		,refProjectName: $("#refProjectNameCondition").val()
+		,dailyDate: $("#dailyDateCondition").val()
+		,dailyDetail: $("#dailyDetailCondition").val()
+		,costTime: $("#costTimeCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+planName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日报标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictDailyType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日报周报不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dailyDate: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dailyDetail: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作内容描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  costTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '投入工时不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictRisk: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '风险级别不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictAskHelp: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否求助不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIsDelay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否延迟不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }   	    });
+</script>

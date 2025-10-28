@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>Offer发放详情 - 勾股OA</title> 		
+
+
+	<meta name="keywords" content="勾股OA,Offer发放,详情"/>
+	<meta name="description" content="勾股OA系统Offer发放详情查看页面"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.detail-container {
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 20px;
+}
+.detail-header {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 20px;
+}
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.detail-table tr {
+    border-bottom: 1px solid #f0f0f0;
+}
+.detail-table td {
+    padding: 12px 15px;
+    line-height: 1.5;
+}
+.detail-table td:first-child {
+    width: 120px;
+    color: #666;
+    font-weight: normal;
+}
+.detail-table td:last-child {
+    color: #333;
+}
+.operate-btn {
+    margin-top: 20px;
+}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="detail-container">
+	<div class="detail-header">Offer发放详情</div>
+	
+	<table class="detail-table">
+		<tr>
+			<td>入职人员名称</td>
+			<td id="refJobUsername"></td>
+		</tr>
+		<tr>
+			<td>工作地点</td>
+			<td id="location"></td>
+		</tr>
+		<tr>
+			<td>部门</td>
+			<td id="refDeptname"></td>
+		</tr>
+		<tr>
+			<td>招聘专员</td>
+			<td id="refUsername1"></td>
+		</tr>
+		<tr>
+			<td>Offer状态</td>
+			<td id="dictOfferStatus"></td>
+		</tr>
+		<tr>
+			<td>发送Offer邮件</td>
+			<td id="dictYesNo"></td>
+		</tr>
+		<tr>
+			<td>入职时间</td>
+			<td id="jobInTime"></td>
+		</tr>
+		<tr>
+			<td>备注</td>
+			<td id="remark"></td>
+		</tr>
+		<tr>
+			<td>创建时间</td>
+			<td id="createTime"></td>
+		</tr>
+		<tr>
+			<td>创建人</td>
+			<td id="createBy"></td>
+		</tr>
+	</table>
+	
+	<div class="operate-btn">
+		<button type="button" class="layui-btn layui-btn-primary" id="btn_back">返回</button>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool = layui.tool;
+		var CoreUtil = layui.CoreUtil;
+		var xnUtil = layui.xnUtil;
+		
+		// 获取URL中的ID参数
+		var id = CoreUtil.getUrlParam("id");
+		if (id) {
+			// 加载详情数据
+			loadDetailData(id);
+		}
+		
+		// 加载详情数据
+		function loadDetailData(id) {
+			CoreUtil.sendPost("/qixing_oa1/hruseroffer/detail", {id: id}, function(res) {
+				if (res.code == 0) {
+					var data = res.data;
+					// 填充详情数据
+					$('#refJobUsername').text(data.refJobUsername || '');
+					$('#location').text(data.location || '');
+					$('#refDeptname').text(data.refDeptname || '');
+					$('#refUsername1').text(data.refUsername1 || '');
+					
+					// 加载并显示字典值
+					xnUtil.getDictDataByDictTypeCode('dict_offer_status', function(offerStatusList) {
+						var offerStatusText = '';
+						offerStatusList.forEach(function(item) {
+							if (item.dictValue == data.dictOfferStatus) {
+								offerStatusText = item.dictLabel;
+							}
+						});
+						$('#dictOfferStatus').text(offerStatusText || '');
+					});
+					
+					xnUtil.getDictDataByDictTypeCode('dict_yes_no', function(yesNoList) {
+						var yesNoText = '';
+						yesNoList.forEach(function(item) {
+							if (item.dictValue == data.dictYesNo) {
+								yesNoText = item.dictLabel;
+							}
+						});
+						$('#dictYesNo').text(yesNoText || '');
+					});
+					
+					$('#jobInTime').text(data.jobInTime || '');
+					$('#remark').text(data.remark || '');
+					$('#createTime').text(data.createTime || '');
+					$('#createBy').text(data.createBy || '');
+				}
+			});
+		}
+		
+		// 返回按钮点击事件
+		$('#btn_back').click(function() {
+			// 判断是否在侧边栏中打开
+			if (parent && parent.layui && parent.layui.admin && parent.layui.admin.sideAdminIndex) {
+				parent.layer.close(parent.layui.admin.sideAdminIndex);
+			} else {
+				history.back();
+			}
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

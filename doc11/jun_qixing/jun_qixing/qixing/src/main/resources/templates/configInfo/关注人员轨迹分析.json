@@ -1,0 +1,32 @@
+﻿{
+  "base": {
+    "name": "关注人员轨迹分析",
+    "url": "http://192.168.1.6:8124/personnelTrack/html/index.html",
+    "desc": "贵州警局"
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-09-30",
+    "actualEndTime": "未定",
+    "estimatedStartTime": "2017-09-30",
+    "estimatedEndTime": "",
+    "process": 30,                    
+    "delay": false,
+    "technology":["jQuery"]
+  },
+  "resources": {
+    "demander": "贵州警局",
+    "type":"独立纵队",			
+    "manager":"黄建鹏",
+    "charge": "闫磊",
+    "affiliate": [""]
+  },
+  "bug": {
+    "total": 0,
+    "resolved": 0,
+    "unsolved": 0                
+  },
+  "others": {
+    "remark": ""
+  }
+}

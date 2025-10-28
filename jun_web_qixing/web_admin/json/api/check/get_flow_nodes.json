@@ -1,0 +1,57 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "id": 1197,
+        "admin_id": 2,
+        "check_status": 1,
+        "check_flow_id": 12,
+        "check_step_sort": 0,
+        "check_uids": "100",
+        "check_copy_uids": "",
+        "is_creater": 1,
+        "admin_name": "素还真",
+        "is_checker": 0,
+        "check_record": [
+            {
+                "id": 3206,
+                "action_id": 1197,
+                "check_table": "contract",
+                "flow_id": 12,
+                "step_id": 0,
+                "check_uid": 2,
+                "check_time": 1748927799,
+                "check_status": 0,
+                "content": "提交申请",
+                "delete_time": 0,
+                "name": "素还真",
+                "check_time_str": "2025-06-03 13:16",
+                "status_str": "提交"
+            }
+        ],
+        
+        "flow": [
+            {
+                "id": 12,
+                "title": "销售合同审批",
+                "cate_id": 12,
+                "check_type": 1,
+                "department_ids": "",
+                "copy_uids": "",
+                "flow_list": "",
+                "status": 1,
+                "remark": "",
+                "admin_id": 1,
+                "create_time": 1723470490,
+                "update_time": 0,
+                "delete_time": 0
+            }
+        ],
+        "check_unames": "白无垢",
+        "copy_unames": "-",
+        "nodes": [],
+        "step": null
+    }
+}

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.qixing.mapper.BizCommonMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.qixing.entity.BizCommonEntity" id="bizCommonMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="desc1" column="desc1"/>
+        <result property="key1" column="key1"/>
+        <result property="value1" column="value1"/>
+        <result property="date1" column="date1"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    
+
+    <select id="getProjectAllNodesUploadFiles" resultType="Map">
+		SELECT * FROM `sys_files_oss` f where f.ref_bizid in (
+				select  pjc.id -- ,pjc.*
+						from pj_project t
+						left join pj_contract pjc on t.project_code=pjc.refid_project_code_hide
+				where t.id=1446756737187348481  
+		
+				union 
+				select  pjp.id -- ,pjp.*
+						from pj_project t
+						left join pj_project_plan pjp on t.project_code=pjp.ref_project_code
+				where t.id=1446756737187348481 
+		
+				union  
+				select  pjd.id -- ,pjd.*
+						from pj_project t
+						left join pj_project_draft pjd on t.project_code=pjd.ref_project_code
+				where t.id=1446756737187348481 
+		
+				union  
+				select  pjr.id -- ,pjr.*
+						from pj_project t
+						left join pj_project_recheck pjr on t.project_code=pjr.ref_pcode
+				where t.id=1446756737187348481 
+				union  
+				select  pja.id -- ,pja.*
+						from pj_project t
+						left join pj_project_appraise pja on t.project_code=pja.ref_project_code
+				where t.id=1446756737187348481 
+				union  
+				select  pji.id -- ,pji.*
+						from pj_project t
+						left join pj_project_invoice pji on t.project_code=pji.ref_project_code
+				where t.id=1446756737187348481 
+				union  
+				select  pjm.id -- ,pjm.*
+						from pj_project t
+						left join pj_project_member pjm on t.project_code=pjm.ref_project_code
+				where t.id=1446756737187348481 
+				union  
+				select  pjt.id -- ,pjt.*
+						from pj_project t
+						left join pj_project_prodess_task pjt on t.project_code=pjt.ref_project_code
+				where t.id=1446756737187348481 
+				union 
+				select  pjr1.id -- ,pjr1.*
+						from pj_project t
+						left join pj_project_report pjr1 on t.project_code=pjr1.ref_project_code
+				where t.id=1446756737187348481 
+				union 
+				select  pjrn.id -- ,pjrn.*
+						from pj_project t
+						left join pj_project_reportnumber pjrn on t.project_code=pjrn.ref_reportnumber_code
+				where t.id=1446756737187348481 
+		) 
+		 
+	</select>
+
+
+</mapper>

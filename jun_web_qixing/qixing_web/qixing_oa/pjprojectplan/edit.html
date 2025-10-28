@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation">
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refProjectCode"  id="refProjectCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目名称</label>
+      <div class=" layui-input-block "> 
+		<input type="refProjectName" name="refProjectName"  id="refProjectName"  lay-verify="required|refProjectName" lay-max="255"  placeholder="请输入项目名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目计划标题</label>
+      <div class=" layui-input-block "> 
+		<input type="planName" name="planName"  id="planName"  lay-verify="required|planName" lay-max="256"  placeholder="请输入项目计划标题"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  layui-required  " >项目计划详细描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="planDetail"  id="planDetail"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目计划开始时间</label>
+      <div class=" layui-input-block "> 
+		<input type="planTimeStart" name="planTimeStart"  id="planTimeStart"  lay-verify="required|planTimeStart" lay-max="99999999"  placeholder="请输入项目计划开始时间"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目计划结束时间</label>
+      <div class=" layui-input-block "> 
+		<input type="planTimeEnd" name="planTimeEnd"  id="planTimeEnd"  lay-verify="required|planTimeEnd" lay-max="99999999"  placeholder="请输入项目计划结束时间"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+
+ <div class="layui-col-md6" style="display: none;">       <label class="layui-form-label  " >项目计划交付日期</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="planGivenTime"  id="planGivenTime"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+ 
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >工期(人天)</label>
+      <div class=" layui-input-block "> 
+		<input type="planDates" name="planDates"  id="planDates"  lay-verify="required|planDates" lay-max="256"  placeholder="请输入工期(人天)"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >项目计划完成天数</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="planFinashDays"  id="planFinashDays"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6" style="display: none;">       <label class="layui-form-label  " >项目实际完成天数</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="planFinashDays2"  id="planFinashDays2"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+
+<div class="form-group-bottom text-right" id="buttonSave">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+</div>
+
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+ 
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+
+ <!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+    var pkCode = "";
+    var flagType = "";
+    var id = CoreUtil.getData("biz_rowdata")==undefined?"":CoreUtil.getData("biz_rowdata")["id"];
+//     console.log(flagType);
+//     console.log(id);
+    if(""!=id){
+	     //$("#buttonSave").hide();
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/dev-api/pjProjectPlan/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	                 form.render(); //更新全部
+	             }else{
+		             layer.msg('项目计划附件信息未上传未维护<br>计划信息未录入！' );
+		             var data_prjData = CoreUtil.getData("data_doProjectDetail");
+		             $("#refProjectCode").val(data_prjData.data.projectCode);
+		             $("#refProjectName").val(data_prjData.data.projectName);
+		             $("#id").val("");
+	             }
+	         });
+	     });
+    }
+</script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+  
+   // 节假日计算
+    function getWeekday(first, last) {
+        var Holiday = ['2022-01-01', '2022-01-02', '2022-01-03', '2022-01-31', '2022-02-01', '2022-02-02', '2022-02-03',
+            '2022-02-04', '2022-02-05', '2022-02-06', '2022-04-03', '2022-04-04', '2022-04-05', '2022-04-30',
+            '2022-05-01', '2022-05-02', '2022-05-03', '2022-05-04', '2022-06-03', '2022-06-04', '2022-06-05',
+            '2022-09-10', '2022-09-11', '2022-09-12', '2022-10-01', '2022-10-02', '2022-10-03', '2022-10-04',
+            '2022-10-05', '2022-10-06', '2022-10-07'
+        ];
+        var WeekendsOff = ['2022-01-29', '2022-01-30', '2022-04-02', '2022-04-24', '2022-05-07', '2022-10-08',
+            '2022-10-09',
+        ];
+        first = new Date(first).getTime();
+        last = new Date(last).getTime();
+        var count = 0;
+        for (var i = first; i <= last; i += 24 * 3600 * 1000) {
+            // 整理时间格式
+            var date = new Date(i);
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            var day = date.getDay();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            if (WeekendsOff.indexOf(currentdate) > -1) {
+                // 调休日
+                count++;
+            } else if (day >= 1 && day <= 5 && Holiday.indexOf(currentdate) == -1) {
+                // 周内非节假日
+                count++;
+            }
+        }
+        return count;
+    }
+  
+  
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	
+    
+	//遍历列，并渲染各种表单组件
+		tableSelect.render({
+			elem: '#refProjectName',
+			checkedKey: 'id',
+			table: {
+				url: '/dev-api/pjProject/listBySelect?Authorization='+tokenQuery,
+				method: 'POST',
+				contentType: 'application/json',
+				 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+			        return {
+			          "code": res.code, //解析接口状态
+			          "msg": res.msg, //解析提示文本
+			          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+			          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+			        }
+			      },
+				cols: [
+					[
+						{ type: 'radio' },
+						{ field: 'id', title: 'ID' ,hide:true},
+						{ field: 'projectName', title: '名称' },
+						{ field: 'projectCode', title: '标题' }
+					]
+				]
+			},
+			done: function (elem, data) {
+				var NEWJSON = []
+				layui.each(data.data, function (index, item) {
+					NEWJSON.push(item.projectName);
+					$("#refProjectCode").val(item.projectCode);
+					console.log('info');  
+				})
+				elem.val(NEWJSON.join(","));
+				$("#refProjectName").val(NEWJSON);
+				form.render()
+			}
+		});
+	 
+	 	//日期
+	laydate.render({
+	    elem: '#planTimeStart'
+	    ,type: 'date'
+    });
+	 	
+	
+	 	//日期
+	laydate.render({
+	    elem: '#planTimeEnd'
+	    ,type: 'date'
+    	,done: function(value, date){
+    	      //layer.alert('你选择的日期是：' + value + '<br>获得的对象是' + JSON.stringify(date));
+    	      //var e = value;
+    	      //var s = $("#planTimeStart").val();
+    	      var startVal = $("#planTimeStart").val();
+    	      var endVal = $("#planTimeEnd").val();
+    	      var num = getWeekday(startVal, endVal);
+    	      $("#planDates").val(num);
+    	      //layer.alert('你选择的日期是：' + e +',你选择的日期是：' + s + '<br>1111-' +num);
+    	 }
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#planGivenTime'
+	    ,type: 'date'
+    });
+	numberInput.render("#planFinashDays", {
+	    autoSelcet: false,
+	    max: 10000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	numberInput.render("#planFinashDays2", {
+	    autoSelcet: false,
+	    max: 10000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	numberInput.render("#planDates", {
+	    autoSelcet: false,
+	    max: 10000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layer.index);
+    	var index = parent.layer.getFrameIndex(window.name);
+    	parent.layer.close(index);
+    	var layerDetail = CoreUtil.getData("layerDetail");
+    	console.log("layerDetail="+layerDetail);
+    	layer.close(layerDetail);
+       return false;
+    });
+    
+    //执行查询
+    function search() {
+    	window.parent.location.reload();
+    };
+	 
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjProjectPlan/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjProjectPlan/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+   
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+		refProjectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planDetail: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划详细描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planTimeStart: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划开始时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planTimeEnd: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划结束时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planDates: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工期(人天)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planGivenTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划交付日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planFinashDays: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划完成天数不能大于'+max+'个字符的长度！';
+            }
+        }  ,  planFinashDays2: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目实际完成天数不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

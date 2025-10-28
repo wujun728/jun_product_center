@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>项目报告编辑 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content=" "/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3  class="pb-3">项目报告编辑</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">报告名称<font>*</font>
+			</td>
+			<td colspan="3">
+				<input type="text" name="report_name" lay-verify="required" lay-reqText="请输入报告名称" placeholder="请输入报告名称" maxlength="100"
+					class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">项目名称<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:300px;">
+					<input type="text" id="projectName" name="project_name" placeholder="请选择项目" readonly class="layui-input" />
+				</div>
+				<input type="hidden" id="projectId" name="project_id" />
+				<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" id="selectProjectBtn">选择</button>
+			</td>
+			<td class="layui-td-gray">报告类型<font>*</font></td>
+			<td>
+				<select id="reportType" name="report_type" lay-filter="report_type" lay-verify="required">
+					<option value="">请选择报告类型</option>
+					<option value="1">月度报告</option>
+					<option value="2">季度报告</option>
+					<option value="3">年度报告</option>
+					<option value="4">专项报告</option>
+					<option value="5">其他报告</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">报告完成天数<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:200px;">
+					<input type="text" id="reportDay" name="report_day" placeholder="请输入报告完成天数" lay-verify="required|number" lay-reqText="请输入报告完成天数"
+						class="layui-input" value="" />
+				</div>
+			</td>
+			<td class="layui-td-gray">报告负责人<font>*</font></td>
+			<td>
+				<div class="layui-input-inline" style="width:300px;">
+					<input type="text" id="chargerName" name="charger_name" placeholder="请选择报告负责人" readonly class="layui-input" />
+				</div>
+				<input type="hidden" id="chargerId" name="charger_id" />
+				<button type="button" class="layui-btn layui-btn-primary layui-btn-sm" id="selectChargerBtn">选择</button>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">报告内容<font>*</font></td>
+			<td colspan="3">
+			  <textarea name="report_content" placeholder="请输入报告内容" class="layui-textarea" id="container" style="border:0;padding:0;"></textarea>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-4">
+		<div class="layui-upload">
+			<div class="layui-upload-list">
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th>文件名</th>
+							<th>大小</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody id="fileList"></tbody>
+				</table>
+			</div>
+			<button type="button" class="layui-btn layui-btn-normal" id="uploadBtn">
+				<i class="layui-icon">&#xe67c;</i>上传附件
+			</button>
+		</div>
+	</div>
+	<div class="pt-4">
+		<input type="hidden" name="id" value="" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="cancelBtn">取消</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tinymce','oaPicker','tableSelect','numberInput','upload'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, layer = layui.layer, $ = layui.jquery;
+		var tableSelect = layui.tableSelect, numberInput = layui.numberInput, upload = layui.upload;
+		var id = tool.getUrlParam('id');
+		var editor = null;
+
+		// 项目选择器配置
+		var projectSelector = tableSelect.render({
+			 elem: '#selectProjectBtn',
+			 title: '选择项目',
+			 url: '/qixing_oa1/pjProject/listBySelect',
+			 cols: [
+				[{ field: 'project_name', title: '项目名称', minWidth: 200 },
+				 { field: 'project_code', title: '项目编号', width: 150 },
+				 { field: 'project_manager_name', title: '项目经理', width: 120 },
+				 { field: 'project_status_name', title: '项目状态', width: 100 }]
+			 ],
+			 done: function (data) {
+				 if (data.data.length > 0) {
+					 $('#projectId').val(data.data[0].id);
+					 $('#projectName').val(data.data[0].project_name);
+				 }
+			 }
+		});
+
+		// 报告负责人选择器配置
+		var chargerSelector = tableSelect.render({
+			 elem: '#selectChargerBtn',
+			 title: '选择报告负责人',
+			 url: '/sys/users/listByPage',
+			 cols: [
+				[{ field: 'realname', title: '姓名', minWidth: 100 },
+				 { field: 'username', title: '用户名', width: 150 },
+				 { field: 'deptName', title: '部门', width: 200 },
+				 { field: 'phone', title: '手机号', width: 150 }]
+			 ],
+			 done: function (data) {
+				 if (data.data.length > 0) {
+					 $('#chargerId').val(data.data[0].id);
+					 $('#chargerName').val(data.data[0].realname);
+				 }
+			 }
+		});
+
+		// 报告完成天数数字输入框
+		numberInput.render({
+			 elem: '#reportDay',
+			 min: 1,
+			 max: 999
+		});
+
+		// 编辑器初始化
+		editor = layui.tinymce.render({
+			 selector: "#container",
+			 images_upload_url: '/sysFilesOss/upload',//图片上传接口
+			 height: 400
+		});
+
+		// 附件上传
+		var uploadInst = upload.render({
+			 elem: '#uploadBtn',
+			 url: '/sysFilesOss/upload',
+			 multiple: true,
+			 before: function (obj) {
+				 layer.load();
+			 },
+			 done: function (res, index, upload) {
+				 layer.closeAll('loading');
+				 if (res.code == 0) {
+					 // 上传成功
+					 var file = res.data;
+					 var html = '<tr id="file_' + file.id + '">' +
+						 '<td>' + file.file_name + '</td>' +
+						 '<td>' + file.file_size + '</td>' +
+						 '<td>' +
+							 '<button type="button" class="layui-btn layui-btn-xs layui-btn-primary previewBtn" data-id="' + file.id + '" data-url="' + file.file_url + '">预览</button>' +
+							 '<button type="button" class="layui-btn layui-btn-xs layui-btn-primary downloadBtn" data-id="' + file.id + '" data-url="' + file.file_url + '">下载</button>' +
+							 '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger deleteFileBtn" data-id="' + file.id + '">删除</button>' +
+						 '</td>' +
+					 '</tr>';
+					 $('#fileList').append(html);
+					 // 添加已上传文件ID到表单
+					 appendFileId(file.id);
+				 } else {
+					 layer.msg(res.msg || '上传失败');
+				 }
+			 },
+			 error: function () {
+				 layer.closeAll('loading');
+				 layer.msg('上传失败');
+			 }
+		});
+
+		// 预览附件
+		$(document).on('click', '.previewBtn', function () {
+			 var url = $(this).attr('data-url');
+			 window.open(url, '_blank');
+		});
+
+		// 下载附件
+		$(document).on('click', '.downloadBtn', function () {
+			 var url = $(this).attr('data-url');
+			 var link = document.createElement('a');
+			 link.href = url;
+			 link.download = '';
+			 link.click();
+		});
+
+		// 删除附件
+		$(document).on('click', '.deleteFileBtn', function () {
+			 var fileId = $(this).attr('data-id');
+			 layer.confirm('确定要删除该附件吗？', {
+				 icon: 3,
+				 title: '提示'
+			 }, function (index) {
+				 $('#file_' + fileId).remove();
+				 // 从表单中移除文件ID
+				 removeFileId(fileId);
+				 layer.close(index);
+			 });
+		});
+
+		// 添加文件ID到表单
+		function appendFileId(fileId) {
+			 var fileIds = $('input[name="file_ids"]').val().split(',').filter(function (id) { return id !== ''; });
+			 if (fileIds.indexOf(fileId) === -1) {
+				 fileIds.push(fileId);
+				 $('input[name="file_ids"]').val(fileIds.join(','));
+			 }
+		}
+
+		// 从表单中移除文件ID
+		function removeFileId(fileId) {
+			 var fileIds = $('input[name="file_ids"]').val().split(',').filter(function (id) { return id !== '' && id !== fileId; });
+			 $('input[name="file_ids"]').val(fileIds.join(','));
+		}
+
+		// 加载文件列表
+		function loadFileList(businessId) {
+			 if (!businessId) return;
+			 tool.get('/sysFilesOss/listByPageUser', { business_id: businessId, business_type: 'project_report' }, function (res) {
+				 if (res.code == 0 && res.data && res.data.list) {
+					 var fileIds = [];
+					 $('#fileList').empty();
+					 layui.each(res.data.list, function (i, file) {
+						 fileIds.push(file.id);
+						 var html = '<tr id="file_' + file.id + '">' +
+							 '<td>' + file.file_name + '</td>' +
+							 '<td>' + file.file_size + '</td>' +
+							 '<td>' +
+								 '<button type="button" class="layui-btn layui-btn-xs layui-btn-primary previewBtn" data-id="' + file.id + '" data-url="' + file.file_url + '">预览</button>' +
+								 '<button type="button" class="layui-btn layui-btn-xs layui-btn-primary downloadBtn" data-id="' + file.id + '" data-url="' + file.file_url + '">下载</button>' +
+								 '<button type="button" class="layui-btn layui-btn-xs layui-btn-danger deleteFileBtn" data-id="' + file.id + '">删除</button>' +
+							 '</td>' +
+						 '</tr>';
+						 $('#fileList').append(html);
+					 });
+					 $('input[name="file_ids"]').val(fileIds.join(','));
+				 }
+			 });
+		}
+
+		// 如果是编辑模式，加载数据
+		if (id) {
+			 tool.get('/qixing_oa1/pjProjectReport/getInfo', { id: id }, function (res) {
+				 if (res.code == 0) {
+					 var data = res.data;
+					 // 填充表单数据
+					 $('input[name="id"]').val(data.id);
+					 $('input[name="report_name"]').val(data.report_name);
+					 $('#projectId').val(data.project_id);
+					 $('#projectName').val(data.project_name);
+					 $('#reportType').val(data.report_type);
+					 $('#reportDay').val(data.report_day);
+					 $('#chargerId').val(data.charger_id);
+					 $('#chargerName').val(data.charger_name);
+					 // 初始化编辑器内容
+					 if (tinyMCE.editors['container']) {
+						 tinyMCE.editors['container'].setContent(data.report_content || '');
+					 }
+					 // 加载附件列表
+					 loadFileList(data.id);
+					 // 渲染表单
+					 form.render();
+				 } else {
+					 layer.msg(res.msg || '获取数据失败');
+				 }
+			 });
+		}
+
+		// 取消按钮
+		$('#cancelBtn').click(function () {
+			 tool.sideClose();
+		});
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			 data.field.report_content = tinyMCE.editors['container'].getContent();
+			 if (data.field.report_content == '') {
+				 layer.msg('请先完善报告内容');
+				 return false;
+			 }
+			
+			 // 表单验证
+			 if (data.field.report_name.length > 100) {
+				 layer.msg('报告名称不能超过100个字符');
+				 return false;
+			 }
+			 if (data.field.report_day && (parseInt(data.field.report_day) < 1 || parseInt(data.field.report_day) > 999)) {
+				 layer.msg('报告完成天数必须在1-999之间');
+				 return false;
+			 }
+			
+			 let callback = function (e) {
+				 layer.msg(e.msg);
+				 if (e.code == 0) {
+					 tool.sideClose(1000, 'documentTable');
+				 }
+			 }
+			 let clickbtn = $(this);
+			 let url = id ? '/qixing_oa1/pjProjectReport/update' : '/qixing_oa1/pjProjectReport/add';
+			 tool.post(url, data.field, callback, clickbtn);
+			 return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

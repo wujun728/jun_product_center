@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+
+<body>
+  <!-- 新增修改的DIV页面-begin,默认hidden -->
+  <div class="panel panel-default operation" hidden>
+    <!--   <div class="panel-heading title"></div> -->
+    <div class="layui-card-body">
+
+      <form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+        <input name="id" id="id" hidden />
+
+        <div class="layui-form-item">
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">入职人员名称</label>
+            <div class=" layui-input-inline ">
+              <input type="refJobUsername" name="refJobUsername" id="refJobUsername"
+                lay-verify="required|refJobUsername" lay-max="256" placeholder="请输入入职人员名称" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">入职部门</label>
+            <div class=" layui-input-inline ">
+              <input type="refJobDeptname" name="refJobDeptname" id="refJobDeptname"
+                lay-verify="required|refJobDeptname" lay-max="256" placeholder="请输入入职部门" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">入职岗位</label>
+            <div class=" layui-input-inline ">
+              <div id="dictJobBox"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">用工类型</label>
+            <div class=" layui-input-inline ">
+              <div id="dictJobTypeBox"></div>
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">新人直属领导</label>
+            <div class=" layui-input-inline ">
+              <input type="refEntryLeader" name="refEntryLeader" id="refEntryLeader"
+                lay-verify="required|refEntryLeader" lay-max="255" placeholder="请输入直属领导" autocomplete="off"
+                class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  ">新员工导师</label>
+            <div class=" layui-input-inline ">
+              <input type="text" name="refEntryTeach" id="refEntryTeach" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">薪资</label>
+            <div class=" layui-input-inline ">
+              <input type="money" name="money" id="money" lay-verify="required|money" lay-max="99999999"
+                placeholder="请输入薪资" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  layui-required  ">入职时间</label>
+            <div class=" layui-input-inline ">
+              <input type="entryTime" name="entryTime" id="entryTime" lay-verify="required|entryTime" lay-max="99999999"
+                placeholder="请输入入职时间" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+
+        <div class="layui-form-item" style="display: none;">
+          <div class="layui-inline"> <label class="layui-form-label  ">流程状态</label>
+            <div class=" layui-input-inline ">
+              <input type="text" name="wfstate" id="wfstate" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  ">当前节点</label>
+            <div class=" layui-input-inline ">
+              <input type="text" name="currNodename" id="currNodename" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-inline"> <label class="layui-form-label  ">当前审批人</label>
+            <div class=" layui-input-inline ">
+              <input type="text" name="currUsercode" id="currUsercode" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label  ">备注</label>
+          <div class=" layui-input-block ">
+            <textarea class="layui-textarea" name="remark" id="remark"></textarea>
+          </div>
+        </div>
+
+        <div class="layui-form-item" id="buttonSave">
+          <div class="layui-input-block">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+            <button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- 新增修改的DIV页面-end -->
+
+  <!-- 查询列表的DIV页面-start -->
+  <div class="layuimini-container">
+    <div class="layuimini-main">
+      <div class="table_div">
+        <blockquote class="layui-elem-quote layui-text">
+          在此您可以对<span class="label-info"><strong>录用审批</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+        </blockquote>
+        <div id="searchParam" shiro:hasPermission="hrUserHire:list">
+          <div class="layui-form-item">
+            <div class="layui-input-inline">
+              <input type="refJobUsername" name="refJobUsernameCondition" id="refJobUsernameCondition"
+                class="layui-input" autocomplete="off" placeholder="请输入入职人员名称">
+            </div>
+            <div class="layui-input-inline" style="display: none;">
+              <input type="refJobDeptname" name="refJobDeptnameCondition" id="refJobDeptnameCondition"
+                class="layui-input" autocomplete="off" placeholder="请输入入职部门">
+            </div>
+            <div class="layui-input-inline" style="display: none;">
+              <input type="dictJobType" name="dictJobTypeCondition" id="dictJobTypeCondition" class="layui-input"
+                autocomplete="off" placeholder="请输入用工类型">
+            </div>
+            <div class="layui-input-inline" style="display: none;">
+              <input type="dictJob" name="dictJobCondition" id="dictJobCondition" class="layui-input" autocomplete="off"
+                placeholder="请输入入职岗位">
+            </div>
+            <div class="layui-input-inline" style="display: none;">
+              <input type="refEntryLeader" name="refEntryLeaderCondition" id="refEntryLeaderCondition"
+                class="layui-input" autocomplete="off" placeholder="请输入直属领导">
+            </div>
+            <div class="layui-input-inline" style="display: none;">
+              <input type="money" name="moneyCondition" id="moneyCondition" class="layui-input" autocomplete="off"
+                placeholder="请输入薪资">
+            </div>
+            <div class="layui-input-inline" style="display: none;">
+              <input type="entryTime" name="entryTimeCondition" id="entryTimeCondition" class="layui-input"
+                autocomplete="off" placeholder="请输入入职时间">
+            </div>
+            <div class="layui-input-block ">
+              <button class="layui-btn" onclick="search()" id="search">查询</button>
+              <button class="layui-btn" id="export">导出全部</button>
+              <button class="layui-btn layui-btn-primary layui-border-blue" onclick="openFlow()">查看审批流程图</button>
+            </div>
+          </div>
+        </div>
+        <!-- 渲染列表，上面的是工具栏 -->
+        <table class="layui-table" id="showTable" lay-filter="showTable"></table>
+      </div>
+    </div>
+  </div>
+  <!-- 查询列表的DIV页面-end -->
+  <script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrUserHire:add">新增</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrUserHire:delete">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="hrUserHire:submit">提交</button>
+  </div>
+</script>
+  <script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserHire:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserHire:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserHire:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrUserHire:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserHire:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+</body>
+
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css" />
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+  var pkCode = "";
+  var flagType = "";
+  var id = CoreUtil.getData("biz_rowdata") == undefined ? "" : CoreUtil.getData("biz_rowdata")["id"];
+  //     console.log(flagType);
+  //     console.log(id);
+  if ("view" == flagType) {
+    $(".table_div").hide();
+    $(".operation").show();
+    $("#buttonSave").hide();
+    var layer = layui.layer;
+    var $ = jQuery = layui.jquery;
+    var form = layui.form;
+    var element = layui.element;
+    $(function () {
+      CoreUtil.sendPost("/hrUserHire/findOne", { id: id }, function (res) {
+        if (res.data != null) {
+          form.val("info", res.data);
+          form.render(); //更新全部
+        }
+      });
+    });
+  }
+</script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token == null ? "" : token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+  var xnUtil = layui.xnUtil;
+
+  layui.config({
+    base: '/layui-ext/'
+  }).extend({
+    treetable: 'treetable-lay/treetable',
+    iconPicker: 'icon/iconPicker',
+    xnUtil: 'xnUtil/xnUtil',
+    notice: 'notice/notice',
+    formX: 'formX',
+    numberInput: 'numberInput/js/index',
+    xmSelect: 'xmSelect/xm-select'
+  }).use(['numberInput', 'table', 'layer', 'laydate', 'form', 'layedit', 'xnUtil', 'formX', 'notice', 'xmSelect'], function () {
+    numberInput = layui.numberInput;
+    xnUtil = layui.xnUtil;
+    var xmSelect = layui.xmSelect;
+
+    // 初始化dictJob和dictJobType的xmSelect组件
+    var dictJob = xmSelect.render({
+      elem: '#dictJobBox',
+      name: 'dictJob',
+      layVerify: 'required',
+      data: [],
+      on: function (data) {
+        form.render();
+      }
+    });
+
+    var dictJobType = xmSelect.render({
+      elem: '#dictJobTypeBox',
+      name: 'dictJobType',
+      layVerify: 'required',
+      data: [],
+      on: function (data) {
+        form.render();
+      }
+    });
+
+    // 加载字典数据
+    function loadDictData() {
+      // 获取dict_member_role字典数据
+      var jobDatas = xnUtil.getDictDataByDictTypeCode('dict_member_role', null);
+      var jobOptions = [];
+      if (jobDatas && jobDatas.length > 0) {
+        jobDatas.forEach(function (item) {
+          jobOptions.push({
+            name: item.label,
+            value: item.value
+          });
+        });
+        dictJob.update({
+          data: jobOptions
+        });
+      }
+
+      // 获取dict_job_type字典数据
+      var jobTypeDatas = xnUtil.getDictDataByDictTypeCode('dict_job_type', null);
+      var jobTypeOptions = [];
+      if (jobTypeDatas && jobTypeDatas.length > 0) {
+        jobTypeDatas.forEach(function (item) {
+          jobTypeOptions.push({
+            name: item.label,
+            value: item.value
+          });
+        });
+        dictJobType.update({
+          data: jobTypeOptions
+        });
+      }
+    }
+
+    // 初始化时加载字典数据
+    loadDictData();
+
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: { "authorization": token }
+      , page: true //开启分页
+      , url: '/hrUserHire/listByPage' //数据接口
+      , method: 'POST'
+      , size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+        }
+      }
+      , cols: [
+        [
+          { type: 'checkbox', fixed: 'left' }, //{type:'radio'}  
+          { field: 'id', title: 'ID', sort: true, hide: true },
+          { field: 'refJobUsername', title: '入职人员名称', sort: true },
+          { field: 'refJobDeptname', title: '入职部门', sort: true },
+          {
+            field: 'dictJobType', title: '用工类型', sort: true, templet: function (item) { 	            //获取类型对应的字典label
+              var datas = xnUtil.getDictDataByDictTypeCode('dict_job_type', null);
+              if (item.dictJobType % 2 == 0) {
+                return '<span class="layui-btn layui-btn-normal layui-btn-xs">' + CoreUtil.selectDictLabel(datas, item.dictJobType) + '</span>';
+              } else {
+                return '<span class="layui-btn layui-btn-warm layui-btn-xs">' + CoreUtil.selectDictLabel(datas, item.dictJobType) + '</span>';
+              }
+              // return CoreUtil.selectDictLabel(datas, item.dictJobType);
+            }
+          },
+          {
+            field: 'dictJob', title: '入职岗位', sort: true, templet: function (item) { 	            //获取类型对应的字典label
+              var datas = xnUtil.getDictDataByDictTypeCode('dict_member_role', null);
+              if (item.dictJob % 2 == 0) {
+                return '<span class="layui-btn layui-btn-normal layui-btn-xs">' + CoreUtil.selectDictLabel(datas, item.dictJob) + '</span>';
+              } else {
+                return '<span class="layui-btn layui-btn-warm layui-btn-xs">' + CoreUtil.selectDictLabel(datas, item.dictJob) + '</span>';
+              }
+              // return CoreUtil.selectDictLabel(datas, item.dictJob);
+            }
+          },
+          { field: 'refEntryLeader', title: '直属领导', sort: true },
+          { field: 'refEntryTeach', title: '新员工导师', sort: true, hide: true },
+          { field: 'money', title: '薪资', sort: true },
+          { field: 'entryTime', title: '入职时间', sort: true },
+          //           {field: 'wfstate', title: '流程状态', sort: true ,hide: true }, 
+          //           {field: 'currNodename', title: '当前节点', sort: true ,hide: true }, 
+          //           {field: 'currUsercode', title: '当前审批人', sort: true ,hide: true }, 
+
+          //   流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          {
+            title: '流程状态', field: 'orderState', align: 'center', width: 90, templet: function (d) {
+              if (d.orderState == 0) {
+                return '<span style="color: #eb7350;">审批完成</span>'
+              } else if (d.orderState == 1) {
+                return '<span style="color: #00b487;">审批中</span>'
+              } else {
+                return '<span style="color: blue;">草稿</span>'
+              }
+            }
+          },
+          { title: '当前节点', field: 'taskName', align: 'center', width: 105 },
+          { title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 90 },
+          //   流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          { field: 'remark', title: '备注', sort: true, hide: true },
+          { field: 'isOwner', hide: true }, { width: 180, toolbar: "#tool", title: '操作', fixed: 'right' }
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+    //封装tableSelect渲染函数，减少重复代码
+    function renderTableSelect(elemId, url, fieldMap, onSelectCallback) {
+      tableSelect.render({
+        elem: '#' + elemId,
+        checkedKey: 'id',
+        table: {
+          url: url + '?Authorization=' + tokenQuery,
+          method: 'POST',
+          contentType: 'application/json',
+          parseData: function (res) {
+            return {
+              "code": res.code,
+              "msg": res.msg,
+              "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total,
+              "data": CoreUtil.isEmpty(res.data) ? null : res.data.records
+            }
+          }
+        },
+        done: function (elem, data) {
+          if (data.data && data.data.length > 0) {
+            var selectedData = data.data[0];
+            var displayValue = selectedData[fieldMap.nameField];
+            elem.val(displayValue);
+            $("#" + elemId).val(displayValue);
+            if (onSelectCallback) {
+              onSelectCallback(selectedData);
+            }
+            form.render();
+          }
+        }
+      });
+    }
+
+    //使用封装的函数渲染各表单项
+    renderTableSelect('refJobUsername', '/hrUserInterview/listBySelect', {
+      nameField: 'refPeopleName',
+      nameTitle: '候选人',
+      titleField: 'ivTime',
+      titleTitle: '面试时间'
+    }, function (selectedData) {
+      console.log('Selected interview data:', selectedData);
+    })
+
+    renderTableSelect('refEntryLeader', '/dev-api/sys/users/listByPage', {
+      nameField: 'realName',
+      nameTitle: '名称',
+      titleField: 'username',
+      titleTitle: '标题'
+    });
+
+    renderTableSelect('refEntryTeach', '/dev-api/sys/users/listByPage', {
+      nameField: 'realName',
+      nameTitle: '名称',
+      titleField: 'username',
+      titleTitle: '标题'
+    });
+
+    // 数字输入框配置
+    numberInput.render("#money", {
+      autoSelcet: false,
+      max: 10000000,
+      min: 0,
+      step: 1,
+      precision: 0
+    });
+    //日期选择器
+    laydate.render({
+      elem: '#entryTime',
+      type: 'date'
+    });
+
+    //表头工具事件处理
+    table.on('toolbar(showTable)', function (obj) {
+      var checkStatus = table.checkStatus(obj.config.id);
+      var data = checkStatus.data;
+      var ids = [];
+
+      // 检查选中数据是否符合操作条件
+      function checkDataPermission() {
+        var hasFlowData = false;
+        var hasNonOwnerData = false;
+
+        $(data).each(function (index, item) {
+          ids.push(item.id);
+          if (item.orderState === 0 || item.orderState === 1) {
+            hasFlowData = true;
+          }
+          if (item.isOwner !== 1) {
+            hasNonOwnerData = true;
+          }
+        });
+
+        if (hasFlowData) {
+          layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+          return false;
+        }
+
+        if (hasNonOwnerData) {
+          layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+          return false;
+        }
+
+        return true;
+      }
+
+      switch (obj.event) {
+        case 'batchDeleted':
+          if (data.length === 0) {
+            layer.msg("请选择要批量删除的列");
+          } else if (checkDataPermission()) {
+            tipDialog(ids);
+          }
+          break;
+
+        case 'submit':
+          if (data.length === 0) {
+            layer.msg("请选择要提交的记录");
+          } else if (data.length > 1) {
+            layer.msg("请选择要提交的记录（一次只能提交一条）");
+          } else {
+            data[0]['processName'] = "hire";
+            CoreUtil.setData("data_doSubmit", data[0]);
+            layer.open({
+              type: 2,
+              skin: 'layui-layer-admin',
+              title: "提交流程",
+              shadeClose: false,
+              area: ['880px', '500px'],
+              shade: 0.6,
+              maxmin: true,
+              anim: 1,
+              content: '/table/doSubmit.html',
+              end: function () {
+                search();
+              }
+            });
+          }
+          break;
+
+        case 'add':
+          resetForm();
+          layerAdd = layer.open({
+            type: 1,
+            skin: 'layui-layer-admin',
+            area: ['80%', '80%'],
+            shift: 1,
+            shadeClose: true,
+            scrollbar: true,
+            maxmin: true,
+            shade: false,
+            title: ['新增录用审批', false],
+            content: $("#info").closest(".operation"),
+          });
+          break;
+      }
+    });
+
+    //表单重置函数
+    function resetForm() {
+      CoreUtil.setData("biz_rowdata", "");
+      $("#id").val("");
+      $("#refJobUsername").val("");
+      $("#refJobDeptname").val("");
+      dictJob.setValue([]); // 清空岗位选择
+      dictJobType.setValue([]); // 清空用工类型选择
+      $("#refEntryLeader").val("");
+      $("#refEntryTeach").val("");
+      $("#money").val("");
+      $("#entryTime").val("");
+      $("#remark").val("");
+    }
+
+    //列操作事件处理
+    table.on('tool(showTable)', function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids = [data.id];
+          tipDialog(ids);
+          break;
+
+        case 'edit':
+          CoreUtil.setData("biz_rowdata", data);
+          $("#id").val(data.id);
+          $("#refJobUsername").val(data.refJobUsername);
+          $("#refJobDeptname").val(data.refJobDeptname);
+
+          // 设置xmSelect组件的值
+          if (data.dictJob) {
+            dictJob.setValue([data.dictJob]);
+          } else {
+            dictJob.setValue([]);
+          }
+          if (data.dictJobType) {
+            dictJobType.setValue([data.dictJobType]);
+          } else {
+            dictJobType.setValue([]);
+          }
+
+          $("#refEntryLeader").val(data.refEntryLeader);
+          $("#refEntryTeach").val(data.refEntryTeach);
+          $("#money").val(data.money);
+          $("#entryTime").val(data.entryTime);
+          $("#remark").val(data.remark);
+          form.render();
+
+          layerAdd = layer.open({
+            type: 1,
+            skin: 'layui-layer-admin',
+            area: ['80%', '80%'],
+            shift: 2,
+            shadeClose: true,
+            scrollbar: true,
+            maxmin: true,
+            shade: false,
+            title: ['修改录用审批', false],
+            content: $("#info").closest(".operation"),
+          });
+          break;
+
+        case 'file':
+          data['dictBiztype'] = '录用';
+          CoreUtil.setData("biz_rowdata", data);
+          var index = layer.open({
+            title: '上传附件',
+            skin: 'layui-layer-admin',
+            type: 2,
+            shade: 0.2,
+            maxmin: true,
+            shadeClose: true,
+            scrollbar: true,
+            area: ['80%', '80%'],
+            content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+            layer.full(index);
+          });
+          return false;
+      }
+    });
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrUserHire/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+    //删除
+    var tipDialog = function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function (index, layero) {
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrUserHire/delete", ids, function (res) {
+            layer.msg(res.msg, { time: 1000 }, function () {
+              search();
+            });
+          });
+        }
+      });
+      //返回
+      $("#btn_cancel").click(function () {
+        layer.close(layerAdd);
+        return false;
+      });
+      //监听保存
+      form.on('submit(submit)', function (data) {
+        if (data.field.id === undefined || data.field.id === null || data.field.id === "") {
+          CoreUtil.sendPost("/hrUserHire/add", data.field, function (res) {
+            layer.close(layerAdd);
+            search();
+          });
+        } else {
+          CoreUtil.sendPut("/hrUserHire/update", data.field, function (res) {
+            layer.close(layerAdd);
+            search();
+          });
+        }
+        return false;
+      });
+
+      //执行查询
+      function search() {
+        //这里以搜索为例
+        tableIns1.reload({
+          where: { //设定异步数据接口的额外参数，任意设
+            '1': '1',
+            refJobUsername: $("#refJobUsernameCondition").val(),
+            refJobDeptname: $("#refJobDeptnameCondition").val(),
+            dictJobType: $("#dictJobTypeCondition").val(),
+            dictJob: $("#dictJobCondition").val(),
+            refEntryLeader: $("#refEntryLeaderCondition").val(),
+            money: $("#moneyCondition").val(),
+            entryTime: $("#entryTimeCondition").val()
+          },
+          page: {
+            curr: 1 //重新从第 1 页开始
+          }
+        });
+      };
+
+      function openFlow() {
+        layer.open({
+          type: 2,
+          skin: 'layui-layer-admin',
+          title: "审批流程",
+          shadeClose: false,
+          area: ['1200px', '600px'], //宽高
+          shade: 0.6, //遮罩透明度
+          maxmin: true, //允许全屏最小化
+          anim: 1, //0-6的动画形式，-1不开启
+          content: '/admin/view/flow/design2.html?processId=9014463ba0e74e0c871f13a2c94077be',
+          end: function () { }
+        });
+      };
+
+      //简化表单验证规则，只保留必要的验证
+      form.verify({
+        refJobUsername: function (value, item) {
+          var max = item.getAttribute('lay-max');
+          if (value && value.length > max) {
+            return '入职人员名称不能大于' + max + '个字符的长度！';
+          }
+        },
+        refEntryLeader: function (value, item) {
+          var max = item.getAttribute('lay-max');
+          if (value && value.length > max) {
+            return '直属领导不能大于' + max + '个字符的长度！';
+          }
+        },
+        money: function (value, item) {
+          var max = item.getAttribute('lay-max');
+          if (value && value.length > max) {
+            return '薪资不能大于' + max + '个字符的长度！';
+          }
+          if (!/^\d+$/.test(value)) {
+            return '薪资必须为数字！';
+          }
+        }
+      });
+</script>

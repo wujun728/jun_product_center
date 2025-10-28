@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>文件管理</title>
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /* 文件列表item */
+        .file-choose-list-item {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            padding: 8px 8px;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .file-choose-list-item:hover {
+            background-color: #F7F7F7;
+        }
+
+        /* 文件列表图片 */
+        .file-choose-list-item-img {
+            width: 90px;
+            height: 90px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+            background-color: #eee;
+        }
+
+        .file-choose-list-item-img.img-icon {
+            background-size: inherit;
+            background-color: transparent;
+        }
+
+        .file-choose-list-item.active .file-choose-list-item-img:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* 文件列表名称 */
+        .file-choose-list-item-name {
+            width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: #333;
+            font-size: 12px;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* 文件列表复选框 */
+        .file-choose-list-item-ck {
+            position: absolute;
+            right: 8px;
+            top: 8px;
+        }
+
+        .file-choose-list-item-ck .layui-form-checkbox {
+            padding: 0;
+        }
+
+        /* 文件列表操作菜单 */
+        .file-choose-oper-menu {
+            background-color: #fff;
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            border-radius: 2px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, .15);
+            transition: all .3s;
+            overflow: hidden;
+            transform: scale(0);
+            transform-origin: left top;
+            visibility: hidden;
+        }
+
+        .file-choose-oper-menu.show {
+            transform: scale(1);
+            visibility: visible;
+        }
+
+        /* 文件列表操作菜单item */
+        .file-choose-oper-menu-item {
+            color: #555;
+            padding: 6px 5px;
+            font-size: 14px;
+            min-width: 70px;
+            text-align: center;
+            cursor: pointer;
+            display: block;
+        }
+
+        .file-choose-oper-menu-item:hover {
+            background-color: #eee;
+        }
+
+        /** 文件列表为空时样式 */
+        .file-choose-empty {
+            text-align: center;
+            color: #999;
+            padding: 50px 0;
+        }
+
+        .file-choose-empty .layui-icon {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body layui-text" style="color: #333;">
+            以下是静态页面，后台集成示例参考
+            <a href="https://github.com/whvcse/easy-fs" target="_blank">获取源码</a>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">当前位置：<span id="tv-current-position">/</span></div>
+        <div class="layui-card-body">
+            <div>
+                <button id="file-btn-back" class="layui-btn layui-btn-sm layui-btn-primary icon-btn">
+                    <i class="layui-icon">&#xe65c;</i>返回上级
+                </button>
+                <button id="file-btn-refresh" class="layui-btn layui-btn-sm layui-btn-primary icon-btn">
+                    <i class="layui-icon">&#xe669;</i>刷新
+                </button>
+                <button id="file-btn-upload" class="layui-btn layui-btn-sm layui-btn-normal icon-btn">
+                    <i class="layui-icon">&#xe681;</i>上传文件
+                </button>
+                <button id="file-btn-choose" class="layui-btn layui-btn-sm layui-btn-primary icon-btn"
+                        style="margin-left: 10px;">
+                    <i class="layui-icon">&#xe634;</i>弹窗选择
+                </button>
+            </div>
+            <div id="file-list-group"></div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../assets/js/common.js?v=318"></script>
+</body>
+<script>
+    layui.use(['jquery', 'layer', 'element', 'upload', 'admin', 'util', 'fileChoose'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var element = layui.element;
+        var upload = layui.upload;
+        var admin = layui.admin;
+        var util = layui.util;
+        var fileChoose = layui.fileChoose;
+        var dataList = [];
+
+        // 渲染列表
+        function renderList(dir) {
+            dir || (dir = $('#tv-current-position').text());
+            layer.load(2);
+            $.get('../../json/files.json', {
+                dir: dir
+            }, function (res) {
+                layer.closeAll('loading');
+                dataList = res.data;
+                var htmlStr = fileChoose.renderList({
+                    data: dataList,
+                    menu: [{
+                        name: '预览',
+                        event: 'preview'
+                    }, {
+                        name: '复制',
+                        event: 'copy'
+                    }, {
+                        name: '<span style="color: red;">删除</span>',
+                        event: 'del'
+                    }]
+                });
+                $('#file-list-group').html(htmlStr);
+            }, 'json');
+        }
+
+        renderList();
+
+        // 列表点击事件
+        $(document).off('click.fclip').on('click.fclip', '#file-list-group .file-choose-list-item', function (e) {
+            var item = dataList[$(this).data('index')];
+            if (item.isDir) {  // 是否是文件夹
+                var cDir = $('#tv-current-position').text();
+                cDir += (cDir == '/' ? item.name : ('/' + item.name));
+                $('#tv-current-position').text(cDir);
+                renderList(cDir);
+            } else {
+                var $cMenu = $(this).find('.file-choose-oper-menu');
+                $('.file-choose-oper-menu').not($cMenu).removeClass('show');
+                $cMenu.toggleClass('show');
+                e.stopPropagation();
+            }
+        });
+        // 点击空白隐藏下拉框
+        $(document).off('click.fclomp').on('click.fclomp', function (e) {
+            $('.file-choose-oper-menu').removeClass('show');
+        });
+
+        // 菜单事件监听
+        $(document).off('click.fclomip').on('click.fclomip', '#file-list-group .file-choose-oper-menu-item', function () {
+            var event = $(this).data('event');
+            var dataIndex = $(this).parent().parent().data('index');
+            if (event == 'del') {  // 删除
+                layer.confirm('确定要删除此文件吗？', {shade: .1}, function () {
+                    layer.msg('操作成功', {icon: 1});
+                    renderList();
+                });
+            } else if (event == 'preview') {
+                window.open(dataList[dataIndex].url);
+            } else {
+                layer.msg('点击了' + event + '，索引' + dataIndex, {icon: 1});
+            }
+        });
+
+        // 刷新
+        $('#file-btn-refresh').click(function () {
+            renderList();
+        });
+
+        // 返回上级
+        $('#file-btn-back').click(function () {
+            var cDir = $('#tv-current-position').text();
+            if (cDir != '/') {
+                cDir = cDir.substring(0, cDir.lastIndexOf('/'));
+                cDir || (cDir = '/');
+                $('#tv-current-position').text(cDir);
+                renderList(cDir);
+            }
+        });
+
+        // 上传
+        upload.render({
+            elem: '#file-btn-upload',
+            accept: 'file'
+        });
+
+        // 弹窗选择
+        $('#file-btn-choose').click(function () {
+            fileChoose.open({
+                fileUrl: '',
+                listUrl: '../../json/files.json',
+                num: 3,
+                dialog: {
+                    offset: '60px'
+                },
+                onChoose: function (urls) {
+                    layer.msg('你选择了：' + JSON.stringify(urls), {icon: 1});
+                }
+            });
+        });
+
+    });
+</script>
+</html>

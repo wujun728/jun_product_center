@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="/jqp-flow/favicon.ico"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta name="description" content="流程设计"/>
+    <link rel="apple-touch-icon" href="/jqp-flow/logo192.png"/>
+    <link rel="manifest" href="/jqp-flow/manifest.json"/>
+    <title>流程设计</title>
+    <script src="/admin/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        jQuery = $.noConflict();
+    </script>
+    <script>
+        readOnly = [(${readOnly})];
+        showProperties = [(${showProperties})];
+        graphData = [(${graphData})];
+        statusOptions = [(${statusOptions})] || [];
+        saveFlow = function(graphData){
+            jQuery.ajax({
+                url:"/admin/flow/saveGraphData/[[${id}]]",
+                type:"POST",
+                data:{
+                    graphData:JSON.stringify(graphData)
+                },
+                success:function(data){
+                    if(data.status == 0){
+                        alert("保存成功");
+                    }else{
+                        alert("保存失败"+data.msg);
+                    }
+                }
+            })
+        }
+    </script>
+    <script defer="defer" src="/jqp-flow/static/js/main.a5609ba3.js"></script>
+    <link href="/jqp-flow/static/css/main.3ab3c2f8.css" rel="stylesheet">
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+</body>
+</html>

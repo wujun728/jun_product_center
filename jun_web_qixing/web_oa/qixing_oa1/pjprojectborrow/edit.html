@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>编辑项目借阅 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content=" "/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3  class="pb-3">编辑项目借阅</h3>
+	<div class="layui-form">
+		<div class="layui-form-item">
+			<div class="layui-col-md2 layui-col-md-offset1">
+				<label class="layui-form-label">项目名称</label>
+			</div>
+			<div class="layui-col-md6">
+				<input type="text" name="refProjectName" lay-verify="required" placeholder="请输入项目名称" class="layui-input" autocomplete="off" />
+				<input name="refProjectId" type="hidden" />
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-col-md2 layui-col-md-offset1">
+				<label class="layui-form-label">用户名称</label>
+			</div>
+			<div class="layui-col-md6">
+				<input type="text" name="refUserName" lay-verify="required" placeholder="请输入用户名称" class="layui-input" autocomplete="off" />
+				<input name="refUserId" type="hidden" />
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-col-md2 layui-col-md-offset1">
+				<label class="layui-form-label">借阅原因</label>
+			</div>
+			<div class="layui-col-md6">
+				<textarea name="borrowDesc" lay-verify="required" placeholder="请输入借阅原因" class="layui-textarea" style="min-height: 120px;"></textarea>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-col-md2 layui-col-md-offset1">
+				<label class="layui-form-label">借阅结束日期</label>
+			</div>
+			<div class="layui-col-md6">
+				<input type="text" name="endTime" lay-verify="required" placeholder="请选择借阅结束日期" class="layui-input" autocomplete="off" />
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-col-md2 layui-col-md-offset1">
+				<label class="layui-form-label">备注</label>
+			</div>
+			<div class="layui-col-md6">
+				<textarea name="remark" placeholder="请输入备注" class="layui-textarea" style="min-height: 80px;"></textarea>
+			</div>
+		</div>
+	</div>
+		<div class="pt-4">
+		<input type="hidden" name="id" value="1081" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	layui.use(['layer', 'form', 'element', 'tool', 'laydate', 'oaPicker'], function () {
+		var layer = layui.layer,
+			form = layui.form,
+			element = layui.element,
+			tool = layui.tool,
+			laydate = layui.laydate,
+			oaPicker = layui.oaPicker;
+
+		var id = tool.getQueryString('id');
+
+		// 日期选择器
+		laydate.render({
+			elem: '[name="endTime"]',
+			type: 'date',
+			format: 'yyyy-MM-dd'
+		});
+
+		// 项目选择器
+		oaPicker({elem: '[name="refProjectName"]', 
+			types: ['project'], 
+			back: function(data){
+				$('[name="refProjectId"]').val(data.projectId);
+				$('[name="refProjectName"]').val(data.projectName);
+			}
+		});
+
+		// 用户选择器
+		oaPicker({elem: '[name="refUserName"]', 
+			types: ['user'], 
+			back: function(data){
+				$('[name="refUserId"]').val(data.id);
+				$('[name="refUserName"]').val(data.name);
+			}
+		});
+
+		// 如果是编辑，则加载数据
+		if (id) {
+			tool.get({
+				url: '/dev-api/pjProjectBorrow/findOne',
+				data: {
+					id: id
+				},
+				success: function (res) {
+					if (res.code == 200) {
+						var data = res.data;
+						$('[name="refProjectId"]').val(data.refProjectId);
+						$('[name="refProjectName"]').val(data.refProjectName);
+						$('[name="refUserId"]').val(data.refUserId);
+						$('[name="refUserName"]').val(data.refUserName);
+						$('[name="borrowDesc"]').val(data.borrowDesc);
+						$('[name="endTime"]').val(data.endTime);
+						$('[name="remark"]').val(data.remark);
+					}
+				}
+			});
+		}
+
+		// 表单验证
+		form.verify({
+			refProjectName: function(value, item){
+				if(value.length>50){
+					return '项目名称长度不能超过50个字符';
+				}
+			},
+			refUserName: function(value, item){
+				if(value.length>20){
+					return '用户名称长度不能超过20个字符';
+				}
+			},
+			borrowDesc: function(value, item){
+				if(value.length>500){
+					return '借阅原因长度不能超过500个字符';
+				}
+			},
+			remark: function(value, item){
+				if(value.length>200){
+					return '备注长度不能超过200个字符';
+				}
+			}
+		});
+
+		// 表单提交
+		form.on('submit(webform)', function (data) {
+			var field = data.field;
+			if (id) {
+				field.id = id;
+			}
+
+			tool.post({
+				url: id ? '/dev-api/pjProjectBorrow/update' : '/dev-api/pjProjectBorrow/add',
+				data: field,
+				success: function (res) {
+					if (res.code == 200) {
+						layer.msg('保存成功', {icon: 1});
+						window.location.href = '/qixing_oa1/pjprojectborrow/datalist.html';
+					} else {
+						layer.msg(res.msg, {icon: 2});
+					}
+				}
+			});
+			return false;
+		});
+
+		// 返回按钮
+		$('#back').on('click', function () {
+			window.location.href = '/qixing_oa1/pjprojectborrow/datalist.html';
+		});
+	});
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

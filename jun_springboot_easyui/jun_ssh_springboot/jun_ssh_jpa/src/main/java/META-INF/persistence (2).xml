@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="klg-j2ee-dataacess-demo"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<class>com.slyak.spring.jpa.extra.Sample</class>
+		<class>demo.jpa.pojo.Logrole</class>
+		<class>demo.jpa.pojo.User</class>
+		<class>demo.jpa.pojo.User2</class>
+		<class>demo.jpa.respository.baseEntity.Aentity</class>
+		<class>demo.jpa.tree.main.MenuTree</class>
+		<class>demo.jpa.tree.main.TreeEntityHA</class>
+		<class>klg.common.dataaccess.entity.BaseEntity</class>
+		<class>klg.common.dataaccess.entity.VersionEntity</class>
+		<class>klg.common.dataaccess.entity.OrderEntity</class>
+	</persistence-unit>
+</persistence>

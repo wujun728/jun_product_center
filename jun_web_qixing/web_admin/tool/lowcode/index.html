@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>低代码开发平台</title>
+    <link rel="stylesheet" href="/assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="/assets/module/admin.css">
+    <link rel="stylesheet" href="lowcode.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <!-- 头部 -->
+    <div class="layui-header">
+        <div class="layui-logo">
+            <img src="/assets/images/logo.png"/>
+            <cite>&nbsp;低代码开发平台</cite>
+        </div>
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" lay-unselect>
+                <a class="layui-btn layui-btn-primary" id="savePage">
+                    <i class="layui-icon layui-icon-save"></i>保存页面
+                </a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a class="layui-btn layui-btn-primary" id="previewPage">
+                    <i class="layui-icon layui-icon-play"></i>预览页面
+                </a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a class="layui-btn layui-btn-primary" id="generateCode">
+                    <i class="layui-icon layui-icon-code"></i>生成代码
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a id="themeSwitch" title="切换主题">
+                    <i class="layui-icon layui-icon-moon"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="lowcode-container">
+        <!-- 左侧组件面板 -->
+        <div class="lowcode-sidebar">
+            <div class="sidebar-header">
+                <h3>组件库</h3>
+            </div>
+            <div class="sidebar-content">
+                <div class="component-group">
+                    <h4>基础组件</h4>
+                    <div class="component-item" data-type="button">按钮</div>
+                    <div class="component-item" data-type="input">输入框</div>
+                    <div class="component-item" data-type="text">文本</div>
+                    <div class="component-item" data-type="select">下拉选择</div>
+                    <div class="component-item" data-type="checkbox">复选框</div>
+                    <div class="component-item" data-type="radio">单选框</div>
+                </div>
+                <div class="component-group">
+                    <h4>布局组件</h4>
+                    <div class="component-item" data-type="grid">栅格布局</div>
+                    <div class="component-item" data-type="card">卡片</div>
+                    <div class="component-item" data-type="tabs">选项卡</div>
+                </div>
+                <div class="component-group">
+                    <h4>高级组件</h4>
+                    <div class="component-item" data-type="table">表格</div>
+                    <div class="component-item" data-type="form">表单</div>
+                    <div class="component-item" data-type="tree">树组件</div>
+                    <div class="component-item" data-type="chart">图表</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 中间设计区域 -->
+        <div class="lowcode-canvas">
+            <div class="canvas-header">
+                <div class="canvas-title">
+                    <input type="text" id="pageTitle" placeholder="请输入页面标题" value="新页面">
+                </div>
+            </div>
+            <div class="canvas-content" id="designCanvas">
+                <!-- 设计区域，组件将拖放到这里 -->
+                <div class="canvas-empty">
+                    <i class="layui-icon layui-icon-edit"></i>
+                    <p>从左侧拖拽组件到此处开始设计页面</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧属性面板 -->
+        <div class="lowcode-properties">
+            <div class="properties-header">
+                <h3>属性设置</h3>
+            </div>
+            <div class="properties-content" id="propertiesPanel">
+                <div class="no-selection">
+                    <p>请选择一个组件进行编辑</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 加载动画 -->
+<div class="page-loading">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
+<script src="/assets/libs/jquery/jquery-3.4.1.min.js"></script>
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="lowcode.js"></script>
+</body>
+</html>

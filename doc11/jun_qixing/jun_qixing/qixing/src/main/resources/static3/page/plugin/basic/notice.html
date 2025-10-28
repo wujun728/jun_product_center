@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>消息通知</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .div-item {
+            margin-top: 30px;
+        }
+
+        .btn-item {
+            display: inline-block;
+            margin: 0 10px 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">效果演示</div>
+                <div class="layui-card-body text-center" style="padding: 50px 0 77px 0;">
+                    <div class="div-item">
+                        <div class="btn-item">
+                            <button id="noticeBtn1" class="layui-btn">成功通知</button>
+                            <button id="noticeBtn2" class="layui-btn layui-btn-danger">错误通知</button>
+                        </div>
+                        <div class="btn-item">
+                            <button id="noticeBtn3" class="layui-btn layui-btn-warm">警告通知</button>
+                            <button id="noticeBtn4" class="layui-btn layui-btn-normal">信息通知</button>
+                        </div>
+                    </div>
+                    <div class="div-item">
+                        <div class="btn-item">
+                            <button id="noticeBtn5" class="layui-btn layui-btn-primary">成功提示</button>
+                            <button id="noticeBtn6" class="layui-btn layui-btn-primary">错误提示</button>
+                        </div>
+                        <div class="btn-item">
+                            <button id="noticeBtn7" class="layui-btn layui-btn-primary">警告提示</button>
+                            <button id="noticeBtn8" class="layui-btn layui-btn-primary">信息提示</button>
+                        </div>
+                    </div>
+                    <div class="div-item">
+                        <div class="btn-item">
+                            <button id="noticeBtn9" class="layui-btn layui-btn-primary">加载提示</button>
+                            <button id="noticeBtn10" class="layui-btn">普通通知</button>
+                        </div>
+                        <div class="btn-item">
+                            <button id="noticeBtn11" class="layui-btn">带图片通知</button>
+                            <button id="noticeBtn12" class="layui-btn">带按钮通知</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm12 layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">自定义参数</div>
+                <div class="layui-card-body layui-form layui-row">
+                    <div class="layui-col-md6">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">主题</label>
+                            <div class="layui-input-block">
+                                <select name="theme" lay-filter="noticeFormSelect">
+                                    <option value="light">light</option>
+                                    <option value="dark">dark</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">动画效果</label>
+                            <div class="layui-input-block">
+                                <select name="animateInside" lay-filter="noticeFormSelect">
+                                    <option value="false">关闭</option>
+                                    <option value="true">开启</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">布局类型</label>
+                            <div class="layui-input-block">
+                                <select name="layout" lay-filter="noticeFormSelect">
+                                    <option value="2">两排显示</option>
+                                    <option value="1">一排显示</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">布局方向</label>
+                            <div class="layui-input-block">
+                                <select name="rtl" lay-filter="noticeFormSelect">
+                                    <option value="false">居左</option>
+                                    <option value="true">居右</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">显示模式</label>
+                            <div class="layui-input-block">
+                                <select name="displayMode" lay-filter="noticeFormSelect">
+                                    <option value="0">无限制</option>
+                                    <option value="1">同类型存在不显示</option>
+                                    <option value="2">同类型存在先移除</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">气泡效果</label>
+                            <div class="layui-input-block">
+                                <select name="balloon" lay-filter="noticeFormSelect">
+                                    <option value="false">关闭</option>
+                                    <option value="true">开启</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">位置</label>
+                            <div class="layui-input-block">
+                                <select name="position" lay-filter="noticeFormSelect">
+                                    <option value="topRight">topRight</option>
+                                    <option value="topLeft">topLeft</option>
+                                    <option value="topCenter">topCenter</option>
+                                    <option value="bottomRight">bottomRight</option>
+                                    <option value="bottomLeft">bottomLeft</option>
+                                    <option value="bottomCenter ">bottomCenter</option>
+                                    <option value="center">center</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">进入动画</label>
+                            <div class="layui-input-block">
+                                <select name="transitionIn" lay-filter="noticeFormSelect">
+                                    <option value="fadeInLeft">fadeInLeft</option>
+                                    <option value="fadeInRight">fadeInRight</option>
+                                    <option value="fadeIn">fadeIn</option>
+                                    <option value="fadeInDown">fadeInDown</option>
+                                    <option value="fadeInUp">fadeInUp</option>
+                                    <option value="bounceInLeft">bounceInLeft</option>
+                                    <option value="bounceInRight">bounceInRight</option>
+                                    <option value="bounceInUp">bounceInUp</option>
+                                    <option value="bounceInDown">bounceInDown</option>
+                                    <option value="flipInX">flipInX</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">退出动画</label>
+                            <div class="layui-input-block">
+                                <select name="transitionOut" lay-filter="noticeFormSelect">
+                                    <option value="fadeOutRight">fadeOutRight</option>
+                                    <option value="fadeOutLeft">fadeOutLeft</option>
+                                    <option value="fadeOut">fadeOut</option>
+                                    <option value="fadeOutUp">fadeOutUp</option>
+                                    <option value="fadeOutDown">fadeOutDown</option>
+                                    <option value="flipOutX">flipOutX</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">音效</label>
+                            <div class="layui-input-block">
+                                <select name="audio" lay-filter="noticeFormSelect">
+                                    <option value="">无</option>
+                                    <option value="1">音效一</option>
+                                    <option value="2">音效二</option>
+                                    <option value="3">音效三</option>
+                                    <option value="4">音效四</option>
+                                    <option value="5">音效五</option>
+                                    <option value="6">音效六</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">消失时间</label>
+                            <div class="layui-input-block">
+                                <select name="timeout" lay-filter="noticeFormSelect">
+                                    <option value="5000">5000</option>
+                                    <option value="3000">3000</option>
+                                    <option value="15000">15000</option>
+                                    <option value="false">永不消失</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">进度条</label>
+                            <div class="layui-input-block">
+                                <select name="progressBar" lay-filter="noticeFormSelect">
+                                    <option value="true">显示</option>
+                                    <option value="false">不显示</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item text-center">
+                        <div class="inline-block" style="width: 85px;margin-right: 10px;">
+                            <select name="noticeType">
+                                <option value="success">success</option>
+                                <option value="error">error</option>
+                                <option value="warning">warning</option>
+                                <option value="info">info</option>
+                                <option value="show">show</option>
+                            </select>
+                        </div>
+                        <button class="layui-btn" lay-filter="noticeFormSubmit" lay-submit>发送通知</button>
+                        <button class="layui-btn layui-btn-primary" id="noticeBtnClose">关闭全部</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['form', 'notice'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var notice = layui.notice;
+
+        $('#noticeBtn1').click(function () {
+            notice.success({
+                title: '消息通知',
+                message: '你有新的消息，请注意查收!'
+            });
+        });
+        $('#noticeBtn2').click(function () {
+            notice.error({
+                title: '消息通知',
+                message: '你有新的消息，请注意查收!'
+            });
+        });
+        $('#noticeBtn3').click(function () {
+            notice.warning({
+                title: '消息通知',
+                message: '你有新的消息，请注意查收!'
+            });
+        });
+        $('#noticeBtn4').click(function () {
+            notice.info({
+                title: '消息通知',
+                message: '你有新的消息，请注意查收!'
+            });
+        });
+        $('#noticeBtn5').click(function () {
+            notice.msg('This is a message of success', {icon: 1});
+        });
+        $('#noticeBtn6').click(function () {
+            notice.msg('This is a message of error', {icon: 2});
+        });
+        $('#noticeBtn7').click(function () {
+            notice.msg('This is message of warning', {icon: 3});
+        });
+        $('#noticeBtn8').click(function () {
+            notice.msg('This is message of info', {icon: 5});
+        });
+        $('#noticeBtn9').click(function () {
+            notice.msg('Action in progress..', {icon: 4, close: true});
+        });
+        $('#noticeBtn10').click(function () {
+            notice.show({
+                title: '消息通知',
+                message: '你有新的消息，请注意查收!'
+            });
+        });
+        $('#noticeBtn11').click(function () {
+            notice.show({
+                /*image: '../../assets/images/logo.png',*/
+                image: 'https://pic.qqtn.com/up/2018-9/15367146917869444.jpg',
+                imageWidth: 71,
+                title: '消息通知',
+                maxWidth: '300px',
+                message: '你有新的消息，请注意查收!'
+            });
+        });
+        $('#noticeBtn12').click(function () {
+            notice.info({
+                title: '消息通知',
+                message: '你有新的消息，请注意查收!',
+                timeout: false,
+                pauseOnHover: false,
+                resetOnHover: false,
+                progressBar: false,
+                maxWidth: '300px',
+                buttons: [['<button>Btn1</button>', function () {
+                    notice.msg('点击了按钮一', {icon: 5});
+                }], ['<button>Btn2</button>', function () {
+                    notice.msg('点击了按钮二', {icon: 5});
+                }]]
+            });
+        });
+
+        // 自定义参数
+        form.on('submit(noticeFormSubmit)', function (data) {
+            for (var f in data.field) {
+                if (data.field[f] == 'false' || data.field == 'true') {
+                    data.field[f] = eval(data.field[f]);
+                }
+            }
+            data.field.title = '消息通知';
+            data.field.message = '你有新的消息，请注意查收!';
+            data.field.pauseOnHover = false;
+            data.field.resetOnHover = false;
+            notice[data.field.noticeType](data.field);
+            return false;
+        });
+        // 关闭全部
+        $('#noticeBtnClose').click(function () {
+            notice.destroy();
+        });
+
+    });
+</script>
+</body>
+</html>

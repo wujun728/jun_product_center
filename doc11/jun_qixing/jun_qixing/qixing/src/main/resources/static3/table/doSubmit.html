@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label ">流程标题</label>
+        <div class="layui-input-block">
+			<input type="text" name="taskNewName"  id="taskNewName"  lay-max="256"  
+				  placeholder="请输入流程标题(非必填)"   autocomplete="off" class="layui-input">
+				  <!-- lay-verify="required|operatorNext" -->
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">审批人</label>
+        <div class="layui-input-block">
+            <input name="operatorNextid" id="operatorNextid" hidden/>
+			<input type="text" name="operatorNext"  id="operatorNext"  lay-max="256" readonly="readonly"   
+				  placeholder="请选择流程审批人"   autocomplete="off" class="layui-input">
+				  <!-- lay-verify="required|operatorNext" -->
+        </div>
+    </div>
+    
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label  required">备注</label>
+        <div class="layui-input-block">
+            <textarea  name="taskOperatorMsg"  id="taskOperatorMsg"  lay-max="256" 
+					   	placeholder="请输入流程提交说明信息，便于审批"  lay-verify="required|taskOperatorMsg"   autocomplete="off"   class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">提交</button>
+<!--                 	<button class="layui-btn "  lay-filter="withRefuse">关闭</button> -->
+<!--                     <button class="pear-btn layui-btn-normal  pear-btn-success" id="withAgree" lay-event="agree">同意</button> -->
+<!--     				<button class="pear-btn layui-btn-normal pear-btn-warming" id="withRefuse" lay-event="refuse">驳回到发起人</button>  -->
+        </div>
+    </div>
+</div>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+	var token = CoreUtil.getData("access_token");
+	var data_doSubmit = CoreUtil.getData("data_doSubmit");
+	var tokenQuery = token==null?"":token.replace("#", "%23");
+	var $ = jQuery = layui.jquery;
+	$(function () {
+		var obj = data_doSubmit;
+     	$("#taskNewName").val(data_doSubmit['flowName']);
+    });
+	layui.use(['table', 'form', 'jquery', 'element'], function () {			
+        var form = layui.form,
+        layer = layui.layer,
+        $ = layui.$;
+		var tableSelect = layui.tableSelect;
+        var rowData;
+        
+        
+     	
+        //监听提交
+         form.on('submit(saveBtn)', function (data) {
+        	 window.agree();
+            return false;
+        }); 
+         form.on('submit(withRefuse)', function (data) {
+        	 window.refuse();
+            return false;
+        }); 
+         
+        window.agree = function () {
+        	var data = data_doSubmit;
+        	var processName = data['processName'];
+        	var businessId = data['id'];
+        	var flowName = data['flowName'];
+         	
+        	var taskNewName = $("#taskNewName").val();
+        	var operatorNext = $("#operatorNext").val();
+        	var operatorNextid = $("#operatorNextid").val();
+        	var taskOperatorMsg = $("#taskOperatorMsg").val();
+        	var taskOperatorFlag = "提交";
+        	if(operatorNext.length == 0 ){
+				 layer.alert('流程下一环节审批人不能为空，请选择下一步审批人员！', {icon: 9});
+				 return false;
+        	}
+        	if(taskOperatorMsg.length == 0){
+        		taskOperatorMsg = "提交流程" ;
+        	}
+        	var url = "/flow/task/submit";/* ?businessId=" + businessId+"&operatorNextid="+operatorNextid
+        			+ "&operatorNext="+operatorNext + "&taskOperatorMsg="+taskOperatorMsg 
+        			+"&taskOperatorFlag="+taskOperatorFlag+"&taskOperatorFlag="+taskOperatorFlag
+        			+"&processName="+processName+"&taskNewName="+taskNewName ; */
+        	var params = {
+        			businessId: businessId,
+        			operatorNextid: operatorNextid,
+        			operatorNext: operatorNext,
+        			taskOperatorFlag: taskOperatorFlag,
+        			taskOperatorFlag: taskOperatorFlag,
+        			processName: processName,
+        			taskNewName: taskNewName,
+        			taskOperatorMsg: taskOperatorMsg 
+                }
+        	CoreUtil.sendPost(url, params, function (res) {
+        		//JSON.stringify(data.field)
+        		var index = layer.msg("流程提交成功！", {time:1000},function () {
+	              // 关闭弹出层
+	        		var iframeIndex = parent.layer.getFrameIndex(window.name);
+	                parent.layer.close(iframeIndex);
+		            layer.close(index);
+	            });
+             	/* var index = layer.alert("流程提交成功！",{time:1000}, {
+		             title: '提交信息'
+		         }, function () {
+		            // 关闭弹出层
+	        		var iframeIndex = parent.layer.getFrameIndex(window.name);
+	                parent.layer.close(iframeIndex);
+		            layer.close(index);
+		         }); */
+            });
+        }
+
+        window.refuse = function () {
+        	layer.closeAll();//关闭所有页面层
+            // 关闭弹出层
+            /* var index = layer.msgalert("流程提交成功！", {
+		             title: '提交信息'
+	         }, function () {
+	            // 关闭弹出层
+        		var iframeIndex = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(iframeIndex);
+	            layer.close(index);
+	         }); */ 
+       }
+        
+
+        tableSelect.render({
+    		elem: '#operatorNext',
+    		checkedKey: 'id',
+    		table: {
+    			url: '/sys/users/listByPageApprover?authorization='+tokenQuery,
+    			method: 'POST',
+    			contentType: 'application/json',
+    			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+    		        return {
+    		          "code": res.code, //解析接口状态
+    		          "msg": res.msg, //解析提示文本
+    		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+    		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+    		        }
+    		      },
+    			cols: [ [
+    					{ type: 'checkbox' },
+    					{ field: 'realName', title: '名称' },
+    					{ field: 'username', title: '标题' },
+    					{ field: 'id', title: 'ID' ,hide:true}
+    				] ]
+    		},
+    		done: function (elem, data) {
+    			var NEWJSONID = [];
+    			var NEWJSON = [];
+    			layui.each(data.data, function (index, item) {
+    				NEWJSON.push(item.realName);
+    				NEWJSONID.push(item.username);
+    			});
+    			console.log('NEWJSON111='+NEWJSON);
+    			console.log('NEWJSONID111='+NEWJSONID);
+    			elem.val(NEWJSON.join(","));
+    			elem.val(NEWJSONID.join(","));
+    			$("#operatorNext").val(NEWJSON);
+   				$("#operatorNextid").val(NEWJSONID);
+    			form.render();
+    		}
+    	});
+        
+    });
+</script>
+</body>
+</html>

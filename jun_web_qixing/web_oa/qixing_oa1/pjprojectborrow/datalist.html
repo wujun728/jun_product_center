@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目借阅列表 - 勾股OA</title> 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:240px;">
+				<input type="text" name="refProjectName" placeholder="项目名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:240px;">
+				<input type="text" name="refUserName" placeholder="用户名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增项目借阅</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit">提交借阅申请</button>
+	<button class="layui-btn layui-btn-sm" lay-event="export">导出全部</button>
+  </div>
+</script>
+
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file">附件</a>
+  {{#  }else {  }}
+  {{#  } }}
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.documentTable = table.render({
+			elem: '#document',
+			title: '项目借阅列表',
+				toolbar: '#toolbarDemo',
+				headers: {"Authorization": localStorage.getItem("Authorization")},
+				contentType: 'application/json',
+				is_excel: true,
+				cellMinWidth: 80,
+				height: 'full-114',
+				url: '/dev-api/pjProjectBorrow/listByPage',
+				cols: [[
+					{type: 'checkbox', fixed: 'left'},
+					{field: 'id', title: 'ID', width: 80, align: 'center'},
+					{field: 'refProjectName', title: '项目名称', minWidth: 150, align: 'center'},
+					{field: 'refUserName', title: '用户名称', minWidth: 120, align: 'center'},
+					{field: 'borrowDesc', title: '借阅原因', minWidth: 200, align: 'center'},
+					{field: 'endTime', title: '借阅结束日期', width: 160, align: 'center'},
+					{
+						title: '流程状态', 
+						field: 'orderState', 
+						align: 'center',
+						width: 100,
+						templet: function (d) {
+							if (d.orderState == 0) {
+								return '<span style="color: #eb7350;">审批完成</span>';
+							}else if (d.orderState == 1) {
+								return '<span style="color: #00b487;">审批中</span>';
+							}else{
+								return '<span style="color: blue;">草稿</span>';
+							}
+						}
+					},
+					{title: '当前节点', field: 'taskName', align: 'center', width: 100},
+					{title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 100},
+					{field: 'creator', title: '提交人', width: 100, align: 'center'},
+					{width: 180, toolbar: '#tool', title: '操作', fixed: 'right'}
+						var html = '<a class="side-a" data-href="/doc/view.html?id=' + d.id + '">' + d.title + '</a>';
+						return html;
+					}
+				}
+				, { field: 'project', title: '关联项目', width: 240,}
+				, { field: 'admin_name', title: '创建人', align: 'center', width: 80 }
+				, { field: 'create_time', title: '创建时间', align: 'center', width: 150 }
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 120,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						return html+btn1+btn2+btn3+'</div>';
+					}						
+				}
+			]]
+		});
+		
+		
+		layui.form.render();
+
+		// 监听行工具事件
+		table.on('tool(document)', function (obj) {
+			var data = obj.data;
+			if (obj.event === 'del') {
+				layer.confirm('确定删除此项目借阅记录吗？', {
+					btn: ['确定', '取消'] //按钮
+				}, function () {
+					tool.get({
+						url: '/dev-api/pjProjectBorrow/delete',
+						data: {
+							id: data.id
+						},
+						success: function (res) {
+							if (res.code == 200) {
+								layer.msg('删除成功', {icon: 1});
+								table.reload('document');
+							}
+						}
+					});
+				});
+			} else if (obj.event === 'edit') {
+				window.location.href = '/qixing_oa1/pjprojectborrow/edit.html?id=' + data.id;
+			} else if (obj.event === 'file') {
+				window.location.href = '/qixing_oa1/pjprojectborrow/view.html?id=' + data.id;
+			}
+		});
+
+		// 监听工具栏事件
+		table.on('toolbar(document)', function (obj) {
+			var checkStatus = table.checkStatus(obj.config.id);
+			switch (obj.event) {
+				case 'add':
+					window.location.href = '/qixing_oa1/pjprojectborrow/add.html';
+					break;
+				case 'batchDeleted':
+					var data = checkStatus.data;
+					if (data.length === 0) {
+						layer.msg('请选择要删除的项目借阅记录');
+						return;
+					}
+					var ids = [];
+					layui.each(data, function (i, item) {
+						ids.push(item.id);
+					});
+					layer.confirm('确定删除选中的项目借阅记录吗？', {
+						btn: ['确定', '取消'] //按钮
+					}, function () {
+						tool.post({
+							url: '/dev-api/pjProjectBorrow/deleteBatch',
+							data: {
+								ids: ids
+							},
+							success: function (res) {
+								if (res.code == 200) {
+									layer.msg('删除成功', {icon: 1});
+									table.reload('document');
+								}
+							}
+						});
+					});
+					break;
+				case 'submit':
+					var data = checkStatus.data;
+					if (data.length === 0) {
+						layer.msg('请选择要提交的项目借阅记录');
+						return;
+					}
+					var ids = [];
+					layui.each(data, function (i, item) {
+						if(item.orderState != 0 && item.orderState != 1){//只能提交草稿状态
+							ids.push(item.id);
+						}
+					});
+					if (ids.length === 0) {
+						layer.msg('只能提交草稿状态的记录');
+						return;
+					}
+					tool.post({
+						url: '/dev-api/pjProjectBorrow/submit',
+						data: {
+							ids: ids
+						},
+						success: function (res) {
+							if (res.code == 200) {
+								layer.msg('提交成功', {icon: 1});
+								table.reload('document');
+							}
+						}
+					});
+					break;
+				case 'export':
+					layer.confirm('确定导出全部项目借阅记录吗？', {
+						btn: ['确定', '取消'] //按钮
+					}, function () {
+						var field = layui.form.val("barsearchform");
+						// 构造查询参数
+						var params = "";
+						for(var key in field){
+							if(field[key] && field[key]!=""){
+								params += "&"+key+"="+encodeURIComponent(field[key]);
+							}
+						}
+						window.open('/dev-api/pjProjectBorrow/export?1=1'+params);
+					});
+					break;
+			}
+		});
+
+		// 搜索
+		form.on('submit(LAY-front-search)', function (data) {
+			var field = data.field;
+			// 执行重载
+			table.reload('document', {
+				where: field,
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+	
+		// 表单验证
+		layui.form.verify({
+			refProjectName: function(value, item){
+				if(value.length>50){
+					return '项目名称长度不能超过50个字符';
+				}
+			},
+			refUserName: function(value, item){
+				if(value.length>20){
+					return '用户名称长度不能超过20个字符';
+				}
+			}
+		});
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

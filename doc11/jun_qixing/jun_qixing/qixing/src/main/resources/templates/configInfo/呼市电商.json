@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "呼市电商",
+    "url": "http://192.168.1.6:8124/CMEGlobex/html/index.html",
+    "desc": "为了避免传统采购模式的弊病，更好的体现公平竞争的原则，使政府采购物品价格公开化、透明化，呼和浩特市财政局引入了电商采购系统，通过连接诸多电商平台，引进更广泛的供应商，并实现与市场价的快速比较分析，保证政府采购商品的最高性价比，为管理单位和预算单位提供更为有效的监督手段。",
+    "mobile":false
+  },
+  "schedule": {
+    "status": "已提测",
+    "actualStartTime": "2017-07-24",
+    "actualEndTime": "",
+    "estimatedStartTime": "2017-07-24",
+    "estimatedEndTime": "2017-10-30",
+    "process": 95,
+    "delay": false,
+    "technology":["jQuery","handlebars"]
+  },
+  "resources": {
+    "demander": "亓桂玖",
+    "type":"合资公司",
+    "manager":"张书兵",
+    "charge": "褚甜甜",
+    "affiliate": ["温兴月","张涛","周志国"]
+  },
+  "bug": {
+    "total": 146,
+    "resolved": 146,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "暂无"
+  }
+}

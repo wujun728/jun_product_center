@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="offiecProductName" id="offiecProductNameCondition" placeholder="办公用品名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<select name="dictProductType" id="dictProductTypeCondition" lay-search="">
+					<option value="">全部类型</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="officeTodo" id="officeTodoCondition" placeholder="办公用品用途" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<input type="text" name="reqNum" id="reqNumCondition" placeholder="需求数量" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增申请</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="batchDeleted">删除选中</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="submit">提交流程</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool, xnUtil = layui.xnUtil;
+
+		layui.documentTable = table.render({
+			elem: '#document',
+			title: '办公用品申领列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/oaofficecount2/datalist.json",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'}
+				,{field: 'id', title: 'ID', sort: true, hide: true}
+				,{field: 'offiecProductName', title: '办公用品名称', minWidth:150}
+				,{field: 'dictProductType', title: '办公用品类型', width: 120, templet: function (item) { 
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_product_type', null);
+					if(item.dictProductType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProductType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictProductType)+'</span>';
+					}
+				}}
+				,{field: 'officeTodo', title: '办公用品用途', minWidth:180}
+				,{field: 'reqNum', title: '需求数量', width: 100, align: 'center'}
+				,{field: 'whyDesc', title: '申请原因', minWidth:180}
+				,{field: 'creator', title: '申请人', width: 100, align: 'center'}
+				,{title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+					if (d.orderState == 0) {
+						return '<span style="color: #eb7350;">审批完成</span>';
+					}else if (d.orderState == 1) {
+						return '<span style="color: #00b487;">审批中</span>';
+					}else{
+						return '<span style="color: blue;">草稿</span>';
+					}
+				}}
+				,{title: '当前节点', field: 'taskName', align: 'center',width:105}
+				,{title: '当前处理人', field: 'taskOperatorName', align: 'center',width:90}
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 180,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						var btn4='<span class="layui-btn layui-btn-warm layui-btn-xs" lay-event="file">附件</span>';
+						return html+btn1+btn2+btn3+btn4+'</div>';
+					}
+				}
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(document)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			var data = checkStatus.data;
+			if(data.length>0) {
+				var ids11 = [];
+				var ids22 = [];
+				$(data).each(function (index,item) {
+					if(item.orderState==0 || item.orderState==1){
+						ids11.push(item.orderState);
+					}
+					if(item.isOwner!=1){
+						ids22.push(item.isOwner);
+					}
+				});
+				if(ids11.length>0){
+					layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+					return;
+				}
+				if(ids22.length>0){
+					layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+					return;
+				}
+			}
+			switch(obj.event){
+				case 'add':
+					tool.side("/qixing_oa1/oaofficecount2/add.html");
+					break;
+				case 'batchDeleted':
+					if(data.length==0){
+						layer.msg("请选择要批量删除的列");
+					}else {
+						var ids = [];
+						$(data).each(function (index,item) {
+							ids.push(item.id);
+						});
+						tipDialog(ids);
+					}
+					break;
+				case 'submit':
+					if(data.length==0){
+						layer.msg("请选择要提交的记录");
+					}else if(data.length > 1){
+						layer.msg("请选择要提交的记录（one row each times）");
+					}else {
+						data[0]['processName'] = "office2";
+						CoreUtil.setData("data_doSubmit",data[0]);
+						layer.open({
+							type: 2,
+							skin: 'layui-layer-admin',
+							title: "提交流程",
+							shadeClose : false,
+							area: ['880px', '500px'], //宽高
+							shade: 0.6, //遮罩透明度
+							maxmin: true, //允许全屏最小化
+							anim: 1, //0-6的动画形式，-1不开启
+							content: '/table/doSubmit.html',
+							end: function(){
+								search();
+							}
+						});
+					}
+					break;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(document)', function(obj) {
+			var data = obj.data;
+			switch (obj.event) {
+				case 'view':
+					tool.side("/qixing_oa1/oaofficecount2/view.html?id="+data.id);
+					break;
+				case 'edit':
+					tool.side('/qixing_oa1/oaofficecount2/edit.html?id='+data.id);
+					break;
+				case 'del':
+					var ids=[];
+					ids.push(data.id);
+					tipDialog(ids);
+					break;
+				case 'file':
+					data['dictBiztype']='申领';
+					CoreUtil.setData("biz_rowdata",data);
+					var index = layer.open({
+						title: '上传附件',
+						skin: 'layui-layer-admin',
+						type: 2,
+						shade: 0.2,
+						maxmin:true,
+						shadeClose: true,
+						scrollbar: true,
+						area: ['80%', '80%'],
+						content: '/index/sysFilesByUser',
+					});
+					$(window).on("resize", function () {
+						layer.full(index);
+					});
+					break;
+			}
+		});
+		
+		//删除
+		var tipDialog=function (ids) {
+			layer.open({
+				skin: 'layui-layer-admin',
+				content: "确定要删除么?",
+				yes: function(index, layero){
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							search();
+						}
+					}
+					tool.delete("/qixing_oa1/oaofficecount2/delete", {ids: ids}, callback);
+				}
+			});
+		};
+		
+		//执行查询
+		function search() {
+			layui.documentTable.reload({
+				where: { //设定异步数据接口的额外参数，任意设
+					'1':'1'
+					,offiecProductName: $("#offiecProductNameCondition").val()
+					,dictProductType: $("#dictProductTypeCondition").val()
+					,officeTodo: $("#officeTodoCondition").val()
+					,reqNum: $("#reqNumCondition").val()
+				}
+				,page: {
+					curr: 1 //重新从第 1 页开始
+				}
+			});
+		}
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

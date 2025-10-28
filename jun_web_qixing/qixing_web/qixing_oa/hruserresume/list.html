@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >姓名</label>
+      <div class=" layui-input-inline "> 
+		<input type="name" name="name"  id="name"  lay-verify="required|name" lay-max="256"  placeholder="请输入姓名"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >电话</label>
+      <div class=" layui-input-inline "> 
+		<input type="phone" name="phone"  id="phone"  lay-verify="required|phone" lay-max="256"  placeholder="请输入电话"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >邮箱</label>
+      <div class=" layui-input-inline "> 
+		<input type="email" name="email"  id="email"  lay-verify="required|email" lay-max="256"  placeholder="请输入邮箱"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >微信</label>
+      <div class=" layui-input-inline "> 
+		<input type="wechat" name="wechat"  id="wechat"  lay-verify="required|wechat" lay-max="256"  placeholder="请输入微信"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >手机号</label>
+      <div class=" layui-input-inline "> 
+		<input type="telephone" name="telephone"  id="telephone"  lay-verify="required|telephone" lay-max="256"  placeholder="请输入手机号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >性别</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictSex" name="dictSex"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >国籍</label>
+      <div class=" layui-input-inline "> 
+		<input type="cuntroy" name="cuntroy"  id="cuntroy"  lay-verify="required|cuntroy" lay-max="256"  placeholder="请输入国籍"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >婚姻状态</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictMariage" name="dictMariage"></div>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >名族</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictNation" name="dictNation"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >生育状况</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictIsborn" name="dictIsborn"></div>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >家庭住址</label>
+      <div class=" layui-input-inline "> 
+		<input type="homeAdress" name="homeAdress"  id="homeAdress"  lay-verify="required|homeAdress" lay-max="256"  placeholder="请输入家庭住址"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >政治面貌</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictPoliticsStatus" name="dictPoliticsStatus"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >证件类型</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictIdType" name="dictIdType"></div>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >证件号</label>
+      <div class=" layui-input-inline "> 
+		<input type="idNo" name="idNo"  id="idNo"  lay-verify="required|idNo" lay-max="256"  placeholder="请输入证件号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >紧急联系人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="urgencyLinkMan"  id="urgencyLinkMan"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >紧急联系电话</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="urgencyLinkPhone"  id="urgencyLinkPhone"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >紧急联系人关系</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="urgencyLinkRelation"  id="urgencyLinkRelation"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >QQ号码</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="qqNo"  id="qqNo"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >第一学历</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictFirestDegree" name="dictFirestDegree"></div>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >学位</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictDegredd" name="dictDegredd"></div>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >专业</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="professional"  id="professional"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >教育类型</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictEduType" name="dictEduType"></div>
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >毕业院校</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="whichColledge"  id="whichColledge"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >院校类型</label>
+      <div class=" layui-input-inline " > 
+	<div id="dictColledge" name="dictColledge"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >毕业时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="graduationDate"  id="graduationDate"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>面试候选人</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="hrUserResume:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="name" name="nameCondition"  id="nameCondition" class="layui-input"  autocomplete="off" placeholder="请输入姓名">
+      </div>
+      <div class="layui-input-inline">
+    <input type="phone" name="phoneCondition"  id="phoneCondition" class="layui-input"  autocomplete="off" placeholder="请输入电话">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="email" name="emailCondition"  id="emailCondition" class="layui-input"  autocomplete="off" placeholder="请输入邮箱">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="wechat" name="wechatCondition"  id="wechatCondition" class="layui-input"  autocomplete="off" placeholder="请输入微信">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="telephone" name="telephoneCondition"  id="telephoneCondition" class="layui-input"  autocomplete="off" placeholder="请输入手机号">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictSex" name="dictSexCondition"  id="dictSexCondition" class="layui-input"  autocomplete="off" placeholder="请输入性别">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="cuntroy" name="cuntroyCondition"  id="cuntroyCondition" class="layui-input"  autocomplete="off" placeholder="请输入国籍">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictMariage" name="dictMariageCondition"  id="dictMariageCondition" class="layui-input"  autocomplete="off" placeholder="请输入婚姻状态">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictNation" name="dictNationCondition"  id="dictNationCondition" class="layui-input"  autocomplete="off" placeholder="请输入名族">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictIsborn" name="dictIsbornCondition"  id="dictIsbornCondition" class="layui-input"  autocomplete="off" placeholder="请输入生育状况">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="homeAdress" name="homeAdressCondition"  id="homeAdressCondition" class="layui-input"  autocomplete="off" placeholder="请输入家庭住址">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictPoliticsStatus" name="dictPoliticsStatusCondition"  id="dictPoliticsStatusCondition" class="layui-input"  autocomplete="off" placeholder="请输入政治面貌">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictIdType" name="dictIdTypeCondition"  id="dictIdTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入证件类型">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="idNo" name="idNoCondition"  id="idNoCondition" class="layui-input"  autocomplete="off" placeholder="请输入证件号">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrUserResume:add">新增</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrUserResume:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserResume:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserResume:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserResume:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrUserResume:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserResume:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  var xmSelect = null;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index',
+        xmSelect: 'xmSelect/xm-select'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice','xmSelect'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	// 初始化xmSelect组件
+	xmSelect = layui.xmSelect;
+    
+    // 初始化各个xmselect组件
+    var dictSex = xmSelect.render({
+        el: '#dictSex',
+        name: 'dictSex',
+        filterable: true,
+        data: [],
+        tips: '请选择性别'
+    });
+    
+    var dictMariage = xmSelect.render({
+        el: '#dictMariage',
+        name: 'dictMariage',
+        filterable: true,
+        data: [],
+        tips: '请选择婚姻状态'
+    });
+    
+    var dictNation = xmSelect.render({
+        el: '#dictNation',
+        name: 'dictNation',
+        filterable: true,
+        data: [],
+        tips: '请选择民族'
+    });
+    
+    var dictIsborn = xmSelect.render({
+        el: '#dictIsborn',
+        name: 'dictIsborn',
+        filterable: true,
+        data: [],
+        tips: '请选择生育状况'
+    });
+    
+    var dictPoliticsStatus = xmSelect.render({
+        el: '#dictPoliticsStatus',
+        name: 'dictPoliticsStatus',
+        filterable: true,
+        data: [],
+        tips: '请选择政治面貌'
+    });
+    
+    var dictIdType = xmSelect.render({
+        el: '#dictIdType',
+        name: 'dictIdType',
+        filterable: true,
+        data: [],
+        tips: '请选择证件类型'
+    });
+    
+    var dictFirestDegree = xmSelect.render({
+        el: '#dictFirestDegree',
+        name: 'dictFirestDegree',
+        filterable: true,
+        data: [],
+        tips: '请选择第一学历'
+    });
+    
+    var dictDegredd = xmSelect.render({
+        el: '#dictDegredd',
+        name: 'dictDegredd',
+        filterable: true,
+        data: [],
+        tips: '请选择学位'
+    });
+    
+    var dictEduType = xmSelect.render({
+        el: '#dictEduType',
+        name: 'dictEduType',
+        filterable: true,
+        data: [],
+        tips: '请选择教育类型'
+    });
+    
+    var dictColledge = xmSelect.render({
+        el: '#dictColledge',
+        name: 'dictColledge',
+        filterable: true,
+        data: [],
+        tips: '请选择院校类型'
+    });
+    
+    // 加载字典数据
+    loadDictData();
+    
+    // 加载字典数据函数
+    function loadDictData() {
+        // 获取性别字典
+        var sexDatas = xnUtil.getDictDataByDictTypeCode('dict_sex', null);
+        var sexData = sexDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictSex.update({data: sexData});
+        
+        // 获取婚姻状态字典
+        var mariageDatas = xnUtil.getDictDataByDictTypeCode('dict_mariage', null);
+        var mariageData = mariageDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictMariage.update({data: mariageData});
+        
+        // 获取民族字典
+        var nationDatas = xnUtil.getDictDataByDictTypeCode('dict_nation', null);
+        var nationData = nationDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictNation.update({data: nationData});
+        
+        // 获取生育状况字典
+        var isbornDatas = xnUtil.getDictDataByDictTypeCode('dict_isborn', null);
+        var isbornData = isbornDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictIsborn.update({data: isbornData});
+        
+        // 获取政治面貌字典
+        var politicsDatas = xnUtil.getDictDataByDictTypeCode('dict_politics_status', null);
+        var politicsData = politicsDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictPoliticsStatus.update({data: politicsData});
+        
+        // 获取证件类型字典
+        var idTypeDatas = xnUtil.getDictDataByDictTypeCode('dict_id_type', null);
+        var idTypeData = idTypeDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictIdType.update({data: idTypeData});
+        
+        // 获取第一学历字典
+        var degreeDatas = xnUtil.getDictDataByDictTypeCode('dict_firest_degree', null);
+        var degreeData = degreeDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictFirestDegree.update({data: degreeData});
+        
+        // 获取学位字典
+        var degreddDatas = xnUtil.getDictDataByDictTypeCode('dict_degredd', null);
+        var degreddData = degreddDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictDegredd.update({data: degreddData});
+        
+        // 获取教育类型字典
+        var eduTypeDatas = xnUtil.getDictDataByDictTypeCode('dict_edu_type', null);
+        var eduTypeData = eduTypeDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictEduType.update({data: eduTypeData});
+        
+        // 获取院校类型字典
+        var colledgeDatas = xnUtil.getDictDataByDictTypeCode('dict_colledge', null);
+        var colledgeData = colledgeDatas.map(item => ({
+            name: item.label,
+            value: item.value
+        }));
+        dictColledge.update({data: colledgeData});
+    }
+    
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/hrUserResume/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'name', title: '姓名', sort: true }, 
+          {field: 'phone', title: '电话', sort: true }, 
+          {field: 'email', title: '邮箱', sort: true }, 
+          {field: 'wechat', title: '微信', sort: true }, 
+          {field: 'telephone', title: '手机号', sort: true }, 
+          {field: 'dictSex', title: '性别', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_sex', null); 
+	            if(item.dictSex%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictSex)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictSex)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictSex);
+            }
+}, 
+          {field: 'cuntroy', title: '国籍', sort: true ,hide: true}, 
+          {field: 'dictMariage', title: '婚姻状态', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_mariage', null); 
+	            if(item.dictMariage%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictMariage)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictMariage)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictMariage);
+            }
+}, 
+          {field: 'dictNation', title: '名族', sort: true ,hide: true, templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_nation', null); 
+	            if(item.dictNation%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictNation)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictNation)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictNation);
+            }
+}, 
+          {field: 'dictIsborn', title: '生育状况', sort: true ,hide: true, templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_isborn', null); 
+	            if(item.dictIsborn%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsborn)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsborn)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictIsborn);
+            }
+}, 
+          {field: 'homeAdress', title: '家庭住址', sort: true }, 
+          {field: 'dictPoliticsStatus', title: '政治面貌', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_politics_status', null); 
+	            if(item.dictPoliticsStatus%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictPoliticsStatus)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictPoliticsStatus)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictPoliticsStatus);
+            }
+}, 
+          {field: 'dictIdType', title: '证件类型',hide: true, sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_id_type', null);
+	            if(item.dictIdType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIdType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIdType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictIdType);
+            }
+}, 
+          {field: 'idNo', title: '证件号',hide: true, sort: true }, 
+          {field: 'urgencyLinkMan', title: '紧急联系人', sort: true ,hide: true }, 
+          {field: 'urgencyLinkPhone', title: '紧急联系电话', sort: true ,hide: true }, 
+          {field: 'urgencyLinkRelation', title: '紧急联系人关系', sort: true ,hide: true }, 
+          {field: 'qqNo', title: 'QQ号码', sort: true ,hide: true }, 
+          {field: 'dictFirestDegree', title: '第一学历', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_firest_degree', null); 
+	            if(item.dictFirestDegree%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictFirestDegree)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictFirestDegree)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictFirestDegree);
+            }
+}, 
+          {field: 'dictDegredd', title: '学位', sort: true ,hide: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_degredd', null); 
+	            if(item.dictDegredd%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDegredd)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDegredd)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictDegredd);
+            }
+}, 
+          {field: 'professional', title: '专业', sort: true ,hide: false }, 
+          {field: 'dictEduType', title: '教育类型', sort: true ,hide: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_edu_type', null); 
+	            if(item.dictEduType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictEduType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictEduType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictEduType);
+            }
+}, 
+          {field: 'whichColledge', title: '毕业院校', sort: true ,hide: false }, 
+          {field: 'dictColledge', title: '院校类型', sort: true ,hide: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = xnUtil.getDictDataByDictTypeCode('dict_colledge', null); 
+	            if(item.dictColledge%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictColledge)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictColledge)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictColledge);
+            }
+}, 
+          {field: 'graduationDate', title: '毕业时间', sort: true ,hide: false }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	 	//日期
+	laydate.render({
+	    elem: '#graduationDate'
+	    ,type: 'date'
+    });
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=name]").val("");
+          $(".operation input[name=phone]").val("");
+          $(".operation input[name=email]").val("");
+          $(".operation input[name=wechat]").val("");
+          $(".operation input[name=telephone]").val("");
+          // 重置xmselect组件
+          dictSex.clear();
+          $('.operation input[name=cuntroy]').val('');
+          dictMariage.clear();
+          dictNation.clear();
+          dictIsborn.clear();
+          $('.operation input[name=homeAdress]').val('');
+          dictPoliticsStatus.clear();
+          dictIdType.clear();
+          $('.operation input[name=idNo]').val('');
+          $('.operation input[name=urgencyLinkMan]').val('');
+          $('.operation input[name=urgencyLinkPhone]').val('');
+          $('.operation input[name=urgencyLinkRelation]').val('');
+          $('.operation input[name=qqNo]').val('');
+          dictFirestDegree.clear();
+          dictDegredd.clear();
+          $('.operation input[name=professional]').val('');
+          dictEduType.clear();
+          $('.operation input[name=whichColledge]').val('');
+          dictColledge.clear();
+          $('.operation input[name=graduationDate]').val('');
+          $(".operation textarea[name=remark]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增面试候选人' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=name]").val(data.name);
+          $(".operation input[name=phone]").val(data.phone);
+          $(".operation input[name=email]").val(data.email);
+          $(".operation input[name=wechat]").val(data.wechat);
+          $(".operation input[name=telephone]").val(data.telephone);
+          // 设置xmselect组件的值
+          if(data.dictSex) dictSex.setValue([data.dictSex]);
+          $(".operation input[name=cuntroy]").val(data.cuntroy);
+          if(data.dictMariage) dictMariage.setValue([data.dictMariage]);
+          if(data.dictNation) dictNation.setValue([data.dictNation]);
+          if(data.dictIsborn) dictIsborn.setValue([data.dictIsborn]);
+          $(".operation input[name=homeAdress]").val(data.homeAdress);
+          if(data.dictPoliticsStatus) dictPoliticsStatus.setValue([data.dictPoliticsStatus]);
+          if(data.dictIdType) dictIdType.setValue([data.dictIdType]);
+          $(".operation input[name=idNo]").val(data.idNo);
+          $(".operation input[name=urgencyLinkMan]").val(data.urgencyLinkMan);
+          $(".operation input[name=urgencyLinkPhone]").val(data.urgencyLinkPhone);
+          $(".operation input[name=urgencyLinkRelation]").val(data.urgencyLinkRelation);
+          $(".operation input[name=qqNo]").val(data.qqNo);
+          if(data.dictFirestDegree) dictFirestDegree.setValue([data.dictFirestDegree]);
+          if(data.dictDegredd) dictDegredd.setValue([data.dictDegredd]);
+          $(".operation input[name=professional]").val(data.professional);
+          if(data.dictEduType) dictEduType.setValue([data.dictEduType]);
+          $(".operation input[name=whichColledge]").val(data.whichColledge);
+          if(data.dictColledge) dictColledge.setValue([data.dictColledge]);
+          $(".operation input[name=graduationDate]").val(data.graduationDate);
+          $(".operation textarea[name=remark]").val(data.remark);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改面试候选人' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='面试';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              type: 2,
+              skin: 'layui-layer-admin',
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrUserResume/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        content: "确定要删除么?",
+          skin: 'layui-layer-admin',
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrUserResume/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/hrUserResume/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/hrUserResume/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,name: $("#nameCondition").val()
+		,phone: $("#phoneCondition").val()
+		,email: $("#emailCondition").val()
+		,wechat: $("#wechatCondition").val()
+		,telephone: $("#telephoneCondition").val()
+		,dictSex: $("#dictSexCondition").val()
+		,cuntroy: $("#cuntroyCondition").val()
+		,dictMariage: $("#dictMariageCondition").val()
+		,dictNation: $("#dictNationCondition").val()
+		,dictIsborn: $("#dictIsbornCondition").val()
+		,homeAdress: $("#homeAdressCondition").val()
+		,dictPoliticsStatus: $("#dictPoliticsStatusCondition").val()
+		,dictIdType: $("#dictIdTypeCondition").val()
+		,idNo: $("#idNoCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+name: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '姓名不能大于'+max+'个字符的长度！';
+            }
+        }  ,  phone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  email: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '邮箱不能大于'+max+'个字符的长度！';
+            }
+        }  ,  wechat: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '微信不能大于'+max+'个字符的长度！';
+            }
+        }  ,  telephone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '手机号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictSex: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '性别不能大于'+max+'个字符的长度！';
+            }
+        }  ,  cuntroy: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '国籍不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictMariage: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '婚姻状态不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictNation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '名族不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIsborn: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '生育状况不能大于'+max+'个字符的长度！';
+            }
+        }  ,  homeAdress: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '家庭住址不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictPoliticsStatus: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '政治面貌不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIdType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '证件类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  idNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '证件号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  urgencyLinkMan: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '紧急联系人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  urgencyLinkPhone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '紧急联系电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  urgencyLinkRelation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '紧急联系人关系不能大于'+max+'个字符的长度！';
+            }
+        }  ,  qqNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return 'QQ号码不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictFirestDegree: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '第一学历不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictDegredd: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '学位不能大于'+max+'个字符的长度！';
+            }
+        }  ,  professional: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '专业不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictEduType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '教育类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  whichColledge: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '毕业院校不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictColledge: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '院校类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  graduationDate: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '毕业时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

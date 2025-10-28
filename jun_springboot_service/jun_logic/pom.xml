@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jun_springboot_vue</artifactId>
+        <groupId>io.github.wujun728</groupId>
+        <version>1.0.24</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <artifactId>jun_logic</artifactId>
+
+    <description>
+        业务逻辑层
+    </description>
+
+    <dependencies>
+		<!-- 通用工具-->
+        <dependency>
+            <groupId>io.github.wujun728</groupId>
+            <artifactId>jun_common</artifactId>
+        </dependency>
+        <!-- Lombok能以简单的注解形式来简化java代码，提高开发效率-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!-- spring-boot-devtools -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional> <!-- 表示依赖不会传递 -->
+        </dependency>
+
+    </dependencies>
+
+</project>

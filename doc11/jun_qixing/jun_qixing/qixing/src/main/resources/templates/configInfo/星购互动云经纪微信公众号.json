@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "星购互动云经纪微信公众号",
+    "url": "http://192.168.1.6:8124/xgWeChat/index.html",
+    "desc": "星购互动云经纪微信公众号",
+    "mobile":true
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-09-07",
+    "actualEndTime": "",
+    "estimatedStartTime": "2017-09-04",
+    "estimatedEndTime": "2017-10-25",
+    "process": 60,
+    "delay": false,
+	"technology":["Vue","Mint UI"]
+  },
+  "resources": {
+    "demander": "星购互动",
+    "type":"总部平台",
+    "manager":"王健",
+    "charge": "魏阁",
+    "affiliate": ["林源","邢玮"]
+  },
+  "bug": {
+    "total": 15,
+    "resolved": 15,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "账户名(18310634607),密码(123456)"
+  }
+}

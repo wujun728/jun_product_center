@@ -1,0 +1,53 @@
+{
+    "code": 0,
+    "msg": "",
+    "totalRow": [],
+    "count": 5,
+    "data": [
+        {
+            "id": 1000,
+            "title": "电视机",
+            "sale_price": "5200.00",
+            "purchase_price": "4200.00",
+            "base_price": "4800.00",
+            "unit": "台",
+            "specs": ""
+        },
+        {
+            "id": 1001,
+            "title": "苹果15",
+            "sale_price": "9999.00",
+            "purchase_price": "5999.00",
+            "base_price": "7999.00",
+            "unit": "台",
+            "specs": "1111"
+        },
+        {
+            "id": 1002,
+            "title": "HP1001打印机",
+            "sale_price": "100.00",
+            "purchase_price": "100.00",
+            "base_price": "100.00",
+            "unit": "件",
+            "specs": ""
+        },
+        {
+            "id": 1003,
+            "title": "测试产品2",
+            "sale_price": "1.00",
+            "purchase_price": "1.00",
+            "base_price": "0.00",
+            "unit": "1",
+            "specs": "1"
+        },
+        {
+            "id": 1005,
+            "title": "测试产品三",
+            "sale_price": "200.00",
+            "purchase_price": "0.00",
+            "base_price": "0.00",
+            "unit": "个",
+            "specs": ""
+        }
+    ]
+}

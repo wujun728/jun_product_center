@@ -1,0 +1,23 @@
+<div style="padding: 25px 25px 15px 25px;" id="demoUrlDialog">
+    <div class="layui-text" style="margin-bottom: 5px;">
+        这是一个type=1的页面层弹窗，弹窗内容却来源于一个独立的html页面，它可以不用iframe就能加载一个独立页面，
+        只用使用url参数指定页面地址即可，这是admin.open对layer的扩展，它还可以直接使用模板引擎语法渲染上个页面传递过来的数据。
+    </div>
+    <blockquote class="layui-elem-quote">NAME: {{d.name}} &emsp; SEX: {{d.sex}}</blockquote>
+    <div class="text-center" style="padding-top: 15px;">
+        <button class="layui-btn" ew-event="closeDialog">关闭我</button>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script>
+    layui.use(['layer', 'admin'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var admin = layui.admin;
+
+        var layerData = admin.getLayerData('#demoUrlDialog');
+        console.log(layerData);
+
+    });
+</script>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>级联选择器</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .layui-form-label {
+            padding-left: 0;
+            padding-right: 0;
+            width: 110px;
+        }
+
+        .layui-form-item {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">基本用法</div>
+                <div class="layui-card-body">
+                    <div class="layui-form model-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">基本用法：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader1" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">设置默认值：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader2" value="jiangsu,suzhou,shizilin" placeholder="请选择"
+                                       class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">移入展开：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader3" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">进阶用法</div>
+                <div class="layui-card-body">
+                    <div class="layui-form model-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">全部禁用：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader4" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">部分禁用：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader5" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">选择即改变：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader6" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">高级用法</div>
+                <div class="layui-card-body">
+                    <div class="layui-form model-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">自定义项：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader7" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">动态加载：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader8" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">搜索功能：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader9" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">表单验证</div>
+                <div class="layui-card-body">
+                    <form class="layui-form model-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">请选择：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader10" placeholder="请选择" class="layui-hide"
+                                       lay-verType="tips" lay-verify="required" required/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item text-center">
+                            <button class="layui-btn layui-btn-primary icon-btn" type="reset">
+                                <i class="layui-icon">&#x1006;</i>重置
+                            </button>
+                            <button class="layui-btn icon-btn" lay-filter="demoCascaderformSub" lay-submit>
+                                <i class="layui-icon">&#xe605;</i>提交
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">常用示例</div>
+                <div class="layui-card-body">
+                    <div class="layui-form model-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">省市区选择：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader11" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">专业选择：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader12" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">更多配置</div>
+                <div class="layui-card-body">
+                    <div class="layui-form model-form">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">不显示清除：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader13" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">清除时重置：</label>
+                            <div class="layui-input-block">
+                                <input id="demoCascader14" placeholder="请选择" class="layui-hide"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script type="text/javascript" src="../../../assets/module/cascader/citys-data.js"></script>
+<script>
+    layui.use(['layer', 'form', 'tableX', 'cascader'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var tableX = layui.tableX;
+        var cascader = layui.cascader;
+
+        var data = [{
+            value: 'beijing',
+            label: '北京',
+            children: [
+                {
+                    value: 'gugong',
+                    label: '故宫'
+                },
+                {
+                    value: 'tiantan',
+                    label: '天坛'
+                },
+                {
+                    value: 'wangfujing',
+                    label: '王府井'
+                }
+            ]
+        }, {
+            value: 'jiangsu',
+            label: '江苏',
+            children: [
+                {
+                    value: 'nanjing',
+                    label: '南京',
+                    children: [
+                        {
+                            value: 'fuzimiao',
+                            label: '夫子庙',
+                        }
+                    ]
+                },
+                {
+                    value: 'suzhou',
+                    label: '苏州',
+                    children: [
+                        {
+                            value: 'zhuozhengyuan',
+                            label: '拙政园',
+                        },
+                        {
+                            value: 'shizilin',
+                            label: '狮子林',
+                        }
+                    ]
+                }
+            ],
+        }];
+
+        // 基础用法
+        cascader.render({
+            elem: '#demoCascader1',
+            data: data
+        });
+
+        // 设置默认值
+        cascader.render({
+            elem: '#demoCascader2',
+            data: data
+        });
+
+        // 移入展开
+        cascader.render({
+            elem: '#demoCascader3',
+            data: data,
+            trigger: 'hover'
+        });
+
+        // 禁用全部
+        cascader.render({
+            elem: '#demoCascader4',
+            data: data,
+            disabled: true
+        });
+
+        // 禁用部分
+        var data1 = tableX.deepClone(data);
+        data1[0].children[2].disabled = true;
+        data1[1].children[0].disabled = true;
+        data1[1].children[1].children[1].disabled = true;
+        cascader.render({
+            elem: '#demoCascader5',
+            data: data1
+        });
+
+        // 选择即改变
+        cascader.render({
+            elem: '#demoCascader6',
+            data: data,
+            changeOnSelect: true
+        });
+
+        // 自定义项
+        cascader.render({
+            elem: '#demoCascader7',
+            data: data,
+            renderFormat: function (labels, values) {
+                return labels.join(' || ');
+            }
+        });
+
+        // 动态加载
+        cascader.render({
+            elem: '#demoCascader8',
+            reqData: function (values, callback, data) {
+                setTimeout(function () {  // 模拟网络请求
+                    callback(getData(data ? data.value : undefined));
+                }, 1500);
+            },
+            onChange: function (values, data) {
+                console.log(values);
+                console.log(data);
+                console.log('-----------------');
+            }
+        });
+
+        // 模拟网络请求加载数据
+        function getData(value) {
+            var list = [];
+            if (!value) {
+                list = [
+                    {value: 'beijing', label: '北京', haveChildren: true},
+                    {value: 'jiangsu', label: '江苏', haveChildren: true}
+                ];
+            } else if (value == 'beijing') {
+                list = [
+                    {value: 'gugong', label: '故宫'},
+                    {value: 'tiantan', label: '天坛'},
+                    {value: 'wangfujing', label: '王府井'}
+                ];
+            } else if (value == 'jiangsu') {
+                list = [
+                    {value: 'nanjing', label: '南京', haveChildren: true},
+                    {value: 'suzhou', label: '苏州', haveChildren: true}
+                ];
+            } else if (value == 'nanjing') {
+                list = [
+                    {value: 'fuzimiao', label: '夫子庙'}
+                ];
+            } else if (value == 'suzhou') {
+                list = [
+                    {value: 'zhuozhengyuan', label: '拙政园'},
+                    {value: 'shizilin', label: '狮子林'}
+                ];
+            }
+            return list;
+        }
+
+        // 搜索功能
+        cascader.render({
+            elem: '#demoCascader9',
+            data: data,
+            filterable: true,
+            onChange: function (values, data) {
+                console.log(values);
+                console.log(data);
+                console.log('-----------------');
+            }
+        });
+
+        // 表单验证
+        cascader.render({
+            elem: '#demoCascader10',
+            data: data
+        });
+        form.on('submit(demoCascaderformSub)', function (data) {
+            layer.closeAll('tips');
+            layer.msg('表单验证通过', {icon: 1});
+            return false;
+        });
+
+        // 省市区选择
+        cascader.render({
+            elem: '#demoCascader11',
+            data: citysData,
+            itemHeight: '250px',
+            filterable: true,
+            onChange: function (values, data) {
+                console.log(values);
+                console.log(data);
+                console.log('-----------------');
+            }
+        });
+
+        // 专业选择
+        cascader.render({
+            elem: '#demoCascader12',
+            itemHeight: '220px',
+            data: [{
+                label: '计算机学院',
+                value: '1',
+                children: [{
+                    label: '软件技术',
+                    value: '1-1'
+                }, {
+                    label: '计算机网络技术',
+                    value: '1-2'
+                }, {
+                    label: '计算机信息管理',
+                    value: '1-3'
+                }, {
+                    label: '物联网应用技术',
+                    value: '1-4'
+                }, {
+                    label: '数字媒体应用技术',
+                    value: '1-5'
+                }, {
+                    label: '移动互联应用技术',
+                    value: '1-6'
+                }]
+            }, {
+                label: '机械工程学院',
+                value: '2',
+                children: [{
+                    label: '模具设计与制造',
+                    value: '2-1'
+                }, {
+                    label: '机械设计与制造',
+                    value: '2-2'
+                }, {
+                    label: '数控技术',
+                    value: '2-3'
+                }, {
+                    label: '机械制造与自动化',
+                    value: '2-4'
+                }]
+            }, {
+                label: '商学院',
+                value: '3',
+                children: [{
+                    label: '电子商务',
+                    value: '3-1'
+                }, {
+                    label: '物流管理',
+                    value: '3-2'
+                }, {
+                    label: '报关与国际货运',
+                    value: '3-3'
+                }, {
+                    label: '连锁经营管理',
+                    value: '3-4'
+                }, {
+                    label: '旅游管理',
+                    value: '3-5'
+                }, {
+                    label: '商务英语',
+                    value: '3-6'
+                }, {
+                    label: '会计',
+                    value: '3-7'
+                }, {
+                    label: '金融管理',
+                    value: '3-8'
+                }, {
+                    label: '工商企业管理',
+                    value: '3-9'
+                }]
+            }]
+        });
+
+        // 关闭清除按钮
+        cascader.render({
+            elem: '#demoCascader13',
+            data: data,
+            clearable: false
+        });
+
+        // 清除时重置
+        cascader.render({
+            elem: '#demoCascader14',
+            data: data,
+            clearAllActive: true
+        });
+
+
+    });
+</script>
+</body>
+</html>

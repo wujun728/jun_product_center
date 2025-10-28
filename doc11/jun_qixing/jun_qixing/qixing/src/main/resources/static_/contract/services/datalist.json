@@ -1,0 +1,32 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1000,
+            "title": "定制开发服务",
+            "cate_id": 0,
+            "price": "500.00",
+            "content": null,
+            "sort": 0,
+            "status": 1,
+            "create_time": "1724944994",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 1001,
+            "title": "授权购买服务",
+            "cate_id": 0,
+            "price": "599.00",
+            "content": null,
+            "sort": 0,
+            "status": 1,
+            "create_time": "1724945014",
+            "update_time": "0",
+            "delete_time": "0"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+package ${serviceImplPackageName};
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import sy.dao.base.BaseDao;
+import ${modelPackageName}.${modelName};
+import sy.service.base.impl.BaseServiceImpl;
+import ${servicePackageName}.${modelName}Service;
+
+/**
+ * ${modelName}ServiceImpl
+ *
+ * http://git.oschina.net/sphsyv/sypro
+ *
+ * 由代码生成器生成
+ *
+ * @author 孙宇
+ *
+ */
+@Service("${lowerModelName}Service")
+public class ${modelName}ServiceImpl extends BaseServiceImpl<${modelName}, ${pkType}> implements ${modelName}Service {
+
+	@Resource(name = "${lowerModelName}Dao")
+	@Override
+	public void setDao(BaseDao<${modelName}, ${pkType}> dao) {
+		super.dao = dao;
+	}
+
+}

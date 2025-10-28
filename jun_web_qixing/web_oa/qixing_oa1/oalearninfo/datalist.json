@@ -1,0 +1,159 @@
+{
+  "code": 200,
+  "msg": "操作成功",
+  "data": {
+    "count": 15,
+    "list": [
+      {
+        "id": "1",
+        "title": "新员工入职培训手册",
+        "dictMsgType": "入职培训",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-06-15",
+        "invalidDate": "",
+        "content": "这是新员工入职培训的详细内容，包括公司文化、规章制度、安全培训等...",
+        "createTime": "2024-06-10 14:30:00"
+      },
+      {
+        "id": "2",
+        "title": "产品研发流程规范",
+        "dictMsgType": "研发规范",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-06-01",
+        "invalidDate": "",
+        "content": "详细介绍了公司产品研发的各个阶段流程和规范要求...",
+        "createTime": "2024-05-25 10:15:00"
+      },
+      {
+        "id": "3",
+        "title": "客户服务标准话术",
+        "dictMsgType": "服务指南",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-05-20",
+        "invalidDate": "",
+        "content": "客户服务过程中的标准沟通话术和应对技巧...",
+        "createTime": "2024-05-15 09:45:00"
+      },
+      {
+        "id": "4",
+        "title": "项目管理方法论培训",
+        "dictMsgType": "管理培训",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-05-10",
+        "invalidDate": "",
+        "content": "项目管理的核心方法论、工具和实践案例分享...",
+        "createTime": "2024-05-01 16:20:00"
+      },
+      {
+        "id": "5",
+        "title": "信息安全防护指南",
+        "dictMsgType": "安全培训",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-04-30",
+        "invalidDate": "",
+        "content": "公司信息安全政策和个人防护措施详解...",
+        "createTime": "2024-04-20 13:10:00"
+      },
+      {
+        "id": "6",
+        "title": "财务报销流程优化方案",
+        "dictMsgType": "财务指南",
+        "dictIsDraft": "草稿",
+        "publishDate": "",
+        "invalidDate": "",
+        "content": "财务报销流程的最新优化方案和操作指引...",
+        "createTime": "2024-06-12 11:30:00"
+      },
+      {
+        "id": "7",
+        "title": "市场营销策略分析",
+        "dictMsgType": "市场分析",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-04-25",
+        "invalidDate": "",
+        "content": "当前市场环境分析和公司营销策略解读...",
+        "createTime": "2024-04-15 15:45:00"
+      },
+      {
+        "id": "8",
+        "title": "团队建设活动指南",
+        "dictMsgType": "团队建设",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-04-20",
+        "invalidDate": "",
+        "content": "团队建设活动的组织方法和效果评估...",
+        "createTime": "2024-04-10 10:20:00"
+      },
+      {
+        "id": "9",
+        "title": "数据分析工具使用教程",
+        "dictMsgType": "技能培训",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-04-15",
+        "invalidDate": "",
+        "content": "公司常用数据分析工具的使用方法和技巧...",
+        "createTime": "2024-04-05 14:50:00"
+      },
+      {
+        "id": "10",
+        "title": "远程办公管理规定",
+        "dictMsgType": "管理制度",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-04-10",
+        "invalidDate": "",
+        "content": "远程办公的申请流程、工作规范和考核标准...",
+        "createTime": "2024-04-01 09:30:00"
+      },
+      {
+        "id": "11",
+        "title": "员工职业发展规划指南",
+        "dictMsgType": "职业发展",
+        "dictIsDraft": "草稿",
+        "publishDate": "",
+        "invalidDate": "",
+        "content": "员工职业发展通道和晋升标准说明...",
+        "createTime": "2024-06-14 16:10:00"
+      },
+      {
+        "id": "12",
+        "title": "质量控制标准操作流程",
+        "dictMsgType": "质量标准",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-04-05",
+        "invalidDate": "",
+        "content": "产品质量控制的标准操作流程和检验方法...",
+        "createTime": "2024-03-25 13:40:00"
+      },
+      {
+        "id": "13",
+        "title": "会议管理技巧培训",
+        "dictMsgType": "管理培训",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-03-30",
+        "invalidDate": "",
+        "content": "高效会议的组织和参与技巧...",
+        "createTime": "2024-03-20 11:15:00"
+      },
+      {
+        "id": "14",
+        "title": "知识管理系统使用手册",
+        "dictMsgType": "系统操作",
+        "dictIsDraft": "已发布",
+        "publishDate": "2024-03-25",
+        "invalidDate": "",
+        "content": "公司知识管理系统的功能介绍和操作指南...",
+        "createTime": "2024-03-15 15:30:00"
+      },
+      {
+        "id": "15",
+        "title": "跨部门协作最佳实践",
+        "dictMsgType": "协作指南",
+        "dictIsDraft": "草稿",
+        "publishDate": "",
+        "invalidDate": "",
+        "content": "跨部门沟通和协作的方法和案例分享...",
+        "createTime": "2024-06-13 10:45:00"
+      }
+    ]
+  }
+}

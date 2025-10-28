@@ -1,0 +1,35 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "普通项目",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1724944914",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 2,
+            "title": "工程项目",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1724944928",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 3,
+            "title": "服务项目",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1724944942",
+            "update_time": "0",
+            "delete_time": "0"
+        }
+    ]
+}

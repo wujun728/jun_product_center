@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >收件人</label>
+      <div class=" layui-input-inline "> 
+		<input type="recipients" name="recipients"  id="recipients"  lay-verify="required|recipients" lay-max="2000"   placeholder="请输入收件人"  autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >抄送人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="copyRecipients"  id="copyRecipients"  placeholder="请输入抄送人" autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >匿名抄送人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="blindCopyRecipients"  id="blindCopyRecipients"  placeholder="请输入匿名抄送人" autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >消息类型(1-邮件；2-短信)</label>
+      <div class=" layui-input-inline "> 
+	<select id="dictMsgType" name="dictMsgType" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_msg_type')}">
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >邮件标题</label>
+      <div class=" layui-input-inline "> 
+		<input type="mailSubject" name="mailSubject"  id="mailSubject"  lay-verify="required|mailSubject" lay-max="512"   placeholder="请输入邮件标题"  autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >邮件正文</label>
+      <div class=" layui-input-inline "> 
+		<input type="mailBody" name="mailBody"  id="mailBody"  lay-verify="required|mailBody" lay-max="2000"   placeholder="请输入邮件正文"  autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >消息格式(TEXT HTML)</label>
+      <div class=" layui-input-inline "> 
+	<select id="dictBodyFormat" name="dictBodyFormat" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_body_format')}">
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >重要级别(0 低，1 普通，2 高)</label>
+      <div class=" layui-input-inline "> 
+	<select id="dictImportance" name="dictImportance" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_importance')}">
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >保密级别(1 普通 2 个人 3 私密 4 机密)</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="sensitivity"  id="sensitivity"  placeholder="请输入保密级别(1 普通 2 个人 3 私密 4 机密)" autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >请求发送日期</label>
+      <div class=" layui-input-inline "> 
+	<input type="requestDate" name="requestDate"  id="requestDate" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >发送状态(1 sent - 邮件已发送。2 unsent - 数据库邮件仍在尝试发送消息。3 failed - 数据库无法发送消息。)</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="sentStatus"  id="sentStatus"  placeholder="请输入发送状态(1 sent - 邮件已发送。2 unsent - 数据库邮件仍在尝试发送消息。3 failed - 数据库无法发送消息。)" autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >最多重试5次</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="retryingTimes"  id="retryingTimes"  placeholder="请输入最多重试5次" autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >发送日期</label>
+      <div class=" layui-input-inline "> 
+	<input type="sentDate" name="sentDate"  id="sentDate" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ </div>
+<div class="layui-form-item">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="table_div">
+  <div id="searchParam"  shiro:hasPermission="bizMail:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="recipients" name="recipientsCondition"  id="recipientsCondition" class="layui-input"  autocomplete="off" placeholder="请输入收件人">
+      </div>
+      <div class="layui-input-inline">
+    <input type="dictMsgType" name="dictMsgTypeCondition"  id="dictMsgTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入消息类型(1-邮件；2-短信)">
+      </div>
+      <div class="layui-input-inline">
+    <input type="mailSubject" name="mailSubjectCondition"  id="mailSubjectCondition" class="layui-input"  autocomplete="off" placeholder="请输入邮件标题">
+      </div>
+      <div class="layui-input-inline">
+    <input type="mailBody" name="mailBodyCondition"  id="mailBodyCondition" class="layui-input"  autocomplete="off" placeholder="请输入邮件正文">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="bizMail:add">添加</button>
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="bizMail:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="bizMail:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="bizMail:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="bizCustomerTest:update">附件</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+    //加载table
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/bizMail/listBySelect' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: '邮件ID', sort: true ,hide:true }, 
+          {field: 'recipients', title: '收件人', sort: true }, 
+          {field: 'copyRecipients', title: '抄送人', sort: true ,hide:true }, 
+          {field: 'blindCopyRecipients', title: '匿名抄送人', sort: true ,hide:true }, 
+          {field: 'dictMsgType', title: '消息类型(1-邮件；2-短信)', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_msg_type')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictMsgType);
+            }
+}, 
+          {field: 'mailSubject', title: '邮件标题', sort: true }, 
+          {field: 'mailBody', title: '邮件正文', sort: true }, 
+          {field: 'dictBodyFormat', title: '消息格式(TEXT HTML)', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_body_format')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictBodyFormat);
+            }
+}, 
+          {field: 'dictImportance', title: '重要级别(0 低，1 普通，2 高)', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_importance')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictImportance);
+            }
+}, 
+          {field: 'sensitivity', title: '保密级别(1 普通 2 个人 3 私密 4 机密)', sort: true ,hide:true }, 
+          {field: 'requestDate', title: '请求发送日期', sort: true ,hide:true }, 
+          {field: 'sentStatus', title: '发送状态(1 sent - 邮件已发送。2 unsent - 数据库邮件仍在尝试发送消息。3 failed - 数据库无法发送消息。)', sort: true ,hide:true }, 
+          {field: 'retryingTimes', title: '最多重试5次', sort: true ,hide:true }, 
+          {field: 'sentDate', title: '发送日期', sort: true ,hide:true }, 
+         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+ 	//日期
+	laydate.render({
+	    elem: '#requestDate'
+	    ,type: 'datetime'
+    });
+	numberInput.render("#retryingTimes", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 2
+	});
+ 	//日期
+	laydate.render({
+	    elem: '#sentDate'
+	    ,type: 'datetime'
+    });
+
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+          $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=recipients]").val("");
+          $(".operation input[name=copyRecipients]").val("");
+          $(".operation input[name=blindCopyRecipients]").val("");
+          $(".operation input[name=dictMsgType]").val("");
+          $(".operation input[name=mailSubject]").val("");
+          $(".operation input[name=mailBody]").val("");
+          $(".operation input[name=dictBodyFormat]").val("");
+          $(".operation input[name=dictImportance]").val("");
+          $(".operation input[name=sensitivity]").val("");
+          $(".operation input[name=requestDate]").val("");
+          $(".operation input[name=sentStatus]").val("");
+          $(".operation input[name=retryingTimes]").val("");
+          $(".operation input[name=sentDate]").val("");
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['75%', '75%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增信息' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+          $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=recipients]").val(data.recipients);
+          $(".operation input[name=copyRecipients]").val(data.copyRecipients);
+          $(".operation input[name=blindCopyRecipients]").val(data.blindCopyRecipients);
+          $(".operation input[name=dictMsgType]").val(data.dictMsgType);
+          $(".operation input[name=mailSubject]").val(data.mailSubject);
+          $(".operation input[name=mailBody]").val(data.mailBody);
+          $(".operation input[name=dictBodyFormat]").val(data.dictBodyFormat);
+          $(".operation input[name=dictImportance]").val(data.dictImportance);
+          $(".operation input[name=sensitivity]").val(data.sensitivity);
+          $(".operation input[name=requestDate]").val(data.requestDate);
+          $(".operation input[name=sentStatus]").val(data.sentStatus);
+          $(".operation input[name=retryingTimes]").val(data.retryingTimes);
+          $(".operation input[name=sentDate]").val(data.sentDate);
+		  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['75%', '75%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改公共信息' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+            data['dictBiztype']='邮件文件';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['75%', '75%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/bizMail/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+          skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/bizMail/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/bizMail/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/bizMail/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,recipients: $("#recipientsCondition").val()
+		,dictMsgType: $("#dictMsgTypeCondition").val()
+		,mailSubject: $("#mailSubjectCondition").val()
+		,mailBody: $("#mailBodyCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+recipients: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '收件人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  copyRecipients: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '抄送人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  blindCopyRecipients: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '匿名抄送人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictMsgType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '消息类型(1-邮件；2-短信)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  mailSubject: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '邮件标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  mailBody: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '邮件正文不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictBodyFormat: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '消息格式(TEXT HTML)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictImportance: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '重要级别(0 低，1 普通，2 高)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  sensitivity: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '保密级别(1 普通 2 个人 3 私密 4 机密)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  requestDate: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '请求发送日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  sentStatus: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '发送状态(1 sent - 邮件已发送。2 unsent - 数据库邮件仍在尝试发送消息。3 failed - 数据库无法发送消息。)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  retryingTimes: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '最多重试5次不能大于'+max+'个字符的长度！';
+            }
+        }  ,  sentDate: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '发送日期不能大于'+max+'个字符的长度！';
+            }
+        }     });
+</script>

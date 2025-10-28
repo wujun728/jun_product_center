@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<script>
+    var source = [
+   
+     { id:1,pid:0,value:"唐僧" },
+     { id:2,pid:1,value:"唐僧1" },
+     { id:3,pid:1,value:"唐僧2" },
+     { id:4,pid:1,value:"唐僧3" },
+     { id:5,pid:0,value:"孙悟空" },
+     { id:6,pid:5,value:"孙悟空1" },
+     { id:7,pid:5,value:"孙悟空2" },
+     { id:8,pid:5,value:"孙悟空3" },
+     { id:9,pid:0,value:"猪八戒" },
+     { id:10,pid:9,value:"猪八戒1" },
+     { id:11,pid:10,value:"猪八戒2" },
+     { id:12,pid:11,value:"猪八戒3" },
+     { id:13,pid:12,value:"猪八戒4" },
+     { id:14,pid:13,value:"猪八戒5" },
+     { id:15,pid:14,value:"猪八戒6" },
+     { id:16,pid:0,value:"沙僧" }
+   
+   ]
+     function toTree(data) {
+       let result = []
+       if (!Array.isArray(data)) {
+         return result
+       }
+       data.forEach(item => {
+           delete item.children;
+       });
+       let map = {};
+       data.forEach(item => {
+           map[item.id] = item;
+       });
+       data.forEach(item => {
+         let parent = map[item.pid];
+         if (parent) {
+             (parent.children || (parent.children = [])).push(item);
+         } else {
+             result.push(item);
+         }
+       });
+       return result;
+     }
+     console.log(toTree(source))
+   </script>
+</body>
+</html>

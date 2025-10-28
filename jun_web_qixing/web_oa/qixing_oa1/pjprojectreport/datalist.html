@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目报告管理 - 勾股OA</title> 	
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:240px;">
+				<input type="text" name="project_name" placeholder="项目名称" readonly class="layui-input picker-oa" data-types="project" autocomplete="off" />
+				<input name="project_id" style="display: none;" value="" />
+			</div>
+			<div class="layui-input-inline" style="width:240px;">
+				<input type="text" name="report_name" placeholder="报告名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<select name="report_type" class="layui-select" lay-filter="report_type">
+					<option value="">报告类型</option>
+					<option value="1">月度报告</option>
+					<option value="2">季度报告</option>
+					<option value="3">年度报告</option>
+					<option value="4">专项报告</option>
+					<option value="5">其他报告</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<select name="process_status" class="layui-select" lay-filter="process_status">
+					<option value="">流程状态</option>
+					<option value="0">未提交</option>
+					<option value="1">待审核</option>
+					<option value="2">已审核</option>
+					<option value="3">已驳回</option>
+				</select>
+			</div>
+			<div class="layui-input-inline" style="width:300px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+				<button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="table-export"><i class="layui-icon layui-icon-download-circle mr-1"></i>导出</button>
+				<button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="view_process_chart"><i class="layui-icon layui-icon-picture mr-1"></i>查看审批流程图</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="showTable" lay-filter="showTable"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">修改</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del">删除</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="submit_review">提交复核</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-primary" lay-event="set_report_number">指定报告文号</button>
+  </div>
+</script>
+
+<script type="text/html" id="barDemo">
+  <div class="layui-btn-group layui-btn-group-sm">
+    <a class="layui-btn layui-btn-xs" lay-event="view">查看</a>
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="submit_review">提交复核</a>
+    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="set_report_number">生成文号</a>
+    <a class="layui-btn layui-btn-xs layui-btn-primary" lay-event="attach">附件</a>
+  </div>
+</script>
+
+<script type="text/html" id="process_status_tpl">
+  {{#  if(d.process_status == 0){ }}
+  <span class="layui-badge">未提交</span>
+  {{#  } else if(d.process_status == 1){ }}
+  <span class="layui-badge layui-badge-warm">待审核</span>
+  {{#  } else if(d.process_status == 2){ }}
+  <span class="layui-badge layui-badge-green">已审核</span>
+  {{#  } else if(d.process_status == 3){ }}
+  <span class="layui-badge layui-badge-danger">已驳回</span>
+  {{#  } }}
+</script>
+
+<script type="text/html" id="report_type_tpl">
+  {{#  if(d.report_type == 1){ }}
+  月度报告
+  {{#  } else if(d.report_type == 2){ }}
+  季度报告
+  {{#  } else if(d.report_type == 3){ }}
+  年度报告
+  {{#  } else if(d.report_type == 4){ }}
+  专项报告
+  {{#  } else if(d.report_type == 5){ }}
+  其他报告
+  {{#  } }}
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool, layer = layui.layer;
+
+		layui.documentTable = table.render({
+			elem: '#showTable',
+			title: '项目报告列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/pjProjectReport/listByPage",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'},
+				{field: 'report_name', title: '报告名称', minWidth: 200, templet: function (d) {
+					return '<a class="side-a" data-href="/qixing_oa1/pjprojectreport/view.html?id=' + d.id + '">' + d.report_name + '</a>';
+				}},
+				{field: 'project_name', title: '项目名称', minWidth: 180},
+				{field: 'report_type', title: '报告类型', width: 100, align: 'center', templet: '#report_type_tpl'},
+				{field: 'report_day', title: '报告完成天数', width: 120, align: 'center'},
+				{field: 'process_status', title: '流程状态', width: 100, align: 'center', templet: '#process_status_tpl'},
+				{field: 'current_node_name', title: '当前节点', width: 100, align: 'center'},
+				{field: 'current_auditor_name', title: '处理人', width: 100, align: 'center'},
+				{field: 'create_name', title: '创建人', width: 100, align: 'center'},
+				{field: 'create_time', title: '创建时间', width: 160, align: 'center'},
+				{fixed: 'right', title: '操作', width: 280, align: 'center', toolbar: '#barDemo'}
+			]]
+		});
+		
+		//触发事件
+		form.on('submit(table-search)', function(data) {
+			layui.documentTable.reload({
+				page: {curr: 1},
+				where: data.field
+			});
+			return false;
+		});
+		
+		form.on('submit(table-reset)', function(data) {
+			$('input[name="project_name"]').val('');
+			$('input[name="project_id"]').val('');
+			layui.documentTable.reload({
+				page: {curr: 1},
+				where: {}
+			});
+			return false;
+		});
+		
+		// 导出
+		form.on('submit(table-export)', function(data) {
+			let params = JSON.stringify(data.field);
+			let url = "/qixing_oa1/pjProjectReport/export?params=" + encodeURIComponent(params);
+			window.open(url);
+			return false;
+		});
+		
+		// 查看审批流程图
+		form.on('submit(view_process_chart)', function() {
+			layer.open({
+				type: 2,
+				title: '审批流程图',
+				area: ['800px', '500px'],
+				content: '/qixing_oa1/pjProjectReport/viewProcessChart'
+			});
+			return false;
+		});
+		
+		//工具栏事件
+		table.on('toolbar(showTable)', function(obj) {
+			var checkStatus = table.checkStatus(obj.config.id);
+			switch(obj.event) {
+				case 'add':
+					tool.side("/qixing_oa1/pjprojectreport/add.html");
+					break;
+				case 'edit':
+					if (checkStatus.data.length !== 1) {
+						layer.msg("请选择一条数据进行修改");
+						return;
+					}
+					tool.side('/qixing_oa1/pjprojectreport/edit.html?id=' + checkStatus.data[0].id);
+					break;
+				case 'del':
+					if (checkStatus.data.length === 0) {
+						layer.msg("请选择至少一条数据进行删除");
+						return;
+					}
+					var ids = [];
+					layui.each(checkStatus.data, function(i, item) {
+						ids.push(item.id);
+					});
+					deleteReport(ids);
+					break;
+				case 'submit_review':
+					if (checkStatus.data.length !== 1) {
+						layer.msg("请选择一条数据进行提交复核");
+						return;
+					}
+					if (checkStatus.data[0].process_status !== 0) {
+						layer.msg("只有未提交状态的数据才能提交复核");
+						return;
+					}
+					layer.confirm('确定要提交复核吗？', {
+						icon: 3,
+						title: '提示'
+					}, function(index) {
+						tool.post('/qixing_oa1/pjProjectReport/submitReview', {id: checkStatus.data[0].id}, function(res) {
+							layer.msg(res.msg);
+							if (res.code === 0) {
+								layui.documentTable.reload();
+							}
+						});
+						layer.close(index);
+					});
+					break;
+				case 'set_report_number':
+					if (checkStatus.data.length !== 1) {
+						layer.msg("请选择一条数据进行指定报告文号");
+						return;
+					}
+					tool.side('/qixing_oa1/pjProjectReport/setReportNumber.html?id=' + checkStatus.data[0].id);
+					break;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(showTable)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/qixing_oa1/pjprojectreport/view.html?id=" + data.id);
+				return;
+			}
+			if (obj.event === 'edit') {
+				tool.side('/qixing_oa1/pjprojectreport/edit.html?id=' + data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				deleteReport([data.id]);
+				return;
+			}
+			if (obj.event === 'submit_review') {
+				if (data.process_status !== 0) {
+					layer.msg("只有未提交状态的数据才能提交复核");
+					return;
+				}
+				layer.confirm('确定要提交复核吗？', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					tool.post('/qixing_oa1/pjProjectReport/submitReview', {id: data.id}, function(res) {
+						layer.msg(res.msg);
+						if (res.code === 0) {
+							layui.documentTable.reload();
+						}
+					});
+					layer.close(index);
+				});
+				return;
+			}
+			if (obj.event === 'set_report_number') {
+				tool.side('/qixing_oa1/pjProjectReport/setReportNumber.html?id=' + data.id);
+				return;
+			}
+			if (obj.event === 'attach') {
+				tool.side('/qixing_oa1/pjProjectReport/attachList.html?id=' + data.id);
+				return;
+			}
+		});
+		
+		// 删除报告
+		function deleteReport(ids) {
+			layer.confirm('确定要删除选中的报告吗？', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				tool.post('/qixing_oa1/pjProjectReport/delete', {ids: ids}, function(res) {
+					layer.msg(res.msg);
+					if (res.code === 0) {
+						layui.documentTable.reload();
+					}
+				});
+				layer.close(index);
+			});
+		}
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

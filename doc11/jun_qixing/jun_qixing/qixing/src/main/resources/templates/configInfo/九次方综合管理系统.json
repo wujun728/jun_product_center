@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "九次方综合管理系统",             
+    "url": "http://192.168.1.6:8124/jusfounManagementSystem/html/index/index.html",           
+    "desc": "",                          
+    "mobile":false                      
+  },
+  "schedule": {
+    "status": "开发中",                  
+    "actualStartTime": "2017-09-30",    
+    "actualEndTime": "未定",      
+    "estimatedStartTime": "2017-09-30", 
+    "estimatedEndTime": "2017-12-30",   
+    "process": 25,
+    "delay": false,                      
+    "technology":["jquery","layui","echarts","gulp"]              
+  },
+  "resources": {
+    "demander": "",                     
+    "type":"内部研发平台",				            
+    "manager":"王远",                 
+    "charge": "杨羽珂",                  
+    "affiliate": ["杜万福","王斌彦","周志国"]
+  },
+  "bug": {
+    "total": 0,                     
+    "resolved": 0,                  
+    "unsolved": 0                     
+  },
+  "others": {
+    "remark": ""                  
+  }
+}

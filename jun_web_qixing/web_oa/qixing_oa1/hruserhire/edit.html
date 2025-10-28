@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>编辑录用审批 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content=" "/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3  class="pb-3">编辑录用审批</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">入职人员名称<font>*</font>
+			</td>
+			<td>
+				<input type="text" name="refJobUsername" lay-verify="required" lay-reqText="请输入入职人员名称" placeholder="请输入入职人员名称" 
+					class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">入职部门<font>*</font></td>
+			<td>
+				<input type="text" name="refJobDeptname" lay-verify="required" lay-reqText="请输入入职部门" placeholder="请输入入职部门" 
+					class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">入职岗位<font>*</font></td>
+			<td>
+				<div id="dictJobBox"></div>
+				<input type="hidden" name="dictJob" value="" />
+			</td>
+			<td class="layui-td-gray">用工类型<font>*</font></td>
+			<td>
+				<div id="dictJobTypeBox"></div>
+				<input type="hidden" name="dictJobType" value="" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">新人直属领导<font>*</font></td>
+			<td>
+				<input type="text" name="refEntryLeader" lay-verify="required" lay-reqText="请输入直属领导" placeholder="请输入直属领导" 
+					class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">新员工导师</td>
+			<td>
+				<input type="text" name="refEntryTeach" placeholder="请输入新员工导师" 
+					class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">薪资<font>*</font></td>
+			<td>
+				<input type="text" name="money" lay-verify="required|number" lay-reqText="请输入薪资" placeholder="请输入薪资" 
+					class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">入职时间<font>*</font></td>
+			<td>
+				<input type="text" name="entryTime" id="entryTime" lay-verify="required" lay-reqText="请输入入职时间" placeholder="请选择入职时间" 
+					class="layui-input" value="">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">备注</td>
+			<td colspan="5">
+			  <textarea name="remark" placeholder="请输入备注" class="layui-textarea" style="border:1px solid #e6e6e6;"></textarea>
+			</td>
+		</tr>
+	</table>
+		<div class="pt-4">
+		<input type="hidden" name="id" value="0" />
+		<input type="hidden" name="wfstate" value="" />
+		<input type="hidden" name="currNodename" value="" />
+		<input type="hidden" name="currUsercode" value="" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tableSelect','datePicker'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, datePicker = layui.datePicker;
+		
+		// 加载字典数据
+		tool.sendGet('/api/sys/dict/type/data', {dictType: 'dict_job,dict_job_type'}, function(res) {
+			if (res.code == 0) {
+				// 入职岗位
+				var dictJobData = res.data.dict_job;
+				var dictJobBox = xmSelect.render({
+					elem: '#dictJobBox',
+					data: dictJobData,
+					filterable: true,
+					radio: true,
+					clickClose: true,
+					model: {
+						label: {
+							type: 'text'
+						}
+					},
+					on: {
+						change: function(data) {
+							if (data.arr.length > 0) {
+								$('input[name="dictJob"]').val(data.arr[0].value);
+							} else {
+								$('input[name="dictJob"]').val('');
+							}
+						}
+					}
+				});
+				
+				// 用工类型
+				var dictJobTypeData = res.data.dict_job_type;
+				var dictJobTypeBox = xmSelect.render({
+					elem: '#dictJobTypeBox',
+					data: dictJobTypeData,
+					filterable: true,
+					radio: true,
+					clickClose: true,
+					model: {
+						label: {
+							type: 'text'
+						}
+					},
+					on: {
+						change: function(data) {
+							if (data.arr.length > 0) {
+								$('input[name="dictJobType"]').val(data.arr[0].value);
+							} else {
+								$('input[name="dictJobType"]').val('');
+							}
+						}
+					}
+				});
+			}
+		});
+		
+		// 日期选择器
+		datePicker.render({
+			elem: '#entryTime',
+			type: 'date',
+			format: 'yyyy-MM-dd'
+		});
+		
+		// 获取ID参数
+		var id = tool.getParam('id');
+		if (id) {
+			// 加载详情数据
+			tool.sendGet('/qixing_oa1/hruserhire/detail', {id: id}, function(res) {
+				if (res.code == 0) {
+					var data = res.data;
+					form.val('webform', data);
+					// 设置下拉框的值
+					if (data.dictJob) {
+						$('#dictJobBox .xm-select').val([data.dictJob]);
+					}
+					if (data.dictJobType) {
+						$('#dictJobTypeBox .xm-select').val([data.dictJobType]);
+					}
+				}
+			});
+		}
+		
+		// 返回按钮
+		$('#btn_cancel').click(function() {
+			tool.sideClose();
+		});
+		
+		// 表单验证规则
+		form.verify({
+			refJobUsername: function(value) {
+				if (value.length > 256) {
+					return '入职人员名称不能超过256个字符';
+				}
+			},
+			refJobDeptname: function(value) {
+				if (value.length > 256) {
+					return '入职部门不能超过256个字符';
+				}
+			},
+			refEntryLeader: function(value) {
+				if (value.length > 255) {
+					return '直属领导不能超过255个字符';
+				}
+			}
+		});
+
+		// 监听提交
+		form.on('submit(webform)', function (data) {
+			// 校验必填字段
+			if (!data.field.refJobUsername) {
+				layer.msg('请输入入职人员名称');
+				return false;
+			}
+			if (!data.field.refJobDeptname) {
+				layer.msg('请输入入职部门');
+				return false;
+			}
+			if (!data.field.dictJob) {
+				layer.msg('请选择入职岗位');
+				return false;
+			}
+			if (!data.field.dictJobType) {
+				layer.msg('请选择用工类型');
+				return false;
+			}
+			if (!data.field.refEntryLeader) {
+				layer.msg('请输入直属领导');
+				return false;
+			}
+			if (!data.field.money) {
+				layer.msg('请输入薪资');
+				return false;
+			}
+			if (!data.field.entryTime) {
+				layer.msg('请选择入职时间');
+				return false;
+			}
+			
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000, 'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/qixing_oa1/hruserhire/update", data.field, callback, clickbtn);
+			return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

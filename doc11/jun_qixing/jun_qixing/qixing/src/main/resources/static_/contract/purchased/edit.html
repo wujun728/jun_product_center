@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+ 
+<script>
+	const login_admin=2;
+</script>
+ 
+</head>
+<body class="main-body">
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑采购品</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray-2">采购品名称<font>*</font></td>
+			<td colspan="3"><input type="text" name="title" value="{$detail.title}" autocomplete="off" placeholder="请输入采购品名称" lay-verify="required" lay-reqText="请输入采购品名称" class="layui-input"></td>
+			<td class="layui-td-gray-2">采购品分类<font>*</font></td>
+			<td>
+				 <select name="cate_id" lay-verify="required" lay-reqText="请选择分类">
+					<option value="">请选择分类</option>
+					{volist name=":set_recursion(get_base_data('PurchasedCate'))" id="v"}
+					<option value="{$v.id}" {eq name="$v.id" value="$detail.cate_id"} selected{/eq}>{$v.title}</option>
+					{/volist}
+				 </select>
+			</td>
+			<td class="layui-td-gray" rowspan="3">缩略图</td>
+			<td rowspan="3" style="width: 150px; vertical-align:top:">
+				<div class="layui-upload">
+					<button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="test1">缩略图(尺寸：240x136)</button>
+					<div class="layui-upload-list" id="demo1" style="width: 150px; height:90px; overflow: hidden;">
+						<img src="{:get_file($detail.thumb)}" style="max-width: 100%; height:90px;" />
+						<input type="hidden" name="thumb" value="{$detail.thumb}">
+					</div>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">采购品编码<font>*</font></td>
+			<td><input type="text" name="code" value="{$detail.code}" readonly class="layui-input" lay-verify="required"></td>
+			<td class="layui-td-gray">单位<font>*</font></td>
+			<td><input type="text" name="unit" autocomplete="off" value="{$detail.unit}" class="layui-input" lay-verify="required" lay-reqText="请输入采购品单位"></td>
+			<td class="layui-td-gray">规格</td>
+			<td><input type="text" name="specs" autocomplete="off" value="{$detail.specs}" placeholder="请输入采购品规格" class="layui-input"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">采购价(元)</td>
+			<td><input type="text" name="purchase_price" value="{$detail.purchase_price}" lay-verify="required|number" lay-reqText="请输入采购品采购价" autocomplete="off" placeholder="请输入采购品采购价" class="layui-input"></td>
+			<td class="layui-td-gray">是否实物<font>*</font></td>
+			<td colspan="3">
+				<input type="radio" name="is_object" value="1" title="是" {eq name="$detail.is_object" value="1"} checked {/eq}>
+				<input type="radio" name="is_object" value="2" title="否" {eq name="$detail.is_object" value="2"} checked {/eq}>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">
+				<div class="layui-input-inline">采购品附件</div>
+				<div class="layui-input-inline">
+					<button type="button" class="layui-btn layui-btn-xs" id="uploadBtn"><i class="layui-icon"></i></button>
+				</div>
+			</td>
+			<td colspan="7">
+				<div class="layui-row" id="uploadBox">
+					<input type="hidden" data-type="file" name="file_ids" value="{$detail.file_ids}">
+					{notempty name="$detail.file_ids"}
+					{volist name="$detail.file_array" id="vo"}
+					<div class="layui-col-md4" id="uploadFile{$vo.id}">{:file_card($vo)}</div>
+					{/volist}
+					{/notempty}
+				</div>
+			</td>
+		</tr> 
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">采购品描述<font>*</font></td>
+			<td colspan="7">
+				<textarea name="content" placeholder="请输入内容" class="layui-textarea" id="container" style="border:0;padding:0">{$detail.content}</textarea>
+			</td>
+		</tr>
+	</table>
+	<div class="pt-1">
+		<input type="hidden" name="id" value="{$detail.id}">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+  
+<!-- /主体 -->
+
+<!-- 脚本 -->
+  
+<script>
+const moduleInit = ['tool','tinymce','uploadPlus'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool,upload = layui.upload,uploadPlus = layui.uploadPlus;
+	
+    //封面上传
+    var uploadInst = upload.render({
+		elem: '#test1'
+		, url: "/api/index/upload"
+		, done: function (res) {
+			layer.msg(res.msg);
+			if (res.code == 0) {
+				//上传成功
+				$('#demo1 input').attr('value', res.data.id);
+				$('#demo1 img').attr('src', res.data.filepath);
+			}
+		}
+    });
+	
+    //编辑器初始化
+	var editor = layui.tinymce;
+	var edit = editor.render({
+		selector: "#container",
+		images_upload_url: '/api/index/upload/sourse/tinymce',//图片上传接口
+		height: 480
+	});	
+	
+	//附件上传
+	var attachment = new uploadPlus({
+		"target":'uploadBtn',
+		"targetBox":'uploadBox'
+	});
+	
+	//监听提交
+	form.on('submit(webform)', function(data){
+		data.field.content = tinyMCE.editors['container'].getContent();
+		if (data.field.content == '') {
+			layer.msg('请先完善采购品的描述内容');
+			return false;
+		}
+		let callback = function (e) {
+			layer.msg(e.msg);
+			if (e.code == 0) {
+				tool.sideClose(1000);				
+			}
+		}
+		let clickbtn = $(this);
+		tool.post("/contract/purchased/add", data.field, callback,clickbtn);
+		return false;
+	});
+}
+</script>
+<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>
+</html>

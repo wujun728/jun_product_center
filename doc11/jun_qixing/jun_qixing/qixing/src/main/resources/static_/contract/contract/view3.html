@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.layui-tab-title .layui-this{background-color:#fff;}
+.layui-tab-card,.layui-card{box-shadow:0 0 0 0 rgb(0 0 0 / 10%); border-radius:0; border-top:none;}
+#checkBox .pb-2{display:none;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<h3 class="pb-3">合同详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">合同名称</td>
+			<td colspan="3">ceshi1</td>
+			<td class="layui-td-gray">合同编号</td>
+			<td>1202409021009415</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">签约主体<span style="font-size:12px;">(乙方)</span></td>
+			<td colspan="3">勾股信息科技有限公司</td>
+			<td class="layui-td-gray-2">合同始止日期</td>
+			<td>2024-09-02 至 2024-10-03</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">客户名称<span style="font-size:12px;">(甲方)</span></td>
+			<td colspan="3">测试新客户</td>
+			<td class="layui-td-gray">签约客户代表</td>
+			<td>李小姐</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">客户联系地址</td>
+			<td colspan="3">测试新客户99888</td>
+			<td class="layui-td-gray">客户联系电话</td>
+			<td>1589858985</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">合同金额</td>
+			<td>100.00</td>
+			<td class="layui-td-gray">合同性质</td>
+			<td>普通合同</td>
+			<td class="layui-td-gray">合同类别</td>
+			<td>合同分类一</td>
+		</tr>
+		<tr>
+			<td colspan="6"><strong>签订信息</strong></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">合同签订人</td>
+			<td>翠萝寒</td>
+			<td class="layui-td-gray-2">合同所属部门</td>
+			<td>市场部</td>
+			<td class="layui-td-gray-2">合同签订日期</td>
+			<td>2024-09-02</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">合同制定人</td>
+			<td>-</td>
+			<td class="layui-td-gray-2">合同保管人</td>
+			<td>慕容婵 <span id="keeper" data-ids="60" data-names="慕容婵" class="layui-btn layui-btn-xs layui-btn-normal ml-1">更改</span></td>
+			<td class="layui-td-gray">合同共享人员</td>
+			<td colspan="3">荫尸人 <span id="shares" data-ids="16" data-names="荫尸人" class="layui-btn layui-btn-xs layui-btn-normal ml-1">更改</span></td>
+		</tr>
+				
+		<tr>
+			<td colspan="6"><strong>合同情况</strong></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">录入人</td>
+			<td>素还真 </td>
+			<td class="layui-td-gray">录入时间</td>
+			<td colspan="3">2024-09-02 10:10:21</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">归档状态</td>
+			<td>
+				<span class="red">已归档</span>
+							</td>
+			<td class="layui-td-gray">归档人</td>
+			<td>素还真 </td>
+			<td class="layui-td-gray">归档时间</td>
+			<td>2024-09-02 10:25:11</td>
+			</table>
+				
+	<div class="layui-tab layui-tab-card" style="margin:0; background-color:#fff;" lay-filter="contract" id="contractTab">
+		<ul class="layui-tab-title">
+			<li class="layui-this" data-load="true">审批信息</li>
+			<li>操作记录</li>
+		</ul>
+		<div class="layui-tab-content" style="padding:0;">
+			<div class="layui-tab-item layui-show" style="padding-top:12px; background-color:#fff;">	
+								<div id="checkBox" data-status="2" data-id="1000" data-checkflowid="6" class="px-3 pb-3"></div>
+					
+			</div>
+			<div class="layui-tab-item">
+				<div>
+	<div id="logList" class="log-timeline p-3"></div>
+</div>
+<script>	
+function log(){
+	let oaEdit = layui.oaEdit;	
+	oaEdit.log('logList','Contract',contract_id);
+}
+</script>	
+			</div>
+		</div>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	var contract_id = 1000;
+	var auth = 0;
+	var archive = 1725243911;
+	var moduleInit = ['tool','oaCheck','oaPicker','oaEdit'];
+	let checking_btn='<span class="layui-btn layui-btn-warm" data-event="stop" data-status="1">中止合同</span><span class="layui-btn layui-btn-danger" data-event="void" data-status="1">作废合同</span>';
+	function gouguInit() {
+		var tool = layui.tool,element = layui.element,oaCheck=layui.oaCheck,oaPicker=layui.oaPicker;	
+		
+		element.on('tab(contract)', function(data){
+			let index = data.index;
+			if(index == 1){
+				log();	
+			}
+		});
+		
+		oaCheck.init({
+			check_name:'contract',
+			check_copy:0,
+			check_back:archive==0?auth:0,
+			checking_btn:checking_btn
+		});
+
+		let eventCallback = function (e) {
+			layer.msg(e.msg);
+			parent.layui.pageTable.reload();
+			setTimeout(function(){
+				location.reload();
+			},1200)					
+		}
+		
+		//选择合同保管人弹窗	
+		$('body').on('click','#keeper',function () {
+			let that = $(this);
+			let ids=$(this).data('ids')+'',names = $(this).data('names')+'';
+			oaPicker.employeeInit({
+				ids:ids,
+				names:names,
+				type:1,//1是单选，2是多选
+				callback:function(data){
+					let select_id=[],select_name=[];
+					for(var a=0; a<data.length;a++){
+						select_id.push(data[a].id);
+						select_name.push(data[a].name);
+					}
+					tool.post("/contract/contract/add", {'id':contract_id,'keeper_uid':select_id.join(','),'scene':'change'}, eventCallback);
+				}
+			});
+		});
+	
+		//选择共享成员弹窗	
+		$('body').on('click','#shares',function () {
+			let that = $(this);
+			let ids=$(this).data('ids')+'',names = $(this).data('names')+'';
+			oaPicker.employeeInit({
+				ids:ids,
+				names:names,
+				type:2,//1是单选，2是多选
+				callback:function(data){
+					let select_id=[],select_name=[];
+					for(var a=0; a<data.length;a++){
+						select_id.push(data[a].id);
+						select_name.push(data[a].name);
+					}
+					tool.post("/contract/contract/add", {'id':contract_id,'share_ids':select_id.join(','),'scene':'change'}, eventCallback);
+				}
+			});
+		});
+		
+		//归档操作
+		$('body').on('click','[data-event="archive"]',function(){
+			let status = $(this).data('status');
+			let tips = '合同归档后将不能进行任何数据操作，确定要提交归档?';
+			if(status==0){
+				tips = '确定要反归档操作?';
+			}
+			layer.confirm(tips, {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				tool.post("/contract/api/contract_archive", {id: contract_id,archive_status:status}, eventCallback);
+				layer.close(index);
+			});
+		})
+
+		//中止操作
+		$('body').on('click','[data-event="stop"]',function(){
+			let status = $(this).data('status');
+			if(status==1){
+				layer.prompt({
+					formType: 2,
+					title: '请输入中止的理由',
+					area: ['480px', '120px']
+				}, function(value, index, elem){
+					tool.post("/contract/api/contract_stop", {id: contract_id,stop_status:status,stop_remark:value}, eventCallback);
+					layer.close(index);
+				});
+			}
+			else{
+				layer.confirm('确定要反中止该合同?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					tool.post("/contract/api/contract_stop", {id: contract_id,stop_status:status}, eventCallback);
+					layer.close(index);
+				});
+			}
+		})
+		
+		//作废操作
+		$('body').on('click','[data-event="void"]',function(){
+			let status = $(this).data('status');
+			if(status==1){
+				layer.prompt({
+					formType: 2,
+					title: '请输入作废的理由',
+					area: ['480px', '120px']
+				}, function(value, index, elem){
+					tool.post("/contract/api/contract_tovoid", {id: contract_id,void_status:status,void_remark:value}, eventCallback);
+					layer.close(index);
+				});
+			}
+			else{
+				layer.confirm('确定要反作废该合同?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					tool.post("/contract/api/contract_tovoid", {id: contract_id,void_status:status}, eventCallback);
+					layer.close(index);
+				});
+			}
+		})		
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

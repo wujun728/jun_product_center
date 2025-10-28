@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >工号</label>
+      <div class=" layui-input-inline "> 
+		<input type="usercode" name="usercode"  id="usercode"  lay-verify="required|usercode" lay-max="256"  placeholder="请输入工号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >姓名</label>
+      <div class=" layui-input-inline "> 
+		<input type="username" name="username"  id="username"  lay-verify="required|username" lay-max="256"  placeholder="请输入姓名"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >部门</label>
+      <div class=" layui-input-inline "> 
+		<input type="deptname" name="deptname"  id="deptname"  lay-verify="required|deptname" lay-max="256"  placeholder="请输入部门"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >职务</label>
+      <div class=" layui-input-inline "> 
+		<input type="postname" name="postname"  id="postname"  lay-verify="required|postname" lay-max="256"  placeholder="请输入职务"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >员工类型</label>
+      <div class=" layui-input-inline "> 
+		<input type="usertype" name="usertype"  id="usertype"  lay-verify="required|usertype" lay-max="256"  placeholder="请输入员工类型"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >入职日期</label>
+      <div class=" layui-input-inline "> 
+		<input type="entryTime" name="entryTime"  id="entryTime"  lay-verify="required|entryTime" lay-max="99999999"  placeholder="请输入入职日期"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >合同结束日期</label>
+      <div class=" layui-input-inline "> 
+		<input type="contractEndTime" name="contractEndTime"  id="contractEndTime"  lay-verify="required|contractEndTime" lay-max="99999999"  placeholder="请输入合同结束日期"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >项目组</label>
+      <div class=" layui-input-inline "> 
+		<input type="projectName" name="projectName"  id="projectName"  lay-verify="required|projectName" lay-max="256"  placeholder="请输入项目组"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >工作地点</label>
+      <div class=" layui-input-inline "> 
+		<input type="workLocation" name="workLocation"  id="workLocation"  lay-verify="required|workLocation" lay-max="256"  placeholder="请输入工作地点"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >离职原因分类</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="leanveReasonType"  id="leanveReasonType"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >离职原因详细</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="leanveReasonDetail"  id="leanveReasonDetail"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >是否需要离职证明</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="isNeedLeaveProve"  id="isNeedLeaveProve"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >离职证明领取方式</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="proveGetWay"  id="proveGetWay"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >离职证明邮寄地址</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="proveGetAdress"  id="proveGetAdress"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >收件人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="proveGetPeople"  id="proveGetPeople"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >收件电话</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="proveGetPhone"  id="proveGetPhone"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >直接上级替换人工号</label>
+      <div class=" layui-input-inline "> 
+		<input type="leaderUsercode" name="leaderUsercode"  id="leaderUsercode"  lay-verify="required|leaderUsercode" lay-max="256"  placeholder="请输入直接上级替换人工号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >直接上级替换人姓名</label>
+      <div class=" layui-input-inline "> 
+		<input type="leaderUsername" name="leaderUsername"  id="leaderUsername"  lay-verify="required|leaderUsername" lay-max="256"  placeholder="请输入直接上级替换人姓名"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >最后工作日</label>
+      <div class=" layui-input-inline "> 
+		<input type="lastWorkDay" name="lastWorkDay"  id="lastWorkDay"  lay-verify="required|lastWorkDay" lay-max="99999999"  placeholder="请输入最后工作日"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >薪资结算日</label>
+      <div class=" layui-input-inline "> 
+		<input type="payOnLastDay" name="payOnLastDay"  id="payOnLastDay"  lay-verify="required|payOnLastDay" lay-max="99999999"  placeholder="请输入薪资结算日"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >是否涉及工作交接</label>
+      <div class=" layui-input-inline "> 
+		<input type="isNeedJobHandover" name="isNeedJobHandover"  id="isNeedJobHandover"  lay-verify="required|isNeedJobHandover" lay-max="256"  placeholder="请输入是否涉及工作交接"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >工作交接是否完成</label>
+      <div class=" layui-input-inline "> 
+		<input type="isHandoverFilish" name="isHandoverFilish"  id="isHandoverFilish"  lay-verify="required|isHandoverFilish" lay-max="256"  placeholder="请输入工作交接是否完成"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>离职</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="hrUserDimission:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline" style="display: none;">
+    <input type="usercode" name="usercodeCondition"  id="usercodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入工号">
+      </div>
+       <div class="layui-input-inline"  >
+    <input type="username" name="usernameCondition"  id="usernameCondition" class="layui-input"  autocomplete="off" placeholder="请输入姓名">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="deptname" name="deptnameCondition"  id="deptnameCondition" class="layui-input"  autocomplete="off" placeholder="请输入部门">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="postname" name="postnameCondition"  id="postnameCondition" class="layui-input"  autocomplete="off" placeholder="请输入职务">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="usertype" name="usertypeCondition"  id="usertypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入员工类型">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="entryTime" name="entryTimeCondition"  id="entryTimeCondition" class="layui-input"  autocomplete="off" placeholder="请输入入职日期">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="contractEndTime" name="contractEndTimeCondition"  id="contractEndTimeCondition" class="layui-input"  autocomplete="off" placeholder="请输入合同结束日期">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="projectName" name="projectNameCondition"  id="projectNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目组">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="workLocation" name="workLocationCondition"  id="workLocationCondition" class="layui-input"  autocomplete="off" placeholder="请输入工作地点">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="leaderUsercode" name="leaderUsercodeCondition"  id="leaderUsercodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入直接上级替换人工号">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="leaderUsername" name="leaderUsernameCondition"  id="leaderUsernameCondition" class="layui-input"  autocomplete="off" placeholder="请输入直接上级替换人姓名">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="lastWorkDay" name="lastWorkDayCondition"  id="lastWorkDayCondition" class="layui-input"  autocomplete="off" placeholder="请输入最后工作日">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="payOnLastDay" name="payOnLastDayCondition"  id="payOnLastDayCondition" class="layui-input"  autocomplete="off" placeholder="请输入薪资结算日">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="isNeedJobHandover" name="isNeedJobHandoverCondition"  id="isNeedJobHandoverCondition" class="layui-input"  autocomplete="off" placeholder="请输入是否涉及工作交接">
+      </div>
+       <div class="layui-input-inline" style="display: none;">
+    <input type="isHandoverFilish" name="isHandoverFilishCondition"  id="isHandoverFilishCondition" class="layui-input"  autocomplete="off" placeholder="请输入工作交接是否完成">
+      </div>
+      <div class="layui-input-block ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+          <button class="layui-btn layui-btn-primary layui-border-blue" onclick="openFlow()" >查看审批流程图</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrUserDimission:add">新增</button>
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrUserDimission:delete">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="hrUserDimission:delete">提交</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserDimission:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserDimission:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserDimission:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrUserDimission:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserDimission:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+    var pkCode = "";
+    var flagType = "";
+    var id = CoreUtil.getData("biz_rowdata")==undefined?"":CoreUtil.getData("biz_rowdata")["id"];
+//     console.log(flagType);
+//     console.log(id);
+    if("view"==flagType){
+	     $(".table_div").hide();
+	     $(".operation").show();
+	     $("#buttonSave").hide();
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/hrUserDimission/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	                 form.render(); //更新全部
+	             }
+	         });
+	     });
+    }
+</script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/hrUserDimission/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'usercode', title: '工号', sort: true ,hide: true }, 
+          {field: 'username', title: '姓名', sort: true }, 
+          {field: 'deptname', title: '部门', sort: true ,hide: true }, 
+          {field: 'postname', title: '职务', sort: true ,hide: true }, 
+          {field: 'usertype', title: '员工类型', sort: true ,hide: true }, 
+          {field: 'entryTime', title: '入职日期', sort: true }, 
+          {field: 'contractEndTime', title: '合同结束日期', sort: true }, 
+          {field: 'projectName', title: '项目组', sort: true ,hide: true }, 
+          {field: 'workLocation', title: '工作地点', sort: true ,hide: true }, 
+          {field: 'leanveReasonType', title: '离职原因分类', sort: true ,hide: true }, 
+          {field: 'leanveReasonDetail', title: '离职原因详细', sort: true }, 
+          {field: 'isNeedLeaveProve', title: '是否需要离职证明', sort: true ,hide: true }, 
+          {field: 'proveGetWay', title: '离职证明领取方式', sort: true ,hide: true }, 
+          {field: 'proveGetAdress', title: '离职证明邮寄地址', sort: true ,hide: true }, 
+          {field: 'proveGetPeople', title: '收件人', sort: true ,hide: true }, 
+          {field: 'proveGetPhone', title: '收件电话', sort: true ,hide: true }, 
+          {field: 'leaderUsercode', title: '直接上级替换人工号', sort: true ,hide: true }, 
+          {field: 'leaderUsername', title: '直接上级替换人姓名', sort: true ,hide: true }, 
+          {field: 'lastWorkDay', title: '最后工作日', sort: true }, 
+          {field: 'payOnLastDay', title: '薪资结算日', sort: true ,hide: true }, 
+          {field: 'isNeedJobHandover', title: '是否涉及工作交接', sort: true ,hide: true }, 
+          {field: 'isHandoverFilish', title: '工作交接是否完成', sort: true  }, 
+     	 //   流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          { title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+                  if (d.orderState == 0) {
+                      return '<span style="color: #eb7350;">审批完成</span>'
+                  }else if (d.orderState == 1) {
+	                  return '<span style="color: #00b487;">审批中</span>'
+                  }else{
+	                  return '<span style="color: blue;">草稿</span>'
+                  }
+              }
+          },
+          { title: '当前节点', field: 'taskName', align: 'center' ,width:105},
+          { title: '当前处理人', field: 'taskOperatorName', align: 'center' ,width:90},{field: 'isOwner', title: 'isOwner',hide:true },
+          //   流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	 	//日期
+	laydate.render({
+	    elem: '#entryTime'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#contractEndTime'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#lastWorkDay'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#payOnLastDay'
+	    ,type: 'date'
+    });
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        //<!-- 流程flow-mark001,新增流程提交方案的submit的function -->
+        case 'submit':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要提交的记录");
+          }else if(data.length > 1){
+            layer.msg("请选择要提交的记录（one row each times）");
+          }else {
+//         	  window.checkPromission(data[0].createId);
+        	  data[0]['processName'] = "dimission";
+        	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+        	  CoreUtil.setData("data_doSubmit",data[0]);
+        	  console.log("data="+data);
+              layer.open({
+                  type: 2,
+                  skin: 'layui-layer-admin',
+                  title: "提交流程",
+                  shadeClose : false,
+                  area: ['880px', '500px'], //宽高
+                  shade: 0.6, //遮罩透明度
+                  maxmin: true, //允许全屏最小化
+                  anim: 1, //0-6的动画形式，-1不开启
+                  content:  '/table/doSubmit.html',
+                  end: function(){
+                	  search();
+                  }
+              });
+          }
+          break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=usercode]").val("");
+          $(".operation input[name=username]").val("");
+          $(".operation input[name=deptname]").val("");
+          $(".operation input[name=postname]").val("");
+          $(".operation input[name=usertype]").val("");
+          $(".operation input[name=entryTime]").val("");
+          $(".operation input[name=contractEndTime]").val("");
+          $(".operation input[name=projectName]").val("");
+          $(".operation input[name=workLocation]").val("");
+          $(".operation input[name=leanveReasonType]").val("");
+          $(".operation input[name=leanveReasonDetail]").val("");
+          $(".operation input[name=isNeedLeaveProve]").val("");
+          $(".operation input[name=proveGetWay]").val("");
+          $(".operation input[name=proveGetAdress]").val("");
+          $(".operation input[name=proveGetPeople]").val("");
+          $(".operation input[name=proveGetPhone]").val("");
+          $(".operation input[name=leaderUsercode]").val("");
+          $(".operation input[name=leaderUsername]").val("");
+          $(".operation input[name=lastWorkDay]").val("");
+          $(".operation input[name=payOnLastDay]").val("");
+          $(".operation input[name=isNeedJobHandover]").val("");
+          $(".operation input[name=isHandoverFilish]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增离职' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=usercode]").val(data.usercode);
+          $(".operation input[name=username]").val(data.username);
+          $(".operation input[name=deptname]").val(data.deptname);
+          $(".operation input[name=postname]").val(data.postname);
+          $(".operation input[name=usertype]").val(data.usertype);
+          $(".operation input[name=entryTime]").val(data.entryTime);
+          $(".operation input[name=contractEndTime]").val(data.contractEndTime);
+          $(".operation input[name=projectName]").val(data.projectName);
+          $(".operation input[name=workLocation]").val(data.workLocation);
+          $(".operation input[name=leanveReasonType]").val(data.leanveReasonType);
+          $(".operation input[name=leanveReasonDetail]").val(data.leanveReasonDetail);
+          $(".operation input[name=isNeedLeaveProve]").val(data.isNeedLeaveProve);
+          $(".operation input[name=proveGetWay]").val(data.proveGetWay);
+          $(".operation input[name=proveGetAdress]").val(data.proveGetAdress);
+          $(".operation input[name=proveGetPeople]").val(data.proveGetPeople);
+          $(".operation input[name=proveGetPhone]").val(data.proveGetPhone);
+          $(".operation input[name=leaderUsercode]").val(data.leaderUsercode);
+          $(".operation input[name=leaderUsername]").val(data.leaderUsername);
+          $(".operation input[name=lastWorkDay]").val(data.lastWorkDay);
+          $(".operation input[name=payOnLastDay]").val(data.payOnLastDay);
+          $(".operation input[name=isNeedJobHandover]").val(data.isNeedJobHandover);
+          $(".operation input[name=isHandoverFilish]").val(data.isHandoverFilish);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改离职' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='离职';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrUserDimission/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+      skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrUserDimission/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/hrUserDimission/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/hrUserDimission/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,usercode: $("#usercodeCondition").val()
+		,username: $("#usernameCondition").val()
+		,deptname: $("#deptnameCondition").val()
+		,postname: $("#postnameCondition").val()
+		,usertype: $("#usertypeCondition").val()
+		,entryTime: $("#entryTimeCondition").val()
+		,contractEndTime: $("#contractEndTimeCondition").val()
+		,projectName: $("#projectNameCondition").val()
+		,workLocation: $("#workLocationCondition").val()
+		,leaderUsercode: $("#leaderUsercodeCondition").val()
+		,leaderUsername: $("#leaderUsernameCondition").val()
+		,lastWorkDay: $("#lastWorkDayCondition").val()
+		,payOnLastDay: $("#payOnLastDayCondition").val()
+		,isNeedJobHandover: $("#isNeedJobHandoverCondition").val()
+		,isHandoverFilish: $("#isHandoverFilishCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+
+  	  function openFlow() {
+		  layer.open({
+			  type: 2,
+              skin: 'layui-layer-admin',
+			  title: "审批流程",
+			  shadeClose : false,
+			  area: ['1200px', '600px'], //宽高
+			  shade: 0.6, //遮罩透明度
+			  maxmin: true, //允许全屏最小化
+			  anim: 1, //0-6的动画形式，-1不开启
+			  content:  '/admin/view/flow/design2.html?processId=52fb314163ca43bb801cfe12324fcf3c',
+			  end: function(){ }
+		  });
+	　　};
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+usercode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  username: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '姓名不能大于'+max+'个字符的长度！';
+            }
+        }  ,  deptname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '部门不能大于'+max+'个字符的长度！';
+            }
+        }  ,  postname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '职务不能大于'+max+'个字符的长度！';
+            }
+        }  ,  usertype: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '员工类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  entryTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '入职日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  contractEndTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同结束日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  projectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目组不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workLocation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作地点不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leanveReasonType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离职原因分类不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leanveReasonDetail: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离职原因详细不能大于'+max+'个字符的长度！';
+            }
+        }  ,  isNeedLeaveProve: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否需要离职证明不能大于'+max+'个字符的长度！';
+            }
+        }  ,  proveGetWay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离职证明领取方式不能大于'+max+'个字符的长度！';
+            }
+        }  ,  proveGetAdress: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离职证明邮寄地址不能大于'+max+'个字符的长度！';
+            }
+        }  ,  proveGetPeople: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '收件人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  proveGetPhone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '收件电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leaderUsercode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '直接上级替换人工号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leaderUsername: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '直接上级替换人姓名不能大于'+max+'个字符的长度！';
+            }
+        }  ,  lastWorkDay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '最后工作日不能大于'+max+'个字符的长度！';
+            }
+        }  ,  payOnLastDay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '薪资结算日不能大于'+max+'个字符的长度！';
+            }
+        }  ,  isNeedJobHandover: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否涉及工作交接不能大于'+max+'个字符的长度！';
+            }
+        }  ,  isHandoverFilish: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作交接是否完成不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

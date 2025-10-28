@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="mobile-prefetch" href=""/>
+	<title>工时记录详情 - 勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="layui-card">
+		<div class="layui-card-header">
+			<span class="layui-breadcrumb">
+			  <a href="javascript:history.back()">工时记录管理</a>
+			  <a><cite>工时记录详情</cite></a>
+			</span>
+		</div>
+		<div class="layui-card-body">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray" style="width:120px;">工号</td>
+					<td style="width:200px;"><span id="usercode"></span></td>
+					<td class="layui-td-gray" style="width:120px;">用户名称</td>
+					<td><span id="refUsername"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">日期</td>
+					<td><span id="workDay"></span></td>
+					<td class="layui-td-gray">开始时间</td>
+					<td><span id="beginTime"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">结束时间</td>
+					<td><span id="endTime"></span></td>
+					<td class="layui-td-gray">工作时长(小时)</td>
+					<td><span id="workTotalTime"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">备注</td>
+					<td colspan="3"><span id="remark"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">创建时间</td>
+					<td><span id="createTime"></span></td>
+					<td class="layui-td-gray">更新时间</td>
+					<td><span id="updateTime"></span></td>
+				</tr>
+			</table>
+			<div class="layui-form-item mt-4">
+				<div class="layui-input-block text-center">
+					<button type="button" class="layui-btn layui-btn-primary" onclick="window.history.back(-1)">返回</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool = layui.tool;
+
+		//获取URL参数
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+
+		//加载数据
+		function loadData() {
+			var id = getUrlParam('id');
+			if (id) {
+				tool.get('/qixing_oa1/oapomsworkmarkstimes/get', {id: id}, function(res) {
+					if (res.code == 0 && res.data) {
+						var data = res.data;
+						$('#usercode').text(data.usercode || '-');
+						$('#refUsername').text(data.refUsername || '-');
+						$('#workDay').text(data.workDay || '-');
+						$('#beginTime').text(data.beginTime || '-');
+						$('#endTime').text(data.endTime || '-');
+						$('#workTotalTime').text(data.workTotalTime || '-');
+						$('#remark').text(data.remark || '-');
+						$('#createTime').text(data.createTime || '-');
+						$('#updateTime').text(data.updateTime || '-');
+					} else {
+						layer.msg('获取数据失败');
+					}
+				});
+			}
+		}
+
+		//页面加载完成后加载数据
+		loadData();
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

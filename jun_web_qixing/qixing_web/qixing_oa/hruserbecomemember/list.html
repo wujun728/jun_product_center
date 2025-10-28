@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline" style="display: none;">       <label class="layui-form-label  layui-required  " >员工工号</label>
+      <div class=" layui-input-inline "> 
+		<input type="usercode" name="usercode"  id="usercode"  lay-verify="required11|usercode11" lay-max="256"  placeholder="请输入员工工号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >员工姓名</label>
+      <div class=" layui-input-inline "> 
+		<input type="username" name="username"  id="username"  lay-verify="required|username" lay-max="256"  placeholder="请输入员工姓名"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >部门</label>
+      <div class=" layui-input-inline "> 
+		<input type="deptname" name="deptname"  id="deptname"  lay-verify="required|deptname" lay-max="256"  placeholder="请输入部门"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >岗位</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="postname"  id="postname"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >试用期开始时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="starttime1"  id="starttime1"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >试用期结束时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="endtime1"  id="endtime1"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+   
+ <div class="layui-inline">       <label class="layui-form-label  " >实际转正时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="acttime2"  id="acttime2"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >试用期导师评价</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="techDesc"  id="techDesc"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >试用期领导评价</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="leaderDesc"  id="leaderDesc"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >转正评价</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="becomeMemDesc"  id="becomeMemDesc"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >转正结论</label>
+      <div class=" layui-input-inline "> 
+	<div id="dictBecomeMember" name="dictBecomeMember" class="xm-select-dictBecomeMember" lay-filter="dictBecomeMember"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>转正</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="hrUserBecomeMember:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline" style="display: none;">
+    <input type="usercode" name="usercodeCondition"  id="usercodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入员工工号">
+      </div>
+      <div class="layui-input-inline" >
+    <input type="username" name="usernameCondition"  id="usernameCondition" class="layui-input"  autocomplete="off" placeholder="请输入员工姓名">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="deptname" name="deptnameCondition"  id="deptnameCondition" class="layui-input"  autocomplete="off" placeholder="请输入部门">
+      </div>
+      <div class="layui-input-block ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+          <button class="layui-btn layui-btn-primary layui-border-blue" onclick="openFlow()" >查看审批流程图</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrUserBecomeMember:add">新增</button>
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrUserBecomeMember:delete">删除</button>
+    <button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="hrUserBecomeMember:submit">提交</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserBecomeMember:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserBecomeMember:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserBecomeMember:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrUserBecomeMember:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserBecomeMember:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+    var pkCode = "";
+    var flagType = "";
+    var id = CoreUtil.getData("biz_rowdata")==undefined?"":CoreUtil.getData("biz_rowdata")["id"];
+//     console.log(flagType);
+//     console.log(id);
+    if("view"==flagType){
+	     $(".table_div").hide();
+	     $(".operation").show();
+	     $("#buttonSave").hide();
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/hrUserBecomeMember/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	                 form.render(); //更新全部
+	             }
+	         });
+	     });
+    }
+</script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index',
+        xmSelect: 'xmSelect'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice','xmSelect'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	var xmSelect = layui.xmSelect;
+      
+      // 初始化xmselect组件
+      var dictBecomeMemberIns = xmSelect.render({
+        el: '#dictBecomeMember',
+        name: 'dictBecomeMember',
+        tips: '请选择转正结论',
+        filterable: true,
+        data: []
+      });
+      
+      // 加载字典数据
+      function loadDictData() {
+        // 获取转正结论字典数据
+        var becomeMemberDatas = xnUtil.getDictDataByDictTypeCode('dict_become_member', null);
+        var becomeMemberOptions = [];
+        if(becomeMemberDatas && becomeMemberDatas.length > 0) {
+          becomeMemberDatas.forEach(function(item) {
+            becomeMemberOptions.push({
+              name: item.label,
+              value: item.value
+            });
+          });
+          dictBecomeMemberIns.update({
+            data: becomeMemberOptions
+          });
+        }
+      }
+      
+      // 调用加载字典数据函数
+      loadDictData();
+      
+      //加载table,数据表格
+      tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/hrUserBecomeMember/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'usercode', title: '员工工号', hide: true }, 
+          {field: 'username', title: '员工姓名', sort: true }, 
+          {field: 'deptname', title: '部门', sort: true }, 
+          {field: 'postname', title: '岗位', sort: true ,hide: false }, 
+          {field: 'starttime1', title: '试用期开始时间', sort: true ,hide: false }, 
+          {field: 'endtime1', title: '试用期结束时间', sort: true ,hide: false }, 
+          {field: 'acttime2', title: '实际转正时间', sort: true ,hide: true }, 
+          {field: 'techDesc', title: '试用期导师评价', sort: true ,hide: true }, 
+          {field: 'leaderDesc', title: '试用期领导评价', sort: true ,hide: true }, 
+          {field: 'becomeMemDesc', title: '转正评价', sort: true ,hide: false }, 
+          {field: 'dictBecomeMember', title: '转正结论', sort: true ,hide: true , templet: function (item) { 	            //获取类型对应的字典label
+              var datas =  xnUtil.getDictDataByDictTypeCode('dict_become_member', null);  
+	            if(item.dictBecomeMember%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictBecomeMember)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictBecomeMember)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictBecomeMember);
+            }
+}, 
+		  //   流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          { title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+                  if (d.orderState == 0) {
+                      return '<span style="color: #eb7350;">审批完成</span>'
+                  }else if (d.orderState == 1) {
+	                  return '<span style="color: #00b487;">审批中</span>'
+                  }else{
+	                  return '<span style="color: blue;">草稿</span>'
+                  }
+              }
+          },
+          { title: '当前节点', field: 'taskName', align: 'center' ,width:105},
+          { title: '当前处理人', field: 'taskOperatorName', align: 'center' ,width:90},
+          //   流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+    
+    tableSelect.render({
+		elem: '#username',
+		checkedKey: 'id',
+		table: {
+			url: '/hrUserHire/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{field: 'refJobUsername', title: '入职人员名称'}, 
+			        {field: 'refJobDeptname', title: '入职部门'}, 
+					{ field: 'XXXfullname', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.refJobUsername);
+				$("#deptname").val(item.refJobDeptname);
+				$("#username").val(item.refJobUsername);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+
+
+//遍历列，并渲染各种表单组件
+	 	//日期
+	laydate.render({
+	    elem: '#starttime1'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#endtime1'
+	    ,type: 'date'
+    });
+	laydate.render({
+	    elem: '#acttime2'
+	    ,type: 'date'
+    });
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        //<!-- 流程flow-mark001,新增流程提交方案的submit的function -->
+        case 'submit':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要提交的记录");
+          }else if(data.length > 1){
+            layer.msg("请选择要提交的记录（one row each times）");
+          }else {
+//         	  window.checkPromission(data[0].createId);
+        	  data[0]['processName'] = "becomemember";
+        	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+        	  CoreUtil.setData("data_doSubmit",data[0]);
+        	  console.log("data="+data);
+              layer.open({
+                  type: 2,
+                  skin: 'layui-layer-admin',
+                  title: "提交流程",
+                  shadeClose : false,
+                  area: ['880px', '500px'], //宽高
+                  shade: 0.6, //遮罩透明度
+                  maxmin: true, //允许全屏最小化
+                  anim: 1, //0-6的动画形式，-1不开启
+                  content:  '/table/doSubmit.html',
+                  end: function(){
+                	  search();
+                  }
+              });
+          }
+          break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $(".table_div").hide();
+          $(".operation").show();
+          $("title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=usercode]").val("");
+          $(".operation input[name=username]").val("");
+          $(".operation input[name=deptname]").val("");
+          $(".operation input[name=postname]").val("");
+          $(".operation input[name=starttime1]").val("");
+          $(".operation input[name=endtime1]").val("");
+          $(".operation textarea[name=acttime2]").val("");
+          $(".operation textarea[name=techDesc]").val("");
+          $(".operation textarea[name=leaderDesc]").val("");
+          $(".operation textarea[name=becomeMemDesc]").val("");
+          dictBecomeMemberIns.clear(); // 清空xmselect组件
+          $(".operation input[name=currNodeUsername]").val("");
+          $(".operation input[name=currNodename]").val("");
+          $(".operation input[name=wfstate]").val("");
+          $(".operation textarea[name=remark]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增转正' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=usercode]").val(data.usercode);
+          $(".operation input[name=username]").val(data.username);
+          $(".operation input[name=deptname]").val(data.deptname);
+          $(".operation input[name=postname]").val(data.postname);
+          $(".operation input[name=starttime1]").val(data.starttime1);
+          $(".operation input[name=endtime1]").val(data.endtime1);
+          $(".operation textarea[name=acttime2]").val(data.acttime2);
+          $(".operation textarea[name=techDesc]").val(data.techDesc);
+          $(".operation textarea[name=leaderDesc]").val(data.leaderDesc);
+          $(".operation textarea[name=becomeMemDesc]").val(data.becomeMemDesc);
+          // 使用xmselect组件的setValue方法设置值
+          if(data.dictBecomeMember) {
+            dictBecomeMemberIns.setValue([data.dictBecomeMember]);
+          } else {
+            dictBecomeMemberIns.clear();
+          }
+          $(".operation input[name=currNodeUsername]").val(data.currNodeUsername);
+          $(".operation input[name=currNodename]").val(data.currNodename);
+          $(".operation input[name=wfstate]").val(data.wfstate);
+          $(".operation textarea[name=remark]").val(data.remark);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改转正' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='转正';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrUserBecomeMember/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrUserBecomeMember/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/hrUserBecomeMember/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/hrUserBecomeMember/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,usercode: $("#usercodeCondition").val()
+		,username: $("#usernameCondition").val()
+		,deptname: $("#deptnameCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+
+  	  function openFlow() {
+		  layer.open({
+			  type: 2,
+              skin: 'layui-layer-admin',
+			  title: "审批流程",
+			  shadeClose : false,
+			  area: ['1200px', '600px'], //宽高
+			  shade: 0.6, //遮罩透明度
+			  maxmin: true, //允许全屏最小化
+			  anim: 1, //0-6的动画形式，-1不开启
+			  content:  '/admin/view/flow/design2.html?processId=a117a458eb4643f995e4fb279ddba555',
+			  end: function(){ }
+		  });
+	　　};
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+usercode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '员工工号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  username: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '员工姓名不能大于'+max+'个字符的长度！';
+            }
+        }  ,  deptname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '部门不能大于'+max+'个字符的长度！';
+            }
+        }  ,  postname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '岗位不能大于'+max+'个字符的长度！';
+            }
+        }  ,  starttime1: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '试用期开始时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  endtime1: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '试用期结束时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  acttime2: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '实际转正时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  techDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '试用期导师评价不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leaderDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '试用期领导评价不能大于'+max+'个字符的长度！';
+            }
+        }  ,  becomeMemDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '转正评价不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictBecomeMember: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '转正结论不能大于'+max+'个字符的长度！';
+            }
+        }  , remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

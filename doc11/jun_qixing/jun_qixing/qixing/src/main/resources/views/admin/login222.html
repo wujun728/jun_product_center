@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <!-- 样 式 文 件 -->
+    <link rel="stylesheet" href="component/pear/css/pear.css"/>
+    <link rel="stylesheet" href="admin/css/other/login.css"/>
+</head>
+<!-- 代 码 结 构 -->
+<body background="admin/images/background.svg" style="background-size: cover;">
+<form class="layui-form" action="javascript:void(0);">
+    <div class="layui-form-item">
+        <img class="logo" src="admin/images/logo.png"/>
+        <div class="title">Easy Admin</div>
+        <div class="desc">
+            easy easy easy 打造最易入门的admin脚手架
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input placeholder="账 户 : 输入账号" name="username" lay-verify="required" hover class="layui-input"
+               value="laker"/>
+    </div>
+    <div class="layui-form-item">
+        <input placeholder="密 码 : 输入密码 " name="password" lay-verify="required" hover class="layui-input"
+               value="lakernote"
+               type="password"/>
+    </div>
+    <div class="layui-form-item">
+        <input placeholder="验证码 : " hover name="captchaCode" lay-verify="required"
+               class="code layui-input layui-input-inline"/>
+        <img id="captcha" class="codeImage"/>
+    </div>
+    <div class="layui-form-item">
+        <input type="checkbox" name="" title="记住密码" lay-skin="primary" checked>
+    </div>
+    <div class="layui-form-item">
+        <button type="button" id="loginButton" class="pear-btn pear-btn-success login" lay-submit lay-filter="login">
+            登 入
+        </button>
+    </div>
+</form>
+<!-- 资 源 引 入 -->
+<script src="component/layui/layui.js"></script>
+<script src="component/pear/pear.js"></script>
+<script>
+    layui.use(['form', 'button', 'popup', 'jquery', 'easyAdmin', 'yaml'], function () {
+        var form = layui.form;
+        var button = layui.button;
+        var popup = layui.popup;
+        let $ = layui.jquery;
+        
+        var yaml = layui.yaml;
+        // 配置服务端地址,先获取adminServerUrl，否则第一次easyAdmin为空
+        let adminServerUrl = yaml.load("config/pear.config.yml").admin.server;
+        layui.data('easyAdmin', {
+            key: 'serverUrl'
+            , value: adminServerUrl
+        });
+        console.log('服务端地址:' + adminServerUrl);
+
+        layui.data('login', {
+            key: 'url'
+            , value: location.href
+        });
+        let easyAdmin = layui.easyAdmin;
+        var uid;
+        captcha();
+        // 登 录 提 交
+        form.on('submit(login)', function (data) {
+            /// 登录
+            data.field.uid = uid;
+            easyAdmin.http({
+                url: '/api/v1/login',
+                sendToken: false,
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+
+                        layui.data('user', {
+                            key: 'token'
+                            , value: {
+                                name: result.data.tokenName,
+                                value: result.data.tokenValue
+                            }
+                        });
+
+
+                        // 动画
+                        button.load({
+                            elem: '.login',
+                            time: 200,
+                            done: function () {
+
+                                popup.success("登录成功", function () {
+
+                                    location.href = "index.html"
+                                });
+                            }
+                        })
+                    } else {
+                        captcha();
+                        layer.msg(result.msg,
+                            {icon: 2, time: 2000, area: ['230px', '80px']}
+                        );
+                    }
+                }
+            })
+            return false;
+        });
+
+        function captcha() {
+            // 获取验证码
+            easyAdmin.httpGet('/captcha', function (res) {
+                uid = res.data.uid;
+                $('#captcha').attr('src', res.data.image);
+            }, false);
+        }
+
+        $("#captcha").click(function () {
+            captcha();
+        })
+
+        $(document).keydown(function (e) {
+            var curKey = e.which;
+            if (curKey == 13) {
+                $("#loginButton").trigger("click");
+            }
+        });
+    })
+</script>
+</body>
+</html>

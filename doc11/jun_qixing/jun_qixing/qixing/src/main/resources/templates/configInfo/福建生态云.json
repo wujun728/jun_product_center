@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "福建生态云",
+    "url": "http://192.168.1.6:8124/ecology/index.html",
+    "desc": "福建生态云 一期，暂停开发，开发二期",
+    "mobile": false
+  },
+  "schedule": {
+    "status": "暂停开发",
+    "actualStartTime": "2017-08-03",
+    "actualEndTime": "2017-08-13",
+    "estimatedStartTime": "2017-08-03",
+    "estimatedEndTime": "2017-08-10",
+    "process": 70,
+    "delay": true,
+    "technology": ["vue"]
+  },
+  "resources": {
+    "demander": "福建星元次方",
+    "type":"合资公司",
+    "manager":"陈志丹",
+    "charge": "陈胜",
+    "affiliate": ["王杰"]
+  },
+  "bug": {
+    "total": 0,
+    "resolved": 0,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "一期跟客户对接需求，已暂停开发，现开发二期"
+  }
+}

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation">
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refCustomerCode"  id="refCustomerCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"    style="display:none" >
+ <div class="layui-col-md6">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refProjectCode"  id="refProjectCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票客户</label>
+      <div class=" layui-input-block "> 
+		<input type="refCustomerName" name="refCustomerName"  id="refCustomerName"  lay-verify="required|refCustomerName" lay-max="256"  placeholder="请输入开票客户"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票项目</label>
+      <div class=" layui-input-block "> 
+		<input type="refProjectName" name="refProjectName"  id="refProjectName"  lay-verify="required|refProjectName" lay-max="256"  placeholder="请输入开票项目"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+</div>  
+
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票类型</label>
+      <div class=" layui-input-block "> 
+	<select id="dictType" name="dictType" lay-filter="dictType"  th:with="type=${@sysDictService.getType('dict_type')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div> 
+    <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票人</label>
+      <div class=" layui-input-block "> 
+		<input type="refInvoiceMan" name="refInvoiceMan"  id="refInvoiceMan"  lay-verify="required|refInvoiceMan" lay-max="256"  placeholder="请输入开票人"   autocomplete="off" class="layui-input">
+	    </div>
+   </div> 
+ </div>
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票单位名称</label>
+      <div class=" layui-input-block "> 
+		<input type="invoiceCompanyName" name="invoiceCompanyName"  id="invoiceCompanyName"  lay-verify="required|invoiceCompanyName" lay-max="512"  placeholder="请输入开票单位名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >纳税人识别号</label>
+      <div class=" layui-input-block "> 
+		<input type="invoiceTaxNo" name="invoiceTaxNo"  id="invoiceTaxNo"  lay-verify="required|invoiceTaxNo" lay-max="256"  placeholder="请输入纳税人识别号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " >地址</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="address"  id="address"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >电话</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="telephone"  id="telephone"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label    " >开户行</label>
+      <div class=" layui-input-block "> 
+	<select id="dictBank" name="dictBank"   th:with="type=${@sysDictService.getType('dict_bank')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label   " >开户行账号</label>
+      <div class=" layui-input-block "> 
+		<input type="bankCardNo" name="bankCardNo"  id="bankCardNo"  lay-max="256"  placeholder="请输入开户行账号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >开票金额</label>
+      <div class=" layui-input-block "> 
+		<input type="invoiceMoney" name="invoiceMoney"  id="invoiceMoney"  lay-verify="required|invoiceMoney" lay-max="999999999"  placeholder="请输入开票金额"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+ 
+ <div class="layui-form-item" style="display: none;"  >
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >审批状态</label>
+      <div class=" layui-input-block "> 
+	<select id="dictInvoiceState" name="dictInvoiceState" disabled="disabled" lay-filter="dictInvoiceState"  th:with="type=${@sysDictService.getType('dict_invoice_state')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >流程状态</label>
+      <div class=" layui-input-block "> 
+	<select id="dictWfState" name="dictWfState" lay-filter="dictWfState" disabled="disabled" th:with="type=${@sysDictService.getType('dict_wf_state')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+ </div>
+ 
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+ 
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+
+ <!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+    var pkCode = "";
+    var flagType = "";
+    var id = CoreUtil.getData("biz_rowdata")==undefined?"":CoreUtil.getData("biz_rowdata")["id"];
+    if(""!=id){
+	     // $("#buttonSave").hide();
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/dev-api/pjProjectInvoice/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	                 form.render(); //更新全部
+	             }else{
+		             layer.msg('信息未上传，信息未录入！' );
+		             var data_prjData = CoreUtil.getData("data_doProjectDetail");
+		             $("#refProjectCode").val(data_prjData.data.projectCode);
+		             $("#refProjectName").val(data_prjData.data.projectName);
+		             $("#refCustomerName").val(data_prjData.data.refCusname);
+		             $("#id").val("");
+	             }
+	         });
+	     });
+    }
+</script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	 
+
+	//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refCustomerName',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjCustomer/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }	
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'customerName', title: '客户名称' },
+					{ field: 'taxRegNumber', title: '纳税人识别号' ,hide: true },
+					{ field: 'dutyParagraph', title: '税号' ,hide: true },
+					{ field: 'openingBank', title: '开户行' ,hide: true },
+					{ field: 'accountNumber', title: '账号' ,hide: true },
+					{ field: 'conpanyName', title: '公司名称' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.customerName);
+				$("#refCustomerCode").val(item.id);
+				$("#bankCardNo").val(item.accountNumber);
+				$("#dictBank").val(item.openingBank);
+				$("#invoiceCompanyName").val(item.conpanyName);
+				$("#invoiceTaxNo").val(item.dutyParagraph);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#refCustomerName").val(NEWJSON);
+		}
+	});
+	 
+	tableSelect.render({
+		elem: '#refProjectName',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProject/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'projectName', title: '名称' },
+					{ field: 'projectCode', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.projectName);
+				$("#refProjectCode").val(item.projectCode);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refProjectName").val(NEWJSON);
+			form.render()
+		}
+	}); 
+	numberInput.render("#invoiceMoney", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 2
+	});
+ 	
+	tableSelect.render({
+		elem: '#refInvoiceMan',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/sys/users/listByPage?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#refInvoiceMan").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layer.index);
+    	var index = parent.layer.getFrameIndex(window.name);
+    	parent.layer.close(index);
+    	var layerDetail = CoreUtil.getData("layerDetail");
+    	console.log("layerDetail="+layerDetail);
+    	layer.close(layerDetail);
+       return false;
+    });
+    
+    //执行查询
+    function search() {
+    	window.parent.location.reload();
+    };
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjProjectInvoice/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjProjectInvoice/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+refCustomerCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refCustomerName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开票客户不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开票项目不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开票类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  invoiceCompanyName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开票单位名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  invoiceTaxNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '纳税人识别号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  address: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '地址不能大于'+max+'个字符的长度！';
+            }
+        }  ,  telephone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictBank: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开户行不能大于'+max+'个字符的长度！';
+            }
+        }  ,  bankCardNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开户行账号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  invoiceMoney: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开票金额不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictInvoiceState: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '审批状态不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictWfState: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '流程状态不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refInvoiceMan: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开票人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }    	    });
+</script>

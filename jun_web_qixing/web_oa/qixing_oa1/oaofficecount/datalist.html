@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="offiecProductName" placeholder="办公用品名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="officeTodo" placeholder="办公用品用途" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="whyDesc" placeholder="申请原因" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:240px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+				<button class="layui-btn layui-btn-primary layui-border-blue" id="export">导出全部</button>
+				<button class="layui-btn layui-btn-primary layui-border-blue" onclick="openFlow()">查看审批流程图</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增申请</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">删除选中</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="submit">提交流程</button>
+  </div>
+</script>
+
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.documentTable = table.render({
+			elem: '#document',
+			title: '办公用品申领列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/oaofficecount/datalist.json",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'}
+				,{field: 'id', title: 'ID', sort: true, hide: true }
+				,{field: 'offiecProductName', title: '办公用品名称', sort: true, minWidth: 150 }
+				,{field: 'dictProductType', title: '办公用品类型', sort: true, width: 120, templet: function (item) {
+					var datas = layui.xnUtil.getDictDataByDictTypeCode('dict_product_type', null);
+					if(item.dictProductType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+layui.CoreUtil.selectDictLabel(datas, item.dictProductType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+layui.CoreUtil.selectDictLabel(datas, item.dictProductType)+'</span>';
+					}
+				}}
+				,{field: 'officeTodo', title: '办公用品用途', sort: true, minWidth: 150 }
+				,{field: 'reqNum', title: '需求数量', sort: true, width: 100 }
+				,{field: 'whyDesc', title: '申请原因', sort: true, minWidth: 150 }
+				,{field: 'creator', title: '申请人', sort: true, width: 100 }
+				,{title: '流程状态', field: 'orderState', align: 'center', width: 90, templet: function (d) {
+					if (d.orderState == 0) {
+						return '<span style="color: #eb7350;">审批完成</span>';
+					}else if (d.orderState == 1) {
+						return '<span style="color: #00b487;">审批中</span>';
+					}else{
+						return '<span style="color: blue;">草稿</span>';
+					}
+				}}
+				,{title: '当前节点', field: 'taskName', align: 'center', width: 105 }
+				,{title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 90 }
+				,{field: 'isOwner', title: 'isOwner', hide: true }
+				,{width: 180, toolbar: "#tool", title: '操作', fixed: 'right' }
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(document)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			var data = checkStatus.data;
+			switch(obj.event){
+				case 'add':
+					tool.side("/qixing_oa1/oaofficecount/add.html");
+					return;
+				case 'batchDeleted':
+					if(data.length==0){
+						layer.msg("请选择要批量删除的列");
+						return;
+					}
+					var ids = [];
+					$(data).each(function (index,item) {
+						ids.push(item.id);
+					});
+					tipDialog(ids);
+					break;
+				case 'submit':
+					if(data.length==0){
+						layer.msg("请选择要提交的记录");
+						return;
+					}else if(data.length > 1){
+						layer.msg("请选择要提交的记录（one row each times）");
+						return;
+					}
+					data[0]['processName'] = "office";
+					layui.CoreUtil.setData("data_doSubmit",data[0]);
+					layer.open({
+						type: 2,
+						skin: 'layui-layer-admin',
+						title: "提交流程",
+						shadeClose : false,
+						area: ['880px', '500px'], //宽高
+						shade: 0.6, //遮罩透明度
+						maxmin: true, //允许全屏最小化
+						anim: 1, //0-6的动画形式，-1不开启
+						content: '/table/doSubmit.html',
+						end: function(){
+							layui.documentTable.reload();
+						}
+					});
+					break;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(document)', function(obj) {
+			var data = obj.data;
+			switch(obj.event){
+				case 'view':
+					tool.side("/qixing_oa1/oaofficecount/view.html?id="+data.id);
+					return;
+				case 'edit':
+					tool.side('/qixing_oa1/oaofficecount/edit.html?id='+data.id);
+					return;
+				case 'del':
+					var ids=[];
+					ids.push(data.id);
+					tipDialog(ids);
+					break;
+				case 'file':
+					data['dictBiztype']='申购';
+					layui.CoreUtil.setData("biz_rowdata",data);
+					layer.open({
+						title: '上传附件',
+						skin: 'layui-layer-admin',
+						type: 2,
+						shade: 0.2,
+						maxmin:true,
+						shadeClose: true,
+						scrollbar: true,
+						area: ['80%', '80%'],
+						content: '/index/sysFilesByUser',
+					});
+					return false;
+			}
+		});
+		
+		//删除
+		var tipDialog=function (ids) {
+			layer.open({
+				skin: 'layui-layer-admin',
+				content: "确定要删除么?",
+				yes: function(index, layero){
+					layer.close(index);
+					tool.delete("/qixing_oa1/oaofficecount/delete", ids, function (res) {
+						layer.msg(res.msg, {time:1000}, function () {
+							layui.documentTable.reload();
+						});
+					});
+				}
+			});
+		};
+		
+		//导出
+		$("#export").on('click', function () {
+			var exportParams = {
+				limit: 10000,
+				offiecProductName: $("input[name='offiecProductName']").val(),
+				officeTodo: $("input[name='officeTodo']").val(),
+				whyDesc: $("input[name='whyDesc']").val()
+			};
+			tool.post("/qixing_oa1/oaofficecount/listByPage", exportParams, function (res) {
+				if (res.data != null && res.data.records != null) {
+					table.exportFile('document', res.data.records, 'xls');
+				}
+			});
+		});
+		
+		//查看审批流程图
+		function openFlow() {
+			layer.open({
+				type: 2,
+				skin: 'layui-layer-admin',
+				title: "审批流程",
+				shadeClose : false,
+				area: ['1200px', '600px'], //宽高
+				shade: 0.6, //遮罩透明度
+				maxmin: true, //允许全屏最小化
+				anim: 1, //0-6的动画形式，-1不开启
+				content: '/admin/view/flow/design2.html?processId=6d6f7243138c4a689c06ef71ee93ec9b',
+				end: function(){}
+			});
+		};
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

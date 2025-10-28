@@ -1,0 +1,93 @@
+{extend name="../../base/view/common/base" /}
+<!-- 主体 -->
+{block name="body"}
+<div class="p-3">
+	<form class="layui-form gg-form-bar border-t border-x" lay-filter="barsearchform" id="barsearchform">
+		<div class="layui-input-inline" style="width:150px;">
+			<select name="type">
+				<option value="">选择审批类别</option>
+				{volist name="type" id="vo"}
+				<option value="{$vo.id}">{$vo.title}</option>
+				{/volist}
+			</select>
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<input type="text" name="username"  placeholder="选择申请人" class="layui-input picker-one" readonly>
+			<input type="text" name="uid" value="" style="display:none" />	
+		</div>
+		<div class="layui-input-inline" style="width:300px;">
+			<input type="text" class="layui-input" id="apply_time" placeholder="申请时间区间" readonly name="apply_time">
+		</div>
+		<div class="layui-input-inline" style="width:150px;">
+			<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+			<button type="reset" class="layui-btn layui-btn-reset" lay-filter="reset">清空</button>
+		</div>
+	</form>
+	<table class="layui-hide" id="test" lay-filter="test"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+<h3 class="h3-title" style="height:28px;">审批列表</h3>
+</script>						
+{/block}
+<!-- /主体 -->
+
+<!-- 脚本 -->
+{block name="script"}
+<script>
+	const moduleInit = ['tool','employeepicker','laydatePlus'];
+	function gouguInit() {
+		var form = layui.form,table = layui.table, tool = layui.tool ,element=layui.element,laydatePlus = layui.laydatePlus;
+		  
+		//日期范围
+		var apply_time = new laydatePlus({'target':'apply_time'});
+			
+		//监听搜索提交
+		form.on('submit(webform)', function(data) {
+			layui.pageTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+		$('[lay-filter="clear"]').on('click',function(){
+			setTimeout(function(){
+				$('[lay-filter="webform"]').click();
+			},10)			
+		});	
+		layui.pageTable = table.render({
+			elem: '#test'
+			,toolbar: '#toolbarDemo'
+			,defaultToolbar: false
+			,title:'审批列表'
+			,url: "/oa/approve/copy"
+			,page: true //开启分页
+			,limit: 20
+			,cellMinWidth: 80
+			,cols: [[
+					{field:'id',width:80, title: 'ID号', align:'center'}
+					,{field:'name',title: '申请人',width:90,align:'center'}
+					,{field:'create_time',title: '申请时间',width:132,align:'center'}
+					,{field:'flow_type',title: '审批类型',width:100, align:'center'}
+					,{field:'department_name',title: '所属部门',width:100,align:'center'}
+					,{field:'check_user',title: '当前审批人',width:120,align:'center'}
+					,{field:'content',title: '理由/说明/备注'}
+					,{field:'check_status', title: '审批状态',width:80,align:'center',templet: function(d){
+						var htmlArray = ['<span style="color:#666666">待审批</span>','<span style="color:#4285f4">审批中</span>','<span style="color:#34a853">已通过</span>','<span style="color:#FF5722">已拒绝</span>','<span style="color:#fbbc05">已撤销</span>'];
+						return htmlArray[d.check_status];
+					}}
+					,{width:60,fixed: 'right',title: '操作', align:'center',templet: function(d){
+						var btn='<a class="layui-btn layui-btn-xs" lay-event="view">详情</a>';
+						return btn;
+					}}
+				]]
+			});
+			
+			table.on('tool(test)',function (obj) {
+				if(obj.event === 'view'){		
+					tool.side('/oa/approve/view?id='+obj.data.id);
+				}
+			});
+		}
+	</script>
+{/block}
+<!-- /脚本 -->

@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目编辑 - 勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	<div class="p-page" style="padding-top: 20px;">
+		<form class="layui-form layui-form-pane">
+			<div class="layui-card">
+				<div class="layui-card-header">项目基本信息</div>
+				<div class="layui-card-body">
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="projectCode" placeholder="请输入项目编码" class="layui-input" lay-verify="required" lay-verType="tips"/>
+						</div>
+						<div class="layui-input-inline" style="width: 400px;">
+							<input type="text" name="projectName" placeholder="请输入项目名称" class="layui-input" lay-verify="required" lay-verType="tips"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="width: 240px;">
+							<select name="dictProjectType" lay-verify="required" lay-verType="tips">
+								<option value="">请选择项目类型</option>
+								<!-- 字典值会动态加载 -->
+							</select>
+						</div>
+						<div class="layui-input-inline" style="width: 240px;">
+							<select name="dictProjectSubtype" lay-verify="required" lay-verType="tips">
+								<option value="">请选择项目子类型</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="projectManager" placeholder="请选择项目经理" readonly class="layui-input picker-oa" data-types="projectManager" lay-verify="required" lay-verType="tips"/>
+							<input name="projectManagerId" style="display: none;" value="" />
+						</div>
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="customer" placeholder="请选择客户" readonly class="layui-input picker-oa" data-types="customer" lay-verify="required" lay-verType="tips"/>
+							<input name="customerId" style="display: none;" value="" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="projectAmount" placeholder="请输入项目总金额" class="layui-input" lay-verify="required|number" lay-verType="tips"/>
+						</div>
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="projectProgress" placeholder="请输入项目进度" class="layui-input" lay-verify="required|number" lay-verType="tips"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="startDate" placeholder="请选择开始时间" class="layui-input" readonly lay-verify="required" lay-verType="tips"/>
+						</div>
+						<div class="layui-input-inline" style="width: 240px;">
+							<input type="text" name="endDate" placeholder="请选择结束时间" class="layui-input" readonly lay-verify="required" lay-verType="tips"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-inline" style="width: 240px;">
+							<select name="dictRiskAssessment" lay-verify="required" lay-verType="tips">
+								<option value="">请选择风险评估等级</option>
+							</select>
+						</div>
+						<div class="layui-input-inline" style="width: 240px;">
+							<select name="dictProjectStatus" lay-verify="required" lay-verType="tips">
+								<option value="">请选择立项状态</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-card" style="margin-top: 10px;">
+				<div class="layui-card-header">项目详细信息</div>
+				<div class="layui-card-body">
+					<div class="layui-form-item">
+						<div class="layui-input-block" style="width: auto; padding-right: 20px;">
+							<textarea name="projectDescription" placeholder="请输入项目描述" class="layui-textarea" rows="5"></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block" style="width: auto; padding-right: 20px;">
+							<textarea name="projectRemark" placeholder="请输入项目备注" class="layui-textarea" rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="layui-form-item fixed-bottom">
+		<div class="layui-input-block" style="text-align: center;">
+			<button type="button" class="layui-btn layui-btn-primary" id="cancelBtn">取消</button>
+			<button type="button" class="layui-btn layui-btn-normal" id="resetBtn">重置</button>
+			<button type="button" class="layui-btn layui-btn-danger" id="saveBtn">保存</button>
+		</div>
+	</div>
+
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','table','form','laydate'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, laydate = layui.laydate, table = layui.table;
+		var id = tool.getUrlParam('id');
+		var isAdd = true;
+		var typeMap = {};
+		
+		// 日期选择器初始化
+		laydate.render({
+			elem: '[name="startDate"]',
+			format: 'yyyy-MM-dd',
+			theme: '#1E9FFF'
+		});
+		laydate.render({
+			elem: '[name="endDate"]',
+			format: 'yyyy-MM-dd',
+			theme: '#1E9FFF'
+		});
+		
+		// 项目经理选择器
+		layui.$("input[name='projectManager']").on('click', function(){
+				layui.tool.tableSelect({tableId: "projectManagerTable"});
+			});
+		
+		// 客户选择器
+		layui.$("input[name='customer']").on('click', function(){
+			layui.tool.tableSelect({tableId: "customerTable"});
+		});
+		
+		// 项目经理表格选择配置
+		layui.tool.addTableSelect('projectManagerTable', {
+			url: '/dev-api/sysUser/listByPage',
+			where: {
+				limit: 10,
+				page: 1
+			},
+			cols: [[
+				{type: 'radio'},
+				{field: 'username', title: '用户姓名'},
+				{field: 'phonenumber', title: '手机号码'},
+				{field: 'deptName', title: '所属部门'}
+			]],
+			onSelect: function(data){
+				layui.$("input[name='projectManager']").val(data.username);
+				layui.$("input[name='projectManagerId']").val(data.userId);
+			}
+		});
+		
+		// 客户表格选择配置
+		layui.tool.addTableSelect('customerTable', {
+			url: '/dev-api/pjCustomer/listByPage',
+			where: {
+				limit: 10,
+				page: 1
+			},
+			cols: [[
+				{type: 'radio'},
+				{field: 'customerName', title: '客户名称'},
+				{field: 'customerCode', title: '客户编码'}
+			]],
+			onSelect: function(data){
+				layui.$("input[name='customer']").val(data.customerName);
+				layui.$("input[name='customerId']").val(data.id);
+			}
+		});
+		
+		// 加载字典数据
+		function loadDictData() {
+			// 项目类型
+			var projectTypeData = layui.tool.getDictDataByDictTypeCode('dict_project_type');
+			var projectTypeHtml = '<option value="">请选择项目类型</option>';
+			$(projectTypeData).each(function(index, item) {
+				projectTypeHtml += '<option value="' + item.dictValue + '">' + item.dictLabel + '</option>';
+			});
+			layui.$("select[name='dictProjectType']").html(projectTypeHtml);
+			
+			// 风险评估等级
+			var riskAssessmentData = layui.tool.getDictDataByDictTypeCode('dict_risk_assessment');
+			var riskAssessmentHtml = '<option value="">请选择风险评估等级</option>';
+			$(riskAssessmentData).each(function(index, item) {
+				riskAssessmentHtml += '<option value="' + item.dictValue + '">' + item.dictLabel + '</option>';
+			});
+			layui.$("select[name='dictRiskAssessment']").html(riskAssessmentHtml);
+			
+			// 立项状态
+			var projectStatusData = layui.tool.getDictDataByDictTypeCode('dict_project_status');
+			var projectStatusHtml = '<option value="">请选择立项状态</option>';
+			$(projectStatusData).each(function(index, item) {
+				projectStatusHtml += '<option value="' + item.dictValue + '">' + item.dictLabel + '</option>';
+			});
+			layui.$("select[name='dictProjectStatus']").html(projectStatusHtml);
+			
+			// 重新渲染表单
+			form.render();
+		}
+		
+		// 加载项目子类型
+		function loadProjectSubtype(typeId) {
+			var subtypeHtml = '<option value="">请选择项目子类型</option>';
+			if (typeMap[typeId]) {
+				$(typeMap[typeId]).each(function(index, item) {
+					subtypeHtml += '<option value="' + item.dictValue + '">' + item.dictLabel + '</option>';
+				});
+			}
+			layui.$("select[name='dictProjectSubtype']").html(subtypeHtml);
+			form.render();
+		}
+		
+		// 监听项目类型变化
+		form.on('select(dictProjectType)', function(data) {
+			loadProjectSubtype(data.value);
+		});
+		
+		// 加载表单数据
+		if (id) {
+			isAdd = false;
+			tool.sendPost("/dev-api/pjProject/findOne", {id: id}, function(res) {
+				if (res.code == 0 && res.data) {
+					var data = res.data;
+					// 填充表单数据
+					form.val('layui-form', {
+						projectCode: data.projectCode || '',
+						projectName: data.projectName || '',
+						dictProjectType: data.dictProjectType || '',
+						dictProjectSubtype: data.dictProjectSubtype || '',
+						projectManager: data.refProjectManager || '',
+						projectManagerId: data.projectManagerId || '',
+						customer: data.refCusname || '',
+						customerId: data.customerId || '',
+						projectAmount: data.projectAmount || '',
+						projectProgress: data.projectProgress || '',
+						startDate: data.startDate || '',
+						endDate: data.endDate || '',
+						dictRiskAssessment: data.dictRiskAssessment || '',
+						dictProjectStatus: data.dictProjectStatus || '',
+						projectDescription: data.projectDescription || '',
+						projectRemark: data.projectRemark || ''
+					});
+					
+					// 加载项目子类型
+					if (data.dictProjectType) {
+						loadProjectSubtype(data.dictProjectType);
+						// 设置选中的子类型
+						layui.$("select[name='dictProjectSubtype']").val(data.dictProjectSubtype);
+						form.render();
+					}
+				}
+			});
+		}
+		
+		// 初始化
+		loadDictData();
+		
+		// 表单验证规则
+		form.verify({
+			projectCode: [
+				/^[\S]{1,20}$/,
+				'项目编码不能为空且长度不能超过20个字符'
+			],
+			projectName: [
+				/^[\S]{1,100}$/,
+				'项目名称不能为空且长度不能超过100个字符'
+			],
+			projectAmount: function(value) {
+				if (value && !/^\d+(\.\d{1,2})?$/.test(value)) {
+					return '项目金额请输入有效的数字';
+				}
+			},
+			projectProgress: function(value) {
+				var num = parseInt(value);
+				if (isNaN(num) || num < 0 || num > 100) {
+					return '项目进度请输入0-100之间的数字';
+				}
+			}
+		});
+		
+		// 取消按钮
+		layui.$('#cancelBtn').on('click', function() {
+			tool.side_close();
+		});
+		
+		// 重置按钮
+		layui.$('#resetBtn').on('click', function() {
+			form.val('layui-form', {
+				projectCode: '',
+				projectName: '',
+				dictProjectType: '',
+				dictProjectSubtype: '',
+				projectManager: '',
+				projectManagerId: '',
+				customer: '',
+				customerId: '',
+				projectAmount: '',
+				projectProgress: '',
+				startDate: '',
+				endDate: '',
+				dictRiskAssessment: '',
+				dictProjectStatus: '',
+				projectDescription: '',
+				projectRemark: ''
+			});
+			// 清空日期选择器
+			layui.$("input[name='startDate']").val('');
+			layui.$("input[name='endDate']").val('');
+		});
+		
+		// 保存按钮
+		layui.$('#saveBtn').on('click', function() {
+			// 手动触发表单验证
+			form.validate();
+			if (!form.validate().done) {
+				return;
+			}
+			
+			// 获取表单数据
+			var formData = form.val('layui-form');
+			// 添加ID（如果有）
+			if (!isAdd) {
+				formData.id = id;
+			}
+			
+			// 提交数据
+			var url = isAdd ? '/dev-api/pjProject/add' : '/dev-api/pjProject/update';
+			tool.sendPost(url, formData, function(res) {
+				if (res.code == 0) {
+					layer.msg(res.msg);
+					tool.side_close();
+				} else {
+					layer.msg(res.msg, {icon: 5});
+				}
+			});
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

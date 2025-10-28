@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.comment-input .comment-image{width:40px; height:40px; border-radius:50%}
+.comment-item .comment-avatar{width:50px; float:left}
+.comment-item .comment-image{width:36px; height:36px; border-radius:50%}
+.comment-item .comment-body{margin-left:50px;}
+.comment-item .comment-content blockquote{border-left:3px solid #f1f1f1; padding:4px 8px;}
+.comment-item .comment-actions a{color:#8c95a8; cursor:pointer; font-size:12px;}
+.comment-item .comment-actions a:hover{color:#3582fb;}
+.comment-meta span{font-size:12px;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-4">
+	<h3 class="pb-1">汇报详情</h3>
+	<table class="layui-table">
+		<tr>
+			<td class="layui-td-gray">汇报人</td>
+			<td>素还真</td>
+			<td class="layui-td-gray">汇报类型</td>
+			<td>
+				<span class="green">『日报』</span>			
+			</td>
+			<td class="layui-td-gray">汇报时间</td>
+			<td>
+								2025-05-23 15:08:44							</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">汇报周期</td>
+			<td>2025-05-23</td>
+			<td class="layui-td-gray">接收人</td>
+			<td colspan="3">洛子商</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作内容</td>
+			<td colspan="5">
+				1			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作计划</td>
+			<td colspan="5">
+				1			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">其他事项</td>
+			<td colspan="5">
+				1			</td>
+		</tr>
+			</table>
+		<div class="p-3 border bg-white">
+		<h3 class="pb-3">工作点评</h3>
+		<div class="comment-input">
+			<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+		</div>		
+		<div id="commentBox" class="pt-3"></div>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+const work_id = 1279;
+const moduleInit = ['tool','oaComment'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool,comment = layui.oaComment;	
+   comment.init({
+		"box":'commentBox',//容器id
+		"input": 'commentInput',
+		"topic_id":work_id,
+		"module": 'work',
+	});
+
+  }
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+	<script src="/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

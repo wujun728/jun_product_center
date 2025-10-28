@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation">
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refReportnumberCode"  id="refReportnumberCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目报告</label>
+      <div class=" layui-input-block "> 
+		<input type="refReportnumberTitle" name="refReportnumberTitle"  id="refReportnumberTitle"  lay-verify="required|refReportnumberTitle" lay-max="256"  placeholder="请输入项目报告"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >报告文号(生成)</label>
+      <div class=" layui-input-block "> 
+		<input type="reportnumberCode" name="reportnumberCode"  id="reportnumberCode"  lay-verify="required|reportnumberCode" lay-max="256"  placeholder="请输入报告文号(生成)"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " >报告出具人</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refReportnumberMan"  id="refReportnumberMan"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >报告审核人</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refReportnumberCheckMan"  id="refReportnumberCheckMan"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+   </div>  
+ 
+
+ <div class="layui-form-item"   >
+	 <div class="layui-col-md6">       <label class="layui-form-label  " >签字注册会计师</label>
+	      <div class=" layui-input-block "> 
+			<input type="text" name="refSignatureAccountant"  id="refSignatureAccountant"   autocomplete="off" class="layui-input">
+		    </div>
+	   </div>  
+	   <div class="layui-col-md6">       <label class="layui-form-label  " >报告号状态</label>
+      <div class=" layui-input-block "> 
+	<select id="dictRpStatus" name="dictRpStatus" lay-filter="dictRpStatus"  th:with="type=${@sysDictService.getType('dict_rp_status')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>
+  </div>
+ 
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+ 
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+    
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refReportnumberTitle',
+		checkedKey: 'id',
+		table: {
+			url: '/pjProjectReport/listBySelect?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'refProjectName', title: '标题' },
+					{ field: 'reportName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.reportName);
+				$("#refReportnumberCode").val(item.reportName);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+
+	tableSelect.render({
+		elem: '#refReportnumberMan',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refReportnumberMan").val(NEWJSON);
+			form.render();
+		}
+	});
+
+	tableSelect.render({
+		elem: '#refReportnumberCheckMan',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refReportnumberCheckMan").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+	tableSelect.render({
+		elem: '#refSignatureAccountant',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refSignatureAccountant").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+     
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/pjProjectReportnumber/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/pjProjectReportnumber/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+   
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+		refReportnumberCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refReportnumberTitle: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目报告不能大于'+max+'个字符的长度！';
+            }
+        }  ,  reportnumberCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告文号(生成)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictRpStatus: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告号状态不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refReportnumberMan: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告出具人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refReportnumberCheckMan: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告审核人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refSignatureAccountant: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '签字注册会计师不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

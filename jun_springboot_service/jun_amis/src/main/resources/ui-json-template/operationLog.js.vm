@@ -1,0 +1,12 @@
+AMIS_JSON={
+    "type": "page",
+    "body": [
+        {
+            "type": "timeline",
+            "source": {
+                "method": "get",
+                "url": "/admin/operationLog/data/${modelName}/${id}"
+            }
+        }
+    ]
+}

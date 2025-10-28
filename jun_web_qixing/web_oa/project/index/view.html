@@ -1,0 +1,1352 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.layui-tab-title .layui-this{background-color:#fff;}
+.layui-tab-card,.layui-card{box-shadow:0 0 0 0 rgb(0 0 0 / 10%); border-radius:0;}
+.layui-card-tips {color: #969696;}
+.layui-card-value {padding: 4px 0 5px;font-size: 18px;color: #1E9FFF;}
+
+.check-items{overflow-x: auto; padding: 2px 0;}
+
+.check-item .check-item-icon strong{margin-right:3px; font-size:36px;}
+.check-item strong.blue,.check-item strong.gray{display:none;}
+.check-item.blue strong.black,.check-item.gray strong.black{display:none;}
+.check-item.blue strong.blue{display:block;}
+.check-item.gray strong.gray{display:block;}
+
+.flow-flex-row {box-direction: row;
+	box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+.flow-flexbox { width: 100%;text-align: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    box-align: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+	flex-wrap: wrap;
+}
+.check-item{width: auto; -ms-flex-negative: 0; flex-shrink: 0; padding:8px 0;}
+.check-item i{font-size:20px; margin-right:3px;}
+.layui-icon[data-ok]{color:#34a853}
+.layui-icon[data-no]{color:#FF5722;}
+.layui-icon[data-on]{color:#4285f4;}
+.check-item-time{color:#969696; font-size:12px; margin-left:3px;}
+.check-item .layui-icon.layui-icon-right{font-size:20px;}
+.check-item:last-child .layui-icon-right{display:none;}
+.file-card{line-height:normal;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<h2 class="pb-3">
+		<span class="font20">1111</span> 
+					<span class="layui-btn layui-btn-danger layui-btn-xs" data-event="close">关闭</span>
+						</h2>
+	<div>
+		<span class="layui-badge layui-bg-gray">#T1186</span>
+		<span class="mx-2">素还真</span>
+		<span class="gray">创建于2025-05-29 08:53:35<span></span></span>
+	</div>
+	<div class="body-table layui-tab layui-tab-brief" lay-filter="project" id="projectTab">
+		<ul class="layui-tab-title border-t border-x bg-white" style="border-bottom:0;">
+			<li class="layui-this" data-load="true">项目概览</li>
+			<li data-load="">项目任务</li>
+			<li data-load="">工作记录</li>
+			<li data-load="">项目文档</li>
+			<li data-load="">项目人员</li>
+			<li data-load="">项目动态</li>
+			<li data-load="">项目评论</li>
+		</ul>
+		<div class="layui-tab-content" style="padding:0">
+			<div class="layui-tab-item layui-show">
+				<table class="layui-table layui-table-form">
+					<tr>
+						<td class="layui-td-gray">项目状态</td>
+						<td><span class="check-status-color-2">『进行中』</span></td>
+						<td class="layui-td-gray">项目类别</td>
+						<td>普通项目</td>
+						<td class="layui-td-gray">始止日期</td>
+						<td>2025-05-29 到 2025-06-29</td>
+						<td class="layui-td-gray">所属部门</td>
+						<td>人事部</td>
+					</tr>
+					<tr>
+						<td class="layui-td-gray">项目经理</td>
+						<td>一页书</td>
+						<td class="layui-td-gray">项目成员</td>
+						<td colspan="5">素还真,一页书,风僧白云剑,藏剑生,独梦君,风霁月,鸳鸯镜,白无垢</td>
+					</tr>
+				</table>
+
+		<div class="layui-card border" style="margin-top:16px;">
+			<div class="layui-card-header" style="height:43px; line-height:43px;">
+				<strong>项目阶段</strong>
+			</div>
+			<div class="px-3 py-1 border-b">
+				<div class="flow-flexbox check-items flow-flex-row">
+								<div class='flow-flexbox flow-flex-row check-item  blue'>
+						<div class="check-item-icon">
+							<strong class="iconfont icon-bianji blue"></strong>
+							<strong class="iconfont icon-kaoheguanli gray"></strong>
+							<strong class="iconfont icon-genjinjilu black"></strong>
+						</div>
+						<div>
+							<div class="check-item-name"><strong class="f16">立项阶段</strong> 鸳鸯镜</div>
+							<div class="check-item-time">2025-05-29 到 2025-06-29</div>
+						</div>
+						<div class="layui-icon layui-icon-right"></div>
+					</div>
+								<div class='flow-flexbox flow-flex-row check-item '>
+						<div class="check-item-icon">
+							<strong class="iconfont icon-bianji blue"></strong>
+							<strong class="iconfont icon-kaoheguanli gray"></strong>
+							<strong class="iconfont icon-genjinjilu black"></strong>
+						</div>
+						<div>
+							<div class="check-item-name"><strong class="f16">规划阶段</strong> 独梦君</div>
+							<div class="check-item-time">2025-05-29 到 2025-06-29</div>
+						</div>
+						<div class="layui-icon layui-icon-right"></div>
+					</div>
+								<div class='flow-flexbox flow-flex-row check-item '>
+						<div class="check-item-icon">
+							<strong class="iconfont icon-bianji blue"></strong>
+							<strong class="iconfont icon-kaoheguanli gray"></strong>
+							<strong class="iconfont icon-genjinjilu black"></strong>
+						</div>
+						<div>
+							<div class="check-item-name"><strong class="f16">执行阶段</strong> 藏剑生</div>
+							<div class="check-item-time">2025-05-29 到 2025-06-29</div>
+						</div>
+						<div class="layui-icon layui-icon-right"></div>
+					</div>
+								<div class='flow-flexbox flow-flex-row check-item '>
+						<div class="check-item-icon">
+							<strong class="iconfont icon-bianji blue"></strong>
+							<strong class="iconfont icon-kaoheguanli gray"></strong>
+							<strong class="iconfont icon-genjinjilu black"></strong>
+						</div>
+						<div>
+							<div class="check-item-name"><strong class="f16">监控与控制阶段</strong> 风僧白云剑</div>
+							<div class="check-item-time">2025-05-29 到 2025-06-29</div>
+						</div>
+						<div class="layui-icon layui-icon-right"></div>
+					</div>
+								<div class='flow-flexbox flow-flex-row check-item '>
+						<div class="check-item-icon">
+							<strong class="iconfont icon-bianji blue"></strong>
+							<strong class="iconfont icon-kaoheguanli gray"></strong>
+							<strong class="iconfont icon-genjinjilu black"></strong>
+						</div>
+						<div>
+							<div class="check-item-name"><strong class="f16">收尾阶段</strong> 风霁月</div>
+							<div class="check-item-time">2025-05-29 到 2025-06-29</div>
+						</div>
+						<div class="layui-icon layui-icon-right"></div>
+					</div>
+							</div>
+			</div>
+				<div class="p-3 border-b">
+				<div>
+					<span class="gray">当前阶段：</span>立项阶段			<span class="gray" style="margin-left:20px">阶段周期：</span>2025-05-29 到 2025-06-29			<span class="gray" style="margin-left:20px">负责人：</span>鸳鸯镜		</div>
+					</div>
+				<div class="p-3">
+				<p><strong>阶段流转记录</strong></p>
+						<div class="layui-data-none">暂无阶段流转记录</div>
+					</div>
+		</div>
+
+		<div class="layui-card border">
+			<div class="layui-card-header" style="height:45px; line-height:45px;">
+				<strong>项目附件</strong>
+				<button type="button" class="layui-btn layui-btn-xs" id="uploadBtn">上传附件</button>
+			</div>
+			<div class="layui-row p-2" id="uploadBox">
+							<div class="layui-col-md4" id="fileItem105"><div class="file-card " id="fileItem1632">
+				<i class="file-icon iconfont icon-sucaiguanli"></i>
+				<div class="file-info">
+					<div class="file-title" title="1743158028439关于嗨旺图片.jpg">1743158028439关于嗨旺图片.jpg</div>
+					<div class="file-ops">77.09 KB，2025-05-30 13:32</div>
+				</div>
+				<div class="file-tool"><span class="file-ctrl blue" data-ctrl="edit" data-type="1" data-fileid="1632" data-ext="image" data-filename="1743158028439关于嗨旺图片.jpg" data-href="/storage/202505/dybpn_a4b429ca2e3bdd0cba55e6d5f8deef01.jpg" data-id="105" data-uid="2" title="附件操作"><i class="iconfont icon-gengduo1"></i></span><span class="name-edit green" style="display:none;" data-id="105" data-fileid="1632" id="fileEdit1632" data-name="1743158028439关于嗨旺图片.jpg" data-fileext="jpg" title="重命名"></span><span class="file-delete red" style="display:none;" data-uid="2" data-id="105" data-fileid="1632" id="fileDel1632" title="删除"></span></div>
+			</div></div>
+					</div>
+		</div>
+
+		<div class="layui-row mb-4 border">
+			<div class="layui-col-xs6 layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header" style="height:45px; line-height:45px;">
+						<strong>项目概况</strong>
+					</div>
+					<div class="p-3">
+						<dl>
+							<dt>任务 <span class="gray">(已完成/全部)</span></dt>
+							<dd class="layui-card-value" title="已完成/总任务">0 / 1</dd>
+						</dl>
+					</div>
+					<div class="pt-2 px-3">
+						<dl>
+							<dt>项目工时 <span class="gray">(实际/计划)</span></dt>
+							<dd class="layui-card-value" title="实际工时/计划工时">18.5 / 30</dd>
+						</dl>
+					</div>
+					<div class="pt-2 px-3">
+						<dl>
+							<dt>工作记录</dt>
+							<dd class="layui-card-value" title="工作记录数">2</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-xs6 layui-col-md9">
+				<div class="layui-card border-l">
+					<div class="layui-card-header" style="height:45px; line-height:45px;">
+						<strong>项目进度</strong>
+					</div>
+					<div class="layui-card-body">
+						<div class="layui-row">
+							<div class="layui-col-md6">
+								<div id="progress" class="gougu-data-none" style="width:100%; height:200px;"></div>
+							</div>
+							<div class="layui-col-md6">
+								<div id="delay" class="gougu-data-none" style="width:100%; height:200px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="layui-card border">
+			<div class="layui-card-header" style="height:45px; line-height:45px;">
+				<strong>项目燃尽图</strong>
+			</div>
+			<div class="layui-card-body">
+				<div id="cross" class="gougu-data-none" style="width:100%; height:360px;"
+					data-tips="任务数：1，已完成：0，未完成：1">
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-row border">
+			<div class="layui-col-xs6 layui-col-md6">
+				<div class="layui-card  border-r">
+					<div class="layui-card-header" style="height:45px; line-height:45px;">
+						<strong>任务分配情况</strong>
+					</div>
+					<div class="layui-card-body">
+						<div id="plan" class="gougu-data-none" style="width:100%; height:150px;"></div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-xs6 layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header" style="height:45px; line-height:45px;">
+						<strong>工时登记情况</strong>
+					</div>
+					<div class="layui-card-body">
+						<div id="work" class="gougu-data-none" style="width:100%; height:150px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+<script>
+function overview(){
+	let form = layui.form,tool = layui.tool,uploadPlus = layui.uploadPlus;
+	
+	$('body').on('click','[data-event="step"]',function(){
+		let check = $(this).data('check');
+		let callback = function (e) {
+			layer.msg(e.msg);
+			if(e.code==0){
+				setTimeout(function(){
+					location.reload();
+				},2000)
+				parent.layui.pageTable.reload();
+			}
+		}
+		if(check == 2){
+			$(parent.$('.express-close')).addClass('parent-colse');
+			layer.open({
+				type: 1,
+				title: '请输入退回的原因或理由',
+				area: ['500px', '252px'],
+				content: '<div style="padding:5px;"><textarea class="layui-textarea" id="remarkTextarea" style="width: 100%; height:132px;"></textarea></div>',
+				btnAlign: 'c',
+				btn: ['确认回退'],
+				end: function(){
+					$(parent.$('.express-close')).removeClass('parent-colse');
+				},
+				yes: function () {
+					let remark = $("#remarkTextarea").val();
+					if (remark != '') {
+						tool.post("/project/api/step_check", {id: project_id,check:check,content:remark}, callback);
+					} else {
+						layer.msg('请输入原因或理由');
+					}
+				}
+			})
+		}
+		else{
+			$(parent.$('.express-close')).addClass('parent-colse');
+			layer.open({
+				type: 1,
+				title: '请输入操作意见',
+				area: ['500px', '252px'],
+				content: '<div style="padding:5px;"><textarea class="layui-textarea" id="remarkTextarea" style="width: 100%; height:132px;"></textarea></div>',
+				btnAlign: 'c',
+				btn: ['确认完成'],
+				end: function(){
+					$(parent.$('.express-close')).removeClass('parent-colse');
+				},
+				yes: function () {
+					let remark = $("#remarkTextarea").val();
+					if (remark != '') {
+						tool.post("/project/api/step_check", {id: project_id,check:check,content:remark}, callback);
+					} else {
+						layer.msg('请输入操作意见');
+					}
+				}
+			})
+		}
+	});
+
+	var attachment = new uploadPlus({
+		"target":'uploadBtn',
+         "targetBox":'uploadBox',
+         "attachment":{
+            "type":1,//0ajax多文件模式，1ajax单文件单记录模式
+            "uidDelete":true,//是否开启只有上传人自己才能删除自己的附件
+			"ajaxSave":function(res){
+				let callback = function (e) {
+					layer.msg('上传成功');
+					setTimeout(function(){
+						location.reload();
+					},2000)	
+				}
+				tool.post("/project/api/add_file", { 'topic_id': project_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'project' }, callback);
+			},
+			"ajaxDelete":function(file_id){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {						
+						$('#fileItem' + file_id).remove();
+					}
+				}
+				tool.delete("/project/api/delete_file", {id: file_id}, callback);			
+			}
+		}
+	});
+
+	let callback = function (res) {
+		if (res.data.date_tasks instanceof Array == false) {
+			optionA.title.text = res.data.task_pie.ok_lv + '%';
+			optionA.series = [
+				{
+					type: 'pie',
+					radius: ['60%', '80%'],
+					center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						show: false
+					},
+					data: [
+						{ value: res.data.task_pie.count - res.data.task_pie.count_ok, name: '待处理' },
+						{ value: res.data.task_pie.count_ok, name: '已完成' }
+					]
+				}
+			];
+			optionA && progressChart.setOption(optionA);
+
+			optionB.title.text = res.data.task_pie.delay_lv + '%';
+			optionB.series = [
+				{
+					type: 'pie',
+					radius: ['60%', '80%'],
+					center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						show: false
+					},
+					data: [{
+						value: res.data.task_pie.delay,
+						name: '延迟',
+						itemStyle: {
+							color: "#ED6666",
+						}
+					},
+					{
+						value: (res.data.task_pie.count - res.data.task_pie.delay),
+						name: '未延迟',
+						itemStyle: {
+							color: "#91CC75",
+						}
+					}
+					]
+				}
+			];
+			optionB && delayChart.setOption(optionB);
+
+			var dataD = cross_count(res.data.date_tasks, res.data.date_tasks_ok);
+			var tips = $('#cross').data('tips');
+			optionD.title = {
+				text: '',
+				subtext: tips,
+				top: -10,
+			},
+			optionD.xAxis = {
+				type: 'category',
+				boundaryGap: false,
+				splitLine: {
+					show: true,
+					lineStyle: {
+						type: 'dashed'
+					}
+				},
+				data: dataD.x,
+				axisLabel: {
+					rotate: 30,
+					formatter: function (value, index) {
+						return value.slice(5);
+					}
+				}
+			};
+			optionD.series = [
+				{
+					name: '任务计划剩余',
+					type: 'line',
+					showSymbol: false,
+					markLine: {
+						data: [{ type: 'average', name: 'Avg' }],
+					},
+					lineStyle: {
+						width: 2
+					},
+					data: dataD.y
+				},
+				{
+					name: '任务实际剩余',
+					type: 'line',
+					showSymbol: false,
+					areaStyle: {
+						opacity: 0.1
+					},
+					markLine: {
+						data: [{ type: 'average', name: 'Avg' }],
+					},
+					lineStyle: {
+						width: 2
+					},
+					data: dataD.y2
+				}
+			]
+			optionD && crossChart.setOption(optionD)
+
+			var dataE = getCalendarData(res.data.date_tasks);
+			optionE.calendar.range = dataE.range,
+				optionE.series = {
+					type: 'heatmap',
+					coordinateSystem: 'calendar',
+					data: dataE.data
+				}
+			optionE && planChart.setOption(optionE);
+
+			if (res.data.date_schedules instanceof Array == false) {
+				var dataF = getCalendarData(res.data.date_schedules);
+				optionF.calendar.range = dataF.range,
+					optionF.series = {
+						type: 'heatmap',
+						coordinateSystem: 'calendar',
+						data: dataF.data
+					}
+				optionF && workChart.setOption(optionF);
+			}
+		}
+	}
+	tool.get('/project/api/get_chart_data.json', { 'project_id': project_id }, callback);
+
+	window.onresize = function () {
+		progressChart.resize();
+		delayChart.resize();
+		crossChart.resize();
+		planChart.resize();
+		workChart.resize();
+	}
+}
+</script>
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="bg-white">
+	<table class="layui-hide" id="task" lay-filter="task"></table>
+</div>
+<script type="text/html" id="toolbartask">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新建任务</button>
+  </div>
+</script>
+<script>
+function project_task(){
+	if($('#projectTab').find('li').eq(1).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(1).data('load','true');
+	let tool = layui.tool, table = layui.tablePlus;
+	//项目任务
+	parent.layui.taskTable = table.render({
+		elem: '#task',
+		title: '任务列表',
+		toolbar: '#toolbartask',
+		cellMinWidth:80,
+		url: "/project/api/get_task.json",
+		where:{'project_id':project_id},
+		page: true, //开启分页
+		limit: 20,
+		cols:  [[
+			{field: 'id', title: '任务编号', width: 80, align: 'center', fixed: 'left', templet: function (d) {
+					return 'T' + d.id;
+				}
+			}
+			,{ field: 'status', title: '任务状态', align: 'center', width: 90, templet: function (d) {
+					var html = '<span class="check-status-color-' + d.status + '">『' + d.status_name + '』</span>';
+					return html;
+					}
+				}
+			, { field: 'cate_name', title: '工作类型', width: 90, align: 'center'}
+			,{field:'title',title: '任务主题', minWidth: 300,templet:function(d){
+					var html = '<span class="layui-badge layui-bg-'+d.priority+'">'+d.priority_name+'</span> <a data-href="/project/task/view/id/'+d.id+'.html" class="side-a">'+d.title+'</a>';
+					return html;
+				}}
+			,{field:'director_name',title: '负责人', align:'center',width: 80}
+			,{field:'assist_admin_names',title: '协作人',width: 160}
+			,{field:'plan_hours',title: '预估工时', align:'center',width: 80}				
+			,{field:'end_time',title: '预计结束日期', width: 150,templet:function(d){
+				var html = d.end_time;	
+				if(d.delay>0){
+					html+= '<span class="red ml-1" style="font-size:12px;">逾期'+d.delay+'天</span>';	
+				}			
+				return html;
+			}}
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(task)', function(obj){
+	  var checkStatus = table.checkStatus(obj.config.id);
+	  switch(obj.event){
+		case 'add':
+            CoreUtil.setData("biz_rowdata","");
+          //CoreUtil.setData('biz_rowdata',null);
+          //tool.side("/qixing_oa/pjProject/edit.html?types="+obj.id);
+		  tool.side('/project/task/add?project_id='+project_id);
+		break;
+	  };
+	});
+}
+</script>				
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="bg-white">
+	<table class="layui-hide" id="scheduleApi" lay-filter="schedule"></table>
+</div>
+<script type="text/html" id="toolbarschedule">
+  <div class="layui-btn-container">
+  	<span class="yellow">如需创建工作日志，请到项目任务的详情页创建</span>
+  </div>
+</script>
+<script>
+function project_schedule(){
+	if($('#projectTab').find('li').eq(2).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(2).data('load','true');
+	let form = layui.form,tool = layui.tool,table = layui.tablePlus,work = layui.oaSchedule,oaPicker = layui.oaPicker;
+	//项目工作记录
+	layui.scheduleTable = table.render({
+		elem: '#scheduleApi',
+		title: '工作记录列表',
+		toolbar: '#toolbarschedule',
+		cellMinWidth: 80,
+		url: "/oa/api/get_schedule.json", //数据接口
+		where: { 'project_id': project_id },
+		cols: [[ //表头
+			{ field: 'id', title: '序号', width: 60, align: 'center' }
+			, {
+				field: 'start_time', title: '工作时间范围', align: 'center', width: 180, templet: function (d) {
+					var html = d.start_time + '至' + d.end_time;
+					return html;
+				}
+			}
+			, { field: 'labor_time', title: '工时', style: 'color: #91CC75;', align: 'center', width: 60 }
+			, { field: 'labor_type_string', title: '工作类型', align: 'center', width: 90,templet:function(d){
+				var html = '<span class="layui-color-'+d.labor_type+'">'+d.labor_type_string+'</span>';
+				return html;
+			}}
+			, { field: 'work_cate', title: '工作类别', align: 'center', width: 100 }
+			, { field: 'title', title: '工作内容' }
+			, { field: 'name', title: '执行员工', align: 'center', width: 80 }
+			, { field: 'department', title: '所在部门', align: 'center', width: 100 }
+			, { field: 'create_time', title: '记录时间', align: 'center', width: 150 }
+			, {title: '操作',fixed:'right', align: 'center', width: 100, templet: function (d) {
+					return '<div class="layui-btn-group"><span class="layui-btn layui-btn-xs" lay-event="edit">修改</span><span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span></div>';
+				}
+			}
+		]]
+	});
+	//监听行工具事件		
+	table.on('tool(schedule)', function (obj) {
+		if (obj.event === 'edit') {
+			work.add(0, obj.data);
+		}
+		if (obj.event === 'view') {
+			work.view(obj.data);
+		}
+		return false;
+	})
+}
+</script>				
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="bg-white">
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbardocument">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新建文档</button>
+  </div>
+</script>
+<script>
+function project_document(){
+	if($('#projectTab').find('li').eq(3).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(3).data('load','true');
+	let tool = layui.tool, table = layui.tablePlus;
+	//项目任务
+	parent.layui.documentTable = table.render({
+		elem: '#document',
+		title: '文档列表',
+		toolbar: '#toolbardocument',
+		cellMinWidth:80,
+		url: "/project/document/datalist.json",
+		where:{'project_id':project_id},
+		page: true, //开启分页
+		limit: 20,
+		cols:  [[
+			{field: 'id', title: '文档编号', width: 80, align: 'center', templet: function (d) {
+					return 'D' + d.id;
+				}
+			}
+			,{field: 'title', title: '文档主题'}
+			,{field:'admin_name',title: '创建人', align:'center',width: 80}			
+			,{field:'create_time',title: '创建时间', align:'center', width: 150}
+			,{
+				field: 'right',
+				fixed:'right',
+				title: '操作',
+				width: 120,
+				align: 'center',
+				templet: function (d) {
+					var html = '<div class="layui-btn-group">';
+					var btn1='<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</a>'
+					var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+					var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+					return html+btn1+btn2+btn3+'</div>';
+				}						
+			}
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(document)', function(obj){
+		if (obj.event === 'add') {
+			tool.side('/project/document/add?project_id='+project_id);
+			return;
+		}
+	});
+	
+	table.on('tool(document)', function(obj){
+		var data = obj.data; //获得当前行数据		
+		if(obj.event === 'view'){ //查看
+			let url = '/project/document/view/id/'+data.id;
+			tool.side(url);
+		}
+		if(obj.event === 'edit'){
+			tool.side('/project/document/add?id='+data.id);
+			return;
+		}
+		if (obj.event === 'del') {
+			layer.confirm('确定要删除吗?', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						obj.del();
+					}
+				}
+				tool.delete("/project/document/delete", {id: data.id}, callback);
+				layer.close(index);
+			});
+		}
+	})
+}
+</script>				
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="bg-white">
+	<table class="layui-hide" id="user" lay-filter="user"></table>
+</div>
+<script type="text/html" id="toolbaruser">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增项目成员</button>
+  </div>
+</script>
+<script>
+function project_user(){
+	if($('#projectTab').find('li').eq(4).data('load') =='true'){
+		return false;
+	}
+	$('#projectTab').find('li').eq(4).data('load','true');
+	let tool = layui.tool, table = layui.tablePlus,oaPicker = layui.oaPicker;
+	//项目成员
+	layui.userTable = table.render({
+		elem: '#user',
+		title: '项目成员列表',
+		cellMinWidth: 60,
+		toolbar: '#toolbaruser',
+		url: "/project/api/project_user.json", //数据接口
+		where: { 'tid': project_id },
+		page: false, //开启分页
+		limit: 20,
+		cols: [[ //表头
+			{ field: 'name', fixed: 'left', title: '成员姓名', width: 90, align: 'center', rowspan: 2 }
+			, { field: 'create_time', title: '进入项目日期', width: 110, align: 'center', rowspan: 2 }
+			, { field: 'role', title: '角色', align: 'center', width: 90, rowspan: 2, templet: function (d) {
+				var html='<span style="color: #4285F4;">普通成员</span>';
+				if(d.role==1){
+					html='<span style="color: #EE6666;">项目创建人</span>';
+				}
+				if(d.role==2){
+					html='<span style="color: #91CC75;">项目负责人</span>';
+				}
+				return html;
+			}}
+			, { field: 'position', title: '职位', align: 'center', width: 100, rowspan: 2 }
+			, { field: 'department', title: '所在部门', align: 'center', width: 120, rowspan: 2 }
+			, { field: 'mobile', title: '手机号码', align: 'center', width: 110, rowspan: 2 }
+			, { align: 'center', title: '工作记录', colspan: 2 }
+			, { align: 'center', title: '项目任务', colspan: 3 }
+			, { field: 'delete_time', title: '移除日期', align: 'center', minWidth: 120, rowspan: 2 }
+			, { field: 'status',fixed: 'right', title: '状态', align: 'center', width: 60, rowspan: 2, templet: function (d) {
+					var html = '<span style="color:#EE6666">✘</span>';
+					if(d.delete_time == '-')
+						html = '<span style="color:#91CC75">✔</span>';
+					return html;
+				}}				
+			, {title: '操作',fixed: 'right', align: 'center', width: 60, rowspan: 2, templet: function (d) {
+					var html = '<span class="layui-btn layui-btn-xs" lay-event="recover">恢复</span>';
+					if(d.delete_time == '-')
+						html = '<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove">移除</span>';
+					return html;
+				}
+			}
+		], [
+			{ field: 'schedules', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '记录' }
+			, { field: 'labor_times', align: 'center', style: 'color: #4285F4;', width: 70, 'title': '工时' }
+			, { field: 'tasks_unfinish', align: 'center', style: 'color: #91CC75;', width: 72, 'title': '进行中' }
+			, { field: 'tasks_finish', align: 'center', style: 'color: #FAC858;', width: 70, 'title': '已完成' }
+			, { field: 'tasks_pensent', align: 'center', style: 'color: #EE6666;', width: 72, 'title': '完成率' }
+		]]
+	});
+	
+	//触发事件
+	table.on('toolbar(user)', function(obj){
+		var checkStatus = table.checkStatus(obj.config.id);
+		switch(obj.event){
+			case 'add':
+            CoreUtil.setData("biz_rowdata","");
+          //CoreUtil.setData('biz_rowdata',null);
+          //tool.side("/qixing_oa/pjProject/edit.html?types="+obj.id);
+			  oaPicker.employeeInit({
+				type: 1,
+				callback: function (data) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if(e.code == 0){
+							layui.userTable.reload();
+						}						
+					}
+					let select_id=[];
+					for(var a=0; a<data.length;a++){
+						select_id.push(data[a].id);
+					}
+					let ids = select_id.join(',');
+					tool.post("/project/api/add_user", {uid: ids,project_id: project_id}, callback);
+				}
+			})			
+			break;
+		};
+	});
+
+	//监听行工具事件
+	table.on('tool(user)', function (obj) {
+		let postData = { "id": obj.data.id };
+		let callback = function (e) {
+				layer.closeAll();
+				layer.msg(e.msg);
+				if(e.code == 0){
+					layui.userTable.reload();
+				}
+			}
+		if (obj.event === 'remove') {
+			layer.confirm('确定要移除该项目成员吗?', { icon: 3, title: '提示' }, function (index) {
+				tool.delete("/project/api/remove_user", postData, callback);
+			});
+		}
+		if (obj.event === 'recover') {
+			layer.confirm('确定要恢复该项目成员吗?', { icon: 3, title: '提示' }, function (index) {
+				tool.post("/project/api/recover_user", postData, callback);
+			});
+		}
+		return;
+	});
+}
+</script>		
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="border">
+	<div id="logList" class="log-timeline p-3"></div>
+</div>
+<script>	
+function project_log(){
+	let oaEdit = layui.oaEdit;	
+	oaEdit.log('logList','Project',project_id);
+}
+</script>
+			</div>
+			
+			<div class="layui-tab-item">
+				<div class="px-3 pt-3 border bg-white">
+	<div class="comment-input">
+		<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input" value="">
+	</div>
+	<div id="commentBox" class="pt-3"></div>
+</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script src="/assets/third_party/echart/echarts.min.js"></script>
+<script>
+	const project_id = '1186';
+	const project_start_time = "2025-05-29";
+	var chartProgress = document.getElementById('progress');
+	var progressChart = echarts.init(chartProgress);
+	var optionA;
+	optionA = {
+		backgroundColor: "#ffffff",
+		title: {
+			text: '67.45%',//主标题文本
+			subtext: '任务完成率',//副标题文本
+			x: 'center',
+			y: '39%',
+			textStyle: {
+				fontWeight: 'normal',
+				fontSize: 18,
+				color: '#FF974C',
+				align: 'center'
+			},
+			subtextStyle: {
+				fontSize: 12,
+				color: '#6c7a89',
+			}
+		},
+		tooltip: {
+			trigger: "item",
+			formatter: '{b}：<br/><strong>{c}</strong>',
+			show: true,
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				center: ['50%', '50%'],
+				avoidLabelOverlap: false,
+				label: {
+					show: false
+				},
+				data: [
+					{ value: 1048, name: '待处理' },
+					{ value: 735, name: '已完成' }
+				]
+			}
+		]
+	};
+
+	var chartDelay = document.getElementById('delay');
+	var delayChart = echarts.init(chartDelay);
+	var optionB;
+	optionB = {
+		backgroundColor: "#ffffff",
+		title: {
+			text: '40.25%',//主标题文本
+			subtext: '任务延迟率',//副标题文本
+			x: 'center',
+			y: '39%',
+			textStyle: {
+				fontWeight: 'normal',
+				fontSize: 18,
+				color: '#FF974C',
+				align: 'center',
+				marginLeft: '-10px'
+			},
+			subtextStyle: {
+				fontSize: 12,
+				color: '#6c7a89',
+			}
+		},
+		tooltip: {
+			trigger: "item",
+			formatter: '{b}：<br/><strong>{c}</strong>',
+			show: true,
+		},
+		series: [
+			{
+				type: 'pie',
+				radius: ['60%', '80%'],
+				center: ['50%', '50%'],
+				avoidLabelOverlap: false,
+				label: {
+					show: false
+				},
+				data: [{
+					value: 1048,
+					name: '延迟',
+					itemStyle: {
+						color: "#ED6666",
+					}
+				},
+				{
+					value: 735,
+					name: '未延迟',
+					itemStyle: {
+						color: "#91CC75",
+					}
+				}
+				]
+			}
+		]
+	};
+
+
+	var chartCross = document.getElementById('cross');
+	var crossChart = echarts.init(chartCross);
+	var optionD;
+	optionD = {
+		backgroundColor: "#ffffff",
+		color: ['#8C92A4', '#2C7EF8'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				label: {
+					backgroundColor: '#6a7985'
+				}
+			}
+		},
+		legend: {
+			data: ['任务计划剩余', '任务实际剩余']
+		},
+		grid: {
+			top: 36,
+			left: 8,
+			right: 36,
+			bottom: 0,
+			containLabel: true
+		},
+		xAxis: [
+			{
+				type: 'category',
+				boundaryGap: false,
+				splitLine: {
+					show: true,
+					lineStyle: {
+						type: 'dashed'
+					}
+				}
+			}
+		],
+		yAxis: [{
+			axisLine: {
+				show: true
+			},
+			boundaryGap: false,
+			splitLine: {
+				show: true,
+				lineStyle: {
+					type: 'dashed'
+				}
+			},
+			type: 'value'
+		}
+		]
+	};
+
+
+	var chartPlan = document.getElementById('plan');
+	var planChart = echarts.init(chartPlan);
+	var optionE;
+
+	optionE = {
+		backgroundColor: "#ffffff",
+		title: {
+			top: 0,
+			left: 0,
+			text: ''
+		},
+		tooltip: {
+			padding: 6,
+			formatter: function (obj) {
+				var value = obj.value;
+				var tips = '<div style="font-size: 12px;">' + value[0] + '<br>';
+				tips += '共 ' + value[1] + ' 个工作任务';
+				tips += '</div>';
+				return tips;
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			show: false,
+			inRange: {
+				color: ['#fafafa', '#20BF3F']
+			}
+		},
+		calendar: {
+			top: 24,
+			left: 36,
+			right: 4,
+			cellSize: ['auto', 16],
+			range: ['2022-03-01', '2022-08-01'],
+			splitLine: {
+				lineStyle: {
+					color: '#333',
+					type: 'dashed',
+				}
+			},
+			itemStyle: {
+				borderWidth: 0.5
+			},
+			yearLabel: { show: false },
+			monthLabel: {
+				nameMap: 'cn',
+				fontSize: 12
+			},
+			dayLabel: {
+				show: true,
+				formatter: '{start}  1st',
+				fontWeight: 'lighter',
+				nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+				fontSize: 12
+			}
+		},
+		series: {
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: []
+		}
+	};
+
+
+	var chartWork = document.getElementById('work');
+	var workChart = echarts.init(chartWork);
+	var optionF;
+
+	optionF = {
+		backgroundColor: "#ffffff",
+		title: {
+			top: 0,
+			left: 0,
+			text: ''
+		},
+		tooltip: {
+			padding: 6,
+			formatter: function (obj) {
+				var value = obj.value;
+				var tips = '<div style="font-size: 12px;">' + value[0] + '<br>';
+				tips += '共 ' + value[1] + ' 个工时';
+				tips += '</div>';
+				return tips;
+			}
+		},
+		visualMap: {
+			min: 0,
+			max: 10,
+			show: false,
+			inRange: {
+				color: ['#fafafa', '#359AEF']
+			}
+		},
+		calendar: {
+			top: 24,
+			left: 36,
+			right: 4,
+			cellSize: ['auto', 16],
+			range: ['2022-03-01', '2022-08-01'],
+			splitLine: {
+				lineStyle: {
+					color: '#333',
+					type: 'dashed',
+				}
+			},
+			itemStyle: {
+				borderWidth: 0.5
+			},
+			yearLabel: { show: false },
+			monthLabel: {
+				nameMap: 'cn',
+				fontSize: 12
+			},
+			dayLabel: {
+				show: true,
+				formatter: '{start}  1st',
+				fontWeight: 'lighter',
+				nameMap: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+				fontSize: 12
+			}
+		},
+		series: {
+			type: 'heatmap',
+			coordinateSystem: 'calendar',
+			data: []
+		}
+	};
+
+
+	function getCalendarData(arr) {
+		var rangeArray = [];
+		for (var property in arr) {
+			rangeArray.push(property);
+		}
+		var rangeArray = [rangeArray[0], rangeArray[rangeArray.length - 1]];
+		var start = +echarts.number.parseDate(rangeArray[0]);
+		var end = +echarts.number.parseDate(rangeArray[1]);
+		if (start + 7776000000 > end) {
+			end = start + 8640000000;
+			rangeArray[1] = echarts.format.formatTime('yyyy-MM-dd', end);
+		}
+		var dayTime = 3600 * 24 * 1000;
+		var data = [];
+		for (var time = start; time < end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			if (arr[this_date]) {
+				data.push([this_date, arr[this_date]]);
+			} else {
+				data.push([this_date, 0]);
+			}
+		}
+		var res = { 'range': rangeArray, 'data': data };
+		return res;
+	}
+
+	//燃尽图统计
+	function cross_count(arr, arr2) {
+		var planArray = [], doArray = [];
+		var today = new Date();
+		var todayStr = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		for (var a in arr) {
+			planArray.push(a);
+		}
+		var rangeArray = [planArray[0], planArray[planArray.length - 1]];
+		if (arr2 instanceof Array == false) {
+			for (var b in arr2) {
+				doArray.push(b);
+			}
+			if ((+echarts.number.parseDate(doArray[doArray.length - 1])) < (+echarts.number.parseDate(todayStr))) {
+				doArray.push(todayStr);
+			}
+			if ((+echarts.number.parseDate(planArray[planArray.length - 1])) < (+echarts.number.parseDate(doArray[doArray.length - 1]))) {
+				rangeArray[1] = doArray[doArray.length - 1];
+			}
+		}
+		var start = +echarts.number.parseDate(rangeArray[0]);
+		var end = +echarts.number.parseDate(rangeArray[1]);
+		var todayInt = +echarts.number.parseDate(todayStr);
+		var dayTime = 3600 * 24 * 1000;
+		var xArray = [], yArray = [], yArray2 = [], done = 0, doneArray = [];
+		for (var time = start; time <= end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			xArray.push(this_date);
+			var plan = cross_recursion(time, end, arr);
+			yArray.push(plan);
+
+			if (arr2[this_date]) {
+				done += arr2[this_date];
+			}
+			if (time <= todayInt) {
+				doneArray.push(done);
+			}
+		}
+		for (var i = 0; i < doneArray.length; i++) {
+			yArray2.push(yArray[0] - doneArray[i]);
+		}
+		var start_time = +echarts.number.parseDate(project_start_time), tem_x_array = [], tem_y_array = [];
+		if (start_time < start) {
+			for (var tem_time = start_time; tem_time < start; tem_time += dayTime) {
+				var this_date = echarts.format.formatTime('yyyy-MM-dd', tem_time);
+				tem_x_array.push(this_date);
+				tem_y_array.push(yArray[0]);
+			}
+			xArray = tem_x_array.concat(xArray);
+			yArray = tem_y_array.concat(yArray);
+			yArray2 = tem_y_array.concat(yArray2);
+		}
+		return { 'x': xArray, 'y': yArray, 'y2': yArray2 };
+	}
+
+	function cross_recursion(start, end, arr) {
+		var count = 0;
+		var dayTime = 3600 * 24 * 1000;
+		for (var time = start; time <= end; time += dayTime) {
+			var this_date = echarts.format.formatTime('yyyy-MM-dd', time);
+			if (arr[this_date]) {
+				count += arr[this_date];
+			}
+		}
+		return count;
+	}
+	
+	//
+	const moduleInit = ['tool','oaPicker','uploadPlus','tablePlus','oaComment','oaSchedule','oaEdit'];
+
+	function gouguInit() {
+		var tool = layui.tool,element = layui.element,comment = layui.oaComment;
+		
+		comment.init({
+			"box":'commentBox',//容器id
+			"input": 'commentInput',
+			"topic_id":project_id,
+			"module": 'project',
+		});
+		
+		$('body').on('click','[data-event="close"]',function(){
+			tool.ask('确定要关闭该项目？',function(){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if(e.code==0){
+						parent.layui.pageTable.reload();
+						setTimeout(function(){
+							location.reload();
+						},2000)
+					}
+				}
+				tool.post("/project/api/close", { 'id': project_id}, callback);
+			})
+		})
+		$('body').on('click','[data-event="open"]',function(){
+			tool.ask('确定要开启该项目？',function(){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if(e.code==0){
+						parent.layui.pageTable.reload();
+						setTimeout(function(){
+							location.reload();
+						},2000)
+					}
+				}
+				tool.post("/project/api/open", { 'id': project_id}, callback);
+			})
+		})
+		
+		overview();		
+		element.on('tab(project)', function(data){
+			let index = data.index;
+			if(index == 1){
+				project_task();	
+			}
+			else if(index == 2){
+				project_schedule();	
+			}
+			else if(index == 3){
+				project_document();	
+			}
+			else if(index == 4){
+				project_user();	
+			}
+			else if(index == 5){
+				project_log();	
+			}
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+	<script src="/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

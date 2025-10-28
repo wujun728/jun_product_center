@@ -1,0 +1,23 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "task_pie": {
+            "count": 1,
+            "count_ok": 0,
+            "delay": 0,
+            "ok_lv": 0,
+            "delay_lv": 0
+        },
+        "date_tasks": {
+            "2026-05-29": 1
+        },
+        "date_tasks_ok": [],
+        "date_schedules": {
+            "2025-05-29": 11,
+            "2025-05-30": 7.5
+        }
+    }
+}

@@ -1,0 +1,110 @@
+{
+	"code": 0,
+	"data": {
+		"current": 1,
+		"hitCount": false,
+		"optimizeCountSql": true,
+		"orders": [],
+		"pages": 1,
+		"records": [
+			{
+				"cusdesc": "1ee04e0b1cb5af7367c80c22e42efd8b",
+				"cusname": "89921218@qq.com",
+				"dictCussex": "1",
+				"dictCustype": "1",
+				"fullname": "土豆",
+				"id": "1",
+				"registerDate": "2021-06-23 14:24:23",
+				"remark": ""
+			},
+			{
+				"cusdesc": "432141111111132",
+				"cusname": "10@qq.com",
+				"dictCussex": "2",
+				"dictCustype": "2",
+				"fullname": "土豆-10",
+				"id": "10",
+				"money": 9999.00,
+				"registerDate": "2021-06-23 14:24:23",
+				"remark": ""
+			},
+			{
+				"cusdesc": "111",
+				"cusname": "111",
+				"dictCussex": "",
+				"dictCustype": "",
+				"fullname": "",
+				"id": "1441724395932016",
+				"registerDate": "1970-01-01 08:00:00"
+			},
+			{
+				"cusdesc": "qqq",
+				"cusname": "qqq",
+				"dictCussex": "qqq",
+				"dictCustype": "qqq",
+				"fullname": "qqq",
+				"id": "1441742043239624",
+				"registerDate": "2021-09-25 00:00:00",
+				"remark": "qqq"
+			},
+			{
+				"cusdesc": "111",
+				"cusname": "1111",
+				"dictCussex": "",
+				"dictCustype": "1",
+				"fullname": "",
+				"id": "1441744961288265",
+				"registerDate": "2021-09-24 00:00:05",
+				"remark": ""
+			},
+			{
+				"cusdesc": "666",
+				"cusname": "666",
+				"dictCussex": "1",
+				"dictCustype": "2",
+				"fullname": "6666",
+				"id": "1443466028221157377",
+				"money": 6666.00,
+				"registerDate": "2021-09-30 15:07:32",
+				"remark": "66666"
+			},
+			{
+				"cusdesc": "1ee04e0b1cb5af7367c80c22e42efd8b",
+				"cusname": "2@qq.com",
+				"dictCussex": "1",
+				"fullname": "土豆-2",
+				"id": "2",
+				"registerDate": "2021-06-23 14:24:23"
+			},
+			{
+				"cusdesc": "1ee04e0b1cb5af7367c80c22e42efd8b",
+				"cusname": "3@qq.com",
+				"dictCussex": "1",
+				"dictCustype": "",
+				"fullname": "土豆-36666",
+				"id": "3",
+				"registerDate": "2021-06-23 14:24:23"
+			},
+			{
+				"cusdesc": "1ee04e0b1cb5af7367c80c22e42efd8b",
+				"cusname": "4@qq.com",
+				"dictCussex": "1",
+				"fullname": "土豆-4",
+				"id": "4",
+				"registerDate": "2021-06-23 14:24:23"
+			},
+			{
+				"cusdesc": "1ee04e0b1cb5af7367c80c22e42efd8b",
+				"cusname": "5@qq.com",
+				"dictCussex": "1",
+				"fullname": "土豆-5",
+				"id": "5",
+				"registerDate": "2021-06-23 14:24:23"
+			}
+		],
+		"searchCount": true,
+		"size": 10,
+		"total": 10
+	},
+	"msg": "操作成功"
+}

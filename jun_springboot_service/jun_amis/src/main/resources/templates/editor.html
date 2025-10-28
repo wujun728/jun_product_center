@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,width=device-width,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>amis-editor</title>
+    <link rel="stylesheet" href="https://bce.bdstatic.com/iconfont/iconfont.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.min.css"/>
+
+    <script src="/admin/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        jQuery = $.noConflict();
+    </script>
+    <script th:src="${js}"></script>
+
+    <style>
+        .cxd-FileControl .disabled .cxd-Button{
+            display: none !important;
+        }
+        .cxd-ImageControl .is-disabled .cxd-ImageControl-addBtn{
+            display: none !important;
+        }
+    </style>
+    <script>
+
+        window.EDITOR_SAVE = schema => {
+            jQuery.ajax({
+                url:"/admin/custom/saveSchema/[[${code}]]",
+                type:"POST",
+                data:{
+                    schema:JSON.stringify(schema)
+                },
+                success:function(data){
+                    if(data.status == 0){
+                        alert("保存成功");
+                    }else{
+                        alert("保存失败"+data.msg);
+                    }
+                }
+            })
+        }
+    </script>
+
+    <link href="/amis-editor/css/index.5e262399.css" rel="stylesheet">
+</head>
+<body>
+<div id="root"></div>
+<script defer src="/amis-editor/scripts/chunk/index.1e439e60.js"></script>
+</body>
+</html>

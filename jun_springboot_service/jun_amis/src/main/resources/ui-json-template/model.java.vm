@@ -1,0 +1,14 @@
+import common.io.github.wujun728.admin.BaseData;
+import lombok.Data;
+
+/***
+ * @date ${date}
+ * @remark ${tableComment}
+ */
+@Data
+public class ${tableName} extends BaseData {
+#foreach( $column in $columns)
+    //${column.columnComment}
+    private ${column.type} ${column.columnName};
+#end
+}

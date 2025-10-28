@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../component/pear/css/pear.css"/>
+</head>
+<body>
+<form class="layui-form" action="" lay-filter="edit">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <div class="layui-form-item layui-hide">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="roleId" lay-verify="title"
+                               autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色标识</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="roleCode" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">状态</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="enable" value="true" title="开启" checked>
+                        <input type="radio" name="enable" value="false" title="关闭">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类型</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="roleType" lay-filter="roleType" value="1" title="菜单" checked>
+                        <input type="radio" name="roleType" lay-filter="roleType" value="2" title="数据">
+                    </div>
+                </div>
+
+                <div class="layui-form-item" id="dataType">
+                    <label class="layui-form-label">数据权限</label>
+                    <div class="layui-input-block">
+                        <select name="dataType" lay-filter="dataTypeFilter">
+                            <option value="ALL" selected>全部</option>
+                            <option value="DEPT">本人所在组织机构</option>
+                            <option value="SELF">本人</option>
+                            <!--                            <option value="DEPT_SETS">自定义组织机构</option>-->
+                            <!--                            <option value="DIY">自定义sql过滤</option>-->
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">描述</label>
+                    <div class="layui-input-block">
+                        <textarea placeholder="请输入描述" name="details" class="layui-textarea"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit="" lay-filter="role-update">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="pear-btn pear-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="../../../component/layui/layui.js"></script>
+<script src="../../../component/pear/pear.js"></script>
+<script>
+    layui.use(['form', 'jquery', 'easyAdmin'], function () {
+        let form = layui.form;
+        let $ = layui.jquery;
+        let easyAdmin = layui.easyAdmin;
+        form.on('submit(role-update)', function (data) {
+            easyAdmin.http({
+                url: '/dev-api/sys/role',
+                data: JSON.stringify(data.field),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                            parent.layui.table.reload("role-table");
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+
+        // 根据menuId获取详情，用于数据回显
+        var roleId = easyAdmin.getQueryString("roleId");
+        easyAdmin.http({
+            url: '/dev-api/sys/role/' + roleId,
+            dataType: 'json',
+            contentType: 'application/json',
+            type: 'get',
+            success: function (result) {
+                if (result.success) {
+                    // 表单数据回显
+                    form.val("edit", result.data);
+                    if (result.data.roleType == '1') {
+                        $("#dataType").hide();
+                        $("#dataType").val("ALL");
+                    } else if (result.data.roleType == '2') {
+                        $("#dataType").show();
+                    }
+                } else {
+                    layer.msg(result.msg, {icon: 2, time: 1000});
+                }
+            }
+        });
+        form.on("radio(roleType)", function (data) {
+            if (this.value == '1') {
+                $("#dataType").hide();
+                $("#dataType").val("ALL");
+            } else if (this.value == '2') {
+                $("#dataType").show();
+            }
+        });
+
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

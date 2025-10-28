@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >入职人员名称</label>
+      <div class=" layui-input-inline "> 
+		<input type="refJobUsername" name="refJobUsername"  id="refJobUsername"  lay-verify="required|refJobUsername" lay-max="256"  placeholder="请输入入职人员名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >报道部门</label>
+      <div class=" layui-input-inline "> 
+		<input type="refJobDeptname" name="refJobDeptname"  id="refJobDeptname"  lay-verify="required|refJobDeptname" lay-max="256"  placeholder="请输入报道部门"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+   <div class="layui-inline">       <label class="layui-form-label  layui-required  " >直属领导</label>
+      <div class=" layui-input-inline "> 
+		<input type="refUsername1" name="refUsername1"  id="refUsername1"  lay-verify="required|refUsername1" lay-max="256"  placeholder="请输入直属领导"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline" style="display: none;">       <label class="layui-form-label  " >入职报告发起人</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="username2"  id="username2"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >试用期开始时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="startTime1"  id="startTime1"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >试用期结束时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="endTime1"  id="endTime1"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+      
+ <div class="layui-inline">       <label class="layui-form-label  " >导师</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="refUsername2"  id="refUsername2"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >合同开始时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="beginTime2"  id="beginTime2"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >合同结束时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="endTime2"  id="endTime2"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+    <div class="layui-inline">       <label class="layui-form-label  " >考勤班次</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="workmarkTimes"  id="workmarkTimes"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ 
+ <div class="layui-inline">       <label class="layui-form-label  " >工作地点</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="workLocation"  id="workLocation"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >资料是否齐全</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="isFullEntryInfomation"  id="isFullEntryInfomation"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >入职手续是否办理完成</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="isEntryJobFilish"  id="isEntryJobFilish"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >合同是否签订</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="isSignContract"  id="isSignContract"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >附件(证件影印件+合同影印件)</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="files"  id="files"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>入职报道</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="hrUserEntryReported:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="refJobUsername" name="refJobUsernameCondition"  id="refJobUsernameCondition" class="layui-input"  autocomplete="off" placeholder="请输入入职人员名称">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="refUsername1" name="refUsername1Condition"  id="refUsername1Condition" class="layui-input"  autocomplete="off" placeholder="请输入直属领导">
+      </div>
+      <div class="layui-input-inline"  style="display: none;">
+    <input type="refJobDeptname" name="refJobDeptnameCondition"  id="refJobDeptnameCondition" class="layui-input"  autocomplete="off" placeholder="请输入报道部门">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrUserEntryReported:add">添加</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrUserEntryReported:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserEntryReported:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserEntryReported:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserEntryReported:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrUserEntryReported:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserEntryReported:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/hrUserEntryReported/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'refJobUsername', title: '入职人员名称', sort: true }, 
+          {field: 'refUsername1', title: '直属领导', sort: true }, 
+          {field: 'refJobDeptname', title: '报道部门', sort: true }, 
+          {field: 'username2', title: '入职报告发起人', sort: true ,hide: true }, 
+          {field: 'refUsername2', title: '导师', sort: true ,hide: true }, 
+          {field: 'startTime1', title: '试用期开始时间', sort: true ,hide: true }, 
+          {field: 'endTime1', title: '试用期结束时间', sort: true ,hide: true }, 
+          {field: 'beginTime2', title: '合同开始时间', sort: true ,hide: true }, 
+          {field: 'endTime2', title: '合同结束时间', sort: true ,hide: true }, 
+          {field: 'workLocation', title: '工作地点', sort: true ,hide: true }, 
+          {field: 'workmarkTimes', title: '考勤班次', sort: true ,hide: true }, 
+          {field: 'isFullEntryInfomation', title: '资料是否齐全', sort: true ,hide: true }, 
+          {field: 'isEntryJobFilish', title: '入职手续是否办理完成', sort: true ,hide: true }, 
+          {field: 'isSignContract', title: '合同是否签订', sort: true ,hide: true }, 
+          {field: 'files', title: '附件(证件影印件+合同影印件)', sort: true ,hide: true }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refJobUsername',
+		checkedKey: 'id',
+		table: {
+			url: '/hrUserHire/listBySelect?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{field: 'refJobUsername', title: '入职人员名称'}, 
+			        {field: 'refJobDeptname', title: '入职部门'}, 
+					{ field: 'XXXfullname', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.refJobUsername);
+				$("#refJobDeptname").val(item.refJobDeptname);
+				$("#refJobUsername").val(item.refJobUsername);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	
+	tableSelect.render({
+		elem: '#refUsername1',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' },
+					{ field: 'id', title: 'ID' , hide:true }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refUsername1").val(NEWJSON);
+			form.render();
+		}
+	});
+	 
+	/* tableSelect.render({
+		elem: '#refJobDeptname',
+		checkedKey: 'id',
+		table: {
+			url: '/hrUserEntryReported/listBySelect?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'XXXcusname', title: '标题' },
+					{ field: 'XXXfullname', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.XXXcusname);
+				$("#refId").val(item.XXXid);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	}); */
+	
+
+	tableSelect.render({
+		elem: '#refUsername2',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' },
+					{ field: 'id', title: 'ID' , hide:true }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refUsername2").val(NEWJSON);
+			form.render();
+		}
+	});
+	  
+	 	//日期
+	laydate.render({
+	    elem: '#startTime1'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#endTime1'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#beginTime2'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#endTime2'
+	    ,type: 'date'
+    });
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=refJobUsername]").val("");
+          $(".operation input[name=refUsername1]").val("");
+          $(".operation input[name=refJobDeptname]").val("");
+          $(".operation input[name=username2]").val("");
+          $(".operation input[name=refUsername2]").val("");
+          $(".operation input[name=startTime1]").val("");
+          $(".operation input[name=endTime1]").val("");
+          $(".operation input[name=beginTime2]").val("");
+          $(".operation input[name=endTime2]").val("");
+          $(".operation input[name=workLocation]").val("");
+          $(".operation input[name=workmarkTimes]").val("");
+          $(".operation input[name=isFullEntryInfomation]").val("");
+          $(".operation input[name=isEntryJobFilish]").val("");
+          $(".operation input[name=isSignContract]").val("");
+          $(".operation input[name=files]").val("");
+          $(".operation textarea[name=remark]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增入职报道' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=refJobUsername]").val(data.refJobUsername);
+          $(".operation input[name=refUsername1]").val(data.refUsername1);
+          $(".operation input[name=refJobDeptname]").val(data.refJobDeptname);
+          $(".operation input[name=username2]").val(data.username2);
+          $(".operation input[name=refUsername2]").val(data.refUsername2);
+          $(".operation input[name=startTime1]").val(data.startTime1);
+          $(".operation input[name=endTime1]").val(data.endTime1);
+          $(".operation input[name=beginTime2]").val(data.beginTime2);
+          $(".operation input[name=endTime2]").val(data.endTime2);
+          $(".operation input[name=workLocation]").val(data.workLocation);
+          $(".operation input[name=workmarkTimes]").val(data.workmarkTimes);
+          $(".operation input[name=isFullEntryInfomation]").val(data.isFullEntryInfomation);
+          $(".operation input[name=isEntryJobFilish]").val(data.isEntryJobFilish);
+          $(".operation input[name=isSignContract]").val(data.isSignContract);
+          $(".operation input[name=files]").val(data.files);
+          $(".operation textarea[name=remark]").val(data.remark);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改入职报道' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='入职';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrUserEntryReported/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+      skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrUserEntryReported/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/hrUserEntryReported/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/hrUserEntryReported/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,refJobUsername: $("#refJobUsernameCondition").val()
+		,refUsername1: $("#refUsername1Condition").val()
+		,refJobDeptname: $("#refJobDeptnameCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+refJobUsername: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '入职人员名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refUsername1: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '直属领导不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refJobDeptname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报道部门不能大于'+max+'个字符的长度！';
+            }
+        }  ,  username2: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '入职报告发起人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refUsername2: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '导师不能大于'+max+'个字符的长度！';
+            }
+        }  ,  startTime1: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '试用期开始时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  endTime1: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '试用期结束时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  beginTime2: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同开始时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  endTime2: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同结束时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workLocation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作地点不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workmarkTimes: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '考勤班次不能大于'+max+'个字符的长度！';
+            }
+        }  ,  isFullEntryInfomation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '资料是否齐全不能大于'+max+'个字符的长度！';
+            }
+        }  ,  isEntryJobFilish: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '入职手续是否办理完成不能大于'+max+'个字符的长度！';
+            }
+        }  ,  isSignContract: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同是否签订不能大于'+max+'个字符的长度！';
+            }
+        }  ,  files: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '附件(证件影印件+合同影印件)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>复杂表格</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!-- 表格工具栏 -->
+            <form class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">账&emsp;&emsp;号:</label>
+                        <div class="layui-input-inline">
+                            <input name="username" class="layui-input" placeholder="输入账号"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用&nbsp;&nbsp;户&nbsp;&nbsp;名:</label>
+                        <div class="layui-input-inline">
+                            <input name="nickName" class="layui-input" placeholder="输入用户名"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">手&nbsp;&nbsp;机&nbsp;&nbsp;号:</label>
+                        <div class="layui-input-inline">
+                            <input name="phone" class="layui-input" placeholder="输入用户名"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline form-search-show-expand">
+                        <label class="layui-form-label">性&emsp;&emsp;别:</label>
+                        <div class="layui-input-inline">
+                            <select name="sex">
+                                <option value="">所有</option>
+                                <option value="男">男</option>
+                                <option value="女">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline form-search-show-expand">
+                        <label class="layui-form-label">状&emsp;&emsp;态:</label>
+                        <div class="layui-input-inline">
+                            <select name="state">
+                                <option value="">所有</option>
+                                <option value="0">正常</option>
+                                <option value="1">冻结</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline form-search-show-expand">
+                        <label class="layui-form-label">注册时间:</label>
+                        <div class="layui-input-inline">
+                            <input id="tbAdvSelDate" name="createTime" class="layui-input icon-date"
+                                   placeholder="选择注册时间" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline">&emsp;
+                        <button class="layui-btn icon-btn" lay-filter="tbAdvTbSearch" lay-submit>
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </button>
+                        <a class="layui-btn form-search-expand" search-expand>
+                            展开 <i class="layui-icon layui-icon-down"></i></a>
+                    </div>
+                </div>
+            </form>
+            <!-- 数据表格 -->
+            <table id="tbAdvTable" lay-filter="tbAdvTable"></table>
+        </div>
+    </div>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="tbAdvTbBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'form', 'table', 'util', 'laydate'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var util = layui.util;
+        var laydate = layui.laydate;
+
+        // 渲染表格
+        var insTb = table.render({
+            elem: '#tbAdvTable',
+            url: '../../../json/user.json',
+            page: true,
+            cellMinWidth: 100,
+            toolbar: 'default',
+            cols: [
+                [
+                    {title: '三级表头', colspan: 6},
+                    {title: '三级表头2', colspan: 3}
+                ],
+                [
+                    {title: '多级表头', colspan: 4},
+                    {field: 'phone', title: '手机号', align: 'center', sort: true, rowspan: 2},
+                    {title: '二级表头', colspan: 4}
+                ],
+                [
+                    {type: 'checkbox'},
+                    {type: 'numbers'},
+                    {field: 'username', title: '账号', align: 'center', sort: true},
+                    {field: 'nickName', title: '用户名', align: 'center', sort: true},
+                    {field: 'sex', title: '性别', align: 'center', sort: true},
+                    {
+                        field: 'createTime', title: '创建时间', templet: function (d) {
+                            return util.toDateString(d.createTime);
+                        }, align: 'center', sort: true
+                    },
+                    {
+                        field: 'state',
+                        title: '状态',
+                        templet: '<p>{{d.state==0?"正常":"锁定"}}</p>',
+                        align: 'center',
+                        sort: true
+                    },
+                    {title: '操作', toolbar: '#tbAdvTbBar', align: 'center', minWidth: 120}
+                ]
+            ]
+        });
+
+        /* 表格搜索 */
+        form.on('submit(tbAdvTbSearch)', function (data) {
+            insTb.reload({where: data.field, page: {curr: 1}});
+            return false;
+        });
+
+        /* 表格工具条点击事件 */
+        table.on('tool(tbAdvTable)', function (obj) {
+            var data = obj.data; // 获得当前行数据
+            if (obj.event === 'edit') { // 修改
+                layer.msg('点击了修改');
+            } else if (obj.event === 'del') { // 删除
+                layer.msg('点击了删除');
+            }
+        });
+
+        /* 渲染laydate */
+        laydate.render({
+            elem: '#tbAdvSelDate'
+        });
+
+    });
+</script>
+</body>
+</html>

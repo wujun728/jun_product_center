@@ -1,0 +1,52 @@
+{
+    "type": "picker",
+    "joinValues": true,
+    "valueField": "${page.valueField}",
+    "labelField": "${page.labelField}",
+    "source": "post:/admin/page/selector/${page.code}?${formField}=$jq${formField}&id=${id}",
+    "size": "lg",
+    "clearable": true,
+    "autoFill": {},
+    "pickerSchema": {
+        "mode": "table",
+        "name": "${page.code}Selector",
+        "className":"#if(${hiddenQueryFilter}) noFilter #end",
+        #if($affixRow)
+          "affixRow":${affixRow},
+        #end
+        "autoFillHeight": true,
+        #if($openPage)
+          "footerToolbar": [
+            "statistics",
+            "switch-per-page",
+            "pagination"
+          ],
+          "perPage":${perPage},
+          "perPageAvailable":${perPageAvailable},
+        #end
+        "filter": {
+          "title": ["<span style='line-height:30px;'>${page.name}</span>",
+            {
+              "type":"button",
+              "label":"重置",
+              "actionType":"reset",
+              "level":"warning",
+              "className":"mr-1 float-right relative jqp-top-btn"
+            },
+            {
+              "type":"button",
+              "label":"查询",
+              "primary":true,
+              "actionType":"submit",
+              "className":"m-l float-right relative jqp-top-btn"
+            }
+          ],
+            "submitText": "",
+            "mode": "horizontal",
+            "body":{
+              "type":"grid",
+              "columns":${queryConfigs}
+            }
+        }
+    }
+}

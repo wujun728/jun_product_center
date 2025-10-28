@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+	<h3 class="pb-3">编辑销售机会</h3>
+    <table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">客户名称</td>
+			<td colspan="3">张</td>
+			<td class="layui-td-gray-2">客户联系人<font>*</font></td>
+			<td>
+			  <select name="contact_id" lay-verify="required" lay-reqText="请选择联系人">
+				<option value="">请选择</option>
+								<option value="1383"  selected>1231</option>
+							  </select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">机会标题<font>*</font></td>
+			<td colspan="3"><input type="text" name="title" value="11" autocomplete="off" lay-verify="required" lay-reqText="请输入机会标题" placeholder="请输入机会标题" class="layui-input"></td>
+			<td class="layui-td-gray">发现时间<font>*</font></td>
+			<td>
+			  <input type="text" name="discovery_time" value="2025-05-30" readonly lay-verify="required" lay-reqText="请选择发现时间" placeholder="请选择发现时间" class="layui-input tool-time">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">销售阶段<font>*</font></td>
+			<td>
+			  <select name="stage" lay-verify="required" lay-reqText="请选择">
+				<option value="">请选择</option>
+									<option value="13" >初期沟通</option>
+									<option value="14"  selected>需求分析</option>
+									<option value="15" >商务谈判</option>
+									<option value="16" >合同签订</option>
+									<option value="17" >失单</option>
+							</td>
+			<td class="layui-td-gray">预计金额<font>*</font></td>
+			<td> <input type="text" name="expected_amount" autocomplete="off" value="1.00" lay-verify="required|number" lay-reqText="请输入预计金额" placeholder="请输入预计金额" class="layui-input"></td>
+			<td class="layui-td-gray-2">预计签单时间<font>*</font></td>
+			<td><input type="text" name="expected_time" value="2025-05-30" readonly lay-verify="required" lay-reqText="请选择预计签单时间" placeholder="请选择预计签单时间" class="layui-input tool-time"></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top">需求描述<font>*</font></td>
+			<td colspan="5"><textarea name="content" placeholder="请输入需求描述" lay-verify="required" lay-reqText="请输入需求描述" class="layui-textarea">测试</textarea></td>
+		</tr>
+		<tr>        
+			<td class="layui-td-gray">归属人员<font>*</font></td>
+        <td>
+			<input type="text" name="belong_name" value="傲笑红尘" readonly placeholder="请选择归属人员" class="layui-input picker-admin">
+			<input type="hidden" name="belong_uid" value="31" lay-verify="required" lay-reqText="请选择归属人员">
+        </td>
+		<td class="layui-td-gray">协助人员</td>
+			<td colspan="3">
+				<input type="text" name="assist_names" value="白无垢" placeholder="请选择协助人员" class="layui-input picker-admin" data-type="2">
+				<input type="hidden" name="assist_ids" value="100">
+			</td>
+		</tr>
+    </table>
+    <div class="pt-4">
+		<input type="hidden" name="id" value="1042">
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','oaPicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool,oaPicker = layui.oaPicker;		
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code==0){
+					tool.sideClose(1000,'chanceTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/customer/chance/add", data.field, callback,clickbtn);
+			return false;
+		});
+
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

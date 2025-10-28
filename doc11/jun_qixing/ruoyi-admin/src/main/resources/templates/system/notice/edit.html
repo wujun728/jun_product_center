@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('通知修改')" />
+</head>
+<body>
+<div class="container">
+    <form class="layui-form mt20" lay-filter="form-notice" th:object="${notice}">
+        <input id="noticeId" name="noticeId" type="hidden" th:field="*{noticeId}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告标题：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="noticeTitle" placeholder="" autocomplete="off" th:field="*{noticeTitle}"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告类型：</label>
+            <div class="layui-input-block min-select">
+                <select name="noticeType" th:with="type=${@dict.getType('sys_notice_type')}" th:field="*{noticeType}">
+                    <option value="">所有</option>
+                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告内容：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea min-input" type="text" name="noticeContent"  rows="5"  th:field="*{noticeContent}"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公告状态：</label>
+            <div class="layui-input-block">
+               <span th:each="dict : ${@dict.getType('sys_normal_disable')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:title="${dict.dictLabel}" th:field="*{status}" />
+                </span>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="btn-edit" id="btn-edit">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:src="@{/js/system/notice_form.js}"></script>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:notice:edit')}]];
+</script>
+</body>
+</html>

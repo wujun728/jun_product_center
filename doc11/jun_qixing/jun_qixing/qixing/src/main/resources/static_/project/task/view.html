@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href="" />
+
+
+	<title>勾股OA</title>
+
+
+	<meta name="keywords" content="勾股OA" />
+	<meta name="description"
+		content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。" />
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+	<style>
+		.layui-tab-title .layui-this {
+			background-color: #fff;
+		}
+
+		.layui-tab-card,
+		.layui-card {
+			box-shadow: 0 0 0 0 rgb(0 0 0 / 10%);
+			border-radius: 0;
+			border-top: none;
+		}
+
+		.layui-card-tips {
+			color: #969696;
+		}
+
+		.layui-card-value {
+			padding: 4px 0 16px;
+			font-size: 18px;
+			color: #1E9FFF;
+		}
+
+		.content-content {
+			line-height: 1.6;
+		}
+
+		.content-content p {
+			margin-bottom: 6px;
+		}
+
+		.content-content img {
+			max-width: 100%;
+			padding: 8px;
+			box-sizing: border-box;
+		}
+
+		.log-item i {
+			font-weight: 800;
+			color: #323232
+		}
+
+		.log-content strong {
+			margin: 0 4px;
+			color: #323232
+		}
+
+		.layui-unselect dl {
+			max-height: 188px;
+		}
+
+		.layui-table td.table-content img {
+			max-width: 100%;
+			height: auto;
+		}
+	</style>
+
+	<script>
+		const login_admin = 2;
+	</script>
+
+</head>
+
+<body class="main-body">
+	<!-- 主体 -->
+
+	<div class="p-page">
+		<h3 class="pb-3">任务详情</h3>
+		<table class="layui-table layui-table-form" id="task">
+			<tr>
+				<td class="layui-td-gray">任务主题</td>
+				<td colspan="3" class="click-edit" data-types="text" data-field="title">深化</td>
+				<td class="layui-td-gray">工作类型</td>
+				<td class="click-edit" data-types="picker" data-field="work_id" data-type="1" data-picker="workcate">
+					方案策划</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">负责人员</td>
+				<td class="click-edit" data-types="adminpicker" data-field="director_uid" data-type="1" data-ids="2"
+					data-names="素还真">素还真</td>
+				<td class="layui-td-gray">协作人</td>
+				<td colspan="3" class="click-edit" data-types="adminpicker" data-field="assist_admin_ids" data-type="2"
+					data-ids="2,3" data-names="素还真,一页书">素还真,一页书</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">优先级</td>
+				<td class="click-edit" data-types="dropdown" data-field="priority" data-array="priority" data-text="1">低
+				</td>
+				<td class="layui-td-gray">关联项目</td>
+				<td colspan="3" class="click-edit" data-types="picker" data-field="project_id" data-type="1"
+					data-picker="project">-</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">完成进度</td>
+				<td class="click-edit" data-types="num" data-field="done_ratio" data-text="0" data-min="0"
+					data-max="100">0%</td>
+				<td class="layui-td-gray">估计结束日期</td>
+				<td class="click-edit" data-types="oadate" data-field="end_time">2025-05-28</span><span class="red">『逾期
+						6天』</span></td>
+				<td class="layui-td-gray-3">估计工作量(工时)</td>
+				<td class="click-edit" data-types="num" data-field="plan_hours">1.0</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">任务状态</td>
+				<td class="click-edit" data-types="dropdown" data-field="status" data-array="status" data-text="1">未开始
+				</td>
+				<td class="layui-td-gray-2">实际完成日期</td>
+				<td>-</td>
+				<td class="layui-td-gray">实际工时</td>
+				<td>-</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">相关附件 <button type="button" class="layui-btn layui-btn-xs"
+						id="uploadBtn">附件上传</button></td>
+				<td colspan="5">
+					<div class="layui-row" id="uploadBox">
+						<input type="hidden" data-type="file" name="file_ids" value="">
+						<div class="layui-col-md4" id="uploadFile111">
+							<div class="file-card " id="fileItem1650">
+								<i class="file-icon iconfont icon-sucaiguanli"></i>
+								<div class="file-info">
+									<div class="file-title" title="2.jpg">2.jpg</div>
+									<div class="file-ops">193.20 KB，2025-06-03 14:43</div>
+								</div>
+								<div class="file-tool"><span class="file-ctrl blue" data-ctrl="edit" data-type="1"
+										data-fileid="1650" data-ext="image" data-filename="2.jpg"
+										data-href="/storage/202506/cuivz_9052057efa71907035742a4369711417.jpg"
+										data-id="111" data-uid="2" title="附件操作"><i
+											class="iconfont icon-gengduo1"></i></span><span class="name-edit green"
+										style="display:none;" data-id="111" data-fileid="1650" id="fileEdit1650"
+										data-name="2.jpg" data-fileext="jpg" title="重命名"></span><span
+										class="file-delete red" style="display:none;" data-uid="2" data-id="111"
+										data-fileid="1650" id="fileDel1650" title="删除"></span></div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="6" class="click-edit" data-types="editor" data-field="content" data-target="content"
+					style="background-color:#FAFAFA;"><strong>任务描述</strong></td>
+			</tr>
+			<tr>
+				<td colspan="6" id="content" class="table-content">
+					<p>审核</p>
+				</td>
+			</tr>
+		</table>
+
+
+		<div class="layui-tab layui-tab-card" style="margin:0;" lay-filter="docDemoTabBrief">
+			<ul class="layui-tab-title">
+				<li class="layui-this">工作记录(0)</li>
+				<li>员工评论(<span id="commentTotal">0</span>)</li>
+				<li>操作日志(<span id="logListTotal">0</span>)</li>
+			</ul>
+			<div class="layui-tab-content py-1 px-3" style="background-color:#fff;">
+				<div class="layui-tab-item layui-show py-2">
+					<table class="layui-hide" id="table_work" lay-filter="table_work"></table>
+				</div>
+				<div class="layui-tab-item comment-list">
+					<div class="comment-input my-2">
+						<input type="text" id="commentInput" readonly placeholder="发表一下你的看法" class="layui-input"
+							value="">
+					</div>
+					<div id="commentBox"></div>
+				</div>
+				<div class="layui-tab-item logs-list">
+					<div id="logList" class="log-timeline p-3"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/html" id="toolbarDemo">
+  <div>
+  	<div class="layui-input-inline" style="margin-right:12px;"><strong>工作日志</strong></div><div class="layui-input-inline"><button class="layui-btn layui-btn-xs" type="button" lay-event="add">+ 添加工作日志</button></div>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+
+	<!-- /底部 -->
+
+	<!-- 脚本 -->
+
+	<script>
+		const admin_id = '2';
+		const detail_id = '1210';
+		const status_array = [{ "id": 1, "title": "未开始" }, { "id": 2, "title": "进行中" }, { "id": 3, "title": "已完成" }, { "id": 4, "title": "已拒绝" }, { "id": 5, "title": "已关闭" }];
+		const priority_array = [{ "id": 1, "title": "低" }, { "id": 2, "title": "中" }, { "id": 3, "title": "高" }, { "id": 4, "title": "紧急" }];
+		const moduleInit = ['tool', 'oaPicker', 'oaEdit', 'oaSchedule', 'oaComment', 'uploadPlus'];
+		function gouguInit() {
+			const oaEdit = layui.oaEdit, work = layui.oaSchedule, comment = layui.oaComment, uploadPlus = layui.uploadPlus, tool = layui.tool, table = layui.table;
+
+			oaEdit.log('logList', 'Task', detail_id);
+
+			comment.init({
+				"box": 'commentBox',//容器id
+				"input": 'commentInput',
+				"topic_id": detail_id,
+				"module": 'task',
+			});
+
+			let edit_callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					setTimeout(function () {
+						location.reload();
+					}, 1000)
+				}
+			}
+			//附件上传
+			var attachment = new uploadPlus({
+				"target": 'uploadBtn',
+				"targetBox": 'uploadBox',
+				"attachment": {
+					"type": 1,//0ajax多文件模式，1ajax单文件单记录模式
+					"uidDelete": true,//是否开启只有上传人自己才能删除自己的附件
+					"ajaxSave": function (res) {
+						tool.post('/project/api/add_file.json', { 'topic_id': detail_id, 'file_id': res.data.id, 'file_name': res.data.name, 'module': 'task' }, edit_callback);
+					},
+					"ajaxDelete": function (file_id) {
+						tool.delete('/project/api/delete_file.json', { id: file_id }, edit_callback);
+					}
+				}
+			});
+
+			//快捷编辑
+			oaEdit.init({
+				box: 'task',
+				id: detail_id,
+				url: "/project/task/add",
+				dropdown: {
+					status: status_array,
+					priority: priority_array
+				}
+			});
+
+			//工作记录相关
+			layui.scheduleTable = table.render({
+				elem: "#table_work"
+				, toolbar: "#toolbarDemo"
+				, url: "/oa/api/get_schedule.json"
+				, page: true
+				, limit: 20
+				, where: { task_id: detail_id }
+				, cellMinWidth: 80
+				, cols: [[
+					{ field: 'id', width: 80, title: 'ID号', align: 'center' }
+					, { field: 'title', title: '工作内容', minWidth: 240 }
+					, { field: 'name', title: '所属人员', align: 'center', width: 80 }
+					, {
+						field: 'start_time', title: '工作时间范围', align: 'center', width: 260, templet: function (d) {
+							var html = d.start_time + ' 至 ' + d.end_time;
+							return html;
+						}
+					}
+					, { field: 'labor_type_string', title: '工作类型', align: 'center', width: 80 }
+					, { field: 'labor_time', title: '工时', align: 'center', width: 80 }
+					, { field: 'create_time', title: '创建时间', width: 150, align: 'center' }
+					, {
+						width: 90, fixed: 'right', title: '操作', align: 'center', ignoreExport: true, templet: function (d) {
+							var html = '';
+							var btn1 = '<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</a>';
+							if (d.admin_id !== login_admin) {
+								return btn1;
+							}
+							else {
+								var btn2 = '<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>';
+								html = '<div class="layui-btn-group">' + btn1 + btn2 + '</div>';
+								return html;
+							}
+						}
+					}
+				]]
+			});
+
+			table.on('toolbar(table_work)', function (obj) {
+				if (obj.event === 'add') {
+					work.add(detail_id, { 'id': 0 });
+				}
+			});
+			table.on('tool(table_work)', function (obj) {
+				var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+				var data = obj.data;
+				if (obj.event === 'view') {
+					work.view(data);
+					return;
+				}
+				if (obj.event === 'edit') {
+					work.add(data.task_id, data);
+					return;
+				}
+				if (obj.event === 'del') {
+					layer.confirm('确定要删除该内容吗?', { icon: 3, title: '提示' }, function (index) {
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								obj.del();
+							}
+						}
+						tool.delete("/project/task/del", { id: data.id }, callback);
+						layer.close(index);
+					});
+					return;
+				}
+			});
+
+			//工作记录相关
+			$('.add-schedule').on('click', function () {
+				work.add(detail_id, { 'id': 0 });
+			})
+			//回复
+			$('#comment_task_' + detail_id).on('click', '[data-event="replay"]', function () {
+				let pid = $(this).data('id');
+				let to_uid = $(this).data('uid');
+				let to_unames = $(this).data('unames');
+				comment.textarea(0, detail_id, 'task', '', pid, to_uid, to_unames);
+			})
+			//编辑
+			$('#comment_task_' + detail_id).on('click', '[data-event="edit"]', function () {
+				let id = $(this).data('id');
+				let content = $('#comment_' + id).data('content');
+				comment.textarea(id, detail_id, 'task', content, 0, 0, '');
+			})
+
+			//删除
+			$('#comment_task_' + detail_id).on('click', '[data-event="del"]', function () {
+				let id = $(this).data('id');
+				comment.del(id, detail_id, 'task');
+			})
+		}
+	</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+
+	<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5 ，Powered by GouguOPEN<a href="https://www.gougucms.com"
+			target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a
+			href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div>
+	</div>
+
+	<!-- /版权标识 -->
+</body>
+
+</html>

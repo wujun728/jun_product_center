@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>卡片列表</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /** 项目列表样式 */
+        .project-list-item {
+            background-color: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .project-list-item:hover {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+        }
+
+        .project-list-item .project-list-item-cover {
+            width: 100%;
+            height: 220px;
+            display: block;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .project-list-item-body {
+            padding: 20px;
+        }
+
+        .project-list-item .project-list-item-body > h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .project-list-item .project-list-item-text {
+            height: 44px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .project-list-item .project-list-item-desc {
+            position: relative;
+        }
+
+        .project-list-item .project-list-item-desc .time {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .project-list-item .project-list-item-desc .ew-head-list {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .ew-head-list .ew-head-list-item {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid #fff;
+            margin-left: -10px;
+        }
+
+        .ew-head-list .ew-head-list-item:first-child {
+            margin-left: 0;
+        }
+
+        /** // 项目列表样式结束 */
+
+        /** 应用列表样式 */
+        .application-list-item {
+            background-color: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .application-list-item:hover {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+        }
+
+        .application-list-item .application-list-item-header {
+            padding: 16px 12px 0 12px;
+        }
+
+        .application-list-item .application-list-item-header .head {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .application-list-item .application-list-item-header > h2 {
+            color: #333;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .application-list-item .application-list-item-body {
+            padding: 12px 12px 12px 50px;
+            font-size: 0;
+        }
+
+        .application-list-item .application-list-item-body .text-num-item {
+            display: inline-block;
+            width: 50%;
+            font-size: 26px;
+            color: #666;
+        }
+
+        .application-list-item .application-list-item-body .text-num-item .text-num-item-title {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+
+        .application-list-item .application-list-item-body .text-num-item small {
+            font-size: 16px;
+        }
+
+        .application-list-item .application-list-item-tool {
+            font-size: 0;
+            background-color: #FAFAFA;
+            border-top: 1px solid #e8e8e8;
+            padding: 10px 0 5px 0;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+
+        .application-list-item .application-list-item-tool .application-list-item-tool-item {
+            display: inline-block;
+            width: 25%;
+            font-size: 18px;
+            text-align: center;
+            color: #999;
+            border-right: 1px solid #e8e8e8;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        .application-list-item .application-list-item-tool .application-list-item-tool-item:last-child {
+            border-right: none;
+        }
+
+        /** // 应用列表样式结束 */
+
+        /** 文章列表样式 */
+        .article-list-item {
+            border-bottom: 1px solid #e8e8e8;
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .article-list-item > h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .article-list-item > .layui-badge-rim {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .article-list-item .layui-badge-list .layui-badge {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .article-list-item .article-list-item-text {
+            margin-bottom: 12px;
+        }
+
+        .article-list-item .article-list-item-desc {
+            margin-bottom: 12px;
+        }
+
+        .article-list-item .article-list-item-desc .head {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .article-list-item .article-list-item-desc > * {
+            vertical-align: middle;
+        }
+
+        .article-list-item .article-list-item-tool {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .article-list-item .article-list-item-tool .article-list-item-tool-item {
+            border-right: 1px solid #e8e8e8;
+            padding: 0 15px;
+            cursor: pointer;
+        }
+
+        .article-list-item .article-list-item-tool .article-list-item-tool-item:first-child {
+            padding-left: 0;
+        }
+
+        .article-list-item .article-list-item-tool .article-list-item-tool-item:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .article-list-item .article-list-item-tool .article-list-item-tool-item > * {
+            vertical-align: middle;
+        }
+
+        .article-list-item .article-list-item-tool .article-list-item-tool-item.star-active {
+            color: #01AAED;
+        }
+
+        .article-list-item .article-list-item-tool .article-list-item-tool-item.star-active .layui-icon-rate:before {
+            content: "\e67a";
+        }
+
+        /** // 文章列表样式结束 */
+    </style>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">项目</li>
+                <li>应用</li>
+                <li>文章</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show" style="padding-top: 20px;">
+                    <div class="layui-row layui-col-space30" id="demoCardList1"></div>
+                </div>
+                <div class="layui-tab-item" style="padding-top: 20px;">
+                    <div class="layui-row layui-col-space30" id="demoCardList2"></div>
+                </div>
+                <div class="layui-tab-item">
+                    <div style="max-width: 730px;padding-left: 10px;">
+                        <div id="demoCardList3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 项目模板 -->
+<script type="text/html" id="demoCardItem1">
+    <div class="layui-col-md3">
+        <div class="project-list-item">
+            <img class="project-list-item-cover" src="{{d.cover}}"/>
+            <div class="project-list-item-body">
+                <h2>{{d.title}}</h2>
+                <div class="project-list-item-text layui-text">{{d.desc}}</div>
+                <div class="project-list-item-desc">
+                    <span class="time">{{d.time}}</span>
+                    <div class="ew-head-list">
+                        <img class="ew-head-list-item" lay-tips="曲丽丽" lay-offset="0,-5px"
+                             src="https://gw.alipayobjects.com/zos/rmsportal/ZiESqWwCXBRQoaPONSJe.png"/>
+                        <img class="ew-head-list-item" lay-tips="王昭君" lay-offset="0,-5px"
+                             src="https://gw.alipayobjects.com/zos/rmsportal/tBOxZPlITHqwlGjsJWaF.png"/>
+                        <img class="ew-head-list-item" lay-tips="董娜娜" lay-offset="0,-5px"
+                             src="https://gw.alipayobjects.com/zos/rmsportal/sBxjgqiuHMGRkIjqlQCd.png"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 应用模板 -->
+<script type="text/html" id="demoCardItem2">
+    <div class="layui-col-md3">
+        <div class="application-list-item">
+            <div class="application-list-item-header">
+                <img class="head" src="{{d.head}}"/>
+                <h2>{{d.name}}</h2>
+            </div>
+            <div class="application-list-item-body">
+                <div class="text-num-item">
+                    <div class="text-num-item-title">活跃用户</div>
+                    <div class="text-num-item-text">
+                        {{d.activeNum}}
+                        <small>万</small>
+                    </div>
+                </div>
+                <div class="text-num-item">
+                    <div class="text-num-item-title">新增用户</div>
+                    <div class="text-num-item-text">{{d.newNum}}</div>
+                </div>
+            </div>
+            <div class="application-list-item-tool">
+                <span class="application-list-item-tool-item" lay-event="download">
+                    <i class="layui-icon layui-icon-download-circle" lay-tips="下载" lay-offset="0,-8px"></i>
+                </span>
+                <span class="application-list-item-tool-item" lay-event="edit">
+                    <i class="layui-icon layui-icon-edit" lay-tips="编辑" lay-offset="0,-8px"></i>
+                </span>
+                <span class="application-list-item-tool-item" lay-event="share">
+                    <i class="layui-icon layui-icon-share" lay-tips="分享" lay-offset="0,-8px"></i>
+                </span>
+                <span class="application-list-item-tool-item" lay-event="more">
+                    <div class="dropdown-menu dropdown-hover">
+                        <i class="layui-icon layui-icon-more"></i>
+                        <ul class="dropdown-menu-nav dropdown-bottom-center">
+                            <div class="dropdown-anchor"></div>
+                            <li><a lay-event="item1">1st menu item</a></li>
+                            <li><a lay-event="item2">2nd menu item</a></li>
+                            <li><a lay-event="item3">3rd menu item</a></li>
+                        </ul>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<!-- 文章模板 -->
+<script type="text/html" id="demoCardItem3">
+    <div class="article-list-item">
+        <h2>{{d.title}}</h2>
+        <span class="layui-badge-rim">{{d.LAY_NUMBER}}楼</span>
+        <div class="layui-badge-list">
+            <span class="layui-badge layui-badge-gray">EasyWeb</span>
+            <span class="layui-badge layui-badge-gray">管理系统</span>
+            <span class="layui-badge layui-badge-gray">前端框架</span>
+        </div>
+        <div class="article-list-item-text layui-text">
+            段落示意：EASY WEB 后台管理模板，基于Layui的一套通用型后台管理模板，拥有众多原创组件及模板页面。
+            EASY WEB 后台管理模板，基于Layui的一套通用型后台管理模板，拥有众多原创组件及模板页面。
+        </div>
+        <div class="article-list-item-desc layui-text">
+            <img src="{{d.head}}" class="head">&nbsp;
+            <a href="javascript:;" class="name">{{d.name}}</a>
+            &emsp;发布在&emsp;<a href="javascript:;">https://easyweb.vip</a>
+        </div>
+        <div class="article-list-item-tool">
+            <span class="article-list-item-tool-item {{d.isStar?'star-active':''}}" lay-event="star">
+                <i class="layui-icon layui-icon-rate"></i>&nbsp;
+                <span>{{d.star}}</span>
+            </span>
+            <span class="article-list-item-tool-item {{d.isLike?'star-active':''}}" lay-event="like">
+                <i class="layui-icon layui-icon-praise"></i>&nbsp;
+                <span>{{d.like}}</span>
+            </span>
+            <span class="article-list-item-tool-item" lay-event="comment">
+                <i class="layui-icon layui-icon-dialogue"></i>&nbsp;
+                <span>{{d.comment}}</span>
+            </span>
+        </div>
+    </div>
+</script>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'dataGrid', 'element', 'dropdown'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var dataGrid = layui.dataGrid;
+
+        // 项目
+        $.get('../../../json/data-grid2.json', function (res) {
+            dataGrid.render({
+                elem: '#demoCardList1',
+                templet: '#demoCardItem1',
+                data: res.data,
+                page: {limit: 8, limits: [8, 16, 24, 32, 40]}
+            });
+        });
+
+        dataGrid.on('item(demoCardList1)', function (obj) {
+            layer.msg('点击了第' + (obj.index + 1) + '个');
+        });
+
+        /** 应用 */
+        $.get('../../../json/data-grid3.json', function (res) {
+            dataGrid.render({
+                elem: '#demoCardList2',
+                templet: '#demoCardItem2',
+                data: res.data,
+                page: {limit: 8, limits: [8, 16, 24, 32, 40]}
+            });
+        });
+
+        dataGrid.on('tool(demoCardList2)', function (obj) {
+            if (obj.event === 'download') {
+                layer.msg('点击了下载');
+            } else if (obj.event === 'edit') {
+                layer.msg('编辑');
+            } else if (obj.event === 'share') {
+                layer.msg('点击了分享');
+            } else if (obj.event === 'item1') {
+                layer.msg('点击了1st menu item');
+            } else if (obj.event === 'item2') {
+                layer.msg('点击了2nd menu item');
+            } else if (obj.event === 'item3') {
+                layer.msg('点击了3rd menu item');
+            }
+        });
+
+        dataGrid.on('item(demoCardList2)', function (obj) {
+            layer.msg('点击了第' + (obj.index + 1) + '个');
+        });
+
+        /** 文章 */
+        dataGrid.render({
+            elem: '#demoCardList3',
+            templet: '#demoCardItem3',
+            data: '../../../json/data-grid1.json',
+            loadMore: {limit: 5}
+        });
+
+        dataGrid.on('tool(demoCardList3)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'star') {
+                data.isStar = !data.isStar;
+                data.isStar ? data.star++ : data.star--;
+                obj.update(data);
+            } else if (obj.event === 'like') {
+                data.isLike = !data.isLike;
+                data.isLike ? data.like++ : data.like--;
+                obj.update(data);
+            } else if (obj.event === 'comment') {
+                layer.msg('点击了评论');
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

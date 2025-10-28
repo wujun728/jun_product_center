@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "西南证券app",             
+    "url": "",           
+    "desc": "",                          
+    "mobile":true                        
+  },
+  "schedule": {
+    "status": "开发中",                  
+    "actualStartTime": "2017/08/10",    
+    "actualEndTime": "未定",     
+    "estimatedStartTime": "2017/08/10", 
+    "estimatedEndTime": "2017/10/13",  
+    "process": 90,                      
+    "delay": false,                     
+    "technology":["vue.js"]               
+  },
+  "resources": {
+    "demander": "",                     
+    "type":"合资公司",				           
+    "manager":"周英",                  
+    "charge": "李妮",                  
+    "affiliate": [""]       
+  },
+  "bug": {
+    "total": 0,                     
+    "resolved": 0,                  
+    "unsolved": 0                     
+  },
+  "others": {
+    "remark": "由于页面都是app中的详细信息展示页，不能整体串起来，目前暂不能点进页面"                  
+  }
+}

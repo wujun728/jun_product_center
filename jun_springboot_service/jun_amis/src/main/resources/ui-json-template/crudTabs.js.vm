@@ -1,0 +1,1 @@
+AMIS_JSON=#parse("ui-json-template/crudTabs.json.vm")

@@ -1,0 +1,33 @@
+{
+  "base": {
+    "name": "工商大数据",
+    "url": "http://192.168.1.6:8124/gongshangBigData/login.html",
+    "desc": "工商大数据的静态页面",
+    "mobile":false
+  },
+  "schedule": {
+    "status": "已完成",
+    "actualStartTime": "2017-10-10",
+    "actualEndTime": "2017-10-12",
+    "estimatedStartTime": "2017-10-10",
+    "estimatedEndTime": "2017-10-11",
+    "process": 100,
+    "delay": false,
+    "technology":["Media Query"]
+  },
+  "resources": {
+    "demander": "九次方",
+    "type":"独立纵队",
+    "manager":"余乐",
+    "charge": "汝银娟",
+    "affiliate": []
+  },
+  "bug": {
+    "total": 0,
+    "resolved": 0,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "独立纵队的项目，配合制作首页和登录页"                 
+  }
+}

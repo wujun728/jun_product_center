@@ -1,0 +1,37 @@
+{
+    "type": "page",
+    "body":[
+#if($introduce)
+    {
+        "type":"tpl",
+        "tpl":"<div>${introduce}</div>"
+    },
+#end
+    {
+        "type":"grid",
+        "columns":[{
+            "md":${width},
+            "xs":${width},
+            "sm":${width},
+            "lg":${width},
+            "name":"mainTable",
+            "id":"mainTable",
+            "type": "crud",
+            "itemAction": {
+                "type": "action",
+                "actionType": "reload",
+                "target": "${target}"
+            },
+            "autoFillHeight": true,
+            #parse("ui-json-template/common/crudCommon.vm")
+        },{
+            "type":"${rightType}",
+            "md":${tabWidth},
+            "xs":${tabWidth},
+            "sm":${tabWidth},
+            "lg":${tabWidth},
+            "className":"#if($width<12) rightHeight #end",
+            "${rightTypeKey}":${columns}
+        }]
+    }]
+}

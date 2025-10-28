@@ -1,0 +1,166 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": {
+        "id": 1064,
+        "admin_id": 3,
+        "check_status": 1,
+        "check_flow_id": 5,
+        "check_step_sort": 1,
+        "check_uids": "10",
+        "check_copy_uids": "",
+        "is_creater": 0,
+        "admin_name": "一页书",
+        "is_checker": 0,
+        "check_record": [
+            {
+                "id": 3173,
+                "action_id": 1064,
+                "check_table": "seal",
+                "flow_id": 5,
+                "step_id": 0,
+                "check_uid": 3,
+                "check_time": 1748503896,
+                "check_status": 0,
+                "content": "提交申请",
+                "delete_time": 0,
+                "name": "一页书",
+                "check_time_str": "2025-05-29 15:31",
+                "status_str": "提交"
+            },
+            {
+                "id": 3174,
+                "action_id": 1064,
+                "check_table": "seal",
+                "flow_id": 5,
+                "step_id": 2034,
+                "check_uid": 2,
+                "check_time": 1748503963,
+                "check_status": 1,
+                "content": "suhaizhen  111",
+                "delete_time": 0,
+                "name": "素还真",
+                "check_time_str": "2025-05-29 15:32",
+                "status_str": "审核通过"
+            }
+        ],
+        "check_unames": "秋分",
+        "copy_unames": "-",
+        "nodes": [
+            {
+                "id": 2034,
+                "flow_name": "当前部门负责人",
+                "action_id": 1064,
+                "flow_id": 5,
+                "check_role": 1,
+                "check_position_id": 0,
+                "check_uids": "2",
+                "check_types": 2,
+                "sort": 0,
+                "create_time": 1748503896,
+                "delete_time": 0,
+                "check_uids_info": [
+                    {
+                        "id": 2,
+                        "name": "素还真",
+                        "thumb": "\/storage\/202504\/19y2p_cce192896b79c210889e6a0799fca07f.jpg",
+                        "check_time": "2025-05-29 15:32",
+                        "content": "suhaizhen  111",
+                        "check_status": 1
+                    }
+                ],
+                "check_position": "",
+                "check_list": [
+                    {
+                        "id": 3174,
+                        "action_id": 1064,
+                        "check_table": "seal",
+                        "flow_id": 5,
+                        "step_id": 2034,
+                        "check_uid": 2,
+                        "check_time": 1748503963,
+                        "check_status": 1,
+                        "content": "suhaizhen  111",
+                        "delete_time": 0,
+                        "name": "素还真",
+                        "check_time_str": "2025-05-29 15:32",
+                        "status_str": "审核通过"
+                    }
+                ]
+            },
+            {
+                "id": 2035,
+                "flow_name": "上级部门负责人",
+                "action_id": 1064,
+                "flow_id": 5,
+                "check_role": 2,
+                "check_position_id": 0,
+                "check_uids": "10",
+                "check_types": 2,
+                "sort": 1,
+                "create_time": 1748503896,
+                "delete_time": 0,
+                "check_uids_info": [
+                    {
+                        "id": 10,
+                        "name": "秋分",
+                        "thumb": "\/storage\/avatars\/avatar_256_bdvoqisjpy1724864029.png",
+                        "check_time": 0,
+                        "content": "",
+                        "check_status": 0
+                    }
+                ],
+                "check_position": "",
+                "check_list": []
+            },
+            {
+                "id": 2036,
+                "flow_name": "人事总监",
+                "action_id": 1064,
+                "flow_id": 5,
+                "check_role": 3,
+                "check_position_id": 2,
+                "check_uids": "5,6",
+                "check_types": 2,
+                "sort": 2,
+                "create_time": 1748503896,
+                "delete_time": 0,
+                "check_uids_info": [
+                    {
+                        "id": 5,
+                        "name": "玉辞心",
+                        "thumb": "\/storage\/avatars\/avatar_256_ej14hy9f8o1724864029.png",
+                        "check_time": 0,
+                        "content": "",
+                        "check_status": 0
+                    },
+                    {
+                        "id": 6,
+                        "name": "秦假仙",
+                        "thumb": "\/storage\/avatars\/avatar_256_wk12ca6h4o1724864029.png",
+                        "check_time": 0,
+                        "content": "",
+                        "check_status": 0
+                    }
+                ],
+                "check_position": "人事总监",
+                "check_list": []
+            }
+        ],
+        "step": {
+            "id": 2035,
+            "flow_name": "上级部门负责人",
+            "action_id": 1064,
+            "flow_id": 5,
+            "check_role": 2,
+            "check_position_id": 0,
+            "check_uids": "10",
+            "check_types": 2,
+            "sort": 1,
+            "create_time": 1748503896,
+            "delete_time": 0
+        }
+    }
+}

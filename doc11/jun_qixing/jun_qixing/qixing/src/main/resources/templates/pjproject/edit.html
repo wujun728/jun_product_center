@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>项目信息</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" >
+<!--   <div class="panel-heading title"></div> -->
+		<div class="layui-card-body">
+
+			<form class="layui-form " action="" lay-filter="info"
+				style="margin-top: 10px">
+				<input name="id" id="id" hidden />
+
+				<div class="layui-form-item">
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">项目名称</label>
+						<div class=" layui-input-block ">
+							<input type="projectName" name="projectName" id="projectName"
+								lay-verify="required|projectName" lay-max="256"
+								placeholder="请输入项目名称" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">项目编码</label>
+						<div class=" layui-input-block ">
+							<input type="projectCode" name="projectCode" id="projectCode"
+								lay-verify="required|projectCode" lay-max="256"
+								placeholder="请输入项目编码" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+ 
+
+				<div class="layui-form-item">
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">项目类型</label>
+						<div class=" layui-input-block ">
+							<select id="dictProjectType" name="dictProjectType"
+								lay-filter="dictProjectType" lay-verify="required"
+								th:with="type=${@sysDictService.getType('dict_project_type')}">
+								<option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.label}"
+									th:value="${dict.value}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">项目类型细分</label>
+						<div class=" layui-input-block ">
+							<select id="dictProjectTypeSub" name="dictProjectTypeSub"
+								lay-filter="dictProjectTypeSub" lay-verify="required">
+								<!-- th:with="type=${@sysDictService.getType('dict_project_type_sub')}" -->
+								<option value="">请选择</option>
+								<!-- 	        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> -->
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item" style="display: none">
+					<div class="layui-col-md6">
+						<label class="layui-form-label  "></label>
+						<div class=" layui-input-block ">
+							<input type="text" name="refIdCuscode" id="refIdCuscode"
+								placeholder="请输入" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-col-md6">
+							<label class="layui-form-label  layui-required  ">客户(委托单位)</label>
+							<div class=" layui-input-block ">
+								<input type="refCusname" name="refCusname" id="refCusname"
+									readonly="readonly" lay-verify="required|refCusname"
+									lay-max="256" placeholder="请输入客户(委托单位)" autocomplete="off"
+									class="layui-input">
+							</div>
+						</div>
+						<div class="layui-col-md6" id="cusnameTodoDIV"
+							style="display: none;">
+							<label class="layui-form-label  layui-required  ">被评估单位</label>
+							<div class=" layui-input-block ">
+								<input type="cusnameTodo" name="cusnameTodo" id="cusnameTodo"
+									lay-verify="required|cusnameTodo" lay-max="512"
+									placeholder="请输入被评估单位" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">项目经理</label>
+						<div class=" layui-input-block ">
+							<input type="refProjectManager" name="refProjectManager"
+								id="refProjectManager" lay-verify="required|refProjectManager"
+								lay-max="256" placeholder="请输入项目经理" autocomplete="off"
+								class="layui-input">
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-col-md6">
+							<label class="layui-form-label  layui-required  ">项目开始时间</label>
+							<div class=" layui-input-block ">
+								<input type="text" name="projectStarttime" id="projectStarttime"
+									lay-verify="required" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-col-md6">
+							<label class="layui-form-label  layui-required  ">项目结束时间</label>
+							<div class=" layui-input-block ">
+								<input type="text" name="projectEndtime" id="projectEndtime"
+									lay-verify="required" autocomplete="off" class="layui-input">
+							</div>
+						</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md6">
+						<label class="layui-form-label  ">承接(合伙)人</label>
+						<div class=" layui-input-block ">
+							<input type="text" name="refUndertakePerson"
+								id="refUndertakePerson" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-col-md6">
+						<label class="layui-form-label  ">承做(合伙)人</label>
+						<div class=" layui-input-block ">
+							<input type="text" name="refUndertakTpersonDo"
+								id="refUndertakTpersonDo" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">风险评估等级</label>
+						<div class=" layui-input-block ">
+							<select id="dictRiskAssessment" name="dictRiskAssessment"
+								lay-verify="required"
+								th:with="type=${@sysDictService.getType('dict_risk_assessment')}">
+								<option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.label}"
+									th:value="${dict.value}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">首次承接</label>
+						<div class=" layui-input-block ">
+							<select id="dictFirstUndertake" name="dictFirstUndertake"
+								lay-verify="required"
+								th:with="type=${@sysDictService.getType('dict_first_undertake')}">
+								<option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.label}"
+									th:value="${dict.value}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<label class="layui-form-label  layui-required  ">客户诉求</label>
+					<div class=" layui-input-block ">
+						<textarea class="layui-textarea" name="customerReq"
+							id="customerReq" lay-verify="required"></textarea>
+					</div>
+				</div>
+
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;  ">
+					<legend>项目进度百分比</legend>
+				</fieldset>
+				<div class="layui-form-item"    >
+					<div id="projectProgressNew"  class="layui-progress" lay-showpercent="true" ></div>
+				</div>
+				<div class="layui-form-item"  style="display: none;">
+					<div class="layui-col-md6">
+						<label class="layui-form-label  layui-required  ">项目进度百分比</label>
+						<div class=" layui-input-block ">
+							<input type="projectProgress" name="projectProgress"
+								id="projectProgress" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-col-md6" style="display: none;">
+						<label class="layui-form-label  ">流程状态</label>
+						<div class=" layui-input-block ">
+							<select id="dictWfState" name="dictWfState" disabled="disabled"
+								lay-filter="dictWfState"
+								th:with="type=${@sysDictService.getType('dict_wf_state')}">
+								<option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.label}"
+									th:value="${dict.value}"></option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-col-md6" style="display: none;">
+						<label class="layui-form-label  ">项目状态</label>
+						<div class=" layui-input-block ">
+							<select id="dictProjectStatus" name="dictProjectStatus"
+								disabled="disabled" lay-filter="dictProjectStatus"
+								th:with="type=${@sysDictService.getType('dict_project_status')}">
+								<option value="">请选择</option>
+								<option th:each="dict : ${type}" th:text="${dict.label}"
+									th:value="${dict.value}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="layui-form-item">
+					<label class="layui-form-label  ">备注</label>
+					<div class=" layui-input-block ">
+						<textarea class="layui-textarea" name="remark" id="remark"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group-bottom text-right" id="buttonSave">
+						<button type="submit" class="layui-btn" lay-submit="" lay-filter="submit"  shiro:hasPermission="pjProject:save">保存项目信息</button>
+						<button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+<!-- 新增修改的DIV页面-end -->
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  var slider;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+	    notice: 'notice/notice',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','slider', 'notice'], function () {
+	  numberInput = layui.numberInput;
+	  var notice = layui.notice;
+	  slider = layui.slider;
+	
+     
+  	//开启输入框
+    var slider_ins1 = slider.render({
+        elem: '#projectProgressNew',theme: '#5FB878',
+        input: false //输入框
+        ,change: function(value){
+            console.log(value) //动态获取滑块数值
+            $(".operation input[name=projectProgress]").val(value);
+            //do something
+          }
+    });
+
+
+//遍历列，并渲染各种表单组件
+	 
+	tableSelect.render({
+		elem: '#refCusname',
+		checkedKey: 'id',
+		table: {
+			url: '/pjCustomer/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'customerName', title: '名称',width:240 },
+					{ field: 'customerCode', title: '编码',width:220 }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.customerName);
+				$("#refIdCuscode").val(item.customerCode);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#cusnameTodo").val(NEWJSON);
+		}
+	});
+	tableSelect.render({
+		elem: '#cusnameTodo',
+		checkedKey: 'id',
+		table: {
+			url: '/pjCustomer/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'customerName', title: '名称' },
+					{ field: 'conpanyName', title: '公司名称' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.customerName);
+// 				$("#refIdCuscode").val(item.id);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	 	//日期
+	laydate.render({
+	    elem: '#projectStarttime'
+	    ,type: 'date'
+    });
+	 	//日期
+	laydate.render({
+	    elem: '#projectEndtime'
+	    ,type: 'date'
+    });
+	 	
+	tableSelect.render({
+		elem: '#refProjectManager',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#refProjectManager").val(NEWJSON);
+			form.render();
+		}
+	});
+	tableSelect.render({
+		elem: '#refUndertakePerson',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#refUndertakePerson").val(NEWJSON);
+			form.render();
+		}
+	});
+	 
+	tableSelect.render({
+		elem: '#refUndertakTpersonDo',
+		checkedKey: 'id',
+		table: {
+			url: '/sys/users/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#refUndertakTpersonDo").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+	numberInput.render("#projectProgress", {
+	    autoSelcet: false,
+	    max: 100,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	
+	/*  $('#dictProjectType').on('change', function () {
+         //获取所有文本内容
+         var text = $("#dictProjectType").text();
+         //获取选中的文本值
+         var selectedText = $("#dictProjectType").find("option:selected").text();
+         //获取选中的value值
+         var value = $("#dictProjectType").val();
+         //获取选中的option的索引值
+         var index = $("#dictProjectType").get(0).selectedIndex;
+         console.log(text);
+         console.log(selectedText);
+         console.log(value);
+         console.log(index);
+         handel("dict_project_type_sub"+value);
+
+     }); */
+
+    form.on('select(dictProjectType)', function (data) {
+    	var dictProjectType1 = $("#dictProjectType").val();
+    	console.log("data111="+$("#dictProjectType").val());
+    	console.log("data="+data);
+		handel("dict_project_type_sub"+dictProjectType1);
+    });
+	function handel(code){
+		var htmls = '<option value="">请选择</option>'; //全局变量
+		$("#dictProjectTypeSub").html(htmls);
+		form.render();
+		var result = getSelectData1(code);
+	   for(var x in result){
+		  htmls += '<option value = "' + result[x].value + '">' + result[x].label + '</option>'
+	   }
+	   $("#dictProjectTypeSub").html(htmls);
+	   
+	   form.render();
+	};
+	
+	function getSelectData1(code){
+		var data1 ; //全局变量
+// 		$("#dictProjectTypeSub").html(htmls);
+		form.render();
+		$.ajax({
+			url: "/sysDict/getType/"+code,
+			type: "get",
+			dataType : "json",
+			contentType : "application/json",
+			async: false,//这得注意是同步
+			success: function (result) {
+				data1 = result;
+			}
+		});
+		return data1;
+	};
+	
+    //返回
+    // $("#btn_cancel").click(function() {
+    // 	layer.close(layer.index);
+    // 	var index = parent.layer.getFrameIndex(window.name);
+    // 	parent.layer.close(index);
+    // 	var layerDetail = CoreUtil.getData("layerDetail");
+    // 	console.log("layerDetail="+layerDetail);
+    // 	layer.close(layerDetail);
+    //    return false;
+    // });
+
+	  //返回
+	  $("#btn_cancel").click(function() {
+		  layer.close(layer.index);
+		  var index = parent.layer.getFrameIndex(window.name);
+		  parent.layer.close(index);
+		  layer.closeAll(); //疯狂模式，关闭所有层
+		  return false;
+	  });
+    
+    //执行查询
+    function search() {
+    	window.parent.location.reload();
+    };
+	
+    //监听保存
+    form.on('submit(submit)', function(data){
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/pjProject/add",data.field,function (res) {
+			if(res.code!=0){
+				//layer.alert(res.msg);
+				notice.error({
+					title: '消息通知',
+					message: res.msg
+				});
+				return false;
+			}else{
+				notice.success({
+					title: '消息通知',
+					message: res.msg
+				});
+			}
+	      layer.close(layerAdd);
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/pjProject/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+			if(res.code!=0){
+				//layer.alert(res.msg);
+				notice.error({
+					title: '消息通知',
+					message: res.msg
+				});
+				return false;
+			}else{
+				notice.success({
+					title: '消息通知',
+					message: res.msg
+				});
+			}
+	      layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+projectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目编码不能大于'+max+'个字符的长度！';
+            }
+        }  ,  projectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictProjectType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictProjectTypeSub: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目类型细分不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refIdCuscode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refCusname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户(委托单位)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  projectStarttime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划开始时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  projectEndtime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目计划结束时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  cusnameTodo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '被评估单位不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectManager: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目经理不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refUndertakePerson: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '承接(合伙)人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refUndertakTpersonDo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '承做(合伙)人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictRiskAssessment: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '风险评估等级不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictFirstUndertake: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '首次承接不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerReq: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户诉求不能大于'+max+'个字符的长度！';
+            }
+        }  ,  projectProgress: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目进度不能大于'+max+'个字符的长度！';
+            }
+        } /*  ,  dictWfState: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '流程状态不能大于'+max+'个字符的长度！';
+            }
+        } */  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>
+
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script th:inline="javascript">
+function handel(code){
+	var htmls = '<option value="">请选择</option>'; //全局变量
+	$("#dictProjectTypeSub").html(htmls);
+	form.render();
+	
+	var result = getSelectData1(code);
+   for(var x in result){
+	  htmls += '<option value = "' + result[x].value + '">' + result[x].label + '</option>'
+   }
+   $("#dictProjectTypeSub").html(htmls);
+   form.render();
+};
+
+function getSelectData1(code){
+	var data1 ; //全局变量
+//		$("#dictProjectTypeSub").html(htmls);
+	form.render();
+	$.ajax({
+		url: "/sysDict/getType/"+code,
+		type: "get",
+		dataType : "json",
+		contentType : "application/json",
+		async: false,//这得注意是同步
+		success: function (result) {
+			data1 = result;
+		}
+	});
+	return data1;
+};
+
+    var pkCode = [[${pkCode}]];
+    var flagType = [[${flagType}]];
+    var id = [[${id}]];
+    if(""!=id){
+//     console.log(flagType);
+       console.log(id);
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/pjProject/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	            	 console.log("edit data="+res.data.dictProjectType);
+	       	  	  	 handel("dict_project_type_sub"+res.data.dictProjectType);
+	       	  		 $(".operation select[name=dictProjectTypeSub]").val(res.data.dictProjectTypeSub);
+	       	  			//element.progress('demo', '50%')
+       	  			 var slider_ins1 = slider.render({ elem: '#projectProgressNew' ,theme: '#5FB878',value: res.data.projectProgress,change: function(value){ $(".operation input[name=projectProgress]").val(value); } });
+					 slider_ins1.setValue(res.data.projectProgress);
+	                 form.render(); //更新全部
+	             }
+	         });
+	     });
+    }else{
+    	$(".operation input[name=projectCode]").val(pkCode);
+    }
+</script>

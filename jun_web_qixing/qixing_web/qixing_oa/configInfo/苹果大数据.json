@@ -1,0 +1,32 @@
+﻿{
+  "base": {
+    "name": "苹果大数据",  
+    "url": "http://192.168.1.6:8124/apple/html/index.html", 
+    "desc": "对苹果大数据进行专题分析，旨在从全局的角度，对苹果大数据的应用方向、数据源、实施路径、应用效果、应用场景设计、可行性等方面提出实施方案，深入挖掘苹果大数据的价值。"
+  },
+  "schedule": {
+    "status": "已完成",
+    "actualStartTime": "2017-04-01",
+    "actualEndTime": "2017-09-15",
+    "estimatedStartTime": "2017-04-01",
+    "estimatedEndTime": "2017-09-15",
+    "process": 100,                    
+    "delay": false,
+    "technology":["jquery","echarts","sass"]
+  },
+  "resources": {
+    "demander": "农业部信息中心",     
+    "type":"独立纵队",			
+    "manager":"陈乃赫",                 
+    "charge": "邵金东",                 
+    "affiliate": ["魏彬","陈胜","郭惠敏"]
+  },
+  "bug": {
+    "total": 456,                
+    "resolved": 456,             
+    "unsolved": 0                
+  },
+  "others": {
+    "remark": "暂无"
+  }
+}

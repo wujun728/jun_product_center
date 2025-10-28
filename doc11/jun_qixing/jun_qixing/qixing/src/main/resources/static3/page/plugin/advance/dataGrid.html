@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>数据列表</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        .demo-grid-item1 {
+            padding: 5px 10px;
+            background-color: #f6f6f6;
+            border-radius: 2px;
+            margin-top: 15px;
+        }
+
+        div > .demo-grid-item1:first-child {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            数据列表dataGrid模块是用来实现非表格形式的数据展示，实现了自动渲染、自动分页、复选框、单选框等功能，用法与table模块类似，
+            如果你厌倦了全是表格的页面，想实现卡片布局、网格布局、列表布局、瀑布流布局等形式的数据列表，只用将table模块换为dataGrid模块，后端接口可通用。
+        </div>
+    </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    加载更多模式
+                    <i id="btnRefreshGird1" class="layui-icon layui-icon-refresh pull-right"
+                       style="cursor: pointer;"></i>
+                    <!-- 全选按钮容器 -->
+                    <span class="pull-right" id="demoDataGridCbAll1" style="padding-right: 15px;"></span>
+                </div>
+                <div class="layui-card-body" style="height: 300px;overflow: auto;">
+                    <!-- 容器 -->
+                    <div id="demoDataGrid1" class="layui-form"></div>
+                    <!-- 布局模板 -->
+                    <script type="text/html" id="demoDataGridItem1">
+                        <div class="demo-grid-item1">{{d.LAY_CHECKBOX_ELEM}} &nbsp; {{d.nickName}} - {{d.sex}}</div>
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    分页模式
+                    <i id="btnCheckStatusGird2" class="layui-icon layui-icon-ok pull-right"
+                       style="cursor: pointer;"></i>
+                </div>
+                <div class="layui-card-body" style="height: 300px;overflow: auto;">
+                    <!-- 容器 -->
+                    <div id="demoDataGrid2" class="layui-row layui-col-space15 layui-form"></div>
+                    <!-- 布局模板 -->
+                    <script type="text/html" id="demoDataGridItem2">
+                        <div class="layui-col-md6">
+                            <div class="demo-grid-item1">
+                                {{d.LAY_RADIO_ELEM}} &nbsp; {{d.device}} - {{d.browserType}}
+                            </div>
+                        </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">无js自动渲染</div>
+                <div class="layui-card-body" style="height: 300px;overflow: auto;">
+                    <!-- 容器 -->
+                    <div lay-data="{url: '../../../json/user.json',loadMore: {limit: 8}}" data-grid>
+                        <!-- 布局模板 -->
+                        <script type="text/html" data-grid-tpl>
+                            <div class="demo-grid-item1">{{d.nickName}} - {{d.sex}}</div>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header">前端分页</div>
+                <div class="layui-card-body" style="height: 300px;overflow: auto;">
+                    <!-- 容器 -->
+                    <div id="demoDataGrid3" class="layui-row layui-col-space15 layui-form"></div>
+                    <!-- 布局模板 -->
+                    <script type="text/html" id="demoDataGridItem3">
+                        <div class="layui-col-md6">
+                            <div class="demo-grid-item1">
+                                {{d.LAY_CHECKBOX_ELEM}} {{d.LAY_INDEX}} {{d.nickName}} - {{d.sex}}
+                                <span class="layui-badge-rim pull-right">{{d.LAY_NUMBER}}</span>
+                            </div>
+                        </div>
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'dataGrid'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var dataGrid = layui.dataGrid;
+
+        /** 加载更多模式 */
+        var insDg1 = dataGrid.render({
+            elem: '#demoDataGrid1',
+            templet: '#demoDataGridItem1',
+            url: '../../../json/user.json',
+            loadMore: {limit: 8},
+            checkAllElem: '#demoDataGridCbAll1'
+        });
+
+        // 刷新
+        $('#btnRefreshGird1').click(function () {
+            $(insDg1.options.elem).parent().scrollTop(0);
+            insDg1.reload({loadMore: {curr: 1}});
+        });
+
+        /** 分页模式 */
+        var insDg2 = dataGrid.render({
+            elem: '#demoDataGrid2',
+            templet: '#demoDataGridItem2',
+            url: '../../../json/login-record.json',
+            page: true
+        });
+
+        // 获取选中数据
+        $('#btnCheckStatusGird2').click(function () {
+            var rows = insDg2.checkStatus();
+            if (rows.length === 0) return layer.msg('未选中数据');
+            layer.msg('选中了' + rows[0].device);
+        });
+
+        /** 前端分页 */
+        $.get('../../../json/user-all.json', function (res) {
+            dataGrid.render({
+                elem: '#demoDataGrid3',
+                templet: '#demoDataGridItem3',
+                data: res.data,
+                page: true
+            });
+        });
+
+    });
+</script>
+</body>
+</html>

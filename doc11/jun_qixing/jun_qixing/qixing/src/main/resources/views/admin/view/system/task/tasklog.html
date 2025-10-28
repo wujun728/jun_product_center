@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="../../../component/pear/css/pear.css" rel="stylesheet"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="table" lay-filter="table-filter"></table>
+    </div>
+</div>
+
+</body>
+
+
+<script type="text/html" id="table-toolbar">
+</script>
+
+<script src="../../../component/layui/layui.js"></script>
+<script src="../../../component/pear/pear.js"></script>
+<script>
+    layui.use(['easyAdmin'], function () {
+        let easyAdmin = layui.easyAdmin;
+
+        let cols = [
+                [
+                    {
+                        title: '编码',
+                        field: 'taskCode',
+                        align: 'left',
+                        width: 80
+                    },
+                    {
+                        title: '线程名',
+                        field: 'threadName',
+                        align: 'left',
+                        width: 160
+                    },
+                    {
+                        title: '任务开始时间',
+                        field: 'startTime',
+                        align: 'left',
+                        width: 160
+                    },
+                    {
+                        title: '任务结束时间',
+                        field: 'endTime',
+                        align: 'left',
+                        width: 160
+                    },
+                    {
+                        title: '状态',
+                        field: 'status',
+                        align: 'left',
+                        width: 120,
+                        templet: function (d) {
+                            if (d.status == 1) {
+                                return '<button type="button" class="tag-item layui-btn layui-btn-primary layui-btn-sm">正常</button>';
+                            }
+                            if (d.status == 2) {
+                                return '<button type="button" class="tag-item tag-item-warm layui-btn layui-btn-primary layui-btn-sm">异常</button>';
+                            }
+
+                            return "";
+                        }
+                    },
+                    {
+                        title: '耗时ms',
+                        field: 'cost',
+                        align: 'left',
+                        width: 80
+                    }
+                ]
+            ]
+        ;
+
+
+        let module = "tasklog";
+        let uri = "/sys/" + module;
+        easyAdmin.tableRender({
+            url: uri,
+            where: {taskCode: easyAdmin.getQueryString('id')},
+            cols: cols
+        });
+        easyAdmin.TableToolBar(uri, module);
+    })
+</script>
+</html>

@@ -1,0 +1,48 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "types": "1",
+            "title": "新进客户",
+            "status": 1,
+            "create_time": 1724945100,
+            "update_time": 0
+        },
+        {
+            "id": 2,
+            "types": "1",
+            "title": "跟进客户",
+            "status": 1,
+            "create_time": 1724945107,
+            "update_time": 0
+        },
+        {
+            "id": 3,
+            "types": "1",
+            "title": "正式客户",
+            "status": 1,
+            "create_time": 1724945113,
+            "update_time": 0
+        },
+        {
+            "id": 4,
+            "types": "1",
+            "title": "流失客户",
+            "status": 1,
+            "create_time": 1724945119,
+            "update_time": 1724945124
+        },
+        {
+            "id": 5,
+            "types": "1",
+            "title": "成交客户",
+            "status": 1,
+            "create_time": 1724945133,
+            "update_time": 0
+        }
+    ]
+}

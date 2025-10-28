@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+	<title>齐兴ERP</title>
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">新建${functionName}</h3>
+	<table class="layui-table layui-table-form">
+#set($columnList = [])
+#set($textareaColumn = '')
+#foreach($column in $columns)
+#set($field=$column.javaField)
+#if($column.insert && !$column.pk)
+#if(($column.usableColumn) || (!$column.superColumn))
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+#set($dictType=$column.dictType)
+#if($column.htmlType == "textarea")
+#set($textareaColumn = $column)
+#else
+#set($columnMap = {"column": $column, "comment": $comment, "field": $field, "dictType": $dictType, "required": $column.required})
+#set($dummy = $columnList.add($columnMap))
+#end
+#end
+#end
+#end
+
+#set($columnCount = $columnList.size())
+#set($rowCount = $columnCount / 2)
+#if($columnCount % 2 > 0)
+#set($rowCount = $rowCount + 1)
+#end
+
+#set($currentIndex = 0)
+#set($endIndex = $rowCount - 1)
+#foreach($i in [0..$endIndex])
+		<tr>
+#set($cellCount = 0)
+#while( $currentIndex < $columnList.size() && $cellCount < 2 )
+#set($col = $columnList.get($currentIndex))
+#set($column = $col.column)
+#set($comment = $col.comment)
+#set($field = $col.field)
+#set($dictType = $col.dictType)
+#set($required = $col.required)
+#set($currentIndex = $currentIndex + 1)
+#set($cellCount = $cellCount + 1)
+			<td class="layui-td-gray">$comment#if($required)<font>*</font>#end</td>
+			<td>
+#if($column.htmlType == "input")
+				<input type="text" name="$field" #if($required)lay-verify="required" lay-reqText="请输入$comment"#end placeholder="请输入$comment" class="layui-input">
+#elseif($column.htmlType == "select" && "" != $dictType)
+				<select name="$field" class="layui-select" #if($required)lay-verify="required"#end>
+					<option value="">请选择</option>
+					<option th:each="dict : ${@dict.getType('$dictType')}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+				</select>
+#elseif($column.htmlType == "checkbox" && "" != $dictType)
+				<div class="layui-form-item" th:with="type=${@dict.getType('$dictType')}">
+					<label th:each="dict : ${type}" class="layui-form-checkbox">
+						<input name="$field" type="checkbox" th:value="${dict.dictValue}" lay-skin="primary" th:text="${dict.dictLabel}">
+					</label>
+				</div>
+#elseif($column.htmlType == "radio" && "" != $dictType)
+				<div class="layui-form-item" th:with="type=${@dict.getType('$dictType')}">
+					<div th:each="dict : ${type}" class="layui-input-block">
+						<input type="radio" th:id="'$field_' + ${dict.dictCode}" name="$field" th:value="${dict.dictValue}" lay-skin="primary" th:checked="${dict.default}">
+						<label th:for="'$field_' + ${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+#elseif($column.htmlType == "datetime")
+				<input type="text" name="$field" placeholder="yyyy-MM-dd" class="layui-input" #if($required)lay-verify="required"#end readonly id="datetime-$field">
+#else
+				<input type="text" name="$field" #if($required)lay-verify="required" lay-reqText="请输入$comment"#end placeholder="请输入$comment" class="layui-input">
+#end
+			</td>
+#end
+#end
+
+#if($textareaColumn != '')
+#set($column = $textareaColumn)
+#set($parentheseIndex=$column.columnComment.indexOf("（"))
+#if($parentheseIndex != -1)
+#set($comment=$column.columnComment.substring(0, $parentheseIndex))
+#else
+#set($comment=$column.columnComment)
+#end
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">$comment#if($column.required)<font>*</font>#end</td>
+			<td colspan="3">
+				<textarea name="${column.javaField}" placeholder="请输入$comment" class="layui-textarea" #if($column.required)lay-verify="required"#end></textarea>
+			</td>
+		</tr>
+#end
+	</table>
+	</div>
+		<div class="pt-4">
+		<input type="hidden" name="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+#foreach($column in $columns)
+#if($column.insert && !$column.superColumn && !$column.pk && $column.htmlType == "datetime")
+	document.write("<script src='/static/assets/layui/laydate/laydate.js'><\\/script>");
+#end
+#end
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool;
+
+#foreach($column in $columns)
+#if($column.insert && !$column.superColumn && !$column.pk && $column.htmlType == "datetime")
+		//日期选择器
+		laydate.render({
+			elem: '#datetime-${column.javaField}',
+			type: 'date'
+		});
+#end
+#end
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000,'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/${moduleName}/${businessName}/add", data.field, callback, clickbtn);
+			return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	 
+		<div class="copyright">Copyright © 2022-2025 齐兴 - 1.7.5  ，Powered by Qixing<a href="https://www.baidu.com" target="_blank">官网</a></div></div>
+ 
+</body>
+</html>

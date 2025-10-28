@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目复核列表 - 勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:240px;">
+				<input type="text" name="refPnameCondition" placeholder="项目名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>查询</button>
+				<button class="layui-btn layui-btn-warm" id="export">导出全部</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add" shiro:hasPermission="pjProjectRecheck:add">新增</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted" shiro:hasPermission="pjProjectRecheck:delete">删除</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.documentTable = table.render({
+			elem: '#document',
+			title: '项目复核列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/pjprojectrecheck/listByPage",
+			page: true,
+			cols: [[
+				{type: 'checkbox', fixed: 'left'}
+				, {field: 'id', title: 'ID', width: 80, align: 'center', hide: true}
+				, {field: 'refPname', title: '项目名称', width: 200}
+				, {field: 'recheckMan', title: '项目复核责任人', width: 150}
+				, {field: 'recheckAdvice', title: '项目复核意见', width: 200}
+				, {field: 'recheckState', title: '项目复核状态', width: 120}
+				, {field: 'remark', title: '备注', width: 150}
+				,{field: 'right',fixed:'right',title: '操作',width: 180,align: 'center',templet: function (d) {
+					var html = '<div class="layui-btn-group">';
+					var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span>';
+					var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+					var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+					var btn4='<span class="layui-btn layui-btn-warm layui-btn-xs" lay-event="file">附件</span>';
+					return html+btn1+btn2+btn3+btn4+'</div>';
+				}							}
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(document)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/web_oa/qixing_oa1/pjprojectrecheck/add.html");
+				return;
+			} else if (obj.event === 'batchDeleted') {
+				var checkStatus = table.checkStatus(obj.config.id);
+				var data = checkStatus.data;
+				if(data.length==0){
+					layer.msg("请选择要批量删除的列");
+				}else {
+					var ids = [];
+					$(data).each(function (index,item) {
+						ids.push(item.id);
+					});
+					tipDialog(ids);
+				}
+				return;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(document)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/web_oa/qixing_oa1/pjprojectrecheck/view.html?id="+data.id);
+				return;
+			}
+			if(obj.event === 'edit'){
+				tool.side('/web_oa/qixing_oa1/pjprojectrecheck/edit.html?id='+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				var ids=[];
+				ids.push(data.id);
+				tipDialog(ids);
+				return;
+			}
+			if (obj.event === 'file') {
+				data['dictBiztype']='项目复核';
+				CoreUtil.setData("biz_rowdata",data);
+				var index = layer.open({
+					title: '上传附件',
+					skin: 'layui-layer-admin',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					scrollbar: true,
+					area: ['75%', '75%'],
+					content: '/index/sysFilesByUser',
+				});
+				$(window).on("resize", function () {
+					layer.full(index);
+				});
+				return false;
+			}
+		});
+	
+		//导出
+		$('#export').on('click', function () {
+			//原先分页limit
+			var exportParams = {
+				limit: 10000,
+				key: $("#key").val()
+			};
+			CoreUtil.sendPost("/qixing_oa1/pjprojectrecheck/listByPage", exportParams, function (res) {
+				//初始化渲染数据
+				if (res.data != null && res.data.records != null) {
+					table.exportFile(layui.documentTable.config.id, res.data.records, 'xls');
+				}
+			});
+		});
+	
+		//删除
+		var tipDialog=function (ids) {
+			layer.confirm('确定要删除吗?', {
+				icon: 3,
+				title: '提示'
+			}, function(index) {
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						layui.documentTable.reload();
+					}
+				}
+				tool.delete("/qixing_oa1/pjprojectrecheck/delete", {id: ids.join(',')}, callback);
+				layer.close(index);
+			});
+		};
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

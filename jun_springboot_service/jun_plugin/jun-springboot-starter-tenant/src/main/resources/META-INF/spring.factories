@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.ruoyi.plugin.tenant.config.TenantConfiguration

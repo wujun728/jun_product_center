@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jun_plugin</artifactId>
+        <groupId>io.github.wujun728</groupId>
+        <version>1.0.24</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jun_springboot-starter-tenant</artifactId>
+
+    <description>
+        多租户插件
+    </description>
+
+    <dependencies>
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>io.github.wujun728</groupId>
+            <artifactId>jun_common</artifactId>
+        </dependency>
+
+        <!-- Lombok能以简单的注解形式来简化java代码，提高开发效率-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- SpringBoot 拦截器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+    </dependencies>
+</project>

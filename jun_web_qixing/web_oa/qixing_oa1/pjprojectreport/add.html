@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>项目报告新增 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+	<style>
+		.layui-form-label{
+			width:120px;
+		}
+		.layui-input-block{
+			margin-left:150px;
+		}
+		body>.layui-table-cell{
+			padding: 0 8px;
+		}
+		.layui-upload-drag .layui-icon {
+			margin: 20px 0 10px 0;
+			font-size: 48px;
+			color: #c0c4cc;
+		}
+	</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+	<div class="p-page">
+		<div class="layui-card">
+			<div class="layui-card-header">项目报告新增</div>
+			<div class="layui-card-body">
+				<form class="layui-form" lay-filter="mainForm" id="mainForm">
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">报告名称 <span class="red">*</span></label>
+						<div class="layui-input-block">
+							<input type="text" name="report_name" id="report_name" lay-verify="required" placeholder="请输入报告名称" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">项目名称 <span class="red">*</span></label>
+						<div class="layui-input-block">
+							<div id="project_id" class="layui-unselect layui-form-select layui-select-up">
+								<div class="layui-select-title">
+									<span class="layui-input layui-unselect">请选择项目</span>
+									<input type="hidden" name="project_id" lay-verify="required">
+									<i class="layui-edge"></i>
+								</div>
+							</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">报告类型 <span class="red">*</span></label>
+						<div class="layui-input-block">
+							<select name="report_type" lay-verify="required" lay-filter="report_type">
+								<option value="">请选择报告类型</option>
+								<option value="1">月度报告</option>
+								<option value="2">季度报告</option>
+								<option value="3">年度报告</option>
+								<option value="4">专项报告</option>
+								<option value="5">其他报告</option>
+							</select>
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">报告完成天数 <span class="red">*</span></label>
+						<div class="layui-input-block">
+							<div class="layui-input-number" id="report_day_box">
+								<div class="layui-input-wrap">
+									<input type="number" name="report_day" id="report_day" lay-verify="required" min="1" max="365" value="1" class="layui-input">
+								</div>
+								<div class="layui-input-number-btn">
+									<a href="javascript:void(0);" class="decrease" lay-number="decrease">−</a>
+									<a href="javascript:void(0);" class="increase" lay-number="increase">+</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">报告负责人 <span class="red">*</span></label>
+						<div class="layui-input-block">
+							<div id="charger_id" class="layui-unselect layui-form-select layui-select-up">
+								<div class="layui-select-title">
+									<span class="layui-input layui-unselect">请选择报告负责人</span>
+									<input type="hidden" name="charger_id" lay-verify="required">
+									<i class="layui-edge"></i>
+								</div>
+							</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">报告内容 <span class="red">*</span></label>
+						<div class="layui-input-block">
+							<script id="report_content" name="report_content" type="text/plain" style="width:100%;height:400px;"></script>
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">附件</label>
+						<div class="layui-input-block">
+							<div class="layui-upload-drag" id="upload">
+								<i class="layui-icon layui-icon-upload"></i>
+								<p>点击上传，或将文件拖拽到此处</p>
+								<p class="layui-word-aux">支持主流格式，单个文件不超过10MB</p>
+							</div>
+							<table class="layui-table mt-4" id="fileTable">
+								<thead>
+									<tr>
+										<th>文件名</th>
+										<th>大小</th>
+										<th>上传时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="fileList"></tbody>
+							</table>
+						</div>
+					</div>
+					
+					<div class="layui-form-item text-center pt-4">
+						<button type="button" class="layui-btn layui-btn-primary layui-btn-lg" id="cancelBtn">取消</button>
+						<button type="submit" class="layui-btn layui-btn-lg layui-btn-green ml-4" lay-submit lay-filter="submitBtn">保存</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool', 'form', 'upload', 'inputNumber'];
+	function gouguInit() {
+		var tool = layui.tool, layer = layui.layer, $ = layui.jquery, form = layui.form, upload = layui.upload;
+		var inputNumber = layui.inputNumber;
+		var businessId = '';
+		var fileList = [];
+		var editor = null;
+
+		// 初始化编辑器
+		initEditor();
+		
+		// 初始化输入框
+		inputNumber.render({
+			elem: '#report_day_box',
+			range: [1, 365]
+		});
+
+		// 初始化项目选择器
+		tool.createSelect({
+			elem: '#project_id',
+			url: '/qixing_oa1/pjProject/listBySelect',
+			isMulti: false,
+			selectCallBack: function() {
+				form.render('select');
+			}
+		});
+
+		// 初始化报告负责人选择器
+		tool.createSelect({
+			elem: '#charger_id',
+			url: '/sys/users/listByPage',
+			isMulti: false,
+			selectCallBack: function() {
+				form.render('select');
+			}
+		});
+
+		// 初始化附件上传
+		var uploadInst = upload.render({
+			elem: '#upload',
+			url: '/sysFilesOss/upload',
+			data: {
+				business_type: 'project_report'
+			},
+			accept: 'file',
+			multiple: true,
+			drag: true,
+			size: 10240, // 10MB
+			before: function(obj) {
+				layer.load();
+			},
+			done: function(res, index, upload) {
+				layer.closeAll('loading');
+				if (res.code == 0) {
+					fileList.push(res.data);
+					updateFileTable();
+					layer.msg('上传成功');
+				} else {
+					layer.msg(res.msg || '上传失败');
+				}
+			},
+			error: function(index, upload) {
+				layer.closeAll('loading');
+				layer.msg('上传失败');
+			}
+		});
+
+		// 更新文件列表表格
+		function updateFileTable() {
+			$('#fileList').empty();
+			if (fileList.length === 0) {
+				$('#fileList').append('<tr><td colspan="4" class="text-center">暂无附件</td></tr>');
+			} else {
+				layui.each(fileList, function(i, file) {
+					var html = '<tr id="file_' + file.id + '">' +
+						'<td>' + file.file_name + '</td>' +
+						'<td>' + file.file_size + '</td>' +
+						'<td>' + file.create_time + '</td>' +
+						'<td>' +
+							'<button type="button" class="layui-btn layui-btn-xs layui-btn-primary previewBtn" data-id="' + file.id + '" data-url="' + file.file_url + '">预览</button>' +
+							'<button type="button" class="layui-btn layui-btn-xs layui-btn-danger deleteBtn" data-id="' + file.id + '" data-index="' + i + '">删除</button>' +
+						'</td>' +
+					'</tr>';
+					$('#fileList').append(html);
+				});
+			}
+		}
+
+		// 预览附件
+		$(document).on('click', '.previewBtn', function() {
+			var url = $(this).attr('data-url');
+			window.open(url, '_blank');
+		});
+
+		// 删除附件
+		$(document).on('click', '.deleteBtn', function() {
+			var index = $(this).attr('data-index');
+			var fileId = $(this).attr('data-id');
+			
+			layer.confirm('确定要删除此附件吗？', function(index) {
+				layer.close(index);
+				tool.post('/sysFilesOss/delete', {id: fileId}, function(res) {
+					if (res.code == 0) {
+						fileList.splice(index, 1);
+						updateFileTable();
+						layer.msg('删除成功');
+					} else {
+						layer.msg(res.msg || '删除失败');
+					}
+				});
+			});
+		});
+
+		// 表单验证规则
+		form.verify({
+			report_name: [/^.{1,100}$/, '报告名称长度1-100个字符']
+		});
+
+		// 表单提交
+		form.on('submit(submitBtn)', function(data) {
+			// 获取编辑器内容
+			var report_content = '';
+			if (editor) {
+				report_content = editor.getContent();
+			}
+			
+			// 构建提交数据
+			var submitData = data.field;
+			submitData.report_content = report_content;
+			
+			// 验证表单
+			if (!submitData.report_name || submitData.report_name.trim() === '') {
+				layer.msg('请输入报告名称');
+				return false;
+			}
+			
+			if (!submitData.project_id || submitData.project_id.trim() === '') {
+				layer.msg('请选择项目');
+				return false;
+			}
+			
+			if (!submitData.report_type || submitData.report_type.trim() === '') {
+				layer.msg('请选择报告类型');
+				return false;
+			}
+			
+			if (!submitData.report_day || submitData.report_day <= 0) {
+				layer.msg('请输入有效的报告完成天数');
+				return false;
+			}
+			
+			if (!submitData.charger_id || submitData.charger_id.trim() === '') {
+				layer.msg('请选择报告负责人');
+				return false;
+			}
+			
+			if (!report_content || report_content.trim() === '') {
+				layer.msg('请输入报告内容');
+				return false;
+			}
+			
+			// 提交表单
+			layer.load();
+			tool.post('/qixing_oa1/pjProjectReport/add', submitData, function(res) {
+				layer.closeAll('loading');
+				if (res.code == 0) {
+					// 关联附件业务ID
+					if (fileList.length > 0 && res.data && res.data.id) {
+						businessId = res.data.id;
+						var fileIds = fileList.map(function(file) { return file.id; }).join(',');
+						tool.post('/sysFilesOss/updateBusinessId', {ids: fileIds, business_id: businessId, business_type: 'project_report'});
+					}
+					layer.msg('保存成功', {icon: 1}, function() {
+						tool.sideClose();
+					});
+				} else {
+					layer.msg(res.msg || '保存失败');
+				}
+			});
+			return false;
+		});
+
+		// 取消按钮
+		$('#cancelBtn').click(function() {
+			tool.sideClose();
+		});
+
+		// 初始化编辑器
+		function initEditor() {
+			if (typeof UE !== 'undefined') {
+				editor = UE.getEditor('report_content', {
+					toolbars: [[
+						'fullscreen', 'source', '|', 'undo', 'redo', '|',
+						'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+						'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+						'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+						'directionalityltr', 'directionalityrtl', 'indent', '|',
+						'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+						'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+						'simpleupload', 'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+						'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+						'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', 'charts', '|',
+						'print', 'preview', 'searchreplace', 'drafts', 'help'
+					]],
+					autoHeightEnabled: true,
+					autoFloatEnabled: true,
+					initialFrameWidth: '100%',
+					initialFrameHeight: 400,
+					zIndex: 101
+				});
+			}
+		}
+	}
+</script>
+
+<script src="/static/assets/ueditor/ueditor.config.js"></script>
+<script src="/static/assets/ueditor/ueditor.all.min.js"></script>
+<script src="/static/assets/ueditor/lang/zh-cn/zh-cn.js"></script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

@@ -1,0 +1,29 @@
+--findByContent
+  SELECT * FROM t_sample WHERE 1 = 1
+  <#if content??>
+        AND content LIKE :content
+  </#if>
+
+--aaaContent
+  SELECT * FROM t_sample WHERE 1 = 1
+  <#if content??>
+        AND content LIKE :content
+  </#if>
+
+--countContent
+SELECT count(*) FROM t_sample WHERE 1 = 1
+<#if content??>
+  AND content LIKE :content
+</#if>
+
+--findDtos
+SELECT id, content as contentShow FROM t_sample
+
+--findByTemplateQueryObject
+SELECT * FROM t_sample WHERE 1 = 1
+<#if content??>
+ AND content LIKE :content
+</#if>
+
+--findMap
+SELECT * FROM t_sample

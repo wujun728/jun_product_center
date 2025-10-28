@@ -1,0 +1,25 @@
+package ${packageName}.domain.vo;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import ${packageName}.domain.${ClassName};
+
+
+/**
+ * ${functionName}对象 ${tableName}
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+#if($table.crud || $table.sub)
+#set($Entity="BaseEntity")
+#elseif($table.tree)
+#set($Entity="TreeEntity")
+#end
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ${ClassName}Vo extends ${ClassName}
+{
+
+}

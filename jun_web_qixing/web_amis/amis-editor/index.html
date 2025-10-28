@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,width=device-width,viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>amis-editor</title>
+    <link rel="stylesheet" href="https://bce.bdstatic.com/iconfont/iconfont.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/animate.css@4.1.1/animate.min.css"/>
+    <link data-react-helmet="true" rel="shortcut icon"
+          href="https://avatars.githubusercontent.com/u/78204817?s=200&v=4"/>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/common.js"></script>
+    <style>
+        .cxd-FileControl .disabled .cxd-Button{
+            display: none !important;
+        }
+        .cxd-ImageControl .is-disabled .cxd-ImageControl-addBtn{
+            display: none !important;
+        }
+    </style>
+    <script>
+        let params = getUrlParams(window.location.href);
+
+        $.ajax({
+            url: "/admin/jqpPage/get/"+params.id,
+            type: 'GET',
+            async:false,
+            dataType: 'json',
+            success: function (data) {
+                window.AMIS_JSON = data.data;
+            }
+        });
+
+        //window.AMIS_JSON = {type: "page", body: "hello"};
+
+        window.EDITOR_SAVE = o => {
+            $.ajax({
+                url: "/admin/common/jqp_page/save",
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id:params.id,
+                    config:JSON.stringify(o)
+                }),
+                dataType: 'json',
+                success: function (data) {
+                    alert("保存成功");
+                }
+            });
+        }
+    </script>
+
+    <link href="/amis-editor/css/index.5e262399.css" rel="stylesheet">
+</head>
+<body>
+<div id="root"></div>
+<script defer src="/amis-editor/scripts/chunk/index.1e439e60.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('字典修改')" />
+</head>
+<body>
+<div class="container">
+    <form class="layui-form mt20" lay-filter="form-dict" th:object="${dict}">
+        <input id="dictId" name="dictId" type="hidden" th:field="*{dictId}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>字典名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="dictName" lay-verify="required" lay-verType="tips" placeholder="" autocomplete="off" th:field="*{dictName}"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>字典类型：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="dictType" lay-verify="required" lay-verType="tips" placeholder="" autocomplete="off" th:field="*{dictType}"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <span th:each="dict : ${@dict.getType('sys_normal_disable')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:title="${dict.dictLabel}" th:field="*{status}" />
+                </span>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-block">
+                <textarea class="layui-textarea min-input" rows="5" name="remark" placeholder="" autocomplete="off" th:field="*{remark}"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="btn-edit" id="btn-edit">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:src="@{/js/system/dict_form.js}"></script>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:dict:edit')}]];
+</script>
+</body>
+</html>

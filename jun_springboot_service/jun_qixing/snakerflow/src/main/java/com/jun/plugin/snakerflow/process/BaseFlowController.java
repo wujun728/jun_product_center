@@ -1,0 +1,124 @@
+package com.jun.plugin.snakerflow.process;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import com.ruoyi.common.annotation.DataSource;
+import com.ruoyi.common.enums.DataSourceType;
+import com.ruoyi.common.utils.SecurityUtils;
+import org.snaker.engine.access.QueryFilter;
+import org.snaker.engine.entity.HistoryOrder;
+import org.snaker.engine.entity.WorkItem;
+import org.springframework.beans.factory.annotation.Autowired;
+
+//import com.jun.plugin.module.ext.mapper.BizCommonMapper;
+import com.jun.plugin.common.entity.BaseFlowEntity;
+//import com.jun.plugin.system.mapper.SysUserMapper;
+//
+
+//import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.StrUtil;
+
+@DataSource(DataSourceType.QIXING)
+public class BaseFlowController {
+//    @Resource
+//    HttpSessionService sessionService;
+    @Autowired
+    private SnakerEngineFacets snakerEngineFacets;
+//    @Autowired
+//    private UserService sysUserService;
+//    @Autowired
+//	private SysUserMapper sysuer;
+
+//    @Autowired
+//    private BizCommonMapper bizCommonMapper;
+
+    protected void setFlowStatusInfo(BaseFlowStatus baseFlowStatus) {
+        String orderId = baseFlowStatus.getOrderId();
+        // 流程实例状态
+        HistoryOrder histOrder = snakerEngineFacets.getEngine().query().getHistOrder(orderId);
+        if(histOrder!=null) {
+        	baseFlowStatus.setOrderState(histOrder.getOrderState());
+        }
+        List<WorkItem> workItems = snakerEngineFacets.getEngine().query().getWorkItems(null, new QueryFilter().setOrderId(orderId));
+        if (CollUtil.isNotEmpty(workItems)) {
+            WorkItem workItem = workItems.get(0);
+            // 当前流程实例任务节点名称
+            baseFlowStatus.setTaskName(workItem.getTaskName());
+            String userid = SecurityUtils.getUsername();
+//            List<HistoryTask> historyTasks = snakerEngineFacets.getEngine().query().getHistoryTasks(new QueryFilter()
+//                    .setOrderId(orderId)
+//                    .setOperator(userid)
+//                    .orderBy("create_time")
+//                    .order(QueryFilter.DESC));
+//            if (CollUtil.isNotEmpty(historyTasks)) {
+//                baseFlowStatus.setCreateTaskId(historyTasks.get(0).getId());
+//            }
+            // 当前流程实例任务操作人
+            String[] actors = snakerEngineFacets.getEngine().query().getTaskActorsByTaskId(workItem.getTaskId());
+            if (ArrayUtil.isNotEmpty(actors)) {
+//                List<String> res = new ArrayList<>();
+//                for (String actor : actors) {
+//                    //SysUser user = sysUserService.getById(Long.valueOf(actor));
+//                    SysUser user = sysuer.getUserByName(actor);
+//                    if (user != null) {
+//                        res.add(user.getRealName());
+//                    }
+//                }
+                String taskOperatorName = StrUtil.join(",", Arrays.asList(actors));
+                baseFlowStatus.setTaskOperatorName(taskOperatorName);
+                if(taskOperatorName.contains(SecurityUtils.getUsername())) {
+                	baseFlowStatus.setIsOwner(1);
+                }
+            }
+        }
+    }
+    
+    protected void setFlowStatusInfo(BaseFlowEntity baseFlowEntity) {
+
+    }
+    protected void setFlowStatusInfoV2(BaseFlowEntity baseFlowEntity) {
+    	String orderId = baseFlowEntity.getOrderId();
+    	// 流程实例状态
+    	HistoryOrder histOrder = snakerEngineFacets.getEngine().query().getHistOrder(orderId);
+    	if(histOrder!=null) {
+    		baseFlowEntity.setOrderState(histOrder.getOrderState());
+    	}
+    	List<WorkItem> workItems = snakerEngineFacets.getEngine().query().getWorkItems(null, new QueryFilter().setOrderId(orderId));
+    	if (CollUtil.isNotEmpty(workItems)) {
+    		WorkItem workItem = workItems.get(0);
+    		// 当前流程实例任务节点名称
+    		baseFlowEntity.setTaskName(workItem.getTaskName());
+            String username = SecurityUtils.getUsername();
+//    		List<HistoryTask> historyTasks = snakerEngineFacets.getEngine().query().getHistoryTasks(new QueryFilter()
+//    				.setOrderId(orderId)
+//    				.setOperator(username)
+//    				.orderBy("create_time")
+//    				.order(QueryFilter.DESC));
+//    		if (CollUtil.isNotEmpty(historyTasks)) {
+//    			baseFlowEntity.setCreateTaskId(historyTasks.get(0).getId());
+//    		}
+    		// 当前流程实例任务操作人
+    		String[] actors = snakerEngineFacets.getEngine().query().getTaskActorsByTaskId(workItem.getTaskId());
+    		if (ArrayUtil.isNotEmpty(actors)) {
+//    			List<String> res = new ArrayList<>();
+//    			for (String actor : actors) {
+//    				//SysUser user = sysUserService.getById(Long.valueOf(actor));
+//    				SysUser user = sysuer.getUserByName(actor);
+//    				if (user != null) {
+//    					res.add(user.getRealName());
+//    				}
+//    			}
+    			String taskOperatorName = StrUtil.join(",", Arrays.asList(actors));
+    			baseFlowEntity.setTaskOperatorName(taskOperatorName);
+                if(taskOperatorName.contains(SecurityUtils.getUsername())) {  // 这个可能有问题，必须要是自己创建的数据
+//                	baseFlowEntity.setIsOwner(1);
+                }
+    		}
+    	}
+    }
+}

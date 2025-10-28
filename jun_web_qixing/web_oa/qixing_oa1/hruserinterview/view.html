@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>面试汇总详情 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA,面试汇总,详情"/>
+	<meta name="description" content="面试汇总详情查看页面，展示面试记录的详细信息。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.detail-info-table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.detail-info-table td {
+	padding: 12px 16px;
+	border-bottom: 1px solid #e8e8e8;
+}
+.detail-info-table td:first-child {
+	width: 120px;
+	background-color: #fafafa;
+	font-weight: 600;
+}
+.detail-info-table td:last-child {
+	width: auto;
+	word-break: break-all;
+}
+.detail-action-buttons {
+	margin-top: 20px;
+	text-align: center;
+}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="layui-container p-4">
+	<h3 class="pb-3">面试汇总详情</h3>
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<table class="detail-info-table">
+				<tr>
+					<td>候选人</td>
+					<td id="userName"></td>
+				</tr>
+				<tr>
+					<td>面试时间</td>
+					<td id="interviewTime"></td>
+				</tr>
+				<tr>
+					<td>面试方式</td>
+					<td id="interviewWay"></td>
+				</tr>
+				<tr>
+					<td>面试结果</td>
+					<td id="interviewResult"></td>
+				</tr>
+				<tr>
+					<td>面试官</td>
+					<td id="interviewers"></td>
+				</tr>
+				<tr>
+					<td>工作年限</td>
+					<td id="workYears"></td>
+				</tr>
+				<tr>
+					<td>期望薪资</td>
+					<td id="expectedSalary"></td>
+				</tr>
+				<tr>
+					<td>面试评价</td>
+					<td id="interviewComment"></td>
+				</tr>
+				<tr>
+					<td>备注</td>
+					<td id="remark"></td>
+				</tr>
+				<tr>
+					<td>创建时间</td>
+					<td id="createTime"></td>
+				</tr>
+				<tr>
+					<td>创建人</td>
+					<td id="createBy"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="detail-action-buttons">
+		<button type="button" class="layui-btn layui-btn-primary" id="backBtn">返回</button>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool = layui.tool;
+		
+		// 获取URL中的ID参数
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+		
+		var id = getUrlParam('id');
+		
+		// 加载字典数据
+		let dicts = {};
+		tool.sendGet('/api/dict/listByTypeCode', {typeCodes: 'interview_way,interview_result'}, function(res) {
+			if(res.code == 0) {
+				dicts = res.data;
+				// 加载详情数据
+				loadDetailData();
+			}
+		});
+		
+		// 加载详情数据
+		function loadDetailData() {
+			tool.sendGet('/hrUserInterview/detail', {id: id}, function(res) {
+				if(res.code == 0) {
+					var data = res.data;
+					
+					// 填充详情数据
+					$('#userName').text(data.userName || '-');
+					$('#interviewTime').text(data.interviewTime || '-');
+					
+					// 显示面试方式字典值
+					if(dicts.interview_way && data.interviewWay) {
+						var wayItem = dicts.interview_way.find(item => item.dictValue == data.interviewWay);
+						$('#interviewWay').text(wayItem ? wayItem.dictName : data.interviewWay);
+					} else {
+						$('#interviewWay').text(data.interviewWay || '-');
+					}
+					
+					// 显示面试结果字典值
+					if(dicts.interview_result && data.interviewResult) {
+						var resultItem = dicts.interview_result.find(item => item.dictValue == data.interviewResult);
+						$('#interviewResult').text(resultItem ? resultItem.dictName : data.interviewResult);
+					} else {
+						$('#interviewResult').text(data.interviewResult || '-');
+					}
+					
+					$('#interviewers').text(data.interviewersNames || '-');
+					$('#workYears').text(data.workYears ? data.workYears + ' 年' : '-');
+					$('#expectedSalary').text(data.expectedSalary ? data.expectedSalary + ' K' : '-');
+					$('#interviewComment').text(data.interviewComment || '-');
+					$('#remark').text(data.remark || '-');
+					$('#createTime').text(data.createTime || '-');
+					$('#createBy').text(data.createByName || '-');
+				} else {
+					layer.msg(res.msg || '获取详情失败');
+				}
+			});
+		}
+		
+		// 返回按钮事件
+		$('#backBtn').click(function() {
+			tool.sideClose(0, 'hrUserInterviewTable');
+		});
+	}
+	</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

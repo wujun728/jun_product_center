@@ -1,0 +1,37 @@
+{
+    "code": 0,
+    "msg": "",
+    "totalRow": [],
+    "count": 1,
+    "data": [
+        {
+            "id": 1215,
+            "title": "地基",
+            "pid": 0,
+            "before_task": 0,
+            "project_id": 1186,
+            "work_id": 1,
+            "step_id": 0,
+            "plan_hours": "30.0",
+            "end_time": "2026-05-29",
+            "over_time": "0",
+            "admin_id": 3,
+            "director_uid": 64,
+            "did": 3,
+            "assist_admin_ids": "73",
+            "priority": 2,
+            "status": 1,
+            "done_ratio": 0,
+            "create_time": "1748596677",
+            "update_time": "1748596804",
+            "delete_time": "0",
+            "director_name": "洛子商",
+            "assist_admin_names": "独梦君",
+            "cate_name": "其他",
+            "project_name": "1111",
+            "delay": 0,
+            "priority_name": "中",
+            "status_name": "未开始"
+        }
+    ]
+}

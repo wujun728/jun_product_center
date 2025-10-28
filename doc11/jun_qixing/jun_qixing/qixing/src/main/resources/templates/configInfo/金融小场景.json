@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "金融小场景", 
+    "url": "http://192.168.1.6:8123",
+    "desc": "金融小场景",               
+    "mobile":false 
+  },
+  "schedule": {
+    "status": "开发中",    
+    "actualStartTime": "2017-08-10", 
+    "actualEndTime": "2017-10-15",   
+    "estimatedStartTime": "2017-08-10", 
+    "estimatedEndTime": "", 
+    "process": 80,                      
+    "delay": false,                     
+    "technology":["vue","element-ui","d3","echarts"]            
+  },
+  "resources": {
+    "demander": "九次方大数据",   
+    "type":"独立纵队",				       
+    "manager":"",            
+    "charge": "王帅",        
+    "affiliate": ["朱润亚","张涛","李猛"]    
+  },
+  "bug": {
+    "total": 0,            
+    "resolved": 0,         
+    "unsolved": 0           
+  },
+  "others": {
+    "remark": "开发进行中"     
+  }
+}

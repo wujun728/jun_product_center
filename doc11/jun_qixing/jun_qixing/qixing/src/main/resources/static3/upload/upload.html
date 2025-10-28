@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+ 
+    <head>
+        <meta charset="UTF-8">
+        <title>文件上传进度条</title>
+        <link rel="stylesheet" type="text/css" href="../../layui/css/layui.css" />
+    </head>
+ 
+    <body>        
+        <div class="layui-upload">
+                <button type="button" class="layui-btn layui-btn-normal" id="fileList">选择多文件</button>
+                <div class="layui-upload-list">
+                    <table class="layui-table">
+                        <thead>
+                        <tr><th>文件名</th>
+                            <th>大小</th>
+                            <th>上传进度</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr></thead>
+                        <tbody id="demoList"></tbody>
+                    </table>
+                </div>
+                <button type="button" class="layui-btn" id="fileListAction">开始上传</button>
+            </div>
+        <script type="text/javascript" src="../../layui/layui.js" ></script>
+        <script type="text/javascript">
+            layui.use(['layer','upload',"element","jquery"], function(){
+                var upload = layui.upload,
+                element = layui.element;
+                element.init();
+                var $ = layui.jquery;
+                
+                var getToken_url="gettoken";    //从后台获取七牛云上传凭证token的url
+                var qiniuToken;
+                network();        
+                function network(){
+                        $.ajax({
+                            type:"get",    
+                            url:getToken_url,
+                            async:false,
+                            cache:false,
+                            dataType: "json",
+                            crossDomain: true == !(document.all),
+                            success: function(res) {
+                                console.log("返回数据=="+JSON.stringify(res));
+                                if (res.code==0) {
+                                    qiniuToken=res.data;
+                                }        
+                            },
+                            error:function(res) { 
+                               layer.msg("联网失败，请检查网络");  
+                           }   
+                        });          
+                }
+                
+                
+                var files;
+                var xhrOnProgress = function (fun) {
+                      xhrOnProgress.onprogress = fun; //绑定监听
+                      //使用闭包实现监听绑
+                      return function () {
+                          //通过$.ajaxSettings.xhr();获得XMLHttpRequest对象
+                          var xhr = $.ajaxSettings.xhr();
+                          //判断监听函数是否为函数
+                          if (typeof xhrOnProgress.onprogress !== 'function')
+                              return xhr;
+                          //如果有监听函数并且xhr对象支持绑定时就把监听函数绑定上去
+                          if (xhrOnProgress.onprogress && xhr.upload) {
+                              xhr.upload.onprogress = xhrOnProgress.onprogress;
+                          }
+                          return xhr;
+                      }
+                };
+                    //多文件列表示例
+                    var demoListView = $('#demoList')
+                        , uploadListIns = upload.render({
+                            elem: '#fileList'
+                            // , size: 102400 //限制文件大小，单位 KB
+                            // , exts: 'zip|rar|7z|doc|docx|pdf|txt|xls|ppt|xlsx|pptx|img|jpg|png|gif|bmp|jpeg' //只允许上传压缩文件
+                            , url: 'http://upload.qiniu.com'
+                            , method: 'post'
+                            , data: {token:qiniuToken}
+                            , accept: 'file'
+                            , multiple: true
+                            , auto: false
+                            , bindAction: '#fileListAction'
+                            , xhr: xhrOnProgress
+                            , progress: function (value) {//上传进度回调 value进度值
+                                element.progress('demoList', value + '%')//设置页面进度条
+                            }, xhr: function (index, e) {
+                                var percent = e.loaded / e.total;//计算百分比
+                                percent = parseFloat(percent.toFixed(2));
+                                element.progress('progress_' + index + '', percent * 100 + '%');
+                                console.log("-----" + percent);
+                            }
+                            , choose: function (obj) {
+                                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                                //读取本地文件
+                                obj.preview(function (index, file, result) {
+                                    var tr = $(['<tr id="upload-' + index + '">'
+                                        , '<td>' + file.name + '</td>'
+                                        , '<td>' + (file.size / 1014).toFixed(1) + 'kb</td>'
+                                        , '<td><div class="layui-progress layui-progress-big" lay-filter="progress_'+index+'" lay-showPercent="true"><div class="layui-progress-bar" lay-percent="0%"></div></div></td>'
+                                        , '<td>等待上传</td>'
+                                        , '<td>'
+                                        , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                                        , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                                        , '</td>'
+                                        , '</tr>'].join(''));
+                 
+                                    //单个重传
+                                    tr.find('.demo-reload').on('click', function () {
+                                        obj.upload(index, file);
+                                    });
+                 
+                                    //删除
+                                    tr.find('.demo-delete').on('click', function () {
+                                        delete files[index]; //删除对应的文件
+                                        tr.remove();
+                                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                                    });
+                 
+                                    demoListView.append(tr);
+                                });
+                            }
+                 
+                            ,
+                            done: function (res, index, upload) {
+                                console.log(res);
+                                if (res.code == 0) { //上传成功
+                                    var tr = demoListView.find('tr#upload-' + index)
+                                        , tds = tr.children();
+                                    tds.eq(3).html('<span style="color: #5FB878;">上传成功</span>');
+                                    tds.eq(4).html(''); //清空操作
+                                    var url = webroot + "/guarantee/itemFile/getItemFileByFlow?FLOW_ID=" + FLOW_ID + "&BUSINESS_ID=" + BUSINESS_ID + "&FLOW_NODE_ID=" + FLOW_NODE_ID + "&FILE_TYPE=" + FILE_TYPE
+                                    //刷新表格
+                                    table.reload('itemFileList', {
+                                        url: url
+                                        , where: {} //设定异步数据接口的额外参数
+                                        //,height: 300
+                                    });
+                                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                                } else if (res.code == -1) {
+                                    layer.msg(res.msg);
+                                }
+                                this.error(index, upload);
+                            }
+                 
+                            ,
+                            error: function (index, upload) {
+                                console.log(index);
+                                // var tr = demoListView.find('tr#upload-' + index)
+                                //     , tds = tr.children();
+                                // tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                                // tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+                            }
+                        })     
+            })
+
+        </script>
+    </body>
+</html>

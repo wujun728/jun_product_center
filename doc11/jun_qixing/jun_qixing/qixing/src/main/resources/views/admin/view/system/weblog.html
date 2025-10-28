@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>日志监控</title>
+    <link rel="stylesheet" href="../../component/pear/css/pear.css"/>
+</head>
+<body>
+
+<div style="margin-top: 5px;">
+
+    <div class="layui-row">
+        <div class="layui-col-xs6">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">文件路径:</label>
+                <div class="layui-input-inline">
+                    <input id="url" type="text" name="username" lay-verify="required"
+                           placeholder="logs/laker.log或D://laker.log"
+                           autocomplete="off"
+                           class="layui-input">
+                </div>
+                <button id="query" type="button" class="layui-btn">查看
+                </button>
+            </div>
+        </div>
+        <div class="layui-col-xs6">
+            <div class="layui-form-item">
+                <label class="layui-form-label">日志名称:</label>
+                <div class="layui-input-inline">
+                    <input id="packgeName" type="text" placeholder="com.jun.plugin"
+                           class="layui-input">
+                </div>
+
+                <label class="layui-form-label">日志等级</label>
+
+                <select id="level" name="interest" lay-filter="aihao">
+                    <option value="INFO">INFO</option>
+                    <option value="DEBUG">DEBUG</option>
+                    <option value="ERROR">ERROR</option>
+                </select>
+
+                <button id="update" type="button" class="layui-btn">
+                    更改
+                </button>
+
+            </div>
+        </div>
+        <!--返回的日志是 text/plain;charset=UTF-8 格式-->
+        <iframe src="" frameborder="1" id="log-frame" width="99%" style="height: calc(100vh - 70px);"></iframe>
+    </div>
+
+
+</div>
+<script src="../../component/layui/layui.js"></script>
+<script src="../../component/pear/pear.js"></script>
+<script>
+    layui.use(['table', 'form', 'common', 'dtree', 'easyAdmin'], function () {
+        var baseApi = "/sys/weblog/file";
+        var $ = layui.$; //使用jQuery 重点处
+        var layer = layui.layer;
+        var easyAdmin = layui.easyAdmin;
+
+        getLogFile();
+
+        function getLogFile() {
+            var url = $('#url').val();
+            // 配置服务端地址
+            var adminServerUrl = layui.data('easyAdmin').serverUrl;
+            var user = layui.data('user');
+            // 用于判断未登录跳转到登录页
+            if (JSON.stringify(user) == "{}") {
+                console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
+                location.href = "login.html";
+            }
+
+            $("#log-frame").attr("src", adminServerUrl + baseApi + "?filePath=" + url + "&" + user.token.name + "=" + user.token.value);
+
+        }
+
+        $("#query").click(function () {
+            getLogFile();
+        })
+        $("#update").click(function () {
+            updateLogLevel();
+        })
+
+        function updateLogLevel() {
+            var packgeName = $('#packgeName').val();
+            var level = $('#level').val();
+            easyAdmin.httpGet("/sys/weblog/level?name=" + packgeName + "&configuredLevel=" + level,
+                function (data) {
+                    if (data !== "ok") {
+                        layer.msg(data, {
+                            icon: 0,
+                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                        return;
+                    }
+
+                    layer.msg('日志级别设置成功！', {
+                            icon: 1,
+                            time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                        },
+                        function () {
+                            //do something
+                        });
+                    getLogFile();
+                })
+            ;
+        }
+    })
+</script>
+
+</body>
+</html>

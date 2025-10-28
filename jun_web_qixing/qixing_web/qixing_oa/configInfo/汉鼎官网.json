@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "汉鼎官网",
+    "url": "http://srbigdata.jusfoun.com/",
+    "desc": "",
+    "mobile":false
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-10-10",
+    "actualEndTime": "未定",
+    "estimatedStartTime": "2017-10-10",
+    "estimatedEndTime": "2017-10-13",
+    "process": 80,
+    "delay": false,
+    "technology":["CMS"]
+  },
+  "resources": {
+    "demander": "",
+    "type":"",
+    "manager":"",
+    "charge": "汝银娟",
+    "affiliate": []
+  },
+  "bug": { 
+    "total": 0,
+    "resolved": 0,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": ""
+  }
+}

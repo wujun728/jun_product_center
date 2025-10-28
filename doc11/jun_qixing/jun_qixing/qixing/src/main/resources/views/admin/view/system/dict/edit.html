@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../component/pear/css/pear.css"/>
+</head>
+<body>
+<form class="layui-form" action="" lay-filter="edit">
+    <div class="mainBox">
+        <div class="main-container">
+            <!-- id隐藏列 -->
+            <div class="layui-form-item layui-hide">
+                <label class="layui-form-label">id</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dictId">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字典名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dictName" lay-verify="title" autocomplete="off" placeholder="请输入"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字典编码</label>
+                <div class="layui-input-block">
+                    <input type="text" name="dictCode" lay-verify="title" autocomplete="off" placeholder="请输入"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">字典状态</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="enable" value="1" title="开启">
+                    <input type="radio" name="enable" value="0" title="关闭">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入描述" name="description" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit lay-filter="save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="pear-btn pear-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="../../../component/layui/layui.js"></script>
+<script src="../../../component/pear/pear.js"></script>
+
+<script>
+    layui.use(['easyAdmin'], function () {
+        let easyAdmin = layui.easyAdmin;
+        easyAdmin.FormVal('/sys/dict');
+        easyAdmin.FormSave('/sys/dict');
+    })
+</script>
+<script>
+</script>
+</body>
+</html>

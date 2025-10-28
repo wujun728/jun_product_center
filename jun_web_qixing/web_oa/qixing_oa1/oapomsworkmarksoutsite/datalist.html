@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/>
+	<title>外出记录管理 - 勾股OA</title> 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="usercode" placeholder="请输入工号" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="refUsername" placeholder="请输入用户名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="workDay" placeholder="请输入外出日期" class="layui-input" id="workDaySearch" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="workmarkstimesTable" lay-filter="workmarkstimesTable"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增外出记录</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">批量删除</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="export">导出</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file">附件</a>
+  {{#  }else {  }}
+  {{#  } }}
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker','laydate'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool, laydate = layui.laydate;
+
+		//日期选择器
+		laydate.render({
+		    elem: '#workDaySearch'
+		    ,type: 'date'
+		});
+
+		layui.workmarkstimesTable = table.render({
+			elem: '#workmarkstimesTable',
+			title: '外出记录列表',
+			toolbar: '#toolbarDemo',
+			head: true,
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/oapomsworkmarksoutsite/datalist.json",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'},
+				{field: 'id', title: 'ID', hide: true},
+				{field: 'usercode', title: '工号', sort: true},
+				{field: 'refUsername', title: '用户名称', sort: true},
+				{field: 'workDay', title: '外出日期', sort: true},
+				{field: 'outsiteDesc', title: '外出事由', sort: true},
+				{field: 'beginTime', title: '开始时间', sort: true},
+				{field: 'endTime', title: '结束时间', sort: true},
+				{field: 'workTotalTime', title: '外出时长(小时)', sort: true},
+				{title: '流程状态', field: 'orderState', align: 'center', width: 90, templet: function (d) {
+					if (d.orderState == 0) {
+						return '<span style="color: #eb7350;">审批完成</span>';
+					} else if (d.orderState == 1) {
+						return '<span style="color: #00b487;">审批中</span>';
+					} else {
+						return '<span style="color: blue;">草稿</span>';
+					}
+				}},
+				{title: '当前节点', field: 'taskName', align: 'center', width: 105},
+				{title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 90},
+				{field: 'creator', title: '填报人', sort: true},
+				{fixed: 'right', width: 180, toolbar: '#tool', title: '操作'}
+			]]
+		});
+
+		//触发事件
+		table.on('toolbar(workmarkstimesTable)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			switch(obj.event){
+			case 'add':
+				tool.side("/qixing_oa1/oapomsworkmarksoutsite/add.html");
+				break;
+			case 'batchDeleted':
+				var data = checkStatus.data;
+				if(data.length == 0){
+					layer.msg("请选择要批量删除的列");
+				}else{
+					var ids = [];
+					$(data).each(function(index, item){
+						ids.push(item.id);
+					});
+					tipDialog(ids);
+				}
+				break;
+			case 'export':
+				exportData();
+				break;
+			};
+		});
+
+		//监听行工具事件
+		table.on('tool(workmarkstimesTable)', function(obj) {
+			var data = obj.data;
+			switch(obj.event){
+			case 'view':
+				tool.side("/qixing_oa1/oapomsworkmarksoutsite/view.html?id="+data.id);
+				break;
+			case 'edit':
+				tool.side("/qixing_oa1/oapomsworkmarksoutsite/edit.html?id="+data.id);
+				break;
+			case 'del':
+				var ids = [];
+				ids.push(data.id);
+				tipDialog(ids);
+				break;
+			case 'file':
+				data['dictBiztype']='外出';
+				tool.setData("biz_rowdata", data);
+				var index = layer.open({
+					title: '上传附件',
+					type: 2,
+					shade: 0.2,
+					maxmin: true,
+					shadeClose: true,
+					scrollbar: true,
+					area: ['80%', '80%'],
+					content: '/index/sysFilesByUser',
+				});
+				return false;
+			}
+		});
+
+		//搜索
+		form.on('submit(table-search)', function(data) {
+			layui.workmarkstimesTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+
+		//清空
+		form.on('submit(table-reset)', function(data) {
+			this.reset();
+			layui.workmarkstimesTable.reload({
+				where: {},
+				page: {curr: 1}
+			});
+			return false;
+		});
+
+		//删除
+		var tipDialog=function (ids) {
+			layer.open({
+				content: "确定要删除么?",
+				yes: function(index, layero){
+					layer.close(index);
+					tool.delete("/qixing_oa1/oapomsworkmarksoutsite/delete", {ids: ids}, function(res){
+						layer.msg(res.msg);
+						if(res.code == 0){
+							layui.workmarkstimesTable.reload();
+						}
+					});
+				}
+			});
+		};
+
+		//导出
+		function exportData() {
+			tool.post("/qixing_oa1/oapomsworkmarksoutsite/export", form.val('barsearchform'), function(res) {
+				if(res.code == 0){
+					window.open(res.url);
+				}else{
+					layer.msg(res.msg);
+				}
+			});
+		}
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

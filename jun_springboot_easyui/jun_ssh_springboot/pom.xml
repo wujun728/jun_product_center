@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jun.plugin</groupId>
+	<artifactId>jun_ssh_springboot_parent</artifactId>
+	<version>1.0</version>
+	
+    <packaging>pom</packaging>
+	
+	
+    <modules>
+        <module>jun_ssh_utils</module>
+        <module>jun_ssh_jpa</module>
+        <module>jun_ssh_springboot</module>
+        <module>jun_ssh_generator</module>
+    </modules>
+
+    <dependencies>
+    	 
+    </dependencies>
+
+    <properties>
+        <plugin.version>1.0</plugin.version>
+        <java.version>1.8</java.version>
+        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+        
+        <java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<mysql-connector-java.version>5.1.36</mysql-connector-java.version>
+		<jackson-databind.version>2.7.0</jackson-databind.version>
+		<commons-dbutils.version>1.6</commons-dbutils.version>
+		<jsoup.version>1.10.2</jsoup.version>
+    </properties>
+
+    <!-- 依赖声明 -->
+    <dependencyManagement>
+	     <dependencies>
+	     
+	        <dependency>
+				<groupId>com.jun.plugin</groupId>
+				<artifactId>jun_ssh_utils</artifactId>
+				<version>1.0</version>
+			</dependency>
+	        <dependency>
+				<groupId>com.jun.plugin</groupId>
+				<artifactId>jun_ssh_jpa</artifactId>
+				<version>1.0</version>
+			</dependency>
+        	
+        	<dependency>
+	            <groupId>com.jun.plugin</groupId>
+			    <artifactId>jun_boot_common</artifactId>
+				<version>1.0</version>
+	        </dependency>
+	        
+	        <dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson-databind.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql-connector-java.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-dbutils</groupId>
+				<artifactId>commons-dbutils</artifactId>
+				<version>${commons-dbutils.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jsoup</groupId>
+				<artifactId>jsoup</artifactId>
+				<version>${jsoup.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.googlecode.rapid-framework</groupId>
+				<artifactId>rapid-generator</artifactId>
+				<version>4.0</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>Brussels-SR12</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

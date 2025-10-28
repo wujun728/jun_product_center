@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目管理 - 勾股OA</title> 	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline">
+				<input type="text" name="projectName" placeholder="请输入项目名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline">
+				<input type="text" name="refCusname" placeholder="请输入客户(委托单位)" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline">
+				<input type="text" name="refProjectManager" placeholder="请输入项目经理" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="projectTable" lay-filter="projectTable"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 项目立项</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="update">修改项目信息</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">删除立项信息</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="submit">提交项目立项申请</button>
+  	<button class="layui-btn layui-btn-sm" lay-event="export">导出全部</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.projectTable = table.render({
+			elem: '#projectTable',
+			title: '项目列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/dev-api/pjProject/listByPage",
+			method: 'POST',
+			parseData: function(res) {
+				return {
+					"code": res.code,
+					"msg": res.msg,
+					"count": res.data ? res.data.total : 0,
+					"data": res.data ? res.data.records : []
+				};
+			},
+			cols: [[
+				{type: 'checkbox', fixed: 'left'},
+				{field: 'id', title: '项目ID', sort: true, hide: true},
+				{field: 'projectName', title: '项目名称', sort: true, minWidth: 200, templet: function(d) {
+					return '<span style="color: #01AAED;">'+d.projectName+'</span>';
+				}},
+				{field: 'dictProjectType', title: '项目类型', sort: true, templet: function(item) {
+					var datas = layui.tool.getDictDataByDictTypeCode('dict_project_type');
+					if(item.dictProjectType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+layui.tool.selectDictLabel(datas, item.dictProjectType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+layui.tool.selectDictLabel(datas, item.dictProjectType)+'</span>';
+					}
+				}},
+				{field: 'refCusname', title: '客户(委托单位)', sort: true, width: 170},
+				{field: 'refProjectManager', title: '项目经理', sort: true},
+				{field: 'dictRiskAssessment', title: '风险评估等级', sort: true, templet: function(item) {
+					var datas = layui.tool.getDictDataByDictTypeCode('dict_risk_assessment');
+					if(item.dictRiskAssessment%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+layui.tool.selectDictLabel(datas, item.dictRiskAssessment)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+layui.tool.selectDictLabel(datas, item.dictRiskAssessment)+'</span>';
+					}
+				}},
+				{field: 'projectProgress', title: '项目进度', sort: true, width: 200, templet: function(item) {
+					return '<div class="layui-progress" style="top: 8px"> <div class="layui-progress-bar" lay-percent="'+item.projectProgress+'" style="width: '+item.projectProgress*2+'px;"></div> </div>';
+				}},
+				{field: 'dictProjectStatus', title: '立项状态', sort: true, templet: function(item) {
+					var datas = layui.tool.getDictDataByDictTypeCode('dict_project_status');
+					if(item.dictProjectStatus%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+layui.tool.selectDictLabel(datas, item.dictProjectStatus)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+layui.tool.selectDictLabel(datas, item.dictProjectStatus)+'</span>';
+					}
+				}},
+				{field: 'creator', title: '创建人', sort: true},
+				{title: '流程状态', field: 'orderState', align: 'center', width: 90, templet: function(d) {
+					if (d.orderState == 0) {
+						return '<span style="color: #eb7350;">审批完成</span>';
+					}else if (d.orderState == 1) {
+						return '<span style="color: #00b487;">审批中</span>';
+					}else{
+						return '<span style="color: blue;">未审批</span>';
+					}
+				}},
+				{title: '当前节点', field: 'taskName', align: 'center', width: 105},
+				{title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 90},
+				{width: 180, fixed: 'right', title: '操作', templet: '#tool'}
+			]]
+		});
+		
+		//工具栏模板
+		table.render({elem: '#tool', done: function() {
+			layui.$('#tool').attr('id', 'toolTemp');
+		}});
+		
+		//触发事件
+		table.on('toolbar(projectTable)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			var data = checkStatus.data;
+			
+			switch(obj.event){
+				case 'batchDeleted':
+					if(data.length==0){
+						layer.msg("请选择要批量删除的列");
+					}else{
+						var ids = [];
+						$(data).each(function(index, item){
+							ids.push(item.id);
+						});
+						tipDialog(ids);
+					}
+					break;
+				case 'submit':
+					if(data.length==0){
+						layer.msg("请选择要提交的记录");
+					}else if(data.length > 1){
+						layer.msg("请选择要提交的记录（one row each times）");
+					}else{
+						data[0]['processName'] = "project";
+						layui.tool.setData("data_doSubmit", data[0]);
+						layer.open({
+							type: 2,
+							title: "提交流程",
+							shadeClose: false,
+							area: ['880px', '500px'],
+							shade: 0.6,
+							maxmin: true,
+							anim: 1,
+							content: '/table/doSubmit.html',
+							end: function(){
+								search();
+							}
+						});
+					}
+					break;
+				case 'add':
+					layui.tool.setData("biz_rowdata", "");
+					tool.side("/qixing_oa1/pjproject/add.html");
+					break;
+				case 'update':
+					if(data.length==0){
+						layer.msg("请选择要修改的列信息！");
+					}else{
+						var ids = [];
+						$(data).each(function(index, item){
+							ids.push(item.id);
+						});
+						tool.side("/qixing_oa1/pjproject/edit.html?id="+ids[0]);
+					}
+					break;
+				case 'export':
+					// 导出逻辑
+					var exportParams = {
+						limit: 10000,
+						key: ""
+					};
+					layui.tool.sendPost("/dev-api/pjProject/listByPage", exportParams, function(res){
+						if(res.data != null && res.data.records != null){
+							table.exportFile(layui.projectTable.config.id, res.data.records, 'xls');
+						}
+					});
+					break;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(projectTable)', function(obj) {
+			var data = obj.data;
+			if(obj.event === 'view'){
+				tool.side("/qixing_oa1/pjproject/view.html?id="+data.id);
+				return;
+			}
+			if(obj.event === 'edit'){
+				layui.tool.setData("biz_rowdata", data);
+				tool.side("/qixing_oa1/pjproject/edit.html?id="+data.id);
+				return;
+			}
+			if(obj.event === 'del'){
+				var ids = [];
+				ids.push(data.id);
+				tipDialog(ids);
+				return;
+			}
+			if(obj.event === 'file'){
+				data['dictBiztype']='项目立项';
+				layui.tool.setData("biz_rowdata", data);
+				tool.side("/index/sysFilesByUser");
+				return;
+			}
+		});
+		
+		//删除确认框
+		function tipDialog(ids) {
+			layer.confirm('确定要删除么?', {
+				title: '提示'
+			}, function(index){
+				layer.close(index);
+				layui.tool.sendDelete("/dev-api/pjProject/delete", ids, function(res){
+					layer.msg(res.msg, {time: 1000}, function(){
+						search();
+					});
+				});
+			});
+		}
+		
+		//执行查询
+		function search() {
+			layui.projectTable.reload({
+				where: form.val('barsearchform'),
+				page: {
+					curr: 1
+				}
+			});
+		}
+		
+		//监听搜索提交
+		form.on('submit(table-search)', function(data) {
+			search();
+			return false;
+		});
+		
+		//监听重置按钮
+		form.on('submit(table-reset)', function() {
+			form.val('barsearchform', {});
+			search();
+			return false;
+		});
+	} 		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

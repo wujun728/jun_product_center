@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+ 
+<script>
+	const login_admin=2;
+</script>
+ 
+</head>
+<body class="main-body">
+<form class="layui-form p-4">
+	<h3 class="pb-3">供应商详情</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">供应商名称</td>
+			<td>{$detail.title}</td>
+			<td class="layui-td-gray-2">供应商电话</td>
+			<td>{$detail.phone}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray-2">供应商地址</td>
+			<td>{$detail.address}</td>
+			<td class="layui-td-gray-2">供应商邮箱</td>
+			<td>{$detail.email}</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">供应商简介</td>
+			<td colspan="3">{$detail.content}</td>
+		</tr>
+		{notempty name="$detail.file_ids"}
+		<tr>
+			<td class="layui-td-gray-2">
+				<div class="layui-input-inline">相关附件</div>
+			</td>
+			<td colspan="3">
+				<div class="layui-row" id="uploadBox">
+					{volist name="$detail.file_array" id="vo"}
+						<div class="layui-col-md4" id="uploadFile{$vo.id}">{:file_card($vo,'view')}</div>
+					{/volist}
+				</div>
+			</td>
+		</tr>
+		{/notempty}
+		<tr>
+			<td colspan="6"><strong>联系人信息</strong><span class="layui-btn layui-btn-xs add-contact ml-3">+ 新增联系人</span></td>
+		</tr>
+		<tr>
+			<td colspan="6"><table class="layui-hide" id="contact" lay-filter="contact"></table></td>
+		</tr>
+	</table>
+</form>
+  
+<!-- /主体 -->
+
+<!-- 脚本 -->
+  
+<script>
+const supplier_id = '{$detail.id}';
+const moduleInit = ['tool'];
+function gouguInit() {
+	let tool = layui.tool, table = layui.table;
+
+	layui.pageTable = table.render({
+		elem: '#contact',
+		title: '联系人列表',
+		cellMinWidth:80,
+		url: '/contract/api/get_supplier_contact',
+		where:{'supplier_id':supplier_id},
+		page: true, //开启分页
+		limit: 20,
+		cols: [[
+			{field:'id',width:80, title: 'ID号', align:'center'}
+			,{field:'name',width:100,title: '联系人姓名', align:'center'}
+			,{field:'status', title: '性别',width:80,align:'center',templet: function(d){
+				var html='未知';
+				var html1='<span class="green">男</span>';
+				var html2='<span class="blue">女</span>';
+				if(d.sex==1){
+					return html1;
+				}
+				if(d.sex==2){
+					return html2;
+				}
+				else{
+					return html;
+				}
+			}}
+			,{field:'mobile',width:100,title: '手机号码', align:'center'}
+			,{field:'qq',width:100,title: 'QQ号码', align:'center'}
+			,{field:'wechat',width:100,title: '微信号码', align:'center'}
+			,{field:'email',title: '电子邮箱', align:'center'}
+			,{field:'position',width:120,title: '担任职位', align:'center'}
+			,{field:'department',width:120,title: '部门', align:'center'}
+			,{fixed:'right',width:190,title: '操作', align:'center',templet: function(d){
+				var html = '<div class="layui-btn-group">';
+				var btn='<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>';
+				var btn1='<a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="set">设为首要联系人</a>';
+				var btn2='<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>';
+				if(d.is_default==1){
+					return '<span class="red" style="margin-right:10px;">首要联系人</span>'+btn;
+				}
+				else{
+					return html+btn+btn1+btn2+'</div>';
+				}				
+			}}
+		]]
+	});
+	$('.add-contact').on('click',function(){
+		tool.side('/contract/supplier/contact_add?sid='+supplier_id);
+	});
+	
+	table.on('tool(contact)', function(obj){
+		var data = obj.data; //获得当前行数据
+		var layEvent = obj.event;		 
+		if(layEvent === 'edit'){ //编辑
+			let url = '/contract/supplier/contact_add?id='+data.id;
+			tool.side(url);
+		}
+		if(layEvent === 'set'){ //查看
+			layer.confirm('确定要设置该联系人为首要联系人吗?', {icon: 3, title:'提示'}, function(index){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						layui.pageTable.reload();
+					}
+				}
+				tool.delete("/contract/api/set_supplier_contact",{"id":data.id},callback);
+				layer.close(index);
+			});
+		}
+		if(layEvent === 'del'){ //删除
+			layer.confirm('确定要删除该联系人吗?', {icon: 3, title:'提示'}, function(index){
+				let callback = function (e) {
+					layer.msg(e.msg);
+					if (e.code == 0) {
+						layui.pageTable.reload();
+					}
+				}
+				tool.delete('/contract/supplier/contact_del',{"id":data.id},callback);
+				layer.close(index);
+			});
+		}
+		return false;
+	})
+}
+</script>
+<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+	<script src="/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>
+</html>

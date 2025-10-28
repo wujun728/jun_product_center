@@ -1,0 +1,168 @@
+[
+    {
+        "id": 1200,
+        "labor_time": "1.00",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[1.00工时] 1324",
+        "start": "2025-05-26 10:30:00",
+        "end": "2025-05-26 11:30:00"
+    },
+    {
+        "id": 1201,
+        "labor_time": "3.25",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[3.25工时] 13413",
+        "start": "2025-05-26 13:15:00",
+        "end": "2025-05-26 16:30:00"
+    },
+    {
+        "id": 1202,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 134132532",
+        "start": "2025-05-26 09:00:00",
+        "end": "2025-05-26 09:30:00"
+    },
+    {
+        "id": 1203,
+        "labor_time": "2.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[2.50工时] 412341234123",
+        "start": "2025-05-26 13:45:00",
+        "end": "2025-05-26 16:15:00"
+    },
+    {
+        "id": 1205,
+        "labor_time": "0.75",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.75工时] 6666",
+        "start": "2025-05-26 14:00:00",
+        "end": "2025-05-26 14:45:00"
+    },
+    {
+        "id": 1206,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 工作",
+        "start": "2025-05-28 09:00:00",
+        "end": "2025-05-28 09:30:00"
+    },
+    {
+        "id": 1207,
+        "labor_time": "5.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[5.50工时] 1",
+        "start": "2025-05-28 12:30:00",
+        "end": "2025-05-28 18:00:00"
+    },
+    {
+        "id": 1209,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 京东\t客户侧交换机互联端口故障",
+        "start": "2025-05-30 09:00:00",
+        "end": "2025-05-30 09:30:00"
+    },
+    {
+        "id": 1210,
+        "labor_time": "0.25",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.25工时] 网宿\t服务器设备故障不通\t\t现场接显示器故障检测，系统死机反馈客户后，要求现场对设备进行重启操作，重启之后进入系统正常，客户检测后反馈恢复。",
+        "start": "2025-05-30 09:45:00",
+        "end": "2025-05-30 10:00:00"
+    },
+    {
+        "id": 1211,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 服务器硬盘故障由客户厂家售后人员进入机房维修，配合申请工单",
+        "start": "2025-05-30 10:15:00",
+        "end": "2025-05-30 10:45:00"
+    },
+    {
+        "id": 1212,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 华为光模块没发光\t由客户厂家售后人员进入机房维修，配合申请工单",
+        "start": "2025-05-29 09:00:00",
+        "end": "2025-05-29 09:30:00"
+    },
+    {
+        "id": 1213,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 开会",
+        "start": "2025-05-30 06:30:00",
+        "end": "2025-05-30 07:00:00"
+    },
+    {
+        "id": 1214,
+        "labor_time": "0.75",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.75工时] 陪睡觉",
+        "start": "2025-05-28 10:30:00",
+        "end": "2025-05-28 11:15:00"
+    },
+    {
+        "id": 1215,
+        "labor_time": "0.50",
+        "backgroundColor": "#12bb37",
+        "borderColor": "#12bb37",
+        "title": "[0.50工时] 陪吃饭睡觉",
+        "start": "2025-05-27 09:00:00",
+        "end": "2025-05-27 09:30:00"
+    },
+    {
+        "backgroundColor": "#eeeeee",
+        "borderColor": "#eeeeee",
+        "id": 0,
+        "title": "【当天总工时：8】",
+        "start": "2025-05-26",
+        "end": "2025-05-26"
+    },
+    {
+        "backgroundColor": "#eeeeee",
+        "borderColor": "#eeeeee",
+        "id": 0,
+        "title": "【当天总工时：6.75】",
+        "start": "2025-05-28",
+        "end": "2025-05-28"
+    },
+    {
+        "backgroundColor": "#eeeeee",
+        "borderColor": "#eeeeee",
+        "id": 0,
+        "title": "【当天总工时：1.75】",
+        "start": "2025-05-30",
+        "end": "2025-05-30"
+    },
+    {
+        "backgroundColor": "#eeeeee",
+        "borderColor": "#eeeeee",
+        "id": 0,
+        "title": "【当天总工时：0.50】",
+        "start": "2025-05-29",
+        "end": "2025-05-29"
+    },
+    {
+        "backgroundColor": "#eeeeee",
+        "borderColor": "#eeeeee",
+        "id": 0,
+        "title": "【当天总工时：0.50】",
+        "start": "2025-05-27",
+        "end": "2025-05-27"
+    }
+]

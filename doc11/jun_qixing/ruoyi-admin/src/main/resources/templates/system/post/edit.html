@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('岗位修改')" />
+</head>
+<body>
+<div class="container">
+    <form class="layui-form mt20" lay-filter="form-post" th:object="${post}">
+        <input id="postId" name="postId" type="hidden" th:field="*{postId}"/>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>岗位名称：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="postName" lay-verify="required" lay-verType="tips" placeholder="" autocomplete="off" th:field="*{postName}"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>岗位编码：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="postCode" lay-verify="required" lay-verType="tips" placeholder="" autocomplete="off" th:field="*{postCode}"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span class="required-msg ">*</span>显示顺序：</label>
+            <div class="layui-input-block">
+                <input class="layui-input min-input" type="text" name="postSort" lay-verify="required|number" lay-verType="tips" laceholder="" autocomplete="off" th:field="*{postSort}"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <span th:each="dict : ${@dict.getType('sys_normal_disable')}">
+                    <input type="radio" th:id="${dict.dictCode}" name="status" th:value="${dict.dictValue}" th:title="${dict.dictLabel}" th:field="*{status}" />
+                </span>
+            </div>
+        </div>
+        <div class="layui-form-item layui-hide">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="btn-edit" id="btn-edit">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer" />
+<script th:src="@{/js/system/post_form.js}"></script>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:post:edit')}]];
+</script>
+</body>
+</html>

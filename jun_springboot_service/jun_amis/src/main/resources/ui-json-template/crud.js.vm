@@ -1,0 +1,17 @@
+AMIS_JSON={
+    "type": "page",
+    "body":[
+#if($introduce)
+    {
+        "type":"tpl",
+        "tpl":"<div>${introduce}</div>"
+    },
+#end
+    {
+        "type": "crud",
+        "name":"mainTable",
+        "id":"mainTable",
+        "autoFillHeight": true,
+        #parse("ui-json-template/common/crudCommon.vm")
+    }]
+}

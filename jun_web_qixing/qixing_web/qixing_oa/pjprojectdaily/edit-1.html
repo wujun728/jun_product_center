@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation">
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refProjectCode"  id="refProjectCode"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >日报标题</label>
+      <div class=" layui-input-block "> 
+		<input type="planName" name="planName"  id="planName"  lay-verify="required|planName" lay-max="256"  placeholder="请输入日报标题"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目名称</label>
+      <div class=" layui-input-block "> 
+		<input type="refProjectName" name="refProjectName"  id="refProjectName"  lay-verify="required|refProjectName" lay-max="255"  placeholder="请输入项目名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  " >日报周报</label>
+      <div class=" layui-input-block "> 
+	<select id="dictDailyType" name="dictDailyType" lay-filter="dictDailyType"  th:with="type=${@sysDictService.getType('dict_daily_type')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >日期</label>
+      <div class=" layui-input-block "> 
+		<input type="dailyDate" name="dailyDate"  id="dailyDate"  lay-verify="required|dailyDate" lay-max="99999999"  placeholder="请输入日期"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  layui-required  " >工作内容描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="dailyDetail"  id="dailyDetail"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >投入工时</label>
+      <div class=" layui-input-block "> 
+		<input type="costTime" name="costTime"  id="costTime"  lay-verify="required|costTime" lay-max="99999999"  placeholder="请输入投入工时"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >风险级别</label>
+      <div class=" layui-input-block "> 
+	<select id="dictRisk" name="dictRisk" lay-filter="dictRisk"  th:with="type=${@sysDictService.getType('dict_risk_assessment')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  " >是否求助</label>
+      <div class=" layui-input-block "> 
+	<select id="dictAskHelp" name="dictAskHelp" lay-filter="dictAskHelp"  th:with="type=${@sysDictService.getType('dict_yes_no')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >是否延迟</label>
+      <div class=" layui-input-block "> 
+	<select id="dictIsDelay" name="dictIsDelay" lay-filter="dictIsDelay"  th:with="type=${@sysDictService.getType('dict_yes_no')}"  >
+        <option value="">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option> 
+    </select>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+    <div class="form-group-bottom text-right" id="buttonSave">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+        <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+    </div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	
+     
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refProjectCode',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProjectDaily/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'XXXcusname', title: '标题' },
+					{ field: 'XXXfullname', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.XXXcusname);
+				$("#refId").val(item.XXXid);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	tableSelect.render({
+		elem: '#refProjectName',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProject/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'projectName', title: '名称' },
+					{ field: 'projectCode', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.projectName);
+				$("#refProjectCode").val(item.projectCode);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refProjectName").val(NEWJSON);
+			form.render()
+		}
+	});
+	
+	//日期
+	laydate.render({
+	    elem: '#dailyDate'
+	    ,type: 'date'
+    });
+	numberInput.render("#costTime", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      layer.close(layerAdd);
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjProjectDaily/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjProjectDaily/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+ 
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+planName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日报标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictDailyType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日报周报不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dailyDate: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dailyDetail: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作内容描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  costTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '投入工时不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictRisk: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '风险级别不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictAskHelp: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否求助不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIsDelay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否延迟不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }   	    });
+</script>

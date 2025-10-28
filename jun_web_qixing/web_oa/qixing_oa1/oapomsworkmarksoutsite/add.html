@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/>
+	<title>新增外出记录 - 勾股OA</title> 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<form action="" class="layui-form" id="edit-form">
+		<input type="hidden" name="id" value="">
+		
+		<div class="layui-card layui-hide" id="layui-card-form">
+			<div class="layui-card-header">基本信息</div>
+			<div class="layui-card-body">
+				<div class="layui-form-item">
+					<div class="layui-col-md4 layui-col-sm12">
+						<label class="layui-form-label">工号</label>
+						<div class="layui-input-block">
+							<input type="text" name="usercode" required lay-verify="required" placeholder="请输入工号" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-col-md4 layui-col-sm12">
+						<label class="layui-form-label">用户名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="refUsername" required lay-verify="required" placeholder="请输入用户名称" class="layui-input" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-col-md4 layui-col-sm12">
+						<label class="layui-form-label">外出日期</label>
+						<div class="layui-input-block">
+							<input type="text" name="workDay" required lay-verify="required" placeholder="请输入外出日期" class="layui-input" id="workDay" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-col-md4 layui-col-sm12">
+						<label class="layui-form-label">开始时间</label>
+						<div class="layui-input-block">
+							<input type="text" name="beginTime" required lay-verify="required" placeholder="请输入开始时间" class="layui-input" id="beginTime" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-col-md4 layui-col-sm12">
+						<label class="layui-form-label">结束时间</label>
+						<div class="layui-input-block">
+							<input type="text" name="endTime" required lay-verify="required" placeholder="请输入结束时间" class="layui-input" id="endTime" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-col-md4 layui-col-sm12">
+						<label class="layui-form-label">外出时长(小时)</label>
+						<div class="layui-input-block">
+							<input type="number" name="workTotalTime" required lay-verify="required" placeholder="请输入外出时长" class="layui-input" autocomplete="off" min="0" max="24" step="0.5" />
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-col-md12 layui-col-sm12">
+						<label class="layui-form-label">外出事由</label>
+						<div class="layui-input-block">
+							<textarea name="outsiteDesc" required lay-verify="required" placeholder="请输入外出事由" class="layui-textarea" autocomplete="off" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-col-md12 layui-col-sm12">
+						<label class="layui-form-label">备注</label>
+						<div class="layui-input-block">
+							<textarea name="remark" placeholder="请输入备注" class="layui-textarea" autocomplete="off" rows="3"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-btn-container text-center mt-3">
+			<button type="button" class="layui-btn layui-btn-normal" id="submitBtn">提交</button>
+			<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			<button type="button" class="layui-btn layui-btn-primary" id="cancelBtn">取消</button>
+		</div>
+	</form>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['form','laydate','tool'];
+	function gouguInit() {
+		var form = layui.form, laydate = layui.laydate, tool = layui.tool;
+
+		//日期选择器
+		laydate.render({
+		    elem: '#workDay'
+		    ,type: 'date'
+		});
+
+		//时间选择器
+		laydate.render({
+		    elem: '#beginTime'
+		    ,type: 'time'
+		    ,format: 'HH:mm'
+		});
+
+		laydate.render({
+		    elem: '#endTime'
+		    ,type: 'time'
+		    ,format: 'HH:mm'
+		});
+
+		//提交
+		$('#submitBtn').click(function(){
+			form.verify();
+			if(form.validate('#edit-form')){
+				var data = form.val('edit-form');
+				tool.post("/qixing_oa1/oapomsworkmarksoutsite/add", data, function(res){
+					if(res.code == 0){
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
+						parent.layui.workmarkstimesTable.reload();
+					} else {
+						layer.msg(res.msg);
+					}
+				});
+			}
+		});
+
+		//取消
+		$('#cancelBtn').click(function(){
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

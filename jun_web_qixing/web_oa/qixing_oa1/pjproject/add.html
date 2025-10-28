@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>项目立项 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">项目立项</h3>
+	
+	<!-- 项目基本信息 -->
+	<div class="layui-card mb-4">
+		<div class="layui-card-header">项目基本信息</div>
+		<div class="layui-card-body">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">项目编码</td>
+					<td>
+						<input type="text" name="project_code" placeholder="请输入项目编码" class="layui-input" value="">
+					</td>
+					<td class="layui-td-gray">项目名称<font>*</font></td>
+					<td>
+						<input type="text" name="project_name" lay-verify="required" lay-reqText="请输入项目名称" placeholder="请输入项目名称" class="layui-input" value="">
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目类型</td>
+					<td>
+						<select name="project_type" lay-filter="project_type" lay-search>
+							<option value="">请选择项目类型</option>
+						</select>
+					</td>
+					<td class="layui-td-gray">项目子类型</td>
+					<td>
+						<select name="project_sub_type" lay-search>
+							<option value="">请选择项目子类型</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目经理</td>
+					<td>
+						<input type="text" name="manager_name" placeholder="请选择项目经理" readonly class="layui-input picker-oa" data-types="user" data-showfields="id,name" autocomplete="off" />
+						<input type="hidden" name="manager_id" value="" />
+					</td>
+					<td class="layui-td-gray">客户(委托单位)</td>
+					<td>
+						<input type="text" name="client_name" placeholder="请选择客户" readonly class="layui-input picker-oa" data-types="customer" autocomplete="off" />
+						<input type="hidden" name="client_id" value="" />
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目金额</td>
+					<td>
+						<input type="text" name="project_amount" placeholder="请输入项目金额" class="layui-input" value="">
+					</td>
+					<td class="layui-td-gray">项目状态</td>
+					<td>
+						<select name="project_status">
+							<option value="">请选择项目状态</option>
+						</select>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<!-- 项目详细信息 -->
+	<div class="layui-card mb-4">
+		<div class="layui-card-header">项目详细信息</div>
+		<div class="layui-card-body">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">项目开始时间</td>
+					<td>
+						<input type="text" name="start_time" placeholder="请选择项目开始时间" class="layui-input" id="start_time" value="">
+					</td>
+					<td class="layui-td-gray">项目结束时间</td>
+					<td>
+						<input type="text" name="end_time" placeholder="请选择项目结束时间" class="layui-input" id="end_time" value="">
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目进度</td>
+					<td>
+						<div class="layui-progress layui-progress-big" lay-showPercent="yes">
+							<div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>
+						</div>
+						<input type="hidden" name="progress" value="0" id="progress_val"/>
+					</td>
+					<td class="layui-td-gray">备注</td>
+					<td>
+						<textarea name="remark" placeholder="请输入备注信息" class="layui-textarea"></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="pt-4">
+		<input type="hidden" name="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','table','form','laydate'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, table = layui.table, laydate = layui.laydate;
+		
+		// 日期选择器初始化
+		laydate.render({
+				elem: '#start_time',
+				type: 'date',
+				range: false
+		});
+		laydate.render({
+				elem: '#end_time',
+				type: 'date',
+				range: false
+		});
+
+		// 项目经理选择器初始化
+		var picker = layui.oaPicker;
+		picker.render();
+
+		// 加载字典数据
+		// 项目类型
+		tool.get('/dev-api/dict/data/type/project_type', function(res) {
+			if (res.code === 0) {
+				var projectTypeHtml = '<option value="">请选择项目类型</option>';
+				res.data.forEach(function(item) {
+					projectTypeHtml += '<option value="' + item.dict_value + '">' + item.dict_label + '</option>';
+				});
+				$('select[name="project_type"]').html(projectTypeHtml);
+				form.render('select');
+			}
+		});
+
+		// 项目状态
+		tool.get('/dev-api/dict/data/type/project_status', function(res) {
+			if (res.code === 0) {
+				var projectStatusHtml = '<option value="">请选择项目状态</option>';
+				res.data.forEach(function(item) {
+					projectStatusHtml += '<option value="' + item.dict_value + '">' + item.dict_label + '</option>';
+				});
+				$('select[name="project_status"]').html(projectStatusHtml);
+				form.render('select');
+			}
+		});
+
+		// 项目类型选择联动项目子类型
+		form.on('select(project_type)', function(data) {
+			var projectType = data.value;
+			if (projectType) {
+				// 加载项目子类型
+				tool.get('/dev-api/dict/data/type/' + projectType, function(res) {
+					if (res.code === 0) {
+						var subTypeHtml = '<option value="">请选择项目子类型</option>';
+						res.data.forEach(function(item) {
+							subTypeHtml += '<option value="' + item.dict_value + '">' + item.dict_label + '</option>';
+						});
+						$('select[name="project_sub_type"]').html(subTypeHtml);
+						form.render('select');
+					}
+				});
+			} else {
+				$('select[name="project_sub_type"]').html('<option value="">请选择项目子类型</option>');
+				form.render('select');
+			}
+		});
+
+		// 表单验证规则
+		form.verify({
+			projectName: function(value) {
+				if (value.length > 50) {
+					return '项目名称不能超过50个字符';
+				}
+			},
+			projectCode: function(value) {
+				if (value.length > 20) {
+					return '项目编码不能超过20个字符';
+				}
+			}
+		});
+
+		// 监听提交
+		form.on('submit(webform)', function(data) {
+			// 表单验证
+			if (!data.field.project_name) {
+				layer.msg('请输入项目名称');
+				return false;
+			}
+
+			let callback = function(e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000, 'pjprojectTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/dev-api/pjProject/add", data.field, callback, clickbtn);
+			return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

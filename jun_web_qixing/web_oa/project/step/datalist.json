@@ -1,0 +1,53 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "立项阶段",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1637987189",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 2,
+            "title": "规划阶段",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1637987189",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 3,
+            "title": "执行阶段",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1637987189",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 4,
+            "title": "监控与控制阶段",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1637987189",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 5,
+            "title": "收尾阶段",
+            "sort": 0,
+            "status": 1,
+            "create_time": "1637987189",
+            "update_time": "0",
+            "delete_time": "0"
+        }
+    ]
+}

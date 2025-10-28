@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目开票 - 勾股OA</title> 	
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="refCustomerNameCondition" placeholder="开票客户" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="refProjectNameCondition" placeholder="开票项目" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="invoiceCompanyNameCondition" placeholder="开票单位名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<input type="text" name="refInvoiceManCondition" placeholder="开票人" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="pjProjectInvoice" lay-filter="pjProjectInvoice"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增开票</button>
+	<button class="layui-btn layui-btn-sm" lay-event="update">修改</button>
+	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit">提交开票申请</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.pjProjectInvoiceTable = table.render({
+			elem: '#pjProjectInvoice',
+			title: '项目开票列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/dev-api/pjProjectInvoice/listByPage",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'}
+				, {field: 'id', title: 'ID', sort: true, hide: true}
+				, {field: 'refCustomerName', title: '开票客户', sort: true}
+				, {field: 'refProjectName', title: '开票项目', sort: true}
+				, {field: 'dictType', title: '开票类型', width: 120, templet: function (item) {
+					var datas = layui.getDictDataByDictTypeCode('dict_type', null);
+					if(item.dictType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+tool.selectDictLabel(datas, item.dictType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+tool.selectDictLabel(datas, item.dictType)+'</span>';
+					}
+				}}
+				, {field: 'invoiceCompanyName', title: '开票单位名称', sort: true}
+				, {field: 'invoiceTaxNo', title: '纳税人识别号', sort: true}
+				, {field: 'dictBank', title: '开户行', width: 120, templet: function (item) {
+					var datas = layui.getDictDataByDictTypeCode('dict_bank', null);
+					if(item.dictBank%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+tool.selectDictLabel(datas, item.dictBank)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+tool.selectDictLabel(datas, item.dictBank)+'</span>';
+					}
+				}}
+				, {field: 'bankCardNo', title: '开户行账号', sort: true}
+				, {field: 'invoiceMoney', title: '开票金额', sort: true}
+				, {field: 'refInvoiceMan', title: '开票人', sort: true}
+				, {title: '流程状态', field: 'orderState', width: 90, align: 'center', templet: function (d) {
+					if (d.orderState == 0) {
+						return '<span style="color: #eb7350;">审批完成</span>';
+					}else if (d.orderState == 1) {
+						return '<span style="color: #00b487;">审批中</span>';
+					}else{
+						return '<span style="color: blue;">草稿</span>';
+					}
+				}}
+				, {title: '当前节点', field: 'taskName', align: 'center', width: 105}
+				, {title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 90}
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 150,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						var btn4='<span class="layui-btn layui-btn-xs" lay-event="file">附件</span>';
+						
+						// 根据状态判断显示哪些按钮
+						if(d.orderState == 0){
+							return html+btn1+'</div>';
+						}else if(d.orderState == 1 && d.isOwner != 1){
+							return html+btn1+'</div>';
+						}else if(d.orderState == 1 && d.isOwner == 1){
+							return html+btn1+btn4+'</div>';
+						}else if(d.orderState != 0 && d.orderState != 1 && d.isOwner == 1){
+							return html+btn1+btn2+btn3+btn4+'</div>';
+						}else{
+							return html+btn1+'</div>';
+						}
+					}					
+				}
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(pjProjectInvoice)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			var data = checkStatus.data;
+			if(obj.event === 'add') {
+				tool.side("/qixing_oa1/pjprojectinvoice/add.html");
+				return;
+			} else if(obj.event === 'update') {
+				if(data.length != 1){
+					layer.msg("请选择一条记录进行修改");
+				} else {
+					tool.side('/qixing_oa1/pjprojectinvoice/edit.html?id='+data[0].id);
+				}
+				return;
+			} else if(obj.event === 'batchDeleted') {
+				if(data.length==0){
+					layer.msg("请选择要批量删除的列");
+				}else {
+					var ids = [];
+					$(data).each(function (index,item) {
+						ids.push(item.id);
+					});
+					layer.confirm('确定要批量删除吗?', {
+						icon: 3,
+						title: '提示'
+					}, function(index) {
+						let callback = function (e) {
+							layer.msg(e.msg);
+							if (e.code == 0) {
+								layui.pjProjectInvoiceTable.reload();
+							}
+						}
+						tool.delete("/dev-api/pjProjectInvoice/deleteBatch", {ids: ids}, callback);
+						layer.close(index);
+					});
+				}
+				return;
+			} else if(obj.event === 'submit') {
+				if(data.length != 1){
+					layer.msg("请选择一条记录进行提交");
+				} else {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							layui.pjProjectInvoiceTable.reload();
+						}
+					}
+					tool.post("/dev-api/pjProjectInvoice/submit", {id: data[0].id}, callback);
+				}
+				return;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(pjProjectInvoice)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/qixing_oa1/pjprojectinvoice/view.html?id="+data.id);
+				return;
+			} else if(obj.event === 'edit'){
+				tool.side('/qixing_oa1/pjprojectinvoice/edit.html?id='+data.id);
+				return;
+			} else if (obj.event === 'del') {
+				layer.confirm('确定要删除吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/dev-api/pjProjectInvoice/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			} else if(obj.event === 'file'){
+				tool.side('/qixing_oa1/pjprojectinvoice/edit.html?id='+data.id+'&tab=file');
+				return;
+			}
+		});
+		
+		// 搜索
+		form.on('submit(table-search)', function(data) {
+			layui.pjProjectInvoiceTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

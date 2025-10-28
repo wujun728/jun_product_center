@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>工时记录管理 - 勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:150px;">
+				<input type="text" name="usercode" placeholder="工号" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<input type="text" name="refUsername" placeholder="用户名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<input type="text" name="workDay" placeholder="日期" class="layui-input" id="workDay" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="workmarkstimesTable" lay-filter="workmarkstimesTable"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增工时</button>
+	<button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="batchDeleted">批量删除</button>
+	<button class="layui-btn layui-btn-warm layui-btn-sm" lay-event="export">导出</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','laydate'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool, laydate = layui.laydate;
+
+		//日期选择器
+		laydate.render({
+			elem: '#workDay',
+			type: 'date'
+		});
+
+		layui.workmarkstimesTable = table.render({
+			elem: '#workmarkstimesTable',
+			title: '工时记录列表',
+			toolbar: '#toolbarDemo',
+			headheaders: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/oapomsworkmarkstimes/datalist.json",
+			cols: [[
+				{ type: 'checkbox', fixed: 'left' },
+				{ field: 'id', title: 'ID', width: 60, align: 'center' }
+				, { field: 'usercode', title: '工号', width: 100, align: 'center' }
+				, { field: 'refUsername', title: '用户名称', width: 120, align: 'center' }
+				, { field: 'workDay', title: '日期', width: 120, align: 'center' }
+				, { field: 'beginTime', title: '开始时间', width: 120, align: 'center' }
+				, { field: 'endTime', title: '结束时间', width: 120, align: 'center' }
+				, { field: 'workTotalTime', title: '工作时长(小时)', width: 120, align: 'center' }
+				, { field: 'remark', title: '备注', minWidth: 200 }
+				, { field: 'createTime', title: '创建时间', width: 150, align: 'center' }
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 180,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						var btn4='<span class="layui-btn layui-btn-primary layui-btn-xs" lay-event="file">附件</span>';
+						return html+btn1+btn2+btn3+btn4+'</div>';
+					}						
+				}
+			]]
+		});
+		
+
+		//触发事件
+		table.on('toolbar(workmarkstimesTable)', function(obj){
+			if (obj.event === 'add') {
+				tool.side("/qixing_oa1/oapomsworkmarkstimes/add.html");
+				return;
+			} else if (obj.event === 'batchDeleted') {
+				var checkStatus = table.checkStatus(obj.config.id);
+				var data = checkStatus.data;
+				if(data.length==0){
+					layer.msg("请选择要批量删除的列");
+				}else {
+					var ids = [];
+					$(data).each(function (index,item) {
+						ids.push(item.id);
+					});
+					tipDialog(ids);
+				}
+				return;
+			} else if (obj.event === 'export') {
+				//导出全部
+				var exportParams = {
+					limit: 10000,
+					usercode: $("input[name='usercode']").val(),
+					refUsername: $("input[name='refUsername']").val(),
+					workDay: $("input[name='workDay']").val()
+				};
+				tool.post("/qixing_oa1/oapomsworkmarkstimes/listByPage", exportParams, function (res) {
+					if (res.data != null && res.data.records != null) {
+						table.exportFile(layui.workmarkstimesTable.config.id, res.data.records, 'xls');
+					}
+				});
+				return;
+			}
+		});
+		
+
+		//监听行工具事件
+		table.on('tool(workmarkstimesTable)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/qixing_oa1/oapomsworkmarkstimes/view.html?id="+data.id);
+				return;
+			}
+			if(obj.event === 'edit'){
+				tool.side('/qixing_oa1/oapomsworkmarkstimes/edit.html?id='+data.id);
+				return;
+			}
+			if (obj.event === 'del') {
+				layer.confirm('确定要删除吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/qixing_oa1/oapomsworkmarkstimes/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			} else if (obj.event === 'file') {
+				data['dictBiztype']='工时';
+				CoreUtil.setData("biz_rowdata",data);
+				var index = layer.open({
+					title: '上传附件',
+					skin: 'layui-layer-admin',
+					type: 2,
+					shade: 0.2,
+					maxmin:true,
+					shadeClose: true,
+					scrollbar: true,
+					area: ['75%', '75%'],
+					content: '/index/sysFilesByUser',
+				});
+				return false;
+			}
+		});
+
+		//查询
+		form.on('submit(table-search)', function(data) {
+			layui.workmarkstimesTable.reload({
+				where: data.field,
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+
+		//清空
+		form.on('submit(table-reset)', function() {
+			layui.workmarkstimesTable.reload({
+				where: {},
+				page: {
+					curr: 1
+				}
+			});
+			return false;
+		});
+
+		//删除确认
+		var tipDialog=function (ids) {
+			layer.open({
+				skin: 'layui-layer-admin',
+				content: "确定要删除么?",
+				yes: function(index, layero){
+					layer.close(index);
+					tool.delete("/qixing_oa1/oapomsworkmarkstimes/delete", {ids: ids.join(',')}, function (res) {
+						layer.msg(res.msg, {time:1000},function () {
+							layui.workmarkstimesTable.reload();
+						});
+					});
+				}
+			});
+		};
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

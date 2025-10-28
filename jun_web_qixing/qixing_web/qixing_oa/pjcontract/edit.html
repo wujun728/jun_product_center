@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation">
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<!-- collapse 文件开始 -->
+<div class="layui-collapse"  lay-filter="test" lay-accordion="">
+	<!-- collapse-1 文件开始 -->
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">基本信息</h2>
+    <div class="layui-colla-content layui-show">
+       <!-- collapse-1 -->
+       
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-col-md6">       <label class="layui-form-label   " ></label>
+      <div class=" layui-input-block "> 
+		<input type="refidProjectCodeHide" name="refidProjectCodeHide"  id="refidProjectCodeHide"  lay-verify="refidProjectCodeHide" lay-max="256"  placeholder="请输入"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >项目名称</label>
+      <div class=" layui-input-block "> 
+		<input type="refProjectName" name="refProjectName"  id="refProjectName"  lay-verify="required|refProjectName" lay-max="256"  placeholder="请输入项目名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+   <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >合同类型</label>
+      <div class=" layui-input-block "> 
+	<div id="dictContractType" name="dictContractType"></div>
+    </div>
+   </div> 
+ </div>
+  
+<div class="layui-form-item"  style="display: none;"  >
+  <div class="layui-col-md6" style="display: none;">       <label class="layui-form-label  " >合同状态</label>
+      <div class=" layui-input-block "> 
+	<div id="dictContractState" name="dictContractState"></div>
+    </div>
+   </div>  
+    <div class="layui-col-md6">       <label class="layui-form-label    " >合同号</label>
+      <div class=" layui-input-block "> 
+		<input type="contractNo" name="contractNo"  id="contractNo"   lay-max="256"  placeholder="请输入合同号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+ 
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  " >合同标题</label>
+      <div class=" layui-input-block "> 
+		<input type="contractName" name="contractName"  id="contractName"  lay-max="256"  placeholder="请输入合同标题"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >签约日期</label>
+      <div class=" layui-input-block "> 
+		<input type="signTime" name="signTime"  id="signTime"  lay-verify="required|signTime" lay-max="99999999"  placeholder="请输入签约日期"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >报告数量</label>
+      <div class=" layui-input-block "> 
+		<input type="reportCount" name="reportCount"  id="reportCount"  lay-verify="required|reportCount" lay-max="99999999"  placeholder="请输入报告数量"   autocomplete="off" class="layui-input">
+	    </div>
+   </div> 
+     <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >约定书金额</label>
+      <div class=" layui-input-block "> 
+		<input type="contractMoney" name="contractMoney"  id="contractMoney"  lay-verify="required|contractMoney" lay-max="99999999"  placeholder="请输入约定书金额"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+   <div class="layui-col-md6">       <label class="layui-form-label  " >执业天数</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="contractDays"  id="contractDays"   autocomplete="off" class="layui-input">
+	    </div>
+   </div> 
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  layui-required  " >报告详细描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="reportDetail"  id="reportDetail"></textarea>
+    </div>
+ </div>
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  layui-required  " >签约/承诺人</label>
+      <div class=" layui-input-block "> 
+		<input type="signBy" name="signBy"  id="signBy"  lay-verify="required|signBy" lay-max="256"  placeholder="请输入签约/承诺人"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label layui-required   " >约定书详细描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="contractDetails"  id="contractDetails"></textarea>
+    </div>
+ </div>
+  
+<div class="layui-form-item"  style="display: none;"  >
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+ </div>
+  
+	 	<br/>
+	   <!--<div class="layui-form-item"  id="buttonSave">
+			  <div class="layui-input-block">
+			    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+			    &lt;!&ndash; <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button> &ndash;&gt;
+			  </div>
+		</div>-->
+
+        <div class="form-group-bottom text-right" id="buttonSave">
+            <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+            <button class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+        </div>
+
+	</form>
+
+ 		<!-- collapse-1  -->
+    </div>
+  </div>
+  <!-- collapse-1 end -->
+  
+  <!-- collapse-2 start -->
+  <!-- 文件附件的DIV页面-111111 -->
+  <div class="layui-colla-item" id="fileList">
+    <h2 class="layui-colla-title">附件信息</h2>
+    <div class="layui-colla-content layui-show">
+<!--       <p>222222222</p> -->
+			<div class="table_div1">
+			  <input id="fileRefId" type="text" style="display: none" />
+			  <input id="copy_in" style="display: none" />
+			    <div class="layui-form-item">
+			      <div class="layui-input-block ">
+			        <button type="button" class="layui-btn " id="upload">
+			          <i class="layui-icon">&#xe67c;</i>上传文件
+			        </button>
+			      </div>
+			    </div>
+			  <table class="layui-table" id="showFilesTable" lay-filter="showFilesTable" ></table>
+			</div>
+<!--       <p>222222222</p> -->
+    </div>
+  </div>
+  <!-- collapse-2 end -->
+  <script type="text/html" id="toolFiles">
+  	<a class="layui-btn layui-btn-xs" lay-event="pre"  >预览</a>
+  	<a class="layui-btn layui-btn-xs" lay-event="down" >下载</a>
+  	<a class="layui-btn layui-btn-xs" lay-event="copy" >复制URL</a>
+  	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
+  </script>
+  <!-- 文件附件的DIV页面-2222222 -->
+</div>
+<!-- collapse end -->
+
+<br/>
+<div class="layui-btn-container" style="text-align: center;display: none;">
+  <div class="layui-input-block">
+  		<button class="layui-btn layui-btn-primary layui-border-green" id="btn_close">关闭</button>
+  </div>
+</div>
+
+
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+ 
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="http://qixing.hbqxcpa.cn/js/base64.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+
+<!-- 流程flow-mark001,新增流程查看表单详情功能 -->
+<script lang="javascript">
+    // 全局定义xmSelect变量
+    var dictContractTypeSelect = null;
+    var dictContractStateSelect = null;
+    var pkCode = "";
+    var flagType = "";
+    var id = CoreUtil.getData("biz_rowdata")==undefined?"":CoreUtil.getData("biz_rowdata")["id"];
+    if(""!=id){
+	   	 if("view"==flagType){
+		   $("#buttonSave").hide();
+	   	 }
+	     var layer = layui.layer;
+	     var $ = jQuery = layui.jquery;
+	     var form = layui.form;
+	     var element = layui.element;
+	     $(function () {
+	         CoreUtil.sendPost("/dev-api/pjContract/findOne", {id : id}, function (res) {
+	             if (res.data != null) {
+	            	 form.val("info", res.data );
+	                 // 为xmSelect设置值
+	                 if(res.data.dictContractType) {
+	                     dictContractTypeSelect.setValue([res.data.dictContractType]);
+	                 }
+	                 if(res.data.dictContractState) {
+	                     dictContractStateSelect.setValue([res.data.dictContractState]);
+	                 }
+	                 form.render(); //更新全部
+	             }else{
+		             layer.msg('合同附件信息未上传未维护<br>合同信息未录入！' );
+		             var data_prjData = CoreUtil.getData("data_doProjectDetail");
+		             $("#refidProjectCodeHide").val(data_prjData.data.projectCode);
+		             $("#refProjectName").val(data_prjData.data.projectName);
+		             $("#contractName").val(data_prjData.data.projectName+"-合同");
+		             $("#id").val("");
+	             }
+	             
+	         });
+	         $(".operation input[name=id]").val(pkCode);
+	     });
+	     //searchFiles();
+    }
+</script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  var userProfile = CoreUtil.getData("userProfile");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var upload = layui.upload;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+  
+  var biz_rowdata = CoreUtil.getData("biz_rowdata");
+//   console.log("biz_rowdata.dictBiztype="+biz_rowdata.dictBiztype);
+//   if(biz_rowdata.dictBiztype == undefined ||  biz_rowdata.dictBiztype==null ){
+// 	  biz_rowdata.dictBiztype==undefined?"":1;
+// 	  biz_rowdata['dictBiztype']="通用文件";
+//   }
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice', 'upload'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+
+	//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refProjectName',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/pjProject/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'projectName', title: '名称' },
+					{ field: 'projectCode', title: '标题' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.projectName);
+				$("#refidProjectCodeHide").val(item.projectCode);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refProjectName").val(NEWJSON);
+			$("#contractName").val(NEWJSON+"-合同");
+			form.render()
+		}
+	});
+	
+	tableSelect.render({
+		elem: '#signBy',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/sys/users/listByPage?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{ field: 'username', title: '标题' },
+					{ field: 'realName', title: '名称' }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				//$("#refId").val(item.id);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#signBy").val(NEWJSON);
+			form.render();
+		}
+	});
+	
+	 	//日期
+	laydate.render({
+	    elem: '#signTime'
+	    ,type: 'date'
+    });
+	numberInput.render("#reportCount", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	numberInput.render("#contractMoney", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 2
+	});
+	numberInput.render("#contractDays", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+    
+    // 初始化合同类型下拉框
+    var dictContractTypeSelect = xmSelect.render({
+        el: '#dictContractType',
+        name: 'dictContractType',
+        height: '36px',
+        layVerify: 'required',
+        data: function() {
+            var data = [];
+            xnUtil.getDictDataByDictTypeCode("dict_contract_type", function(res) {
+                if(res && res.code == 200 && res.data) {
+                    layui.each(res.data, function(index, item) {
+                        data.push({name: item.label, value: item.value});
+                    });
+                }
+            }, true);
+            return data;
+        }
+    });
+    
+    // 初始化合同状态下拉框
+    var dictContractStateSelect = xmSelect.render({
+        el: '#dictContractState',
+        name: 'dictContractState',
+        height: '36px',
+        data: function() {
+            var data = [];
+            xnUtil.getDictDataByDictTypeCode("dict_contract_state", function(res) {
+                if(res && res.code == 200 && res.data) {
+                    layui.each(res.data, function(index, item) {
+                        data.push({name: item.label, value: item.value});
+                    });
+                }
+            }, true);
+            return data;
+        }
+    });
+    
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layer.index);
+    	var index = parent.layer.getFrameIndex(window.name);
+    	parent.layer.close(index);
+       return false;
+    });
+    $("#btn_close").click(function() {
+    	layer.close(layer.index);
+    	var index = parent.layer.getFrameIndex(window.name);
+    	parent.layer.close(index);
+       return false;
+    });
+    
+    // 如果已经加载了数据，设置到xmSelect中
+    var loadedData = form.val("info");
+    if(loadedData && loadedData.dictContractType) {
+        dictContractTypeSelect.setValue([loadedData.dictContractType]);
+    }
+    if(loadedData && loadedData.dictContractState) {
+        dictContractStateSelect.setValue([loadedData.dictContractState]);
+    }
+    
+    //执行查询
+    function search() {
+    	window.parent.location.reload();
+    };
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/dev-api/pjContract/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          if(res.code==0){
+	          layer.close(layerAdd);
+	          search();
+          }else{
+        	  layer.alert(res.msg);
+          }
+        });
+      }else {
+        CoreUtil.sendPut("/dev-api/pjContract/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+        	if(res.code==0){
+  	          layer.close(layerAdd);
+  	          search();
+            }else{
+          	  layer.alert(res.msg);
+            }
+        });
+      }
+      return false;
+    });
+    
+/* 2222222222222222222222222222222222222222222222222222222222222222222   fileupload begin */
+ //加载table
+	 tableIns1Files = table.render({
+	      elem: '#showFilesTable'
+	      , contentType: 'application/json'
+	      , headers: {"authorization": token}
+	      , page: true //开启分页
+	      , url: '/dev-api/sysFilesOss/listByPageUser'   //数据接口
+	      , where:{refBizid: id/* ,dictBiztype: biz_rowdata.dictBiztype */}
+	      , method: 'POST'
+	      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+	      }
+	      , cols: [
+	        [
+	          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
+	          {field: 'fileName', title: '文件名', sort: true},
+	          {field: 'createDate', title: '创建时间', sort: true},
+	          {field: 'fileSize', title: '文件大小', sort: true},
+	          {field: 'isOwner',hide: true  }, 
+	          {field: 'creator', title: '操作人', hide: false},
+	          {field: 'dictBiztype', title: '业务类型', hide: false},
+	          {field: 'refBizid', title: '业务ID', hide: true},
+	          {toolbar: "#toolFiles", title: '操作', width:280}
+	        ]
+	      ]
+	    });
+    
+
+    //执行实例
+    var indexLoad;
+    var uploadInst = upload.render({
+      elem: '#upload' //绑定元素
+      ,exts: 'jpg|gif|png|jpeg|txt|sql|pdf|doc|docx|xls|xlsx|ppt|pptx|zip|rar|gz|7z'
+      ,url: '/dev-api/sysFilesOss/upload?Authorization='+tokenQuery //上传接口
+      ,size: 1024*101
+      , accept: 'file'   //video audio images
+      , multiple: false  //多文件上传
+      //, number: 20  //multiple:true时有效
+      ,choose: function(obj){  
+    	  if(id===undefined || id===null || id===""){
+	  			layer.alert("请先保存基本信息表单数据，然后上传附件！");
+	  			return false;
+	  	  }
+      }
+      ,before : function(obj){ //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+    	  indexLoad = layer.load(); //上传loading
+      }
+      ,data: {
+    	  	  bizid: id, //$('#id').val(),
+    	  	  //bizid: biz_rowdata.id, //$('#id').val(),
+        	  biztype: "合同"  //每个页面不一样
+       }
+      ,done: function(res){
+    	  if(res.code!="0"){
+  			layer.alert(res.msg);
+  			return false;
+  		}
+    	layer.close(indexLoad);
+        searchFiles();
+        //上传完毕回调
+      }
+      ,error: function(){
+    	  if(res.code!="0"){
+  			layer.alert(res.msg);
+  			return false;
+  		}
+    	  layer.close(indexLoad);
+        //请求异常回调
+      }
+    });
+
+ 
+    //列操作
+    table.on('tool(showFilesTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+        	 var data11 = data;
+             if(data11.length==0){
+               	layer.msg("请选择要操作的数据列！");
+             }else {
+       	          var ids11 = [];
+       	          var ids22 = [];
+       	          $(data11).each(function (index,item) {
+       	        	  if(item.orderState==0 || item.orderState==1){
+       	        		  ids11.push(item.orderState);
+       	        	  }
+       	        	  if(item.isOwner!=1){
+       	        		  ids22.push(item.isOwner);
+       	        	  }
+       	          });
+       	          if(ids11.length>0){
+       	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+             		  return;
+       	          }
+       	          if(ids22.length>0){
+       	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+             		  return;
+       	          }
+		          var ids=[];
+		          ids.push(data.id);
+		          tipFileDialog(ids);
+		          break;
+             }
+             
+        case 'pre':
+          //预览
+          //window.open(data.url,'_blank');
+              window.open('http://119.45.221.36:8012/onlinePreview?url='+encodeURIComponent(Base64.encode(data.url)));
+          break;
+        case 'down':
+          //下载
+          window.open(data.url,'_blank');
+          break;
+        case 'copy':
+          var Url2=data.url;
+          var oInput = document.createElement('input');
+          oInput.value = Url2;
+          document.body.appendChild(oInput);
+          oInput.select(); // 选择对象
+          document.execCommand("Copy"); // 执行浏览器复制命令
+          oInput.className = 'oInput';
+          oInput.style.display='none';
+          layer.msg('已复制成功！');
+          break;
+      }
+    });
+
+    //删除
+    var tipFileDialog=function (ids) {
+      layer.open({
+
+          skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/sysFilesOss/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              searchFiles();
+            });
+          });
+        }
+      });
+    };
+    
+    //执行查询
+    function searchFiles() {
+  	console.log(111111111111);
+      //这里以搜索为例
+      tableIns1Files.reload({
+        where: { //设定异步数据接口的额外参数，任意设
+          key: 1234,
+          //refBizid: $("#fileRefId").val()
+          refBizid: id
+//           refBizid: biz_rowdata.id
+          /* ,
+          dictBiztype: biz_rowdata.dictBiztype */
+        }
+        , page: {
+          curr: 1 //重新从第 1 页开始
+        }
+      });
+    };
+/* 2222222222222222222222222222222222222222222222222222222222222222222     fileupload end */
+    
+    
+    });
+
+  
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+		refidProjectCodeHide: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictContractState: function(value, item){
+            /* var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同状态不能大于'+max+'个字符的长度！';
+            } */
+        }  ,  dictContractType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  contractNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  contractName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '合同标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  signTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '签约日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  reportCount: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告数量不能大于'+max+'个字符的长度！';
+            }
+        }  ,  reportDetail: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '报告详细描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  contractMoney: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '约定书金额不能大于'+max+'个字符的长度！';
+            }
+        }  ,  signBy: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '签约/承诺人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  contractDays: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '执业天数不能大于'+max+'个字符的长度！';
+            }
+        }  ,  contractDetails: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '约定书详细描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  	    });
+</script>

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en"  >
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >候选人</label>
+      <div class=" layui-input-inline "> 
+		<input type="refPeopleName" name="refPeopleName"  id="refPeopleName"  lay-verify="required|refPeopleName" lay-max="256"  placeholder="请输入候选人"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >面试时间</label>
+      <div class=" layui-input-inline "> 
+	<input type="ivTime" name="ivTime"  id="ivTime" lay-verify="required| date"  placeholder="yyyy-MM-dd"  autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >面试方式</label>
+      <div class=" layui-input-inline "> 
+	<div id="dictIvType" name="dictIvType" class="xm-select-dictIvType" lay-filter="dictIvType"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >面试官名称</label>
+      <div class=" layui-input-inline "> 
+		<input type="refIvUsername" name="refIvUsername"  id="refIvUsername"  lay-verify="required|refIvUsername" lay-max="256"  placeholder="请输入面试官名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >面试官电话</label>
+      <div class=" layui-input-inline "> 
+		<input type="ivPhone" name="ivPhone"  id="ivPhone"  lay-verify="required|ivPhone" lay-max="256"  placeholder="请输入面试官电话"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >面试结果</label>
+      <div class=" layui-input-inline "> 
+	<div id="dictResult" name="dictResult" class="xm-select-dictResult" lay-filter="dictResult"></div>
+    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  layui-required  " >面试评价</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="ivEvaluate"  id="ivEvaluate"></textarea>
+    </div>
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >工作岗位</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="jobName"  id="jobName"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >工作年限</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="workYear"  id="workYear"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >工作描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="jobDesc"  id="jobDesc"></textarea>
+    </div>
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >工作地点</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="workLocation"  id="workLocation"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >工作内容</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="workContent"  id="workContent"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+ <div class="layui-inline">       <label class="layui-form-label  " >期望薪资</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="jobMoney"  id="jobMoney"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >预期到岗时间</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="getInCompayTime"  id="getInCompayTime"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >离职原因</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="outJobDesc"  id="outJobDesc"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >职业技能特长</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="jobSkill"  id="jobSkill"></textarea>
+    </div>
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  layui-required  " >候选人优缺点</label>
+      <div class=" layui-input-block "> 
+	    <textarea   placeholder="请输入内容"  class="layui-textarea" name="jobInterview"  id="jobInterview"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      在此你可以对<span class="label-info"><strong>面试汇总</strong></span>进行编辑!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="hrUserInterview:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="refPeopleName" name="refPeopleNameCondition"  id="refPeopleNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入候选人">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+	<input type="ivTime" name="ivTimeCondition"  id="ivTimeCondition" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="dictIvType" name="dictIvTypeCondition"  id="dictIvTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入面试方式">
+      </div>
+      <div class="layui-input-inline">
+    <input type="refIvUsername" name="refIvUsernameCondition"  id="refIvUsernameCondition" class="layui-input"  autocomplete="off" placeholder="请输入面试官名称">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="ivPhone" name="ivPhoneCondition"  id="ivPhoneCondition" class="layui-input"  autocomplete="off" placeholder="请输入面试官电话">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="ivEvaluate" name="ivEvaluateCondition"  id="ivEvaluateCondition" class="layui-input"  autocomplete="off" placeholder="请输入面试评价">
+      </div>
+      <div class="layui-input-inline" style="display: none;">
+    <input type="jobInterview" name="jobInterviewCondition"  id="jobInterviewCondition" class="layui-input"  autocomplete="off" placeholder="请输入候选人优缺点">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrUserInterview:add">新增</button>
+    <button class="layui-btn layui-btn-sm  layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrUserInterview:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  {{#  if(d.orderState == 0){ }}
+<!-- 判读是否流程完结，完结后不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner != 1){ }}
+<!-- 判读是否流程进行中，进行中不是自己的不展示工具栏 -->
+  {{#  }else if(d.orderState == 1 &&  d.isOwner == 1){ }}
+<!-- 判读是否流程进行中，进行中是自己的展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserInterview:update">编辑</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserInterview:file">附件</a>
+  {{#  }else  if(d.orderState != 0 && d.orderState != 1 &&  d.isOwner == 1){  }}
+<!-- 不在流程中，判读是否自己的，是的话展示工具栏 -->
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrUserInterview:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrUserInterview:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="hrUserInterview:file">附件</a>
+  {{#  }else {  }}
+<!-- 不在流程中，判读是否自己的，不是的话不展示工具栏 -->   
+  {{#  } }}
+</script>
+
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<!-- <script src="/layui-ext/xnUtil/xnUtil.js"></script>
+<script src="/layui-ext/notice/notice.js"></script>
+<script src="/layui-ext/formX.js"></script> -->
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+var xnUtil = layui.xnUtil;
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        xnUtil: 'xnUtil/xnUtil',
+        notice: 'notice/notice',
+        formX: 'formX',
+        numberInput: 'numberInput/js/index',
+        xmSelect: 'xmSelect'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','xnUtil','formX','notice','xmSelect'], function () {
+	numberInput = layui.numberInput;
+	xnUtil = layui.xnUtil;
+	var xmSelect = layui.xmSelect;
+    //初始化xmSelect组件
+      var dictIvTypeIns = xmSelect.render({
+          el: '#dictIvType',
+          filterable: true,
+          data: []
+      });
+      var dictResultIns = xmSelect.render({
+          el: '#dictResult',
+          filterable: true,
+          data: []
+      });
+      
+      //加载字典数据
+      function loadDictData(){
+          //加载面试方式字典数据
+          xnUtil.getDictDataByDictTypeCode("dict_iv_type",function (data) {
+              var dictIvTypeData = [];
+              for(var i=0; i<data.length; i++){
+                  dictIvTypeData.push({
+                      name: data[i].label,
+                      value: data[i].value
+                  });
+              }
+              dictIvTypeIns.update({
+                  data: dictIvTypeData
+              });
+          });
+          
+          //加载面试结果字典数据
+          xnUtil.getDictDataByDictTypeCode("dict_iv_result",function (data) {
+              var dictResultData = [];
+              for(var i=0; i<data.length; i++){
+                  dictResultData.push({
+                      name: data[i].label,
+                      value: data[i].value
+                  });
+              }
+              dictResultIns.update({
+                  data: dictResultData
+              });
+          });
+      }
+      
+      //调用加载字典数据函数
+      loadDictData();
+      
+      //加载table,数据表格
+      tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/hrUserInterview/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true }, 
+          {field: 'refPeopleName', title: '候选人', sort: true }, 
+          {field: 'ivTime', title: '面试时间', sort: true }, 
+          {field: 'dictIvType', title: '面试方式', sort: true , templet: function (item) { 	            //获取类型对应的字典label
+              var datas =  xnUtil.getDictDataByDictTypeCode('dict_iv_type', null);   
+	            if(item.dictIvType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIvType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIvType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictIvType);
+            }
+}, 
+          {field: 'refIvUsername', title: '面试官名称', sort: true }, 
+          {field: 'ivPhone', title: '面试官电话', sort: true }, 
+          {field: 'dictResult', title: '面试结果', sort: true ,hide: false , templet: function (item) { 	            //获取类型对应的字典label
+              var datas =  xnUtil.getDictDataByDictTypeCode('dict_result', null);   
+	            if(item.dictResult%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictResult)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictResult)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictResult);
+            }
+}, 
+          {field: 'ivEvaluate', title: '面试评价', sort: true }, 
+          {field: 'jobName', title: '工作岗位', sort: true ,hide: true }, 
+          {field: 'jobDesc', title: '工作描述', sort: true ,hide: true }, 
+          {field: 'workYear', title: '工作年限', sort: true ,hide: true }, 
+          {field: 'workLocation', title: '工作地点', sort: true ,hide: true }, 
+          {field: 'workContent', title: '工作内容', sort: true ,hide: true }, 
+          {field: 'jobMoney', title: '期望薪资', sort: true ,hide: false }, 
+          {field: 'getInCompayTime', title: '到岗时间', sort: true ,hide: false }, 
+          {field: 'outJobDesc', title: '离职原因', sort: true ,hide: true }, 
+          {field: 'jobSkill', title: '职业技能特长', sort: true ,hide: true }, 
+          {field: 'jobInterview', title: '候选人优缺点', sort: true }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refPeopleName',
+		checkedKey: 'id',
+		table: {
+			url: '/hrUserResume/listBySelect?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' ,hide:true},
+					{field: 'name', title: '姓名'}, 
+			          {field: 'phone', title: '电话'}
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.name);
+				$("#refId").val(item.id);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+			$("#refPeopleName").val(NEWJSON);
+		}
+	});
+ 	//日期+时间
+	laydate.render({
+	    elem: '#ivTime'
+	    ,type: 'datetime'
+    });
+ 	
+	tableSelect.render({
+		elem: '#refIvUsername',
+		checkedKey: 'id',
+		table: {
+			url: '/dev-api/sys/users/listByPage?Authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [ [
+					{ type: 'radio' },
+					{ field: 'realName', title: '名称' },
+					{ field: 'username', title: '标题' },
+					{ field: 'phone', title: 'phone' , hide:true },
+					{ field: 'id', title: 'ID' , hide:true }
+				] ]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.realName);
+				$("#ivPhone").val(item.phone);
+				console.log('item.id='+item.id);  
+			})
+			elem.val(NEWJSON.join(","));
+			$("#refIvUsername").val(NEWJSON);
+			form.render();
+		}
+	});
+ 
+	numberInput.render("#workYear", {
+	    autoSelcet: false,
+	    max: 10000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	numberInput.render("#jobMoney", {
+	    autoSelcet: false,
+	    max: 10000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	 	//日期
+	laydate.render({
+	    elem: '#getInCompayTime'
+	    ,type: 'date'
+    });
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+    	var checkStatus11 = table.checkStatus(obj.config.id);
+        var data11 = checkStatus11.data;
+        if(data11.length==0){
+          	layer.msg("请选择要操作的数据列！");
+        }else {
+	          var ids11 = [];
+	          var ids22 = [];
+	          $(data11).each(function (index,item) {
+	        	  if(item.orderState==0 || item.orderState==1){
+	        		  ids11.push(item.orderState);
+	        	  }
+	        	  if(item.isOwner!=1){
+	        		  ids22.push(item.isOwner);
+	        	  }
+	          });
+	          if(ids11.length>0){
+	        	  layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+        		  return;
+	          }
+	          if(ids22.length>0){
+	        	  layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+        		  return;
+	          }
+        }
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+            CoreUtil.setData("biz_rowdata","");
+//           $("#table_div").hide();
+          $("#operation").show();
+          $("#title").html("新增");
+          $("#operation input[name=id]").val("");
+          $("#operation input[name=refPeopleName]").val("");
+          $("#operation input[name=ivTime]").val("");
+          dictIvTypeIns.clear();
+          $("#operation input[name=refIvUsername]").val("");
+          $("#operation input[name=ivPhone]").val("");
+          dictResultIns.clear();
+          $("#operation textarea[name=ivEvaluate]").val("");
+          $("#operation input[name=jobName]").val("");
+          $("#operation textarea[name=jobDesc]").val("");
+          $("#operation input[name=workYear]").val("");
+          $("#operation input[name=workLocation]").val("");
+          $("#operation textarea[name=workContent]").val("");
+          $("#operation input[name=jobMoney]").val("");
+          $("#operation input[name=getInCompayTime]").val("");
+          $("#operation textarea[name=outJobDesc]").val("");
+          $("#operation textarea[name=jobSkill]").val("");
+          $("#operation textarea[name=jobInterview]").val("");
+          $("#operation textarea[name=remark]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增面试汇总' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+            CoreUtil.setData("biz_rowdata",data);
+//           $("#table_div").hide();
+          $("#operation").show();
+          $("#title").html("编辑");
+          $("#operation input[name=id]").val(data.id);
+          $("#operation input[name=refPeopleName]").val(data.refPeopleName);
+          $("#operation input[name=ivTime]").val(data.ivTime);
+          if(data.dictIvType){
+              dictIvTypeIns.setValue([data.dictIvType]);
+          }else{
+              dictIvTypeIns.clear();
+          }
+          $("#operation input[name=refIvUsername]").val(data.refIvUsername);
+          $("#operation input[name=ivPhone]").val(data.ivPhone);
+          if(data.dictResult){
+              dictResultIns.setValue([data.dictResult]);
+          }else{
+              dictResultIns.clear();
+          }
+          $("#operation textarea[name=ivEvaluate]").val(data.ivEvaluate);
+          $("#operation input[name=jobName]").val(data.jobName);
+          $("#operation textarea[name=jobDesc]").val(data.jobDesc);
+          $("#operation input[name=workYear]").val(data.workYear);
+          $("#operation input[name=workLocation]").val(data.workLocation);
+          $("#operation textarea[name=workContent]").val(data.workContent);
+          $("#operation input[name=jobMoney]").val(data.jobMoney);
+          $("#operation input[name=getInCompayTime]").val(data.getInCompayTime);
+          $("#operation textarea[name=outJobDesc]").val(data.outJobDesc);
+          $("#operation textarea[name=jobSkill]").val(data.jobSkill);
+          $("#operation textarea[name=jobInterview]").val(data.jobInterview);
+          $("#operation textarea[name=remark]").val(data.remark);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改面试汇总' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='面试';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrUserInterview/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+          skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrUserInterview/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/hrUserInterview/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/hrUserInterview/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,refPeopleName: $("#refPeopleNameCondition").val()
+		,ivTime: $("#ivTimeCondition").val()
+		,dictIvType: $("#dictIvTypeCondition").val()
+		,refIvUsername: $("#refIvUsernameCondition").val()
+		,ivPhone: $("#ivPhoneCondition").val()
+		,ivEvaluate: $("#ivEvaluateCondition").val()
+		,jobInterview: $("#jobInterviewCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+refPeopleName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '候选人不能大于'+max+'个字符的长度！';
+            }
+        }  ,  ivTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '面试时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictIvType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '面试方式不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refIvUsername: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '面试官名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  ivPhone: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '面试官电话不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictResult: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '面试结果不能大于'+max+'个字符的长度！';
+            }
+        }  ,  ivEvaluate: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '面试评价不能大于'+max+'个字符的长度！';
+            }
+        }  ,  jobName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作岗位不能大于'+max+'个字符的长度！';
+            }
+        }  ,  jobDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workYear: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作年限不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workLocation: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作地点不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workContent: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作内容不能大于'+max+'个字符的长度！';
+            }
+        }  ,  jobMoney: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '期望薪资不能大于'+max+'个字符的长度！';
+            }
+        }  ,  getInCompayTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '到岗时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  outJobDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离职原因不能大于'+max+'个字符的长度！';
+            }
+        }  ,  jobSkill: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '职业技能特长不能大于'+max+'个字符的长度！';
+            }
+        }  ,  jobInterview: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '候选人优缺点不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

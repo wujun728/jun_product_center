@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "南通公安",
+    "url": "http://192.168.16.209:9096/ntp/login.html",
+    "desc": "南通公安企业人员积分定制查询网",
+    "mobile":false
+  },
+  "schedule": {
+    "status": "已提测",
+    "actualStartTime": "2017-02",
+    "actualEndTime": "",
+    "estimatedStartTime": "2017-02",
+    "estimatedEndTime": "2017-10",
+    "process": 90,
+    "delay": false,
+    "technology":["layer弹层","水印效果"]
+  },
+  "resources": {
+    "demander": "九次方",
+    "type":"总部平台",
+    "manager":"马国杰",
+    "charge": "柳杨",
+    "affiliate": ["汝银娟","邵金东"]
+  },
+  "bug": {
+    "total": 22,
+    "resolved": 22,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "这个是测试地址，只有在公司内网可以进入，正式地址在公安内部网，进不到网页中，账户名(zhidui),密码(123456)"                 
+  }
+}

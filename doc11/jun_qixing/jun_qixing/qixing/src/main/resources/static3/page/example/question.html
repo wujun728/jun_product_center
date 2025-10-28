@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>弹窗实例</title>
+    <link rel="stylesheet" href="../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        [lay-filter="eQuestionForm"] .layui-form-item, .layui-inline {
+            margin-bottom: 0;
+            margin-top: 20px;
+        }
+
+        .qa-xx-item {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        .qa-xx-item-title {
+            position: absolute;
+            left: 0;
+            line-height: 38px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">添加试题</div>
+        <div class="layui-card-body">
+            <form class="layui-form" lay-filter="eQuestionForm" style="max-width: 960px;">
+                <input type="hidden" name="questionId" value=""/>
+                <div class="layui-form-item" style="margin-top: 0;">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">试题类型：</label>
+                        <div class="layui-input-inline">
+                            <select name="questionTypeId" lay-verType="tips" lay-verify="required" required>
+                                <option value="">请选择</option>
+                                <option value="1">有机</option>
+                                <option value="2">无机</option>
+                                <option value="3">物化</option>
+                                <option value="7">模拟电路</option>
+                                <option value="8">数字电路</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">难度系数：</label>
+                        <div class="layui-input-inline">
+                            <select name="difficulty" lay-verType="tips" lay-verify="required" required>
+                                <option value="">请选择</option>
+                                <option value="1">0.5</option>
+                                <option value="2">1</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">试题类型：</label>
+                    <div class="layui-input-block">
+                        <input type="radio" lay-filter="raQT" name="typeId" value="1" title="单选题" checked>
+                        <input type="radio" lay-filter="raQT" name="typeId" value="2" title="多选题">
+                        <input type="radio" lay-filter="raQT" name="typeId" value="3" title="判断题">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">试题内容：</label>
+                    <div class="layui-input-block">
+                        <textarea name="content" id="eQuestionContentEdt" lay-verType="tips" lay-verify="required"
+                                  style="display: block !important;visibility: hidden;height: 1px;border: none;"></textarea>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-form-text" id="eQuestionSelGroup">
+                </div>
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">正确答案：</label>
+                    <div id="qaRIGroup" class="layui-input-block">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block text-center">
+                        <button ew-event="closeThisTabs" type="button" class="layui-btn layui-btn-primary">&emsp;关闭&emsp;</button>
+                        <button class="layui-btn" lay-filter="eQuestionSubmit" lay-submit>&emsp;提交&emsp;</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 不同类型题目的正确答案选项 -->
+<script type="text/html" id="eQuestionSinTpl">
+    <!-- 单选题 -->
+    <div style="max-width: 160px;">
+        <select name="answer" lay-verType="tips" lay-verify="required" required>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+    </div>
+</script>
+<script type="text/html" id="eQuestionMulTpl">
+    <!-- 多选题 -->
+    <div style="max-width: 220px;" id="qaRIMore">
+    </div>
+</script>
+<script type="text/html" id="eQuestionTfTpl">
+    <!-- 判断题 -->
+    <div style="max-width: 160px;">
+        <select name="answer" lay-verType="tips" lay-verify="required" required>
+            <option value="T">正确</option>
+            <option value="F">错误</option>
+        </select>
+    </div>
+</script>
+<script type="text/html" id="eQuestionSelTpl">
+    <label class="layui-form-label">试题选项：</label>
+    <div class="layui-input-block">
+        <div class="qa-xx-item">
+            <span class="qa-xx-item-title">A：</span>
+            <input type="text" name="xxA" placeholder="请输入选项内容" class="layui-input"
+                   autocomplete="off" lay-verType="tips" lay-verify="required" required/>
+        </div>
+        <div class="qa-xx-item">
+            <span class="qa-xx-item-title">B：</span>
+            <input type="text" name="xxB" placeholder="请输入选项内容" class="layui-input"
+                   autocomplete="off" lay-verType="tips" lay-verify="required" required/>
+        </div>
+        <div class="qa-xx-item">
+            <span class="qa-xx-item-title">C：</span>
+            <input type="text" name="xxC" placeholder="请输入选项内容" class="layui-input"
+                   autocomplete="off" lay-verType="tips" lay-verify="required" required/>
+        </div>
+        <div class="qa-xx-item">
+            <span class="qa-xx-item-title">D：</span>
+            <input type="text" name="xxD" placeholder="请输入选项内容" class="layui-input" autocomplete="off"/>
+        </div>
+    </div>
+</script>
+
+<!-- js部分 -->
+<script type="text/javascript" src="../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'form', 'xmSelect', 'layedit'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var xmSelect = layui.xmSelect;
+        var layedit = layui.layedit;
+
+        var editIndex = layedit.build('eQuestionContentEdt'); // 建立编辑器
+
+        // 表单提交事件
+        form.on('submit(eQuestionSubmit)', function (data) {
+            layer.msg("表单验证通过", {icon: 1});
+            return false;
+        });
+
+        // 试题类型切换事件
+        form.on('radio(raQT)', function (data) {
+            changeQT(data.value);
+        });
+
+        function changeQT(value, sel) {
+            if (value == 1) {
+                $('#qaRIGroup').html($('#eQuestionSinTpl').html());
+                form.render('select', 'eQuestionForm');
+                $('#eQuestionSelGroup').html($('#eQuestionSelTpl').html());
+            } else if (value == 2) {
+                $('#qaRIGroup').html($('#eQuestionMulTpl').html());
+                xmSelect.render({
+                    el: '#qaRIMore',
+                    data: [
+                        {name: 'A', value: 'A'},
+                        {name: 'B', value: 'B'},
+                        {name: 'C', value: 'C'},
+                        {name: 'D', value: 'D'}
+                    ]
+                });
+                $('#eQuestionSelGroup').html($('#eQuestionSelTpl').html());
+            } else if (value == 3) {
+                $('#qaRIGroup').html($('#eQuestionTfTpl').html());
+                form.render('select', 'eQuestionForm');
+                $('#eQuestionSelGroup').html('');
+            }
+        }
+
+        setTimeout(function () {
+            changeQT(1);
+        }, 50);
+
+    });
+</script>
+</body>
+</html>

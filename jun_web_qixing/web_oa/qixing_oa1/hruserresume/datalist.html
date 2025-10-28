@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>勾股OA</title> 	
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+	<link rel="stylesheet" href="/static/assets/xmselect/xmselect.css" />
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:140px;">
+				<input type="text" name="name" id="nameCondition" placeholder="姓名" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:140px;">
+				<input type="text" name="phone" id="phoneCondition" placeholder="电话" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:140px;">
+				<input type="text" name="email" id="emailCondition" placeholder="邮箱" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:140px;">
+				<input type="text" name="wechat" id="wechatCondition" placeholder="微信" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="document" lay-filter="document"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+  	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增候选人</button>
+  	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">批量删除</button>
+  	<button class="layui-btn layui-btn-sm" id="export">导出</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.documentTable = table.render({
+			elem: '#document',
+			title: '文档列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/qixing_oa1/hruserresume/datalist.json",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'}
+				,{
+					field: 'id', title: 'ID', width: 80, align: 'center', sort: true, hide: true
+				}
+				,{field: 'name', title: '姓名', width: 100, sort: true}
+				,{field: 'phone', title: '电话', width: 120, sort: true}
+				,{field: 'email', title: '邮箱', width: 180, sort: true}
+				,{field: 'wechat', title: '微信', width: 120, sort: true, hide: false}
+				,{field: 'telephone', title: '手机号', width: 120, sort: true, hide: false}
+				,{field: 'dictSex', title: '性别', width: 80, sort: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_sex', null);
+					if(item.dictSex%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictSex)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictSex)+'</span>';
+					}
+				}}
+				,{field: 'cuntroy', title: '国籍', width: 100, sort: true, hide: true}
+				,{field: 'dictMariage', title: '婚姻状态', width: 100, sort: true, hide: false, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_mariage', null);
+					if(item.dictMariage%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictMariage)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictMariage)+'</span>';
+					}
+				}}
+				,{field: 'dictNation', title: '民族', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_nation', null);
+					return CoreUtil.selectDictLabel(datas, item.dictNation);
+				}}
+				,{field: 'dictIsborn', title: '生育状况', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_isborn', null);
+					if(item.dictIsborn%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsborn)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIsborn)+'</span>';
+					}
+				}}
+				,{field: 'homeAdress', title: '家庭住址', width: 200, sort: true, hide: true}
+				,{field: 'dictPoliticsStatus', title: '政治面貌', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_politics_status', null);
+					if(item.dictPoliticsStatus%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictPoliticsStatus)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictPoliticsStatus)+'</span>';
+					}
+				}}
+				,{field: 'dictIdType', title: '证件类型', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_id_type', null);
+					if(item.dictIdType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIdType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictIdType)+'</span>';
+					}
+				}}
+				,{field: 'idNo', title: '证件号', width: 180, sort: true, hide: true}
+				,{field: 'urgencyLinkMan', title: '紧急联系人', width: 120, sort: true, hide: true}
+				,{field: 'urgencyLinkPhone', title: '紧急联系电话', width: 120, sort: true, hide: true}
+				,{field: 'urgencyLinkRelation', title: '紧急联系人关系', width: 120, sort: true, hide: true}
+				,{field: 'qqNo', title: 'QQ号码', width: 120, sort: true, hide: true}
+				,{field: 'dictFirestDegree', title: '第一学历', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_firest_degree', null);
+					if(item.dictFirestDegree%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictFirestDegree)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictFirestDegree)+'</span>';
+					}
+				}}
+				,{field: 'dictDegredd', title: '学位', width: 80, sort: true, hide: false, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_degredd', null);
+					if(item.dictDegredd%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDegredd)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictDegredd)+'</span>';
+					}
+				}}
+				,{field: 'professional', title: '专业', width: 120, sort: true, hide: false}
+				,{field: 'dictEduType', title: '教育类型', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_edu_type', null);
+					if(item.dictEduType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictEduType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictEduType)+'</span>';
+					}
+				}}
+				,{field: 'whichColledge', title: '毕业院校', width: 180, sort: true, hide: false}
+				,{field: 'dictColledge', title: '院校类型', width: 100, sort: true, hide: true, templet: function (item) {
+					var datas = xnUtil.getDictDataByDictTypeCode('dict_colledge', null);
+					if(item.dictColledge%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictColledge)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictColledge)+'</span>';
+					}
+				}}
+				,{field: 'graduationDate', title: '毕业时间', width: 120, sort: true, hide: false}
+				,{field: 'remark', title: '备注', width: 200, sort: true, hide: true}
+				,{field: 'isOwner', hide: true}
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 180,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">详细</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						var btn4='<span class="layui-btn layui-btn-primary layui-btn-xs" lay-event="file">附件</span>';
+						return html+btn1+btn2+btn3+btn4+'</div>';
+					}						
+				}
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(document)', function(obj){
+			var checkStatus11 = table.checkStatus(obj.config.id);
+			var data11 = checkStatus11.data;
+			if(data11.length==0 && obj.event !== 'add'){
+				layer.msg("请选择要操作的数据列！");
+				return;
+			}
+			if(obj.event !== 'add'){
+				var ids11 = [];
+				var ids22 = [];
+				$(data11).each(function (index,item) {
+					if(item.orderState==0 || item.orderState==1){
+						ids11.push(item.orderState);
+					}
+					if(item.isOwner!=1){
+						ids22.push(item.isOwner);
+					}
+				});
+				if(ids11.length>0){
+					layer.msg("请选择未发起流程中的数据(禁止操作流程中的数据)！");
+					return;
+				}
+				if(ids22.length>0){
+					layer.msg("请选择您自己创建的数据(禁止操作他人的数据)！");
+					return;
+				}
+			}
+			switch(obj.event){
+				case 'add':
+					tool.side("/qixing_oa1/hruserresume/add.html");
+					return;
+				case 'batchDeleted':
+					var checkStatus = table.checkStatus(obj.config.id);
+					var data = checkStatus.data;
+					var ids = [];
+					$(data).each(function (index,item) {
+						ids.push(item.id);
+					});
+					tipDialog(ids);
+					break;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(document)', function(obj) {
+			var data = obj.data;
+			switch (obj.event) {
+				case 'view':
+					tool.side("/qixing_oa1/hruserresume/view.html?id="+data.id);
+					return;
+				case 'edit':
+					tool.side('/qixing_oa1/hruserresume/edit.html?id='+data.id);
+					return;
+				case 'del':
+					var ids=[];
+					ids.push(data.id);
+					tipDialog(ids);
+					break;
+				case 'file':
+					data['dictBiztype']='面试';
+					CoreUtil.setData("biz_rowdata",data);
+					var index = layer.open({
+						title: '上传附件',
+						type: 2,
+						skin: 'layui-layer-admin',
+						shade: 0.2,
+						maxmin:true,
+						shadeClose: true,
+						scrollbar: true,
+						area: ['80%', '80%'],
+						content: '/index/sysFilesByUser',
+					});
+					$(window).on("resize", function () {
+						layer.full(index);
+					});
+					return false;
+			}
+		});
+		
+		//导出
+		$('#export').on('click', function () {
+			//原先分页limit
+			var exportParams = {
+				limit: 10000,
+				name: $("#nameCondition").val(),
+				phone: $("#phoneCondition").val(),
+				email: $("#emailCondition").val(),
+				wechat: $("#wechatCondition").val()
+			};
+			CoreUtil.sendPost("/hrUserResume/listByPage", exportParams, function (res) {
+				//初始化渲染数据
+				if (res.data != null && res.data.records != null) {
+					table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+				}
+			});
+		});
+		
+		//删除
+		var tipDialog=function (ids) {
+			layer.open({
+				content: "确定要删除么?",
+				skin: 'layui-layer-admin',
+				yes: function(index, layero){
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+					CoreUtil.sendDelete("/hrUserResume/delete",ids,function (res) {
+						layer.msg(res.msg, {time:1000},function () {
+							layui.documentTable.reload();
+						});
+					});
+				}
+			});
+		};
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	<script src="/static/assets/xmselect/xmselect.js"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

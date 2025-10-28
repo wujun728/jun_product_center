@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="mobile-prefetch" href=""/> 
+	<title>项目底稿 - 勾股OA</title> 	
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="gg-form-bar border-t border-x">
+		<form class="layui-form" lay-filter="barsearchform">
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="draftNameCondition" placeholder="底稿名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="dictDraftTypeCondition" placeholder="底稿类型" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:200px;">
+				<input type="text" name="refProjectNameCondition" placeholder="项目名称" class="layui-input" autocomplete="off" />
+			</div>
+			<div class="layui-input-inline" style="width:150px;">
+				<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="table-search"><i class="layui-icon layui-icon-search mr-1"></i>搜索</button>
+				<button type="reset" class="layui-btn layui-btn-reset" lay-filter="table-reset">清空</button>
+			</div>
+		</form>
+	</div>
+	<table class="layui-hide" id="pjProjectDraft" lay-filter="pjProjectDraft"></table>
+</div>
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+	<button class="layui-btn layui-btn-sm" lay-event="add">+ 新增底稿</button>
+	<button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDeleted">删除</button>
+	<button class="layui-btn layui-btn-sm" lay-event="submit">提交</button>
+  </div>
+</script>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tablePlus','oaPicker'];
+	function gouguInit() {
+		var table = layui.tablePlus, form = layui.form, tool = layui.tool;
+
+		layui.pjProjectDraftTable = table.render({
+			elem: '#pjProjectDraft',
+			title: '项目底稿列表',
+			toolbar: '#toolbarDemo',
+			headers: {"Authorization": localStorage.getItem("Authorization")},
+			contentType: 'application/json',
+			is_excel: true,
+			cellMinWidth: 80,
+			height: 'full-114',
+			url: "/dev-api/pjProjectDraft/listByPage",
+			cols: [[
+				{type: 'checkbox', fixed: 'left'}
+				, {field: 'id', title: '底稿ID', sort: true, width: 90}
+				, {field: 'draftName', title: '底稿名称', minWidth: 180}
+				, {field: 'dictDraftType', title: '底稿类型', width: 120, templet: function (item) {
+					var datas = layui.getDictDataByDictTypeCode('dict_draft_type', null);
+					if(item.dictDraftType%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+tool.selectDictLabel(datas, item.dictDraftType)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+tool.selectDictLabel(datas, item.dictDraftType)+'</span>';
+					}
+				}}
+				, {field: 'refProjectName', title: '项目名称', width: 200}
+				, {field: 'draftDesc', title: '底稿描述', minWidth: 150}
+				, {field: 'draftTime', title: '底稿输出时间', width: 150, align: 'center'}
+				, {field: 'refDraftBy', title: '底稿输出责任人', width: 120, align: 'center'}
+				, {field: 'dictDraftStatus', title: '底稿整理进度', width: 120, templet: function (item) {
+					var datas = layui.getDictDataByDictTypeCode('dict_draft_status', null);
+					if(item.dictDraftStatus%2==0){
+						return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+tool.selectDictLabel(datas, item.dictDraftStatus)+'</span>';
+					}else{
+						return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+tool.selectDictLabel(datas, item.dictDraftStatus)+'</span>';
+					}
+				}}
+				, {title: '流程状态', field: 'orderState', width: 90, align: 'center', templet: function (d) {
+					if (d.orderState == 0) {
+						return '<span style="color: #eb7350;">审批完成</span>';
+					}else if (d.orderState == 1) {
+						return '<span style="color: #00b487;">审批中</span>';
+					}else{
+						return '<span style="color: blue;">草稿</span>';
+					}
+				}}
+				, {title: '当前节点', field: 'taskName', align: 'center', width: 105}
+				, {title: '当前处理人', field: 'taskOperatorName', align: 'center', width: 90}
+				,{
+					field: 'right',
+					fixed:'right',
+					title: '操作',
+					width: 180,
+					align: 'center',
+					templet: function (d) {
+						var html = '<div class="layui-btn-group">';
+						var btn1='<span class="layui-btn layui-btn-normal layui-btn-xs" lay-event="view">查看</span>';
+						var btn2='<span class="layui-btn layui-btn-xs" lay-event="edit">编辑</span>';
+						var btn3='<span class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</span>';
+						var btn4='<span class="layui-btn layui-btn-xs" lay-event="file">附件</span>';
+						
+						// 根据状态判断显示哪些按钮
+						if(d.orderState == 0){
+							return html+btn1+btn4+'</div>';
+						}else if(d.orderState == 1 && d.isOwner != 1){
+							return html+btn1+'</div>';
+						}else if(d.orderState == 1 && d.isOwner == 1){
+							return html+btn1+btn4+'</div>';
+						}else if(d.orderState != 0 && d.orderState != 1 && d.isOwner == 1){
+							return html+btn1+btn2+btn3+btn4+'</div>';
+						}else{
+							return html+btn1+'</div>';
+						}
+					}					
+				}
+			]]
+		});
+		
+		
+		//触发事件
+		table.on('toolbar(pjProjectDraft)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			var data = checkStatus.data;
+			if(obj.event === 'add') {
+				tool.side("/qixing_oa1/pjprojectdraft/add.html");
+				return;
+			} else if(obj.event === 'batchDeleted') {
+				if(data.length==0){
+					layer.msg("请选择要批量删除的列");
+				}else {
+					var ids = [];
+					$(data).each(function (index,item) {
+						ids.push(item.id);
+					});
+					tipDialog(ids);
+				}
+				return;
+			} else if(obj.event === 'submit') {
+				layer.msg("提示：项目底稿无需单独提交审批，请在[项目报告]中提交(项目报告提交会自动带上关联的项目底稿)！");
+				return;
+			}
+		});
+		
+		//监听行工具事件
+		table.on('tool(pjProjectDraft)', function(obj) {
+			var data = obj.data;
+			if (obj.event === 'view') {
+				tool.side("/qixing_oa1/pjprojectdraft/view.html?id="+data.id);
+				return;
+			} else if(obj.event === 'edit'){
+				tool.side('/qixing_oa1/pjprojectdraft/edit.html?id='+data.id);
+				return;
+			} else if (obj.event === 'del') {
+				layer.confirm('确定要删除吗?', {
+					icon: 3,
+					title: '提示'
+				}, function(index) {
+					let callback = function (e) {
+						layer.msg(e.msg);
+						if (e.code == 0) {
+							obj.del();
+						}
+					}
+					tool.delete("/dev-api/pjProjectDraft/delete", {id: data.id}, callback);
+					layer.close(index);
+				});
+			} else if(obj.event === 'file'){
+				tool.side('/qixing_oa1/pjprojectdraft/edit.html?id='+data.id+'&tab=file');
+				return;
+			}
+		});
+		
+		// 搜索
+		form.on('submit(table-search)', function(data) {
+			layui.pjProjectDraftTable.reload({
+				where: data.field,
+				page: {curr: 1}
+			});
+			return false;
+		});
+		
+		// 清空搜索
+		form.on('submit(table-reset)', function() {
+			form.val('barsearchform', {
+				draftNameCondition: '',
+				dictDraftTypeCondition: '',
+				refProjectNameCondition: ''
+			});
+			layui.pjProjectDraftTable.reload({
+				where: {},
+				page: {curr: 1}
+			});
+			return false;
+		});
+	}
+	
+	// 删除确认对话框
+	function tipDialog(ids) {
+		layer.confirm('确定要删除选中的项目底稿吗？', {
+			icon: 3,
+			title: '提示'
+		}, function(index) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					layui.pjProjectDraftTable.reload();
+				}
+			}
+			tool.post("/dev-api/pjProjectDraft/deleteBatch", {ids: ids}, callback);
+			layer.close(index);
+		});
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

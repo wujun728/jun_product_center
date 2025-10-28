@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/lib/layui-v2.5.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+            height: 100%;
+        }
+        .fullScreen {
+		    width: 100%;
+		    height: 100%;
+		    position: absolute;
+		    top: 25;
+		    left: 0;
+		}
+    </style>
+</head>
+<body>
+
+<div class="layui-form layuimini-form">
+     <div class="layui-tab  layui-tab-brief"  lay-filter="ptab">
+	  <ul class="layui-tab-title">
+	    <li class="layui-this">项目信息</li>
+	    <li>客户信息</li>
+	    <li>合同信息</li>
+	    <li>项目计划信息</li>
+<!-- 	    <li>项目进度任务信息</li> -->
+	    <li>项目日报周报</li>
+	    <li>项目底稿</li>
+	    <li>项目报告</li>
+	    <li>项目成员</li>
+	    <li>项目开票</li>
+	    <li>项目文件</li>
+	  </ul>
+	  <div class="layui-tab-content"   >
+	    <div class="layui-tab-item layui-show" id="tab0">
+			<iframe id="tab0Url" src=""  frameborder="0" class="iframe-page"></iframe>
+		</div>
+	    <div class="layui-tab-item" id="tab1">
+	    	<iframe id="tab1Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab2">
+			<iframe id="tab2Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab3">
+	    	<iframe id="tab3Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <!-- <div class="layui-tab-item" id="tab4" style="display: none;" >
+	    	<iframe id="tab4Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div> -->
+	    <div class="layui-tab-item" id="tab5">
+	    	<iframe id="tab5Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab6">
+	    	<iframe id="tab6Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab7">
+	    	<iframe id="tab7Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab8">
+	    	<iframe id="tab8Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab9">
+	    	<iframe id="tab9Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	    <div class="layui-tab-item" id="tab10">
+	    	<iframe id="tab10Url" src=""  frameborder="0" class="iframe-page"></iframe>
+	    </div>
+	  </div>
+	</div>
+</div>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+ 
+<script>
+	//获取token
+	var token = CoreUtil.getData("access_token");
+	var data_doTask = CoreUtil.getData("data_doProjectDetail");
+	var pid ;
+	if((data_doTask+"").indexOf(".json")==-1){
+		pid = data_doTask.data.refProjectCode;
+	}else{
+		pid = data_doTask.split(".")[0];
+	}
+	//地址栏转义token中的#号
+	var tokenQuery = token==null?"":token.replace("#", "%23");
+	var $ = jQuery = layui.jquery;
+	var tplData = { isNextAprove:1, text1:"结束流程", text2:"总经理审批"  };
+	$(function () {
+		var obj = data_doTask;
+//     	var taskid = obj.data['id'];
+//     	var processName = obj.data['processName'];
+//     	var taskName = obj.data['taskName'];
+    	console.log("22pid="+pid);
+    });
+	layui.use(['laytpl','table', 'form', 'jquery', 'element'], function () {			
+        var form = layui.form,
+        layer = layui.layer,
+        $ = layui.$;
+		var tableSelect = layui.tableSelect;
+		var element = layui.element;
+		var laytpl = layui.laytpl;
+        var rowData;
+		console.log("11pid="+pid);
+        
+       /*  var getTpl = demo.innerHTML;
+		var nextAprove = document.getElementById('nextAprove');
+		laytpl(getTpl).render(tplData, function(html){
+			nextAprove.innerHTML = html;
+			form.render();
+		}); */
+		
+		var pageUrl =  '/public/flow/task/bizContent/view/'+'project'+'/'+pid;
+		document.getElementById('tab0Url').src = pageUrl; 
+		document.getElementById('tab0Url').className = "fullScreen";
+		
+		 
+	  //一些事件触发
+	  element.on('tab(ptab)', function(data){
+		  	
+	    	console.log("115555555"+data.index);
+	    	console.log("33pid="+pid);
+	    	switch (data.index) {
+		        case 0:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'project'+'/'+pid;
+					document.getElementById('tab0Url').src = pageUrl; 
+					document.getElementById('tab0Url').className = "fullScreen";
+		          	break;
+		        case 1:
+		        	console.log(data.index);
+		        	console.log("44pid="+pid);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'customer'+'/'+pid;
+					document.getElementById('tab1Url').src = pageUrl; 
+					document.getElementById('tab1Url').className = "fullScreen";
+	        		break;
+		        case 2:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'contract'+'/'+pid;
+					document.getElementById('tab2Url').src = pageUrl; 
+					document.getElementById('tab2Url').className = "fullScreen";
+					document.getElementById('tab2Url').style.zIndex = -1;
+	        		break;
+		        case 3:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'plan'+'/'+pid;
+					document.getElementById('tab3Url').src = pageUrl; 
+					document.getElementById('tab3Url').className = "fullScreen";
+	        		break;
+		        /* case 4:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'jindu'+'/'+pid;
+					document.getElementById('tab4Url').src = pageUrl; 
+					document.getElementById('tab4Url').className = "fullScreen";
+	        		break; */
+		        case 4:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'daily'+'/'+pid;
+					document.getElementById('tab5Url').src = pageUrl; 
+					document.getElementById('tab5Url').className = "fullScreen";
+	        		break;
+		        case 5:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'draft'+'/'+pid;
+					document.getElementById('tab6Url').src = pageUrl; 
+					document.getElementById('tab6Url').className = "fullScreen";
+	        		break;
+		        case 6:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'recheck'+'/'+pid;
+					document.getElementById('tab7Url').src = pageUrl; 
+					document.getElementById('tab7Url').className = "fullScreen";
+	        		break;
+		        case 7:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'member'+'/'+pid;
+					document.getElementById('tab8Url').src = pageUrl; 
+					document.getElementById('tab8Url').className = "fullScreen";
+	        		break;
+		        case 8:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'invoice'+'/'+pid;
+					document.getElementById('tab9Url').src = pageUrl; 
+					document.getElementById('tab9Url').className = "fullScreen";
+	        		break;
+		        case 9:
+		        	console.log(data.index);
+		        	var pageUrl =  '/public/flow/task/bizContent/view/'+'projectFiles'+'/'+pid;
+					document.getElementById('tab10Url').src = pageUrl; 
+					document.getElementById('tab10Url').className = "fullScreen";
+	        		break;
+	    	}
+	  });
+		
+        //监听提交
+         form.on('submit(saveBtn)', function (data) {
+        	 window.agree();
+            return false;
+        }); 
+          
+         form.on('submit(withRefuse)', function (data) {
+        	 $("#taskOperatorFlag").val("");
+        	 window.refuse();
+            return false;
+        }); 
+        
+        window.agree = function (status) {
+        	var obj = CoreUtil.getData("data_doProjectDetail");
+        	var taskid = obj.data['id'];
+        	var processName = obj.data['processName'];
+        	var processId = obj.data['processId'];
+        	var taskName = obj.data['taskName'];
+        	var operatorNext = $("#operatorNext").val();
+        	var operatorNextid = $("#operatorNextid").val();
+        	var taskOperatorMsg = $("#taskOperatorMsg").val();
+        	var taskOperatorFlag = "同意";
+        	var flag = $("input:radio[name='flag']:checked").val();
+        	console.log("flag="+flag);
+        	console.log(flag!='0');
+//         	if(flag!='0' && operatorNext.length == 0 ){
+// 				 layer.alert('流程下一环节审批人不能为空，请选择下一步审批人员！', {icon: 9});
+// 				 return false;
+//         	}
+        	if(taskOperatorMsg.length == 0){
+				 layer.alert('下一环节审批意见不能为空，请维护审批意见！', {icon: 3});
+				 return false;
+        	}
+//         	return false;
+        	var url = "/flow/task/approval?taskId=" +taskid+"&operatorNextid="+operatorNextid+"&taskOperatorMsg="+taskOperatorMsg +"&taskOperatorFlag="+taskOperatorFlag
+    		+"&operatorNext="+operatorNext+"&flag="+flag+"&processName="+processName+"&processId="+processId;
+        	CoreUtil.sendGet(url, null, function (res) {
+        		if(res.code!="0"){
+        			layer.alert(res.msg);
+        			return false;
+        		}
+        		//JSON.stringify(data.field)
+             	var index = layer.alert("流程信息提交成功！", {
+		             title: '提交信息'
+		         }, function () {
+		             // 关闭弹出层
+		        		var iframeIndex = parent.layer.getFrameIndex(window.name);
+		                parent.layer.close(iframeIndex);
+		             layer.close(index);
+		         });
+            });
+        }
+        
+        window.refuse = function () {
+        	var obj = CoreUtil.getData("data_doProjectDetail");
+        	var operatorNext = $("#operatorNext").val();
+        	var operatorNextid = $("#operatorNextid").val();
+        	var operatorNext = $("#operatorNext").val();
+        	var taskOperatorMsg = $("#taskOperatorMsg").val();
+        	var taskOperatorFlag = "驳回";
+        	if(taskOperatorMsg.length == 0){
+        		layer.alert('审批意见不能为空，请输入审批意见！', {icon: 6});
+				 return false;
+        	}
+            var url = "/flow/task/rejectToCreate?taskId=" + obj.data['id']+"&operatorNextid="+operatorNextid+"&taskOperatorMsg="+taskOperatorMsg
+            +"&taskOperatorFlag="+taskOperatorFlag+"&operatorNext="+operatorNext;
+        	CoreUtil.sendGet(url, null, function (res) {
+        		//JSON.stringify(data.field)
+             	var index = layer.alert("流程信息驳回成功！", {
+		             title: '提交信息'
+		         }, function () {
+		             // 关闭弹出层
+		              var iframeIndex = parent.layer.getFrameIndex(window.name);
+		             parent.layer.close(iframeIndex);
+		             layer.close(index);
+		         });
+            });
+        }
+        
+        tableSelect.render({
+    		elem: '#operatorNext',
+    		checkedKey: 'id',
+    		table: {
+    			url: '/sys/users/listByPageApprover?authorization='+tokenQuery,
+    			method: 'POST',
+    			contentType: 'application/json',
+    			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+    		        return {
+    		          "code": res.code, //解析接口状态
+    		          "msg": res.msg, //解析提示文本
+    		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+    		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+    		        }
+    		      },
+    			cols: [ [
+    					{ type: 'checkbox' },
+    					{ field: 'realName', title: '名称' },
+    					{ field: 'username', title: '标题' },
+    					{ field: 'id', title: 'ID' ,hide:true}
+    				] ]
+    		},
+    		done: function (elem, data) {
+    			var NEWJSONID = [];
+    			var NEWJSON = [];
+    			layui.each(data.data, function (index, item) {
+    				NEWJSON.push(item.realName);
+    				NEWJSONID.push(item.username);
+    			});
+    			console.log('NEWJSON111='+NEWJSON);
+    			console.log('NEWJSONID111='+NEWJSONID);
+    			elem.val(NEWJSON.join(","));
+    			elem.val(NEWJSONID.join(","));
+    			$("#operatorNext").val(NEWJSON);
+   				$("#operatorNextid").val(NEWJSONID);
+    			form.render();
+    		}
+    	});
+        
+    });
+</script>
+</body>
+</html>

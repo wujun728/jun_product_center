@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+  <style>
+		element.style { width: 180px; }
+		.layui-form-label.layui-required:after{
+	        content: '*';
+		    color: red;
+		    position: absolute;
+		    margin-left: 4px;
+		    font-weight: bold;
+		    line-height: 1.8em;
+		    top: 6px;
+		    right: 5px;
+	    }
+  </style>
+</head>
+<body>
+
+
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation"  id="leftAdd"  hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >考核模板名称</label>
+      <div class=" layui-input-inline "> 
+		<input type="tplname" name="tplname"  id="tplname"  lay-verify="required|tplname" lay-max="256"  placeholder="请输入考核模板名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >考核总分值</label>
+      <div class=" layui-input-inline "> 
+		<input type="scoreTotal" name="scoreTotal"  id="scoreTotal"  lay-verify="required|scoreTotal" lay-max="99999999"  placeholder="请输入考核总分值"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >适用范围</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="forpeoples"  id="forpeoples"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-inline">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="orderId"  id="orderId"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" id="rightAdd"  hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >序号</label>
+      <div class=" layui-input-inline "> 
+		<input type="sortno" name="sortno"  id="sortno"  lay-verify="required|sortno" lay-max="99999999"  placeholder="请输入序号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-inline">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="teamplateId"  id="teamplateId"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >考核模板名称</label>
+      <div class=" layui-input-inline "> 
+		<input type="refTeamplateName" name="refTeamplateName"  id="refTeamplateName"  lay-verify="required|refTeamplateName" lay-max="256"  placeholder="请输入考核模板名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >评分项目(大类)</label>
+      <div class=" layui-input-inline "> 
+		<input type="assType" name="assType"  id="assType"  lay-verify="required|assType" lay-max="256"  placeholder="请输入评分项目(大类)"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >项目类别</label>
+      <div class=" layui-input-inline "> 
+		<input type="assAttrType" name="assAttrType"  id="assAttrType"  lay-verify="required|assAttrType" lay-max="256"  placeholder="请输入项目类别"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >考核内容</label>
+      <div class=" layui-input-inline "> 
+		<input type="assAttrName" name="assAttrName"  id="assAttrName"  lay-verify="required|assAttrName" lay-max="256"  placeholder="请输入考核内容"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >分值 </label>
+      <div class=" layui-input-inline "> 
+		<input type="attrScore" name="attrScore"  id="attrScore"  lay-verify="required|attrScore" lay-max="99999999"  placeholder="请输入分值 "   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >评分标准</label>
+      <div class=" layui-input-inline "> 
+		<input type="attrDesc" name="attrDesc"  id="attrDesc"  lay-verify="required|attrDesc" lay-max="256"  placeholder="请输入评分标准"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >考核方式</label>
+      <div class=" layui-input-inline "> 
+		<input type="assAttrDesc" name="assAttrDesc"  id="assAttrDesc"  lay-verify="required|assAttrDesc" lay-max="256"  placeholder="请输入考核方式"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"    style="display:none" >
+
+ <div class="layui-inline">       <label class="layui-form-label  " ></label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="orderId"  id="orderId"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+
+<!-- 左树 -->
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md5 layui-col-lg5">
+            <div class="table_div">
+                <div id="searchParam" shiro:hasPermission="sysDict:list">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <input type="text" id="name" class="layui-input" autocomplete="off" placeholder="请输入字典名称或描述 ">
+                            <input type="text" id="dictId" style="display: none" class="layui-input" autocomplete="off" placeholder="请输入字典名称或描述 ">
+                        </div>
+
+                        <div class="layui-input-inline ">
+                            <button class="layui-btn" onclick="search()" id="search">查询</button>
+                        </div>
+                    </div>
+
+                </div>
+                <table class="layui-table" id="showTable" lay-filter="showTable"></table>
+            </div>
+        </div>
+        <div class="layui-col-sm12 layui-col-md7 layui-col-lg7" style="margin-top: 43px;">
+            <div class="table_detail_div">
+                <table class="layui-table" id="showTableDetail" lay-filter="showTableDetail"></table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrAssessmentTemplate:add">添加</button>
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrAssessmentTemplate:delete">删除</button>
+    <!-- 
+    <button class="layui-btn layui-btn-sm" lay-event="submit" shiro:hasPermission="hrAssessmentTemplate:delete">提交</button>
+     -->
+  </div>
+</script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrAssessmentTemplate:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrAssessmentTemplate:delete">删除</a>
+<!--   <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="bizCustomerTest:update">附件</a> -->
+</script>
+
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbarDetail">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="hrAssessmentTemplateDetail:add">添加</button>
+    <button class="layui-btn layui-btn-sm   layui-btn-danger " lay-event="batchDeleted" shiro:hasPermission="hrAssessmentTemplateDetail:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="toolDetail">
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="hrAssessmentTemplateDetail:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="hrAssessmentTemplateDetail:delete">删除</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/hrAssessmentTemplate/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: 'ID', sort: true ,hide: true 		  }, 
+          {field: 'tplname', title: '考核模板名称', sort: true 		  }, 
+          {field: 'scoreTotal', title: '考核总分值', sort: true 		  }, 
+          {field: 'forpeoples', title: '适用范围', sort: true ,hide: false 		  }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true 		  }, 
+          {field: 'orderId', title: '', sort: true ,hide: true 		  }, 
+				//   流程新增字段   beggin    flow_test1  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+          /* { title: '流程状态', field: 'orderState', align: 'center',width:90, templet: function (d) {
+                  if (d.orderState == 0) {
+                      return '<span style="color: #eb7350;">审批完成</span>'
+                  }else if (d.orderState == 1) {
+	                  return '<span style="color: #00b487;">审批中</span>'
+                  }else{
+	                  return '<span style="color: blue;">草稿</span>'
+                  }
+              }
+          },
+          { title: '当前节点', field: 'taskName', align: 'center' ,width:105},
+          { title: '当前处理人', field: 'taskOperatorName', align: 'center' ,width:90},{field: 'isOwner', title: 'isOwner',hide:true }, */
+          //   流程新增字段   end  <!-- 流程flow-mark001,新增流程列表字段，查询流程状态及处理人信息 -->
+         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        //<!-- 流程flow-mark001,新增流程提交方案的submit的function -->
+        case 'submit':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要提交的记录");
+          }else if(data.length > 1){
+            layer.msg("请选择要提交的记录（one row each times）");
+          }else {
+//         	  window.checkPromission(data[0].createId);
+        	  data[0]['processName'] = "submit";
+        	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+        	  CoreUtil.setData("data_doSubmit",data[0]);
+        	  console.log("data="+data);
+              layer.open({
+                  type: 2,
+                  skin: 'layui-layer-admin',
+                  title: "提交流程",
+                  shadeClose : false,
+                  area: ['880px', '500px'], //宽高
+                  shade: 0.6, //遮罩透明度
+                  maxmin: true, //允许全屏最小化
+                  anim: 1, //0-6的动画形式，-1不开启
+                  content:  '/table/doSubmit.html',
+                  end: function(){
+                	  search();
+                  }
+              });
+          }
+          break;
+        case 'add':
+//           $(".table_div").hide();
+//           $(".operation").show();
+//           $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=tplname]").val("");
+          $(".operation input[name=scoreTotal]").val("");
+          $(".operation textarea[name=forpeoples]").val("");
+          $(".operation textarea[name=remark]").val("");
+          $(".operation input[name=orderId]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增考核模板' , false],
+              content: $('#leftAdd'),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+//           $(".table_div").hide();
+//           $(".operation").show();
+//           $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=tplname]").val(data.tplname);
+          $(".operation input[name=scoreTotal]").val(data.scoreTotal);
+          $(".operation textarea[name=forpeoples]").val(data.forpeoples);
+          $(".operation textarea[name=remark]").val(data.remark);
+          $(".operation input[name=orderId]").val(data.orderId);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改考核模板' , false],
+              content: $('#leftAdd'),
+          });
+          break;
+        case 'file':
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              type: 2,
+              skin: 'layui-layer-admin',
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+    
+    
+//遍历列，并渲染各种表单组件
+	
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/hrAssessmentTemplate/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+       skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/hrAssessmentTemplate/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+//       $(".table_div").show();
+//       $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/hrAssessmentTemplate/add",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/hrAssessmentTemplate/update",data.field,function (res) {
+          //$(".table_div").show();
+          //$(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,tplname: $("#tplnameCondition").val()
+		,scoreTotal: $("#scoreTotalCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+tplname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '考核模板名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  scoreTotal: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '考核总分值不能大于'+max+'个字符的长度！';
+            }
+        }  ,  forpeoples: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '适用范围不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  orderId: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>
+<script>
+//加载table,数据表格
+tableIns1 = table.render({
+  elem: '#showTableDetail'
+  , contentType: 'application/json'
+  , headers: {"authorization": token}
+  , page: true //开启分页
+  , url: '/hrAssessmentTemplateDetail/listByPage' //数据接口
+  , method: 'POST'
+  ,size: 'sm' //小尺寸的表格
+  , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+        return {
+          "code": res.code, //解析接口状态
+          "msg": res.msg, //解析提示文本
+          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+        }
+  }
+  , cols: [
+    [
+      {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+      {field: 'id', title: 'ID', sort: true ,hide: true 		  }, 
+      {field: 'sortno', title: '序号', sort: true 		  }, 
+      {field: 'teamplateId', title: '', sort: true ,hide: true 		  }, 
+      {field: 'refTeamplateName', title: '考核模板名称', sort: true 		  }, 
+      {field: 'assType', title: '评分项目(大类)', sort: true 		  }, 
+      {field: 'assAttrType', title: '项目类别', sort: true 		  }, 
+      {field: 'assAttrName', title: '考核内容', sort: true 		  }, 
+      {field: 'attrScore', title: '分值 ', sort: true 		  }, 
+      {field: 'attrDesc', title: '评分标准', sort: true 		  }, 
+      {field: 'assAttrDesc', title: '考核方式', sort: true 		  }, 
+      {width: 160, toolbar: "#toolDetail", title: '操作'}
+    ]
+  ]
+  , toolbar: '#toolbarDetail'
+});
+
+
+//表头工具
+table.on('toolbar(showTableDetail)', function(obj){
+  switch(obj.event){
+    case 'batchDeleted':
+      var checkStatus = table.checkStatus(obj.config.id);
+      var data = checkStatus.data;
+      if(data.length==0){
+        layer.msg("请选择要批量删除的列");
+      }else {
+        var ids = [];
+        $(data).each(function (index,item) {
+          ids.push(item.id);
+        });
+        tipDialog(ids);
+      }
+      break;
+    //<!-- 流程flow-mark001,新增流程提交方案的submit的function -->
+    case 'submit':
+      var checkStatus = table.checkStatus(obj.config.id);
+      var data = checkStatus.data;
+      if(data.length==0){
+        layer.msg("请选择要提交的记录");
+      }else if(data.length > 1){
+        layer.msg("请选择要提交的记录（one row each times）");
+      }else {
+//     	  window.checkPromission(data[0].createId);
+    	  data[0]['processName'] = "submit";
+    	  //<!-- 流程flow-mark001,新增流程,指定流程的类型 -->
+    	  CoreUtil.setData("data_doSubmit",data[0]);
+    	  console.log("data="+data);
+          layer.open({
+              type: 2,
+              skin: 'layui-layer-admin',
+              title: "提交流程",
+              shadeClose : false,
+              area: ['880px', '500px'], //宽高
+              shade: 0.6, //遮罩透明度
+              maxmin: true, //允许全屏最小化
+              anim: 1, //0-6的动画形式，-1不开启
+              content:  '/table/doSubmit.html',
+              end: function(){
+            	  search();
+              }
+          });
+      }
+      break;
+    case 'add':
+//       $(".table_div").hide();
+//       $(".operation").show();
+//       $(".title").html("新增");
+      $(".operation input[name=id]").val("");
+      $(".operation input[name=sortno]").val("");
+      $(".operation input[name=teamplateId]").val("");
+      $(".operation input[name=refTeamplateName]").val("");
+      $(".operation input[name=assType]").val("");
+      $(".operation input[name=assAttrType]").val("");
+      $(".operation input[name=assAttrName]").val("");
+      $(".operation input[name=attrScore]").val("");
+      $(".operation input[name=attrDesc]").val("");
+      $(".operation input[name=assAttrDesc]").val("");
+      $(".operation input[name=orderId]").val("");
+		  layerAdd = layer.open({
+          type: 1,
+          skin: 'layui-layer-admin',
+          area: ['80%', '80%'],
+          shift: 1,
+          shadeClose: true,
+          scrollbar: true,
+          maxmin: true,
+          shade: false,
+          title:  ['新增考核模板明细' , false],
+          content: $("#rightAdd"),
+      });
+      break;
+  };
+});
+</script>

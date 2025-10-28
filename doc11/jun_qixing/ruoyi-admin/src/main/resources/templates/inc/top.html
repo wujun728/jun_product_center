@@ -1,0 +1,22 @@
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div class="layui-header">
+    <ul class="layui-nav">
+        <li class="layui-nav-item" lay-unselect>
+            <a th:href="@{/index}">Ruoyi-Layui</a>
+        </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item" lay-unselect>
+            <a href="javascript:;">
+                <cite>[[${T(com.ruoyi.web.utils.UserUtils).getUser().getLoginName()}]]</cite>
+            </a>
+            <dl class="layui-nav-child">
+               <!-- <dd><a>基本资料</a></dd>
+                <dd><a>修改密码</a></dd>
+                <hr>-->
+                <dd style="text-align: center;"><a th:href="@{/logout}">退出</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+</html>

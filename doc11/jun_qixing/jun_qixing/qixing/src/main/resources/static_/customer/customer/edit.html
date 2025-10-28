@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-page">
+	<h3 class="pb-3">编辑客户信息</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">客户名称<font>*</font></td>
+			<td colspan="3"><input type="text" name="name" lay-verify="required" value="公海客户" lay-reqText="请输入客户名称" autocomplete="off" placeholder="请输入客户名称" class="layui-input"></td>
+			<td class="layui-td-gray">客户来源<font>*</font></td>
+			<td>
+				<select name="source_id" lay-verify="required" lay-reqText="请选择客户来源">
+				<option value="">请选择客户来源</option>
+								<option value="1"  selected>独立开发</option>
+								<option value="2" >微信公众号</option>
+								<option value="3" >今日头条</option>
+								<option value="4" >百度搜索</option>
+								<option value="5" >销售活动</option>
+								<option value="6" >电话来访</option>
+								<option value="7" >客户介绍</option>
+								<option value="8" >其他来源</option>
+							  </select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">联系地址<font>*</font></td>
+			<td colspan="3"><input type="text" name="address" value="1312" autocomplete="off" lay-verify="required" lay-reqText="请输入客户联系地址" placeholder="请输入客户联系地址" class="layui-input"></td>
+			<td class="layui-td-gray">所属行业<font>*</font></td>
+			<td>
+			  <select name="industry_id" lay-verify="required" lay-reqText="请选择所属行业">
+				<option value="">请选择所属行业</option>
+								<option value="1" >工业品企业</option>
+								<option value="2"  selected>互联网企业</option>
+								<option value="3" >服务行业</option>
+								<option value="4" >消费品企业</option>
+								<option value="5" >原材料企业</option>
+								<option value="6" >农业企业</option>
+								<option value="7" >科技企业</option>
+								<option value="8" >其他行业</option>
+							  </select>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">客户等级<font>*</font></td>
+			<td>
+			  <select name="grade_id" lay-verify="required" lay-reqText="请选择客户等级">
+				<option value="">请选择客户等级</option>
+								<option value="1"  selected>普通客户</option>
+								<option value="2" >VIP客户</option>
+							  </select>
+			</td>
+			<td class="layui-td-gray">客户状态<font>*</font></td>
+			<td>
+			  <select name="customer_status" lay-verify="required" lay-reqText="请选择客户状态">
+				<option value="">请选择客户当前状态</option>
+								<option value="1"  selected>新进客户</option>
+								<option value="2" >跟进客户</option>
+								<option value="3" >正式客户</option>
+								<option value="4" >流失客户</option>
+								<option value="5" >成交客户</option>
+							  </select>
+			</td>
+			<td class="layui-td-gray">客户意向<font>*</font></td>
+			<td>
+			  <select name="intent_status" lay-verify="required" lay-reqText="请选择客户意向">
+				<option value="">请选择客户意向</option>
+								<option value="6"  selected>意向不明</option>
+								<option value="7" >意向一般</option>
+								<option value="8" >意向强烈</option>
+							  </select>
+			</td>
+		  </tr>
+		  		  <tr>
+				<td class="layui-td-gray">归属员工</td>
+				<td>
+					<input type="text" name="belong_name" value="素还真" autocomplete="off" readonly placeholder="请选择客户归属人" class="layui-input">
+					<input type="hidden" name="belong_uid" value="2">
+					<input type="hidden" name="belong_did" value="2">
+				</td>
+				<td class="layui-td-gray">归属部门</td>
+				<td><input type="text" name="belong_department" value="人事部" autocomplete="off" readonly class="layui-input"></td>
+				<td class="layui-td-gray">共享员工</td>
+				 <td colspan="3">
+					<input type="text" name="share_names" value="" autocomplete="off" readonly placeholder="请选择共享人员" class="layui-input picker-admin" data-type="2">
+					<input type="hidden" name="share_ids" value="">
+				</td>
+		  </tr>
+		  		<tr>
+			<td class="layui-td-gray" style="vertical-align:top">客户介绍<font>*</font></td>
+			<td colspan="5"><textarea name="content" placeholder="请输入客户介绍信息" lay-verify="required" lay-reqText="请输入客户介绍信息" class="layui-textarea">12312312</textarea></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top">经营业务</td>
+			<td colspan="5"><textarea name="market" placeholder="请输入客户主要经营业务" class="layui-textarea"></textarea></td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top">备注信息</td>
+			<td colspan="5"><textarea name="remark" placeholder="请输入备注信息" class="layui-textarea"></textarea></td>
+		</tr>
+    </table>
+    <div class="pt-4">
+	   <input type="hidden" name="id" value="1362">
+	   <input type="hidden" name="scene" value="edit"/>
+      <button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	var moduleInit = ['tool','oaPicker'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool,oaPicker = layui.oaPicker;
+		//选择归属人人弹窗
+		$('body').on('click','[name="belong_name"]',function () {
+			var ids=$('[name="belong_uid"]').val(),names=$('[name="belong_name"]').val();
+			oaPicker.employeeInit({
+				ids:ids,
+				names:names,
+				type:1,
+				callback:function(data){
+					let select_id=[],select_name=[],select_did=[],select_dname=[];
+					for(var a=0; a<data.length;a++){
+						select_id.push(data[a].id);
+						select_name.push(data[a].name);
+						select_did.push(data[a].did);
+						select_dname.push(data[a].department);
+					}
+					$('[name="belong_uid"]').val(select_id.join(','));
+					$('[name="belong_name"]').val(select_name.join(','));
+					$('[name="belong_did"]').val(select_did.join(','));
+					$('[name="belong_department"]').val(select_dname.join(','));
+				}
+			});
+		});	
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000);
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/customer/customer/add", data.field, callback,clickbtn);
+			return false;
+		});
+	}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+	<!-- /版权标识 -->
+</body>
+</html>

@@ -1,0 +1,85 @@
+# Tomcat
+server:
+  port: 8082
+  servlet:
+    context-path: /erp
+    jsp:      init-parameters:        development: true
+    session:
+      timeout: 6000
+  tomcat:
+    uri-encoding: UTF-8
+# DataSource
+spring:
+  datasource:
+    name: druidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/db_mis?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+      username: root
+      password: 
+      filters: stat,wall,log4j,config
+      max-active: 100
+      initial-size: 1
+      max-wait: 60000
+      min-idle: 1
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: select 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-open-prepared-statements: 50
+      max-pool-prepared-statement-per-connection-size: 20
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  jpa:
+    database: MYSQL
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+  mvc:
+    static-path-pattern: /**
+    view:
+      prefix: /
+      suffix: .jsp
+  profiles:
+    active: dev
+  thymeleaf:
+    cache: false
+    enabled: false
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    com:
+      gs:
+        service: debug
+    org:
+      hibernate:
+        sql: debug
+erp:
+  job:
+    dcsTask: 0/30 0/7 * * * ?
+  quartz:
+    corePoolSize: 10
+    maxPoolSize: 30
+    queueCapacity: 40
+  rule: 0/20 * * * * ?
+  timeout:
+    connectTimeout: 3000
+    connectionRequestTimeout: 3000
+    readTimeout: 6000  
+    

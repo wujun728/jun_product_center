@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户管理</title>
+    <link rel="stylesheet" href="../../component/pear/css/pear.css"/>
+</head>
+<body class="pear-container">
+<div class="layui-card"> <!-- 上半截卡片容器 -->
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">关键字</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyWord" placeholder="账号或者姓名" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">部门</label>
+                    <div class="layui-input-block">
+                        <ul id="selectParent" name="deptId" class="dtree" data-id="0"></ul>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-inline">
+                    <!-- lay-submit 定义一个触发表单提交的button-->
+                    <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="pear-btn pear-btn-md">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card"><!-- 下半截卡片容器 -->
+    <div class="layui-card-body">
+        <!-- 定义一个table表  lay-filter 相当于一个事件过滤器-->
+        <table id="user-table" lay-filter="user-filter"></table>
+    </div>
+</div>
+
+<script type="text/html" id="user-toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        新增
+    </button>
+    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+        <i class="layui-icon layui-icon-delete"></i>
+        删除
+    </button>
+</script>
+
+<script type="text/html" id="user-bar">
+    <button class="pear-btn pear-btn-success pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>
+    </button>
+    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i>
+    </button>
+    <button class="pear-btn pear-btn-warming pear-btn-sm" lay-event="resetPwd">重置密码
+    </button>
+</script>
+
+<!-- 模板 -->
+<script type="text/html" id="user-enable">
+    <input type="checkbox" name="enable" value="{{d.userId}}" lay-skin="switch" lay-text="启用|禁用"
+           lay-filter="user-enable"
+           {{ d.enable== 1 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="user-sex">
+    {{#if (d.sex == 1) { }}
+    <span>男</span>
+    {{# }else if(d.sex == 2){ }}
+    <span>女</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="user-login">
+    {{#if (d.login == 0) { }}
+    <span>在线</span>
+    {{# }else if(d.sex == 1){ }}
+    <span>离线</span>
+    {{# } }}
+</script>
+
+<script type="text/html" id="user-createTime">
+    {{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}
+</script>
+
+<script src="../../component/layui/layui.js"></script>
+<script src="../../component/pear/pear.js"></script>
+<script>
+    layui.use(['table', 'form', 'common', 'dtree', 'easyAdmin'], function () {
+        let table = layui.table;
+        let form = layui.form;
+        let common = layui.common;
+        let dtree = layui.dtree;
+        let easyAdmin = layui.easyAdmin;
+        let MODULE_PATH = "user";
+
+        let cols = [
+            [{
+                type: 'checkbox'
+            },
+                {
+                    title: '账号',
+                    field: 'userName',
+                    align: 'center',
+                    width: 100
+                },
+                {
+                    title: '姓名',
+                    field: 'nickName',
+                    align: 'center'
+                },
+                {
+                    title: '性别',
+                    field: 'sex',
+                    align: 'center',
+                    width: 80,
+                    templet: '#user-sex'
+                },
+                {
+                    title: '电话',
+                    field: 'phone',
+                    align: 'center'
+                },
+                {
+                    title: '启用',
+                    field: 'enable',
+                    align: 'center',
+                    templet: '#user-enable'
+                },
+                {
+                    title: '注册时间',
+                    field: 'createTime',
+                    align: 'center'
+                },
+                {
+                    title: '操作',
+                    toolbar: '#user-bar',
+                    align: 'center',
+                    width: 200
+                }
+            ]
+        ]
+
+        easyAdmin.httpGet("/sys/dept/tree", function (data) {
+            dtree.renderSelect({
+                elem: "#selectParent",
+                data: data.data,
+                selectTips: "请选择部门",
+                selectCardHeight: "150",
+                selectInputName: {nodeId: "deptId", context: "deptName"},
+                // skin: "layui",
+                dataFormat: "list",
+                response: {treeId: "deptId", parentId: "pid", title: "deptName"}
+            });
+        })
+
+        easyAdmin.tableRender({
+            elem: '#user-table', // 对应table的id
+            url: "/sys/user",
+            page: true, // 分页参数可以自定义
+            cols: cols, // 列表示
+            skin: 'line', // 表格样式
+            toolbar: '#user-toolbar', // 表格头部工具栏 可定义左上角和右上角工具栏,一般用于左上角配置
+            defaultToolbar: [{  // 自由配置头部工具栏右侧的图标按钮
+                title: '刷新',
+                layEvent: 'refresh',
+                icon: 'layui-icon-refresh',
+            }, 'filter', 'print', 'exports']
+        });
+
+        // 触发行中工具条点击事件 (操作列)
+        // table.on('event(filter)', callback); filter为容器lay-filter设定的值
+        //  cols: [[{fixed: 'right', width:150, align:'center', toolbar: '#barDemo'}
+        table.on('tool(user-filter)', function (obj) {
+            switch (obj.event) {
+                case 'remove':
+                    window.remove(obj);
+                    break;
+                case 'edit':
+                    easyAdmin.JumpEdit(MODULE_PATH, obj.data.userId)
+                    break;
+                case 'resetPwd':
+                    resetPwd(obj);
+                    break;
+            }
+        });
+        // toolbar: '#toolbarDemo'
+        // toolbar 点击头部工具栏区域设定了属性为 lay-event="" 的元素时触发(包括左上角和右上角)
+        table.on('toolbar(user-filter)', function (obj) {
+            switch (obj.event) {
+                case 'add':
+                    easyAdmin.JumpAdd(MODULE_PATH);
+                    break;
+                case 'refresh':
+                    easyAdmin.tableRefresh('user-table');
+                    break;
+                case 'batchRemove':
+                    window.batchRemove(obj);
+                    break;
+            }
+        });
+
+        // 触发submit提交 按钮点击或者表单被执行提交时触发
+        form.on('submit(user-query)', function (data) {
+            // 对表格进行重载。id 即 table表格的id
+            // where :{ //设定异步数据接口的额外参数，任意设
+            //  aaaaaa: 'xxx'
+            //    ,bbb: 'yyy'
+            // 自动 ?aaaa=xxx&bbbb=yyy
+            table.reload('user-table', {
+                // //设定异步数据接口的额外参数
+                where: data.field
+            })
+            return false; // 阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+        // 触发switch开关 开关被点击时触发
+        form.on('switch(user-enable)', function (obj) {
+            easyAdmin.http({
+                url: '/dev-api/sys/user',
+                data: JSON.stringify({
+                    userId: this.value,
+                    enable: obj.elem.checked ? 1 : 0
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'post',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg("操作成功", {icon: 1, time: 1000, area: ['100px', '65px']});
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000, area: ['260px', '80px']});
+                        table.reload('user-table');
+                    }
+                }
+            })
+        });
+
+        let resetPwd = function (obj) {
+            layer.confirm('确定要重置密码吗？', {
+                icon: 3,
+                title: '提示'
+            }, function (index) {
+                layer.close(index);
+                easyAdmin.http({
+                    url: "/sys/user/resetPwd/" + obj.data['userId'],
+                    dataType: 'json',
+                    type: 'put',
+                    success: function (result) {
+                        if (result.success) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 2000,
+                                area: ['100px', '80px'],
+                                content: "重置成功"
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 2000,
+                                area: ['260px', '65px'],
+                            });
+                        }
+                    }
+                })
+            });
+        }
+
+        window.remove = function (obj) {
+            layer.confirm('确定要删除该用户', {
+                icon: 3,
+                title: '提示'
+            }, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                easyAdmin.http({
+                    url: "/sys/user/" + obj.data['userId'],
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000,
+                                area: ['100px', '80px'],
+                                content: "删除成功"
+                            }, function () {
+                                obj.del();
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000,
+                                area: ['260px', '80px']
+                            });
+                        }
+                    }
+                })
+            });
+        }
+
+        window.batchRemove = function (obj) {
+
+            var checkIds = common.checkField(obj, 'userId');
+
+            if (checkIds === "") {
+                layer.msg("未选中数据", {
+                    icon: 3,
+                    time: 1000
+                });
+                return false;
+            }
+
+            layer.confirm('确定要删除这些用户', {
+                icon: 3,
+                title: '提示'
+            }, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                easyAdmin.http({
+                    url: "/sys/user/batch/" + checkIds,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+                                table.reload('user-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                area: ['260px', '80px'],
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
+    })
+</script>
+</body>
+</html>

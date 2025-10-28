@@ -1,0 +1,52 @@
+"api": "post:/admin/page/crudQuery/${pageCode}",
+"syncLocation": false,
+"className":"#if(${hiddenQueryFilter}) noFilter #end",
+"filterTogglable": false,
+"headerToolbar": ${topButtons},
+"bulkActions": ${bulkButtons},
+#if($openPage)
+"footerToolbar": [
+    "statistics",
+    "switch-per-page",
+    "pagination"
+],
+"perPage":${perPage},
+"perPageAvailable":${perPageAvailable},
+#end
+
+#if($affixRow)
+"affixRow":${affixRow},
+#end
+
+$!{extraJson}
+
+"filter": {
+    "title": ["<span style='line-height:30px;'>${pageName}</span>",
+        {
+            "type":"button",
+            "label":"导出",
+            "actionType": "url",
+            "level":"success",
+            "icon":"fa fa-download",
+            "url":"/admin/page/crudExport/${pageCode}${downloadParam}",
+            "className":"m-l float-right relative jqp-top-btn"
+        },
+        {
+            "type":"button",
+            "label":"查询",
+            "icon":"fa fa-magnifying-glass",
+            "primary":true,
+            "actionType":"submit",
+            "className":"m-l float-right relative jqp-top-btn"
+        }
+    ],
+    "submitText": "",
+    "labelWidth":120,
+    "mode": "horizontal",
+    "body":{
+        "type":"grid",
+        "columns":${queryConfigs}
+    },
+    "actions":[]
+},
+"affixHeader":true

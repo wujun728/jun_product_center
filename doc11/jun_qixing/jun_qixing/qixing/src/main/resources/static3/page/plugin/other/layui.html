@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Layui组件</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">按钮</div>
+        <div class="layui-card-body">
+            <div class="layui-btn-container">
+                <button type="button" class="layui-btn layui-btn-primary">原始按钮</button>
+                <button type="button" class="layui-btn">默认按钮</button>
+                <button type="button" class="layui-btn layui-btn-normal">百搭按钮</button>
+                <button type="button" class="layui-btn layui-btn-warm">暖色按钮</button>
+                <button type="button" class="layui-btn layui-btn-danger">警告按钮</button>
+                <button type="button" class="layui-btn layui-btn-disabled">禁用按钮</button>
+            </div>
+            <div class="layui-btn-container">
+                <button type="button" class="layui-btn layui-btn-lg layui-btn-radius">圆角按钮</button>
+                <button type="button" class="layui-btn layui-btn-lg">大型按钮</button>
+                <button type="button" class="layui-btn">默认按钮</button>
+                <button type="button" class="layui-btn layui-btn-sm">小型按钮</button>
+                <button type="button" class="layui-btn layui-btn-xs">迷你按钮</button>
+            </div>
+            <div>
+                <div class="layui-btn-group" style="margin-bottom: 10px;">
+                    <button type="button" class="layui-btn">增加</button>
+                    <button type="button" class="layui-btn">编辑</button>
+                    <button type="button" class="layui-btn">删除</button>
+                </div>
+                <div class="layui-btn-group" style="margin-bottom: 10px;">
+                    <button type="button" class="layui-btn layui-btn-primary">增加</button>
+                    <button type="button" class="layui-btn layui-btn-primary">编辑</button>
+                    <button type="button" class="layui-btn layui-btn-primary">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">表单</div>
+        <div class="layui-card-body layui-form" style="padding-bottom: 10px;">
+            <div class="inline-block" style="margin: 10px;">
+                <select name="sel">
+                    <option value="">请选择省</option>
+                    <option value="浙江省">浙江省</option>
+                    <option value="江西省">江西省</option>
+                    <option value="福建省">福建省</option>
+                </select>
+            </div>
+            <div class="inline-block" style="margin: 10px;">
+                <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF" checked/>&nbsp;&nbsp;
+                <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF"/>
+            </div>
+            <div class="inline-block" style="margin: 10px;">
+                <input type="checkbox" name="like[write]" title="写作" checked/>
+                <input type="checkbox" name="like[read]" title="阅读"/>
+                <input type="checkbox" name="like[game]" title="游戏"/>
+            </div>
+            <div class="inline-block" style="margin: 10px;">
+                <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked/>
+                <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读"/>
+                <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏"/>
+            </div>
+            <div class="inline-block" style="margin: 10px;">
+                <input type="radio" name="sex" value="男" title="男" checked/>
+                <input type="radio" name="sex" value="女" title="女"/>
+                <input type="radio" name="sex" value="禁" title="禁用" disabled/>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">进度条</div>
+        <div class="layui-card-body">
+            <br>
+            <div class="layui-progress" lay-showpercent="true">
+                <div class="layui-progress-bar" lay-percent="20%"></div>
+            </div>
+            <br>
+            <div class="layui-progress" lay-showpercent="true">
+                <div class="layui-progress-bar" lay-percent="30%" lay-percent="5 / 10"></div>
+            </div>
+            <br>
+            <div class="layui-progress layui-progress-big" lay-showpercent="true">
+                <div class="layui-progress-bar" lay-percent="40%"></div>
+            </div>
+            <br>
+            <div id="layDemoSlider1"></div>
+            <br>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">分页</div>
+        <div class="layui-card-body">
+            <div id="layDemoPage1"></div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">引用区块</div>
+        <div class="layui-card-body">
+            <blockquote class="layui-elem-quote">引用区域的文字</blockquote>
+            <blockquote class="layui-elem-quote layui-quote-nm">引用区域的文字</blockquote>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">穿梭框</div>
+                <div class="layui-card-body" style="height: 385px;overflow: auto;box-sizing: border-box;">
+                    <div id="layDemoTransfer1" style="min-width: 490px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">树</div>
+                <div class="layui-card-body" style="height: 385px;overflow: auto;box-sizing: border-box;">
+                    <div id="layDemoTree1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">树</div>
+                <div class="layui-card-body" style="height: 385px;overflow: auto;box-sizing: border-box;">
+                    <div id="layDemoTree2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['form', 'element', 'slider', 'laypage', 'transfer', 'tree'], function () {
+        var slider = layui.slider;
+        var laypage = layui.laypage;
+        var transfer = layui.transfer;
+        var tree = layui.tree;
+
+        // 滑块
+        slider.render({
+            elem: '#layDemoSlider1',
+            value: 40,
+            range: true
+        });
+
+        // 分页
+        laypage.render({
+            elem: 'layDemoPage1',
+            count: 100,
+            layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+        });
+
+        // 穿梭框
+        transfer.render({
+            elem: '#layDemoTransfer1',
+            data: [
+                {"value": "1", "title": "李白"},
+                {"value": "2", "title": "杜甫"},
+                {"value": "3", "title": "苏轼"},
+                {"value": "4", "title": "李清照"},
+                {"value": "5", "title": "鲁迅", "disabled": true},
+                {"value": "6", "title": "巴金"},
+                {"value": "7", "title": "冰心"},
+                {"value": "8", "title": "矛盾"},
+                {"value": "9", "title": "贤心"}
+            ]
+        });
+
+        // 模拟数据
+        var treeData = [{
+            title: '一级1'
+            , id: 1
+            , field: 'name1'
+            , checked: true
+            , spread: true
+            , children: [{
+                title: '二级1-1 可允许跳转'
+                , id: 3
+                , field: 'name11'
+                , href: 'https://www.layui.com/'
+                , children: [{
+                    title: '三级1-1-3'
+                    , id: 23
+                    , field: ''
+                    , children: [{
+                        title: '四级1-1-3-1'
+                        , id: 24
+                        , field: ''
+                        , children: [{
+                            title: '五级1-1-3-1-1'
+                            , id: 30
+                            , field: ''
+                        }, {
+                            title: '五级1-1-3-1-2'
+                            , id: 31
+                            , field: ''
+                        }]
+                    }]
+                }, {
+                    title: '三级1-1-1'
+                    , id: 7
+                    , field: ''
+                    , children: [{
+                        title: '四级1-1-1-1 可允许跳转'
+                        , id: 15
+                        , field: ''
+                        , href: 'https://www.layui.com/doc/'
+                    }]
+                }, {
+                    title: '三级1-1-2'
+                    , id: 8
+                    , field: ''
+                    , children: [{
+                        title: '四级1-1-2-1'
+                        , id: 32
+                        , field: ''
+                    }]
+                }]
+            }, {
+                title: '二级1-2'
+                , id: 4
+                , spread: true
+                , children: [{
+                    title: '三级1-2-1'
+                    , id: 9
+                    , field: ''
+                    , disabled: true
+                }, {
+                    title: '三级1-2-2'
+                    , id: 10
+                    , field: ''
+                }]
+            }, {
+                title: '二级1-3'
+                , id: 20
+                , field: ''
+                , children: [{
+                    title: '三级1-3-1'
+                    , id: 21
+                    , field: ''
+                }, {
+                    title: '三级1-3-2'
+                    , id: 22
+                    , field: ''
+                }]
+            }]
+        }, {
+            title: '一级2'
+            , id: 2
+            , field: ''
+            , spread: true
+            , children: [{
+                title: '二级2-1'
+                , id: 5
+                , field: ''
+                , spread: true
+                , children: [{
+                    title: '三级2-1-1'
+                    , id: 11
+                    , field: ''
+                }, {
+                    title: '三级2-1-2'
+                    , id: 12
+                    , field: ''
+                }]
+            }, {
+                title: '二级2-2'
+                , id: 6
+                , field: ''
+                , children: [{
+                    title: '三级2-2-1'
+                    , id: 13
+                    , field: ''
+                }, {
+                    title: '三级2-2-2'
+                    , id: 14
+                    , field: ''
+                    , disabled: true
+                }]
+            }]
+        }, {
+            title: '一级3'
+            , id: 16
+            , field: ''
+            , children: [{
+                title: '二级3-1'
+                , id: 17
+                , field: ''
+                , fixed: true
+                , children: [{
+                    title: '三级3-1-1'
+                    , id: 18
+                    , field: ''
+                }, {
+                    title: '三级3-1-2'
+                    , id: 19
+                    , field: ''
+                }]
+            }, {
+                title: '二级3-2'
+                , id: 27
+                , field: ''
+                , children: [{
+                    title: '三级3-2-1'
+                    , id: 28
+                    , field: ''
+                }, {
+                    title: '三级3-2-2'
+                    , id: 29
+                    , field: ''
+                }]
+            }]
+        }];
+
+        // 树
+        tree.render({
+            elem: '#layDemoTree1',
+            data: treeData,
+            showCheckbox: true
+        });
+        tree.render({
+            elem: '#layDemoTree2',
+            data: treeData,
+            showLine: false
+        });
+
+    });
+</script>
+</body>
+</html>

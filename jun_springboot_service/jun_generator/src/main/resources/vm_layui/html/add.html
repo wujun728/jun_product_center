@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/> 
+
+	<title>齐兴ERP</title>		 
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3 class="pb-3">新建${functionName}</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">${functionName}名称<font>*</font></td>
+			<td>
+				<input type="text" name="title" lay-verify="required" lay-reqText="请输入${functionName}名称" placeholder="请输入${functionName}名称" class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">关联项目<font>*</font></td>
+			<td>
+				<input type="text" name="project_name" placeholder="所属项目" value="1111" readonly class="layui-input picker-oa" data-types="project" autocomplete="off" />
+				<input type="hidden" name="project_id" value="1186" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">${functionName}内容<font>*</font></td>
+			<td colspan="5">
+			  <textarea name="content" placeholder="请输入内容" class="layui-textarea" id="container" style="border:0;padding:0"></textarea>
+			</td>
+		</tr>
+	</table>
+	</div>
+		<div class="pt-4">
+		<input type="hidden" name="id" value="0" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','tinymce','oaPicker'];
+	function gouguInit() {
+		var form = layui.form,tool=layui.tool;
+		
+		//编辑器初始化
+		var editor = layui.tinymce;
+		var edit = editor.render({
+			selector: "#container",
+			images_upload_url: '/api/index/upload/sourse/tinymce',//图片上传接口
+			height:600
+		});
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+		  data.field.content = tinyMCE.editors['container'].getContent();
+			if (data.field.content == '') {
+				layer.msg('请先完善${functionName}内容');
+				return false;
+			}
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000,'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/project/document/add", data.field, callback,clickbtn);
+			return false;
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	 
+		<div class="copyright">Copyright © 2022-2025 齐兴 - 1.7.5  ，Powered by Qixing<a href="https://www.baidu.com" target="_blank">官网</a></div></div>
+ 
+</body>
+</html>

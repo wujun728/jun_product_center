@@ -1,0 +1,33 @@
+{
+  "base": {
+    "name": "智城大数据",
+    "url": "http://www.deyangbigdata.com/",
+    "desc": "智城大数据官网(CMS上搭建)",
+    "mobile":false
+  },
+  "schedule": {
+    "status": "开发中",
+    "actualStartTime": "2017-10-09",
+    "actualEndTime": "2017-10-20",
+    "estimatedStartTime": "2017-10-09",
+    "estimatedEndTime": "2017-10-20",
+    "process": 80,
+    "delay": false,
+    "technology":[""]
+  },
+  "resources": {
+    "demander": "九次方",
+    "type":"独立纵队",
+    "manager":"",
+    "charge": "李猛",
+    "affiliate": []
+  },
+  "bug": {
+    "total": 0,
+    "resolved": 0,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": ""                 
+  }
+}

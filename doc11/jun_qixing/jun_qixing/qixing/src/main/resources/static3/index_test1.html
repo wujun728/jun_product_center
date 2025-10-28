@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="your keywords">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="description" content="your description">
+		<meta name="author" content="author,email address">
+		<meta name="robots" content="index,follow">
+		<meta name="renderer" content="ie-stand">
+		<title></title>
+		<!-- S DNS预解析 -->
+		<link rel="dns-prefetch" href="">
+		<!-- E DNS预解析 -->
+		<!-- S 线上样式页面片，开发请直接取消注释引用 -->
+		<!-- #include virtual="" -->
+		<!-- E 线上样式页面片 -->
+		<!-- S 本地调试，根据开发模式选择调试方式，请开发删除 -->
+		<!--<link rel="stylesheet" href="index/css/index.css" >-->
+		<!-- /本地调试方式 -->
+		<link rel="stylesheet" href="prj/css/lib/bootstrap.min.css" >
+		<link rel="stylesheet" href="prj/font/iconfont.css" >
+		<link rel="stylesheet" href="prj/css/reset.css" >
+		<link rel="stylesheet" href="prj/css/common.css" >
+		<!-- /开发机调试方式 -->
+		<!-- E 本地调试 -->
+	</head>
+	<body>
+		<div class="header-wrapper">
+			<div class="container header">
+				<h1 class="navbar-header">九次方前端</h1>
+				<div class="navbar-collapse collapse ">
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="https://jusfoun-fe.github.io/index.html#services ">前端规范</a></li>
+						<li><a href="https://jusfoun-fe.github.io/index.html#portfolio ">团队介绍</a></li>
+						<li><a href="https://jusfoun-fe.github.io/index.html#contact">加入我们</a></li>
+						<li><a href="https://jusfoun-fe.github.io/news.html" title="" target="_blank">新闻周刊</a></li>
+						<li><a href="https://jusfoun-fe.github.io/doc.html" target="_blank" id="priInfo">内部资料</a></li>
+						<li><a href="https://jusfoun-fe.github.io/Project.html" target="_blank">前端项目</a></li>
+						<li><a href="https://jusfoun-fe.github.io/Project.html" target="_blank">前端项目</a></li>
+						<li class="active"><a href="https://jusfoun-fe.github.io/projectManage/" target="_blank">项目管理</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container wrapper">
+			<div class="row content-block">
+				<div class="chart-wrapper col-lg-4 col-lg-push-8 col-md-12 col-sm-12">
+					<div class="row chart-big-wrapper">
+						<div class="chart-block col-lg-12 col-md-6">
+							<p class="chart-title">人员项目详情</p>
+							<button type="button" class="btn btn-primary" id="force-modal">人员项目详情</button>
+						</div>
+						<div class="chart-block col-lg-12 col-md-6">
+							<p class="chart-title">人员分配情况</p>
+							<div class="chart" id="chart5"></div>
+						</div>
+						<div class="chart-block no-right-border col-lg-12 col-md-6">
+							<p class="chart-title">项目状态统计情况</p>
+							<div class="chart" id="chart1"></div>
+						</div>
+						<div class="chart-block  col-lg-12  col-md-6">
+                            <p class="chart-title">已提测项目bug统计情况</p>
+                            <div class="chart" id="chart3"></div>
+
+						</div>
+						<div class="chart-block  col-lg-12 col-md-6 ">
+							<p class="chart-title">项目类型统计情况</p>
+							<div class="chart" id="chart4"></div>
+						</div>
+						<div class="chart-block no-right-border col-lg-12 col-md-12 ">
+                            <p class="chart-title">项目人员投入</p>
+                            <div class="staff-input">
+                                <span><i class="develop-icon"></i>开发中：<i class="develop-num"></i>人</span>
+                                <span><i class="measured-icon"></i>已提测：<i class="measured-num"></i>人</span>
+                            </div>
+                            <div class="chart chart2" id="chart2"></div>
+						</div>
+					</div>
+
+				</div>
+				<div class="list-wrapper col-lg-8 col-lg-pull-4 col-md-12 col-sm-12">
+					<ul class="condition-wrapper">
+						<li class="clearfix row">
+							<span class="condition-title">项目状态：</span>
+							<div class="condition-list status-list">
+								<span class="active">全部</span>
+								<span>开发中</span>
+								<span>已提测</span>
+								<span>已完成</span>
+								<span>已冻结</span>
+								<span>暂停开发</span>
+							</div>
+						</li>
+						<li class="clearfix">
+							<span class="condition-title">项目类型：</span>
+							<div class="condition-list type-list">
+								<span class="active">全部</span>
+								<span>独立纵队</span>
+								<span>合资公司</span>
+								<span>总部平台</span>
+								<span>内部研发平台</span>
+							</div>
+						</li>
+					</ul>
+					<ul class="row list" id="listWrapper"></ul>
+				</div>
+
+			</div>
+
+		</div>
+		<div class="footer-wrapper">
+			<div class="container footer clearfix ">
+				<div class="row">
+					<p class="col-lg-6 col-md-6 col-sm-6 sol-xs-12">版权所有 九次方大数据信息集团有限公司</p>
+					<p class="col-lg-6 col-md-6 col-sm-6 sol-xs-12">Copyright 2017 by Jusfoun.com. All Right Reserved</p>
+				</div>
+
+			</div>
+		</div>
+		<!-- Large modal -->
+		<div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="chart-force" id="chart_force"></div>
+				</div>
+			</div>
+		</div>
+	<script src="prj/js/lib/jquery.min.js"></script>
+	<script src="prj/js/lib/echarts.js"></script>
+	<script src="prj/js/lib/jquery.nicescroll.js"></script>
+	<script src="prj/js/lib/bootstrap.min.js"></script>
+	<script src="prj/js/index2.js"></script>
+	</body>
+</html>

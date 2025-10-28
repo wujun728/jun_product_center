@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../component/pear/css/pear.css"/>
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="mainBox">
+        <div class="main-container">
+            <div class="main-container">
+                <ul id="role-power" class="dtree" data-id="0"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="button-container">
+            <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit="" lay-filter="power-save">
+                <i class="layui-icon layui-icon-ok"></i>
+                提交
+            </button>
+            <button type="reset" class="pear-btn pear-btn-sm">
+                <i class="layui-icon layui-icon-refresh"></i>
+                重置
+            </button>
+        </div>
+    </div>
+</form>
+<script src="../../../component/layui/layui.js"></script>
+<script src="../../../component/pear/pear.js"></script>
+<script>
+    layui.use(['dtree', 'form', 'jquery', 'easyAdmin'], function () {
+        let dtree = layui.dtree;
+        let form = layui.form;
+        let $ = layui.jquery;
+        let easyAdmin = layui.easyAdmin;
+        // 根据menuId获取详情，用于数据回显
+        var roleId = easyAdmin.getQueryString("roleId");
+        easyAdmin.httpGet("/sys/role/getRolePower?roleId=" + roleId, function (result) {
+            dtree.render({
+                elem: "#role-power",
+                method: "get",
+                data: result.data,
+                dataFormat: "list",
+                checkbar: true,
+                // skin: "layui",
+                initLevel: "1",
+                checkbarType: "self",
+                response: {treeId: "menuId", parentId: "pid", title: "title"},
+            });
+        })
+
+
+        form.on('submit(power-save)', function (data) {
+            let param = dtree.getCheckbarNodesParam("role-power");
+            let ids = '';
+            for (let i = 0; i < param.length; i++) {
+                let id = param[i].nodeId;
+                ids += id + ',';
+            }
+            ids = ids.substr(0, ids.length - 1);
+            data.field.roleId = roleId;
+            data.field.powerIds = ids;
+
+            easyAdmin.http({
+                url: '/dev-api/sys/role/saveRolePower',
+                data: data.field,
+                dataType: 'json',
+                type: 'put',
+                success: function (result) {
+                    if (result.success) {
+                        layer.msg(result.msg, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        });
+                    } else {
+                        layer.msg(result.msg, {icon: 2, time: 1000});
+                    }
+                }
+            })
+            return false;
+        });
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .phone{
+            margin: 2% auto 0 auto;
+            background-image: url(./static/img/phone-view.png);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            height: 100%;
+            padding: 106px 16px;
+            box-sizing: border-box;
+            width: 365px;
+            overflow: hidden;
+        }
+        .iframe-page{
+            width: 100%;
+            height: 580px;
+            background-color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+   <div class="phone">
+       <iframe id="phoneUrl" src="" frameborder="0" class="iframe-page"></iframe>
+   </div>
+</body>
+<script>
+	var phoneUrl = window.location.href.split('?')[1].split('=')[1];
+	document.getElementById('phoneUrl').src = phoneUrl; 
+</script>
+</html>

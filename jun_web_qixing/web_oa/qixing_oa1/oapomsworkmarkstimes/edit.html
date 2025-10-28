@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="mobile-prefetch" href=""/>
+	<title>编辑工时记录 - 勾股OA</title>	 
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-page">
+	<div class="layui-card">
+		<div class="layui-card-header">
+			<span class="layui-breadcrumb">
+			  <a href="javascript:history.back()">工时记录管理</a>
+			  <a><cite>编辑工时记录</cite></a>
+			</span>
+		</div>
+		<div class="layui-card-body">
+			<form class="layui-form" id="editForm" lay-filter="editForm">
+				<input type="hidden" name="id" id="id" />
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<input type="text" name="usercode" required  lay-verify="required" placeholder="工号" class="layui-input" maxlength="20" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<input type="text" name="refUsername" required  lay-verify="required" placeholder="用户名称" class="layui-input" maxlength="50" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<input type="text" name="workDay" required  lay-verify="required" placeholder="日期" class="layui-input" id="workDay" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<input type="text" name="beginTime" required  lay-verify="required" placeholder="开始时间" class="layui-input" id="beginTime" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<input type="text" name="endTime" required  lay-verify="required" placeholder="结束时间" class="layui-input" id="endTime" autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<input type="number" name="workTotalTime" required  lay-verify="required|number" placeholder="工作时长(小时)" class="layui-input" id="workTotalTime" readonly autocomplete="off" />
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md6 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<textarea name="remark" placeholder="备注" class="layui-textarea" rows="4" maxlength="200" autocomplete="off"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-col-md3 layui-col-md-offset2">
+						<div class="layui-input-block">
+							<button type="button" class="layui-btn layui-btn-primary" onclick="window.history.back(-1)">取消</button>
+							<button type="submit" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="submitEdit">保存</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','laydate','form'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, laydate = layui.laydate;
+
+		//日期选择器
+		laydate.render({
+			elem: '#workDay',
+			type: 'date'
+		});
+
+		//时间选择器
+		laydate.render({
+			elem: '#beginTime',
+			type: 'time'
+		});
+
+		laydate.render({
+			elem: '#endTime',
+			type: 'time'
+		});
+
+		//监听开始时间和结束时间的变化，自动计算工作时长
+		$(document).on('blur', '#beginTime, #endTime', function() {
+			calculateWorkTime();
+		});
+
+		//计算工作时长
+		function calculateWorkTime() {
+			var beginTime = $('#beginTime').val();
+			var endTime = $('#endTime').val();
+			if (beginTime && endTime) {
+				var begin = new Date('2000-01-01 ' + beginTime);
+				var end = new Date('2000-01-01 ' + endTime);
+				var diff = end - begin;
+				if (diff < 0) {
+					layer.msg('结束时间必须大于开始时间');
+					return;
+				}
+				var hours = diff / (1000 * 60 * 60);
+				$('#workTotalTime').val(hours.toFixed(2));
+			}
+		}
+
+		//获取URL参数
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+
+		//加载数据
+		function loadData() {
+			var id = getUrlParam('id');
+			if (id) {
+				tool.get('/qixing_oa1/oapomsworkmarkstimes/get', {id: id}, function(res) {
+					if (res.code == 0 && res.data) {
+						var data = res.data;
+						$('#id').val(data.id);
+						$('input[name="usercode"]').val(data.usercode);
+						$('input[name="refUsername"]').val(data.refUsername);
+						$('input[name="workDay"]').val(data.workDay);
+						$('input[name="beginTime"]').val(data.beginTime);
+						$('input[name="endTime"]').val(data.endTime);
+						$('input[name="workTotalTime"]').val(data.workTotalTime);
+						$('textarea[name="remark"]').val(data.remark);
+						form.render();
+					} else {
+						layer.msg('获取数据失败');
+					}
+				});
+			}
+		}
+
+		//页面加载完成后加载数据
+		loadData();
+
+		//监听提交
+		form.on('submit(submitEdit)', function(data) {
+			var field = data.field;
+
+			//表单验证
+			if (!field.usercode) {
+				layer.msg('请输入工号');
+				return false;
+			}
+			if (field.usercode.length > 20) {
+				layer.msg('工号长度不能超过20个字符');
+				return false;
+			}
+			if (!field.refUsername) {
+				layer.msg('请输入用户名称');
+				return false;
+			}
+			if (field.refUsername.length > 50) {
+				layer.msg('用户名称长度不能超过50个字符');
+				return false;
+			}
+			if (!field.workDay) {
+				layer.msg('请选择日期');
+				return false;
+			}
+			if (!field.beginTime) {
+				layer.msg('请选择开始时间');
+				return false;
+			}
+			if (!field.endTime) {
+				layer.msg('请选择结束时间');
+				return false;
+			}
+			if (!field.workTotalTime) {
+				layer.msg('请输入工作时长');
+				return false;
+			}
+			if (parseFloat(field.workTotalTime) <= 0) {
+				layer.msg('工作时长必须大于0');
+				return false;
+			}
+			if (field.remark && field.remark.length > 200) {
+				layer.msg('备注长度不能超过200个字符');
+				return false;
+			}
+
+			//提交表单
+			tool.post('/qixing_oa1/oapomsworkmarkstimes/update', field, function(res) {
+				layer.msg(res.msg, {time: 1000}, function() {
+					if (res.code == 0) {
+						window.location.href = '/qixing_oa1/oapomsworkmarkstimes/datalist.html';
+					}
+				});
+			});
+			return false;
+		});
+	}		
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+ 
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

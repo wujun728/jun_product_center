@@ -1,0 +1,40 @@
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div class="layui-side layui-side-menu">
+    <div class="layui-side-scroll">
+        <ul class="layui-nav layui-nav-tree" lay-filter="menu">
+            <!--一级菜单-->
+            <li class="layui-nav-item" th:each="menu : ${T(com.ruoyi.web.utils.UserUtils).listUserMenu()}">
+                <a th:class="${#lists.isEmpty(menu.children)?'':'child'}" th:href="@{${#lists.isEmpty(menu.children)?(menu.url):''}}">
+                    <i class="layui-icon" th:if="${menu.icon!='#' && menu.icon!=''}" th:class="${menu.icon}"></i>
+                    <span th:text="${menu.menuName}">菜单</span>
+                </a>
+                <!--二级菜单-->
+                <dl class="layui-nav-child" th:if="${not #lists.isEmpty(menu.children)}">
+                    <dd th:each="cmenu : ${menu.children}">
+                        <a  th:class="${#lists.isEmpty(cmenu.children)?'':'child'}" th:href="@{${#lists.isEmpty(cmenu.children)?(cmenu.url):''}}">
+                            <span th:text="${cmenu.menuName}"></span>
+                        </a>
+                        <!--三级菜单-->
+                        <dl class="layui-nav-child" th:if="${not #lists.isEmpty(cmenu.children)}">
+                            <dd th:each="dmenu : ${cmenu.children}">
+                                <a th:class="${#lists.isEmpty(dmenu.children)?'':'child'}" th:href="@{${#lists.isEmpty(dmenu.children)?(dmenu.url):''}}">
+                                    <span th:text="${dmenu.menuName}"></span>
+                                </a>
+                                <!--四级菜单-->
+                                <dl class="layui-nav-child" th:if="${not #lists.isEmpty(dmenu.children)}">
+                                    <dd  th:each="emenu : ${dmenu.children}">
+                                        <a th:class="${#lists.isEmpty(emenu.children)?'':'child'}" th:href="@{${#lists.isEmpty(emenu.children)?(emenu.url):''}}">
+                                            <span th:text="${emenu.menuName}"></span>
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </dd>
+                        </dl>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+</html>

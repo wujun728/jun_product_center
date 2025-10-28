@@ -1,0 +1,24 @@
+{
+    "code": 0,
+    "msg": "",
+    "action": "",
+    "url": "",
+    "data": [
+        {
+            "id": 1,
+            "title": "合同分类一",
+            "status": 1,
+            "create_time": "1637987189",
+            "update_time": "0",
+            "delete_time": "0"
+        },
+        {
+            "id": 2,
+            "title": "合同分类二",
+            "status": 1,
+            "create_time": "1637987199",
+            "update_time": "0",
+            "delete_time": "0"
+        }
+    ]
+}

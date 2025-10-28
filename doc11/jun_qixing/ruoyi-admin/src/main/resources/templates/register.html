@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('注册若依layui版管理系统')"/>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+<div class="login-container">
+    <div class="layui-row">
+        <div class="layui-col-xs7">
+            <div class="login-left-container">
+                <div class="logo-panel">
+                    <h1><img th:src="@{/ruoyi.png}" alt="若依layui版"></h1>
+                </div>
+                <p class="title">欢迎使用<strong style="padding: 0px 5px;">若依layui版</strong>后台管理系统</p>
+                <ul>
+                    <li><i class="layui-icon layui-icon-circle-dot"></i>SpringBoot</li>
+                    <li><i class="layui-icon layui-icon-circle-dot"></i>Mybatis</li>
+                    <li><i class="layui-icon layui-icon-circle-dot"></i>Shiro</li>
+                    <li><i class="layui-icon layui-icon-circle-dot"></i>Thymeleaf</li>
+                    <li><i class="layui-icon layui-icon-circle-dot"></i>layui</li>
+                </ul>
+                <p class="title">已经注册过?<a th:href="@{/login}">立即登录>></a></p>
+            </div>
+        </div>
+        <div class="layui-col-xs5">
+            <div class="login-right-container">
+                <form class="layui-form login-form" action="" lay-filter="register-form">
+                    <div class="layui-form-item">
+                        <label class="user-icon layui-icon layui-icon-username"></label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" type="text" name="loginName" lay-verify="required" lay-verType="tips" lay-reqtext="请输入用户名" autocomplete="off" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="user-icon layui-icon layui-icon-password"></label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" type="password" name="password" lay-verify="required" lay-verType="tips" lay-reqtext="请输入密码" placeholder="密码" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="user-icon layui-icon layui-icon-password"></label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" type="password" id="confirmPassword" lay-verify="required" lay-verType="tips" lay-reqtext="请再次输入密码" placeholder="确认密码" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-row">
+                            <div class="layui-col-xs7">
+                                <label class="user-icon layui-icon layui-icon-vercode"></label>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" style="width: 160px;" type="text" name="validateCode" lay-verify="required" lay-verType="tips" lay-reqtext="请输入验证码" placeholder="验证码" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="layui-col-xs5">
+                                <div style="margin-left: 10px;">
+                                    <a href="javascript:void(0);" title="点击更换验证码">
+                                        <img th:src="@{captcha/captchaImage(type=${captchaType})}" class="login-vercode imgcode">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="margin-bottom: 20px;">
+                        <input type="checkbox" name="acceptTerm" lay-skin="primary" title="我已阅读并同意">
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="btn-register" id="btn-register">登 录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var captchaType = [[${captchaType}]];
+</script>
+<script>
+    $(function () {
+        var $ = layui.jquery,
+            form = layui.form;
+        $('.imgcode').click(function () {
+            var url = ctx + "captcha/captchaImage?type=" + captchaType + "&s=" + Math.random();
+            $(".imgcode").attr("src", url);
+        });
+        //监听提交
+        form.on('submit(btn-register)', function (data) {
+            layer.load(2, {
+                shade: [0.1, '#393D49']
+            });
+            var data = data.field;
+            var confirmPassword = $('#confirmPassword').val();
+            if (confirmPassword != data.password) {
+                layer.msg('两次密码输入不一致');
+                return false;
+            }
+            if(!$('input[name="acceptTerm"]').prop('checked')){
+                layer.msg('注册需同意使用条款');
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                url: ctx + "register",
+                data: data,
+                success: function (r) {
+                    if (r.code == 0) {
+                        location.href = ctx + 'index';
+                    } else {
+                        layer.msg(r.msg);
+                        layer.closeAll('loading');
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg("位置错误！");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

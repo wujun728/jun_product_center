@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "遵化大数据",            
+    "url": "",           
+    "desc": "",                           
+    "mobile":false                       
+  },
+  "schedule": {
+    "status": "已提测",                  
+    "actualStartTime": "2017-05-12",    
+    "actualEndTime": "未定",      
+    "estimatedStartTime": "2017-05-02", 
+    "estimatedEndTime": "2017-11-30",   
+    "process": 80,                      
+    "delay": false,                     
+    "technology":["layui","gulp"]               
+  },
+  "resources": {
+    "demander": "河北溯源大数据信息技术有限公司",                    
+    "type":"合资公司",				           
+    "manager":"姚文龙",                 
+    "charge": "杨杰",                  
+    "affiliate": ["任传真"]       
+  },
+  "bug": {
+    "total": 59,                     
+    "resolved": 58,                  
+    "unsolved": 1                     
+  },
+  "others": {
+    "remark": "企业端，政府端，消费端，运维端提测中，决策分析处于开发中"   
+  }
+}

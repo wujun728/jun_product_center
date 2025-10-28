@@ -1,0 +1,18 @@
+package ${servicePackageName};
+
+import ${modelPackageName}.${modelName};
+import sy.service.base.BaseService;
+
+/**
+ * ${modelName}Service
+ *
+ * http://git.oschina.net/sphsyv/sypro
+ *
+ * 由代码生成器生成
+ *
+ * @author 孙宇
+ *
+ */
+public interface ${modelName}Service extends BaseService<${modelName}, ${pkType}> {
+
+}

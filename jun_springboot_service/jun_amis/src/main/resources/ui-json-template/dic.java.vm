@@ -1,0 +1,10 @@
+/***
+ * @date ${date}
+ * @remark ${dicName}
+ */
+public class ${dicCode} {
+#foreach( $item in $items)
+    /**${item.name}*/
+    public static final String ${item.valueUpper} = "${item.value}";
+#end
+}

@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title> 		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content=" "/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+	<link rel="stylesheet" href="/static/assets/xmselect/xmselect.css" />
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3  class="pb-3">编辑面试候选人</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">姓名<font>*</font>
+			</td>
+			<td>
+				<input type="text" name="name" lay-verify="required" lay-reqText="请输入姓名" placeholder="请输入姓名" class="layui-input">
+			</td>
+			<td class="layui-td-gray">电话</td>
+			<td>
+				<input type="text" name="phone" placeholder="请输入电话" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">邮箱</td>
+			<td>
+				<input type="text" name="email" placeholder="请输入邮箱" class="layui-input">
+			</td>
+			<td class="layui-td-gray">微信</td>
+			<td>
+				<input type="text" name="wechat" placeholder="请输入微信" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">手机号</td>
+			<td>
+				<input type="text" name="telephone" placeholder="请输入手机号" class="layui-input">
+			</td>
+			<td class="layui-td-gray">性别</td>
+			<td>
+				<div id="dictSex" class="xm-select-dictSex"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">国籍</td>
+			<td>
+				<input type="text" name="cuntroy" placeholder="请输入国籍" class="layui-input">
+			</td>
+			<td class="layui-td-gray">婚姻状态</td>
+			<td>
+				<div id="dictMariage" class="xm-select-dictMariage"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">民族</td>
+			<td>
+				<div id="dictNation" class="xm-select-dictNation"></div>
+			</td>
+			<td class="layui-td-gray">生育状况</td>
+			<td>
+				<div id="dictIsborn" class="xm-select-dictIsborn"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">家庭住址</td>
+			<td>
+				<input type="text" name="homeAdress" placeholder="请输入家庭住址" class="layui-input">
+			</td>
+			<td class="layui-td-gray">政治面貌</td>
+			<td>
+				<div id="dictPoliticsStatus" class="xm-select-dictPoliticsStatus"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">证件类型</td>
+			<td>
+				<div id="dictIdType" class="xm-select-dictIdType"></div>
+			</td>
+			<td class="layui-td-gray">证件号</td>
+			<td>
+				<input type="text" name="idNo" placeholder="请输入证件号" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">紧急联系人</td>
+			<td>
+				<input type="text" name="urgencyLinkMan" placeholder="请输入紧急联系人" class="layui-input">
+			</td>
+			<td class="layui-td-gray">紧急联系电话</td>
+			<td>
+				<input type="text" name="urgencyLinkPhone" placeholder="请输入紧急联系电话" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">紧急联系人关系</td>
+			<td>
+				<input type="text" name="urgencyLinkRelation" placeholder="请输入紧急联系人关系" class="layui-input">
+			</td>
+			<td class="layui-td-gray">QQ号码</td>
+			<td>
+				<input type="text" name="qqNo" placeholder="请输入QQ号码" class="layui-input">
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">第一学历</td>
+			<td>
+				<div id="dictFirestDegree" class="xm-select-dictFirestDegree"></div>
+			</td>
+			<td class="layui-td-gray">学位</td>
+			<td>
+				<div id="dictDegredd" class="xm-select-dictDegredd"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">专业</td>
+			<td>
+				<input type="text" name="professional" placeholder="请输入专业" class="layui-input">
+			</td>
+			<td class="layui-td-gray">教育类型</td>
+			<td>
+				<div id="dictEduType" class="xm-select-dictEduType"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">毕业院校</td>
+			<td>
+				<input type="text" name="whichColledge" placeholder="请输入毕业院校" class="layui-input">
+			</td>
+			<td class="layui-td-gray">院校类型</td>
+			<td>
+				<div id="dictColledge" class="xm-select-dictColledge"></div>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">毕业时间</td>
+			<td>
+				<input type="text" name="graduationDate" id="graduationDate" placeholder="请输入毕业时间" class="layui-input">
+			</td>
+			<td class="layui-td-gray">备注</td>
+			<td>
+				<textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+			</td>
+		</tr>
+	</table>
+		<div class="pt-4">
+		<input type="hidden" name="id" value="" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="btn_cancel">取消</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','laydate'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, laydate = layui.laydate;
+		var id = CoreUtil.getUrlParam("id");
+		var dictSex, dictMariage, dictNation, dictIsborn, dictPoliticsStatus, dictIdType, dictFirestDegree, dictDegredd, dictEduType, dictColledge;
+		
+		//日期
+		laydate.render({
+			elem: '#graduationDate',
+			type: 'date'
+		});
+		
+		//加载字典数据
+		xnUtil.getDictDataByDictTypeCode('dict_sex', function(res){
+			dictSex = xmSelect.render({
+				elem: '#dictSex',
+				name: 'dictSex',
+				placeholder: '请选择性别',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_mariage', function(res){
+			dictMariage = xmSelect.render({
+				elem: '#dictMariage',
+				name: 'dictMariage',
+				placeholder: '请选择婚姻状态',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_nation', function(res){
+			dictNation = xmSelect.render({
+				elem: '#dictNation',
+				name: 'dictNation',
+				placeholder: '请选择民族',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_isborn', function(res){
+			dictIsborn = xmSelect.render({
+				elem: '#dictIsborn',
+				name: 'dictIsborn',
+				placeholder: '请选择生育状况',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_politics_status', function(res){
+			dictPoliticsStatus = xmSelect.render({
+				elem: '#dictPoliticsStatus',
+				name: 'dictPoliticsStatus',
+				placeholder: '请选择政治面貌',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_id_type', function(res){
+			dictIdType = xmSelect.render({
+				elem: '#dictIdType',
+				name: 'dictIdType',
+				placeholder: '请选择证件类型',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_firest_degree', function(res){
+			dictFirestDegree = xmSelect.render({
+				elem: '#dictFirestDegree',
+				name: 'dictFirestDegree',
+				placeholder: '请选择第一学历',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_degredd', function(res){
+			dictDegredd = xmSelect.render({
+				elem: '#dictDegredd',
+				name: 'dictDegredd',
+				placeholder: '请选择学位',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_edu_type', function(res){
+			dictEduType = xmSelect.render({
+				elem: '#dictEduType',
+				name: 'dictEduType',
+				placeholder: '请选择教育类型',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		xnUtil.getDictDataByDictTypeCode('dict_colledge', function(res){
+			dictColledge = xmSelect.render({
+				elem: '#dictColledge',
+				name: 'dictColledge',
+				placeholder: '请选择院校类型',
+				data: res,
+				prop: {
+					name: 'dictLabel',
+					value: 'dictValue'
+				}
+			});
+		});
+		
+		//加载数据
+		if(id){
+			$.ajax({
+				url: '/qixing_oa1/hruserresume/detail',
+				data: {id: id},
+				success: function(res){
+					if(res.code == 0){
+						var data = res.data;
+						$('input[name=id]').val(data.id);
+						$('input[name=name]').val(data.name);
+						$('input[name=phone]').val(data.phone);
+						$('input[name=email]').val(data.email);
+						$('input[name=wechat]').val(data.wechat);
+						$('input[name=telephone]').val(data.telephone);
+						if(data.dictSex) dictSex.setValue([data.dictSex]);
+						$('input[name=cuntroy]').val(data.cuntroy);
+						if(data.dictMariage) dictMariage.setValue([data.dictMariage]);
+						if(data.dictNation) dictNation.setValue([data.dictNation]);
+						if(data.dictIsborn) dictIsborn.setValue([data.dictIsborn]);
+						$('input[name=homeAdress]').val(data.homeAdress);
+						if(data.dictPoliticsStatus) dictPoliticsStatus.setValue([data.dictPoliticsStatus]);
+						if(data.dictIdType) dictIdType.setValue([data.dictIdType]);
+						$('input[name=idNo]').val(data.idNo);
+						$('input[name=urgencyLinkMan]').val(data.urgencyLinkMan);
+						$('input[name=urgencyLinkPhone]').val(data.urgencyLinkPhone);
+						$('input[name=urgencyLinkRelation]').val(data.urgencyLinkRelation);
+						$('input[name=qqNo]').val(data.qqNo);
+						if(data.dictFirestDegree) dictFirestDegree.setValue([data.dictFirestDegree]);
+						if(data.dictDegredd) dictDegredd.setValue([data.dictDegredd]);
+						$('input[name=professional]').val(data.professional);
+						if(data.dictEduType) dictEduType.setValue([data.dictEduType]);
+						$('input[name=whichColledge]').val(data.whichColledge);
+						if(data.dictColledge) dictColledge.setValue([data.dictColledge]);
+						$('input[name=graduationDate]').val(data.graduationDate);
+						$('textarea[name=remark]').val(data.remark);
+						form.render();
+					}
+				}
+			});
+		}
+		
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000,'documentTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/qixing_oa1/hruserresume/update", data.field, callback, clickbtn);
+			return false;
+		});
+		
+		//取消按钮
+		$('#btn_cancel').click(function(){
+			tool.sideClose();
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	<script src="/static/assets/xmselect/xmselect.js"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

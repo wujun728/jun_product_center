@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>下拉菜单</title>
+    <link rel="stylesheet" href="../../../assets/libs/layui/css/layui.css"/>
+    <link rel="stylesheet" href="../../../assets/module/admin.css?v=318"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-header">基本用法</div>
+        <div class="layui-card-body" style="padding: 25px 15px 20px 15px;">
+            <div class="layui-btn-container">
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn icon-btn">
+                        &nbsp;Hover方式触发 <i class="layui-icon layui-icon-drop"></i></button>
+                    <ul class="dropdown-menu-nav">
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu">
+                    <button class="layui-btn icon-btn">
+                        &nbsp;点击方式触发 <i class="layui-icon layui-icon-drop"></i>
+                    </button>
+                    <ul class="dropdown-menu-nav">
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn icon-btn">
+                        &nbsp;带箭头指示 <i class="layui-icon layui-icon-drop"></i>
+                    </button>
+                    <ul class="dropdown-menu-nav">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn icon-btn">
+                        &nbsp;更多样式 <i class="layui-icon layui-icon-drop"></i></button>
+                    <ul class="dropdown-menu-nav">
+                        <li class="title">HEADER</li>
+                        <li><a><i class="layui-icon layui-icon-star-fill"></i>1st menu item</a></li>
+                        <li class="disabled">
+                            <a><i class="layui-icon layui-icon-template-1"></i>2nd menu item</a></li>
+                        <hr>
+                        <li class="title">HEADER</li>
+                        <li><a><i class="layui-icon layui-icon-set-fill"></i>3rd menu item</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-btn-container" style="margin-top: 15px;">
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-normal icon-btn">
+                        &nbsp;无限子级 <i class="layui-icon layui-icon-drop"></i></button>
+                    <ul class="dropdown-menu-nav">
+                        <li class="title">HEADER</li>
+                        <li><a><i class="layui-icon layui-icon-star-fill"></i>1st menu item</a></li>
+                        <li class="have-more">
+                            <a><i class="layui-icon layui-icon-template-1"></i>2nd menu item&nbsp;&nbsp;</a>
+                            <ul class="dropdown-menu-nav-child">
+                                <li><a>1st menu item</a></li>
+                                <li><a>2nd menu item</a></li>
+                                <li><a>3rd menu item</a></li>
+                            </ul>
+                        </li>
+                        <hr>
+                        <li class="title">HEADER</li>
+                        <li class="have-more">
+                            <a><i class="layui-icon layui-icon-set-fill"></i>3rd menu item&nbsp;&nbsp;</a>
+                            <ul class="dropdown-menu-nav-child">
+                                <li><a>1st menu item</a></li>
+                                <li><a>2nd menu item</a></li>
+                                <li class="have-more">
+                                    <a>3rd menu item</a>
+                                    <ul class="dropdown-menu-nav-child">
+                                        <li><a>1st menu item</a></li>
+                                        <li><a>2nd menu item</a></li>
+                                        <li class="have-more">
+                                            <a>3rd menu item</a>
+                                            <ul class="dropdown-menu-nav-child">
+                                                <li><a>1st menu item</a></li>
+                                                <li><a>2nd menu item</a></li>
+                                                <li><a>3rd menu item</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu">
+                    <button class="layui-btn layui-btn-normal icon-btn">
+                        &nbsp;暗色主题 <i class="layui-icon layui-icon-drop"></i></button>
+                    <ul class="dropdown-menu-nav dark">
+                        <div class="dropdown-anchor"></div>
+                        <li class="title">HEADER</li>
+                        <li><a><i class="layui-icon layui-icon-star-fill"></i>1st menu item</a></li>
+                        <li class="disabled">
+                            <a><i class="layui-icon layui-icon-template-1"></i>2nd menu item</a></li>
+                        <hr>
+                        <li class="title">HEADER</li>
+                        <li><a><i class="layui-icon layui-icon-set-fill"></i>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <button class="layui-btn layui-btn-normal icon-btn" data-dropdown="#dropdownExp1">
+                    &nbsp;显示遮罩层 <i class="layui-icon layui-icon-drop"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">进阶用法</div>
+        <div class="layui-card-body" style="padding: 25px 15px 20px 15px;">
+            <div class="layui-btn-container">
+                <div class="dropdown-menu">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        &nbsp;气泡确认框 <i class="layui-icon layui-icon-drop"></i></button>
+                    <div class="dropdown-menu-nav dropdown-popconfirm">
+                        <div class="dropdown-anchor"></div>
+                        <div class="dropdown-popconfirm-title">
+                            <i class="layui-icon layui-icon-help"></i>
+                            这是一段内容确定删除吗？
+                        </div>
+                        <div class="dropdown-popconfirm-btn">
+                            <button class="layui-btn" btn-cancel>取消</button>
+                            <button class="layui-btn layui-btn-normal">确定</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-menu">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        &nbsp;气泡确认框 <i class="layui-icon layui-icon-drop"></i></button>
+                    <div class="dropdown-menu-nav dropdown-popconfirm dropdown-top-right">
+                        <div class="dropdown-anchor"></div>
+                        <div class="dropdown-popconfirm-title">
+                            <i class="layui-icon layui-icon-about"></i>
+                            这是一段内容确定删除吗？
+                        </div>
+                        <div class="dropdown-popconfirm-btn">
+                            <button class="layui-btn" btn-cancel>取消</button>
+                            <button class="layui-btn layui-btn-normal">确定</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown-menu">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        &nbsp;自定义下拉内容 <i class="layui-icon layui-icon-drop"></i></button>
+                    <div class="dropdown-menu-nav dropdown-bottom-right"
+                         style="width: 280px;padding: 0 10px 10px 10px;">
+                        <div class="dropdown-anchor"></div>
+                        <div class="layui-tab layui-tab-brief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">HTTPS</li>
+                                <li>SSH</li>
+                            </ul>
+                            <div class="layui-tab-content" style="padding: 10px 0 10px 0;">
+                                <div class="layui-tab-item layui-show layui-text">
+                                    <input class="layui-input" value="https://gitee.com/whvse/easyweb-jwt.git"
+                                           readonly/>
+                                </div>
+                                <div class="layui-tab-item layui-text">
+                                    <input class="layui-input" value="git@gitee.com:whvse/easyweb-jwt.git" readonly/>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="layui-btn layui-btn-sm layui-btn-fluid" style="margin-bottom: 10px;">
+                            Download ZIP
+                        </button>
+                        <img src="http://p1.music.126.net/voV3yPduAhNATICMRJza1A==/109951164017919367.jpg"
+                             width="100%">
+                    </div>
+                </div>
+                <div class="dropdown-menu dropdown-hover" style="width: 135px;">
+                    <input type="text" placeholder="可用于任意元素" class="layui-input"/>
+                    <ul class="dropdown-menu-nav">
+                        <li class="title">是不是在找</li>
+                        <li><a>一个会跳舞的输入框</a></li>
+                        <li><a>一杯忧郁的可乐</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">显示方向控制</div>
+        <div class="layui-card-body" style="padding: 25px 15px;">
+            <div class="layui-btn-container">
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        <i class="layui-icon layui-icon-drop"></i> Bottom Left
+                    </button>
+                    <ul class="dropdown-menu-nav">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        Bottom <i class="layui-icon layui-icon-drop"></i> Center
+                    </button>
+                    <ul class="dropdown-menu-nav dropdown-bottom-center">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        Bottom Right <i class="layui-icon layui-icon-drop"></i>
+                    </button>
+                    <ul class="dropdown-menu-nav dropdown-bottom-right">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        Right Center <i class="layui-icon layui-icon-drop right"></i></button>
+                    <ul class="dropdown-menu-nav dropdown-right-center">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        <i class="layui-icon layui-icon-drop top"></i> Top Left
+                    </button>
+                    <ul class="dropdown-menu-nav dropdown-top-left">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        Top <i class="layui-icon layui-icon-drop top"></i> Center
+                    </button>
+                    <ul class="dropdown-menu-nav dropdown-top-center">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        Top Right <i class="layui-icon layui-icon-drop top"></i></button>
+                    <ul class="dropdown-menu-nav dropdown-top-right">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown-menu dropdown-hover">
+                    <button class="layui-btn layui-btn-primary icon-btn">
+                        <i class="layui-icon layui-icon-drop left"></i> Left Center
+                    </button>
+                    <ul class="dropdown-menu-nav dropdown-left-center">
+                        <div class="dropdown-anchor"></div>
+                        <li><a>1st menu item</a></li>
+                        <li><a>2nd menu item</a></li>
+                        <li><a>3rd menu item</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p style="margin: 15px 0 0 5px;" class="layui-text">
+                查看在<a ew-href="page/template/table/table-basic.html">数据表格</a>中使用示例。
+            </p>
+        </div>
+    </div>
+</div>
+<!-- 下拉菜单 -->
+<ul class="dropdown-menu-nav dropdown-bottom-right layui-hide" id="dropdownExp1">
+    <div class="dropdown-anchor"></div>
+    <li class="title">HEADER</li>
+    <li><a><i class="layui-icon layui-icon-star-fill"></i>1st menu item</a></li>
+    <li class="disabled">
+        <a><i class="layui-icon layui-icon-template-1"></i>2nd menu item</a></li>
+    <hr>
+    <li class="title">HEADER</li>
+    <li><a><i class="layui-icon layui-icon-set-fill"></i>3rd menu item</a></li>
+</ul>
+<!-- js部分 -->
+<script type="text/javascript" src="../../../assets/libs/layui/layui.js"></script>
+<script type="text/javascript" src="../../../assets/js/common.js?v=318"></script>
+<script>
+    layui.use(['layer', 'dropdown', 'element'], function () {
+        var $ = layui.jquery;
+
+    });
+</script>
+</body>
+</html>

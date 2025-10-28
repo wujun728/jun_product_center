@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<link rel="stylesheet" href="/static/assets/third_party/prism/prism.css"/>
+<style>
+.text-detial-ops{line-height: 30px; color:#999; font-size: 12px; padding: 12px 0;}
+.text-detial-ops span{margin-right: 20px;}
+.text-detial-ops a{margin-right:10px;}
+.text-detial-content{padding: 8px 0; color:#333; word-break: break-all; border-top:1px solid #e8e8e8;font-size: 16px!important; line-height: 1.72!important;}
+.text-detial-content p{padding: 8px 0;}
+.text-detial-content img{max-width:98%!important; margin:0 auto; display:block; border: 1px solid #e6e6e6; -webkit-box-shadow: 0 2px 6px rgba(26,26,26,.08); box-shadow: 0 2px 6px rgba(26,26,26,.08); border-radius: 4px;}
+.text-detial-content h1,.text-detial-content h2,.text-detial-content h3,.text-detial-content h4,.text-detial-content h5{margin-top:10px;}
+.text-detial-content a{color:#186AF2; font-style:italic;}
+.text-detial-content a:hover{text-decoration:underline;}
+
+.text-detial-content p code,.blog-detial-content pre{margin:0 3px;font-size: 14px; font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #f6f6f6; padding: 10px; border-radius: 2px;}
+.text-detial-content p code{border: 1px solid #eee;padding: 2px 4px;}
+.text-detial-content table {border-collapse: collapse; border-spacing: 0; display: block; width: 100%; overflow: auto;  word-break: normal;word-break: keep-all; margin-top: 0;margin-bottom: 16px;}
+.text-detial-content table tr {background-color: #fff;border-top: 1px solid #ccc;}
+.text-detial-content table tr:nth-child(2n) {background-color: #f8f8f8;}
+.text-detial-content table td, .blog-detial-content table th { padding: 6px 12px;border: 1px solid #ddd; font-size:14px; }
+.text-detial-content table th {font-weight: 800;}
+.text-detial-content li {list-style: initial;margin-left: 20px;}
+:not(pre)>code[class*=language-], pre[class*=language-]{background:#fff!important;border:1px solid #e8e8e8!important; border-radius:3px;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="p-4">
+	<div class="layui-form-item">
+		<div class="layui-col-md12">
+			<h2 id="title" class="mb-4">办公用品申领详情</h2>
+		</div>
+	</div>
+	
+	<div class="layui-form-item">
+		<div class="layui-col-md12">
+			<div class="text-detial-ops">
+				<span id="createInfo">申请人：</span>
+				<span id="createTime">创建时间：</span>
+				<span id="processStatus" class="ml-4">流程状态：</span>
+			</div>
+		</div>
+	</div>
+	
+	<div class="layui-form-item">
+		<table class="layui-table">
+			<tr>
+				<td class="layui-td-gray" width="120">办公用品名称</td>
+				<td id="offiecProductName" colspan="3"></td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">办公用品类型</td>
+				<td id="dictProductType" width="200"></td>
+				<td class="layui-td-gray">需求数量</td>
+				<td id="reqNum"></td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">办公用品用途</td>
+				<td id="officeTodo" colspan="3"></td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">申请原因</td>
+				<td id="whyDesc" colspan="3"></td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">备注</td>
+				<td id="remark" colspan="3"></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="layui-form-item">
+		<div class="layui-col-md12 text-center mt-6">
+			<button type="button" class="layui-btn layui-btn-normal" id="btn_back">返回</button>
+		</div>
+	</div>
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool'];
+	function gouguInit() {
+		var tool = layui.tool, xnUtil = layui.xnUtil;
+		
+		//获取ID参数
+		var id = GetQueryString("id");
+		
+		//加载详情数据
+		if(id){
+			let callback = function (e) {
+				if (e.code == 0) {
+					var data = e.data;
+					$("#offiecProductName").text(data.offiecProductName || '-');
+					
+					//获取办公用品类型字典
+					var dictProductTypeData = xnUtil.getDictDataByDictTypeCode('dict_product_type', null);
+					$("#dictProductType").text(CoreUtil.selectDictLabel(dictProductTypeData, data.dictProductType) || '-');
+					
+					$("#officeTodo").text(data.officeTodo || '-');
+					$("#reqNum").text(data.reqNum || '-');
+					$("#whyDesc").text(data.whyDesc || '-');
+					$("#remark").text(data.remark || '-');
+					$("#createInfo").text('申请人：' + (data.creator || '-'));
+					$("#createTime").text('创建时间：' + (data.createTime || '-'));
+					
+					//设置流程状态
+					var statusText = '-';
+					if(data.orderState === 0){
+						statusText = '<span style="color: #eb7350;">审批完成</span>';
+					}else if(data.orderState === 1){
+						statusText = '<span style="color: #00b487;">审批中</span>';
+					}else if(data.orderState === 2){
+						statusText = '<span style="color: blue;">草稿</span>';
+					}
+					$("#processStatus").html('流程状态：' + statusText);
+					
+					//如果有流程信息，显示当前节点和处理人
+					if(data.taskName){
+						$("#processStatus").append('<span class="ml-4">当前节点：' + data.taskName + '</span>');
+					}
+					if(data.taskOperatorName){
+						$("#processStatus").append('<span class="ml-4">当前处理人：' + data.taskOperatorName + '</span>');
+					}
+				}
+			}
+			tool.get("/qixing_oa1/oaofficecount2/detail?id="+id, {}, callback);
+		}
+		
+		//返回按钮事件
+		$("#btn_back").click(function() {
+			tool.sideClose();
+			return false;
+		});
+		
+		//获取URL参数
+		function GetQueryString(name){
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if(r!=null)return  unescape(r[2]); return null;
+		}
+	}
+	</script>
+	
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

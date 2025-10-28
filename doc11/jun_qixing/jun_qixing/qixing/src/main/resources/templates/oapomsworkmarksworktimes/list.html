@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <link rel="stylesheet" href="/css/public.css" media="all">
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+<!--   <div class="panel-heading title"></div> -->
+<div class="layui-card-body">
+
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >工号</label>
+      <div class=" layui-input-inline "> 
+		<input type="usercode" name="usercode"  id="usercode"  readonly="readonly"  lay-verify="required|usercode" lay-max="256"  placeholder="请输入工号"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >用户名称</label>
+      <div class=" layui-input-inline "> 
+		<input type="refUsername" name="refUsername"  id="refUsername"  readonly="readonly"  lay-verify="required|refUsername" lay-max="256"  placeholder="请输入用户名称"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >日期</label>
+      <div class=" layui-input-inline "> 
+		<input type="workDay" name="workDay"  id="workDay"  lay-verify="required|workDay" lay-max="99999999"  placeholder="请输入日期"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >开始时间</label>
+      <div class=" layui-input-inline "> 
+	<input type="beginTime" name="beginTime"  id="beginTime" lay-verify="required| date"  placeholder="yyyy-MM-dd"  autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >结束时间</label>
+      <div class=" layui-input-inline "> 
+	<input type="endTime" name="endTime"  id="endTime" lay-verify="required| date"  placeholder="yyyy-MM-dd"  autocomplete="off" class="layui-input">
+    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  layui-required  " >工作时长</label>
+      <div class=" layui-input-inline "> 
+		<input type="workTotalTime" name="workTotalTime"  id="workTotalTime"  lay-verify="required|workTotalTime" lay-max="99999999"  placeholder="请输入工作时长"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >入场地点</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="leaveInCase"  id="leaveInCase"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >入场经纬度</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="leaveInXy"  id="leaveInXy"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-inline">       <label class="layui-form-label  " >离场地点</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="leanveOutCase"  id="leanveOutCase"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-inline">       <label class="layui-form-label  " >离场经纬度</label>
+      <div class=" layui-input-inline "> 
+		<input type="text" name="leanveOutXy"  id="leanveOutXy"   autocomplete="off" class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark"></textarea>
+    </div>
+   
+ </div>
+  	<div class="layui-form-item" id="buttonSave">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="layuimini-container">
+<div class="layuimini-main">
+<div class="table_div">
+   <blockquote class="layui-elem-quote layui-text">
+      <span class="label-info"><strong>考勤记录</strong></span>集成自第三方平台考勤机系统，当前可以查询自己的考勤记录，同时对忘记打卡的记录进行补录(补录权限)!若有操作及使用问题及常见“问题”：请查看<a href="#">操作手册</a>！
+   </blockquote>
+  <div id="searchParam"  shiro:hasPermission="oaPomsWorkmarksWorktimes:list">
+    <div class="layui-form-item">
+	      <div class="layui-input-inline">
+	    <input type="usercode" name="usercodeCondition"  id="usercodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入工号">
+	      </div>
+	      <div class="layui-input-inline">
+	    <input type="refUsername" name="refUsernameCondition"  id="refUsernameCondition" class="layui-input"  autocomplete="off" placeholder="请输入用户名称">
+	      </div>
+	      <div class="layui-input-inline" style="display: none;">
+	    <input type="workDay" name="workDayCondition"  id="workDayCondition" class="layui-input"  autocomplete="off" placeholder="请输入日期">
+	      </div>
+	      <div class="layui-input-inline" style="display: none;">
+		<input type="beginTime" name="beginTimeCondition"  id="beginTimeCondition" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+	      </div>
+	      <div class="layui-input-inline" style="display: none;">
+		<input type="endTime" name="endTimeCondition"  id="endTimeCondition" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+	      </div>
+	      <div class="layui-input-inline" style="display: none;">
+	    <input type="workTotalTime" name="workTotalTimeCondition"  id="workTotalTimeCondition" class="layui-input"  autocomplete="off" placeholder="请输入工作时长">
+	      </div>
+	      <div class="layui-input-inline ">
+	        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+	        <button class="layui-btn"   id="export">导出全部</button>
+	      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+</div>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="oaPomsWorkmarksWorktimes:add">补签</button>
+    <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="oaPomsWorkmarksWorktimes:delete">删除记录</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="oaPomsWorkmarksWorktimes:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="oaPomsWorkmarksWorktimes:delete">删除</a>
+</script>
+<!--   <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="bizCustomerTest:update">附件</a> -->
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/lib/lay-module/xmSelect/xm-select.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+
+<link rel="stylesheet" href="/assets/module/admin.css"/>
+<script src="/assets/module/admin.js"></script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var userProfile = CoreUtil.getData("userProfile");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  var layerAdd;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+    //加载table,数据表格
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/oaPomsWorkmarksWorktimes/listByPage' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+          {field: 'id', title: '', sort: true ,hide: true }, 
+          {field: 'usercode', title: '工号', sort: true }, 
+          {field: 'refUsername', title: '用户名称', sort: true }, 
+          {field: 'workDay', title: '日期', sort: true }, 
+          {field: 'beginTime', title: '开始时间', sort: true }, 
+          {field: 'endTime', title: '结束时间', sort: true }, 
+          {field: 'workTotalTime', title: '工作时长', sort: true }, 
+          {field: 'leaveInCase', title: '入场地点', sort: true ,hide: true }, 
+          {field: 'leaveInXy', title: '入场经纬度', sort: true ,hide: true }, 
+          {field: 'leanveOutCase', title: '离场地点', sort: true ,hide: true }, 
+          {field: 'leanveOutXy', title: '离场经纬度', sort: true ,hide: true }, 
+          {field: 'remark', title: '备注', sort: true ,hide: true }, 
+	         {field: 'isOwner',hide: true  }, {width: 180, toolbar: "#tool", title: '操作', fixed: 'right'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+// 	tableSelect.render({
+// 		elem: '#refUsername',
+// 		checkedKey: 'id',
+// 		table: {
+// 			url: '/oaPomsWorkmarksWorktimes/listBySelect?authorization='+tokenQuery,
+// 			method: 'POST',
+// 			contentType: 'application/json',
+// 			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+// 		        return {
+// 		          "code": res.code, //解析接口状态
+// 		          "msg": res.msg, //解析提示文本
+// 		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+// 		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+// 		        }
+// 		      },
+// 			cols: [ [
+// 					{ type: 'radio' },
+// 					{ field: 'id', title: 'ID' ,hide:true},
+// 					{ field: 'XXXcusname', title: '标题' },
+// 					{ field: 'XXXfullname', title: '名称' }
+// 				] ]
+// 		},
+// 		done: function (elem, data) {
+// 			var NEWJSON = []
+// 			layui.each(data.data, function (index, item) {
+// 				NEWJSON.push(item.XXXcusname);
+// 				$("#refId").val(item.XXXid);
+// 				console.log('info');  
+// 			})
+// 			elem.val(NEWJSON.join(","))
+// 		}
+// 	});
+	 	//日期
+	laydate.render({
+	    elem: '#workDay'
+	    ,type: 'date'
+    });
+ 	//日期+时间
+	laydate.render({
+	    elem: '#beginTime'
+    	,type: 'time'
+    	,format: 'HH:mm:ss' 
+		,min: '08:00:00'
+		,max: '20:00:00'
+		,btns: ['clear', 'confirm']
+    });
+
+ 	//日期+时间
+	laydate.render({
+	    elem: '#endTime'
+    	,type: 'time'
+    	,format: 'HH:mm:ss' 
+   		,min: '08:00:00'
+   		,max: '20:00:00'
+   		,btns: ['clear', 'confirm']
+    });
+
+	numberInput.render("#workTotalTime", {
+	    autoSelcet: false,
+	    max: 12,
+	    min: 0,
+		step: 1,
+	    precision: 2
+	});
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=usercode]").val(userProfile.data.username);
+          $(".operation input[name=refUsername]").val(userProfile.data.realName);
+          $(".operation input[name=workDay]").val("");
+          $(".operation input[name=beginTime]").val("");
+          $(".operation input[name=endTime]").val("");
+          $(".operation input[name=workTotalTime]").val("");
+          $(".operation input[name=leaveInCase]").val("");
+          $(".operation input[name=leaveInXy]").val("");
+          $(".operation input[name=leanveOutCase]").val("");
+          $(".operation input[name=leanveOutXy]").val("");
+          $(".operation textarea[name=remark]").val("");
+			  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 1,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['新增考勤记录' , false],
+              content: $(".operation"),
+          });
+          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+//           $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=usercode]").val(data.usercode);
+          $(".operation input[name=refUsername]").val(data.refUsername);
+          $(".operation input[name=workDay]").val(data.workDay);
+          $(".operation input[name=beginTime]").val(data.beginTime);
+          $(".operation input[name=endTime]").val(data.endTime);
+          $(".operation input[name=workTotalTime]").val(data.workTotalTime);
+          $(".operation input[name=leaveInCase]").val(data.leaveInCase);
+          $(".operation input[name=leaveInXy]").val(data.leaveInXy);
+          $(".operation input[name=leanveOutCase]").val(data.leanveOutCase);
+          $(".operation input[name=leanveOutXy]").val(data.leanveOutXy);
+          $(".operation textarea[name=remark]").val(data.remark);
+			  form.render();
+		  layerAdd = layer.open({
+              type: 1,
+              skin: 'layui-layer-admin',
+              area: ['80%', '80%'],
+              shift: 2,
+              shadeClose: true,
+              scrollbar: true,
+              maxmin: true,
+              shade: false,
+              title:  ['修改考勤记录' , false],
+              content: $(".operation"),
+          });
+          break;
+        case 'file':
+        	data['dictBiztype']='考勤';
+          CoreUtil.setData("biz_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              skin: 'layui-layer-admin',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              scrollbar: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/oaPomsWorkmarksWorktimes/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        skin: 'layui-layer-admin',
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/oaPomsWorkmarksWorktimes/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+    	layer.close(layerAdd);
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/oaPomsWorkmarksWorktimes/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/oaPomsWorkmarksWorktimes/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          layer.close(layerAdd);
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,usercode: $("#usercodeCondition").val()
+		,refUsername: $("#refUsernameCondition").val()
+		,workDay: $("#workDayCondition").val()
+		,beginTime: $("#beginTimeCondition").val()
+		,endTime: $("#endTimeCondition").val()
+		,workTotalTime: $("#workTotalTimeCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+usercode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工号不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refUsername: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '用户名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workDay: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '日期不能大于'+max+'个字符的长度！';
+            }
+        }  ,  beginTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '开始时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  endTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '结束时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  workTotalTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '工作时长不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leaveInCase: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '入场地点不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leaveInXy: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '入场经纬度不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leanveOutCase: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离场地点不能大于'+max+'个字符的长度！';
+            }
+        }  ,  leanveOutXy: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '离场经纬度不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

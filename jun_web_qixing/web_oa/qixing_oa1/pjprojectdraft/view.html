@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>项目底稿查看 - 勾股OA</title>			
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="panel panel-default operation">
+<div class="layui-card-body">
+
+<!-- 11111111111111 -->
+<form class="layui-form " action="" lay-filter="info" style="margin-top: 10px">
+
+<!-- collapse 文件开始 -->
+<div class="layui-collapse"  lay-filter="test" lay-accordion="">
+	<!-- collapse-1 文件开始 -->
+  <div class="layui-colla-item">
+    <h2 class="layui-colla-title">基本信息</h2>
+    <div class="layui-colla-content layui-show">
+       <!-- collapse-1 -->
+        
+
+      <input name="id" id="id" hidden/>
+    
+<div class="layui-form-item"   >
+ <div class="layui-col-md6">       <label class="layui-form-label  " >项目名称</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refProjectName"  id="refProjectName"   readonly  class="layui-input">
+	    </div>
+   </div>  
+ <div class="layui-col-md6">       <label class="layui-form-label  " >底稿名称</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="draftName"  id="draftName"   readonly  class="layui-input">
+	    </div>
+   </div>  
+ </div>
+<div class="layui-form-item" >
+	 <div class="layui-col-md6">       <label class="layui-form-label  " >底稿类型</label>
+	      <div class=" layui-input-block "> 
+		<input type="text" name="dictDraftTypeText"  id="dictDraftTypeText"   readonly  class="layui-input">
+	    </div>
+	   </div>  
+ </div>
+
+ <div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >底稿描述</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="draftDesc"  id="draftDesc" readonly></textarea>
+    </div>
+   
+ </div>
+  
+<div class="layui-form-item"   >
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " >底稿输出时间</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="draftTime"  id="draftTime"   readonly  class="layui-input">
+	    </div>
+   </div>  
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " >底稿输出责任人(承做)</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="refDraftBy"  id="refDraftBy"   readonly  class="layui-input">
+	    </div>
+   </div>  
+
+ <div class="layui-col-md6">       <label class="layui-form-label  " >底稿整理进度</label>
+      <div class=" layui-input-block "> 
+		<input type="text" name="dictDraftStatusText"  id="dictDraftStatusText"   readonly  class="layui-input">
+	    </div>
+   </div>  
+ </div>
+  
+<div class="layui-form-item"   >
+
+      <label class="layui-form-label  " >备注</label>
+      <div class=" layui-input-block "> 
+	    <textarea   class="layui-textarea" name="remark"  id="remark" readonly></textarea>
+    </div>
+   
+ </div>
+
+    </div>
+  </div>
+    <!-- collapse-1  -->
+
+
+  <!-- collapse-1 end -->
+  
+  <!-- collapse-2 start -->
+  <!-- 文件附件的DIV页面-111111 -->
+  <div class="layui-colla-item" id="fileList">
+    <h2 class="layui-colla-title">附件信息</h2>
+    <div class="layui-colla-content layui-show">
+		<div class="table_div1">
+		  <input id="fileRefId" type="text" style="display: none" />
+		  <table class="layui-table" id="showFilesTable" lay-filter="showFilesTable" ></table>
+		</div>
+    </div>
+  </div>
+  <!-- collapse-2 end -->
+</div>
+
+    <div class="form-group-bottom text-right" id="buttonSave">
+        <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+    </div>
+</form>
+
+  <script type="text/html" id="toolFiles">
+	<a class="layui-btn layui-btn-xs" lay-event="pre"  >预览</a>
+	<a class="layui-btn layui-btn-xs" lay-event="down" >下载</a>
+	<a class="layui-btn layui-btn-xs" lay-event="copy" >复制URL</a>
+  </script>
+  <!-- 文件附件的DIV页面-2222222 -->
+</div>
+<!-- collapse end -->
+<!-- 11111111111111 -->
+</div>
+</div>
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','table','form'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, table = layui.table;
+		var id = tool.getUrlParam('id');
+		var token = localStorage.getItem("Authorization");
+		var tableIns1Files;
+		
+		if(id && id != ''){
+			//加载数据
+			tool.get("/dev-api/pjProjectDraft/findOne", {id: id}, function(res){
+				if(res.data != null){
+					form.val("info", res.data);
+					form.render();
+					
+					// 加载附件列表
+					loadFilesTable();
+					
+					// 处理字典文本值
+					if(res.data.dictDraftType){
+						getDictText('dict_draft_type', res.data.dictDraftType, function(text){
+							$('#dictDraftTypeText').val(text);
+						});
+					}
+					
+					if(res.data.dictDraftStatus){
+						getDictText('dict_draft_status', res.data.dictDraftStatus, function(text){
+							$('#dictDraftStatusText').val(text);
+						});
+					}
+				}else{
+					layer.msg('项目底稿信息未找到！');
+				}
+			});
+		}
+		
+		//加载附件列表
+		function loadFilesTable() {
+			tableIns1Files = table.render({
+				elem: '#showFilesTable',
+				contentType: 'application/json',
+				headers: {"Authorization": token},
+				page: true,
+				url: '/dev-api/sysFilesOss/listByPageUser',
+				where: {refBizid: id},
+				method: 'POST',
+				cols: [
+					[
+						{field: 'fileName', title: '文件名', sort: true},
+						{field: 'createDate', title: '创建时间', sort: true},
+						{field: 'fileSize', title: '文件大小', sort: true},
+						{field: 'creator', title: '操作人', hide: false},
+						{field: 'dictBiztype', title: '业务类型', hide: false},
+						{toolbar: "#toolFiles", title: '操作', width:200}
+					]
+				]
+			});
+		}
+		
+		//列操作
+		table.on('tool(showFilesTable)', function(obj) {
+			var data = obj.data;
+			switch (obj.event) {
+				case 'pre':
+					//预览
+					window.open('http://119.45.221.36:8012/onlinePreview?url='+encodeURIComponent(btoa(data.url))+ '&watermarkTxt=' + encodeURIComponent('齐兴会计师事务所'));
+					break;
+				case 'down':
+					//下载
+					window.open(data.url, '_blank');
+					break;
+				case 'copy':
+					var Url2 = data.url;
+					var oInput = document.createElement('input');
+					oInput.value = Url2;
+					document.body.appendChild(oInput);
+					oInput.select();
+					document.execCommand("Copy");
+					oInput.className = 'oInput';
+					oInput.style.display = 'none';
+					layer.msg('已复制成功！');
+					break;
+			}
+		});
+		
+		//返回
+		$("#btn_cancel").click(function() {
+			tool.sideClose();
+			return false;
+		});
+		
+		// 获取字典文本
+		function getDictText(type, value, callback) {
+			tool.get('/dev-api/sys/dict/type/' + type, {}, function(res) {
+				if(res.code == 0 && res.data && res.data.length > 0){
+					for(var i = 0; i < res.data.length; i++){
+						if(res.data[i].value == value){
+							callback(res.data[i].label);
+							return;
+						}
+					}
+					callback('');
+				}else{
+					callback('');
+				}
+			});
+		}
+	}
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

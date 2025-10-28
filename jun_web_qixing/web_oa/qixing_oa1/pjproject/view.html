@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>项目详情 - 勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="layui-form p-4">
+	<h1 id="project_name">项目详情</h1>
+	<div class="text-detial-ops">
+		<span>创建时间：<span id="create_time"></span></span>
+		<span>创建人：<span id="create_by_name"></span></span>
+		<span>更新时间：<span id="update_time"></span></span>
+	</div>
+
+	<!-- 项目基本信息 -->
+	<div class="layui-card mb-4">
+		<div class="layui-card-header">项目基本信息</div>
+		<div class="layui-card-body">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">项目编码</td>
+					<td><span id="project_code"></span></td>
+					<td class="layui-td-gray">项目名称</td>
+					<td><span id="project_name_display"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目类型</td>
+					<td><span id="project_type"></span></td>
+					<td class="layui-td-gray">项目子类型</td>
+					<td><span id="project_sub_type"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目经理</td>
+					<td><span id="manager_name"></span></td>
+					<td class="layui-td-gray">客户(委托单位)</td>
+					<td><span id="client_name"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目金额</td>
+					<td><span id="project_amount"></span></td>
+					<td class="layui-td-gray">项目状态</td>
+					<td><span id="project_status"></span></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+	<!-- 项目详细信息 -->
+	<div class="layui-card mb-4">
+		<div class="layui-card-header">项目详细信息</div>
+		<div class="layui-card-body">
+			<table class="layui-table layui-table-form">
+				<tr>
+					<td class="layui-td-gray">项目开始时间</td>
+					<td><span id="start_time"></span></td>
+					<td class="layui-td-gray">项目结束时间</td>
+					<td><span id="end_time"></span></td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">项目进度</td>
+					<td colspan="3">
+						<div class="layui-progress layui-progress-big" lay-showPercent="yes">
+							<div class="layui-progress-bar layui-bg-green" id="progress_bar" lay-percent="0%"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="layui-td-gray">备注</td>
+					<td colspan="3"><pre id="remark"></pre></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['tool','table','form'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, table = layui.table;
+		
+		// 获取URL中的项目ID
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+
+		var id = getUrlParam('id');
+		if (!id) {
+			layer.msg('获取项目信息失败');
+			return;
+		}
+
+		// 加载项目数据
+		tool.get('/dev-api/pjProject/findOne?id=' + id, function(res) {
+			if (res.code === 0) {
+				var data = res.data;
+				
+				// 填充项目基本信息
+				$('#project_name').text(data.project_name + ' - 项目详情');
+				$('#project_name_display').text(data.project_name);
+				$('#project_code').text(data.project_code || '-');
+				$('#project_type').text(data.project_type_label || '-');
+				$('#project_sub_type').text(data.project_sub_type_label || '-');
+				$('#manager_name').text(data.manager_name || '-');
+				$('#client_name').text(data.client_name || '-');
+				$('#project_amount').text(data.project_amount || '-');
+				$('#project_status').text(data.project_status_label || '-');
+				
+				// 填充项目详细信息
+				$('#start_time').text(data.start_time || '-');
+				$('#end_time').text(data.end_time || '-');
+				$('#remark').text(data.remark || '-');
+				
+				// 初始化项目进度条
+				var progress = data.progress || 0;
+				$('#progress_bar').attr('lay-percent', progress + '%');
+				layui.element.render('progress');
+				
+				// 填充时间信息
+				$('#create_time').text(data.create_time || '-');
+				$('#create_by_name').text(data.create_by_name || '-');
+				$('#update_time').text(data.update_time || '-');
+			} else {
+				layer.msg(res.msg || '获取项目信息失败');
+			}
+		});
+  }
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

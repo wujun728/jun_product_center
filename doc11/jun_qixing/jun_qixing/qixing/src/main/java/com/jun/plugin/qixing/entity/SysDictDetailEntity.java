@@ -1,0 +1,73 @@
+package com.jun.plugin.qixing.entity;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 字典明细
+ *
+ * @author wujun
+ * @version V1.0
+ * @date 2020年3月18日
+ */
+@Data
+@TableName("sys_dict_detail")
+public class SysDictDetailEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 主键
+     */
+    @TableId("id")
+    private String id;
+
+    @TableField("dict_name")
+    private String dict_name;
+    
+    @TableField("dict_remark")
+    private String dict_remark;
+    /**
+     * 字典标签
+     */
+    @TableField("label")
+    private String label;
+
+    /**
+     * 字典值
+     */
+    @TableField("value")
+    private String value;
+
+    /**
+     * 排序
+     */
+    @TableField("sort")
+    private Integer sort;
+
+    /**
+     * 字典id
+     */
+    @TableField("dict_id")
+    private String dictId;
+
+    /**
+     * 创建日期
+     */
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createTime;
+
+    /**
+     * 字典name
+     */
+    @TableField(exist = false)
+    private String dictName;
+
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="page-fill">
+<head>
+    <meta charset="UTF-8">
+    <title>齐兴会计师事务所信息系统-登陆</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="齐兴会计师事务所信息系统">
+    <meta name="description" content="齐兴会计师事务所信息系统">
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" href="../css/oksub.css"/>
+<style>body{background-image:url("/images/bg.jpg");height:100%;width:100%}#container{height:100%;width:100%}input:-webkit-autofill{-webkit-box-shadow:inset 0 0 0 1000px#fff;background-color:transparent}.admin-login-background{width:300px;height:300px;position:absolute;left:50%;top:40%;margin-left:-150px;margin-top:-50px}.admin-header{text-align:center;margin-bottom:20px;color:#ffffff;font-weight:bold;font-size:40px}.admin-input{border-top-style:none;border-right-style:solid;border-bottom-style:solid;border-left-style:solid;height:50px;width:300px;padding-bottom:0px}.admin-input::-webkit-input-placeholder{color:#a78369}.layui-icon-username{color:#a78369!important}.layui-icon-username:hover{color:#9dadce!important}.layui-icon-password{color:#a78369!important}.layui-icon-password:hover{color:#9dadce!important}.admin-input-username{border-top-style:solid;border-radius:10px 10px 0 0}.admin-input-verify{border-radius:0 0 10px 10px}.admin-button{margin-top:20px;font-weight:bold;font-size:18px;width:300px;height:50px;border-radius:5px;background-color:#a78369;border:1px solid#d8b29f}.admin-icon{margin-left:260px;margin-top:10px;font-size:30px}i{position:absolute}.admin-captcha{position:absolute;margin-left:205px;margin-top:-45px}</style>
+</head>
+<body class="page-fill">
+<div class="admin-header"  style="width: 800px;
+			    height: 100px;
+			    position: absolute;
+			    left: 37%;
+			    top: 30%;
+			    z-index: 9999;
+			    margin-left: -150px;
+			    margin-top: -100px;">
+    <span style="font-size:48px">齐兴会计师事务所信息系统</span>
+</div>
+    <div class="page-fill" id="login">
+        <form class="layui-form"   lay-filter="add_form" >
+            <div class="login_face"><!-- <img src="../images/logo.png"> --></div>
+            <div class="layui-form-item input-item">
+                <label for="username">用户名</label>
+                <input type="text" lay-verify="required" name="username" placeholder="请输入账号" autocomplete="off" id="username" class="layui-input">
+            </div>
+            <div class="layui-form-item input-item">
+                <label for="password">密码</label>
+                <input type="password" lay-verify="required|password" name="password" placeholder="请输入密码" autocomplete="off" id="password" class="layui-input">
+            </div>
+            <div class="layui-form-item input-item captcha-box">
+                <label for="captcha">验证码</label>
+                <input type="text" lay-verify="required|captcha" name="captcha" placeholder="请输入验证码" autocomplete="off" id="captcha" maxlength="4" class="layui-input">
+                <!-- <div class="img ok-none-select" id="captchaImg"></div> -->
+                <img class="admin-captcha" width="90" height="40" src="/sys/getVerify">
+                <img  onClick="this.src=this.src+'?'+Math.random();" id="img" class="admin-captcha" width="90" height="40" src="/sys/getVerify">
+            </div>
+            <div style="margin-top: 10px" class="layui-form-item">
+             		<input type="checkbox" style="float: right;" lay-filter="remember" name="remember_user" id="remember_user"  lay-skin="primary" title="记住密码">
+            </div>
+            <div class="layui-form-item">
+                <button class="layui-btn layui-block" lay-filter="login" lay-submit="">登录</button>
+            </div>
+            <div class="login-link">
+                <!-- <a href="/register.html">注册</a> -->
+                 <a href="/forget.html">忘记密码?</a> 
+            </div>
+        </form>
+    </div>
+<!--js逻辑-->
+<script src="../lib/layui/layui.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+    <script>
+        layui.use(["form", "okGVerify", "okUtils", "okLayer"], function () {
+            let form = layui.form;
+            let $ = layui.jquery;
+            let okGVerify = layui.okGVerify;
+            let okUtils = layui.okUtils;
+            let okLayer = layui.okLayer;
+            
+            /*记住用户名和密码*/
+            if ($.cookie("remember_user")) {
+                $("#remember_user").prop("checked", true);
+                form.val("add_form",{
+                    "username":$.cookie("user_name"),
+                    "password":$.cookie("user_password")
+                })
+            }
+
+            // 进行登录操作
+            form.on('submit(login)', function (data) {
+                data = data.field;
+                if (data.captcha == '') {
+                    layer.msg('请输入验证码');
+                    return false;
+                }
+                if (data.username == '') {
+                    layer.msg('用户名不能为空');
+                    return false;
+                }
+                if (data.password == '') {
+                    layer.msg('密码不能为空');
+                    return false;
+                }
+                
+              //勾选记住密码
+                if (data.remember_user== "on") {
+                    var user_name = data.username;
+                    var user_password = data.password;
+                    $.cookie("remember_user", "true", {
+                        expires: 7
+                    }); // 存储一个带7天期限的 cookie
+                    $.cookie("user_name", user_name, {
+                        expires: 7
+                    }); // 存储一个带7天期限的 cookie
+                    $.cookie("user_password", user_password, {
+                        expires: 7
+                    }); // 存储一个带7天期限的 cookie
+                } else {
+                    $.cookie("remember_user", "false", {
+                        expires: -1
+                    }); // 删除 cookie
+                    $.cookie("user_name", '', {
+                        expires: -1
+                    });
+                    $.cookie("user_password", '', {
+                        expires: -1
+                    });
+                } 
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/sys/user/login',
+                    dataType: "JSON",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (res) {
+                        if (res.code == 0) {
+                            layui.data('LocalData', {
+                                key: "access_token",
+                                value: res.data.accessToken
+                            });
+                            layui.data('LocalData', {
+                                key: "userProfile",
+                                value: res
+                            });
+//                             CoreUtil.setData("userProfile",res.data);
+//                             CoreUtil.setData("access_token",res.data.accessToken);
+                            layer.msg('登录成功', {time: 300}, function () {
+                                window.location = '/index.html';
+//                                 window.location = '/home.html';
+                            });
+                        } else {
+                            layer.msg(res.msg);
+                            $("#img").click();
+                        }
+                    }
+                });
+
+                return false;
+            });
+            
+
+            /**
+             * 表单input组件单击时
+             */
+            $("#login .input-item .layui-input").click(function (e) {
+                e.stopPropagation();
+                $(this).addClass("layui-input-focus").find(".layui-input").focus();
+            });
+
+            /**
+             * 表单input组件获取焦点时
+             */
+            $("#login .layui-form-item .layui-input").focus(function () {
+                $(this).parent().addClass("layui-input-focus");
+            });
+
+            /**
+             * 表单input组件失去焦点时
+             */
+            $("#login .layui-form-item .layui-input").blur(function () {
+                $(this).parent().removeClass("layui-input-focus");
+                if ($(this).val() != "") {
+                    $(this).parent().addClass("layui-input-active");
+                } else {
+                    $(this).parent().removeClass("layui-input-active");
+                }
+            })
+            
+            /**
+             * 初始化验证码
+             */
+            /* let verifyCode = new okGVerify("#captchaImg"); */
+
+            /**
+             * 数据校验
+             */
+            /* form.verify({
+                password: [/^[\S]{6,12}$/, "密码必须6到12位，且不能出现空格"],
+                captcha: function (val) {
+                    if (verifyCode.validate(val) != "true") {
+                        return verifyCode.validate(val)
+                    }
+                }
+            }); */
+
+            /**
+             * 表单提交
+             */
+            /* form.on("submit(login)", function (data) {
+                okUtils.ajax("/login", "post", data.field, true).done(function (response) {
+                    okLayer.greenTickMsg(response.msg, function () {
+                        window.location = "../index.html";
+                    })
+                }).fail(function (error) {
+                    console.log(error)
+                });
+                return false;
+            }); */
+            
+        });
+    </script>
+</body>
+</html>

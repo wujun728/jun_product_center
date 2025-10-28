@@ -1,0 +1,22 @@
+<!-- 通用CSS -->
+<head th:fragment=header(title)>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	<title th:text="${title}"></title>
+	<link rel="shortcut icon" th:href="@{/favicon.ico}">
+	<link rel="stylesheet" th:href="@{/js/plugins/layui/css/layui.css}">
+	<link rel="stylesheet" th:href="@{/css/common.css}">
+</head>
+
+<!-- 通用JS -->
+<div th:fragment="footer">
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/polyfill.min.js}"></script>
+	<script th:src="@{/js/plugins/layui/layui.all.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
+	<script th:inline="javascript"> var ctx = [[@{/}]]; </script>
+</div>
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>日志</title>
+    <link href="../../component/pear/css/pear.css" rel="stylesheet"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyWord" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="table" lay-filter="table-filter"></table>
+    </div>
+</div>
+
+</body>
+
+<script type="text/html" id="record-toolbar">
+
+    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="kick">
+        <i class="layui-icon layui-icon-delete">踢人</i>
+    </button>
+</script>
+
+
+<script src="../../component/layui/layui.js"></script>
+<script src="../../component/pear/pear.js"></script>
+<script>
+    layui.use(['easyAdmin', 'table'], function () {
+        let easyAdmin = layui.easyAdmin;
+        let table = layui.table;
+        let cols = [
+                [
+                    {
+                        title: '用户',
+                        field: 'nickName',
+                        align: 'center'
+                    },
+                    {
+                        title: '城市',
+                        field: 'city',
+                        align: 'center'
+                    },
+                    {
+                        title: '操作系统',
+                        field: 'os',
+                        align: 'center'
+                    },
+                    {
+                        title: '浏览器',
+                        field: 'browser',
+                        align: 'center',
+                        width: 90
+                    },
+                    {
+                        title: '请求IP',
+                        field: 'ip',
+                        align: 'center'
+                    },
+                    {
+                        title: '最近操作时间',
+                        field: 'lastActivityTime',
+                        align: 'center'
+                    },
+
+                    {
+                        title: '登录时间',
+                        field: 'loginTime',
+                        align: 'center'
+                    }
+                    ,
+                    {
+                        title: '操作',
+                        field: 'loginTime',
+                        align: 'center',
+                        width: 90,
+                        templet: '#record-toolbar'
+                    }
+                ]
+            ]
+        ;
+
+
+        let module = "log";
+        easyAdmin.tableRender({
+            url: "/api/v1/onlineUsers",
+            cols: cols,
+            toolbar: null,
+            defaultToolbar: null
+        });
+        table.on('tool(table-filter)', function (obj) {
+            if (obj.event === 'kick') {
+                easyAdmin.httpGet("/api/v1/kickOffline?token=" + obj.data.tokenValue, function (result) {
+                    if (result.success) {
+                        layer.msg("踢人成功", {
+                            icon: 1,
+                            area: ['100px', '65px'],
+                            time: 1000
+                        }, function () {
+                            table.reload('table');
+                        });
+                    } else {
+                        layer.msg(result.msg, {
+                            icon: 2,
+                            area: ['300px', '65px'],
+                            time: 2000
+                        });
+                    }
+                });
+            }
+
+        });
+        easyAdmin.FormQuery();
+    })
+</script>
+</html>

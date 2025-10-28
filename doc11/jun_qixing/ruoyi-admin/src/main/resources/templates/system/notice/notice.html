@@ -1,0 +1,212 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('通知公告')"/>
+    <style>
+        .layui-table-cell .layui-form-checkbox[lay-skin=primary]{top:4px;}
+    </style>
+</head>
+<body>
+<div class="layui-layout layui-layout-iframe">
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <!--search form-->
+            <form class="layui-form layui-card-header layuiadmin-card-header-auto search-form" id="searchForm">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">公告标题</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" type="text" name="noticeTitle" placeholder="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">操作人员</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input" type="text" name="createBy" placeholder="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">公告类型</label>
+                        <div class="layui-input-inline input-sm">
+                            <select name="noticeType" th:with="type=${@dict.getType('sys_notice_type')}">
+                                <option value="">所有</option>
+                                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button  type="button" class="layui-btn layuiadmin-btn-list" data-type="reload" lay-submit lay-filter="form-search" id="form-search">搜索</button>
+                    </div>
+                </div>
+            </form>
+            <!--table actcion-->
+            <div class="layui-card-body">
+                <script type="text/html" id="table_notice_toolbar">
+                    <div class="layui-btn-group" shiro:hasPermission="system:dict:add">
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-notice-add" shiro:hasPermission="system:notice:add"><i class="layui-icon">&#xe654;</i>新增</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="toolbar-notice-remove" shiro:hasPermission="system:notice:remove"><i class="layui-icon">&#xe640;</i>删除</button>
+                    </div>
+                </script>
+                <table id="table_notice" lay-filter="table_notice">
+                </table>
+                <script type="text/html" id="col_operation">
+                    <a shiro:hasPermission="system:notice:edit" href="javascript:;" lay-event="edit">编辑</a><span class="splitor">|</span>
+                    <a shiro:hasPermission="system:notice:remove" href="javascript:;" lay-event="del">删除</a>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:include="include :: footer"/>
+<script th:inline="javascript">
+    var editFlag = [[${@permission.hasPermi('system:notice:edit')}]];
+    var removeFlag = [[${@permission.hasPermi('system:notice:remove')}]];
+    var prefix = ctx + "system/notice";
+    var types = [[${@dict.getType('sys_notice_type')}]];
+    var datas = [[${@dict.getType('sys_notice_status')}]];
+</script>
+<script>
+    layui.use(['common'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form,
+            common = layui.common,
+            laydate = layui.laydate,
+            table = layui.table;
+        //页面事件列表
+        var active = {
+            reload: function () {
+                search(false);
+            },
+            remove: function (ids) {
+                common.ajaxRemove(prefix + "/remove", ids, function (res) {
+                    active['reload'].call(this);
+                });
+            }
+        };
+        //查询表单
+        form.on('submit(form-search)', function (data) {
+            search(true);
+        });
+        //表格
+        table.render({
+            elem: '#table_notice'
+            , method: 'post'
+            , url: prefix + "/list"
+            , toolbar: '#table_notice_toolbar'
+            , defaultToolbar:['filter', 'exports']
+            , autoSort: false 	//关闭前端排序 使用后端排序
+            , limit: getPageSize()
+            , limits: getPageList()
+            , text: getLoadErrorMsg()
+            , page: true
+            , cols: new Array([
+                {type: 'checkbox', width: 40}
+                , {field: 'noticeTitle', title: '标题'}
+                , {
+                    field: 'noticeType', title: '类型', width: 80, align: 'center',
+                    templet: function (item) {
+                        var label=common.getDictLabel(types, item.noticeType);
+                        if(label=='通知'){
+                            return "<span class=\"layui-btn layui-btn-xs layui-btn-normal layui-btn-radius\">" + label + "</span>";
+                        }
+                        if(label=='公告'){
+                            return "<span class=\"layui-btn layui-btn-xs layui-btn-warm layui-btn-radius\">" + label + "</span>";
+                        }
+                    }
+                }
+                , {
+                    field: 'status', title: '状态', width: 80, align: 'center',
+                    templet: function (item) {
+                        var _status = common.getDictLabel(datas, item.status);
+                        if (_status === "正常") {
+                            return "<span class=\"layui-btn layui-btn-xs layui-btn-radius\">正常</span>";
+                        } else {
+                            return "<span class=\"layui-btn layui-btn-xs layui-btn-danger layui-btn-radius\">停用</span>";
+                        }
+                    }
+                }
+                , {field: 'createBy', title: '创建者', width: 150}
+                , {field: 'createTime', title: '创建时间', width: 180,sort: true}
+                , {title: '操作', align: 'center', width: 100, toolbar: '#col_operation'}
+            ])
+        });
+        //表格工具栏按钮事件
+        table.on('toolbar(table_notice)', function (obj) {
+            switch (obj.event) {
+                case 'toolbar-notice-remove':
+                    var checks = table.checkStatus('table_notice');
+                    var ids = common.joinArray(checks.data, "noticeId");
+                    active['remove'].call(this, ids);
+                    break;
+                case 'toolbar-notice-add':
+                    showSaveDialog('新增通知公告', prefix + '/add', 'btn-add');
+                    break;
+                case 'toolbar_del':
+                    break;
+            }
+        });
+        //表格事件
+        table.on('tool(table_notice)', function (obj) {
+            switch (obj.event) {
+                case 'del':
+                    active['remove'].call(this, obj.data.noticeId);
+                    break;
+                case 'edit':
+                    showSaveDialog('修改通知公告', prefix + '/edit/' + obj.data.noticeId, 'btn-edit');
+                    break;
+            }
+        });
+        //监听排序事件
+        table.on('sort(table_notice)', function (obj) {
+            var field = serializeJson($('#searchForm'));
+            field.orderByColumn = obj.field ;
+            field.isAsc = obj.type;
+            table.reload('table_notice', {where: field,page:{curr: 1}});//执行重载
+        });
+    });
+
+    //展示保存表单弹出层
+    function showSaveDialog(title, url, formSubmitBtnId) {
+        layer.open({
+            type: 2,
+            title: title,
+            shade: false,
+            fixed: false,
+            area: ['800px', '400px'],
+            content: url,
+            btn: ["保存", "取消"],
+            yes: function (index, layero) {
+                var submitID = formSubmitBtnId;//表单提交按钮id
+                var submit = layero.find('iframe').contents().find('#' + submitID);//button obj
+                layero.find('iframe')[0].contentWindow.successCallback = function () {
+                    parent.layer.closeAll();
+                    parent.layer.alert('保存成功');
+                    parent.layui.table.reload('table_notice'); //刷新表格数据
+                };
+                submit.trigger('click');
+            }
+            , cancel: function (index, layero) {
+                layui.layer.close(index);
+                return false;
+            }
+        });
+    }
+
+    //表格查询
+    function search(isResetCurr) {
+        var field = serializeJson($('#searchForm'));
+        var sortParam = getSort('table_notice');
+        if (sortParam) {
+            field.orderByColumn = sortParam.sortField;
+            field.isAsc = sortParam.sortMethod;
+        }
+        //执行重载
+        var options = {where: field};
+        if (isResetCurr == true) {
+            options.page = {curr: 1};
+        }
+        layui.table.reload('table_notice', options);
+    }
+</script>
+</body>
+</html>

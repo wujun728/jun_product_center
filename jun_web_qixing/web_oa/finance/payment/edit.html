@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>勾股OA</title>		
+
+
+	<meta name="keywords" content="勾股OA"/>
+	<meta name="description" content="勾股办公是一款基于ThinkPHP6 + Layui + MySql打造的，简单实用的开源免费的企业办公系统框架。系统集成了系统设置、基础数据、人事管理、消息管理、审批管理、行政办公、个人办公、客户管理、合同管理、项目管理、财务管理、知识网盘等模块。系统简约，易于功能扩展，方便二次开发，让开发者更专注于业务深度需求的开发，帮助开发者简单高效降低二次开发成本，通过二次开发之后可以用来做CRM，ERP，业务管理等系统。"/>
+
+
+	<link rel="stylesheet" href="/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<style>
+.layui-table-min th{font-size:13px; text-align:center; background-color:#f8f8f8;}
+.layui-table-min td{font-size:13px; padding:6px;text-align:center;}
+</style>
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<div class="layui-form p-page">
+	<h3 class="pb-3">发票信息</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray-2">发票金额(元)</td>
+			<td class="blue">2000.00</td>
+			<td class="layui-td-gray">发票类型</td>
+			<td>
+			增值税专用发票			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">发票抬头</td>
+			<td>勾股信息科技有限公司</td>
+			<td class="layui-td-gray-3">开票主体(供应商)</td>
+			<td>供应商二</td>
+		</tr>
+				<tr>
+			<td class="layui-td-gray">关联附件</td>
+			<td colspan="5">
+				<div class="layui-row">
+										<div class="layui-col-md4" id="uploadFile841"><div class="file-card " id="fileItem841">
+		<i class="file-icon iconfont icon-sucaiguanli"></i>
+		<div class="file-info">
+			<div class="file-title" title="8ea5e75585629cf779fdb5c8a17e983f2eca04d9_full.jpg">8ea5e75585629cf779fdb5c8a17e983f2eca04d9_full.jpg</div>
+			<div class="file-ops">9.05 KB，2025-01-10 14:58</div>
+		</div>
+		<div class="file-tool"><span class="file-ctrl blue" data-ctrl="view" data-type="1" data-fileid="841" data-ext="image" data-filename="8ea5e75585629cf779fdb5c8a17e983f2eca04d9_full.jpg" data-href="/storage/202501/7esdb_b006acec13c4c49eb7049a8e9e92473e.jpg" title="附件操作"><i class="iconfont icon-gengduo1"></i></span></div>
+	</div></div>
+									</div>
+			</td>
+		</tr>
+			</table>
+	
+	<h3 class="py-3">付款信息</h3>
+	<form class="layui-form">
+		<table class="layui-table layui-table-form">
+			<tr>
+				<td class="layui-td-gray">付款状态</td>
+				<td>
+											<span  class="green">全部付款</span>
+									</td>
+				<td class="layui-td-gray-2">未付款金额(元)</td>
+				<td style="color:#FF5722">0.00</td>
+				<td class="layui-td-gray-2">已付款金额(元)</td>
+				<td style="color:#1E9FFF">2000.00</td>
+			</tr>
+			<tr>
+				<td class="layui-td-gray">付款记录</td>
+				<td colspan="5">
+					<table id="interfix" class="layui-table layui-table-min" style="margin:0">
+						<tr>
+							<th style="width:200px;">付款日期</th>
+							<th style="width:200px;">付款金额(元)</th>
+							<th>备注</th>
+							<th style="width:100px;">操作</th>
+						</tr>
+												<tr class="more_interfix">
+							<td>2025-05-27</td>
+							<td>1000.00</td>
+							<td style="text-align:left;">一次性全部付款</td>
+							<td><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove" data-id="1060" data-tiid="1021">删除</a></td>
+						</tr>
+												<tr class="more_interfix">
+							<td>2025-05-09</td>
+							<td>1000.00</td>
+							<td style="text-align:left;"></td>
+							<td><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="remove" data-id="1055" data-tiid="1021">删除</a></td>
+						</tr>
+																	</table>
+									</td>
+			</tr>
+		</table>
+		<div class="pt-3">
+			<input name="ticket_id" id="ticket_id" type="hidden" value="1021">
+			<input name="pay_type" id="pay_type" type="hidden" value="1">
+						<span class="layui-btn layui-btn-warm" lay-event="refue">全部反付款</span>
+					</div>
+	</form>
+	<input type="hidden" name="id" value="1021">
+</div>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+const moduleInit = ['tool'];
+function gouguInit() {
+	var form = layui.form,tool=layui.tool,laydate = layui.laydate;
+	//添加表格行
+	$('#addInterfix').on('click',function(){
+		var html = '';
+		html += '<tr class="more_interfix">';
+		html += '<td><input type="text" class="layui-input tool-time" name="pay_time[]" readonly lay-verify="required" lay-reqText="请选择付款日期">';
+		html += '<td><input type="text" class="layui-input" name="amount[]" lay-verify="required|number" lay-reqText="请输入付款金额,数字"></td>';
+		html += '<td><input type="text" class="layui-input" name="remarks[]"></td>';
+		html += '<td><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></td>';
+		html += '</tr>';
+		$("#interfix").find('.none_interfix').remove();
+		$("#interfix").append(html);
+		form.render();
+	});
+	//删除表格
+	$('#interfix').on('click', '[lay-event="del"]', function() {
+		$(this).parents(".more_interfix").remove();
+		if($("#interfix").find('.more_interfix').length<1){
+			$("#interfix").append('<tr class="none_interfix"><td colspan="4" style="text-align: center;">暂无付款记录</td></tr>');				
+		}
+	});
+
+	//删除付款记录
+	$('#interfix').on('click', '[lay-event="remove"]', function() {
+		var that=$(this);
+		var id=that.data('id');
+		var ticket_id=that.data('tiid');
+		layer.confirm('确定要删除该付款记录?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				url: "/finance/payment/del",
+				type:'post',
+				data:{id:id,ticket_id:ticket_id},
+				success:function(res){
+					layer.msg(res.msg);
+					if(res.code==0){
+						parent.layui.pageTable.reload();
+						window.setTimeout(function(){
+							location.reload();
+						},1200)	
+					}
+				}
+			})
+		})
+	});
+
+	//监听提交
+	form.on('submit(webform)', function(data){
+		console.log(data.field);
+		if($("#interfix").find('.tool-time').length<1){
+			layer.msg('请添加付款记录');
+			return false;
+		}
+		$.ajax({
+			url: "/finance/payment/add",
+			type:'post',
+			data:data.field,
+			success:function(res){
+				layer.msg(res.msg);
+				if(res.code==0){
+					parent.layui.pageTable.reload();
+					window.setTimeout(function(){
+						location.reload();
+					},1200)	
+				}
+			}
+		})
+		return false;
+	});
+	
+	$('.layui-form').on('click', '[lay-event="refue"]', function () {
+		var ticket_id=$('#ticket_id').val();
+		layer.confirm('确定要全部反付款?', {icon: 3, title:'提示'}, function(index){
+			$.ajax({
+				url: "/finance/payment/add",
+				type:'post',
+				data:{ticket_id:ticket_id,pay_type:3},
+				success:function(res){
+					layer.msg(res.msg);
+					if(res.code==0){
+						parent.layui.pageTable.reload();
+						window.setTimeout(function(){
+							location.reload();
+						},1200)	
+					}
+				}
+			})
+		})
+		return false;
+	})
+	$('.layui-form').on('click', '[lay-event="all"]', function () {
+		var ticket_id=$('#ticket_id').val();
+		layer.confirm('确定已经全部付款?', {icon: 3, title:'提示'}, function(idx){
+			layer.prompt({title: '选择付款日期', formType: 3,value :'',success: function(layero, index){
+				$('.layui-layer-input').attr('readonly',true);
+				lay('.layui-layer-input').each(function () {
+					laydate.render({
+						elem: this,
+						trigger: 'click',
+						showBottom:false
+					});
+				});
+				layer.close(idx);
+			}
+		}, function(pay_time, index){
+				if(pay_time ==''){
+					layer.msg('选择付款日期');
+					return false;
+				}
+				$.ajax({
+					url: "/finance/payment/add",
+					type:'post',
+					data:{ticket_id:ticket_id,pay_type:2,pay_time:pay_time},
+					success:function(res){
+						layer.msg(res.msg);
+						if(res.code==0){
+							parent.layui.pageTable.reload();
+							window.setTimeout(function(){
+								location.reload();
+							},1200)	
+						}
+					}
+				})
+			})
+		})
+		return false;
+	})
+}
+</script>
+
+	<!-- /脚本 -->
+	<script src="/assets/libs/layui/layui.js"></script>
+	<script src="/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

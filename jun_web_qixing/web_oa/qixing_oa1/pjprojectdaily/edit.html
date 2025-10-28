@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="renderer" content="webkit"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="mobile-prefetch" href=""/>
+
+
+	<title>编辑项目日报周报 - 勾股OA</title>		
+
+
+	<link rel="stylesheet" href="/static/assets/gougu/css/gougu.css?v=5.7.5" media="all">
+
+
+<script>
+	const login_admin=2;
+</script>
+
+</head>
+<body class="main-body">
+	<!-- 主体 -->
+	
+<form class="layui-form p-4">
+		<h3  class="pb-3">编辑项目日报周报</h3>
+	<table class="layui-table layui-table-form">
+		<tr>
+			<td class="layui-td-gray">日报标题<font>*</font>
+			</td>
+			<td>
+				<input type="text" name="planName" lay-verify="required|maxLength100" lay-reqText="请输入日报标题" placeholder="请输入日报标题" 
+					class="layui-input" value="">
+			</td>
+			<td class="layui-td-gray">项目名称<font>*</font></td>
+			<td>
+				<input type="text" name="refProjectName" placeholder="请选择项目名称" readonly class="layui-input picker-oa" data-types="project" autocomplete="off" />
+				<input type="hidden" name="refProjectCode" value="" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">日报/周报<font>*</font></td>
+			<td>
+				<select name="dictDailyType" lay-verify="required">
+					<option value="daily">日报</option>
+					<option value="weekly">周报</option>
+				</select>
+			</td>
+			<td class="layui-td-gray">日期<font>*</font></td>
+			<td>
+				<input type="text" name="dailyDate" placeholder="请选择日期" class="layui-input" id="dailyDate" lay-verify="required" autocomplete="off" />
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray" style="vertical-align:top;">工作内容描述<font>*</font></td>
+			<td colspan="5">
+			  <textarea name="dailyDetail" placeholder="请输入工作内容描述" class="layui-textarea" id="dailyDetail" lay-verify="required|maxLength2000" maxlength="2000"></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="layui-td-gray">投入工时<font>*</font></td>
+			<td>
+				<input type="number" name="costTime" placeholder="0.0" class="layui-input" lay-verify="required|number" step="0.5" min="0" max="24" autocomplete="off" />
+			</td>
+			<td class="layui-td-gray">备注</td>
+			<td>
+				<textarea name="remark" placeholder="请输入备注" class="layui-textarea" maxlength="500"></textarea>
+			</td>
+		</tr>
+	</table>
+		<div class="pt-4">
+		<input type="hidden" name="id" value="" />
+		<button class="layui-btn layui-btn-normal" lay-submit="" lay-filter="webform">立即提交</button>
+		<button type="button" class="layui-btn layui-btn-primary" id="form-cancel">取消</button>
+	</div>
+</form>
+
+	<!-- /主体 -->
+
+	<!-- 底部 -->
+	
+	<!-- /底部 -->
+	
+	<!-- 脚本 -->
+	
+<script>
+	const moduleInit = ['layer', 'form', 'tool', 'laydate', 'oaPicker'];
+	function gouguInit() {
+		var form = layui.form, tool = layui.tool, laydate = layui.laydate, layer = layui.layer;
+
+		// 初始化日期选择器
+		laydate.render({
+			elem: '#dailyDate',
+			type: 'date',
+			format: 'yyyy-MM-dd'
+		});
+
+		// 表单验证
+		form.verify({
+			maxLength100: function(value) {
+				if (value.length > 100) {
+					return '标题长度不能超过100个字符';
+				}
+			},
+			maxLength2000: function(value) {
+				if (value.length > 2000) {
+					return '工作内容描述长度不能超过2000个字符';
+				}
+			}
+		});
+
+		// 获取ID
+		var id = tool.getUrlParam('id');
+
+		// 获取详情
+		tool.get('/dev-api/pjProjectDaily/findOne', {id: id}, function(e) {
+			if (e.code == 0) {
+				var data = e.data;
+				// 填充表单数据
+				form.val('webform', data);
+			}
+		});
+
+		//监听提交
+		form.on('submit(webform)', function (data) {
+			let callback = function (e) {
+				layer.msg(e.msg);
+				if (e.code == 0) {
+					tool.sideClose(1000,'pjProjectDailyTable');
+				}
+			}
+			let clickbtn = $(this);
+			tool.post("/dev-api/pjProjectDaily/update", data.field, callback, clickbtn);
+			return false;
+		});
+		
+		// 取消
+		$('#form-cancel').click(function() {
+			top.layer.closeAll();
+		});
+  }
+
+</script>
+
+	<!-- /脚本 -->
+	<script src="/static/assets/layui/layui.js"></script>
+	<script src="/static/assets/gougu/gouguInit.js?v=5.7.5"></script>
+	
+	<!-- 版权标识 -->
+	<!-- 
+	+------------------------------------------------------------------------------------------
+	勾股OA系统开源且可免费使用，但并不是自由软件，未经授权许可不能去除勾股OA的相关版权信息
+	+------------------------------------------------------------------------------------------
+	如需去除版权标识使用的，请微信(hdm588)联系作者去除，开源不易，请多支持！
+	+------------------------------------------------------------------------------------------
+	勾股工作室 <hdm58@qq.com>
+	+------------------------------------------------------------------------------------------
+	-->
+	
+		<div class="copyright">Copyright © 2022-2025 勾股OA - 5.7.5  ，Powered by GouguOPEN<a href="https://www.gougucms.com" target="_blank">官网</a><a href="https://blog.gougucms.com" target="_blank">社区</a><a href="https://blog.gougucms.com/home/book/detail/bid/3/id/7.html" target="_blank">文档</a></div></div>
+	
+	<!-- /版权标识 -->
+</body>
+</html>

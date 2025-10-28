@@ -1,0 +1,119 @@
+.table-selected-container {
+    position: relative;
+    transition: 0.2s;
+
+    > .table-selected-input {
+        cursor: pointer;
+    }
+    > .table-selected-table-container {
+        position: absolute;
+        left: 0;
+        right: 0px;
+        padding: 10px;
+        z-index: 899;
+        border: 1px solid #eee;
+        background-color: #fff;
+        border-radius: 2px;
+        box-sizing: border-box;
+        display: none;
+        box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+
+        &.table-selected-down {
+            top: 42px;
+            animation: tableContainerAniamteUp 0.2s linear;
+        }
+
+        &.table-selected-up {
+            bottom: 42px;
+            animation: tableContainerAniamteDown 0.2s linear;
+        }
+
+        > .table-selected-table-container-header {
+            > .table-selected-table-container-form {
+                float: left;
+                overflow: hidden;
+                > .table-selected-table-container-form-input,
+                > .table-selected-table-container-form-submit {
+                    float: left;
+                    height: 28px;
+                    line-height: 28px;
+                    border-width: 1px;
+                    border-style: solid;
+                    background-color: #fff;
+                    color: rgba(0, 0, 0, 0.85);
+                    border-radius: 3px;
+                    border-color: #d2d2d2;
+                    padding: 0px 5px;
+                    font-size: 12px;
+                }
+
+                > .table-selected-table-container-form-input {
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                }
+
+                > .table-selected-table-container-form-submit {
+                    cursor: pointer;
+                    padding: 0px 1em;
+                    transition: 0.2s;
+                    margin-left: -1px;
+                    height: 30px;
+                    border-top-left-radius: 0px;
+                    border-bottom-left-radius: 0px;
+
+                    &:hover {
+                        background-color: #f6f6f6;
+                    }
+                }
+            }
+
+            > .table-selected-table-container-submit {
+                float: right;
+                line-height: 28px;
+                border-radius: 2px;
+                cursor: pointer;
+                padding: 0px 1em;
+                transition: 0.2s;
+                background-color: #009688;
+                color: #fff;
+                border: 1px solid #009688;
+            }
+        }
+
+        > .table-selected-table-container-body {
+            clear: both;
+            padding-top: 10px;
+            > .layui-table,
+            > .layui-table-view {
+                margin: 0px;
+                padding: 0px;
+
+                .layui-form-checkbox[lay-skin="primary"] {
+                    margin-top: 0px;
+                }
+            }
+        }
+    }
+}
+
+@keyframes tableContainerAniamteUp {
+    0% {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+@keyframes tableContainerAniamteDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

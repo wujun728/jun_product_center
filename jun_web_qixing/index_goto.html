@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>跳转中...</title>
+    <script>
+        // 方式1：页面加载完成后立即跳转（类似 meta 标签的 0 秒延迟）
+        window.onload = function() {
+            // 跳转到 index.html（绝对路径，推荐）
+            window.location.href = "/index.html";
+        };
+
+        // 方式2：点击按钮后跳转（按需使用）
+        function jumpToIndex() {
+            window.location.href = "/index.html";
+        }
+    </script>
+</head>
+<body>
+<button onclick="jumpToIndex()">点击跳转到首页</button>
+</body>
+</html>

@@ -1,0 +1,337 @@
+
+<html>
+<body>
+<div class="layui-form layuimini-form">
+    <input type="hidden" name="pjCustomerId" value="" class="layui-input">
+
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户ID</label>
+        <div class="layui-input-block">
+            <input type="text" name="id" lay-verify="required" lay-reqtext="客户ID不能为空" placeholder="请输入客户ID" value="￥{(pjCustomer.id)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerName" lay-verify="required" lay-reqtext="客户名称不能为空" placeholder="请输入客户名称" value="￥{(pjCustomer.customerName)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户编码</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerCode" lay-verify="required" lay-reqtext="客户编码不能为空" placeholder="请输入客户编码" value="￥{(pjCustomer.customerCode)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="dictCustomerType" lay-verify="required" lay-reqtext="客户类型不能为空" placeholder="请输入客户类型" value="￥{(pjCustomer.dictCustomerType)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">公司电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="phone" lay-verify="required" lay-reqtext="公司电话不能为空" placeholder="请输入公司电话" value="￥{(pjCustomer.phone)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">财务经理</label>
+        <div class="layui-input-block">
+            <input type="text" name="financialManager" lay-verify="required" lay-reqtext="财务经理不能为空" placeholder="请输入财务经理" value="￥{(pjCustomer.financialManager)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">财务经理电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="fphone" lay-verify="required" lay-reqtext="财务经理电话不能为空" placeholder="请输入财务经理电话" value="￥{(pjCustomer.fphone)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户联系信息</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerLinks" lay-verify="required" lay-reqtext="客户联系信息不能为空" placeholder="请输入客户联系信息" value="￥{(pjCustomer.customerLinks)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户营业信息</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerBusiness" lay-verify="required" lay-reqtext="客户营业信息不能为空" placeholder="请输入客户营业信息" value="￥{(pjCustomer.customerBusiness)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">营业执照</label>
+        <div class="layui-input-block">
+            <input type="text" name="busineslicense" lay-verify="required" lay-reqtext="营业执照不能为空" placeholder="请输入营业执照" value="￥{(pjCustomer.busineslicense)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">公司全称</label>
+        <div class="layui-input-block">
+            <input type="text" name="conpanyName" lay-verify="required" lay-reqtext="公司全称不能为空" placeholder="请输入公司全称" value="￥{(pjCustomer.conpanyName)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">营业执照编码</label>
+        <div class="layui-input-block">
+            <input type="text" name="busineslicenseNo" lay-verify="required" lay-reqtext="营业执照编码不能为空" placeholder="请输入营业执照编码" value="￥{(pjCustomer.busineslicenseNo)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">法定代表人</label>
+        <div class="layui-input-block">
+            <input type="text" name="legalRepresentative" lay-verify="required" lay-reqtext="法定代表人不能为空" placeholder="请输入法定代表人" value="￥{(pjCustomer.legalRepresentative)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">注册资本</label>
+        <div class="layui-input-block">
+            <input type="text" name="registeredCapital" lay-verify="required" lay-reqtext="注册资本不能为空" placeholder="请输入注册资本" value="￥{(pjCustomer.registeredCapital)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerAddress" lay-verify="required" lay-reqtext="客户地址不能为空" placeholder="请输入客户地址" value="￥{(pjCustomer.customerAddress)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">公司类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="dictCompanyType" lay-verify="required" lay-reqtext="公司类型不能为空" placeholder="请输入公司类型" value="￥{(pjCustomer.dictCompanyType)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">公司始建于</label>
+        <div class="layui-input-block">
+            <input type="text" name="companyBegin" lay-verify="required" lay-reqtext="公司始建于不能为空" placeholder="请输入公司始建于" value="￥{(pjCustomer.companyBegin)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">实收资本</label>
+        <div class="layui-input-block">
+            <input type="text" name="paiclupCapital" lay-verify="required" lay-reqtext="实收资本不能为空" placeholder="请输入实收资本" value="￥{(pjCustomer.paiclupCapital)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">经营范围</label>
+        <div class="layui-input-block">
+            <input type="text" name="businesscope" lay-verify="required" lay-reqtext="经营范围不能为空" placeholder="请输入经营范围" value="￥{(pjCustomer.businesscope)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">营业期限开始</label>
+        <div class="layui-input-block">
+            <input type="text" name="businesterstart" lay-verify="required" lay-reqtext="营业期限开始不能为空" placeholder="请输入营业期限开始" value="￥{(pjCustomer.businesterstart)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">营业期限结束</label>
+        <div class="layui-input-block">
+            <input type="text" name="businesterend" lay-verify="required" lay-reqtext="营业期限结束不能为空" placeholder="请输入营业期限结束" value="￥{(pjCustomer.businesterend)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">登记机关</label>
+        <div class="layui-input-block">
+            <input type="text" name="registrationAuthority" lay-verify="required" lay-reqtext="登记机关不能为空" placeholder="请输入登记机关" value="￥{(pjCustomer.registrationAuthority)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">执照发放日</label>
+        <div class="layui-input-block">
+            <input type="text" name="licensingDay" lay-verify="required" lay-reqtext="执照发放日不能为空" placeholder="请输入执照发放日" value="￥{(pjCustomer.licensingDay)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户开票信息</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerBillingInformation" lay-verify="required" lay-reqtext="客户开票信息不能为空" placeholder="请输入客户开票信息" value="￥{(pjCustomer.customerBillingInformation)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">纳税人识别号</label>
+        <div class="layui-input-block">
+            <input type="text" name="taxRegNumber" lay-verify="required" lay-reqtext="纳税人识别号不能为空" placeholder="请输入纳税人识别号" value="￥{(pjCustomer.taxRegNumber)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">税号</label>
+        <div class="layui-input-block">
+            <input type="text" name="dutyParagraph" lay-verify="required" lay-reqtext="税号不能为空" placeholder="请输入税号" value="￥{(pjCustomer.dutyParagraph)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">开户行</label>
+        <div class="layui-input-block">
+            <input type="text" name="openingBank" lay-verify="required" lay-reqtext="开户行不能为空" placeholder="请输入开户行" value="￥{(pjCustomer.openingBank)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">账号</label>
+        <div class="layui-input-block">
+            <input type="text" name="accountNumber" lay-verify="required" lay-reqtext="账号不能为空" placeholder="请输入账号" value="￥{(pjCustomer.accountNumber)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">电话</label>
+        <div class="layui-input-block">
+            <input type="text" name="telephone" lay-verify="required" lay-reqtext="电话不能为空" placeholder="请输入电话" value="￥{(pjCustomer.telephone)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">公司地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="companyAddress" lay-verify="required" lay-reqtext="公司地址不能为空" placeholder="请输入公司地址" value="￥{(pjCustomer.companyAddress)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">是否老客户</label>
+        <div class="layui-input-block">
+            <input type="text" name="dictIoldCustomer" lay-verify="required" lay-reqtext="是否老客户不能为空" placeholder="请输入是否老客户" value="￥{(pjCustomer.dictIoldCustomer)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户对接责任人</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerRespPerson" lay-verify="required" lay-reqtext="客户对接责任人不能为空" placeholder="请输入客户对接责任人" value="￥{(pjCustomer.customerRespPerson)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户关系维护责任人</label>
+        <div class="layui-input-block">
+            <input type="text" name="customerRelationPerson" lay-verify="required" lay-reqtext="客户关系维护责任人不能为空" placeholder="请输入客户关系维护责任人" value="￥{(pjCustomer.customerRelationPerson)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">备注信息</label>
+        <div class="layui-input-block">
+            <input type="text" name="remark" lay-verify="required" lay-reqtext="备注信息不能为空" placeholder="请输入备注信息" value="￥{(pjCustomer.remark)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required"></label>
+        <div class="layui-input-block">
+            <input type="text" name="creator" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入" value="￥{(pjCustomer.creator)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">创建时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="createTime" lay-verify="required" lay-reqtext="创建时间不能为空" placeholder="请输入创建时间" value="￥{(pjCustomer.createTime)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">创建人</label>
+        <div class="layui-input-block">
+            <input type="text" name="createId" lay-verify="required" lay-reqtext="创建人不能为空" placeholder="请输入创建人" value="￥{(pjCustomer.createId)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">更新时间</label>
+        <div class="layui-input-block">
+            <input type="text" name="updateTime" lay-verify="required" lay-reqtext="更新时间不能为空" placeholder="请输入更新时间" value="￥{(pjCustomer.updateTime)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">更新人</label>
+        <div class="layui-input-block">
+            <input type="text" name="updateId" lay-verify="required" lay-reqtext="更新人不能为空" placeholder="请输入更新人" value="￥{(pjCustomer.updateId)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">是否弃用</label>
+        <div class="layui-input-block">
+            <input type="text" name="deleted" lay-verify="required" lay-reqtext="是否弃用不能为空" placeholder="请输入是否弃用" value="￥{(pjCustomer.deleted)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">财务经理1</label>
+        <div class="layui-input-block">
+            <input type="text" name="financialManager1" lay-verify="required" lay-reqtext="财务经理1不能为空" placeholder="请输入财务经理1" value="￥{(pjCustomer.financialManager1)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">财务经理电话1</label>
+        <div class="layui-input-block">
+            <input type="text" name="fphone1" lay-verify="required" lay-reqtext="财务经理电话1不能为空" placeholder="请输入财务经理电话1" value="￥{(pjCustomer.fphone1)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">财务经理2</label>
+        <div class="layui-input-block">
+            <input type="text" name="financialManager2" lay-verify="required" lay-reqtext="财务经理2不能为空" placeholder="请输入财务经理2" value="￥{(pjCustomer.financialManager2)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">财务经理电话2</label>
+        <div class="layui-input-block">
+            <input type="text" name="fphone2" lay-verify="required" lay-reqtext="财务经理电话2不能为空" placeholder="请输入财务经理电话2" value="￥{(pjCustomer.fphone2)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required"></label>
+        <div class="layui-input-block">
+            <input type="text" name="orderId" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入" value="￥{(pjCustomer.orderId)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required"></label>
+        <div class="layui-input-block">
+            <input type="text" name="orderStatus" lay-verify="required" lay-reqtext="不能为空" placeholder="请输入" value="￥{(pjCustomer.orderStatus)!!}" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">编辑权限人员</label>
+        <div class="layui-input-block">
+            <input type="text" name="editor" lay-verify="required" lay-reqtext="编辑权限人员不能为空" placeholder="请输入编辑权限人员" value="￥{(pjCustomer.editor)!!}" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="saveBtn">确认保存</button>
+        </div>
+    </div>
+</div>
+<script src="￥{request.contextPath}/static/lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            $.ajax({
+                type: 'POST',
+                url: "￥{request.contextPath}/pjCustomer/save",
+                data:JSON.stringify(data.field),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (responseData) {
+                    if (responseData.code === 200) {
+                        layer.msg(responseData.msg, function () {
+                            // 关闭弹出层
+                            //layer.close(index);
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                            parent.searchBtn.click();
+                        });
+                    } else {
+                        layer.msg(responseData.msg, function () {
+                            //window.location = '/index.html';
+                        });
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>
+20:22:20.590 [main] INFO io.github.wujun728.generator.CodeUtil - 生成代码/ui/${classInfo.className}layui-edit2.html.ftl，生成代码行数：334
+
+Process finished with exit code 0

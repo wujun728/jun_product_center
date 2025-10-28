@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "征金在线",
+    "url": "http://192.168.1.6:8124/gold_online/index.html",
+    "desc": "在互联网上实现针对借款人、借贷企业和金融机构双方的借贷业务，同时可以出具征信报告。",
+    "mobile":false  
+  },
+  "schedule": {
+    "status": "已完成",
+    "actualStartTime": "2017-06-01",
+    "actualEndTime": "2017-08-31",
+    "estimatedStartTime": "2017-06-01",
+    "estimatedEndTime": "2017-08-31",
+    "process": 100,
+    "delay": false,
+    "technology": ["omi", "echarts", "less"]
+  },
+  "resources": {
+    "demander": "福建省企业信用信息管理有限公司",
+    "type": "独立纵队",
+    "manager": "周维",
+    "charge": "韩凯波",
+    "affiliate": ["徐媛媛", "颜庭光"]
+  },
+  "bug": {
+    "total": 414,
+    "resolved": 414,
+    "unsolved": 0
+  },
+  "others": {
+    "remark": "暂无"
+  }
+}

@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "一带一路安易行",            
+    "url": "http://202.106.10.250:8988/slb",        
+    "desc": "一带一路，商务旅行使用，提供预警，通知，团队管理等功能",                          
+    "mobile":true                    
+  },
+  "schedule": {
+    "status": "已提测",                 
+    "actualStartTime": "2017-05-08",
+    "actualEndTime": "未定",    
+    "estimatedStartTime": "2017-05-08", 
+    "estimatedEndTime": "2017-10-20",   
+    "process": 99,                     
+    "delay": false,                      
+    "technology":["vue","mint-ui","webSocket"]            
+  },
+  "resources": {
+    "demander": "中交星宇科技有限公司",                    
+    "type":"总部平台",				         
+    "manager":"李杰",                
+    "charge": "杨勇冠",              
+    "affiliate": ["杨勇冠"]      
+  },
+  "bug": {
+    "total": 135,                    
+    "resolved": 135,                  
+    "unsolved": 0                  
+  },
+  "others": {
+    "remark": "账户名(17600801597),密码(111111)"                  
+  }
+}

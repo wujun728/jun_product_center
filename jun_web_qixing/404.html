@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>跳转中...</title>
+    <script>
+        // 方式1：页面加载完成后立即跳转（类似 meta 标签的 0 秒延迟）
+        window.onload = function() {
+            // 跳转到 index.html（绝对路径，推荐）
+            window.location.href = "/index.html";
+        };
+
+        // 方式2：点击按钮后跳转（按需使用）
+        function jumpToIndex() {
+            window.location.href = "/index.html";
+        }
+    </script>
+    
+<!-- js部分 -->
+<script src="/assets/libs/layui/layui.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/js/common.js"></script>
+<script src="/assets/js/core.util.js"></script>
+  
+<!-- <script src="http://qixing.hbqxcpa.cn/js/base64.js"></script>-->
+<script>
+	//var token = CoreUtil.getData("access_token");
+	var token = localStorage.getItem('Authorization');
+    console.log(token);
+	
+    var param = {}
+    //CoreUtil.sendGet("/dev-api/getInfo", param, function (res) { 
+    //     console.log(res); 
+    //}); 
+    layui.use(['layer', 'element',  'admin','index', 'laytpl', 'element', 'notice','xnUtil','formX','notice' ], function () {
+        var $ = layui.jquery;
+        var admin = layui.admin;
+        var index = layui.index;
+        var laytpl = layui.laytpl;
+        var element = layui.element;
+        var xnUtil = layui.xnUtil;
+
+        //缓存字典
+        xnUtil.cacheDictData();
+        index.clearTabCache();
+         
+    });
+</script>
+
+
+</head>
+<body>
+<button onclick="jumpToIndex()">点击跳转到首页</button>
+</body>
+</html>

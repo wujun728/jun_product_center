@@ -1,0 +1,33 @@
+﻿{
+  "base": {
+    "name": "天津河蟹移动端",            
+    "url": "http://192.168.1.6:8124/tianjinCrabMobile/index.html",         
+    "desc": "河蟹养殖追溯",
+    "mobile":true
+  },
+  "schedule": {
+    "status": "开发中",                  
+    "actualStartTime": "2017-09-11",
+    "actualEndTime": "",      
+    "estimatedStartTime": "2017-09-11",
+    "estimatedEndTime": "2017-10-30",
+    "process": 60,                      
+    "delay": false,
+    "technology":["vuejs"]	
+  },
+  "resources": {
+    "demander": "",
+    "type":"合资公司",
+    "manager":"李静波",                  
+    "charge": "胡杰",                  
+    "affiliate": ["郑梦丽","商业庆"]       
+  },
+  "bug": {
+    "total": 0,                     
+    "resolved": 0,                  
+    "unsolved": 0                     
+  },
+  "others": {
+    "remark": "暂无"
+  }
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysTreeDictMapper">
+
+    <resultMap type="com.ruoyi.system.domain.SysTreeDict" id="TreeDictResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="struType" column="stru_type"/>
+        <result property="isSysParam" column="is_sys_param"/>
+        <result property="remark" column="remark"/>
+        <result property="tenantId" column="tenant_id"/>
+    </resultMap>
+
+    <sql id="selectTreeDictVo">
+        SELECT
+            o.id as id,
+            o.code as code,
+            o.name as name,
+            o.stru_type as stru_type,
+            o.create_by as create_by,
+            o.remark as remark,
+            o.is_sys_param as is_sys_param
+        FROM sys_tree_dict o
+    </sql>
+
+    <select id="selectTreeDictPage" parameterType="com.ruoyi.system.domain.SysTreeDict"
+            resultMap="TreeDictResult">
+        <include refid="selectTreeDictVo"/>
+        <where>
+            <if test="entity.id != null  and entity.id != ''">and o.id = #{entity.id}</if>
+            <if test="entity.name != null  and entity.name != ''">and NAME like o.concat('%', #{entity.name}, '%')</if>
+            <if test="entity.struType != null  and entity.struType != ''">and o.stru_type = #{entity.struType}</if>
+            <!-- 数据范围过滤
+            ${entity.params.dataScope}-->
+        </where>
+        order by o.CREATE_TIME desc
+    </select>
+
+    <select id="selectTreeDictList" parameterType="com.ruoyi.system.domain.SysTreeDict"
+            resultMap="TreeDictResult">
+        <include refid="selectTreeDictVo"/>
+        <where>
+            <if test="entity.id != null  and entity.id != ''">and o.id = #{entity.id}</if>
+            <if test="entity.name != null  and entity.name != ''">and o.name like concat('%', #{entity.name}, '%')</if>
+            <if test="entity.struType != null  and entity.struType != ''">and o.stru_type = #{entity.struType}</if>
+            <!-- 数据范围过滤
+            ${entity.params.dataScope}-->
+        </where>
+    </select>
+</mapper>

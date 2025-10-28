@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="../../component/pear/css/pear.css" rel="stylesheet"/>
+</head>
+<body class="pear-container">
+<div class="layui-card">
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyWord" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <table id="table" lay-filter="table-filter"></table>
+    </div>
+</div>
+
+</body>
+
+<script type="text/html" id="record-toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit">
+        详情
+    </button>
+    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="undo">
+        撤回
+    </button>
+    <button class="pear-btn pear-btn-success pear-btn-sm" lay-event="diagram">
+        流程图
+    </button>
+
+</script>
+
+<script type="text/html" id="table-toolbar">
+    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+        <i class="layui-icon layui-icon-add-1"></i>
+        发起请假
+    </button>
+</script>
+
+<script src="../../component/layui/layui.js"></script>
+<script src="../../component/pear/pear.js"></script>
+<script>
+    layui.use(['easyAdmin'], function () {
+        let easyAdmin = layui.easyAdmin;
+
+        let cols = [
+                [
+                	{type: 'checkbox', fixed: 'left'}, //{type:'radio'}  
+                    {
+                        title: '请假天数',
+                        field: 'leaveDay',
+                        align: 'center',
+                    },
+                    {
+                        title: '请假原因',
+                        field: 'leaveReason',
+                        align: 'center',
+                    },
+                    {
+                        title: '创建人',
+                        field: 'createBy',
+                        align: 'center',
+                        templet: '<div>{{d.createUser.nickName}}</div>'
+                    },
+                    {
+                        title: '创建人部门',
+                        field: 'createDeptId',
+                        align: 'center',
+                        templet: '<div>{{d.createUser.dept.deptName}}</div>'
+                    },
+                    {
+                        title: '申请时间',
+                        field: 'createTime',
+                        align: 'center'
+                    },
+                    {
+                        title: '状态',
+                        field: 'createTime',
+                        align: 'center',
+                        templet: function (d) {
+                            if (d.orderState == 0) {
+                                return '<span style="color: #eb7350;">审批完成</span>'
+                            }
+                            return '<span style="color: #00b487;">审批中</span>'
+                        }
+                    },
+                    {
+                        title: '当前节点',
+                        field: 'taskName',
+                        align: 'center'
+                    },
+                    {
+                        title: '当前处理人',
+                        field: 'taskOperatorName',
+                        align: 'center'
+                    },
+                    {
+                        title: '操作',
+                        toolbar: '#record-toolbar',
+                        align: 'center',
+                        width: 250
+                    }
+                ]
+            ]
+        ;
+
+
+        let module = "leave";
+        let uri = "/ext/" + module;
+        easyAdmin.tableRender({
+            url: uri,
+            cols: cols
+        });
+
+
+        easyAdmin.TableTool(uri, module);
+        easyAdmin.TableToolBar(uri, module);
+        easyAdmin.FormQuery();
+    })
+</script>
+</html>
