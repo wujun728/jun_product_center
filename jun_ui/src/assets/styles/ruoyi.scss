@@ -1,0 +1,565 @@
+/**
+* 通用css样式布局处理
+* Copyright (c) 2019 ruoyi
+*/
+
+/** 基础通用 **/
+.pt5 {
+  padding-top: 5px;
+}
+
+.pr5 {
+  padding-right: 5px;
+}
+
+.pb5 {
+  padding-bottom: 5px;
+}
+
+.mt5 {
+  margin-top: 5px;
+}
+
+.mr5 {
+  margin-right: 5px;
+}
+
+.mb5 {
+  margin-bottom: 5px;
+}
+
+.mb8 {
+  margin-bottom: 8px;
+}
+
+.ml5 {
+  margin-left: 5px;
+}
+
+.mt10 {
+  margin-top: 10px;
+}
+
+.mr10 {
+  margin-right: 10px;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.mt20 {
+  margin-top: 20px;
+}
+
+.mr20 {
+  margin-right: 20px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.ml20 {
+  margin-left: 20px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.el-message-box__status + .el-message-box__message {
+  word-break: break-word;
+}
+
+.el-dialog:not(.is-fullscreen) {
+  margin-top: 6vh !important;
+}
+
+.el-dialog__wrapper.scrollbar .el-dialog .el-dialog__body {
+  overflow: auto;
+  overflow-x: hidden;
+  max-height: 70vh;
+  padding: 10px 20px 0;
+}
+
+.el-table {
+  .el-table__header-wrapper, .el-table__fixed-header-wrapper {
+    th {
+      word-break: break-word;
+      background-color: #f8f8f9;
+      color: #515a6e;
+      height: 40px;
+      font-size: 13px;
+    }
+  }
+
+  .el-table__body-wrapper {
+    .el-button [class*="el-icon-"] + span {
+      margin-left: 1px;
+    }
+  }
+}
+
+/** 表单布局 **/
+.form-header {
+  font-size: 15px;
+  color: #6379bb;
+  border-bottom: 1px solid #ddd;
+  margin: 8px 10px 25px 10px;
+  padding-bottom: 5px
+}
+
+/** 表格布局 **/
+.pagination-container {
+  position: relative;
+  height: 25px;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  padding: 10px 20px !important;
+}
+
+/* tree border */
+.tree-border {
+  margin-top: 5px;
+  border: 1px solid #e5e6e7;
+  background: #FFFFFF none;
+  border-radius: 4px;
+}
+
+.pagination-container .el-pagination {
+  right: 0;
+  position: absolute;
+}
+
+@media (max-width: 768px) {
+  .pagination-container .el-pagination > .el-pagination__jump {
+    display: none !important;
+  }
+  .pagination-container .el-pagination > .el-pagination__sizes {
+    display: none !important;
+  }
+}
+
+.el-table .fixed-width .el-button--mini {
+  padding-left: 0;
+  padding-right: 0;
+  width: inherit;
+}
+
+/** 表格更多操作下拉样式 */
+.el-table .el-dropdown-link, .el-table .el-dropdown-selfdefine {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.el-table .el-dropdown, .el-icon-arrow-down {
+  font-size: 12px;
+}
+
+.el-tree-node__content > .el-checkbox {
+  margin-right: 8px;
+}
+
+.list-group-striped > .list-group-item {
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.list-group {
+  padding-left: 0px;
+  list-style: none;
+}
+
+.list-group-item {
+  border-bottom: 1px solid #e7eaec;
+  border-top: 1px solid #e7eaec;
+  margin-bottom: -1px;
+  padding: 11px 0px;
+  font-size: 13px;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.el-card__header {
+  padding: 14px 15px 7px;
+  min-height: 40px;
+}
+
+.el-card__body {
+  padding: 15px 20px 20px 20px;
+}
+
+.card-box {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-bottom: 10px;
+}
+
+/* button color */
+.el-button--cyan.is-active,
+.el-button--cyan:active {
+  background: #20B2AA;
+  border-color: #20B2AA;
+  color: #FFFFFF;
+}
+
+.el-button--cyan:focus,
+.el-button--cyan:hover {
+  background: #48D1CC;
+  border-color: #48D1CC;
+  color: #FFFFFF;
+}
+
+.el-button--cyan {
+  background-color: #20B2AA;
+  border-color: #20B2AA;
+  color: #FFFFFF;
+}
+
+/* text color */
+.text-navy {
+  color: #1ab394;
+}
+
+.text-primary {
+  color: inherit;
+}
+
+.text-success {
+  color: #1c84c6;
+}
+
+.text-info {
+  color: #23c6c8;
+}
+
+.text-warning {
+  color: #f8ac59;
+}
+
+.text-danger {
+  color: #ed5565;
+}
+
+.text-muted {
+  color: #888888;
+}
+
+/* image */
+.img-circle {
+  border-radius: 50%;
+}
+
+.img-lg {
+  width: 120px;
+  height: 120px;
+}
+
+.avatar-upload-preview {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ccc;
+  overflow: hidden;
+}
+
+/* 拖拽列样式 */
+.sortable-ghost {
+  opacity: .8;
+  color: #fff !important;
+  background: #42b983 !important;
+}
+
+.top-right-btn {
+  position: relative;
+  float: right;
+}
+
+/*  美化页面样式 */
+//分割线
+.el-divider--horizontal {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+//搜索框
+.queryFormClass {
+  box-shadow: 1px 1px 1px 1px rgba(185, 197, 218, 0.2), 0 0 6px rgba(85, 197, 218, 0.1);
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+//搜索框和表格中间的区域
+.mb8 {
+  box-shadow: 1px 1px 1px 1px rgba(185, 197, 218, 0.2), 0 0 6px rgba(85, 197, 218, 0.1);
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
+
+//表格
+.tableClass {
+  box-shadow: 1px 1px 1px 1px rgba(185, 197, 218, 0.2), 0 0 6px rgba(85, 197, 218, 0.1);
+}
+
+//设置表格鼠标悬停颜色
+.el-table__body {
+  tr:hover > td {
+    background-color: rgba(176, 201, 250, 0.4) !important;
+  }
+}
+
+//设置表格滚动条宽度
+.el-table ::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+  background-color: #f8f2ea;
+}
+
+// 设置滚动条的背景色和圆角
+.el-table__body-wrapper::-webkit-scrollbar-thumb {
+  background-color: #f6e6cf;
+  -webkit-box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+//设置按钮颜色
+.el-button--info,
+.el-button--default,
+.el-button--cyan,
+.el-button--primary,
+.el-button--success,
+.el-button--warning,
+.el-button--danger {
+  border: 1px solid #ffffff;
+
+  &.is-disabled,
+  &:focus,
+  &:hover {
+    border: 1px solid #ffffff;
+  }
+}
+
+.el-button {
+  background-color: #3898f8;
+  color: #ffffff;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: #b8d5f6;
+    color: #ffffff;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: #3898f8;
+    color: #ffffff;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: #3898f8;
+    color: #ffffff;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: #b8d5f6;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: #b8d5f6;
+      color: #ffffff;
+    }
+  }
+}
+
+.el-button--text {
+  background-color: transparent;
+  color: #1662d5;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: transparent;
+    color: #568de3;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: transparent;
+    color: #1662d5;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: transparent;
+    color: #1662d5;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: transparent;
+    color: #1662d5;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: transparent;
+      color: #1662d5;
+    }
+  }
+}
+
+.el-button--primary {
+  background-color: #3b45f4;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: #959af4;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: #000a7e;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: #3b45f4;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: #959af4;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: #959af4;
+    }
+  }
+}
+
+.el-button--success {
+  background-color: #e1552a;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: #ed977e;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: #982200;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: #e1552a;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: #ed977e;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: #ed977e;
+    }
+  }
+}
+
+.el-button--danger {
+  background-color: #ea1111;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: #ef9a9a;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: #9a0000;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: #ea1111;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: #ef9a9a;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: #ef9a9a;
+    }
+  }
+}
+
+.el-button--info {
+  background-color: #20d114;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: #91e48c;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: #097a00;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: #20d114;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: #91e48c;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: #91e48c;
+    }
+  }
+}
+
+.el-button--warning {
+  background-color: #6a28b1;
+  // 鼠标移入颜色
+  &:hover {
+    background-color: #a67ad6;
+  }
+
+  // 鼠标按下颜色
+  &:active {
+    background-color: #5600b1;
+  }
+
+  // 鼠标点击后颜色
+  &:focus {
+    background-color: #6a28b1;
+  }
+
+  // 禁用状态颜色
+  &.is-disabled {
+    background-color: #a67ad6;
+    cursor: not-allowed;
+    // 鼠标移入颜色
+    &:hover {
+      background-color: #a67ad6;
+    }
+  }
+}
+

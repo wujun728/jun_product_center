@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.wujun728</groupId>
-    <artifactId>jun_springboot_vue</artifactId>
+    <artifactId>jun_springboot_service</artifactId>
     <version>1.0.24</version>
 
     <name>jun_springboot_vue</name>
