@@ -1,5 +1,7 @@
 package io.github.wujun728.admin.util;
 
+import cn.hutool.core.util.StrUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -298,9 +300,48 @@ public class StringUtil {
 	 * @param name
 	 * @return
 	 */
-	public static String toTableName(String name){
-		return ""+toSqlColumn(name);
-	}
+    public static String toTableName(String name) {
+        // 定义需要特殊处理的结尾字符串集合
+        Set<String> suffixes = new HashSet<>(Arrays.asList(
+                "data_import_task",
+                "data_import_template",
+                "data_import_template_field",
+                "data_listener",
+                "dic",
+                "dic_item",
+                "flow",
+                "flow_deploy",
+                "flow_instance",
+                "flow_instance_task",
+                "form",
+                "form_button",
+                "form_field",
+                "form_ref",
+                "log_table",
+                "page",
+                "page_button",
+                "page_query_field",
+                "page_ref",
+                "page_result_field",
+                "sql_api",
+                "sql_info",
+                "sql_param",
+                "sql_result",
+                "custom_page",
+                "sys_menu"
+        ));
+
+        // 先处理列名（保持原逻辑）
+        String processedColumn = toSqlColumn(name);
+
+        // 检查处理后的列名是否以集合中的字符串结尾
+        boolean endsWithTarget = suffixes.stream()
+                .anyMatch(suffix -> suffix.endsWith(processedColumn.toLowerCase()));
+
+        // 仅当匹配时才拼接前缀，否则直接返回处理后的列名
+        //return endsWithTarget ? "" + processedColumn : processedColumn;
+        return processedColumn;
+    }
 	public static String toSqlColumn(String name){
 		StringBuffer sqlColumn = new StringBuffer();
 		char[] array = name.toCharArray();

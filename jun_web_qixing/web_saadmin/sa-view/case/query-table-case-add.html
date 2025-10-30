@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>表格显示示例-修改</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 所有的 css & js 资源 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="../../static/sa.css"> 
+		<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+		<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+		<script src="https://unpkg.com/http-vue-loader@1.4.2/src/httpVueLoader.js"></script>
+		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="../../static/sa.js"></script>
+		<style type="text/css">
+			/* 流体input */
+			.c-panel .el-form .el-input,.el-select{width: calc(100% - 120px);}
+			.c-panel .el-form .el-select .el-input{width: 100%;}
+		</style>
+	</head>
+	<body>
+		<div class="vue-box" :class="{sbot: id}" style="display: none;" :style="'display: block;'">
+			<!-- ------- 内容部分 ------- -->
+			<div class="s-body">
+				<div class="c-panel">
+					<el-form v-if="m">
+						<sa-item name="编号" v-model="m.id" br disabled></sa-item>
+						<sa-item name="名称" v-model="m.name" br></sa-item>
+						<sa-item name="图标" v-model="m.icon" br></sa-item>
+						<sa-item name="状态" v-model="m.status" type="j" :jv="{1: '正常', 2: '禁用'}" jtype="3" br></sa-item>
+						<sa-item name="" class="s-ok" br>
+							<el-button type="primary" icon="el-icon-plus" @click="ok()">保存</el-button>
+						</sa-item>
+					</el-form>
+				</div>
+			</div>
+			<!-- ------- 底部按钮 ------- -->
+			<div class="s-foot">
+				<el-button type="primary" @click="ok()">确定</el-button>
+				<el-button @click="sa.closeCurrIframe()">取消</el-button>
+			</div>
+		</div>
+		<script src="mock-data-list.js"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+				components: {
+					"sa-item": httpVueLoader('../../sa-frame/com/sa-item.vue'),				// logo 
+				},
+				el: '.vue-box',
+				data: {
+					id: sa.p('id', 0),	// 获取传递的参数 
+					m: null
+				},
+				methods: {
+					// 创建一个 默认Model 
+					createModel: function() {
+						return {
+							id: 0, 
+							name: '', 
+							icon: '',
+							avatar: 'http://sa-admin.dev33.cn/sa-resources/admin-logo.png', 
+							money: 99.99,
+							status: 1,
+							create_time: new Date()
+						}
+					},
+					// 提交 
+					ok: function() {
+						// 表单验证 
+						sa.checkNull(this.m.name, '请输入名称');
+						sa.checkNull(this.m.icon, '请输入图标');
+						// 开始增加或修改
+						if(this.id <= 0) {
+							// id == 0 为增加        
+							sa.ajax2('/data/add', this.m, function(res) {
+								sa.alert('增加成功', app.clean);
+							}.bind(this));
+						} else {
+							// id != 0 为修改  
+							sa.ajax2('/data/update', this.m, function(res){
+								sa.alert('修改成功', app.clean);
+							}.bind(this));
+						}
+					},
+					// 添加/修改 完成后的动作
+					clean: function() {
+						if(this.id == 0) {
+							this.m = this.createModel();	// 初始化model 
+						} else {
+							parent.app.f5();		// 刷新父页面列表
+							sa.closeCurrIframe();	// 关闭本页 
+						}
+					}
+				},
+				created: function(){
+					// 如果是添加
+					if(this.id <= 0){
+						this.m = this.createModel();
+					} else {
+						// id 非 0 代表 是要修改 先查询一下，把旧值显示在input中  
+						sa.ajax2('/data/getById', {id: this.id}, function(res) {
+							this.m = res.data;
+						}.bind(this), {res: getMockData()});
+					}
+				}
+			})
+			
+			// 遍历判断， 获取模拟数据  
+			function getMockData() {
+				var id = sa.p('id', 0);	
+				var data = null;
+				// 遍历判断 
+				mockDataList.data.forEach(function(item) {
+					if(item.id == id) {
+						data = item;
+					}
+				})
+				// 创建模拟数据 
+				var mockData = {
+					code: 200,
+					msg: 'ok',
+					data: data
+				}
+				return mockData;
+			}
+		</script>
+		
+	</body>
+</html>

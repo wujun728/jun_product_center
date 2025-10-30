@@ -1,5 +1,6 @@
 package io.github.wujun728.admin.page.inputRender;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -77,10 +78,14 @@ public class InputDefaultRender implements InputRender{
             config.put("label","");
             config.put("type","hidden");
         }else if(DataType.isDate(field.getType())){
-            config.put("format",field.getFormat().replace("yyyy-MM-dd","YYYY-MM-DD"));
-            if("yyyy-MM-dd".equals(field.getFormat())){
-                config.put("type","input-date");
-            }else if("yyyy-MM-dd HH:mm:ss".equals(field.getFormat())){
+            if(ObjectUtil.isNotEmpty(field.getFormat())){
+                config.put("format",field.getFormat().replace("yyyy-MM-dd","YYYY-MM-DD"));
+                if("yyyy-MM-dd".equals(field.getFormat())){
+                    config.put("type","input-date");
+                }else if("yyyy-MM-dd HH:mm:ss".equals(field.getFormat())){
+                    config.put("type","input-datetime");
+                }
+            }else{
                 config.put("type","input-datetime");
             }
         }else if(DataType.DIC.equals(field.getType())){

@@ -32,7 +32,7 @@ public class DicCacheServiceImpl implements DataListenerTask, DicCacheService {
         String eventType = (String) context.get("eventType");
         String tableName = (String) context.get("tableName");
         List<String> codes = new ArrayList<>();
-        if(tableName.equalsIgnoreCase("dic")){
+        if(tableName.equalsIgnoreCase("dic") || tableName.equalsIgnoreCase("dic")){
             if(EventType.NEW.equals(eventType)){
                 Map<String,Object> obj = (Map<String, Object>) context.get("obj");
                 codes.add((String) obj.get("dicCode"));
@@ -46,7 +46,7 @@ public class DicCacheServiceImpl implements DataListenerTask, DicCacheService {
                 Map<String,Object> obj = (Map<String, Object>) context.get("obj");
                 codes.add((String) obj.get("dicCode"));
             }
-        }else if(tableName.equalsIgnoreCase("dic_item")){
+        }else if(tableName.equalsIgnoreCase("dic_item")  || tableName.equalsIgnoreCase("dic_item")){
             Long dicId = null;
             if(EventType.NEW.equals(eventType)){
                 Map<String,Object> obj = (Map<String, Object>) context.get("obj");

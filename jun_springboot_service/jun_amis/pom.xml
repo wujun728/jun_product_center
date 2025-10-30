@@ -10,7 +10,8 @@
     </parent>
     <groupId>io.github.wujun728</groupId>
     <artifactId>jun_amis</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
+    <packaging>jar</packaging>
     <name>jun_amis</name>
     <description>Demo project for Spring Boot</description>
     <properties>
@@ -20,7 +21,8 @@
         <poi.version>5.1.0</poi.version>
         <hutool-all.version>5.8.35</hutool-all.version>
         <velocity.version>1.7</velocity.version>
-        <magic-api.version>2.0.2</magic-api.version>
+        <!-- 移除magic-api版本定义 -->
+         <magic-api.version>2.2.0</magic-api.version>
         <java-jwt.version>3.4.0</java-jwt.version>
         <aliyun-oss.version>3.12.0</aliyun-oss.version>
         <activiti.version>5.22.0</activiti.version>
@@ -86,15 +88,28 @@
             <version>2.3</version> <!-- 使用一个稳定的版本号 -->
         </dependency>
 
+        <!-- 移除magic-api依赖 -->
         <dependency>
             <groupId>org.ssssssss</groupId>
             <artifactId>magic-api-spring-boot-starter</artifactId>
-            <version>${magic-api.version}</version>
+            <version>2.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.ssssssss</groupId>
+            <artifactId>magic-api-plugin-task</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <!-- <dependency>
+            <groupId>org.ssssssss</groupId>
             <artifactId>magic-api-plugin-swagger</artifactId>
             <version>${magic-api.version}</version>
+        </dependency>
+        -->
+
+        <!-- 添加WebSocket依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
         <dependency>
             <groupId>com.aliyun.oss</groupId>
@@ -127,12 +142,34 @@
                     <artifactId>spring-security-config</artifactId>
                     <groupId>org.springframework.security</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>spring-security-crypto</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-security-web</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-diagram-rest</artifactId>
             <version>${activiti.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-security-config</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-security-crypto</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>spring-security-web</artifactId>
+                    <groupId>org.springframework.security</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>-->
 
         <dependency>
@@ -163,10 +200,17 @@
             <artifactId>htmlunit</artifactId>
         </dependency>
 
+        <!-- Swagger3依赖 -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>3.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--引入Knife4j的官方ui包,OpenAPI3建议使用springdoc-openapi项目-->
         <!-- 文档 -->
@@ -214,6 +258,20 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- 添加缺失的xml-apis依赖，解决ElementTraversal类找不到的问题 -->
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+
+        <!-- 添加MyBatis-Plus依赖，确保与主项目一致 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>3.5.3.1</version>
         </dependency>
 
         <!-- 替代tomcat

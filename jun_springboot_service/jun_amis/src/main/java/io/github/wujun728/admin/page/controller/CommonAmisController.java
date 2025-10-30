@@ -251,7 +251,7 @@ public class CommonAmisController {
 
     @RequestMapping("/{model}/delete/{id}")
     public Result delete(@PathVariable("id") Long id, @PathVariable("model") String model) {
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         Long enterpriseId = SessionContext.getSession().getEnterpriseId();
 
         if (id != null && StringUtils.isNotBlank(id.toString()) && !jdbcService.ownerEnterprise(tableName, id, enterpriseId)) {
@@ -271,7 +271,7 @@ public class CommonAmisController {
     }
     @RequestMapping("/{model}/bathDelete/{ids}")
     public Result bathDelete(@PathVariable("ids") String ids, @PathVariable("model") String model) {
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         Long enterpriseId = SessionContext.getSession().getEnterpriseId();
 
 //        if (id != null && StringUtils.isNotBlank(id.toString()) && !jdbcService.ownerEnterprise(tableName, id, enterpriseId)) {
@@ -290,7 +290,7 @@ public class CommonAmisController {
                               @PathVariable("mainField") String mainField,
                               @PathVariable("relationField") String relationField,
                               @PathVariable("id") Long id) {
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         String sql = StrUtil.format("select {} from {} where {}={} ",
                 StringUtil.toSqlColumn(relationField),
                 tableName,
@@ -318,7 +318,7 @@ public class CommonAmisController {
                                  @PathVariable("relationField") String relationField,
                                  @PathVariable("id") Long id) {
         Long enterpriseId = SessionContext.getSession().getEnterpriseId();
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         String sql = StrUtil.format("select {} from {} where {}={} and enterprise_id = {} ",
                 StringUtil.toSqlColumn(relationField),
                 tableName,
@@ -346,7 +346,7 @@ public class CommonAmisController {
                               @PathVariable("mainField") String mainField,
                               @PathVariable("relationField") String relationField,
                               @RequestBody Map<String,Object> params) {
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         Long mainId = Long.parseLong(params.get(mainField).toString());
         String[] relationIds = params.get(relationField).toString().split(",");
         List<Long> relationIdList = new ArrayList<>();
@@ -399,7 +399,7 @@ public class CommonAmisController {
                                  @PathVariable("relationField") String relationField,
                                  @RequestBody Map<String,Object> params) {
         Long enterpriseId = SessionContext.getSession().getEnterpriseId();
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         Long mainId = Long.parseLong(params.get(mainField).toString());
         String[] relationIds = params.get(relationField).toString().split(",");
         List<Long> relationIdList = new ArrayList<>();
@@ -452,7 +452,7 @@ public class CommonAmisController {
                               @PathVariable("mainField") String mainField,
                               @PathVariable("relationField") String relationField,
                               @RequestBody Map<String,Object> params) {
-        String tableName = StringUtil.toSqlColumn(model);
+        String tableName = StringUtil.toTableName(model);
         Long mainId = Long.parseLong(params.get(mainField).toString());
         String[] relationIds = params.get(relationField).toString().split(",");
         List<Long> relationIdList = new ArrayList<>();
@@ -518,7 +518,8 @@ public class CommonAmisController {
             }
         }else{
             if(StringUtils.isNotBlank(form.getTableName())){
-                String tableName = StringUtil.toSqlColumn(form.getTableName());
+                //String tableName = form.getTableName();
+                String tableName = StringUtil.toTableName(form.getTableName());
                 Map<String, Object> obj = jdbcService.getById(tableName, id);
 
                 List<FormField> formFields = form.getFormFields();

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title>各种表格显示示例</title>
+	    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 所有的 css & js 资源 -->
+		<link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+		<link rel="stylesheet" href="../../static/sa.css"> 
+		<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+		<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+		<script src="https://unpkg.com/http-vue-loader@1.4.2/src/httpVueLoader.js"></script>
+		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+		<script src="../../static/sa.js"></script>
+	</head>
+	<body>
+		<div class="vue-box" style="display: none;" :style="'display: block;'">
+			<div class="c-panel">
+				<!-- ------------- 检索参数 ------------- -->
+				<div class="c-title">检索参数</div>
+				<el-form @submit.native.prevent >
+					<sa-item name="名称查询" v-model="p.name" placeholder="模糊查询"></sa-item>
+					<el-button type="primary" icon="el-icon-search" @click="p.pageNo = 1; f5()">查询</el-button>
+				</el-form>
+				<!-- ------------- 快捷curd按钮 ------------- -->
+				<sa-item type="fast-btn" show="add,get,delete,export,reset"></sa-item>
+				<!-- ------------- 数据列表 ------------- -->
+				<el-table class="data-table" ref="data-table" :data="dataList" size="small">
+					<sa-td type="selection"></sa-td>
+					<sa-td name="id" prop="id" width="70px"></sa-td>
+					<sa-td name="显示文本" prop="name"></sa-td>
+					<sa-td type="img" name="显示头像" prop="avatar"></sa-td>
+					<sa-td type="icon" name="显示图标" prop="icon"></sa-td>
+					<sa-td type="money-f" name="显示价格" prop="money"></sa-td>
+					<el-table-column label="显示标签" width="190px" >
+						<template slot-scope="s">
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('1') > -1">周一</el-tag>
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('2') > -1">周二</el-tag>
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('3') > -1">周三</el-tag>
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('4') > -1">周四</el-tag>
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('5') > -1">周五</el-tag>
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('6') > -1">周六</el-tag>
+							<el-tag size="small" effect="plain" v-if="s.row.day.indexOf('7') > -1">周日</el-tag>
+						</template>
+					</el-table-column>
+					<sa-td type="j" name="显示状态" prop="status" :jv="{1: '正常[green]', 2: '禁用[red]'}"></sa-td>
+					<sa-td type="switch" name="显示开关" prop="status" :jv="{1: '正常', 2: '禁用'}"></sa-td>
+					<sa-td type="datetime" name="显示日期" prop="create_time" width="150px"></sa-td>
+					<el-table-column label="文字按钮" width="160px">
+						<template slot-scope="s">
+							<el-button type="text" @click="get(s.row)">查看</el-button>
+							<el-button type="text" @click="update(s.row)">修改</el-button>
+							<el-button type="text" @click="del(s.row)">删除</el-button>
+						</template>
+					</el-table-column>
+					<el-table-column label="正常按钮" width="240px">
+						<template slot-scope="s">
+							<el-button class="c-btn" type="success"  icon="el-icon-view" @click="get(s.row)">查看</el-button>
+							<el-button class="c-btn" type="primary" icon="el-icon-edit" @click="update(s.row)">修改</el-button>
+							<el-button class="c-btn" type="danger" icon="el-icon-delete" @click="del(s.row)">删除</el-button>
+						</template>
+					</el-table-column>
+				</el-table>
+				<!-- ------------- 分页 ------------- -->
+				<sa-item type="page" :curr.sync="p.pageNo" :size.sync="p.pageSize" :total="dataCount" @change="f5()"></sa-item>
+			</div>
+		</div>
+		<script src="mock-data-list.js"></script>
+        <script>
+			var app = new Vue({
+				components: {
+					"sa-item": httpVueLoader('../../sa-frame/com/sa-item.vue'),  
+					"sa-td": httpVueLoader('../../sa-frame/com/sa-td.vue')
+				},
+				el: '.vue-box',
+				data: {
+					p: {		// 查询参数  
+						name: '',
+						pageNo: 1,
+						pageSize: 10,
+					},
+					dataCount: 0,		// 数据总数 
+					dataList: [],		// 数据集合
+				},
+				methods: {
+					// 刷新
+					f5: function(){
+						sa.ajax2('/goods/getList', this.p, function(res){
+							this.dataList = res.data;	// 数据
+							this.dataCount = res.dataCount;	// 分页
+							sa.f5TableHeight();		// 刷新表格高度 
+						}.bind(this), {res: mockDataList});
+					},
+					// 查看
+					get: function(data) {
+						var str = '<div>';
+						str += '<p>编号：' + data.id + '</p>';
+						str += '<p>名称：' + data.name + '</p>';
+						str += '<p>状态：' + (data.status == 1 ? '正常' : '禁用') + '</p>';
+						str += '<p>价格：' + (data.money / 100) + ' 元</p>';
+						str += '<p>日期：' + (sa.forDate(data.create_time, 2)) + '</p>';
+						str += '</div>';
+						sa.alert(str);
+					},
+					// 查看 - 根据选中的
+					getBySelect: function(data) {
+						var selection = this.$refs['data-table'].selection;
+						if(selection.length == 0) {
+							return sa.msg('请选择一条数据')
+						}
+						this.get(selection[0]);
+					},
+					// 添加 - 底部按钮式
+					add: function(data) {
+						sa.showIframe('添加一个', 'query-table-case-add.html?id=-1', '450px', '320px');
+					},
+					// 修改
+					update: function (data) {
+						sa.showIframe('修改数据', 'query-table-case-add.html?id=' + data.id, '450px', '320px');
+					},
+					// 删除
+					del: function (data) {
+						sa.confirm('是否删除，此操作不可撤销', function() {
+							sa.ajax2('/goods/delete?id=' + data.id, function(res) {
+								sa.arrayDelete(this.dataList, data);
+								sa.ok('删除成功');
+								sa.f5TableHeight();		// 刷新表格高度 
+							}.bind(this))
+						}.bind(this));
+					},
+					// 批量删除
+					deleteByIds: function() {
+						// 获取选中元素的id列表
+						let selection = this.$refs['data-table'].selection;
+						let ids = sa.getArrayField(selection, 'id');
+						if(selection.length == 0) {
+							return sa.msg('请至少选择一条数据')
+						}
+						// 提交删除 
+						sa.confirm('是否批量删除选中数据？此操作不可撤销', function() {
+							sa.ajax2('/SysType/deleteByIds', {ids: ids.join(',')}, function(res) {
+								sa.arrayDelete(this.dataList, selection);
+								sa.ok('删除成功');
+								sa.f5TableHeight();		// 刷新表格高度 
+							}.bind(this))
+						}.bind(this));
+					},
+				},
+				created: function(){
+					this.f5();
+					sa.onInputEnter();		// 监听输入框的回车事件，执行查询  
+					this.$notify.info({
+						title: '消息',
+						message: '本页面展示表格的常见显示方式'
+					});
+				}
+			})
+			
+		</script>
+	</body>
+</html>

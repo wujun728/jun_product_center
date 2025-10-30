@@ -137,6 +137,23 @@ flowable:
   check-process-definitions: false # 设置为 false，禁用 /resources/processes 自动部署 BPMN XML 流程
   history-level: full # full：保存历史数据的最高级别，可保存全部流程相关细节，包括流程流转各节点参数
 
+magic-api:
+  #配置web页面入口
+  web: /magic/web
+  resource:
+    #配置文件存储位置。当以classpath开头时，为只读模式
+    #mac用户请改为可读写的目录
+    #如果不想存到文件中，可以参考配置将接口信息存到数据库、Redis中（或自定义）
+    location: D:/data/magic-api
+    table-name: magic_api_file
+    type: database
+  response: '{status:code,msg:message,data}'
+  editor-config: classpath:./magic-editor-config.js
+  response-code:
+    exception: 9
+    invalid: 9
+    success: 0
+
 db:
   main:
     enable: true
@@ -144,3 +161,4 @@ db:
   api:
     enable: false
     path: /rest
+

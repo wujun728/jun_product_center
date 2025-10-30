@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="/jqp-flow/favicon.ico"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta name="description" content="流程设计"/>
+    <link rel="apple-touch-icon" href="/jqp-flow/logo192.png"/>
+    <link rel="manifest" href="/jqp-flow/manifest.json"/>
+    <title>流程设计</title>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/common.js"></script>
+    <style>
+        .container{
+            overflow:hidden !important;
+        }
+    </style>
+    <script>
+
+        let params = getUrlParams(window.location.href);
+
+        $.ajax({
+            url: "/admin/jqpFlow/getFlowDetail?flowId="+(params.flowId || "")+"&flowInstanceId="+(params.flowInstanceId || ""),
+            type: 'GET',
+            async:false,
+            dataType: 'json',
+            success: function (data) {
+                window.readOnly = data.data.readOnly;
+                window.showProperties = data.data.showProperties;
+                window.graphData = data.data.graphData;
+                window.statusOptions = data.data.statusOptions;
+            }
+        });
+
+        // readOnly = false;
+        // showProperties = true;
+        // graphData = {nodes: [], edges: []};
+        saveFlow = e => {
+            console.info("save nodes:{}", e)
+
+            $.ajax({
+                url: "/admin/common/jqp_flow/save",
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id:params.flowId,
+                    graph_data:JSON.stringify(e)
+                }),
+                dataType: 'json',
+                success: function (data) {
+                    alert("保存成功");
+                }
+            });
+
+        };
+        // statusOptions = [
+        //     {
+        //         value: "1",
+        //         label: "开立"
+        //     },
+        //     {
+        //         value: "2",
+        //         label: "提交"
+        //     },
+        //     {
+        //         value: "3",
+        //         label: "审核通过"
+        //     },
+        //     {
+        //         value: "4",
+        //         label: "打回"
+        //     }
+        // ]
+    </script>
+    <script defer="defer" src="/jqp-flow/static/js/main.e10dab50.js"></script>
+    <link href="/jqp-flow/static/css/main.f87ff60b.css" rel="stylesheet">
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root"></div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+    <!--
+        升级amis-editor时需更新以下代码
+    -->
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/common.js"></script>
+    <style>
+        .cxd-FileControl .disabled .cxd-Button{
+            display: none !important;
+        }
+        .cxd-ImageControl .is-disabled .cxd-ImageControl-addBtn{
+            display: none !important;
+        }
+    </style>
+    <script>
+        let params = getUrlParams(window.location.href);
+
+        $.ajax({
+            url: "/admin/jqpPage/get/"+params.id,
+            type: 'GET',
+            async:false,
+            dataType: 'json',
+            success: function (data) {
+                window.AMIS_JSON = data.data;
+            }
+        });
+
+        //window.AMIS_JSON = {type: "page", body: "hello"};
+
+        window.EDITOR_SAVE = o => {
+            $.ajax({
+                url: "/admin/common/jqp_page/save",
+                type: 'POST',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    id:params.id,
+                    config:JSON.stringify(o)
+                }),
+                dataType: 'json',
+                success: function (data) {
+                    alert("保存成功");
+                }
+            });
+        }
+    </script>

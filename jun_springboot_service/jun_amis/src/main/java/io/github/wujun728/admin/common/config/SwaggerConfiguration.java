@@ -55,23 +55,23 @@ public class SwaggerConfiguration {
         return info;
     }
 
-    @Bean
-    public SwaggerResourcesProvider jqpSwaggerResourcesProvider(DicService dicService){
-        SwaggerResourcesProvider provider = () -> {
-            List<SwaggerResource> list = new ArrayList<>();
-            List<Map<String, Object>> menuTypes = dicService.options("menuType");
-            for(Map<String, Object> item:menuTypes){
-                SwaggerResource resource = new SwaggerResource();
-                resource.setSwaggerVersion("3.0.3");
-                resource.setName(item.get("label")+"");
-                resource.setUrl("/openApi/"+item.get("value"));
-                resource.setLocation(resource.getUrl());
-                list.add(resource);
-            }
-            return list;
-        };
-        return provider;
-    }
+//    @Bean
+//    public SwaggerResourcesProvider jqpSwaggerResourcesProvider(DicService dicService){
+//        SwaggerResourcesProvider provider = () -> {
+//            List<SwaggerResource> list = new ArrayList<>();
+//            List<Map<String, Object>> menuTypes = dicService.options("menuType");
+//            for(Map<String, Object> item:menuTypes){
+//                SwaggerResource resource = new SwaggerResource();
+//                resource.setSwaggerVersion("3.0.3");
+//                resource.setName(item.get("label")+"");
+//                resource.setUrl("/openApi/"+item.get("value"));
+//                resource.setLocation(resource.getUrl());
+//                list.add(resource);
+//            }
+//            return list;
+//        };
+//        return provider;
+//    }
 
     @Bean
     public static BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
