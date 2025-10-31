@@ -30,17 +30,18 @@ var CoreUtil = (function () {
     /*ajax*/
     coreUtil.sendAJAX = function(url, params, ft, method){
         var loadIndex = top.layer.load(0, {shade: false});
+        debugger;
         $.ajax({
             url: url,
             cache: false,
             async: true,
             data: params,
-            headers: {"authorization": token}, 
+            headers: {"Authorization": token}, 
             type: method,
             contentType: 'application/json; charset=UTF-8',
             dataType: "json",
             beforeSend: function(request) {
-                request.setRequestHeader("authorization", CoreUtil.getData("access_token"));
+                request.setRequestHeader("Authorization", token);
             },
             success: function (res) {
                 top.layer.close(loadIndex);

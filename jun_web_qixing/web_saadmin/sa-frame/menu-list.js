@@ -15,7 +15,7 @@
 // }
 
 // 定义菜单列表 
-var menuList =	[
+window.menuList2 =	[
 	{
 		id: '2',
 		name: '各种示例',
