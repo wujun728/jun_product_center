@@ -2,7 +2,11 @@ package com.jun.plugin.qixing.qixing;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.ruoyi.common.annotation.DataSource;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
@@ -13,9 +17,7 @@ import io.github.wujun728.db.record.Record;
 import io.github.wujun728.db.utils.RecordUtil;
 import io.github.wujun728.db.utils.TreeBuildUtil;
 import org.apache.commons.compress.utils.Lists;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -70,6 +72,26 @@ public class QixingController extends BaseController {
         List<Map<String, Object>> menus1 = RecordUtil.recordToMaps(menus, true);
         menus1 = (List) menus1.stream().map(map -> rebuildMenu(map)).collect(Collectors.toList());
         List menus2 = TreeBuildUtil.listToTree(menus1, "0", "menu_id", "parent_id");
+        Map data = new HashMap<>();
+        data.put("apps", apps1);
+        data.put("menus", menus2);
+        return R.ok(data);
+    }
+
+
+    @GetMapping("getRoutersSaAdmin")
+    public R getRoutersSaAdmin() throws IOException {
+        //Long userId = SecurityUtils.getUserId();
+        List<Record> apps = Db.use("master").find(" SELECT `menu_id` as id, `menu_name` as name, `parent_id`, `order_num`, \" +\n" +
+            "            \"`path`, `component` as url, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`,\" +\n" +
+            "            \" `create_by`, `create_time`, `update_by`, `update_time`, `remark` from sys_menu where parent_id = 0 ");
+        List<Map<String, Object>> apps1 = RecordUtil.recordToMaps(apps, true);
+        List<Record> menus = Db.use("master").find(" SELECT `menu_id` as id, `menu_name` as name,`remark` as info, `parent_id`, `order_num`, " +
+            "`path`, `component` as url, `query`, `is_frame`, `is_cache`, `menu_type`, `visible`, `status`, `perms`, `icon`," +
+            " `create_by`, `create_time`, `update_by`, `update_time`, `remark` from sys_menu where menu_type != 'F' ORDER BY parent_id,order_num ");
+        List<Map<String, Object>> menus1 = RecordUtil.recordToMaps(menus, true);
+        menus1 = (List) menus1.stream().map(map -> rebuildMenu(map)).collect(Collectors.toList());
+        List menus2 = TreeBuildUtil.listToTree(menus1, "0", "id", "parent_id","childList");
         Map data = new HashMap<>();
         data.put("apps", apps1);
         data.put("menus", menus2);

@@ -124,9 +124,12 @@ var sa_admin = new Vue({
 				for (var i = 0; i < menuList.length; i++) {
 					var menu = menuList[i];
 					arr.push(menu);
-					// 如果有子菜单 
+					// 如果有子菜单 children
 					if(menu.childList) {
 						_dg(menu.childList);
+					}
+					if(menu.children) {
+						_dg(menu.children);
 					}
 				}
 			}

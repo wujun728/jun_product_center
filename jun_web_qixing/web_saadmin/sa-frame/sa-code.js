@@ -12,8 +12,25 @@ sa_admin.icon = 'sa-frame/admin-logo.png';    // 设置icon图标地址
 
 
 // ================================= 示例：自定义菜单 =================================
-
+// $.ajax({
+//   url: '/dev-api/qixing/getRoutersSaAdmin',  // 请求地址
+//   type: 'get',                               // 请求方法
+//   data: {}, 
+//   async: false,
+//   headers: {"authorization": localStorage.getItem("Authorization")},                                   // 请求参数（原代码中的p变量）
+//   success: function(res) {                   // 成功回调函数
+//     console.log(res);
+//     window.menuList = res.data.menus;
+//     console.log(menuList);
+//     window.menuList;   
+//   },
+//   // 可选：添加错误处理（原sa.ajax可能默认处理，这里补充完整）
+//   error: function(xhr, status, error) {
+//     console.error('请求失败：', error);
+//   }
+// });
 var myMenuList = window.menuList;		// window.menuList 在 menu-list.js 中定义 
+
 sa_admin.setMenuList(myMenuList);	// 写入菜单  
 // sa_admin.setMenuList(myMenuList, [11, 1, '1-1']);	// 写入菜单，并设置应该显示哪些id的菜单（第二个参数为空时，代表默认显示所有） 
 // sa_admin.initMenu();	// 更简单的写法，相当于setMenuList省略第一个参数 

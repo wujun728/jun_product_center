@@ -12,6 +12,10 @@ var sa = {
 		api_url: 'http://127.0.0.1:8080',	// 所有ajax请求接口父地址
 		web_url: 'http://www.baidu.com'		// 此项目前台地址 (此配置项非必须)
 	}
+	var cfg_local = {
+		api_url: 'http://qixing.localhost',	// 所有ajax请求接口父地址
+		web_url: 'http://www.baidu.com'		// 此项目前台地址 (此配置项非必须)
+	}
 	// 服务器测试环境
 	var cfg_test = {
 		api_url: 'http://www.baidu.com',
@@ -22,7 +26,7 @@ var sa = {
 		api_url: 'http://www.baidu.com',
 		web_url: 'http://www.baidu.com'
 	}
-	sa.cfg = cfg_dev; // 最终环境 , 上线前请选择正确的环境 
+	sa.cfg = cfg_local; // 最终环境 , 上线前请选择正确的环境 
 })();
 
 
@@ -116,6 +120,7 @@ var sa = {
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
 			},
+			headers: {"authorization": localStorage.getItem("Authorization")}, 
 			success: function(res){
 				console.log('返回数据：', res);
 				setTimeout(function() {

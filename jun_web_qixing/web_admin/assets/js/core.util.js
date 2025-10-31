@@ -1,7 +1,6 @@
 /*工具类*/
 var CoreUtil = (function () {
-    var coreUtil = {};
-    //var token = layui.data('LocalData')["Authorization"];
+    var coreUtil = {}; 
     var token = localStorage.getItem("Authorization");
     var datas ;
 
@@ -116,27 +115,27 @@ var CoreUtil = (function () {
 
     /*存入本地缓存*/
     coreUtil.setData = function(key, value){
-        layui.data('LocalData',{
-            key :key,
-            value: value
-        })
+        // layui.data('LocalData',{
+        //     key :key,
+        //     value: value
+        // })
     };
     /*从本地缓存拿数据*/
     coreUtil.getData = function(key){
-        var localData = layui.data('LocalData');
-        return localData[key];
+        // var localData = layui.data('LocalData');
+        // return localData[key];
     };
 
     coreUtil.setLocal = function(key, value){
-        layui.data('LocalData1',{
-            key :key,
-            value: value
-        })
+        // layui.data('LocalData1',{
+        //     key :key,
+        //     value: value
+        // })
     };
     /*从本地缓存拿数据*/
     coreUtil.getLocal = function(key){
-        var localData = layui.data('LocalData1');
-        return localData[key];
+        // var localData = layui.data('LocalData1');
+        // return localData[key];
     };
 
     //判断字符是否为空的方法
@@ -294,15 +293,15 @@ var CoreUtil = (function () {
     };
 
     coreUtil.getCheckValues = function () { 
-        var _items = $('input:checkbox[name*="' + name + '"]:checked');
-        var _itemsStr = "";
-        layui.each(_items, function (i, n) {
-            _itemsStr += "," + $(n).val();
-        });
-        if (_itemsStr.length > 0) {
-            return _itemsStr.substr(1, _itemsStr.length);
-        }
-        return "";
+        // var _items = $('input:checkbox[name*="' + name + '"]:checked');
+        // var _itemsStr = "";
+        // layui.each(_items, function (i, n) {
+        //     _itemsStr += "," + $(n).val();
+        // });
+        // if (_itemsStr.length > 0) {
+        //     return _itemsStr.substr(1, _itemsStr.length);
+        // }
+        // return "";
     };
     
 

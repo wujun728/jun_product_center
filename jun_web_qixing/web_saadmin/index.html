@@ -1,69 +1,108 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title></title>
-		<meta charset="utf-8">
-		<link rel="shortcut icon" type="image/x-icon" href="sa-frame/admin-logo.png" class="admin-icon">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
-		<link rel="stylesheet" href="sa-frame/index/index.css">
-		<link rel="stylesheet" href="sa-frame/index/theme.css">
-		<link rel="stylesheet" href="static/sa.css">
-	</head>
-	<body>
-		<!-- App -->
-		<div class="app" style="display: none;" :style="'display: block;'" 
-			:class="['theme-0', 'theme-' + themeV, (isOpen ? '' : 'app-fold'), (isOpenRight ? '' : 'app-fold-right')]" >
-			<!-- 左 -->
-			<div class="nav-left">
-				<!-- logo部分 -->
-				<div class="nav-left-top">
-					<nav-logo></nav-logo>
-				</div>
-				<!-- 左下：菜单 -->
-				<div class="nav-left-bottom">
-					<nav-menu-bar ref="nav-menu-bar"></nav-menu-bar>
-				</div>
-			</div>
-			<!-- 右 -->
-			<div class="nav-right">
-				<!-- 工具栏 -->
-				<div class="nav-right-1" des="">
-					<nav-tool-bar ref="nav-tool-bar"></nav-tool-bar>
-				</div>
-				<!-- Tab栏 -->
-				<div class="nav-right-2">
-					<nav-tab-bar ref="nav-tab-bar"></nav-tab-bar>
-				</div>
-				<!-- 视图容器 -->
-				<div class="nav-right-3">
-					<nav-view-vessel ref="nav-view-vessel"></nav-view-vessel>
-				</div>
-			</div>
-			<!-- 右键菜单 -->
-			<com-right-menu ref="com-right-menu"></com-right-menu>
-			<!-- 双击添加新tab -->
-			<com-add-tab ref="com-add-tab"></com-add-tab>
-		</div>
-		
-		<!-- js依赖库 -->
-		<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
-		<script type="text/javascript">Vue.config.productionTip = false;</script>
-		<script src="https://unpkg.com/http-vue-loader@1.4.2/src/httpVueLoader.js"></script>
-		<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
-		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
-		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
-		<script src="https://unpkg.com/sortablejs@1.14.0/Sortable.min.js"></script>
-		<script src="https://unpkg.com/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
-		<!-- <script src="https://www.itxst.com/package/sortable/sortable.min.js"></script> -->
-		<!-- <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script> -->
-		
-		<!-- js本地库 -->
-		<script src="sa-frame/index/admin-util.js"></script>
-		<script src="sa-frame/index/index.js"></script>
-		<script src="sa-frame/menu-list.js"></script>
-		<script src="static/sa.js"></script>
-		<script src="sa-frame/sa-code.js"></script>
 
-	</body>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/x-icon" href="sa-frame/admin-logo.png" class="admin-icon">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+	<link rel="stylesheet" href="sa-frame/index/index.css">
+	<link rel="stylesheet" href="sa-frame/index/theme.css">
+	<link rel="stylesheet" href="static/sa.css">
+</head>
+
+<body>
+	<!-- App -->
+	<div class="app" style="display: none;" :style="'display: block;'"
+		:class="['theme-0', 'theme-' + themeV, (isOpen ? '' : 'app-fold'), (isOpenRight ? '' : 'app-fold-right')]">
+		<!-- 左 -->
+		<div class="nav-left">
+			<!-- logo部分 -->
+			<div class="nav-left-top">
+				<nav-logo></nav-logo>
+			</div>
+			<!-- 左下：菜单 -->
+			<div class="nav-left-bottom">
+				<nav-menu-bar ref="nav-menu-bar"></nav-menu-bar>
+			</div>
+		</div>
+		<!-- 右 -->
+		<div class="nav-right">
+			<!-- 工具栏 -->
+			<div class="nav-right-1" des="">
+				<nav-tool-bar ref="nav-tool-bar"></nav-tool-bar>
+			</div>
+			<!-- Tab栏 -->
+			<div class="nav-right-2">
+				<nav-tab-bar ref="nav-tab-bar"></nav-tab-bar>
+			</div>
+			<!-- 视图容器 -->
+			<div class="nav-right-3">
+				<nav-view-vessel ref="nav-view-vessel"></nav-view-vessel>
+			</div>
+		</div>
+		<!-- 右键菜单 -->
+		<com-right-menu ref="com-right-menu"></com-right-menu>
+		<!-- 双击添加新tab -->
+		<com-add-tab ref="com-add-tab"></com-add-tab>
+	</div>
+
+	<!-- js依赖库 -->
+	<script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+	<script type="text/javascript">Vue.config.productionTip = false;</script>
+	<script src="https://unpkg.com/http-vue-loader@1.4.2/src/httpVueLoader.js"></script>
+	<script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+	<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+	<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
+	<script src="https://unpkg.com/sortablejs@1.14.0/Sortable.min.js"></script>
+	<script src="https://unpkg.com/vuedraggable@2.24.3/dist/vuedraggable.umd.min.js"></script>
+	<!-- <script src="https://www.itxst.com/package/sortable/sortable.min.js"></script> -->
+	<!-- <script src="https://www.itxst.com/package/vuedraggable/vuedraggable.umd.min.js"></script> -->
+
+	<!-- js本地库 -->
+	<script src="sa-frame/index/admin-util.js"></script>
+	<script src="sa-frame/index/index.js"></script>
+	<script src="/assets/js/core.util.js"></script>
+
+	<!-- <script src="sa-frame/menu.js"></script> -->
+	<!-- <script src="sa-frame/menu-list.js"></script> -->
+	 <!-- <script src="sa-frame/menu-list2.js"></script> -->
+	 <script src="/dev-api/qixing/js/menuList.js"></script>
+
+	<script src="static/sa.js"></script>
+	<script type="text/javascript">
+		// var menuList = [];
+
+		var token = localStorage.getItem('Authorization');
+		console.log(token);
+
+		// 1、取值 
+		var p = {
+			key: $('[name=key]').val(), 
+			password: $('[name=password]').val()
+		}
+		/* sa.ajax('/dev-api/qixing/getRoutersSaAdmin', p, function (res) {
+			console.log(res);
+			window.menuList = res.data.menus;
+			console.log(menuList);
+			var myMenuList = window.menuList;		// window.menuList 在 menu-list.js 中定义 
+			sa_admin.setMenuList(myMenuList);	// 写入菜单  
+			// sa_admin.setMenuList(myMenuList, [11, 1, '1-1']);	// 写入菜单，并设置应该显示哪些id的菜单（第二个参数为空时，代表默认显示所有） 
+			sa_admin.initMenu();	// 更简单的写法，相当于setMenuList省略第一个参数 
+			sa_admin.init();
+		}, { type: 'get' }); */
+		sa.ajax('/dev-api/getInfo', p, function (res) {
+			console.log(res);
+		}, { type: 'get' });
+
+	</script>
+
+	<script src="sa-frame/sa-code.js"></script>
+
+
+
+</body>
+
 </html>

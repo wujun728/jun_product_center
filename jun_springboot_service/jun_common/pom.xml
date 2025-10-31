@@ -30,7 +30,7 @@
         <dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-db-activerecord</artifactId>
-            <version>1.0.22</version>
+            <version>1.0.23</version>
             <exclusions>
                 <exclusion>
                     <artifactId>mybatis-plus-core</artifactId>
