@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/x-icon" href="sa-frame/admin-logo.png" class="admin-icon">
+	<meta name="viewport"
+		content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" href="/js/element-ui@2.13.0/lib/theme-chalk/index.css">
+	<link rel="stylesheet" href="sa-frame/index/index.css">
+	<link rel="stylesheet" href="sa-frame/index/theme.css">
+	<link rel="stylesheet" href="static/sa.css">
+</head>
+
+<body>
+	<!-- App -->
+	<div class="app" style="display: none;" :style="'display: block;'"
+		:class="['theme-0', 'theme-' + themeV, (isOpen ? '' : 'app-fold'), (isOpenRight ? '' : 'app-fold-right')]">
+		<!-- 左 -->
+		<div class="nav-left">
+			<!-- logo部分 -->
+			<div class="nav-left-top">
+				<nav-logo></nav-logo>
+			</div>
+			<!-- 左下：菜单 -->
+			<div class="nav-left-bottom">
+				<nav-menu-bar ref="nav-menu-bar"></nav-menu-bar>
+			</div>
+		</div>
+		<!-- 右 -->
+		<div class="nav-right">
+			<!-- 工具栏 -->
+			<div class="nav-right-1" des="">
+				<nav-tool-bar ref="nav-tool-bar"></nav-tool-bar>
+			</div>
+			<!-- Tab栏 -->
+			<div class="nav-right-2">
+				<nav-tab-bar ref="nav-tab-bar"></nav-tab-bar>
+			</div>
+			<!-- 视图容器 -->
+			<div class="nav-right-3">
+				<nav-view-vessel ref="nav-view-vessel"></nav-view-vessel>
+			</div>
+		</div>
+		<!-- 右键菜单 -->
+		<com-right-menu ref="com-right-menu"></com-right-menu>
+		<!-- 双击添加新tab -->
+		<com-add-tab ref="com-add-tab"></com-add-tab>
+	</div>
+
+	<!-- js依赖库 -->
+	<script src="/js/vue@2.6.10/vue.js"></script>
+	<script type="text/javascript">Vue.config.productionTip = false;</script>
+	<script src="/js/httpVueLoader.js"></script>
+	<script src="/js/element-ui@2.13.0/lib/index.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/layer-v3.1.1/layer.js"></script>
+	<script src="/js/Sortable.min.js"></script>
+	<script src="/js/vuedraggable.umd.min.js"></script> 
+
+	<!-- js本地库 -->
+	<script src="sa-frame/index/admin-util.js"></script>
+	<script src="sa-frame/index/index.js"></script>
+	<script src="/assets/js/core.util.js"></script>
+
+	<!-- <script src="sa-frame/menu.js"></script> -->
+	<script src="sa-frame/menu-list.js"></script>
+	 <!-- <script src="sa-frame/menu-list2.js"></script> -->
+	 <script src="/dev-api/qixing/js/menuList.js"></script>
+
+	<script src="static/sa.js"></script>
+	<script type="text/javascript"> 
+
+		var token = localStorage.getItem('Authorization');
+		console.log(token);
+ 
+		 
+		sa.ajax('/dev-api/getInfo', {}, function (res) {
+			console.log(res);
+		}, { type: 'get' });
+
+	</script>
+
+	<script src="sa-frame/sa-code.js"></script>
+
+
+
+</body>
+
+</html>
