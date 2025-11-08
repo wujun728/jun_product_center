@@ -19,6 +19,7 @@ public class TableInfo {
     private String tableComment;
     //表行数
     private int tableRows;
+    private String moduleName;
     //列信息
     private List<ColumnInfo> columnInfos = new ArrayList<>();
     //索引信息

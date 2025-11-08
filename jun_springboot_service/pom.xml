@@ -6,9 +6,9 @@
 
     <groupId>io.github.wujun728</groupId>
     <artifactId>jun_springboot_service</artifactId>
-    <version>1.0.24</version>
+    <version>1.0.25</version>
 
-    <name>jun_springboot_vue</name>
+    <name>jun_springboot_service</name>
     <url>http://www.ruoyi.vip</url>
     <description>管理系统</description>
 
@@ -31,7 +31,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <ruoyi.version>1.0.24</ruoyi.version>
+        <ruoyi.version>1.0.25</ruoyi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

@@ -10,6 +10,7 @@ import io.github.wujun728.admin.common.service.TemplateService;
 import io.github.wujun728.admin.common.service.impl.AbstractCacheService;
 import io.github.wujun728.admin.db.data.ColumnMeta;
 import io.github.wujun728.admin.db.service.JdbcService;
+import io.github.wujun728.admin.page.ConfigUtils;
 import io.github.wujun728.admin.page.constants.*;
 import io.github.wujun728.admin.page.data.*;
 import io.github.wujun728.admin.page.service.DicCacheService;
@@ -563,7 +564,8 @@ public class PageServiceImpl extends AbstractCacheService<Page> implements PageS
             PageResultField field = new PageResultField();
             field.setField(columnMeta.getColumnLabel());
             field.setLabel(columnMeta.getColumnComment());
-            if(columnMeta.getColumnName() != null && columnMeta.getColumnName().toLowerCase().contains("id")){
+            if(columnMeta.getColumnName() != null && columnMeta.getColumnName().toLowerCase().contains("id")
+                || ConfigUtils.ignoreListColumnName.contains(columnMeta.getColumnName().toLowerCase())){
                 field.setHidden("YES");
             }
 

@@ -283,7 +283,7 @@
         <!--<dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun_common</artifactId>
-            <version>1.0.23</version>
+            <version>1.0.25</version>
             <scope>compile</scope>
         </dependency>-->
         <!--<dependency>

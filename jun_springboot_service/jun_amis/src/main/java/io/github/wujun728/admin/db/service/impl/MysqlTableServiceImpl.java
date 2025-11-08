@@ -62,6 +62,7 @@ public class MysqlTableServiceImpl extends AbstractCacheService<Result<TableInfo
         tableInfos.forEach(tableInfo -> {
             tableInfo.setId(tableInfo.getTableName());
             tableInfo.setOldTableName(tableInfo.getTableName());
+            tableInfo.setModuleName(StringUtil.toFieldColumn(tableInfo.getTableName()));
         });
         return result;
     }

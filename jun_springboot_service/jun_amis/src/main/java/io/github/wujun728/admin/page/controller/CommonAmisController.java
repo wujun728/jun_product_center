@@ -2,6 +2,7 @@ package io.github.wujun728.admin.page.controller;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import io.github.wujun728.admin.common.Result;
@@ -59,8 +60,8 @@ public class CommonAmisController {
         String tableName = form.getTableName();
         Object id = obj.get("id");
         Long enterpriseId = SessionContext.getSession().getEnterpriseId();
-
-        if (id != null && StringUtils.isNotBlank(id.toString()) && !jdbcService.ownerEnterprise(tableName, ((Integer)id).longValue(), enterpriseId)) {
+        Long idVal = NumberUtil.toBigDecimal(String.valueOf(id)).longValue();
+        if (id != null && StringUtils.isNotBlank(id.toString()) && !jdbcService.ownerEnterprise(tableName, idVal/*((Integer)id).longValue()*/, enterpriseId)) {
             return Result.error("没有数据权限.");
         }
         List<FormField> formFields = form.getFormFields();
@@ -245,7 +246,8 @@ public class CommonAmisController {
             log.error("保存异常",e);
             return Result.error(e.getMessage());
         }
-        return get((Long)obj.get("id"),formCode);
+        //Long idVal = NumberUtil.toBigDecimal(String.valueOf(obj.get("id"))).longValue();
+        return get(idVal/*(Long)obj.get("id")*/,formCode);
         //return Result.success(obj);
     }
 

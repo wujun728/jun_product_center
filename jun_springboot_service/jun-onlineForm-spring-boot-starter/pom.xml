@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>jun_springboot_vue</artifactId>
+        <artifactId>jun_springboot_service</artifactId>
         <groupId>io.github.wujun728</groupId>
-        <version>1.0.24</version>
+        <version>1.0.25</version>
     </parent>
     <groupId>io.github.wujun728</groupId>
     <artifactId>jun-onlineForm-spring-boot-starter</artifactId>
@@ -23,7 +23,7 @@
         <!--<dependency>
             <groupId>io.github.wujun728</groupId>
             <artifactId>jun-common</artifactId>
-            <version>1.0.24</version>
+            <version>1.0.25</version>
         </dependency>-->
         <!-- 通用工具-->
         <dependency>
@@ -85,8 +85,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.wujun728</groupId>
-            <artifactId>jun-common-core</artifactId>
-            <version>1.0.23</version>
+            <artifactId>jun-common-base</artifactId>
+            <version>1.0.25</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

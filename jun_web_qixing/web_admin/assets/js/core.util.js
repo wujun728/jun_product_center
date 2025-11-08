@@ -30,7 +30,7 @@ var CoreUtil = (function () {
     /*ajax*/
     coreUtil.sendAJAX = function(url, params, ft, method){
         var loadIndex = top.layer.load(0, {shade: false});
-        debugger;
+        //debugger;
         $.ajax({
             url: url,
             cache: false,

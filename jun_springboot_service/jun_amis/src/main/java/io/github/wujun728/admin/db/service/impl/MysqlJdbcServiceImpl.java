@@ -1,5 +1,6 @@
 package io.github.wujun728.admin.db.service.impl;
 
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -188,7 +189,9 @@ public class MysqlJdbcServiceImpl extends MysqlJdbcDaoImpl implements JdbcServic
         if(obj == null){
             return;
         }
-        Long id = (Long) obj.get("id");
+
+        //Long id = (Long) obj.get("id");
+        Long id = NumberUtil.toBigDecimal(String.valueOf(obj.get("id"))).longValue();
         if(id == null){
             throw new RuntimeException("更新失败,id不能为空");
         }

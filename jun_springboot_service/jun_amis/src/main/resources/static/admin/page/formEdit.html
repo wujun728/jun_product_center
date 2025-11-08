@@ -143,12 +143,12 @@
 			<el-button type="primary" @click="onAddField">添加</el-button>
 			<el-button type="primary" @click="onReload">加载字段</el-button>
 			<el-table :data="form.formFields"  border height="500" >
-				<el-table-column fixed prop='seq' sortable   label="序号" width="200" >
+				<el-table-column fixed prop='seq' sortable   label="序号" width="160" >
 					<template  #default="scope">
 						<el-input-number v-model="scope.row.seq" style="width:150" :step="10" />
 					</template>
 				</el-table-column>
-				<el-table-column fixed  label="字段" width="200" >
+				<el-table-column fixed  label="字段" width="160" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper" style="width:100%;">
@@ -157,7 +157,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column  label="名称" width="180" >
+				<el-table-column  label="名称" width="150" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -166,7 +166,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="分组" width="150" >
+				<el-table-column label="分组" width="110" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -175,7 +175,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="宽度" width="100" >
+				<el-table-column label="宽度" width="80" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -184,7 +184,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="字段类型" width="160" >
+				<el-table-column label="字段类型" width="150" >
 					<template  #default="scope">
 						<el-select v-model="scope.row.type" placeholder="请选择" clearable  >
 							<el-option label="字符串" value="string"  ></el-option>
@@ -202,7 +202,7 @@
 						</el-select>
 					</template>
 				</el-table-column>
-				<el-table-column label="默认值" width="200" >
+				<el-table-column label="默认值" width="90" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -211,14 +211,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="格式化" width="300" >
-					<template  #default="scope">
-						<div class='el-textarea'>
-							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.format" style="height:80px;"></textarea>
-						</div>
-					</template>
-				</el-table-column>
-				<el-table-column label="组件类型" width="180"  >
+				<el-table-column label="组件类型" width="120"  >
 					<template  #default="scope">
 						<el-select v-model="scope.row.componentType" filterable  placeholder="请选择" clearable >
 							<el-option label="文本框" value="input-text" ></el-option>
@@ -267,6 +260,13 @@
 						</el-select>
 					</template>
 				</el-table-column>
+                <el-table-column label="格式化" width="160" >
+                    <template  #default="scope">
+                        <div class='el-textarea'>
+                            <textarea class='el-textarea__inner'  v-model.lazy="scope.row.format" style="height:80px;"></textarea>
+                        </div>
+                    </template>
+                </el-table-column>
 				<el-table-column label="是否隐藏" width="100"   >
 					<template  #default="scope">
 						<el-select v-model="scope.row.hidden"  placeholder="请选择" clearable >
@@ -300,14 +300,14 @@
 					</template>
 				</el-table-column>
 
-				<el-table-column label="标签提示" width="300" >
+				<el-table-column label="标签提示" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.labelRemark" style="height:80px;"></textarea>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="校验重复类型" width="200" >
+				<el-table-column label="校验重复类型" width="160" >
 					<template  #default="scope">
 						<el-select v-model="scope.row.checkRepeatType" placeholder="请选择" clearable  >
 							<el-option label="不校验" value="notCheck" ></el-option>
@@ -318,7 +318,7 @@
 						</el-select>
 					</template>
 				</el-table-column>
-				<el-table-column label="校验重复配置" width="200" >
+				<el-table-column label="校验重复配置" width="160" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -327,14 +327,14 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="校验重复提示" width="200" >
+				<el-table-column label="校验重复提示" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.checkRepeatTip" style="height:80px;"></textarea>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="表单项校验" width="300" >
+				<el-table-column label="表单项校验" width="160" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -343,14 +343,14 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="选项sql" width="300" >
+				<el-table-column label="选项sql" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.optionSql" style="height:80px;"></textarea>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="扩展json" width="300" >
+				<el-table-column label="扩展json" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.extraJson" style="height:80px;"></textarea>
@@ -373,7 +373,7 @@
 						<el-input-number v-model="scope.row.seq" style="width:150" :step="10" />
 					</template>
 				</el-table-column>
-				<el-table-column  label="名称" fixed width="180" >
+				<el-table-column  label="名称" fixed width="160" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -382,7 +382,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column  label="编号" width="180" >
+				<el-table-column  label="编号" width="160" >
 					<template  #default="scope">
 						<div class='el_input'>
 							<div class="el-input__wrapper">
@@ -391,7 +391,7 @@
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作类型" width="200" >
+				<el-table-column label="操作类型" width="160" >
 					<template  #default="scope">
 						<el-select v-model="scope.row.optionType" placeholder="请选择" clearable  >
 							<el-option label="弹出表单" value="form"  ></el-option>
@@ -402,7 +402,7 @@
 						</el-select>
 					</template>
 				</el-table-column>
-				<el-table-column label="操作配置" width="400" >
+				<el-table-column label="操作配置" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.optionValue" placeholder="表单:配置表单编号
@@ -449,14 +449,14 @@ post:/xxx(会携带)requestBody参数
 						</el-select>
 					</template>
 				</el-table-column>
-				<el-table-column label="二次确认提示" width="300" >
+				<el-table-column label="二次确认提示" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.confirmText" style="height:80px;"></textarea>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="是否提示" width="200" >
+				<el-table-column label="是否提示" width="160" >
 					<template  #default="scope">
 						<el-select v-model="scope.row.whetherConfirm" placeholder="默认提示" clearable  >
 							<el-option label="YES" value="YES"  ></el-option>
@@ -464,21 +464,21 @@ post:/xxx(会携带)requestBody参数
 						</el-select>
 					</template>
 				</el-table-column>
-				<el-table-column label="禁用规则" width="300" >
+				<el-table-column label="禁用规则" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.jsRule" style="height:80px;"></textarea>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="弹出前接口" width="300" >
+				<el-table-column label="弹出前接口" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.beforePopApi" style="height:80px;"></textarea>
 						</div>
 					</template>
 				</el-table-column>
-				<el-table-column label="扩展json" width="300" >
+				<el-table-column label="扩展json" width="160" >
 					<template  #default="scope">
 						<div class='el-textarea'>
 							<textarea class='el-textarea__inner'  v-model.lazy="scope.row.extraJson" style="height:80px;"></textarea>

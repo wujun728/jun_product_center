@@ -9,6 +9,7 @@ import io.github.wujun728.admin.common.config.SessionContext;
 import io.github.wujun728.admin.common.service.impl.AbstractCacheService;
 import io.github.wujun728.admin.db.data.ColumnMeta;
 import io.github.wujun728.admin.db.service.JdbcService;
+import io.github.wujun728.admin.page.ConfigUtils;
 import io.github.wujun728.admin.page.constants.ComponentType;
 import io.github.wujun728.admin.page.constants.DataType;
 import io.github.wujun728.admin.page.constants.FormType;
@@ -404,6 +405,8 @@ public class FormServiceImpl extends AbstractCacheService<Form> implements FormS
         Map<String,Object> fieldConfig = inputFieldService.buildInputField(field,false);
         if(Whether.YES.equals(field.getHidden())){
             fieldConfig.put("columnClassName","mb-0");
+            fieldConfig.put("label","");
+            fieldConfig.put("type","hidden");
         }else{
             fieldConfig.put("columnClassName","mb-3");
         }
@@ -494,7 +497,8 @@ public class FormServiceImpl extends AbstractCacheService<Form> implements FormS
             field.setHidden(Whether.NO);
             field.setDisabled(Whether.NO);
             field.setLabel(columnMeta.getColumnComment());
-            if(columnMeta.getColumnName() != null && columnMeta.getColumnName().toLowerCase().contains("id")){
+            if(columnMeta.getColumnName() != null && columnMeta.getColumnName().toLowerCase().contains("id")
+                || ConfigUtils.ignoreListColumnName.contains(columnMeta.getColumnName().toLowerCase())  ){
                 field.setHidden("YES");
             }
 

@@ -2,6 +2,7 @@ package io.github.wujun728.admin.page.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -82,12 +83,26 @@ public class PageController {
         copy.setCode(copy.getCode()+"_copy");
         return Result.success(copy);
     }
-    @RequestMapping("/get")
+    /*@RequestMapping("/get")
     public Result<Page> get(Long id){
         if(id == null){
             return Result.success(new Page());
         }
         return Result.success(pageService.get(id));
+    }*/
+    @RequestMapping("/get")
+    public Result<Page> getNew(String id){
+        if(NumberUtil.isNumber(id)){
+            if(id == null){
+                return Result.success(new Page());
+            }
+            return Result.success(pageService.get(Long.valueOf(id)));
+        }else{
+            if(id == null){
+                return Result.success(new Page());
+            }
+            return Result.success(pageService.load(id));
+        }
     }
     @RequestMapping("/getJson")
     public Result getJson(Long id){

@@ -2,6 +2,7 @@ package io.github.wujun728.admin.page.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import io.github.wujun728.admin.common.PageData;
@@ -46,14 +47,28 @@ public class FormAmisController {
         return jdbcService.query(pageParam,Page.class,sql,values.toArray());
     }
 
-    @RequestMapping("/get")
+    /*@RequestMapping("/get")
     public Result<Form> get(Long id){
         if(id == null){
             return Result.success(new Form());
         }
         return Result.success(formService.get(id));
-    }
+    }*/
+    @RequestMapping("/get")
+    public Result<Form> getNew(String id){
 
+        if(NumberUtil.isNumber(id)){
+            if(id == null){
+                return Result.success(new Form());
+            }
+            return Result.success(formService.get(Long.valueOf(id)));
+        }else{
+            if(id == null){
+                return Result.success(new Form());
+            }
+            return Result.success(formService.load(id));
+        }
+    }
     @RequestMapping("/save")
     public Result<String> save(@RequestBody Form form){
         if(jdbcService.isRepeat("select id from form where code = '$code' and id <> $id ", BeanUtil.beanToMap(form))){
