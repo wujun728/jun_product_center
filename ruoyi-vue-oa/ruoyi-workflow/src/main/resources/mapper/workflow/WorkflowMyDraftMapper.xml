@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.WorkflowMyDraftMapper">
+    
+    <resultMap type="WorkflowMyDraft" id="WorkflowMyDraftResult">
+        <result property="id"    column="id"    />
+        <result property="bizId"    column="biz_id"    />
+        <result property="bizTitle"    column="biz_title"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="type"    column="type"    />
+        <result property="status"    column="status"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowMyDraftVo">
+        select id, biz_id, biz_title, template_id, template_name, type, status, proc_inst_id, task_id, del_flag, create_id, create_time from t_workflow_my_draft
+    </sql>
+
+    <select id="selectWorkflowMyDraftList" parameterType="WorkflowMyDraft" resultMap="WorkflowMyDraftResult">
+        <include refid="selectWorkflowMyDraftVo"/>
+        <where>
+            del_flag = '0' and create_id = #{createId}
+            <if test="bizTitle != null  and bizTitle != ''"> and biz_title like concat('%', #{bizTitle}, '%')</if>
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectWorkflowMyDraftById" parameterType="String" resultMap="WorkflowMyDraftResult">
+        <include refid="selectWorkflowMyDraftVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectByBizId" resultMap="WorkflowMyDraftResult">
+        <include refid="selectWorkflowMyDraftVo"/>
+        where biz_id = #{bizId}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from t_workflow_my_draft where create_id = #{createId}
+    </select>
+
+    <insert id="insertWorkflowMyDraft" parameterType="WorkflowMyDraft">
+        insert into t_workflow_my_draft
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="bizId != null and bizId != ''">biz_id,</if>
+            <if test="bizTitle != null and bizTitle != ''">biz_title,</if>
+            <if test="templateId != null and templateId != ''">template_id,</if>
+            <if test="templateName != null and templateName != ''">template_name,</if>
+            <if test="type != null">type,</if>
+            <if test="status != null">status,</if>
+            <if test="procInstId != null">proc_inst_id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="bizId != null and bizId != ''">#{bizId},</if>
+            <if test="bizTitle != null and bizTitle != ''">#{bizTitle},</if>
+            <if test="templateId != null and templateId != ''">#{templateId},</if>
+            <if test="templateName != null and templateName != ''">#{templateName},</if>
+            <if test="type != null">#{type},</if>
+            <if test="status != null">#{status},</if>
+            <if test="procInstId != null">#{procInstId},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowMyDraft" parameterType="WorkflowMyDraft">
+        update t_workflow_my_draft
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="bizId != null and bizId != ''">biz_id = #{bizId},</if>
+            <if test="bizTitle != null and bizTitle != ''">biz_title = #{bizTitle},</if>
+            <if test="templateId != null and templateId != ''">template_id = #{templateId},</if>
+            <if test="templateName != null and templateName != ''">template_name = #{templateName},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowMyDraftById" parameterType="String">
+        delete from t_workflow_my_draft where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowMyDraftByIds" parameterType="String">
+        delete from t_workflow_my_draft where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectWorkflowMyDraftByBizIds" parameterType="String" resultMap="WorkflowMyDraftResult">
+        <include refid="selectWorkflowMyDraftVo"/>
+        where biz_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.file.business.mapper.FileStorageMapper">
+    
+    <resultMap type="FileStorage" id="FileStorageResult">
+        <result property="id"    column="id"    />
+        <result property="fileId"    column="file_id"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="identifier"    column="identifier"    />
+        <result property="storageType"    column="storage_type"    />
+        <result property="extendName"    column="extend_name"    />
+        <result property="md5"    column="md5"    />
+        <result property="previewUrl"    column="preview_url"    />
+        <result property="genPreviewTime"    column="gen_preview_time"    />
+        <result property="sort"    column="sort"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateBy"    column="update_by"    />
+    </resultMap>
+
+    <sql id="selectFileStorageVo">
+        select id, file_id, file_name, file_url, file_size, identifier, storage_type, extend_name, md5, sort, preview_url, gen_preview_time, del_flag, create_time, create_id, create_by, update_time, update_id, update_by from t_file_storage
+    </sql>
+
+    <select id="selectFileStorageList" parameterType="FileStorage" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        <where>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="extendName != null  and extendName != ''"> and extend_name = #{extendName}</if>
+            <if test="identifier != null  and identifier != ''"> and identifier = #{identifier}</if>
+            <if test="storageType != null  and storageType != ''"> and storage_type = #{storageType}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by like concat('%', #{createBy}, '%')</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="listByEqConditions" parameterType="FileStorage" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        <where>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name = #{fileName}</if>
+            <if test="extendName != null  and extendName != ''"> and extend_name = #{extendName}</if>
+            <if test="identifier != null  and identifier != ''"> and identifier = #{identifier}</if>
+            <if test="storageType != null  and storageType != ''"> and storage_type = #{storageType}</if>
+            <if test="storageType != null  and storageType != ''"> and storage_type = #{storageType}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectFileStorageById" parameterType="String" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectFileStorageByFileId" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        where file_id = #{fileId}
+    </select>
+
+    <select id="selectFileStorageByIdentifier" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        where identifier = #{identifier}
+    </select>
+
+    <select id="selectFileStorageByFileUrl" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        where file_url = #{fileUrl}
+        limit 1
+    </select>
+
+    <select id="listByIds" resultMap="FileStorageResult">
+        <include refid="selectFileStorageVo"/>
+        where del_flag = '0' and file_id in
+        <foreach item="fileId" collection="list" open="(" separator="," close=")">
+            #{fileId}
+        </foreach>
+        order by sort asc
+    </select>
+
+    <insert id="insertFileStorage" parameterType="FileStorage">
+        insert into t_file_storage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="fileId != null and fileId != ''">file_id,</if>
+            <if test="fileName != null and fileName != ''">file_name,</if>
+            <if test="fileUrl != null and fileUrl != ''">file_url,</if>
+            <if test="fileSize != null">file_size,</if>
+            <if test="identifier != null">identifier,</if>
+            <if test="storageType != null">storage_type,</if>
+            <if test="extendName != null">extend_name,</if>
+            <if test="md5 != null and md5 != ''">md5,</if>
+            <if test="previewUrl != null and previewUrl != ''">preview_url,</if>
+            <if test="genPreviewTime != null">gen_preview_time,</if>
+            <if test="sort != null">sort,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="fileId != null and fileId != ''">#{fileId},</if>
+            <if test="fileName != null and fileName != ''">#{fileName},</if>
+            <if test="fileUrl != null and fileUrl != ''">#{fileUrl},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+            <if test="identifier != null">#{identifier},</if>
+            <if test="storageType != null">#{storageType},</if>
+            <if test="extendName != null">#{extendName},</if>
+            <if test="md5 != null and md5 != ''">#{md5},</if>
+            <if test="previewUrl != null and previewUrl != ''">#{previewUrl},</if>
+            <if test="genPreviewTime != null">#{genPreviewTime},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFileStorage" parameterType="FileStorage">
+        update t_file_storage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileId != null and fileId != ''">file_id = #{fileId},</if>
+            <if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+            <if test="fileUrl != null and fileUrl != ''">file_url = #{fileUrl},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="identifier != null">identifier = #{identifier},</if>
+            <if test="storageType != null">storage_type = #{storageType},</if>
+            <if test="extendName != null">extend_name = #{extendName},</if>
+            <if test="md5 != null and md5 != ''">md5 = #{md5},</if>
+            <if test="previewUrl != null and previewUrl != ''">preview_url = #{previewUrl},</if>
+            <if test="genPreviewTime != null">gen_preview_time = #{genPreviewTime},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="updateFileSort">
+        update t_file_storage set sort = #{sort} where file_id = #{fileId}
+    </update>
+
+    <update id="updateByFileId">
+        update t_file_storage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null and fileName != ''">file_name = #{fileName},</if>
+            <if test="fileUrl != null and fileUrl != ''">file_url = #{fileUrl},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="identifier != null">identifier = #{identifier},</if>
+            <if test="storageType != null">storage_type = #{storageType},</if>
+            <if test="extendName != null">extend_name = #{extendName},</if>
+            <if test="md5 != null and md5 != ''">md5 = #{md5},</if>
+            <if test="previewUrl != null and previewUrl != ''">preview_url = #{previewUrl},</if>
+            <if test="genPreviewTime != null">gen_preview_time = #{genPreviewTime},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where file_id = #{fileId}
+    </update>
+
+    <delete id="deleteByFileId">
+        delete from t_file_storage where file_id = #{fileId}
+    </delete>
+
+    <delete id="deleteFileStorageByIds" parameterType="String">
+        delete from t_file_storage where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

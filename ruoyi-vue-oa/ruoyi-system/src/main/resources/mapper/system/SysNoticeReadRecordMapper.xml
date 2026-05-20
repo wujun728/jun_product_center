@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.SysNoticeReadRecordMapper">
+    
+    <resultMap type="SysNoticeReadRecord" id="SysNoticeReadRecordResult">
+        <result property="id"    column="id"    />
+        <result property="noticeId"    column="notice_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectSysNoticeReadRecordVo">
+        select id, notice_id, user_id, create_time from t_sys_notice_read_record
+    </sql>
+
+    <select id="selectSysNoticeReadRecordList" parameterType="SysNoticeReadRecord" resultMap="SysNoticeReadRecordResult">
+        <include refid="selectSysNoticeReadRecordVo"/>
+        <where>  
+            <if test="noticeId != null  and noticeId != ''"> and notice_id = #{noticeId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysNoticeReadRecordById" parameterType="String" resultMap="SysNoticeReadRecordResult">
+        <include refid="selectSysNoticeReadRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="listUserRecords" resultMap="SysNoticeReadRecordResult">
+        <include refid="selectSysNoticeReadRecordVo"/>
+        where user_id= #{userId} and notice_id in
+        <foreach item="id" collection="noticeIds" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertSysNoticeReadRecord" parameterType="SysNoticeReadRecord">
+        insert into t_sys_notice_read_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="noticeId != null and noticeId != ''">notice_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="noticeId != null and noticeId != ''">#{noticeId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysNoticeReadRecord" parameterType="SysNoticeReadRecord">
+        update t_sys_notice_read_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="noticeId != null and noticeId != ''">notice_id = #{noticeId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysNoticeReadRecordById" parameterType="String">
+        delete from t_sys_notice_read_record where id = #{id}
+    </delete>
+
+    <delete id="deleteSysNoticeReadRecordByIds" parameterType="String">
+        delete from t_sys_notice_read_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

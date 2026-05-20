@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kbs.mapper.KbsDocumentCommentMapper">
+
+    <resultMap type="KbsDocumentComment" id="KbsDocumentCommentResult">
+        <result property="id" column="id"/>
+        <result property="docId" column="doc_id"/>
+        <result property="comment" column="comment"/>
+        <result property="rootParentId" column="root_parent_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="replierId" column="replier_id"/>
+        <result property="replier" column="replier"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createId" column="create_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectKbsDocumentCommentVo">
+        select id,
+               doc_id,
+               comment,
+               root_parent_id,
+               parent_id,
+               replier_id,
+               replier,
+               del_flag,
+               create_id,
+               create_by,
+               create_time,
+               update_id,
+               update_by,
+               update_time
+        from t_kbs_document_comment
+    </sql>
+
+    <select id="selectKbsDocumentCommentList" parameterType="KbsDocumentComment" resultMap="KbsDocumentCommentResult">
+        <include refid="selectKbsDocumentCommentVo"/>
+        <where>
+            del_flag = '0'
+            <if test="docId != null  and docId != ''">and doc_id = #{docId}</if>
+            <if test="rootParentId != null  and rootParentId != ''">and root_parent_id = #{rootParentId}</if>
+            <if test="parentId != null  and parentId != ''">and parent_id = #{parentId}</if>
+            <if test="replierId != null ">and replier_id = #{replierId}</if>
+            <if test="createId != null ">and create_id = #{createId}</if>
+            <if test="parentId == null ">and parent_id is null</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectKbsDocumentCommentById" parameterType="String" resultMap="KbsDocumentCommentResult">
+        <include refid="selectKbsDocumentCommentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertKbsDocumentComment" parameterType="KbsDocumentComment">
+        insert into t_kbs_document_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="docId != null and docId != ''">doc_id,</if>
+            <if test="comment != null">comment,</if>
+            <if test="rootParentId != null">root_parent_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="replierId != null">replier_id,</if>
+            <if test="replier != null">replier,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="docId != null and docId != ''">#{docId},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="rootParentId != null">#{rootParentId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="replierId != null">#{replierId},</if>
+            <if test="replier != null">#{replier},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateKbsDocumentComment" parameterType="KbsDocumentComment">
+        update t_kbs_document_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="docId != null and docId != ''">doc_id = #{docId},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="rootParentId != null">root_parent_id = #{rootParentId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="replierId != null">replier_id = #{replierId},</if>
+            <if test="replier != null">replier = #{replier},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKbsDocumentCommentById" parameterType="String">
+        delete
+        from t_kbs_document_comment
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteKbsDocumentCommentByIds" parameterType="String">
+        delete from t_kbs_document_comment where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectKbsDocumentCommentByParentIds" parameterType="String" resultMap="KbsDocumentCommentResult">
+        <include refid="selectKbsDocumentCommentVo"/>
+        where del_flag = '0' and root_parent_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by create_time desc
+    </select>
+
+    <select id="statDocumentCommentNum" parameterType="String" resultType="Long">
+        select count(1) from t_kbs_document_comment where del_flag = '0' and doc_id = #{docId}
+    </select>
+
+    <select id="selectKbsDocumentCommentByRootParentId" resultMap="KbsDocumentCommentResult">
+        <include refid="selectKbsDocumentCommentVo"/>
+        where del_flag = '0' and root_parent_id = #{rootParentId}
+        order by create_time desc
+    </select>
+
+    <update id="updateDelFlagByIds" parameterType="KbsDocumentCommentUpdateQo">
+        update t_kbs_document_comment
+        set del_flag = #{delFlag}, update_id = #{updateId}, update_by = #{updateBy}, update_time = #{updateTime}
+        where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.schedule.mapper.ScheduleTypeMapper">
+    
+    <resultMap type="ScheduleType" id="ScheduleTypeResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="tagName"    column="tag_name"    />
+        <result property="tagType"    column="tag_type"    />
+        <result property="tagEffect"    column="tag_effect"    />
+        <result property="color"    column="color"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectScheduleTypeVo">
+        select id, title, tag_name, tag_type, tag_effect, color, del_flag, create_id, create_time, update_id, update_time from t_schedule_type
+    </sql>
+
+    <select id="selectScheduleTypeList" parameterType="ScheduleType" resultMap="ScheduleTypeResult">
+        <include refid="selectScheduleTypeVo"/>
+        <where>
+            del_flag = '0'
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="createId != null"> and create_id = #{createId}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+        order by create_time asc
+    </select>
+    
+    <select id="selectScheduleTypeById" parameterType="String" resultMap="ScheduleTypeResult">
+        <include refid="selectScheduleTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectByIds" resultMap="ScheduleTypeResult">
+        <include refid="selectScheduleTypeVo"/>
+        where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertScheduleType" parameterType="ScheduleType">
+        insert into t_schedule_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="tagName != null">tag_name,</if>
+            <if test="tagType != null">tag_type,</if>
+            <if test="tagEffect != null">tag_effect,</if>
+            <if test="color != null">color,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="tagName != null">#{tagName},</if>
+            <if test="tagType != null">#{tagType},</if>
+            <if test="tagEffect != null">#{tagEffect},</if>
+            <if test="color != null">#{color},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateScheduleType" parameterType="ScheduleType">
+        update t_schedule_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="tagName != null">tag_name = #{tagName},</if>
+            <if test="tagType != null">tag_type = #{tagType},</if>
+            <if test="tagEffect != null">tag_effect = #{tagEffect},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteScheduleTypeById" parameterType="String">
+        update t_schedule_type set del_flag = '1' where id = #{id}
+    </delete>
+
+    <delete id="deleteScheduleTypeByIds" parameterType="String">
+        update t_schedule_type set del_flag = '1' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateDelFlagByIds" parameterType="ScheduleTypeUpdateQo">
+        update t_schedule_type set del_flag = #{delFlag}, update_id = #{updateId}, update_time = #{updateTime} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

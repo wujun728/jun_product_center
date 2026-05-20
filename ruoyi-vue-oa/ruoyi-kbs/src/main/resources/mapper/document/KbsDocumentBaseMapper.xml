@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kbs.mapper.KbsDocumentBaseMapper">
+
+    <resultMap type="KbsDocumentBase" id="KbsDocumentBaseResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="topicId" column="topic_id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="sort" column="sort"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createId" column="create_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectKbsDocumentBaseVo">
+        select id,
+               name,
+               type,
+               topic_id,
+               parent_id,
+               sort,
+               del_flag,
+               create_id,
+               create_by,
+               create_time,
+               update_id,
+               update_by,
+               update_time
+        from t_kbs_document_base
+    </sql>
+
+    <select id="selectKbsDocumentBaseList" parameterType="KbsDocumentBase" resultMap="KbsDocumentBaseResult">
+        <include refid="selectKbsDocumentBaseVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="topicId != null  and topicId != ''">and topic_id = #{topicId}</if>
+            <if test="parentId != null  and parentId != ''">and parent_id = #{parentId}</if>
+            <if test="createId != null ">and create_id = #{createId}</if>
+        </where>
+    </select>
+
+    <select id="selectKbsDocumentBaseById" parameterType="String" resultMap="KbsDocumentBaseResult">
+        <include refid="selectKbsDocumentBaseVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectKbsDocumentInfoById" parameterType="String" resultType="KbsDocumentInfoVo">
+        select t1.doc_id      docId,
+               t1.content     content,
+               t1.url         url,
+               t1.tag         tag,
+               t1.pic_id      picId,
+               t1.summary     summary,
+               t2.id          id,
+               t2.name        name,
+               t2.type        type,
+               t2.topic_id    topicId,
+               t2.parent_id   parentId,
+               t2.sort        sort,
+               t2.del_flag    delFlag,
+               t2.create_id   createId,
+               t2.create_by   createBy,
+               t2.create_time createTime,
+               t2.update_id   updateId,
+               t2.update_by   updateBy,
+               t2.update_time updateTime
+        from t_kbs_document_info t1
+                 inner join t_kbs_document_base t2 on t1.doc_id = t2.id
+        where t2.id = #{id}
+    </select>
+
+    <insert id="insertKbsDocumentBase" parameterType="KbsDocumentBase">
+        insert into t_kbs_document_base
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="topicId != null">topic_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="topicId != null">#{topicId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateKbsDocumentBase" parameterType="KbsDocumentBase">
+        update t_kbs_document_base
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="topicId != null">topic_id = #{topicId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKbsDocumentBaseById" parameterType="String">
+        delete
+        from t_kbs_document_base
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteKbsDocumentBaseByIds" parameterType="String">
+        delete from t_kbs_document_base where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectDocumentListByTopicId" parameterType="String" resultMap="KbsDocumentBaseResult">
+        <include refid="selectKbsDocumentBaseVo"/>
+        where del_flag = '0' and topic_id = #{topicId}
+        order by sort asc, create_time asc
+    </select>
+
+    <select id="selectKbsDocumentBaseByIds" parameterType="String" resultMap="KbsDocumentBaseResult">
+        <include refid="selectKbsDocumentBaseVo"/>
+        where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="batchUpdate">
+        update t_kbs_document_base
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id in
+        <foreach collection="ids" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="updateSort">
+        UPDATE t_kbs_document_base
+        SET sort = #{sort}
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectKbsDocumentBaseByCreateIds" parameterType="String" resultMap="KbsDocumentBaseResult">
+        <include refid="selectKbsDocumentBaseVo"/>
+        where create_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="selectMaxSort" resultMap="KbsDocumentBaseResult">
+        select *
+        from t_kbs_document_base
+        where topic_id = #{topicId}
+        order by sort desc limit 1
+    </select>
+
+    <select id="countNumByTopicId" parameterType="String" resultType="java.lang.Long">
+        select count(1)
+        from t_kbs_document_base
+        where del_flag = '0'
+          and topic_id = #{topicId}
+    </select>
+</mapper>

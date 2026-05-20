@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.todo.mapper.TodoMapper">
+
+    <resultMap type="Todo" id="TodoResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="curNode"    column="cur_node"    />
+        <result property="curHandler"    column="cur_handler"    />
+        <result property="curHandlerName"    column="cur_handler_name"    />
+        <result property="sender"    column="sender"    />
+        <result property="senderName"    column="sender_name"    />
+        <result property="sendTime"    column="send_time"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="templateType"    column="template_type"    />
+        <result property="type"    column="type"    />
+        <result property="handleType"    column="handle_type"    />
+        <result property="urgencyStatus"    column="urgency_status"    />
+        <result property="urgeFlag"    column="urge_flag"    />
+        <result property="readFlag"    column="read_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTodoVo">
+        select id, title, cur_node, cur_handler, cur_handler_name, sender, sender_name, send_time, proc_inst_id, business_id, task_id, template_id, template_name, template_type, type, handle_type, urgency_status, urge_flag, read_flag, del_flag, create_id, create_by, create_time, update_id, update_by, update_time from t_workflow_todo
+    </sql>
+
+    <select id="selectTodoList" parameterType="Todo" resultMap="TodoResult">
+        <include refid="selectTodoVo"/>
+        <where>
+            del_flag = '0'
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="curNode != null  and curNode != ''"> and cur_node = #{curNode}</if>
+            <if test="curHandler != null "> and cur_handler = #{curHandler}</if>
+            <if test="curHandlerName != null  and curHandlerName != ''"> and cur_handler_name like concat('%', #{curHandlerName}, '%')</if>
+            <if test="sender != null "> and sender = #{sender}</if>
+            <if test="senderName != null  and senderName != ''"> and sender_name like concat('%', #{senderName}, '%')</if>
+            <if test="sendTime != null "> and send_time = #{sendTime}</if>
+            <if test="procInstId != null  and procInstId != ''"> and proc_inst_id = #{procInstId}</if>
+            <if test="businessId != null  and businessId != ''"> and business_id = #{businessId}</if>
+            <if test="taskId != null  and taskId != ''"> and task_id = #{taskId}</if>
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="templateName != null  and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="type == null  or type == ''"> and type != '2'</if>
+            <if test="handleType != null  and handleType != ''"> and handle_type = #{handleType}</if>
+            <if test="urgencyStatus != null  and urgencyStatus != ''"> and urgency_status = #{urgencyStatus}</if>
+            <if test="urgeFlag != null  and urgeFlag != ''"> and urge_flag = #{urgeFlag}</if>
+            <if test="readFlag != null  and readFlag != ''"> and read_flag = #{readFlag}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectTodoById" parameterType="String" resultMap="TodoResult">
+        <include refid="selectTodoVo"/>
+        where del_flag = '0' and id = #{id}
+    </select>
+
+    <insert id="insertTodo" parameterType="Todo">
+        insert into t_workflow_todo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null">title,</if>
+            <if test="curNode != null">cur_node,</if>
+            <if test="curHandler != null">cur_handler,</if>
+            <if test="curHandlerName != null">cur_handler_name,</if>
+            <if test="sender != null">sender,</if>
+            <if test="senderName != null">sender_name,</if>
+            <if test="sendTime != null">send_time,</if>
+            <if test="procInstId != null">proc_inst_id,</if>
+            <if test="businessId != null">business_id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="templateName != null">template_name,</if>
+            <if test="templateType != null">template_type,</if>
+            <if test="type != null">type,</if>
+            <if test="handleType != null">handle_type,</if>
+            <if test="urgencyStatus != null">urgency_status,</if>
+            <if test="urgeFlag != null">urge_flag,</if>
+            <if test="readFlag != null">read_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="curNode != null">#{curNode},</if>
+            <if test="curHandler != null">#{curHandler},</if>
+            <if test="curHandlerName != null">#{curHandlerName},</if>
+            <if test="sender != null">#{sender},</if>
+            <if test="senderName != null">#{senderName},</if>
+            <if test="sendTime != null">#{sendTime},</if>
+            <if test="procInstId != null">#{procInstId},</if>
+            <if test="businessId != null">#{businessId},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="templateName != null">#{templateName},</if>
+            <if test="templateType != null">#{templateType},</if>
+            <if test="type != null">#{type},</if>
+            <if test="handleType != null">#{handleType},</if>
+            <if test="urgencyStatus != null">#{urgencyStatus},</if>
+            <if test="urgeFlag != null">#{urgeFlag},</if>
+            <if test="readFlag != null">#{readFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTodo" parameterType="Todo">
+        update t_workflow_todo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="curNode != null">cur_node = #{curNode},</if>
+            <if test="curHandler != null">cur_handler = #{curHandler},</if>
+            <if test="curHandlerName != null">cur_handler_name = #{curHandlerName},</if>
+            <if test="sender != null">sender = #{sender},</if>
+            <if test="senderName != null">sender_name = #{senderName},</if>
+            <if test="sendTime != null">send_time = #{sendTime},</if>
+            <if test="procInstId != null">proc_inst_id = #{procInstId},</if>
+            <if test="businessId != null">business_id = #{businessId},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="templateType != null">template_type = #{templateType},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="handleType != null">handle_type = #{handleType},</if>
+            <if test="urgencyStatus != null">urgency_status = #{urgencyStatus},</if>
+            <if test="urgeFlag != null">urge_flag = #{urgeFlag},</if>
+            <if test="readFlag != null">read_flag = #{readFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTodoById" parameterType="String">
+        delete from t_workflow_todo where id = #{id}
+    </delete>
+
+    <delete id="deleteTodoByIds" parameterType="String">
+        delete from t_workflow_todo where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectTodoByTaskId" parameterType="String" resultMap="TodoResult">
+        <include refid="selectTodoVo"/>
+        where del_flag = '0' and task_id = #{taskId}
+    </select>
+
+    <select id="selectTodoByTaskIds" parameterType="List" resultMap="TodoResult">
+        <include refid="selectTodoVo"/>
+        where del_flag = '0' and task_id in
+        <foreach item="taskId" collection="list" open="(" separator="," close=")">
+            #{taskId}
+        </foreach>
+    </select>
+
+    <insert id="batchInsert" parameterType="Todo">
+        insert into t_workflow_todo(id, title, cur_node, cur_handler, cur_handler_name, sender, sender_name, send_time, proc_inst_id, business_id, task_id, template_id, template_name, template_type, type, handle_type, urgency_status, urge_flag, read_flag, del_flag, create_id, create_by, create_time, update_id, update_by, update_time) values
+        <foreach collection="list" item="item" separator="," >
+            (#{item.id}, #{item.title}, #{item.curNode}, #{item.curHandler}, #{item.curHandlerName}, #{item.sender}, #{item.senderName}, #{item.sendTime}, #{item.procInstId}, #{item.businessId}, #{item.taskId}, #{item.templateId}, #{item.templateName}, #{item.templateType}, #{item.type}, #{item.handleType}, #{item.urgencyStatus}, #{item.urgeFlag}, #{item.readFlag}, #{item.delFlag}, #{item.createId}, #{item.createBy}, #{item.createTime}, #{item.updateId}, #{item.updateBy}, #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <update id="batchUpdate">
+        update t_workflow_todo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </trim>
+        where  del_flag = 0 and  id in
+        <foreach item="item" collection="todoIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <update id="batchUpdateUrge">
+        update t_workflow_todo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="urgeFlag != null">urge_flag = #{urgeFlag},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </trim>
+        where  del_flag = '0' and  id in
+        <foreach item="item" collection="todoIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="selectTodoByProcInsId" parameterType="String" resultMap="TodoResult">
+        <include refid="selectTodoVo"/>
+        where del_flag = '0' and proc_inst_id = #{procInsId}
+    </select>
+
+    <select id="getNoRead" resultType="java.lang.Integer">
+        select count(*) from t_workflow_todo where cur_handler = #{curHandler} and del_flag = '0' and read_flag='0'
+    </select>
+    <select id="staticTodo" resultType="java.lang.Integer">
+        select count(*) from t_workflow_todo where del_flag = '0' and cur_handler = #{curHandler}
+        <choose>
+            <when test='"1".equals(type)'>
+                and type in('0', '1')
+            </when>
+            <otherwise>
+                and type in('2')
+            </otherwise>
+        </choose>
+    </select>
+
+    <update id="updateReadTodo">
+        update t_workflow_todo set read_flag = '1' where id = #{id}
+    </update>
+
+    <select id="selectLastListByProcInstIds" parameterType="String" resultMap="TodoResult">
+        select t2.* from
+        (
+            select business_id, MAX(create_time) as create_time
+            from t_workflow_todo
+            where proc_inst_id in
+            <foreach item="item" collection="list" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            group by business_id
+            order by create_time desc
+        ) t1
+        inner join t_workflow_todo t2
+        on t2.business_id = t1.business_id and t2.create_time = t1.create_time
+        order by t2.create_time desc
+    </select>
+
+    <delete id="deleteTodoByProcInsId">
+        delete from t_workflow_todo where proc_inst_id = #{procInsId}
+    </delete>
+
+    <delete id="deleteTodoByTaskIds">
+        delete from t_workflow_todo where task_id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

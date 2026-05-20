@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HolidayWorkSettingMapper">
+    
+    <resultMap type="HolidayWorkSetting" id="HolidayWorkSettingResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="workDate"    column="work_date"    />
+        <result property="holidaySettingId"    column="holiday_setting_id"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHolidayWorkSettingVo">
+        select id, year, work_date, holiday_setting_id, del_flag, remark, create_id, create_time, update_id, update_time from t_holiday_work_setting
+    </sql>
+
+    <select id="selectHolidayWorkSettingList" parameterType="HolidayWorkSetting" resultMap="HolidayWorkSettingResult">
+        <include refid="selectHolidayWorkSettingVo"/>
+        <where>
+            del_flag = '0'
+            <if test="year != null and year != ''"> and year = #{year}</if>
+            <if test="params.beginStartDate != null and params.endStartDate != null">
+                <![CDATA[
+                    and date_format(work_date,'%Y-%m-%d') >= date_format(#{params.beginStartDate},'%Y-%m-%d')
+                    and date_format(work_date,'%Y-%m-%d') <= date_format(#{params.endStartDate},'%Y-%m-%d')
+                ]]>
+             </if>
+        </where>
+        order by year desc, work_date asc
+    </select>
+    
+    <select id="selectHolidayWorkSettingById" parameterType="String" resultMap="HolidayWorkSettingResult">
+        <include refid="selectHolidayWorkSettingVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHolidayWorkSetting" parameterType="HolidayWorkSetting">
+        insert into t_holiday_work_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="year != null and year != ''">year,</if>
+            <if test="workDate != null">work_date,</if>
+            <if test="holidaySettingId != null">holiday_setting_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="year != null and year != ''">#{year},</if>
+            <if test="workDate != null">#{workDate},</if>
+            <if test="holidaySettingId != null">#{holidaySettingId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHolidayWorkSetting" parameterType="HolidayWorkSetting">
+        update t_holiday_work_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null and year != ''">year = #{year},</if>
+            <if test="workDate != null">work_date = #{workDate},</if>
+            <if test="holidaySettingId != null">holiday_setting_id = #{holidaySettingId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHolidayWorkSettingById" parameterType="String">
+        delete from t_holiday_work_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteHolidayWorkSettingByIds" parameterType="String">
+        delete from t_holiday_work_setting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

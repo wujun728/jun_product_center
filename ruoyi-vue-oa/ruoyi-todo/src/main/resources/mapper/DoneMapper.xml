@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.todo.mapper.DoneMapper">
+    
+    <resultMap type="Done" id="DoneResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="handleNode"    column="handle_node"    />
+        <result property="handler"    column="handler"    />
+        <result property="handlerName"    column="handler_name"    />
+        <result property="handleTime"    column="handle_time"    />
+        <result property="todoId"    column="todo_id"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="templateType"    column="template_type"    />
+        <result property="type"    column="type"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectDoneVo">
+        select id, title, handle_node, handler, handler_name, handle_time, todo_id, proc_inst_id, business_id, task_id, template_id, template_name, template_type, type, create_id, create_by, create_time, update_id, update_by, update_time from t_workflow_done
+    </sql>
+
+    <select id="selectDoneList" parameterType="Done" resultMap="DoneResult">
+        <include refid="selectDoneVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="handleNode != null  and handleNode != ''"> and handle_node = #{handleNode}</if>
+            <if test="handler != null "> and handler = #{handler}</if>
+            <if test="handlerName != null  and handlerName != ''"> and handler_name like concat('%', #{handlerName}, '%')</if>
+            <if test="handleTime != null "> and handle_time = #{handleTime}</if>
+            <if test="todoId != null "> and todo_id = #{todoId}</if>
+            <if test="procInstId != null  and procInstId != ''"> and proc_inst_id = #{procInstId}</if>
+            <if test="businessId != null  and businessId != ''"> and business_id = #{businessId}</if>
+            <if test="taskId != null  and taskId != ''"> and task_id = #{taskId}</if>
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="templateName != null  and templateName != ''"> and template_name like concat('%', #{templateName}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectDoneById" parameterType="String" resultMap="DoneResult">
+        <include refid="selectDoneVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDone" parameterType="Done">
+        insert into t_workflow_done
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null">title,</if>
+            <if test="handleNode != null">handle_node,</if>
+            <if test="handler != null">handler,</if>
+            <if test="handlerName != null">handler_name,</if>
+            <if test="handleTime != null">handle_time,</if>
+            <if test="todoId != null">todo_id,</if>
+            <if test="procInstId != null">proc_inst_id,</if>
+            <if test="businessId != null">business_id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="templateName != null">template_name,</if>
+            <if test="templateType != null">template_type,</if>
+            <if test="type != null">type,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="handleNode != null">#{handleNode},</if>
+            <if test="handler != null">#{handler},</if>
+            <if test="handlerName != null">#{handlerName},</if>
+            <if test="handleTime != null">#{handleTime},</if>
+            <if test="todoId != null">#{todoId},</if>
+            <if test="procInstId != null">#{procInstId},</if>
+            <if test="businessId != null">#{businessId},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="templateName != null">#{templateName},</if>
+            <if test="templateType != null">#{templateType},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDone" parameterType="Done">
+        update t_workflow_done
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="handleNode != null">handle_node = #{handleNode},</if>
+            <if test="handler != null">handler = #{handler},</if>
+            <if test="handlerName != null">handler_name = #{handlerName},</if>
+            <if test="handleTime != null">handle_time = #{handleTime},</if>
+            <if test="todoId != null">todo_id = #{todoId},</if>
+            <if test="procInstId != null">proc_inst_id = #{procInstId},</if>
+            <if test="businessId != null">business_id = #{businessId},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="templateType != null">template_type = #{templateType},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDoneById" parameterType="String">
+        delete from t_workflow_done where id = #{id}
+    </delete>
+
+    <delete id="deleteDoneByIds" parameterType="String">
+        delete from t_workflow_done where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsert">
+        insert into t_workflow_done(id, title, handle_node, handler, handler_name, handle_time, todo_id, proc_inst_id, business_id, task_id, template_id, template_name, template_type, type, create_id, create_by, create_time, update_id, update_by, update_time) values
+        <foreach collection="list" item="item" separator="," >
+            (#{item.id}, #{item.title}, #{item.handleNode}, #{item.handler}, #{item.handlerName}, #{item.handleTime}, #{item.todoId}, #{item.procInstId}, #{item.businessId}, #{item.taskId}, #{item.templateId}, #{item.templateName}, #{item.templateType}, #{item.type}, #{item.createId}, #{item.createBy}, #{item.createTime}, #{item.updateId}, #{item.updateBy}, #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <select id="selectLastDoneList" parameterType="Done" resultMap="DoneResult">
+        select t2.* from
+        (
+            select business_id, MAX(handle_time) as max_time
+            from t_workflow_done
+            <where>
+                <if test="title != null and title != ''">
+                    and title like CONCAT('%', #{title}, '%')
+                </if>
+                <if test="handler != null">
+                    and handler = #{handler}
+                </if>
+            </where>
+            group by business_id
+            order by max_time desc
+        ) t1
+        inner join t_workflow_done t2
+        on t2.business_id = t1.business_id and t2.handle_time = t1.max_time
+        order by t2.handle_time desc
+    </select>
+
+    <select id="selectDoneByTaskIds" parameterType="List" resultMap="DoneResult">
+        <include refid="selectDoneVo"/>
+        where task_id in
+        <foreach item="taskId" collection="list" open="(" separator="," close=")">
+            #{taskId}
+        </foreach>
+    </select>
+
+    <select id="selectLastListByProcInstIds" parameterType="String" resultMap="DoneResult">
+        select t2.* from
+        (
+            select business_id, MAX(handle_time) as max_time
+            from t_workflow_done
+            where proc_inst_id in
+            <foreach item="item" collection="list" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+            group by business_id
+            order by max_time desc
+        ) t1
+        inner join t_workflow_done t2
+        on t2.business_id = t1.business_id and t2.handle_time = t1.max_time
+        order by t2.handle_time desc
+    </select>
+</mapper>

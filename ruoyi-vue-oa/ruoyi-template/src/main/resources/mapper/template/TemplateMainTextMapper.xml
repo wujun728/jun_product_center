@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.template.mapper.TemplateMainTextMapper">
+    
+    <resultMap type="TemplateMainText" id="TemplateMainTextResult">
+        <result property="id"    column="id"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="type"    column="type"    />
+        <result property="fileId"    column="file_id"    />
+        <result property="limitSize"    column="limit_size"    />
+        <result property="limitType"    column="limit_type"    />
+        <result property="tipContent"    column="tip_content"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTemplateMainTextVo">
+        select id, template_id, type, file_id, limit_size, limit_type, tip_content, create_id, create_time, update_id, update_time from t_template_main_text
+    </sql>
+
+    <select id="selectTemplateMainTextList" parameterType="TemplateMainText" resultMap="TemplateMainTextResult">
+        <include refid="selectTemplateMainTextVo"/>
+        <where>  
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="limitSize != null "> and limit_size = #{limitSize}</if>
+            <if test="limitType != null  and limitType != ''"> and limit_type = #{limitType}</if>
+            <if test="tipContent != null  and tipContent != ''"> and tip_content = #{tipContent}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTemplateMainTextById" parameterType="String" resultMap="TemplateMainTextResult">
+        <include refid="selectTemplateMainTextVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectByTemplateId" resultMap="TemplateMainTextResult">
+        <include refid="selectTemplateMainTextVo"/>
+        where template_id = #{templateId}
+    </select>
+
+    <insert id="insertTemplateMainText" parameterType="TemplateMainText">
+        insert into t_template_main_text
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="type != null">type,</if>
+            <if test="fileId != null">file_id,</if>
+            <if test="limitSize != null">limit_size,</if>
+            <if test="limitType != null">limit_type,</if>
+            <if test="tipContent != null">tip_content,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="fileId != null">#{fileId},</if>
+            <if test="limitSize != null">#{limitSize},</if>
+            <if test="limitType != null">#{limitType},</if>
+            <if test="tipContent != null">#{tipContent},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTemplateMainText" parameterType="TemplateMainText">
+        update t_template_main_text
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="fileId != null">file_id = #{fileId},</if>
+            <if test="limitSize != null">limit_size = #{limitSize},</if>
+            <if test="limitType != null">limit_type = #{limitType},</if>
+            <if test="tipContent != null">tip_content = #{tipContent},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTemplateMainTextById" parameterType="String">
+        delete from t_template_main_text where id = #{id}
+    </delete>
+
+    <delete id="deleteTemplateMainTextByIds" parameterType="String">
+        delete from t_template_main_text where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

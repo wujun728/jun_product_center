@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ruoyi</groupId>
+        <artifactId>ruoyi-mq</artifactId>
+        <version>${ruoyi.mq.version}</version>
+    </parent>
+
+    <artifactId>ruoyi-mq-async</artifactId>
+    <version>1.0.1</version>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <ruoyi.tools.version>1.0.1</ruoyi.tools.version>
+        <ruoyi.mq.core.version>1.0.1</ruoyi.mq.core.version>
+    </properties>
+
+    <dependencies>
+        <!--ruoyi框架-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-framework</artifactId>
+        </dependency>
+        <!--ruoyi工具包-->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-tools</artifactId>
+            <version>${ruoyi.tools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-mq-core</artifactId>
+            <version>${ruoyi.mq.core.version}</version>
+        </dependency>
+    </dependencies>
+</project>

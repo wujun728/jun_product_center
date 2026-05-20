@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.flowable.mapper.FlowCommentMapper">
+
+    <select id="selectCommentList" resultType="com.ruoyi.flowable.domain.dto.FlowCommentDto">
+        SELECT
+            id_ id,
+            type_ type,
+            time_ time,
+            user_id_ userId,
+            task_id_ taskId,
+            proc_inst_id_ procInstId,
+            action_ action,
+            message_ message,
+            full_msg_ fullMessage
+        FROM
+            act_hi_comment
+        <where>
+            <if test="procInstId != null and procInstId != ''">
+                proc_inst_id_ = #{procInstId}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and task_id_ = #{taskId}
+            </if>
+        </where>
+        ORDER BY
+            time_ DESC
+    </select>
+</mapper>

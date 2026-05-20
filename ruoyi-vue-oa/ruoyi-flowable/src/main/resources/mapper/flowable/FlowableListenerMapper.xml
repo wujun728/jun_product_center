@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.flowable.mapper.FlowableListenerMapper">
+
+    <resultMap type="FlowableListener" id="FlowableListenerResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="eventType" column="event_type"/>
+        <result property="valueType" column="value_type"/>
+        <result property="value" column="value"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateId" column="update_id"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="selectFlowableListenerVo">
+        select id,
+               name,
+               type,
+               event_type,
+               value_type,
+               value,
+               create_time,
+               update_time,
+               create_id,
+               update_id,
+               status,
+               remark
+        from t_flowable_listener
+    </sql>
+
+    <select id="selectFlowableListenerList" parameterType="FlowableListener" resultMap="FlowableListenerResult">
+        <include refid="selectFlowableListenerVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''">and type = #{type}</if>
+            <if test="eventType != null  and eventType != ''">and event_type = #{eventType}</if>
+            <if test="valueType != null  and valueType != ''">and value_type = #{valueType}</if>
+            <if test="value != null  and value != ''">and value = #{value}</if>
+            <if test="status != null ">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="selectFlowableListenerById" parameterType="String" resultMap="FlowableListenerResult">
+        <include refid="selectFlowableListenerVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFlowableListener" parameterType="FlowableListener">
+        insert into t_flowable_listener
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="eventType != null">event_type,</if>
+            <if test="valueType != null">value_type,</if>
+            <if test="value != null">value,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="eventType != null">#{eventType},</if>
+            <if test="valueType != null">#{valueType},</if>
+            <if test="value != null">#{value},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateFlowableListener" parameterType="FlowableListener">
+        update t_flowable_listener
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="eventType != null">event_type = #{eventType},</if>
+            <if test="valueType != null">value_type = #{valueType},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFlowableListenerById" parameterType="String">
+        delete
+        from t_flowable_listener
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteFlowableListenerByIds" parameterType="String">
+        delete from t_flowable_listener where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,13 @@
+# flowable
+flowable:
+  # 关闭表更新
+  database-schema-update: false
+  # 关闭定时任务JOB
+  async-executor-activate: false
+  # 禁用身份服务
+  identity-lookup-enabled: false
+  identity-service-enabled: false
+  # 关闭事件日志
+  event-logging-enabled: false
+  # 关闭表单引擎
+  form-engine-enabled: false

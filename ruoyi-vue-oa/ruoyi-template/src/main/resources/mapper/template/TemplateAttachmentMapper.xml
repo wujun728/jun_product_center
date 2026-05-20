@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.template.mapper.TemplateAttachmentMapper">
+    
+    <resultMap type="TemplateAttachment" id="TemplateAttachmentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="limitSize"    column="limit_size"    />
+        <result property="limitType"    column="limit_type"    />
+        <result property="tipContent"    column="tip_content"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTemplateAttachmentVo">
+        select id, name, limit_size, limit_type, tip_content, template_id, create_id, create_time, update_id, update_time from t_template_attachment
+    </sql>
+
+    <select id="selectTemplateAttachmentList" parameterType="TemplateAttachment" resultMap="TemplateAttachmentResult">
+        <include refid="selectTemplateAttachmentVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="limitSize != null  and limitSize != ''"> and limit_size = #{limitSize}</if>
+            <if test="limitType != null  and limitType != ''"> and limit_type = #{limitType}</if>
+            <if test="tipContent != null  and tipContent != ''"> and tip_content = #{tipContent}</if>
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTemplateAttachmentById" parameterType="String" resultMap="TemplateAttachmentResult">
+        <include refid="selectTemplateAttachmentVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectTemplateAttachmentByTemplateId"  resultMap="TemplateAttachmentResult">
+        <include refid="selectTemplateAttachmentVo"/>
+        where template_id = #{templateId}
+    </select>
+
+    <insert id="insertTemplateAttachment" parameterType="TemplateAttachment">
+        insert into t_template_attachment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null">name,</if>
+            <if test="limitSize != null">limit_size,</if>
+            <if test="limitType != null">limit_type,</if>
+            <if test="tipContent != null">tip_content,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="limitSize != null">#{limitSize},</if>
+            <if test="limitType != null">#{limitType},</if>
+            <if test="tipContent != null">#{tipContent},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTemplateAttachment" parameterType="TemplateAttachment">
+        update t_template_attachment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="limitSize != null">limit_size = #{limitSize},</if>
+            <if test="limitType != null">limit_type = #{limitType},</if>
+            <if test="tipContent != null">tip_content = #{tipContent},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTemplateAttachmentById" parameterType="String">
+        delete from t_template_attachment where id = #{id}
+    </delete>
+
+    <delete id="deleteTemplateAttachmentByIds" parameterType="String">
+        delete from t_template_attachment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAttachmentByTemplateIds" parameterType="String">
+        delete from t_template_attachment where template_id in
+        <foreach item="templateId" collection="array" open="(" separator="," close=")">
+            #{templateId}
+        </foreach>
+    </delete>
+
+</mapper>

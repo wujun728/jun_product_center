@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kbs.mapper.KbsRecycleMapper">
+
+    <resultMap type="KbsRecycle" id="KbsRecycleResult">
+        <result property="id" column="id"/>
+        <result property="objectId" column="object_id"/>
+        <result property="objectName" column="object_name"/>
+        <result property="objectType" column="object_type"/>
+        <result property="parentObjectId" column="parent_object_id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectKbsRecycleVo">
+        select id,
+               object_id,
+               object_name,
+               object_type,
+               parent_object_id,
+               create_id,
+               create_by,
+               create_time,
+               update_id,
+               update_by,
+               update_time
+        from t_kbs_recycle
+    </sql>
+
+    <select id="selectKbsRecycleList" parameterType="KbsRecycle" resultMap="KbsRecycleResult">
+        <include refid="selectKbsRecycleVo"/>
+        <where>
+            <if test="objectId != null  and objectId != ''">and object_id = #{objectId}</if>
+            <if test="objectName != null  and objectName != ''">and object_name like concat('%', #{objectName}, '%')
+            </if>
+            <if test="objectType != null  and objectType != ''">and object_type = #{objectType}</if>
+            <if test="parentObjectId != null  and parentObjectId != ''">and parent_object_id = #{parentObjectId}</if>
+            <if test="createId != null ">and create_id = #{createId}</if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectKbsRecycleById" parameterType="String" resultMap="KbsRecycleResult">
+        <include refid="selectKbsRecycleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertKbsRecycle" parameterType="KbsRecycle">
+        insert into t_kbs_recycle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="objectId != null">object_id,</if>
+            <if test="objectName != null">object_name,</if>
+            <if test="objectType != null">object_type,</if>
+            <if test="parentObjectId != null">parent_object_id,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="objectId != null">#{objectId},</if>
+            <if test="objectName != null">#{objectName},</if>
+            <if test="objectType != null">#{objectType},</if>
+            <if test="parentObjectId != null">#{parentObjectId},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateKbsRecycle" parameterType="KbsRecycle">
+        update t_kbs_recycle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="objectId != null">object_id = #{objectId},</if>
+            <if test="objectName != null">object_name = #{objectName},</if>
+            <if test="objectType != null">object_type = #{objectType},</if>
+            <if test="parentObjectId != null">parent_object_id = #{parentObjectId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKbsRecycleById" parameterType="String">
+        delete
+        from t_kbs_recycle
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteKbsRecycleByIds" parameterType="String">
+        delete from t_kbs_recycle where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsert" parameterType="KbsRecycle">
+        insert into t_kbs_recycle
+        (id, object_id, object_name, object_type, parent_object_id, create_id, create_by, create_time, update_id,
+        update_by, update_time)
+        values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.id}, #{item.objectId}, #{item.objectName}, #{item.objectType}, #{item.parentObjectId},
+            #{item.createId}, #{item.createBy}, #{item.createTime}, #{item.updateId}, #{item.updateBy},
+            #{item.updateTime})
+        </foreach>
+    </insert>
+
+    <select id="selectKbsRecycleByIds" parameterType="String" resultMap="KbsRecycleResult">
+        <include refid="selectKbsRecycleVo"/>
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

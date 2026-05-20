@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.WorkflowTimeoutJobMapper">
+    
+    <resultMap type="WorkflowTimeoutJob" id="WorkflowTimeoutJobResult">
+        <result property="id"    column="id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="expireTime"    column="expire_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowTimeoutJobVo">
+        select id, task_id, proc_inst_id, expire_time, create_id, create_time from t_workflow_timeout_job
+    </sql>
+
+    <select id="selectWorkflowTimeoutJobList" parameterType="WorkflowTimeoutJob" resultMap="WorkflowTimeoutJobResult">
+        <include refid="selectWorkflowTimeoutJobVo"/>
+        <where>  
+            <if test="taskId != null  and taskId != ''"> and task_id = #{taskId}</if>
+            <if test="procInstId != null  and procInstId != ''"> and proc_inst_id = #{procInstId}</if>
+            <if test="expireTime != null "> and expire_time = #{expireTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectWorkflowTimeoutJobById" parameterType="String" resultMap="WorkflowTimeoutJobResult">
+        <include refid="selectWorkflowTimeoutJobVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWorkflowTimeoutJob" parameterType="WorkflowTimeoutJob">
+        insert into t_workflow_timeout_job
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="procInstId != null">proc_inst_id,</if>
+            <if test="expireTime != null">expire_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="procInstId != null">#{procInstId},</if>
+            <if test="expireTime != null">#{expireTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowTimeoutJob" parameterType="WorkflowTimeoutJob">
+        update t_workflow_timeout_job
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="procInstId != null">proc_inst_id = #{procInstId},</if>
+            <if test="expireTime != null">expire_time = #{expireTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowTimeoutJobById" parameterType="String">
+        delete from t_workflow_timeout_job where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowTimeoutJobByIds" parameterType="String">
+        delete from t_workflow_timeout_job where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectWorkflowTimeoutJobListByCurrentTime" parameterType="Date" resultMap="WorkflowTimeoutJobResult">
+        <include refid="selectWorkflowTimeoutJobVo"/>
+        <where>
+            <![CDATA[ expire_time <= #{currentTime} ]]>
+        </where>
+    </select>
+</mapper>
