@@ -26,4 +26,6 @@ target
 # git
 *.orig
 
+doc1
 doc2
+imgs
