@@ -39,6 +39,8 @@ Software architecture description
 superAdmin/amdin123
 
 
+
+
 ## 开发
 
 ```bash
@@ -153,3 +155,24 @@ Set-ExecutionPolicy RemoteSigned
     npm install true-case-path@2.2.1 --save
 
  
+
+功能	npm	pnpm
+安装依赖	npm install	pnpm install
+简写	npm i	pnpm i
+运行 dev	npm run dev	pnpm run dev
+安装全局包	npm i -g xxx	pnpm add -g xxx
+删除依赖	npm uninstall	pnpm remove
+
+
+1 分钟切换到 pnpm（无风险）
+安装 pnpm
+ 
+npm install -g pnpm
+进入你的项目
+ 
+pnpm approve-builds
+pnpm install
+
+pnpm install --ignore-scripts=false
+ 
+pnpm run dev
