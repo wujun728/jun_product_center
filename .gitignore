@@ -26,6 +26,9 @@ target
 # git
 *.orig
 
+application-dev-local.yml
+application-prod-local.yml
+*.env
 doc1
 doc2
 imgs
