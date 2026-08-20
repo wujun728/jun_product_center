@@ -17,13 +17,29 @@ hs_err_pid*
 .classpath
 .project
 target
+bin
+classes
 .settings
+.factorypath
+doc2
+doc1
+*bak
+log
+logs
+target
+*.zip
+.playwright-mcp
+
+node_modules
 
 # Idea
 .idea
 *.iml
+.mvn
 
 # git
 *.orig
-
-doc2
+jun_spring_plugin
+docs
+script
+.idea
