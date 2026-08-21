@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserDimissionMapper">
+    
+    <resultMap type="HrUserDimission" id="HrUserDimissionResult">
+        <result property="id"    column="id"    />
+        <result property="usercode"    column="usercode"    />
+        <result property="username"    column="username"    />
+        <result property="deptname"    column="deptname"    />
+        <result property="postname"    column="postname"    />
+        <result property="usertype"    column="usertype"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="contractEndTime"    column="contract_end_time"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="leanveReasonType"    column="leanve_reason_type"    />
+        <result property="leanveReasonDetail"    column="leanve_reason_detail"    />
+        <result property="isNeedLeaveProve"    column="is_need_leave_prove"    />
+        <result property="proveGetWay"    column="prove_get_way"    />
+        <result property="proveGetAdress"    column="prove_get_adress"    />
+        <result property="proveGetPeople"    column="prove_get_people"    />
+        <result property="proveGetPhone"    column="prove_get_phone"    />
+        <result property="leaderUsercode"    column="leader_usercode"    />
+        <result property="leaderUsername"    column="leader_username"    />
+        <result property="lastWorkDay"    column="last_work_day"    />
+        <result property="payOnLastDay"    column="pay_on_last_day"    />
+        <result property="isNeedJobHandover"    column="is_need_job_handover"    />
+        <result property="isHandoverFilish"    column="is_handover_filish"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="wfsate"    column="wfsate"    />
+        <result property="currNodename"    column="curr_nodename"    />
+        <result property="currNodeUsername"    column="curr_node_username"    />
+        <result property="remark"    column="remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectHrUserDimissionVo">
+        select id, usercode, username, deptname, postname, usertype, entry_time, contract_end_time, project_name, work_location, leanve_reason_type, leanve_reason_detail, is_need_leave_prove, prove_get_way, prove_get_adress, prove_get_people, prove_get_phone, leader_usercode, leader_username, last_work_day, pay_on_last_day, is_need_job_handover, is_handover_filish, create_time, wfsate, curr_nodename, curr_node_username, remark, create_id, update_time, update_id, order_id, order_status from hr_user_dimission
+    </sql>
+
+    <select id="selectHrUserDimissionList" parameterType="HrUserDimission" resultMap="HrUserDimissionResult">
+        <include refid="selectHrUserDimissionVo"/>
+        <where>  
+            <if test="usercode != null  and usercode != ''"> and usercode = #{usercode}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="deptname != null  and deptname != ''"> and deptname like concat('%', #{deptname}, '%')</if>
+            <if test="postname != null  and postname != ''"> and postname like concat('%', #{postname}, '%')</if>
+            <if test="usertype != null  and usertype != ''"> and usertype = #{usertype}</if>
+            <if test="entryTime != null "> and entry_time = #{entryTime}</if>
+            <if test="contractEndTime != null "> and contract_end_time = #{contractEndTime}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="workLocation != null  and workLocation != ''"> and work_location = #{workLocation}</if>
+            <if test="leanveReasonType != null  and leanveReasonType != ''"> and leanve_reason_type = #{leanveReasonType}</if>
+            <if test="leanveReasonDetail != null  and leanveReasonDetail != ''"> and leanve_reason_detail = #{leanveReasonDetail}</if>
+            <if test="isNeedLeaveProve != null  and isNeedLeaveProve != ''"> and is_need_leave_prove = #{isNeedLeaveProve}</if>
+            <if test="proveGetWay != null  and proveGetWay != ''"> and prove_get_way = #{proveGetWay}</if>
+            <if test="proveGetAdress != null  and proveGetAdress != ''"> and prove_get_adress = #{proveGetAdress}</if>
+            <if test="proveGetPeople != null  and proveGetPeople != ''"> and prove_get_people = #{proveGetPeople}</if>
+            <if test="proveGetPhone != null  and proveGetPhone != ''"> and prove_get_phone = #{proveGetPhone}</if>
+            <if test="leaderUsercode != null  and leaderUsercode != ''"> and leader_usercode = #{leaderUsercode}</if>
+            <if test="leaderUsername != null  and leaderUsername != ''"> and leader_username like concat('%', #{leaderUsername}, '%')</if>
+            <if test="lastWorkDay != null "> and last_work_day = #{lastWorkDay}</if>
+            <if test="payOnLastDay != null "> and pay_on_last_day = #{payOnLastDay}</if>
+            <if test="isNeedJobHandover != null  and isNeedJobHandover != ''"> and is_need_job_handover = #{isNeedJobHandover}</if>
+            <if test="isHandoverFilish != null  and isHandoverFilish != ''"> and is_handover_filish = #{isHandoverFilish}</if>
+            <if test="wfsate != null  and wfsate != ''"> and wfsate = #{wfsate}</if>
+            <if test="currNodename != null  and currNodename != ''"> and curr_nodename like concat('%', #{currNodename}, '%')</if>
+            <if test="currNodeUsername != null  and currNodeUsername != ''"> and curr_node_username like concat('%', #{currNodeUsername}, '%')</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserDimissionById" parameterType="String" resultMap="HrUserDimissionResult">
+        <include refid="selectHrUserDimissionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserDimission" parameterType="HrUserDimission">
+        insert into hr_user_dimission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="usercode != null and usercode != ''">usercode,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="deptname != null and deptname != ''">deptname,</if>
+            <if test="postname != null and postname != ''">postname,</if>
+            <if test="usertype != null and usertype != ''">usertype,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="contractEndTime != null">contract_end_time,</if>
+            <if test="projectName != null and projectName != ''">project_name,</if>
+            <if test="workLocation != null and workLocation != ''">work_location,</if>
+            <if test="leanveReasonType != null">leanve_reason_type,</if>
+            <if test="leanveReasonDetail != null">leanve_reason_detail,</if>
+            <if test="isNeedLeaveProve != null">is_need_leave_prove,</if>
+            <if test="proveGetWay != null">prove_get_way,</if>
+            <if test="proveGetAdress != null">prove_get_adress,</if>
+            <if test="proveGetPeople != null">prove_get_people,</if>
+            <if test="proveGetPhone != null">prove_get_phone,</if>
+            <if test="leaderUsercode != null and leaderUsercode != ''">leader_usercode,</if>
+            <if test="leaderUsername != null and leaderUsername != ''">leader_username,</if>
+            <if test="lastWorkDay != null">last_work_day,</if>
+            <if test="payOnLastDay != null">pay_on_last_day,</if>
+            <if test="isNeedJobHandover != null and isNeedJobHandover != ''">is_need_job_handover,</if>
+            <if test="isHandoverFilish != null and isHandoverFilish != ''">is_handover_filish,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="wfsate != null">wfsate,</if>
+            <if test="currNodename != null">curr_nodename,</if>
+            <if test="currNodeUsername != null">curr_node_username,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="usercode != null and usercode != ''">#{usercode},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="deptname != null and deptname != ''">#{deptname},</if>
+            <if test="postname != null and postname != ''">#{postname},</if>
+            <if test="usertype != null and usertype != ''">#{usertype},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="contractEndTime != null">#{contractEndTime},</if>
+            <if test="projectName != null and projectName != ''">#{projectName},</if>
+            <if test="workLocation != null and workLocation != ''">#{workLocation},</if>
+            <if test="leanveReasonType != null">#{leanveReasonType},</if>
+            <if test="leanveReasonDetail != null">#{leanveReasonDetail},</if>
+            <if test="isNeedLeaveProve != null">#{isNeedLeaveProve},</if>
+            <if test="proveGetWay != null">#{proveGetWay},</if>
+            <if test="proveGetAdress != null">#{proveGetAdress},</if>
+            <if test="proveGetPeople != null">#{proveGetPeople},</if>
+            <if test="proveGetPhone != null">#{proveGetPhone},</if>
+            <if test="leaderUsercode != null and leaderUsercode != ''">#{leaderUsercode},</if>
+            <if test="leaderUsername != null and leaderUsername != ''">#{leaderUsername},</if>
+            <if test="lastWorkDay != null">#{lastWorkDay},</if>
+            <if test="payOnLastDay != null">#{payOnLastDay},</if>
+            <if test="isNeedJobHandover != null and isNeedJobHandover != ''">#{isNeedJobHandover},</if>
+            <if test="isHandoverFilish != null and isHandoverFilish != ''">#{isHandoverFilish},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="wfsate != null">#{wfsate},</if>
+            <if test="currNodename != null">#{currNodename},</if>
+            <if test="currNodeUsername != null">#{currNodeUsername},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserDimission" parameterType="HrUserDimission">
+        update hr_user_dimission
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usercode != null and usercode != ''">usercode = #{usercode},</if>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="deptname != null and deptname != ''">deptname = #{deptname},</if>
+            <if test="postname != null and postname != ''">postname = #{postname},</if>
+            <if test="usertype != null and usertype != ''">usertype = #{usertype},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="contractEndTime != null">contract_end_time = #{contractEndTime},</if>
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="workLocation != null and workLocation != ''">work_location = #{workLocation},</if>
+            <if test="leanveReasonType != null">leanve_reason_type = #{leanveReasonType},</if>
+            <if test="leanveReasonDetail != null">leanve_reason_detail = #{leanveReasonDetail},</if>
+            <if test="isNeedLeaveProve != null">is_need_leave_prove = #{isNeedLeaveProve},</if>
+            <if test="proveGetWay != null">prove_get_way = #{proveGetWay},</if>
+            <if test="proveGetAdress != null">prove_get_adress = #{proveGetAdress},</if>
+            <if test="proveGetPeople != null">prove_get_people = #{proveGetPeople},</if>
+            <if test="proveGetPhone != null">prove_get_phone = #{proveGetPhone},</if>
+            <if test="leaderUsercode != null and leaderUsercode != ''">leader_usercode = #{leaderUsercode},</if>
+            <if test="leaderUsername != null and leaderUsername != ''">leader_username = #{leaderUsername},</if>
+            <if test="lastWorkDay != null">last_work_day = #{lastWorkDay},</if>
+            <if test="payOnLastDay != null">pay_on_last_day = #{payOnLastDay},</if>
+            <if test="isNeedJobHandover != null and isNeedJobHandover != ''">is_need_job_handover = #{isNeedJobHandover},</if>
+            <if test="isHandoverFilish != null and isHandoverFilish != ''">is_handover_filish = #{isHandoverFilish},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="wfsate != null">wfsate = #{wfsate},</if>
+            <if test="currNodename != null">curr_nodename = #{currNodename},</if>
+            <if test="currNodeUsername != null">curr_node_username = #{currNodeUsername},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserDimissionById" parameterType="String">
+        delete from hr_user_dimission where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserDimissionByIds" parameterType="String">
+        delete from hr_user_dimission where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

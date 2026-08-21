@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserBecomeMemberMapper">
+    
+    <resultMap type="HrUserBecomeMember" id="HrUserBecomeMemberResult">
+        <result property="id"    column="id"    />
+        <result property="usercode"    column="usercode"    />
+        <result property="username"    column="username"    />
+        <result property="deptname"    column="deptname"    />
+        <result property="postname"    column="postname"    />
+        <result property="starttime1"    column="starttime1"    />
+        <result property="endtime1"    column="endtime1"    />
+        <result property="acttime2"    column="acttime2"    />
+        <result property="techDesc"    column="tech_desc"    />
+        <result property="leaderDesc"    column="leader_desc"    />
+        <result property="becomeMemDesc"    column="become_mem_desc"    />
+        <result property="dictBecomeMember"    column="dict_become_member"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectHrUserBecomeMemberVo">
+        select id, usercode, username, deptname, postname, starttime1, endtime1, acttime2, tech_desc, leader_desc, become_mem_desc, dict_become_member, remark, create_time, create_id, update_time, update_id, order_id, order_status from hr_user_become_member
+    </sql>
+
+    <select id="selectHrUserBecomeMemberList" parameterType="HrUserBecomeMember" resultMap="HrUserBecomeMemberResult">
+        <include refid="selectHrUserBecomeMemberVo"/>
+        <where>  
+            <if test="usercode != null  and usercode != ''"> and usercode = #{usercode}</if>
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="deptname != null  and deptname != ''"> and deptname like concat('%', #{deptname}, '%')</if>
+            <if test="postname != null  and postname != ''"> and postname like concat('%', #{postname}, '%')</if>
+            <if test="starttime1 != null "> and starttime1 = #{starttime1}</if>
+            <if test="endtime1 != null "> and endtime1 = #{endtime1}</if>
+            <if test="acttime2 != null "> and acttime2 = #{acttime2}</if>
+            <if test="techDesc != null  and techDesc != ''"> and tech_desc = #{techDesc}</if>
+            <if test="leaderDesc != null  and leaderDesc != ''"> and leader_desc = #{leaderDesc}</if>
+            <if test="becomeMemDesc != null  and becomeMemDesc != ''"> and become_mem_desc = #{becomeMemDesc}</if>
+            <if test="dictBecomeMember != null  and dictBecomeMember != ''"> and dict_become_member = #{dictBecomeMember}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserBecomeMemberById" parameterType="String" resultMap="HrUserBecomeMemberResult">
+        <include refid="selectHrUserBecomeMemberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserBecomeMember" parameterType="HrUserBecomeMember">
+        insert into hr_user_become_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="usercode != null">usercode,</if>
+            <if test="username != null and username != ''">username,</if>
+            <if test="deptname != null and deptname != ''">deptname,</if>
+            <if test="postname != null">postname,</if>
+            <if test="starttime1 != null">starttime1,</if>
+            <if test="endtime1 != null">endtime1,</if>
+            <if test="acttime2 != null">acttime2,</if>
+            <if test="techDesc != null">tech_desc,</if>
+            <if test="leaderDesc != null">leader_desc,</if>
+            <if test="becomeMemDesc != null">become_mem_desc,</if>
+            <if test="dictBecomeMember != null">dict_become_member,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="usercode != null">#{usercode},</if>
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="deptname != null and deptname != ''">#{deptname},</if>
+            <if test="postname != null">#{postname},</if>
+            <if test="starttime1 != null">#{starttime1},</if>
+            <if test="endtime1 != null">#{endtime1},</if>
+            <if test="acttime2 != null">#{acttime2},</if>
+            <if test="techDesc != null">#{techDesc},</if>
+            <if test="leaderDesc != null">#{leaderDesc},</if>
+            <if test="becomeMemDesc != null">#{becomeMemDesc},</if>
+            <if test="dictBecomeMember != null">#{dictBecomeMember},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserBecomeMember" parameterType="HrUserBecomeMember">
+        update hr_user_become_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usercode != null">usercode = #{usercode},</if>
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="deptname != null and deptname != ''">deptname = #{deptname},</if>
+            <if test="postname != null">postname = #{postname},</if>
+            <if test="starttime1 != null">starttime1 = #{starttime1},</if>
+            <if test="endtime1 != null">endtime1 = #{endtime1},</if>
+            <if test="acttime2 != null">acttime2 = #{acttime2},</if>
+            <if test="techDesc != null">tech_desc = #{techDesc},</if>
+            <if test="leaderDesc != null">leader_desc = #{leaderDesc},</if>
+            <if test="becomeMemDesc != null">become_mem_desc = #{becomeMemDesc},</if>
+            <if test="dictBecomeMember != null">dict_become_member = #{dictBecomeMember},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserBecomeMemberById" parameterType="String">
+        delete from hr_user_become_member where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserBecomeMemberByIds" parameterType="String">
+        delete from hr_user_become_member where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

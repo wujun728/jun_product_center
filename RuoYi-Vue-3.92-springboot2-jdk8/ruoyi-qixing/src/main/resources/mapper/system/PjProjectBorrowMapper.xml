@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectBorrowMapper">
+    
+    <resultMap type="PjProjectBorrow" id="PjProjectBorrowResult">
+        <result property="id"    column="id"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="refUserCode"    column="ref_user_code"    />
+        <result property="refUserName"    column="ref_user_name"    />
+        <result property="borrowDesc"    column="borrow_desc"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="dictBorrowState"    column="dict_borrow_state"    />
+        <result property="creator"    column="creator"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjProjectBorrowVo">
+        select id, ref_project_code, ref_project_name, ref_user_code, ref_user_name, borrow_desc, end_time, dict_borrow_state, creator, remark, create_time, create_id, update_time, update_id, order_id, order_status from pj_project_borrow
+    </sql>
+
+    <select id="selectPjProjectBorrowList" parameterType="PjProjectBorrow" resultMap="PjProjectBorrowResult">
+        <include refid="selectPjProjectBorrowVo"/>
+        <where>  
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="refUserCode != null  and refUserCode != ''"> and ref_user_code = #{refUserCode}</if>
+            <if test="refUserName != null  and refUserName != ''"> and ref_user_name like concat('%', #{refUserName}, '%')</if>
+            <if test="borrowDesc != null  and borrowDesc != ''"> and borrow_desc = #{borrowDesc}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="dictBorrowState != null  and dictBorrowState != ''"> and dict_borrow_state = #{dictBorrowState}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectBorrowById" parameterType="String" resultMap="PjProjectBorrowResult">
+        <include refid="selectPjProjectBorrowVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectBorrow" parameterType="PjProjectBorrow">
+        insert into pj_project_borrow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refProjectCode != null and refProjectCode != ''">ref_project_code,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="refUserCode != null and refUserCode != ''">ref_user_code,</if>
+            <if test="refUserName != null and refUserName != ''">ref_user_name,</if>
+            <if test="borrowDesc != null">borrow_desc,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="dictBorrowState != null and dictBorrowState != ''">dict_borrow_state,</if>
+            <if test="creator != null">creator,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refProjectCode != null and refProjectCode != ''">#{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="refUserCode != null and refUserCode != ''">#{refUserCode},</if>
+            <if test="refUserName != null and refUserName != ''">#{refUserName},</if>
+            <if test="borrowDesc != null">#{borrowDesc},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="dictBorrowState != null and dictBorrowState != ''">#{dictBorrowState},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectBorrow" parameterType="PjProjectBorrow">
+        update pj_project_borrow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refProjectCode != null and refProjectCode != ''">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="refUserCode != null and refUserCode != ''">ref_user_code = #{refUserCode},</if>
+            <if test="refUserName != null and refUserName != ''">ref_user_name = #{refUserName},</if>
+            <if test="borrowDesc != null">borrow_desc = #{borrowDesc},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="dictBorrowState != null and dictBorrowState != ''">dict_borrow_state = #{dictBorrowState},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectBorrowById" parameterType="String">
+        delete from pj_project_borrow where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectBorrowByIds" parameterType="String">
+        delete from pj_project_borrow where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

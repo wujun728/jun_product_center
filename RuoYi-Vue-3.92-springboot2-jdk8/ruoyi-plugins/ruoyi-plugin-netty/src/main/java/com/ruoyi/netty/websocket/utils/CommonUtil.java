@@ -1,5 +1,6 @@
 package com.ruoyi.netty.websocket.utils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class CommonUtil {
 
    public static Map<String, String> parseQueryParameters(String query) {
       if (query == null || query.isEmpty()) {
-         return Map.of();
+         return Collections.emptyMap();   // [MIG] JDK8 兼容：原 Map.of() 为 JDK9+ API
       }
 
       Map<String, String> params = new HashMap<>();

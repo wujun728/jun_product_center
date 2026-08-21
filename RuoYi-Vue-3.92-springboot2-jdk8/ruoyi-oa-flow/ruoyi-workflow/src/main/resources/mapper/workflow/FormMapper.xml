@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.FormMapper">
+    
+    <resultMap type="Form" id="FormResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="formData"    column="form_data"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectFormVo">
+        select id, title, form_data, template_id, create_id, create_time, update_id, update_time from t_workflow_form
+    </sql>
+
+    <select id="selectFormList" parameterType="Form" resultMap="FormResult">
+        <include refid="selectFormVo"/>
+        <where>  
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="formData != null  and formData != ''"> and form_data = #{formData}</if>
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFormById" parameterType="String" resultMap="FormResult">
+        <include refid="selectFormVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertForm" parameterType="Form">
+        insert into t_workflow_form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null">title,</if>
+            <if test="formData != null">form_data,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="formData != null">#{formData},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateForm" parameterType="Form">
+        update t_workflow_form
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="formData != null">form_data = #{formData},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFormById" parameterType="String">
+        delete from t_workflow_form where id = #{id}
+    </delete>
+
+    <delete id="deleteFormByIds" parameterType="String">
+        delete from t_workflow_form where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

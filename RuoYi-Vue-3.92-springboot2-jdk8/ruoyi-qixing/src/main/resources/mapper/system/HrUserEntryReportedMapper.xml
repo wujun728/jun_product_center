@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserEntryReportedMapper">
+    
+    <resultMap type="HrUserEntryReported" id="HrUserEntryReportedResult">
+        <result property="id"    column="id"    />
+        <result property="refJobUsername"    column="ref_job_username"    />
+        <result property="refUsername1"    column="ref_username1"    />
+        <result property="refJobDeptname"    column="ref_job_deptname"    />
+        <result property="username2"    column="username2"    />
+        <result property="refUsername2"    column="ref_username2"    />
+        <result property="startTime1"    column="start_time1"    />
+        <result property="endTime1"    column="end_time1"    />
+        <result property="beginTime2"    column="begin_time2"    />
+        <result property="endTime2"    column="end_time2"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="workmarkTimes"    column="workmark_times"    />
+        <result property="isFullEntryInfomation"    column="is_full_entry_infomation"    />
+        <result property="isEntryJobFilish"    column="is_entry_job_filish"    />
+        <result property="isSignContract"    column="is_sign_contract"    />
+        <result property="files"    column="files"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectHrUserEntryReportedVo">
+        select id, ref_job_username, ref_username1, ref_job_deptname, username2, ref_username2, start_time1, end_time1, begin_time2, end_time2, work_location, workmark_times, is_full_entry_infomation, is_entry_job_filish, is_sign_contract, files, remark, create_time, create_id, update_time, update_id from hr_user_entry_reported
+    </sql>
+
+    <select id="selectHrUserEntryReportedList" parameterType="HrUserEntryReported" resultMap="HrUserEntryReportedResult">
+        <include refid="selectHrUserEntryReportedVo"/>
+        <where>  
+            <if test="refJobUsername != null  and refJobUsername != ''"> and ref_job_username like concat('%', #{refJobUsername}, '%')</if>
+            <if test="refUsername1 != null  and refUsername1 != ''"> and ref_username1 = #{refUsername1}</if>
+            <if test="refJobDeptname != null  and refJobDeptname != ''"> and ref_job_deptname like concat('%', #{refJobDeptname}, '%')</if>
+            <if test="username2 != null  and username2 != ''"> and username2 = #{username2}</if>
+            <if test="refUsername2 != null  and refUsername2 != ''"> and ref_username2 = #{refUsername2}</if>
+            <if test="startTime1 != null "> and start_time1 = #{startTime1}</if>
+            <if test="endTime1 != null "> and end_time1 = #{endTime1}</if>
+            <if test="beginTime2 != null "> and begin_time2 = #{beginTime2}</if>
+            <if test="endTime2 != null "> and end_time2 = #{endTime2}</if>
+            <if test="workLocation != null  and workLocation != ''"> and work_location = #{workLocation}</if>
+            <if test="workmarkTimes != null  and workmarkTimes != ''"> and workmark_times = #{workmarkTimes}</if>
+            <if test="isFullEntryInfomation != null  and isFullEntryInfomation != ''"> and is_full_entry_infomation = #{isFullEntryInfomation}</if>
+            <if test="isEntryJobFilish != null  and isEntryJobFilish != ''"> and is_entry_job_filish = #{isEntryJobFilish}</if>
+            <if test="isSignContract != null  and isSignContract != ''"> and is_sign_contract = #{isSignContract}</if>
+            <if test="files != null  and files != ''"> and files = #{files}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserEntryReportedById" parameterType="String" resultMap="HrUserEntryReportedResult">
+        <include refid="selectHrUserEntryReportedVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserEntryReported" parameterType="HrUserEntryReported">
+        insert into hr_user_entry_reported
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refJobUsername != null and refJobUsername != ''">ref_job_username,</if>
+            <if test="refUsername1 != null and refUsername1 != ''">ref_username1,</if>
+            <if test="refJobDeptname != null and refJobDeptname != ''">ref_job_deptname,</if>
+            <if test="username2 != null">username2,</if>
+            <if test="refUsername2 != null">ref_username2,</if>
+            <if test="startTime1 != null">start_time1,</if>
+            <if test="endTime1 != null">end_time1,</if>
+            <if test="beginTime2 != null">begin_time2,</if>
+            <if test="endTime2 != null">end_time2,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="workmarkTimes != null">workmark_times,</if>
+            <if test="isFullEntryInfomation != null">is_full_entry_infomation,</if>
+            <if test="isEntryJobFilish != null">is_entry_job_filish,</if>
+            <if test="isSignContract != null">is_sign_contract,</if>
+            <if test="files != null">files,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refJobUsername != null and refJobUsername != ''">#{refJobUsername},</if>
+            <if test="refUsername1 != null and refUsername1 != ''">#{refUsername1},</if>
+            <if test="refJobDeptname != null and refJobDeptname != ''">#{refJobDeptname},</if>
+            <if test="username2 != null">#{username2},</if>
+            <if test="refUsername2 != null">#{refUsername2},</if>
+            <if test="startTime1 != null">#{startTime1},</if>
+            <if test="endTime1 != null">#{endTime1},</if>
+            <if test="beginTime2 != null">#{beginTime2},</if>
+            <if test="endTime2 != null">#{endTime2},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="workmarkTimes != null">#{workmarkTimes},</if>
+            <if test="isFullEntryInfomation != null">#{isFullEntryInfomation},</if>
+            <if test="isEntryJobFilish != null">#{isEntryJobFilish},</if>
+            <if test="isSignContract != null">#{isSignContract},</if>
+            <if test="files != null">#{files},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserEntryReported" parameterType="HrUserEntryReported">
+        update hr_user_entry_reported
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refJobUsername != null and refJobUsername != ''">ref_job_username = #{refJobUsername},</if>
+            <if test="refUsername1 != null and refUsername1 != ''">ref_username1 = #{refUsername1},</if>
+            <if test="refJobDeptname != null and refJobDeptname != ''">ref_job_deptname = #{refJobDeptname},</if>
+            <if test="username2 != null">username2 = #{username2},</if>
+            <if test="refUsername2 != null">ref_username2 = #{refUsername2},</if>
+            <if test="startTime1 != null">start_time1 = #{startTime1},</if>
+            <if test="endTime1 != null">end_time1 = #{endTime1},</if>
+            <if test="beginTime2 != null">begin_time2 = #{beginTime2},</if>
+            <if test="endTime2 != null">end_time2 = #{endTime2},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="workmarkTimes != null">workmark_times = #{workmarkTimes},</if>
+            <if test="isFullEntryInfomation != null">is_full_entry_infomation = #{isFullEntryInfomation},</if>
+            <if test="isEntryJobFilish != null">is_entry_job_filish = #{isEntryJobFilish},</if>
+            <if test="isSignContract != null">is_sign_contract = #{isSignContract},</if>
+            <if test="files != null">files = #{files},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserEntryReportedById" parameterType="String">
+        delete from hr_user_entry_reported where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserEntryReportedByIds" parameterType="String">
+        delete from hr_user_entry_reported where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

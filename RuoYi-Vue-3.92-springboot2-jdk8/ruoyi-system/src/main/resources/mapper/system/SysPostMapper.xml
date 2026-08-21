@@ -119,4 +119,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach> 
  	</delete>
 
+	<!-- [MIG] OA 迁移引入：根据用户ID列表查询岗位列表 -->
+	<select id="selectUserPostsByUserIds" parameterType="java.util.List" resultMap="SysPostResult">
+		select p.post_id, p.post_name, p.post_code, p.post_sort, p.status, p.create_by, p.create_time, p.remark
+		from sys_post p
+			 left join sys_user_post up on up.post_id = p.post_id
+			 left join sys_user u on u.user_id = up.user_id
+		where u.user_id in
+		<foreach item="userId" collection="list" separator="," close=")" open="(">
+			#{userId}
+		</foreach>
+	</select>
 </mapper> 

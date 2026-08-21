@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://www.flowable.org/processdef">
+  <process id="project" name="项目立项流程" isExecutable="true">
+    <startEvent id="start1"></startEvent>
+    <endEvent id="end1"></endEvent>
+    <userTask id="apply" name="项目承接人" flowable:assignee="${assign_step1}"></userTask>
+    <userTask id="approveDept" name="部门经理审批" flowable:assignee="${assign_step2}"></userTask>
+    <userTask id="approveBoss" name="董事长审批" flowable:assignee="${assign_step3}"></userTask>
+    <userTask id="approveStep4" name="部门经理审批" flowable:assignee="${systemAuto}"></userTask>
+    <sequenceFlow id="transition1" sourceRef="start1" targetRef="apply"></sequenceFlow>
+    <sequenceFlow id="transition2" sourceRef="apply" targetRef="approveDept"></sequenceFlow>
+    <sequenceFlow id="transition3" sourceRef="approveDept" targetRef="approveBoss"></sequenceFlow>
+    <sequenceFlow id="transition6" sourceRef="approveBoss" targetRef="approveStep4"></sequenceFlow>
+    <sequenceFlow id="transition4" sourceRef="approveStep4" targetRef="end1"></sequenceFlow>
+  </process>
+</definitions>

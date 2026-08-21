@@ -15,6 +15,7 @@ import com.ruoyi.common.annotation.DataScope;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -127,6 +128,54 @@ public class SysUserServiceImpl implements ISysUserService
     public SysUser selectUserById(Long userId)
     {
         return userMapper.selectUserById(userId);
+    }
+
+    /**
+     * [MIG] 根据用户ID（字符串形式）查询用户 — OA 迁移引入的 String 重载
+     *
+     * @param userId 用户ID（字符串，业务侧 String 主键体系）
+     * @return 用户信息
+     */
+    @Override
+    public SysUser selectUserById(String userId)
+    {
+        return userMapper.selectUserById(Convert.toLong(userId));
+    }
+
+    /**
+     * [MIG] 根据用户ID列表查询用户（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户列表
+     */
+    @Override
+    public List<SysUser> selectByUserIds(List<String> userIds)
+    {
+        return userMapper.selectByUserIds(userIds);
+    }
+
+    /**
+     * [MIG] 根据用户ID列表查询用户详情（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户详情列表
+     */
+    @Override
+    public List<SysUser> selectDetailByUserIds(List<String> userIds)
+    {
+        return userMapper.selectDetailByUserIds(userIds);
+    }
+
+    /**
+     * [MIG] 根据角色ID列表查询用户角色关联（OA 迁移引入）
+     *
+     * @param roleIds 角色ID列表
+     * @return 用户角色关联列表
+     */
+    @Override
+    public List<SysUserRole> selectRoleUserInfos(List<String> roleIds)
+    {
+        return userRoleMapper.selectRoleUserInfos(roleIds);
     }
 
     /**

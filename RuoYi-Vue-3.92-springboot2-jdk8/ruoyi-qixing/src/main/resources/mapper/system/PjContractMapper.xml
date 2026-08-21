@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjContractMapper">
+    
+    <resultMap type="PjContract" id="PjContractResult">
+        <result property="id"    column="id"    />
+        <result property="refidProjectCodeHide"    column="refid_project_code_hide"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="dictContractState"    column="dict_contract_state"    />
+        <result property="dictContractType"    column="dict_contract_type"    />
+        <result property="contractNo"    column="contract_no"    />
+        <result property="contractName"    column="contract_name"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="reportCount"    column="report_count"    />
+        <result property="reportDetail"    column="report_detail"    />
+        <result property="contractMoney"    column="contract_money"    />
+        <result property="signBy"    column="sign_by"    />
+        <result property="contractDays"    column="contract_days"    />
+        <result property="contractDetails"    column="contract_details"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjContractVo">
+        select id, refid_project_code_hide, ref_project_name, dict_contract_state, dict_contract_type, contract_no, contract_name, sign_time, report_count, report_detail, contract_money, sign_by, contract_days, contract_details, remark, creator, create_time, create_id, update_time, update_id, deleted, order_id, order_status from pj_contract
+    </sql>
+
+    <select id="selectPjContractList" parameterType="PjContract" resultMap="PjContractResult">
+        <include refid="selectPjContractVo"/>
+        <where>  
+            <if test="refidProjectCodeHide != null  and refidProjectCodeHide != ''"> and refid_project_code_hide = #{refidProjectCodeHide}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="dictContractState != null  and dictContractState != ''"> and dict_contract_state = #{dictContractState}</if>
+            <if test="dictContractType != null  and dictContractType != ''"> and dict_contract_type = #{dictContractType}</if>
+            <if test="contractNo != null  and contractNo != ''"> and contract_no = #{contractNo}</if>
+            <if test="contractName != null  and contractName != ''"> and contract_name like concat('%', #{contractName}, '%')</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="reportCount != null "> and report_count = #{reportCount}</if>
+            <if test="reportDetail != null  and reportDetail != ''"> and report_detail = #{reportDetail}</if>
+            <if test="contractMoney != null "> and contract_money = #{contractMoney}</if>
+            <if test="signBy != null  and signBy != ''"> and sign_by = #{signBy}</if>
+            <if test="contractDays != null "> and contract_days = #{contractDays}</if>
+            <if test="contractDetails != null  and contractDetails != ''"> and contract_details = #{contractDetails}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjContractById" parameterType="String" resultMap="PjContractResult">
+        <include refid="selectPjContractVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjContract" parameterType="PjContract">
+        insert into pj_contract
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refidProjectCodeHide != null">refid_project_code_hide,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="dictContractState != null">dict_contract_state,</if>
+            <if test="dictContractType != null">dict_contract_type,</if>
+            <if test="contractNo != null">contract_no,</if>
+            <if test="contractName != null">contract_name,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="reportCount != null">report_count,</if>
+            <if test="reportDetail != null">report_detail,</if>
+            <if test="contractMoney != null">contract_money,</if>
+            <if test="signBy != null">sign_by,</if>
+            <if test="contractDays != null">contract_days,</if>
+            <if test="contractDetails != null">contract_details,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refidProjectCodeHide != null">#{refidProjectCodeHide},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="dictContractState != null">#{dictContractState},</if>
+            <if test="dictContractType != null">#{dictContractType},</if>
+            <if test="contractNo != null">#{contractNo},</if>
+            <if test="contractName != null">#{contractName},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="reportCount != null">#{reportCount},</if>
+            <if test="reportDetail != null">#{reportDetail},</if>
+            <if test="contractMoney != null">#{contractMoney},</if>
+            <if test="signBy != null">#{signBy},</if>
+            <if test="contractDays != null">#{contractDays},</if>
+            <if test="contractDetails != null">#{contractDetails},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjContract" parameterType="PjContract">
+        update pj_contract
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refidProjectCodeHide != null">refid_project_code_hide = #{refidProjectCodeHide},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="dictContractState != null">dict_contract_state = #{dictContractState},</if>
+            <if test="dictContractType != null">dict_contract_type = #{dictContractType},</if>
+            <if test="contractNo != null">contract_no = #{contractNo},</if>
+            <if test="contractName != null">contract_name = #{contractName},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="reportCount != null">report_count = #{reportCount},</if>
+            <if test="reportDetail != null">report_detail = #{reportDetail},</if>
+            <if test="contractMoney != null">contract_money = #{contractMoney},</if>
+            <if test="signBy != null">sign_by = #{signBy},</if>
+            <if test="contractDays != null">contract_days = #{contractDays},</if>
+            <if test="contractDetails != null">contract_details = #{contractDetails},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjContractById" parameterType="String">
+        delete from pj_contract where id = #{id}
+    </delete>
+
+    <delete id="deletePjContractByIds" parameterType="String">
+        delete from pj_contract where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

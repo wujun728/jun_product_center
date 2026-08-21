@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.OaPomsWorkmarksPayrollMapper">
+    
+    <resultMap type="OaPomsWorkmarksPayroll" id="OaPomsWorkmarksPayrollResult">
+        <result property="id"    column="id"    />
+        <result property="usercode"    column="usercode"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="deptname"    column="deptname"    />
+        <result property="workrole"    column="workrole"    />
+        <result property="month"    column="month"    />
+        <result property="payrollAct"    column="payroll_act"    />
+        <result property="payrollDatatimeSe"    column="payroll_datatime_se"    />
+        <result property="payrollBase"    column="payroll_base"    />
+        <result property="payrollCurMouth"    column="payroll_cur_mouth"    />
+        <result property="taxBeforeBufa"    column="tax_before_bufa"    />
+        <result property="taxBeforeKoukuan"    column="tax_before_koukuan"    />
+        <result property="hoursQingjia"    column="hours_qingjia"    />
+        <result property="hoursQueqing"    column="hours_queqing"    />
+        <result property="moneyAllIn"    column="money_all_in"    />
+        <result property="sbKoukuan"    column="sb_koukuan"    />
+        <result property="gjjKoukuan"    column="gjj_koukuan"    />
+        <result property="geshui"    column="geshui"    />
+        <result property="taxAfterBufa"    column="tax_after_bufa"    />
+        <result property="taxAfterKoukuan"    column="tax_after_koukuan"    />
+        <result property="workDayCount"    column="work_day_count"    />
+        <result property="sholdbeWorkDayCount"    column="sholdbe_work_day_count"    />
+        <result property="workTotalHours"    column="work_total_hours"    />
+        <result property="shoulbeWorkHours"    column="shoulbe_work_hours"    />
+        <result property="payrollState"    column="payroll_state"    />
+        <result property="payrollStateMsg"    column="payroll_state_msg"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectOaPomsWorkmarksPayrollVo">
+        select id, usercode, ref_username, deptname, workrole, month, payroll_act, payroll_datatime_se, payroll_base, payroll_cur_mouth, tax_before_bufa, tax_before_koukuan, hours_qingjia, hours_queqing, money_all_in, sb_koukuan, gjj_koukuan, geshui, tax_after_bufa, tax_after_koukuan, work_day_count, sholdbe_work_day_count, work_total_hours, shoulbe_work_hours, payroll_state, payroll_state_msg, remark, create_time, create_id, update_time, update_id, deleted, order_id, order_status from oa_poms_workmarks_payroll
+    </sql>
+
+    <select id="selectOaPomsWorkmarksPayrollList" parameterType="OaPomsWorkmarksPayroll" resultMap="OaPomsWorkmarksPayrollResult">
+        <include refid="selectOaPomsWorkmarksPayrollVo"/>
+        <where>  
+            <if test="usercode != null  and usercode != ''"> and usercode = #{usercode}</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="deptname != null  and deptname != ''"> and deptname like concat('%', #{deptname}, '%')</if>
+            <if test="workrole != null  and workrole != ''"> and workrole = #{workrole}</if>
+            <if test="month != null  and month != ''"> and month = #{month}</if>
+            <if test="payrollAct != null "> and payroll_act = #{payrollAct}</if>
+            <if test="payrollDatatimeSe != null  and payrollDatatimeSe != ''"> and payroll_datatime_se = #{payrollDatatimeSe}</if>
+            <if test="payrollBase != null "> and payroll_base = #{payrollBase}</if>
+            <if test="payrollCurMouth != null "> and payroll_cur_mouth = #{payrollCurMouth}</if>
+            <if test="taxBeforeBufa != null "> and tax_before_bufa = #{taxBeforeBufa}</if>
+            <if test="taxBeforeKoukuan != null "> and tax_before_koukuan = #{taxBeforeKoukuan}</if>
+            <if test="hoursQingjia != null "> and hours_qingjia = #{hoursQingjia}</if>
+            <if test="hoursQueqing != null "> and hours_queqing = #{hoursQueqing}</if>
+            <if test="moneyAllIn != null "> and money_all_in = #{moneyAllIn}</if>
+            <if test="sbKoukuan != null "> and sb_koukuan = #{sbKoukuan}</if>
+            <if test="gjjKoukuan != null "> and gjj_koukuan = #{gjjKoukuan}</if>
+            <if test="geshui != null "> and geshui = #{geshui}</if>
+            <if test="taxAfterBufa != null "> and tax_after_bufa = #{taxAfterBufa}</if>
+            <if test="taxAfterKoukuan != null "> and tax_after_koukuan = #{taxAfterKoukuan}</if>
+            <if test="workDayCount != null "> and work_day_count = #{workDayCount}</if>
+            <if test="sholdbeWorkDayCount != null "> and sholdbe_work_day_count = #{sholdbeWorkDayCount}</if>
+            <if test="workTotalHours != null "> and work_total_hours = #{workTotalHours}</if>
+            <if test="shoulbeWorkHours != null "> and shoulbe_work_hours = #{shoulbeWorkHours}</if>
+            <if test="payrollState != null  and payrollState != ''"> and payroll_state = #{payrollState}</if>
+            <if test="payrollStateMsg != null  and payrollStateMsg != ''"> and payroll_state_msg = #{payrollStateMsg}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null  and orderStatus != ''"> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaPomsWorkmarksPayrollById" parameterType="String" resultMap="OaPomsWorkmarksPayrollResult">
+        <include refid="selectOaPomsWorkmarksPayrollVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaPomsWorkmarksPayroll" parameterType="OaPomsWorkmarksPayroll">
+        insert into oa_poms_workmarks_payroll
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="usercode != null and usercode != ''">usercode,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="deptname != null">deptname,</if>
+            <if test="workrole != null">workrole,</if>
+            <if test="month != null and month != ''">month,</if>
+            <if test="payrollAct != null">payroll_act,</if>
+            <if test="payrollDatatimeSe != null">payroll_datatime_se,</if>
+            <if test="payrollBase != null">payroll_base,</if>
+            <if test="payrollCurMouth != null">payroll_cur_mouth,</if>
+            <if test="taxBeforeBufa != null">tax_before_bufa,</if>
+            <if test="taxBeforeKoukuan != null">tax_before_koukuan,</if>
+            <if test="hoursQingjia != null">hours_qingjia,</if>
+            <if test="hoursQueqing != null">hours_queqing,</if>
+            <if test="moneyAllIn != null">money_all_in,</if>
+            <if test="sbKoukuan != null">sb_koukuan,</if>
+            <if test="gjjKoukuan != null">gjj_koukuan,</if>
+            <if test="geshui != null">geshui,</if>
+            <if test="taxAfterBufa != null">tax_after_bufa,</if>
+            <if test="taxAfterKoukuan != null">tax_after_koukuan,</if>
+            <if test="workDayCount != null">work_day_count,</if>
+            <if test="sholdbeWorkDayCount != null">sholdbe_work_day_count,</if>
+            <if test="workTotalHours != null">work_total_hours,</if>
+            <if test="shoulbeWorkHours != null">shoulbe_work_hours,</if>
+            <if test="payrollState != null and payrollState != ''">payroll_state,</if>
+            <if test="payrollStateMsg != null">payroll_state_msg,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="usercode != null and usercode != ''">#{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="deptname != null">#{deptname},</if>
+            <if test="workrole != null">#{workrole},</if>
+            <if test="month != null and month != ''">#{month},</if>
+            <if test="payrollAct != null">#{payrollAct},</if>
+            <if test="payrollDatatimeSe != null">#{payrollDatatimeSe},</if>
+            <if test="payrollBase != null">#{payrollBase},</if>
+            <if test="payrollCurMouth != null">#{payrollCurMouth},</if>
+            <if test="taxBeforeBufa != null">#{taxBeforeBufa},</if>
+            <if test="taxBeforeKoukuan != null">#{taxBeforeKoukuan},</if>
+            <if test="hoursQingjia != null">#{hoursQingjia},</if>
+            <if test="hoursQueqing != null">#{hoursQueqing},</if>
+            <if test="moneyAllIn != null">#{moneyAllIn},</if>
+            <if test="sbKoukuan != null">#{sbKoukuan},</if>
+            <if test="gjjKoukuan != null">#{gjjKoukuan},</if>
+            <if test="geshui != null">#{geshui},</if>
+            <if test="taxAfterBufa != null">#{taxAfterBufa},</if>
+            <if test="taxAfterKoukuan != null">#{taxAfterKoukuan},</if>
+            <if test="workDayCount != null">#{workDayCount},</if>
+            <if test="sholdbeWorkDayCount != null">#{sholdbeWorkDayCount},</if>
+            <if test="workTotalHours != null">#{workTotalHours},</if>
+            <if test="shoulbeWorkHours != null">#{shoulbeWorkHours},</if>
+            <if test="payrollState != null and payrollState != ''">#{payrollState},</if>
+            <if test="payrollStateMsg != null">#{payrollStateMsg},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaPomsWorkmarksPayroll" parameterType="OaPomsWorkmarksPayroll">
+        update oa_poms_workmarks_payroll
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usercode != null and usercode != ''">usercode = #{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="deptname != null">deptname = #{deptname},</if>
+            <if test="workrole != null">workrole = #{workrole},</if>
+            <if test="month != null and month != ''">month = #{month},</if>
+            <if test="payrollAct != null">payroll_act = #{payrollAct},</if>
+            <if test="payrollDatatimeSe != null">payroll_datatime_se = #{payrollDatatimeSe},</if>
+            <if test="payrollBase != null">payroll_base = #{payrollBase},</if>
+            <if test="payrollCurMouth != null">payroll_cur_mouth = #{payrollCurMouth},</if>
+            <if test="taxBeforeBufa != null">tax_before_bufa = #{taxBeforeBufa},</if>
+            <if test="taxBeforeKoukuan != null">tax_before_koukuan = #{taxBeforeKoukuan},</if>
+            <if test="hoursQingjia != null">hours_qingjia = #{hoursQingjia},</if>
+            <if test="hoursQueqing != null">hours_queqing = #{hoursQueqing},</if>
+            <if test="moneyAllIn != null">money_all_in = #{moneyAllIn},</if>
+            <if test="sbKoukuan != null">sb_koukuan = #{sbKoukuan},</if>
+            <if test="gjjKoukuan != null">gjj_koukuan = #{gjjKoukuan},</if>
+            <if test="geshui != null">geshui = #{geshui},</if>
+            <if test="taxAfterBufa != null">tax_after_bufa = #{taxAfterBufa},</if>
+            <if test="taxAfterKoukuan != null">tax_after_koukuan = #{taxAfterKoukuan},</if>
+            <if test="workDayCount != null">work_day_count = #{workDayCount},</if>
+            <if test="sholdbeWorkDayCount != null">sholdbe_work_day_count = #{sholdbeWorkDayCount},</if>
+            <if test="workTotalHours != null">work_total_hours = #{workTotalHours},</if>
+            <if test="shoulbeWorkHours != null">shoulbe_work_hours = #{shoulbeWorkHours},</if>
+            <if test="payrollState != null and payrollState != ''">payroll_state = #{payrollState},</if>
+            <if test="payrollStateMsg != null">payroll_state_msg = #{payrollStateMsg},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaPomsWorkmarksPayrollById" parameterType="String">
+        delete from oa_poms_workmarks_payroll where id = #{id}
+    </delete>
+
+    <delete id="deleteOaPomsWorkmarksPayrollByIds" parameterType="String">
+        delete from oa_poms_workmarks_payroll where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

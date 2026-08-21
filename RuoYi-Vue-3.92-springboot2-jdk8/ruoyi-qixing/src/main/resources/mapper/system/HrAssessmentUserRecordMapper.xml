@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrAssessmentUserRecordMapper">
+    
+    <resultMap type="HrAssessmentUserRecord" id="HrAssessmentUserRecordResult">
+        <result property="id"    column="id"    />
+        <result property="refUsercode"    column="ref_usercode"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="refTeamplateName"    column="ref_teamplate_name"    />
+        <result property="recordName"    column="record_name"    />
+        <result property="score"    column="score"    />
+        <result property="score1"    column="score1"    />
+        <result property="score1Username"    column="score1_username"    />
+        <result property="score1Desc"    column="score1_desc"    />
+        <result property="teamplateId"    column="teamplate_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectHrAssessmentUserRecordVo">
+        select id, ref_usercode, ref_username, ref_teamplate_name, record_name, score, score1, score1_username, score1_desc, teamplate_id, order_id, remark, create_time, create_id, update_time, update_id, order_status from hr_assessment_user_record
+    </sql>
+
+    <select id="selectHrAssessmentUserRecordList" parameterType="HrAssessmentUserRecord" resultMap="HrAssessmentUserRecordResult">
+        <include refid="selectHrAssessmentUserRecordVo"/>
+        <where>  
+            <if test="refUsercode != null  and refUsercode != ''"> and ref_usercode = #{refUsercode}</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="refTeamplateName != null  and refTeamplateName != ''"> and ref_teamplate_name like concat('%', #{refTeamplateName}, '%')</if>
+            <if test="recordName != null  and recordName != ''"> and record_name like concat('%', #{recordName}, '%')</if>
+            <if test="score != null "> and score = #{score}</if>
+            <if test="score1 != null "> and score1 = #{score1}</if>
+            <if test="score1Username != null  and score1Username != ''"> and score1_username like concat('%', #{score1Username}, '%')</if>
+            <if test="score1Desc != null  and score1Desc != ''"> and score1_desc = #{score1Desc}</if>
+            <if test="teamplateId != null  and teamplateId != ''"> and teamplate_id = #{teamplateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrAssessmentUserRecordById" parameterType="String" resultMap="HrAssessmentUserRecordResult">
+        <include refid="selectHrAssessmentUserRecordVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrAssessmentUserRecord" parameterType="HrAssessmentUserRecord">
+        insert into hr_assessment_user_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refUsercode != null and refUsercode != ''">ref_usercode,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="refTeamplateName != null and refTeamplateName != ''">ref_teamplate_name,</if>
+            <if test="recordName != null">record_name,</if>
+            <if test="score != null">score,</if>
+            <if test="score1 != null">score1,</if>
+            <if test="score1Username != null">score1_username,</if>
+            <if test="score1Desc != null">score1_desc,</if>
+            <if test="teamplateId != null and teamplateId != ''">teamplate_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refUsercode != null and refUsercode != ''">#{refUsercode},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="refTeamplateName != null and refTeamplateName != ''">#{refTeamplateName},</if>
+            <if test="recordName != null">#{recordName},</if>
+            <if test="score != null">#{score},</if>
+            <if test="score1 != null">#{score1},</if>
+            <if test="score1Username != null">#{score1Username},</if>
+            <if test="score1Desc != null">#{score1Desc},</if>
+            <if test="teamplateId != null and teamplateId != ''">#{teamplateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrAssessmentUserRecord" parameterType="HrAssessmentUserRecord">
+        update hr_assessment_user_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refUsercode != null and refUsercode != ''">ref_usercode = #{refUsercode},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="refTeamplateName != null and refTeamplateName != ''">ref_teamplate_name = #{refTeamplateName},</if>
+            <if test="recordName != null">record_name = #{recordName},</if>
+            <if test="score != null">score = #{score},</if>
+            <if test="score1 != null">score1 = #{score1},</if>
+            <if test="score1Username != null">score1_username = #{score1Username},</if>
+            <if test="score1Desc != null">score1_desc = #{score1Desc},</if>
+            <if test="teamplateId != null and teamplateId != ''">teamplate_id = #{teamplateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrAssessmentUserRecordById" parameterType="String">
+        delete from hr_assessment_user_record where id = #{id}
+    </delete>
+
+    <delete id="deleteHrAssessmentUserRecordByIds" parameterType="String">
+        delete from hr_assessment_user_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

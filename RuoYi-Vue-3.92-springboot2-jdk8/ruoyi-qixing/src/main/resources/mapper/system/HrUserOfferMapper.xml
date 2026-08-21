@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserOfferMapper">
+    
+    <resultMap type="HrUserOffer" id="HrUserOfferResult">
+        <result property="id"    column="id"    />
+        <result property="refJobUsername"    column="ref_job_username"    />
+        <result property="location"    column="location"    />
+        <result property="refDeptname"    column="ref_deptname"    />
+        <result property="refUsername1"    column="ref_username1"    />
+        <result property="dictOfferStatus"    column="dict_offer_status"    />
+        <result property="dictYesNo"    column="dict_yes_no"    />
+        <result property="jobInTime"    column="job_in_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectHrUserOfferVo">
+        select id, ref_job_username, location, ref_deptname, ref_username1, dict_offer_status, dict_yes_no, job_in_time, remark, create_time, create_id, update_time, update_id from hr_user_offer
+    </sql>
+
+    <select id="selectHrUserOfferList" parameterType="HrUserOffer" resultMap="HrUserOfferResult">
+        <include refid="selectHrUserOfferVo"/>
+        <where>  
+            <if test="refJobUsername != null  and refJobUsername != ''"> and ref_job_username like concat('%', #{refJobUsername}, '%')</if>
+            <if test="location != null  and location != ''"> and location = #{location}</if>
+            <if test="refDeptname != null  and refDeptname != ''"> and ref_deptname like concat('%', #{refDeptname}, '%')</if>
+            <if test="refUsername1 != null  and refUsername1 != ''"> and ref_username1 = #{refUsername1}</if>
+            <if test="dictOfferStatus != null  and dictOfferStatus != ''"> and dict_offer_status = #{dictOfferStatus}</if>
+            <if test="dictYesNo != null  and dictYesNo != ''"> and dict_yes_no = #{dictYesNo}</if>
+            <if test="jobInTime != null "> and job_in_time = #{jobInTime}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserOfferById" parameterType="String" resultMap="HrUserOfferResult">
+        <include refid="selectHrUserOfferVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserOffer" parameterType="HrUserOffer">
+        insert into hr_user_offer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refJobUsername != null and refJobUsername != ''">ref_job_username,</if>
+            <if test="location != null and location != ''">location,</if>
+            <if test="refDeptname != null and refDeptname != ''">ref_deptname,</if>
+            <if test="refUsername1 != null">ref_username1,</if>
+            <if test="dictOfferStatus != null">dict_offer_status,</if>
+            <if test="dictYesNo != null">dict_yes_no,</if>
+            <if test="jobInTime != null">job_in_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refJobUsername != null and refJobUsername != ''">#{refJobUsername},</if>
+            <if test="location != null and location != ''">#{location},</if>
+            <if test="refDeptname != null and refDeptname != ''">#{refDeptname},</if>
+            <if test="refUsername1 != null">#{refUsername1},</if>
+            <if test="dictOfferStatus != null">#{dictOfferStatus},</if>
+            <if test="dictYesNo != null">#{dictYesNo},</if>
+            <if test="jobInTime != null">#{jobInTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserOffer" parameterType="HrUserOffer">
+        update hr_user_offer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refJobUsername != null and refJobUsername != ''">ref_job_username = #{refJobUsername},</if>
+            <if test="location != null and location != ''">location = #{location},</if>
+            <if test="refDeptname != null and refDeptname != ''">ref_deptname = #{refDeptname},</if>
+            <if test="refUsername1 != null">ref_username1 = #{refUsername1},</if>
+            <if test="dictOfferStatus != null">dict_offer_status = #{dictOfferStatus},</if>
+            <if test="dictYesNo != null">dict_yes_no = #{dictYesNo},</if>
+            <if test="jobInTime != null">job_in_time = #{jobInTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserOfferById" parameterType="String">
+        delete from hr_user_offer where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserOfferByIds" parameterType="String">
+        delete from hr_user_offer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

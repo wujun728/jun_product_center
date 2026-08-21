@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserHireMapper">
+    
+    <resultMap type="HrUserHire" id="HrUserHireResult">
+        <result property="id"    column="id"    />
+        <result property="refJobUsername"    column="ref_job_username"    />
+        <result property="refJobDeptname"    column="ref_job_deptname"    />
+        <result property="dictJobType"    column="dict_job_type"    />
+        <result property="dictJob"    column="dict_job"    />
+        <result property="refEntryLeader"    column="ref_entry_leader"    />
+        <result property="refEntryTeach"    column="ref_entry_teach"    />
+        <result property="money"    column="money"    />
+        <result property="entryTime"    column="entry_time"    />
+        <result property="wfstate"    column="wfstate"    />
+        <result property="currNodename"    column="curr_nodename"    />
+        <result property="currUsercode"    column="curr_usercode"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectHrUserHireVo">
+        select id, ref_job_username, ref_job_deptname, dict_job_type, dict_job, ref_entry_leader, ref_entry_teach, money, entry_time, wfstate, curr_nodename, curr_usercode, remark, create_time, create_id, update_time, update_id, order_id, order_status from hr_user_hire
+    </sql>
+
+    <select id="selectHrUserHireList" parameterType="HrUserHire" resultMap="HrUserHireResult">
+        <include refid="selectHrUserHireVo"/>
+        <where>  
+            <if test="refJobUsername != null  and refJobUsername != ''"> and ref_job_username like concat('%', #{refJobUsername}, '%')</if>
+            <if test="refJobDeptname != null  and refJobDeptname != ''"> and ref_job_deptname like concat('%', #{refJobDeptname}, '%')</if>
+            <if test="dictJobType != null  and dictJobType != ''"> and dict_job_type = #{dictJobType}</if>
+            <if test="dictJob != null  and dictJob != ''"> and dict_job = #{dictJob}</if>
+            <if test="refEntryLeader != null  and refEntryLeader != ''"> and ref_entry_leader = #{refEntryLeader}</if>
+            <if test="refEntryTeach != null  and refEntryTeach != ''"> and ref_entry_teach = #{refEntryTeach}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="entryTime != null "> and entry_time = #{entryTime}</if>
+            <if test="wfstate != null  and wfstate != ''"> and wfstate = #{wfstate}</if>
+            <if test="currNodename != null  and currNodename != ''"> and curr_nodename like concat('%', #{currNodename}, '%')</if>
+            <if test="currUsercode != null  and currUsercode != ''"> and curr_usercode = #{currUsercode}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserHireById" parameterType="String" resultMap="HrUserHireResult">
+        <include refid="selectHrUserHireVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserHire" parameterType="HrUserHire">
+        insert into hr_user_hire
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refJobUsername != null and refJobUsername != ''">ref_job_username,</if>
+            <if test="refJobDeptname != null and refJobDeptname != ''">ref_job_deptname,</if>
+            <if test="dictJobType != null and dictJobType != ''">dict_job_type,</if>
+            <if test="dictJob != null and dictJob != ''">dict_job,</if>
+            <if test="refEntryLeader != null and refEntryLeader != ''">ref_entry_leader,</if>
+            <if test="refEntryTeach != null">ref_entry_teach,</if>
+            <if test="money != null">money,</if>
+            <if test="entryTime != null">entry_time,</if>
+            <if test="wfstate != null">wfstate,</if>
+            <if test="currNodename != null">curr_nodename,</if>
+            <if test="currUsercode != null">curr_usercode,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refJobUsername != null and refJobUsername != ''">#{refJobUsername},</if>
+            <if test="refJobDeptname != null and refJobDeptname != ''">#{refJobDeptname},</if>
+            <if test="dictJobType != null and dictJobType != ''">#{dictJobType},</if>
+            <if test="dictJob != null and dictJob != ''">#{dictJob},</if>
+            <if test="refEntryLeader != null and refEntryLeader != ''">#{refEntryLeader},</if>
+            <if test="refEntryTeach != null">#{refEntryTeach},</if>
+            <if test="money != null">#{money},</if>
+            <if test="entryTime != null">#{entryTime},</if>
+            <if test="wfstate != null">#{wfstate},</if>
+            <if test="currNodename != null">#{currNodename},</if>
+            <if test="currUsercode != null">#{currUsercode},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserHire" parameterType="HrUserHire">
+        update hr_user_hire
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refJobUsername != null and refJobUsername != ''">ref_job_username = #{refJobUsername},</if>
+            <if test="refJobDeptname != null and refJobDeptname != ''">ref_job_deptname = #{refJobDeptname},</if>
+            <if test="dictJobType != null and dictJobType != ''">dict_job_type = #{dictJobType},</if>
+            <if test="dictJob != null and dictJob != ''">dict_job = #{dictJob},</if>
+            <if test="refEntryLeader != null and refEntryLeader != ''">ref_entry_leader = #{refEntryLeader},</if>
+            <if test="refEntryTeach != null">ref_entry_teach = #{refEntryTeach},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="entryTime != null">entry_time = #{entryTime},</if>
+            <if test="wfstate != null">wfstate = #{wfstate},</if>
+            <if test="currNodename != null">curr_nodename = #{currNodename},</if>
+            <if test="currUsercode != null">curr_usercode = #{currUsercode},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserHireById" parameterType="String">
+        delete from hr_user_hire where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserHireByIds" parameterType="String">
+        delete from hr_user_hire where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

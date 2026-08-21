@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.BizCommonMapper">
+    <resultMap type="com.ruoyi.qixing.domain.BizCommon" id="BizCommonResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="desc1" column="desc1"/>
+        <result property="key1" column="key1"/>
+        <result property="value1" column="value1"/>
+        <result property="date1" column="date1"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <select id="selectBizCommonList" parameterType="com.ruoyi.qixing.domain.BizCommon" resultMap="BizCommonResult">
+        select * from biz_common
+        <where>
+            <if test="title != null and title != ''"> AND title like concat('%', #{title}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectBizCommonById" parameterType="String" resultMap="BizCommonResult">
+        select * from biz_common where id = #{id}
+    </select>
+
+    <insert id="insertBizCommon" parameterType="com.ruoyi.qixing.domain.BizCommon">
+        insert into biz_common
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="desc1 != null">desc1,</if>
+            <if test="key1 != null">key1,</if>
+            <if test="value1 != null">value1,</if>
+            <if test="date1 != null">date1,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            create_time,
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="desc1 != null">#{desc1},</if>
+            <if test="key1 != null">#{key1},</if>
+            <if test="value1 != null">#{value1},</if>
+            <if test="date1 != null">#{date1},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            sysdate(),
+         </trim>
+    </insert>
+
+    <update id="updateBizCommon" parameterType="com.ruoyi.qixing.domain.BizCommon">
+        update biz_common
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="desc1 != null">desc1 = #{desc1},</if>
+            <if test="key1 != null">key1 = #{key1},</if>
+            <if test="value1 != null">value1 = #{value1},</if>
+            <if test="date1 != null">date1 = #{date1},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate(),
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBizCommonByIds" parameterType="String">
+        delete from biz_common where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

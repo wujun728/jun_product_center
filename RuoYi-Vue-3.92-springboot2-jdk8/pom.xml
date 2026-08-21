@@ -34,6 +34,7 @@
         <hutool.version>5.8.15</hutool.version>
         <redisson.version>3.16.2</redisson.version>
         <easyexcel.version>2.2.6</easyexcel.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <!-- override dependency version -->
         <tomcat.version>9.0.112</tomcat.version>
         <logback.version>1.2.13</logback.version>
@@ -215,6 +216,37 @@
                 <version>${easyexcel.version}</version>
             </dependency>
 
+            <!--  对象拷贝 (OA迁移子模块依赖) -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${org.mapstruct.version}</version>
+            </dependency>
+
+            <!-- [MIG] okhttp/okio（minio 8.5.11 需要 okhttp4；老顶层 pom 已 pin 4.12.0） -->
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>4.12.0</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.squareup.okio</groupId>
+                        <artifactId>okio</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okio</groupId>
+                <artifactId>okio</artifactId>
+                <version>3.2.0</version>
+            </dependency>
+
             <!-- 定时任务-->
             <dependency>
                 <groupId>com.ruoyi</groupId>
@@ -263,6 +295,13 @@
         <module>ruoyi-plugins</module>
         <module>ruoyi-business</module>
         <module>ruoyi-modules</module>
+
+        <!--   迁移OA自定义模块组（父POM管理）    -->
+        <module>ruoyi-oa-common</module>
+        <module>ruoyi-oa-flow</module>
+        <module>ruoyi-oa-msg</module>
+        <module>ruoyi-oa-biz</module>
+        <module>ruoyi-qixing</module>
     </modules>
     <packaging>pom</packaging>
 

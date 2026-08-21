@@ -3,6 +3,7 @@ package com.ruoyi.system.service;
 import java.util.Date;
 import java.util.List;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.domain.SysUserRole;
 
 /**
  * 用户 业务层
@@ -50,6 +51,38 @@ public interface ISysUserService
      * @return 用户对象信息
      */
     public SysUser selectUserById(Long userId);
+
+    /**
+     * [MIG] 根据用户ID（字符串形式）查询用户 — OA 迁移引入的 String 重载
+     *
+     * @param userId 用户ID（字符串，业务侧 String 主键体系）
+     * @return 用户信息
+     */
+    public SysUser selectUserById(String userId);
+
+    /**
+     * [MIG] 根据用户ID列表查询用户（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户列表
+     */
+    public List<SysUser> selectByUserIds(List<String> userIds);
+
+    /**
+     * [MIG] 根据用户ID列表查询用户详情（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户详情列表
+     */
+    public List<SysUser> selectDetailByUserIds(List<String> userIds);
+
+    /**
+     * [MIG] 根据角色ID列表查询用户角色关联（OA 迁移引入）
+     *
+     * @param roleIds 角色ID列表
+     * @return 用户角色关联列表
+     */
+    public List<SysUserRole> selectRoleUserInfos(List<String> roleIds);
 
     /**
      * 根据用户ID查询用户所属角色组

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kbs.mapper.KbsDocumentViewMapper">
+
+    <resultMap type="KbsDocumentView" id="KbsDocumentViewResult">
+        <result property="id" column="id"/>
+        <result property="docId" column="doc_id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="selectKbsDocumentViewVo">
+        select id, doc_id, create_id, create_time
+        from t_kbs_document_view
+    </sql>
+
+    <select id="selectKbsDocumentViewList" parameterType="KbsDocumentView" resultMap="KbsDocumentViewResult">
+        <include refid="selectKbsDocumentViewVo"/>
+        <where>
+            <if test="docId != null  and docId != ''">and doc_id = #{docId}</if>
+            <if test="createId != null ">and create_id = #{createId}</if>
+        </where>
+    </select>
+
+    <select id="selectKbsDocumentViewById" parameterType="String" resultMap="KbsDocumentViewResult">
+        <include refid="selectKbsDocumentViewVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertKbsDocumentView" parameterType="KbsDocumentView">
+        insert into t_kbs_document_view
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="docId != null and docId != ''">doc_id,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="docId != null and docId != ''">#{docId},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateKbsDocumentView" parameterType="KbsDocumentView">
+        update t_kbs_document_view
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="docId != null and docId != ''">doc_id = #{docId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKbsDocumentViewById" parameterType="String">
+        delete
+        from t_kbs_document_view
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteKbsDocumentViewByIds" parameterType="String">
+        delete from t_kbs_document_view where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="statDocumentViewNum" parameterType="String" resultType="Long">
+        select count(1)
+        from t_kbs_document_view
+        where doc_id = #{docId}
+    </select>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workfile.mapper.WorkflowMainTextMapper">
+    
+    <resultMap type="WorkflowMainText" id="WorkflowMainTextResult">
+        <result property="id"    column="id"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="fileId"    column="file_id"    />
+        <result property="oriFileId"    column="ori_file_id"    />
+        <result property="stampStatus"    column="stamp_status"    />
+        <result property="stampUserId"    column="stamp_user_id"    />
+        <result property="stampTime"    column="stamp_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowMainTextVo">
+        select id, business_id, file_id, ori_file_id, stamp_status, stamp_user_id, stamp_time, create_id, create_time, update_id, update_time from t_workflow_main_text
+    </sql>
+
+    <select id="selectWorkflowMainTextList" parameterType="WorkflowMainText" resultMap="WorkflowMainTextResult">
+        <include refid="selectWorkflowMainTextVo"/>
+        <where>  
+            <if test="businessId != null  and businessId != ''"> and business_id = #{businessId}</if>
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="oriFileId != null  and oriFileId != ''"> and ori_file_id = #{oriFileId}</if>
+            <if test="stampStatus != null  and stampStatus != ''"> and stamp_status = #{stampStatus}</if>
+            <if test="stampUserId != null "> and stamp_user_id = #{stampUserId}</if>
+            <if test="stampTime != null "> and stamp_time = #{stampTime}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectWorkflowMainTextById" parameterType="String" resultMap="WorkflowMainTextResult">
+        <include refid="selectWorkflowMainTextVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getByBusinessId" resultMap="WorkflowMainTextResult">
+        <include refid="selectWorkflowMainTextVo"/>
+        where business_id = #{businessId}
+    </select>
+
+    <insert id="insertWorkflowMainText" parameterType="WorkflowMainText">
+        insert into t_workflow_main_text
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="businessId != null and businessId != ''">business_id,</if>
+            <if test="fileId != null and fileId != ''">file_id,</if>
+            <if test="oriFileId != null and oriFileId != ''">ori_file_id,</if>
+            <if test="stampStatus != null">stamp_status,</if>
+            <if test="stampUserId != null">stamp_user_id,</if>
+            <if test="stampTime != null">stamp_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="businessId != null and businessId != ''">#{businessId},</if>
+            <if test="fileId != null and fileId != ''">#{fileId},</if>
+            <if test="oriFileId != null and oriFileId != ''">#{oriFileId},</if>
+            <if test="stampStatus != null">#{stampStatus},</if>
+            <if test="stampUserId != null">#{stampUserId},</if>
+            <if test="stampTime != null">#{stampTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowMainText" parameterType="WorkflowMainText">
+        update t_workflow_main_text
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="businessId != null and businessId != ''">business_id = #{businessId},</if>
+            <if test="fileId != null and fileId != ''">file_id = #{fileId},</if>
+            <if test="oriFileId != null and oriFileId != ''">ori_file_id = #{oriFileId},</if>
+            <if test="stampStatus != null">stamp_status = #{stampStatus},</if>
+            <if test="stampUserId != null">stamp_user_id = #{stampUserId},</if>
+            <if test="stampTime != null">stamp_time = #{stampTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="restoreSeal">
+        update t_workflow_main_text set stamp_status = '0', file_id = #{fileId}, stamp_user_id = null, stamp_time = null
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowMainTextById" parameterType="String">
+        delete from t_workflow_main_text where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowMainTextByIds" parameterType="String">
+        delete from t_workflow_main_text where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByBusinessId">
+        delete from t_workflow_main_text where business_id = #{businessId}
+    </delete>
+</mapper>

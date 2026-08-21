@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectAppraiseMapper">
+    
+    <resultMap type="PjProjectAppraise" id="PjProjectAppraiseResult">
+        <result property="id"    column="id"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="dictMemberRole"    column="dict_member_role"    />
+        <result property="detail1"    column="detail1"    />
+        <result property="detail2"    column="detail2"    />
+        <result property="detail3"    column="detail3"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectPjProjectAppraiseVo">
+        select id, ref_project_code, ref_project_name, ref_username, dict_member_role, detail1, detail2, detail3, remark, creator, create_time, create_id, update_time, update_id from pj_project_appraise
+    </sql>
+
+    <select id="selectPjProjectAppraiseList" parameterType="PjProjectAppraise" resultMap="PjProjectAppraiseResult">
+        <include refid="selectPjProjectAppraiseVo"/>
+        <where>  
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="dictMemberRole != null  and dictMemberRole != ''"> and dict_member_role = #{dictMemberRole}</if>
+            <if test="detail1 != null  and detail1 != ''"> and detail1 = #{detail1}</if>
+            <if test="detail2 != null  and detail2 != ''"> and detail2 = #{detail2}</if>
+            <if test="detail3 != null  and detail3 != ''"> and detail3 = #{detail3}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectAppraiseById" parameterType="String" resultMap="PjProjectAppraiseResult">
+        <include refid="selectPjProjectAppraiseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectAppraise" parameterType="PjProjectAppraise">
+        insert into pj_project_appraise
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="dictMemberRole != null and dictMemberRole != ''">dict_member_role,</if>
+            <if test="detail1 != null and detail1 != ''">detail1,</if>
+            <if test="detail2 != null and detail2 != ''">detail2,</if>
+            <if test="detail3 != null and detail3 != ''">detail3,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="dictMemberRole != null and dictMemberRole != ''">#{dictMemberRole},</if>
+            <if test="detail1 != null and detail1 != ''">#{detail1},</if>
+            <if test="detail2 != null and detail2 != ''">#{detail2},</if>
+            <if test="detail3 != null and detail3 != ''">#{detail3},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectAppraise" parameterType="PjProjectAppraise">
+        update pj_project_appraise
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="dictMemberRole != null and dictMemberRole != ''">dict_member_role = #{dictMemberRole},</if>
+            <if test="detail1 != null and detail1 != ''">detail1 = #{detail1},</if>
+            <if test="detail2 != null and detail2 != ''">detail2 = #{detail2},</if>
+            <if test="detail3 != null and detail3 != ''">detail3 = #{detail3},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectAppraiseById" parameterType="String">
+        delete from pj_project_appraise where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectAppraiseByIds" parameterType="String">
+        delete from pj_project_appraise where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjCustomerMapper">
+    
+    <resultMap type="PjCustomer" id="PjCustomerResult">
+        <result property="id"    column="id"    />
+        <result property="customerName"    column="customer_name"    />
+        <result property="customerCode"    column="customer_code"    />
+        <result property="dictCustomerType"    column="dict_customer_type"    />
+        <result property="phone"    column="phone"    />
+        <result property="financialManager"    column="financial_manager"    />
+        <result property="fmPhone"    column="fm_phone"    />
+        <result property="customerLinks"    column="customer_links"    />
+        <result property="customerBusiness"    column="customer_business"    />
+        <result property="businessLicense"    column="business_license"    />
+        <result property="conpanyName"    column="conpany_name"    />
+        <result property="businessLicenseNo"    column="business_license_no"    />
+        <result property="legalRepresentative"    column="legal_representative"    />
+        <result property="registeredCapital"    column="registered_capital"    />
+        <result property="customerAddress"    column="customer_address"    />
+        <result property="dictCompanyType"    column="dict_company_type"    />
+        <result property="companyBegin"    column="company_begin"    />
+        <result property="paiclupCapital"    column="paiclup_capital"    />
+        <result property="businessScope"    column="business_scope"    />
+        <result property="businessTermStart"    column="business_term_start"    />
+        <result property="businessTermEnd"    column="business_term_end"    />
+        <result property="registrationAuthority"    column="registration_authority"    />
+        <result property="licensingDay"    column="licensing_day"    />
+        <result property="customerBillingInformation"    column="customer_billing_information"    />
+        <result property="taxRegNumber"    column="tax_reg_number"    />
+        <result property="dutyParagraph"    column="duty_paragraph"    />
+        <result property="openingBank"    column="opening_bank"    />
+        <result property="accountNumber"    column="account_number"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="companyAddress"    column="company_address"    />
+        <result property="dictIsOldCustomer"    column="dict_is_old_customer"    />
+        <result property="customerRespPerson"    column="customer_resp_person"    />
+        <result property="customerRelationPerson"    column="customer_relation_person"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="financialManager1"    column="financial_manager1"    />
+        <result property="fmPhone1"    column="fm_phone1"    />
+        <result property="financialManager2"    column="financial_manager2"    />
+        <result property="fmPhone2"    column="fm_phone2"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="editor"    column="editor"    />
+    </resultMap>
+
+    <sql id="selectPjCustomerVo">
+        select id, customer_name, customer_code, dict_customer_type, phone, financial_manager, fm_phone, customer_links, customer_business, business_license, conpany_name, business_license_no, legal_representative, registered_capital, customer_address, dict_company_type, company_begin, paiclup_capital, business_scope, business_term_start, business_term_end, registration_authority, licensing_day, customer_billing_information, tax_reg_number, duty_paragraph, opening_bank, account_number, telephone, company_address, dict_is_old_customer, customer_resp_person, customer_relation_person, remark, creator, create_time, create_id, update_time, update_id, deleted, financial_manager1, fm_phone1, financial_manager2, fm_phone2, order_id, order_status, editor from pj_customer
+    </sql>
+
+    <select id="selectPjCustomerList" parameterType="PjCustomer" resultMap="PjCustomerResult">
+        <include refid="selectPjCustomerVo"/>
+        <where>  
+            <if test="customerName != null  and customerName != ''"> and customer_name like concat('%', #{customerName}, '%')</if>
+            <if test="customerCode != null  and customerCode != ''"> and customer_code = #{customerCode}</if>
+            <if test="dictCustomerType != null  and dictCustomerType != ''"> and dict_customer_type = #{dictCustomerType}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="financialManager != null  and financialManager != ''"> and financial_manager = #{financialManager}</if>
+            <if test="fmPhone != null  and fmPhone != ''"> and fm_phone = #{fmPhone}</if>
+            <if test="customerLinks != null  and customerLinks != ''"> and customer_links = #{customerLinks}</if>
+            <if test="customerBusiness != null  and customerBusiness != ''"> and customer_business = #{customerBusiness}</if>
+            <if test="businessLicense != null  and businessLicense != ''"> and business_license = #{businessLicense}</if>
+            <if test="conpanyName != null  and conpanyName != ''"> and conpany_name like concat('%', #{conpanyName}, '%')</if>
+            <if test="businessLicenseNo != null  and businessLicenseNo != ''"> and business_license_no = #{businessLicenseNo}</if>
+            <if test="legalRepresentative != null  and legalRepresentative != ''"> and legal_representative = #{legalRepresentative}</if>
+            <if test="registeredCapital != null  and registeredCapital != ''"> and registered_capital = #{registeredCapital}</if>
+            <if test="customerAddress != null  and customerAddress != ''"> and customer_address = #{customerAddress}</if>
+            <if test="dictCompanyType != null  and dictCompanyType != ''"> and dict_company_type = #{dictCompanyType}</if>
+            <if test="companyBegin != null "> and company_begin = #{companyBegin}</if>
+            <if test="paiclupCapital != null  and paiclupCapital != ''"> and paiclup_capital = #{paiclupCapital}</if>
+            <if test="businessScope != null  and businessScope != ''"> and business_scope = #{businessScope}</if>
+            <if test="businessTermStart != null "> and business_term_start = #{businessTermStart}</if>
+            <if test="businessTermEnd != null "> and business_term_end = #{businessTermEnd}</if>
+            <if test="registrationAuthority != null  and registrationAuthority != ''"> and registration_authority = #{registrationAuthority}</if>
+            <if test="licensingDay != null "> and licensing_day = #{licensingDay}</if>
+            <if test="customerBillingInformation != null  and customerBillingInformation != ''"> and customer_billing_information = #{customerBillingInformation}</if>
+            <if test="taxRegNumber != null  and taxRegNumber != ''"> and tax_reg_number = #{taxRegNumber}</if>
+            <if test="dutyParagraph != null  and dutyParagraph != ''"> and duty_paragraph = #{dutyParagraph}</if>
+            <if test="openingBank != null  and openingBank != ''"> and opening_bank = #{openingBank}</if>
+            <if test="accountNumber != null  and accountNumber != ''"> and account_number = #{accountNumber}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="companyAddress != null  and companyAddress != ''"> and company_address = #{companyAddress}</if>
+            <if test="dictIsOldCustomer != null  and dictIsOldCustomer != ''"> and dict_is_old_customer = #{dictIsOldCustomer}</if>
+            <if test="customerRespPerson != null  and customerRespPerson != ''"> and customer_resp_person = #{customerRespPerson}</if>
+            <if test="customerRelationPerson != null  and customerRelationPerson != ''"> and customer_relation_person = #{customerRelationPerson}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="financialManager1 != null  and financialManager1 != ''"> and financial_manager1 = #{financialManager1}</if>
+            <if test="fmPhone1 != null  and fmPhone1 != ''"> and fm_phone1 = #{fmPhone1}</if>
+            <if test="financialManager2 != null  and financialManager2 != ''"> and financial_manager2 = #{financialManager2}</if>
+            <if test="fmPhone2 != null  and fmPhone2 != ''"> and fm_phone2 = #{fmPhone2}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+            <if test="editor != null  and editor != ''"> and editor = #{editor}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjCustomerById" parameterType="String" resultMap="PjCustomerResult">
+        <include refid="selectPjCustomerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjCustomer" parameterType="PjCustomer">
+        insert into pj_customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="customerName != null and customerName != ''">customer_name,</if>
+            <if test="customerCode != null and customerCode != ''">customer_code,</if>
+            <if test="dictCustomerType != null and dictCustomerType != ''">dict_customer_type,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="financialManager != null">financial_manager,</if>
+            <if test="fmPhone != null">fm_phone,</if>
+            <if test="customerLinks != null">customer_links,</if>
+            <if test="customerBusiness != null">customer_business,</if>
+            <if test="businessLicense != null">business_license,</if>
+            <if test="conpanyName != null">conpany_name,</if>
+            <if test="businessLicenseNo != null">business_license_no,</if>
+            <if test="legalRepresentative != null">legal_representative,</if>
+            <if test="registeredCapital != null">registered_capital,</if>
+            <if test="customerAddress != null">customer_address,</if>
+            <if test="dictCompanyType != null">dict_company_type,</if>
+            <if test="companyBegin != null">company_begin,</if>
+            <if test="paiclupCapital != null">paiclup_capital,</if>
+            <if test="businessScope != null">business_scope,</if>
+            <if test="businessTermStart != null">business_term_start,</if>
+            <if test="businessTermEnd != null">business_term_end,</if>
+            <if test="registrationAuthority != null">registration_authority,</if>
+            <if test="licensingDay != null">licensing_day,</if>
+            <if test="customerBillingInformation != null">customer_billing_information,</if>
+            <if test="taxRegNumber != null">tax_reg_number,</if>
+            <if test="dutyParagraph != null">duty_paragraph,</if>
+            <if test="openingBank != null">opening_bank,</if>
+            <if test="accountNumber != null">account_number,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="companyAddress != null">company_address,</if>
+            <if test="dictIsOldCustomer != null">dict_is_old_customer,</if>
+            <if test="customerRespPerson != null">customer_resp_person,</if>
+            <if test="customerRelationPerson != null">customer_relation_person,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="financialManager1 != null">financial_manager1,</if>
+            <if test="fmPhone1 != null">fm_phone1,</if>
+            <if test="financialManager2 != null">financial_manager2,</if>
+            <if test="fmPhone2 != null">fm_phone2,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+            <if test="editor != null">editor,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="customerName != null and customerName != ''">#{customerName},</if>
+            <if test="customerCode != null and customerCode != ''">#{customerCode},</if>
+            <if test="dictCustomerType != null and dictCustomerType != ''">#{dictCustomerType},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="financialManager != null">#{financialManager},</if>
+            <if test="fmPhone != null">#{fmPhone},</if>
+            <if test="customerLinks != null">#{customerLinks},</if>
+            <if test="customerBusiness != null">#{customerBusiness},</if>
+            <if test="businessLicense != null">#{businessLicense},</if>
+            <if test="conpanyName != null">#{conpanyName},</if>
+            <if test="businessLicenseNo != null">#{businessLicenseNo},</if>
+            <if test="legalRepresentative != null">#{legalRepresentative},</if>
+            <if test="registeredCapital != null">#{registeredCapital},</if>
+            <if test="customerAddress != null">#{customerAddress},</if>
+            <if test="dictCompanyType != null">#{dictCompanyType},</if>
+            <if test="companyBegin != null">#{companyBegin},</if>
+            <if test="paiclupCapital != null">#{paiclupCapital},</if>
+            <if test="businessScope != null">#{businessScope},</if>
+            <if test="businessTermStart != null">#{businessTermStart},</if>
+            <if test="businessTermEnd != null">#{businessTermEnd},</if>
+            <if test="registrationAuthority != null">#{registrationAuthority},</if>
+            <if test="licensingDay != null">#{licensingDay},</if>
+            <if test="customerBillingInformation != null">#{customerBillingInformation},</if>
+            <if test="taxRegNumber != null">#{taxRegNumber},</if>
+            <if test="dutyParagraph != null">#{dutyParagraph},</if>
+            <if test="openingBank != null">#{openingBank},</if>
+            <if test="accountNumber != null">#{accountNumber},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="companyAddress != null">#{companyAddress},</if>
+            <if test="dictIsOldCustomer != null">#{dictIsOldCustomer},</if>
+            <if test="customerRespPerson != null">#{customerRespPerson},</if>
+            <if test="customerRelationPerson != null">#{customerRelationPerson},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="financialManager1 != null">#{financialManager1},</if>
+            <if test="fmPhone1 != null">#{fmPhone1},</if>
+            <if test="financialManager2 != null">#{financialManager2},</if>
+            <if test="fmPhone2 != null">#{fmPhone2},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="editor != null">#{editor},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjCustomer" parameterType="PjCustomer">
+        update pj_customer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="customerName != null and customerName != ''">customer_name = #{customerName},</if>
+            <if test="customerCode != null and customerCode != ''">customer_code = #{customerCode},</if>
+            <if test="dictCustomerType != null and dictCustomerType != ''">dict_customer_type = #{dictCustomerType},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="financialManager != null">financial_manager = #{financialManager},</if>
+            <if test="fmPhone != null">fm_phone = #{fmPhone},</if>
+            <if test="customerLinks != null">customer_links = #{customerLinks},</if>
+            <if test="customerBusiness != null">customer_business = #{customerBusiness},</if>
+            <if test="businessLicense != null">business_license = #{businessLicense},</if>
+            <if test="conpanyName != null">conpany_name = #{conpanyName},</if>
+            <if test="businessLicenseNo != null">business_license_no = #{businessLicenseNo},</if>
+            <if test="legalRepresentative != null">legal_representative = #{legalRepresentative},</if>
+            <if test="registeredCapital != null">registered_capital = #{registeredCapital},</if>
+            <if test="customerAddress != null">customer_address = #{customerAddress},</if>
+            <if test="dictCompanyType != null">dict_company_type = #{dictCompanyType},</if>
+            <if test="companyBegin != null">company_begin = #{companyBegin},</if>
+            <if test="paiclupCapital != null">paiclup_capital = #{paiclupCapital},</if>
+            <if test="businessScope != null">business_scope = #{businessScope},</if>
+            <if test="businessTermStart != null">business_term_start = #{businessTermStart},</if>
+            <if test="businessTermEnd != null">business_term_end = #{businessTermEnd},</if>
+            <if test="registrationAuthority != null">registration_authority = #{registrationAuthority},</if>
+            <if test="licensingDay != null">licensing_day = #{licensingDay},</if>
+            <if test="customerBillingInformation != null">customer_billing_information = #{customerBillingInformation},</if>
+            <if test="taxRegNumber != null">tax_reg_number = #{taxRegNumber},</if>
+            <if test="dutyParagraph != null">duty_paragraph = #{dutyParagraph},</if>
+            <if test="openingBank != null">opening_bank = #{openingBank},</if>
+            <if test="accountNumber != null">account_number = #{accountNumber},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="companyAddress != null">company_address = #{companyAddress},</if>
+            <if test="dictIsOldCustomer != null">dict_is_old_customer = #{dictIsOldCustomer},</if>
+            <if test="customerRespPerson != null">customer_resp_person = #{customerRespPerson},</if>
+            <if test="customerRelationPerson != null">customer_relation_person = #{customerRelationPerson},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="financialManager1 != null">financial_manager1 = #{financialManager1},</if>
+            <if test="fmPhone1 != null">fm_phone1 = #{fmPhone1},</if>
+            <if test="financialManager2 != null">financial_manager2 = #{financialManager2},</if>
+            <if test="fmPhone2 != null">fm_phone2 = #{fmPhone2},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="editor != null">editor = #{editor},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjCustomerById" parameterType="String">
+        delete from pj_customer where id = #{id}
+    </delete>
+
+    <delete id="deletePjCustomerByIds" parameterType="String">
+        delete from pj_customer where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

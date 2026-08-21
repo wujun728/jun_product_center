@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.schedule.mapper.SchedulePartsMapper">
+    
+    <resultMap type="ScheduleParts" id="SchedulePartsResult">
+        <result property="id"    column="id"    />
+        <result property="scheduleId"    column="schedule_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectSchedulePartsVo">
+        select id, schedule_id, user_id, status, del_flag, create_id, create_time from t_schedule_parts
+    </sql>
+
+    <select id="selectSchedulePartsList" parameterType="ScheduleParts" resultMap="SchedulePartsResult">
+        <include refid="selectSchedulePartsVo"/>
+        <where>
+            del_flag = '0'
+            <if test="scheduleId != null "> and schedule_id = #{scheduleId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+        order by create_time asc
+    </select>
+    
+    <select id="selectSchedulePartsById" parameterType="String" resultMap="SchedulePartsResult">
+        <include refid="selectSchedulePartsVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectSchedulePartsByScheduleIds" resultMap="SchedulePartsResult">
+        <include refid="selectSchedulePartsVo"/>
+        where schedule_id in
+        <foreach item="scheduleId" collection="list" open="(" separator="," close=")">
+            #{scheduleId}
+        </foreach>
+    </select>
+
+    <insert id="insertScheduleParts" parameterType="ScheduleParts">
+        insert into t_schedule_parts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="scheduleId != null">schedule_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="scheduleId != null">#{scheduleId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsertScheduleParts">
+        insert into t_schedule_parts (id, schedule_id, user_id, create_id, create_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.scheduleId}, #{item.userId}, #{item.createId}, #{item.createTime})
+        </foreach>
+    </insert>
+
+    <update id="updateScheduleParts" parameterType="ScheduleParts">
+        update t_schedule_parts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="scheduleId != null">schedule_id = #{scheduleId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSchedulePartsById" parameterType="String">
+        delete from t_schedule_parts where id = #{id}
+    </delete>
+
+    <delete id="deleteSchedulePartsByIds" parameterType="String">
+        delete from t_schedule_parts where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+     <delete id="deleteByScheduleId">
+        delete from t_schedule_parts where schedule_id = #{scheduleId}
+    </delete>
+
+    <update id="updateDelFlagByScheduleIds" parameterType="String">
+        update t_schedule_parts set del_flag = '1' where schedule_id in
+        <foreach item="scheduleId" collection="list" open="(" separator="," close=")">
+            #{scheduleId}
+        </foreach>
+    </update>
+</mapper>

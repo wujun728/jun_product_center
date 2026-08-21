@@ -37,6 +37,18 @@ public class SecurityUtils
     }
 
     /**
+     * [MIG] 获取用户ID字符串（OA 业务侧 String 用户主键体系兼容，不做返回类型的 Long 强转）
+     * <p>老项目将 userId 整体 String 化（业务表 varchar(64) 主键 + createId/updateId 均为 String），
+     * 迁移时基座保持 Long userId 不变，业务侧改调本方法获得字符串用户 ID。</p>
+     *
+     * @return 当前登录用户ID的字符串形式，登录异常/未登录时抛 ServiceException
+     */
+    public static String getUserIdStr()
+    {
+        return String.valueOf(getUserId());
+    }
+
+    /**
      * 获取部门ID
      **/
     public static Long getDeptId()

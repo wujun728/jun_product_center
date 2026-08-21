@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectReportnumberMapper">
+    
+    <resultMap type="PjProjectReportnumber" id="PjProjectReportnumberResult">
+        <result property="id"    column="id"    />
+        <result property="refReportnumberCode"    column="ref_reportnumber_code"    />
+        <result property="refReportnumberTitle"    column="ref_reportnumber_title"    />
+        <result property="reportnumberCode"    column="reportnumber_code"    />
+        <result property="dictRpStatus"    column="dict_rp_status"    />
+        <result property="refReportnumberMan"    column="ref_reportnumber_man"    />
+        <result property="refReportnumberCheckMan"    column="ref_reportnumber_check_man"    />
+        <result property="refSignatureAccountant"    column="ref_signature_accountant"    />
+        <result property="creator"    column="creator"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectPjProjectReportnumberVo">
+        select id, ref_reportnumber_code, ref_reportnumber_title, reportnumber_code, dict_rp_status, ref_reportnumber_man, ref_reportnumber_check_man, ref_signature_accountant, creator, remark, create_time, create_id, update_time, update_id from pj_project_reportnumber
+    </sql>
+
+    <select id="selectPjProjectReportnumberList" parameterType="PjProjectReportnumber" resultMap="PjProjectReportnumberResult">
+        <include refid="selectPjProjectReportnumberVo"/>
+        <where>  
+            <if test="refReportnumberCode != null  and refReportnumberCode != ''"> and ref_reportnumber_code = #{refReportnumberCode}</if>
+            <if test="refReportnumberTitle != null  and refReportnumberTitle != ''"> and ref_reportnumber_title = #{refReportnumberTitle}</if>
+            <if test="reportnumberCode != null  and reportnumberCode != ''"> and reportnumber_code = #{reportnumberCode}</if>
+            <if test="dictRpStatus != null  and dictRpStatus != ''"> and dict_rp_status = #{dictRpStatus}</if>
+            <if test="refReportnumberMan != null  and refReportnumberMan != ''"> and ref_reportnumber_man = #{refReportnumberMan}</if>
+            <if test="refReportnumberCheckMan != null  and refReportnumberCheckMan != ''"> and ref_reportnumber_check_man = #{refReportnumberCheckMan}</if>
+            <if test="refSignatureAccountant != null  and refSignatureAccountant != ''"> and ref_signature_accountant = #{refSignatureAccountant}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectReportnumberById" parameterType="String" resultMap="PjProjectReportnumberResult">
+        <include refid="selectPjProjectReportnumberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectReportnumber" parameterType="PjProjectReportnumber">
+        insert into pj_project_reportnumber
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refReportnumberCode != null">ref_reportnumber_code,</if>
+            <if test="refReportnumberTitle != null and refReportnumberTitle != ''">ref_reportnumber_title,</if>
+            <if test="reportnumberCode != null and reportnumberCode != ''">reportnumber_code,</if>
+            <if test="dictRpStatus != null">dict_rp_status,</if>
+            <if test="refReportnumberMan != null">ref_reportnumber_man,</if>
+            <if test="refReportnumberCheckMan != null">ref_reportnumber_check_man,</if>
+            <if test="refSignatureAccountant != null">ref_signature_accountant,</if>
+            <if test="creator != null">creator,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refReportnumberCode != null">#{refReportnumberCode},</if>
+            <if test="refReportnumberTitle != null and refReportnumberTitle != ''">#{refReportnumberTitle},</if>
+            <if test="reportnumberCode != null and reportnumberCode != ''">#{reportnumberCode},</if>
+            <if test="dictRpStatus != null">#{dictRpStatus},</if>
+            <if test="refReportnumberMan != null">#{refReportnumberMan},</if>
+            <if test="refReportnumberCheckMan != null">#{refReportnumberCheckMan},</if>
+            <if test="refSignatureAccountant != null">#{refSignatureAccountant},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectReportnumber" parameterType="PjProjectReportnumber">
+        update pj_project_reportnumber
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refReportnumberCode != null">ref_reportnumber_code = #{refReportnumberCode},</if>
+            <if test="refReportnumberTitle != null and refReportnumberTitle != ''">ref_reportnumber_title = #{refReportnumberTitle},</if>
+            <if test="reportnumberCode != null and reportnumberCode != ''">reportnumber_code = #{reportnumberCode},</if>
+            <if test="dictRpStatus != null">dict_rp_status = #{dictRpStatus},</if>
+            <if test="refReportnumberMan != null">ref_reportnumber_man = #{refReportnumberMan},</if>
+            <if test="refReportnumberCheckMan != null">ref_reportnumber_check_man = #{refReportnumberCheckMan},</if>
+            <if test="refSignatureAccountant != null">ref_signature_accountant = #{refSignatureAccountant},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectReportnumberById" parameterType="String">
+        delete from pj_project_reportnumber where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectReportnumberByIds" parameterType="String">
+        delete from pj_project_reportnumber where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.information.mapper.InformationMapper">
+    
+    <resultMap type="Information" id="InformationResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="validDate"    column="valid_date"    />
+        <result property="validStartTime"    column="valid_start_time"    />
+        <result property="validEndTime"    column="valid_end_time"    />
+        <result property="sort"    column="sort"    />
+        <result property="readTotal"    column="read_total"    />
+        <result property="status"    column="status"    />
+        <result property="topFlag"    column="top_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="content"    column="content"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectInformationVo">
+        select id, title, valid_date, valid_start_time, valid_end_time, sort, read_total, status, top_flag, del_flag, img_url, content, create_id, create_by, create_time, update_id, update_by, update_time from t_information
+    </sql>
+
+    <select id="selectInformationList" parameterType="Information" resultMap="InformationResult">
+        <include refid="selectInformationVo"/>
+        <where>
+            del_flag = '0'
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+        </where>
+        order by top_flag desc, sort asc, valid_start_time desc
+    </select>
+    
+    <select id="selectInformationById" parameterType="String" resultMap="InformationResult">
+        <include refid="selectInformationVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectPubList" resultMap="InformationResult">
+        <include refid="selectInformationVo"/>
+        <where>
+            del_flag = '0' and status = '1'
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+        </where>
+        order by top_flag desc, sort asc, valid_start_time desc
+    </select>
+
+    <insert id="insertInformation" parameterType="Information">
+        insert into t_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="validDate != null">valid_date,</if>
+            <if test="validStartTime != null">valid_start_time,</if>
+            <if test="validEndTime != null">valid_end_time,</if>
+            <if test="sort != null">sort,</if>
+            <if test="readTotal != null">read_total,</if>
+            <if test="status != null">status,</if>
+            <if test="topFlag != null">top_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="imgUrl != null">img_url,</if>
+            <if test="content != null">content,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="validDate != null">#{validDate},</if>
+            <if test="validStartTime != null">#{validStartTime},</if>
+            <if test="validEndTime != null">#{validEndTime},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="readTotal != null">#{readTotal},</if>
+            <if test="status != null">#{status},</if>
+            <if test="topFlag != null">#{topFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="content != null">#{content},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInformation" parameterType="Information">
+        update t_information
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="validDate != null">valid_date = #{validDate},</if>
+            <if test="validStartTime != null">valid_start_time = #{validStartTime},</if>
+            <if test="validEndTime != null">valid_end_time = #{validEndTime},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="readTotal != null">read_total = #{readTotal},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="topFlag != null">top_flag = #{topFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="imgUrl != null">img_url = #{imgUrl},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="resetTopFlag">
+        update t_information set top_flag = '0 'where top_flag = '1'
+    </update>
+
+    <update id="addReadNum">
+        update t_information set read_total = read_total + 1 where id = #{id}
+    </update>
+
+    <update id="changeStatus">
+        update t_information set status = #{status}, update_time = #{updateTime}, update_id = #{updateId}
+        where id = #{id}
+    </update>
+
+    <update id="toTop">
+        update t_information set top_flag = #{topFlag} where id = #{id}
+    </update>
+
+    <delete id="deleteInformationById" parameterType="String">
+        delete from t_information where id = #{id}
+    </delete>
+
+    <delete id="deleteInformationByIds" parameterType="String">
+        delete from t_information where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateDelFlagByIds" parameterType="InformationUpdateQo">
+        update t_information set del_flag = #{delFlag}, update_time = #{updateTime}, update_id = #{updateId}, update_by = #{updateBy} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

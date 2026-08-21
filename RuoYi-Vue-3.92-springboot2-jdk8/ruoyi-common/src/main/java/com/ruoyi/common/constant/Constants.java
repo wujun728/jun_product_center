@@ -201,4 +201,51 @@ public class Constants
          */
         public static final String DATA_SCOPE_SELF = "5";
     }
+
+    // ==================== [MIG] OA 迁移新增常量（纯增量，勿删） ====================
+
+    /**
+     * [MIG] 逗号（OA 迁移引入）
+     */
+    public static final String COMMA = ",";
+
+    /**
+     * [MIG] 冒号（OA 迁移引入）
+     */
+    public static final String COLON = ":";
+
+    /**
+     * [MIG] 点号（OA 迁移引入）
+     */
+    public static final String DOT = ".";
+
+    /**
+     * [MIG] 斜杠分隔符（OA 迁移引入，与 SLASH 同值）
+     */
+    public static final String SEPARATOR = "/";
+
+    /**
+     * [MIG] 斜杠（OA 迁移引入，与 SEPARATOR 同值）
+     */
+    public static final String SLASH = "/";
+
+    /**
+     * [MIG] 井号（OA 迁移引入）
+     */
+    public static final String HASH = "#";
+
+    /**
+     * [MIG] 否 / 值 0（OA 迁移引入）
+     */
+    public static final String NO_VALUE = "0";
+
+    /**
+     * [MIG] 是 / 值 1（OA 迁移引入）
+     */
+    public static final String YES_VALUE = "1";
+
+    /**
+     * [MIG] 图片格式 png（OA 迁移引入）
+     */
+    public static final String PNG = "png";
 }

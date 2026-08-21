@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.WorkflowRecycleMapper">
+    
+    <resultMap type="WorkflowRecycle" id="WorkflowRecycleResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="procInstId"    column="proc_inst_id"    />
+        <result property="taskId"    column="task_id"    />
+        <result property="businessId"    column="business_id"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="templateName"    column="template_name"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowRecycleVo">
+        select id, title, proc_inst_id, task_id, business_id, template_id, template_name, del_flag, create_id, create_time from t_workflow_recycle
+    </sql>
+
+    <select id="selectWorkflowRecycleList" parameterType="WorkflowRecycle" resultMap="WorkflowRecycleResult">
+        <include refid="selectWorkflowRecycleVo"/>
+        <where>
+            del_flag = '0' and create_id = #{createId}
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectWorkflowRecycleById" parameterType="String" resultMap="WorkflowRecycleResult">
+        <include refid="selectWorkflowRecycleVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWorkflowRecycle" parameterType="WorkflowRecycle">
+        insert into t_workflow_recycle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null">title,</if>
+            <if test="procInstId != null">proc_inst_id,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="businessId != null">business_id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="templateName != null">template_name,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="procInstId != null">#{procInstId},</if>
+            <if test="taskId != null">#{taskId},</if>
+            <if test="businessId != null">#{businessId},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="templateName != null">#{templateName},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowRecycle" parameterType="WorkflowRecycle">
+        update t_workflow_recycle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="procInstId != null">proc_inst_id = #{procInstId},</if>
+            <if test="taskId != null">task_id = #{taskId},</if>
+            <if test="businessId != null">business_id = #{businessId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="templateName != null">template_name = #{templateName},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowRecycleById" parameterType="String">
+        delete from t_workflow_recycle where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowRecycleByIds" parameterType="String">
+        update t_workflow_recycle set del_flag = '1' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

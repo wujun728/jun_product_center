@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://www.flowable.org/processdef">
+  <process id="weekly" name="项目周报审批" isExecutable="true">
+    <startEvent id="start1"></startEvent>
+    <endEvent id="end1"></endEvent>
+    <userTask id="step1" name="部门经理审批" flowable:assignee="${assign_step1}"></userTask>
+    <userTask id="step2" name="董事长审批" flowable:assignee="${assign_step2}"></userTask>
+    <sequenceFlow id="transition1" sourceRef="start1" targetRef="step1"></sequenceFlow>
+    <sequenceFlow id="transition2" sourceRef="step1" targetRef="step2"></sequenceFlow>
+    <sequenceFlow id="transition3" sourceRef="step2" targetRef="end1"></sequenceFlow>
+  </process>
+</definitions>

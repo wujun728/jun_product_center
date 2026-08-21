@@ -27,6 +27,14 @@ public interface SysRoleMapper
     public List<SysRole> selectRolePermissionByUserId(Long userId);
 
     /**
+     * [MIG] 根据用户ID列表查询角色列表（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 角色列表
+     */
+    public List<SysRole> selectRolesByUserIds(List<String> userIds);
+
+    /**
      * 查询所有角色
      * 
      * @return 角色列表

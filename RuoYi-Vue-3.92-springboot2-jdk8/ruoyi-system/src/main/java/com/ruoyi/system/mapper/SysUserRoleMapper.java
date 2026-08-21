@@ -59,4 +59,12 @@ public interface SysUserRoleMapper
      * @return 结果
      */
     public int deleteUserRoleInfos(@Param("roleId") Long roleId, @Param("userIds") Long[] userIds);
+
+    /**
+     * [MIG] 根据角色ID列表查询用户角色关联（OA 迁移引入）
+     *
+     * @param roleIds 角色ID列表
+     * @return 用户角色关联列表
+     */
+    public List<SysUserRole> selectRoleUserInfos(@Param("roleIds") List<String> roleIds);
 }

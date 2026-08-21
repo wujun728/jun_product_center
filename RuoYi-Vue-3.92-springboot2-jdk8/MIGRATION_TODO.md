@@ -164,10 +164,20 @@ tools → file → sms → mq-core → mq-async → im-broker/im-process → mes
 
 ## 3.1 基座侧调整
 
-- [ ] 3.1.1 🤖 顶层 pom.xml：modules 增加四个 parent 组 + ruoyi-qixing；dependencyManagement 补 netty/rabbitmq/minio/qiniu/tencentcloud/flowable6.7.2/freemarker/mapstruct 版本
-- [ ] 3.1.2 🤖 确认基座 `ruoyi-modules/ruoyi-module-flowable` 不接入（admin 无依赖、modules-starter 中引用保持注释，保留代码不删）
+- [x] 3.1.1 🤖 顶层 pom.xml：modules 增加五个父组 + ruoyi-qixing；dependencyManagement 补 mapstruct 版本（✅ 2026-08-21 批次1完成；qixing parent 挂 ruoyi-oa-biz）
+- [x] 3.1.2 🤖 确认基座 `ruoyi-modules/ruoyi-module-flowable` 不接入（admin 无依赖、modules-starter 中引用保持注释，保留代码不删）（✅ 已确认）
 - [ ] 3.1.3 🤖 确认基座 ruoyi-plugins（redis/minio/netty/rabbitmq）与老 OA 自带配置的共存关系：统一走基座 starter 还是老模块自带（原则：老模块 pom 自带依赖不动，避免双数据源/双 Redis 冲突）
-- [ ] 3.1.4 🤖 `MybatisPlusConfig @MapperScan("com.ruoyi.**.mapper")` 与老模块 Mapper 包兼容性验证（通配已覆盖，验证即可）
+  - ✅ 批次1实测：基座插件与 OA 模块可共存编译；但基座 plugin-netty/rabbitmq 含 JDK9+ API（Map.of）已做 JDK8 兼容修复 [MIG]
+- [x] 3.1.4 🤖 `MybatisPlusConfig @MapperScan("com.ruoyi.**.mapper")` 与老模块 Mapper 包兼容性验证（✅ 编译通过验证）
+
+### 3.1.5 批次1 额外完成项（2026-08-21，userId String 架构决策落地）
+
+- [x] 基座 ruoyi-common 增量：`SecurityUtils.getUserIdStr()`、Constants 8 个 `[MIG]` 常量（COMMA/COLON/DOT/SEPARATOR/SLASH/HASH/NO_VALUE/YES_VALUE/PNG）、DateUtils（joinDateRange/getFirstDayOfMonth/getLastDayOfMonth）、RedisCache（setCacheObject(Long,timeout)/getIncr）
+- [x] 基座新增 `[MIG]` 枚举 `WhetherStatus`
+- [x] 基座 ruoyi-system 增量 `[MIG]` 方法：SysUserMapper（selectByUserIds/selectDetailByUserIds）、SysUserRoleMapper（selectRoleUserInfos）、SysRoleMapper（selectRolesByUserIds）、SysPostMapper（selectUserPostsByUserIds）、ISysUserService.selectUserById(String) 重载
+- [x] HolidaySetting/HolidayWorkSetting 业务从老 ruoyi-system 迁入 `ruoyi-oa-common/ruoyi-tools`（包名保持 com.ruoyi.system，admin 的 HolidaySettingController 依赖）
+- [x] OA 侧批量 `SecurityUtils.getUserId()` → `getUserIdStr()`（约 50 文件）；`xxx.getUserId()/getRoleId()/getPostId()`（Long→String字段）→ `Convert.toStr()`
+- [x] 全 reactor `mvn clean install -DskipTests` **BUILD SUCCESS（48 模块）**
 
 ## 3.2 环境与配置迁移
 
@@ -223,5 +233,5 @@ tools → file → sms → mq-core → mq-async → im-broker/im-process → mes
 
 ---
 
-**当前状态**：v2.1 清单完成（已完成老仓库功能全面比对并修正遗漏）
-**下一步**：批次1（顶层 pom 调整 + tools/file/sms/todo 平移 + 老 flowable 平移）
+**当前状态**：批次1 完成（2026-08-21）——全 reactor BUILD SUCCESS（48 模块），userId String 架构决策已落地
+**下一步**：批次2 应用启动验证（BPMN 自动部署/Bean 装配/RabbitMQ）→ 前端 scrm_ui 联调 → SQL 建表

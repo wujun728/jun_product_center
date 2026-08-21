@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://www.flowable.org/processdef">
+  <process id="examination" name="审校及发行审批流程" isExecutable="true">
+    <startEvent id="start"></startEvent>
+    <exclusiveGateway id="test"></exclusiveGateway>
+    <userTask id="submitTest2" name="提交复审" flowable:assignee="${systemAuto}"></userTask>
+    <userTask id="reDo" name="返回重做" flowable:assignee="${systemAuto}"></userTask>
+    <exclusiveGateway id="test2"></exclusiveGateway>
+    <userTask id="submitTest3" name="提交终审" flowable:assignee="${systemAuto}"></userTask>
+    <exclusiveGateway id="test3"></exclusiveGateway>
+    <userTask id="submitCheck" name="提交一校" flowable:assignee="${systemAuto}"></userTask>
+    <exclusiveGateway id="check"></exclusiveGateway>
+    <userTask id="submitCheck2" name="提交二校" flowable:assignee="${systemAuto}"></userTask>
+    <exclusiveGateway id="check2"></exclusiveGateway>
+    <userTask id="submitCheck3" name="提交三校" flowable:assignee="${systemAuto}"></userTask>
+    <exclusiveGateway id="check3"></exclusiveGateway>
+    <userTask id="submitPublish" name="提交发行" flowable:assignee="${systemAuto}"></userTask>
+    <exclusiveGateway id="publish"></exclusiveGateway>
+    <endEvent id="end1"></endEvent>
+    <userTask id="doPack" name="打包发行" flowable:assignee="${systemAuto}"></userTask>
+    <parallelGateway id="join1"></parallelGateway>
+    <parallelGateway id="join2"></parallelGateway>
+    <parallelGateway id="join3"></parallelGateway>
+    <parallelGateway id="join4"></parallelGateway>
+    <userTask id="submitTest" name="提交初审" flowable:assignee="${user}"></userTask>
+    <sequenceFlow id="transition6" sourceRef="start" targetRef="submitTest"></sequenceFlow>
+    <sequenceFlow id="testOK" sourceRef="test" targetRef="submitTest2">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="testNO" sourceRef="test" targetRef="reDo">
+      <conditionExpression xsi:type="tFormalExpression">${test == 0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="toTest2" sourceRef="submitTest2" targetRef="test2"></sequenceFlow>
+    <sequenceFlow id="test2OK" sourceRef="test2" targetRef="submitTest3">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="test2NO" sourceRef="test2" targetRef="reDo">
+      <conditionExpression xsi:type="tFormalExpression">${test == 0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="toTest3" sourceRef="submitTest3" targetRef="test3"></sequenceFlow>
+    <sequenceFlow id="test3NO" sourceRef="test3" targetRef="reDo">
+      <conditionExpression xsi:type="tFormalExpression">${test == 0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="test3OK" sourceRef="test3" targetRef="join4">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="toCheck" sourceRef="submitCheck" targetRef="check"></sequenceFlow>
+    <sequenceFlow id="checkOK" sourceRef="check" targetRef="join1">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="checkNO" sourceRef="check" targetRef="join4">
+      <conditionExpression xsi:type="tFormalExpression">${test==0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="toCheck2" sourceRef="submitCheck2" targetRef="check2"></sequenceFlow>
+    <sequenceFlow id="check2OK" sourceRef="check2" targetRef="join2">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="check2NO" sourceRef="check2" targetRef="join1">
+      <conditionExpression xsi:type="tFormalExpression">${test==0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="toCheck3" sourceRef="submitCheck3" targetRef="check3"></sequenceFlow>
+    <sequenceFlow id="check3OK" sourceRef="check3" targetRef="join3">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="check3NO" sourceRef="check3" targetRef="join2">
+      <conditionExpression xsi:type="tFormalExpression">${test==0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="toPublish" sourceRef="submitPublish" targetRef="publish"></sequenceFlow>
+    <sequenceFlow id="publishOK" sourceRef="publish" targetRef="doPack">
+      <conditionExpression xsi:type="tFormalExpression">${test == 1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="publishNO" sourceRef="publish" targetRef="join3">
+      <conditionExpression xsi:type="tFormalExpression">${test==0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="transition1" sourceRef="doPack" targetRef="end1"></sequenceFlow>
+    <sequenceFlow id="transition2" sourceRef="join1" targetRef="submitCheck2"></sequenceFlow>
+    <sequenceFlow id="transition3" sourceRef="join2" targetRef="submitCheck3"></sequenceFlow>
+    <sequenceFlow id="transition4" sourceRef="join3" targetRef="submitPublish"></sequenceFlow>
+    <sequenceFlow id="transition5" sourceRef="join4" targetRef="submitCheck"></sequenceFlow>
+    <sequenceFlow id="toTest" sourceRef="submitTest" targetRef="test"></sequenceFlow>
+  </process>
+</definitions>

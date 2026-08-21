@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.serial.mapper.CodeConfigMapper">
+    
+    <resultMap type="CodeConfig" id="CodeConfigResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="currentSeq"    column="current_seq"    />
+        <result property="enableFlag"    column="enable_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCodeConfigVo">
+        select id, title, current_seq, enable_flag, del_flag, remark, create_id, create_time, update_id, update_time from t_code_config
+    </sql>
+
+    <select id="selectCodeConfigList" parameterType="CodeConfig" resultMap="CodeConfigResult">
+        <include refid="selectCodeConfigVo"/>
+        <where>
+            del_flag = '0'
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="enableFlag != null  and enableFlag != ''"> and enable_flag = #{enableFlag}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''"> and create_time between #{params.beginCreateTime} and #{params.endCreateTime}</if>
+        </where>
+        order by enable_flag desc, create_time desc
+    </select>
+    
+    <select id="selectCodeConfigById" parameterType="String" resultMap="CodeConfigResult">
+        <include refid="selectCodeConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectCodeConfigDTOById" resultType="com.ruoyi.serial.module.CodeConfigDTO">
+        select id,
+               title,
+               current_seq   currentSeq,
+               enable_flag   enableFlag,
+               remark
+        from t_code_config
+        where id = #{id}
+    </select>
+
+    <select id="selectAllSerialOptions" resultType="com.ruoyi.serial.module.CodeConfigDTO">
+        select id, title
+        from t_code_config
+        where del_flag = '0' and enable_flag = '1'
+        order by create_time desc
+    </select>
+
+    <insert id="insertCodeConfig" parameterType="CodeConfig">
+        insert into t_code_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="currentSeq != null">current_seq,</if>
+            <if test="enableFlag != null">enable_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="currentSeq != null">#{currentSeq},</if>
+            <if test="enableFlag != null">#{enableFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCodeConfig" parameterType="CodeConfig">
+        update t_code_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="currentSeq != null">current_seq = #{currentSeq},</if>
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <update id="incrCurrentSeq">
+        update t_code_config set current_seq = current_seq + 1 where id = #{id}
+    </update>
+
+    <update id="disableEnableFlag">
+        update t_code_config set enable_flag = '0' where del_flag = '0' and id = #{id}
+    </update>
+
+    <update id="changeEnableFlag">
+        update t_code_config set enable_flag = #{enableFlag} where id = #{id}
+    </update>
+
+    <delete id="deleteCodeConfigById" parameterType="String">
+        delete from t_code_config where id = #{id}
+    </delete>
+
+    <delete id="deleteCodeConfigByIds" parameterType="String">
+        delete from t_code_config where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateDelFlagById" parameterType="String">
+        update t_code_config set del_flag = '1' where id = #{id}
+    </update>
+
+    <update id="updateCurrentSeq">
+        update t_code_config set current_seq = 1 where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

@@ -188,4 +188,42 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(zdt.toInstant());
     }
+
+    /**
+     * [MIG] 拼接日期范围字符串（OA 迁移引入）
+     *
+     * @param startTime 开始时间
+     * @param endTime 结束时间
+     * @return "yyyy-MM-dd ~ yyyy-MM-dd" 形式的日期范围
+     */
+    public static String joinDateRange(Date startTime, Date endTime)
+    {
+        return parseDateToStr(YYYY_MM_DD, startTime) + " ~ " + parseDateToStr(YYYY_MM_DD, endTime);
+    }
+
+    /**
+     * [MIG] 获取指定时间的当月第一天（OA 迁移引入）
+     *
+     * @param date 指定日期
+     * @return 当月第一天的 Date 对象
+     */
+    public static Date getFirstDayOfMonth(Date date)
+    {
+        LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDate firstDay = localDateTime.toLocalDate().withDayOfMonth(1);
+        return toDate(firstDay.atStartOfDay());
+    }
+
+    /**
+     * [MIG] 获取指定时间的当月最后一天（OA 迁移引入）
+     *
+     * @param date 指定日期
+     * @return 当月最后一天的 Date 对象
+     */
+    public static Date getLastDayOfMonth(Date date)
+    {
+        LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDate lastDay = localDateTime.toLocalDate().withDayOfMonth(localDateTime.toLocalDate().lengthOfMonth());
+        return toDate(lastDay.atTime(LocalTime.MAX));
+    }
 }

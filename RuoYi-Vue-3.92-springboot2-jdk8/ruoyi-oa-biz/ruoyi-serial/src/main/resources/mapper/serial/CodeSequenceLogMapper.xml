@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.serial.mapper.CodeSequenceLogMapper">
+    
+    <resultMap type="CodeSequenceLog" id="CodeSequenceLogResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="code"    column="code"    />
+        <result property="codeSeq"    column="code_seq"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectCodeSequenceLogVo">
+        select id, title, code, code_seq, create_time from t_code_sequence_log
+    </sql>
+
+    <select id="selectCodeSequenceLogList" parameterType="CodeSequenceLog" resultMap="CodeSequenceLogResult">
+        <include refid="selectCodeSequenceLogVo"/>
+        <where>
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="codeSeq != null "> and code_seq = #{codeSeq}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectCodeSequenceLogById" parameterType="Long" resultMap="CodeSequenceLogResult">
+        <include refid="selectCodeSequenceLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCodeSequenceLog" parameterType="CodeSequenceLog" useGeneratedKeys="true" keyProperty="id">
+        insert into t_code_sequence_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="code != null">code,</if>
+            <if test="codeSeq != null">code_seq,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="code != null">#{code},</if>
+            <if test="codeSeq != null">#{codeSeq},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCodeSequenceLog" parameterType="CodeSequenceLog">
+        update t_code_sequence_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="codeSeq != null">code_seq = #{codeSeq},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCodeSequenceLogById" parameterType="Long">
+        delete from t_code_sequence_log where id = #{id}
+    </delete>
+
+    <delete id="deleteCodeSequenceLogByIds" parameterType="Long">
+        delete from t_code_sequence_log where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

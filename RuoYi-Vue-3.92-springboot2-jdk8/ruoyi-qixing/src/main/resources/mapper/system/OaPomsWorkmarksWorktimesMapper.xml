@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.OaPomsWorkmarksWorktimesMapper">
+    
+    <resultMap type="OaPomsWorkmarksWorktimes" id="OaPomsWorkmarksWorktimesResult">
+        <result property="id"    column="id"    />
+        <result property="usercode"    column="usercode"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="workDay"    column="work_day"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="workTotalTime"    column="work_total_time"    />
+        <result property="leaveInCase"    column="leave_in_case"    />
+        <result property="leaveInXy"    column="leave_in_xy"    />
+        <result property="leanveOutCase"    column="leanve_out_case"    />
+        <result property="leanveOutXy"    column="leanve_out_xy"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="creator"    column="creator"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectOaPomsWorkmarksWorktimesVo">
+        select id, usercode, ref_username, work_day, begin_time, end_time, work_total_time, leave_in_case, leave_in_xy, leanve_out_case, leanve_out_xy, remark, create_time, creator, update_time, update_id, deleted, create_id from oa_poms_workmarks_worktimes
+    </sql>
+
+    <select id="selectOaPomsWorkmarksWorktimesList" parameterType="OaPomsWorkmarksWorktimes" resultMap="OaPomsWorkmarksWorktimesResult">
+        <include refid="selectOaPomsWorkmarksWorktimesVo"/>
+        <where>  
+            <if test="usercode != null  and usercode != ''"> and usercode = #{usercode}</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="workDay != null "> and work_day = #{workDay}</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="workTotalTime != null "> and work_total_time = #{workTotalTime}</if>
+            <if test="leaveInCase != null  and leaveInCase != ''"> and leave_in_case = #{leaveInCase}</if>
+            <if test="leaveInXy != null  and leaveInXy != ''"> and leave_in_xy = #{leaveInXy}</if>
+            <if test="leanveOutCase != null  and leanveOutCase != ''"> and leanve_out_case = #{leanveOutCase}</if>
+            <if test="leanveOutXy != null  and leanveOutXy != ''"> and leanve_out_xy = #{leanveOutXy}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaPomsWorkmarksWorktimesById" parameterType="String" resultMap="OaPomsWorkmarksWorktimesResult">
+        <include refid="selectOaPomsWorkmarksWorktimesVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaPomsWorkmarksWorktimes" parameterType="OaPomsWorkmarksWorktimes">
+        insert into oa_poms_workmarks_worktimes
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="usercode != null and usercode != ''">usercode,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="workDay != null">work_day,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="workTotalTime != null">work_total_time,</if>
+            <if test="leaveInCase != null">leave_in_case,</if>
+            <if test="leaveInXy != null">leave_in_xy,</if>
+            <if test="leanveOutCase != null">leanve_out_case,</if>
+            <if test="leanveOutXy != null">leanve_out_xy,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="creator != null">creator,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="usercode != null and usercode != ''">#{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="workDay != null">#{workDay},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="workTotalTime != null">#{workTotalTime},</if>
+            <if test="leaveInCase != null">#{leaveInCase},</if>
+            <if test="leaveInXy != null">#{leaveInXy},</if>
+            <if test="leanveOutCase != null">#{leanveOutCase},</if>
+            <if test="leanveOutXy != null">#{leanveOutXy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaPomsWorkmarksWorktimes" parameterType="OaPomsWorkmarksWorktimes">
+        update oa_poms_workmarks_worktimes
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usercode != null and usercode != ''">usercode = #{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="workDay != null">work_day = #{workDay},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="workTotalTime != null">work_total_time = #{workTotalTime},</if>
+            <if test="leaveInCase != null">leave_in_case = #{leaveInCase},</if>
+            <if test="leaveInXy != null">leave_in_xy = #{leaveInXy},</if>
+            <if test="leanveOutCase != null">leanve_out_case = #{leanveOutCase},</if>
+            <if test="leanveOutXy != null">leanve_out_xy = #{leanveOutXy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaPomsWorkmarksWorktimesById" parameterType="String">
+        delete from oa_poms_workmarks_worktimes where id = #{id}
+    </delete>
+
+    <delete id="deleteOaPomsWorkmarksWorktimesByIds" parameterType="String">
+        delete from oa_poms_workmarks_worktimes where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -41,4 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	        #{userId}
             </foreach> 
 	</delete>
+
+	<!-- [MIG] OA 迁移引入：根据角色ID列表查询用户角色关联 -->
+	<select id="selectRoleUserInfos" resultMap="SysUserRoleResult">
+		select * from sys_user_role where role_id in
+		<foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+	</select>
 </mapper> 

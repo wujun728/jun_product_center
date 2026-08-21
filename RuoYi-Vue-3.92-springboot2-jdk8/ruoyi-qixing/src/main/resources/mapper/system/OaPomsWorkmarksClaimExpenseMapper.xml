@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.OaPomsWorkmarksClaimExpenseMapper">
+    
+    <resultMap type="OaPomsWorkmarksClaimExpense" id="OaPomsWorkmarksClaimExpenseResult">
+        <result property="id"    column="id"    />
+        <result property="costCode"    column="cost_code"    />
+        <result property="usercode"    column="usercode"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="deptname"    column="deptname"    />
+        <result property="money"    column="money"    />
+        <result property="dictMoneyType"    column="dict_money_type"    />
+        <result property="userPost"    column="user_post"    />
+        <result property="refTodoPersonCode"    column="ref_todo_person_code"    />
+        <result property="refTodoPreson"    column="ref_todo_preson"    />
+        <result property="refTodoDeptname"    column="ref_todo_deptname"    />
+        <result property="dictYeNo"    column="dict_ye_no"    />
+        <result property="dictBelongProject"    column="dict_belong_project"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="dictCostType"    column="dict_cost_type"    />
+        <result property="costDetail"    column="cost_detail"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectOaPomsWorkmarksClaimExpenseVo">
+        select id, cost_code, usercode, ref_username, deptname, money, dict_money_type, user_post, ref_todo_person_code, ref_todo_preson, ref_todo_deptname, dict_ye_no, dict_belong_project, ref_project_code, ref_project_name, dict_cost_type, cost_detail, remark, create_time, create_id, update_time, update_id, deleted, order_id, order_status from oa_poms_workmarks_claim_expense
+    </sql>
+
+    <select id="selectOaPomsWorkmarksClaimExpenseList" parameterType="OaPomsWorkmarksClaimExpense" resultMap="OaPomsWorkmarksClaimExpenseResult">
+        <include refid="selectOaPomsWorkmarksClaimExpenseVo"/>
+        <where>  
+            <if test="costCode != null  and costCode != ''"> and cost_code = #{costCode}</if>
+            <if test="usercode != null  and usercode != ''"> and usercode = #{usercode}</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="deptname != null  and deptname != ''"> and deptname like concat('%', #{deptname}, '%')</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="dictMoneyType != null  and dictMoneyType != ''"> and dict_money_type = #{dictMoneyType}</if>
+            <if test="userPost != null  and userPost != ''"> and user_post = #{userPost}</if>
+            <if test="refTodoPersonCode != null  and refTodoPersonCode != ''"> and ref_todo_person_code = #{refTodoPersonCode}</if>
+            <if test="refTodoPreson != null  and refTodoPreson != ''"> and ref_todo_preson = #{refTodoPreson}</if>
+            <if test="refTodoDeptname != null  and refTodoDeptname != ''"> and ref_todo_deptname like concat('%', #{refTodoDeptname}, '%')</if>
+            <if test="dictYeNo != null  and dictYeNo != ''"> and dict_ye_no = #{dictYeNo}</if>
+            <if test="dictBelongProject != null  and dictBelongProject != ''"> and dict_belong_project = #{dictBelongProject}</if>
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="dictCostType != null  and dictCostType != ''"> and dict_cost_type = #{dictCostType}</if>
+            <if test="costDetail != null  and costDetail != ''"> and cost_detail = #{costDetail}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaPomsWorkmarksClaimExpenseById" parameterType="String" resultMap="OaPomsWorkmarksClaimExpenseResult">
+        <include refid="selectOaPomsWorkmarksClaimExpenseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaPomsWorkmarksClaimExpense" parameterType="OaPomsWorkmarksClaimExpense">
+        insert into oa_poms_workmarks_claim_expense
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="costCode != null and costCode != ''">cost_code,</if>
+            <if test="usercode != null">usercode,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="deptname != null and deptname != ''">deptname,</if>
+            <if test="money != null">money,</if>
+            <if test="dictMoneyType != null and dictMoneyType != ''">dict_money_type,</if>
+            <if test="userPost != null">user_post,</if>
+            <if test="refTodoPersonCode != null">ref_todo_person_code,</if>
+            <if test="refTodoPreson != null">ref_todo_preson,</if>
+            <if test="refTodoDeptname != null">ref_todo_deptname,</if>
+            <if test="dictYeNo != null and dictYeNo != ''">dict_ye_no,</if>
+            <if test="dictBelongProject != null and dictBelongProject != ''">dict_belong_project,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="refProjectName != null">ref_project_name,</if>
+            <if test="dictCostType != null and dictCostType != ''">dict_cost_type,</if>
+            <if test="costDetail != null and costDetail != ''">cost_detail,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="costCode != null and costCode != ''">#{costCode},</if>
+            <if test="usercode != null">#{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="deptname != null and deptname != ''">#{deptname},</if>
+            <if test="money != null">#{money},</if>
+            <if test="dictMoneyType != null and dictMoneyType != ''">#{dictMoneyType},</if>
+            <if test="userPost != null">#{userPost},</if>
+            <if test="refTodoPersonCode != null">#{refTodoPersonCode},</if>
+            <if test="refTodoPreson != null">#{refTodoPreson},</if>
+            <if test="refTodoDeptname != null">#{refTodoDeptname},</if>
+            <if test="dictYeNo != null and dictYeNo != ''">#{dictYeNo},</if>
+            <if test="dictBelongProject != null and dictBelongProject != ''">#{dictBelongProject},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="refProjectName != null">#{refProjectName},</if>
+            <if test="dictCostType != null and dictCostType != ''">#{dictCostType},</if>
+            <if test="costDetail != null and costDetail != ''">#{costDetail},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaPomsWorkmarksClaimExpense" parameterType="OaPomsWorkmarksClaimExpense">
+        update oa_poms_workmarks_claim_expense
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="costCode != null and costCode != ''">cost_code = #{costCode},</if>
+            <if test="usercode != null">usercode = #{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="deptname != null and deptname != ''">deptname = #{deptname},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="dictMoneyType != null and dictMoneyType != ''">dict_money_type = #{dictMoneyType},</if>
+            <if test="userPost != null">user_post = #{userPost},</if>
+            <if test="refTodoPersonCode != null">ref_todo_person_code = #{refTodoPersonCode},</if>
+            <if test="refTodoPreson != null">ref_todo_preson = #{refTodoPreson},</if>
+            <if test="refTodoDeptname != null">ref_todo_deptname = #{refTodoDeptname},</if>
+            <if test="dictYeNo != null and dictYeNo != ''">dict_ye_no = #{dictYeNo},</if>
+            <if test="dictBelongProject != null and dictBelongProject != ''">dict_belong_project = #{dictBelongProject},</if>
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null">ref_project_name = #{refProjectName},</if>
+            <if test="dictCostType != null and dictCostType != ''">dict_cost_type = #{dictCostType},</if>
+            <if test="costDetail != null and costDetail != ''">cost_detail = #{costDetail},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaPomsWorkmarksClaimExpenseById" parameterType="String">
+        delete from oa_poms_workmarks_claim_expense where id = #{id}
+    </delete>
+
+    <delete id="deleteOaPomsWorkmarksClaimExpenseByIds" parameterType="String">
+        delete from oa_poms_workmarks_claim_expense where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

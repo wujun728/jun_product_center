@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectRecheckMapper">
+    
+    <resultMap type="PjProjectRecheck" id="PjProjectRecheckResult">
+        <result property="id"    column="id"    />
+        <result property="refPcode"    column="ref_pcode"    />
+        <result property="refPname"    column="ref_pname"    />
+        <result property="refPmanager"    column="ref_pmanager"    />
+        <result property="refPreport"    column="ref_preport"    />
+        <result property="refPmanager2"    column="ref_pmanager2"    />
+        <result property="recheckMan"    column="recheck_man"    />
+        <result property="recheckAdvice"    column="recheck_advice"    />
+        <result property="recheckState"    column="recheck_state"    />
+        <result property="currMan"    column="curr_man"    />
+        <result property="dictWfState"    column="dict_wf_state"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectPjProjectRecheckVo">
+        select id, ref_pcode, ref_pname, ref_pmanager, ref_preport, ref_pmanager2, recheck_man, recheck_advice, recheck_state, curr_man, dict_wf_state, remark, create_time, create_id, update_time, update_id from pj_project_recheck
+    </sql>
+
+    <select id="selectPjProjectRecheckList" parameterType="PjProjectRecheck" resultMap="PjProjectRecheckResult">
+        <include refid="selectPjProjectRecheckVo"/>
+        <where>  
+            <if test="refPcode != null  and refPcode != ''"> and ref_pcode = #{refPcode}</if>
+            <if test="refPname != null  and refPname != ''"> and ref_pname like concat('%', #{refPname}, '%')</if>
+            <if test="refPmanager != null  and refPmanager != ''"> and ref_pmanager = #{refPmanager}</if>
+            <if test="refPreport != null  and refPreport != ''"> and ref_preport = #{refPreport}</if>
+            <if test="refPmanager2 != null  and refPmanager2 != ''"> and ref_pmanager2 = #{refPmanager2}</if>
+            <if test="recheckMan != null  and recheckMan != ''"> and recheck_man = #{recheckMan}</if>
+            <if test="recheckAdvice != null  and recheckAdvice != ''"> and recheck_advice = #{recheckAdvice}</if>
+            <if test="recheckState != null  and recheckState != ''"> and recheck_state = #{recheckState}</if>
+            <if test="currMan != null  and currMan != ''"> and curr_man = #{currMan}</if>
+            <if test="dictWfState != null  and dictWfState != ''"> and dict_wf_state = #{dictWfState}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectRecheckById" parameterType="String" resultMap="PjProjectRecheckResult">
+        <include refid="selectPjProjectRecheckVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectRecheck" parameterType="PjProjectRecheck">
+        insert into pj_project_recheck
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refPcode != null">ref_pcode,</if>
+            <if test="refPname != null and refPname != ''">ref_pname,</if>
+            <if test="refPmanager != null and refPmanager != ''">ref_pmanager,</if>
+            <if test="refPreport != null and refPreport != ''">ref_preport,</if>
+            <if test="refPmanager2 != null and refPmanager2 != ''">ref_pmanager2,</if>
+            <if test="recheckMan != null and recheckMan != ''">recheck_man,</if>
+            <if test="recheckAdvice != null and recheckAdvice != ''">recheck_advice,</if>
+            <if test="recheckState != null">recheck_state,</if>
+            <if test="currMan != null">curr_man,</if>
+            <if test="dictWfState != null">dict_wf_state,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refPcode != null">#{refPcode},</if>
+            <if test="refPname != null and refPname != ''">#{refPname},</if>
+            <if test="refPmanager != null and refPmanager != ''">#{refPmanager},</if>
+            <if test="refPreport != null and refPreport != ''">#{refPreport},</if>
+            <if test="refPmanager2 != null and refPmanager2 != ''">#{refPmanager2},</if>
+            <if test="recheckMan != null and recheckMan != ''">#{recheckMan},</if>
+            <if test="recheckAdvice != null and recheckAdvice != ''">#{recheckAdvice},</if>
+            <if test="recheckState != null">#{recheckState},</if>
+            <if test="currMan != null">#{currMan},</if>
+            <if test="dictWfState != null">#{dictWfState},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectRecheck" parameterType="PjProjectRecheck">
+        update pj_project_recheck
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refPcode != null">ref_pcode = #{refPcode},</if>
+            <if test="refPname != null and refPname != ''">ref_pname = #{refPname},</if>
+            <if test="refPmanager != null and refPmanager != ''">ref_pmanager = #{refPmanager},</if>
+            <if test="refPreport != null and refPreport != ''">ref_preport = #{refPreport},</if>
+            <if test="refPmanager2 != null and refPmanager2 != ''">ref_pmanager2 = #{refPmanager2},</if>
+            <if test="recheckMan != null and recheckMan != ''">recheck_man = #{recheckMan},</if>
+            <if test="recheckAdvice != null and recheckAdvice != ''">recheck_advice = #{recheckAdvice},</if>
+            <if test="recheckState != null">recheck_state = #{recheckState},</if>
+            <if test="currMan != null">curr_man = #{currMan},</if>
+            <if test="dictWfState != null">dict_wf_state = #{dictWfState},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectRecheckById" parameterType="String">
+        delete from pj_project_recheck where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectRecheckByIds" parameterType="String">
+        delete from pj_project_recheck where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

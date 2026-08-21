@@ -49,6 +49,18 @@ public class SysPostServiceImpl implements ISysPostService
     }
 
     /**
+     * [MIG] 根据用户ID列表查询岗位列表（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 岗位列表
+     */
+    @Override
+    public List<SysPost> listUserPostByUserIds(List<String> userIds)
+    {
+        return postMapper.selectUserPostsByUserIds(userIds);
+    }
+
+    /**
      * 通过岗位ID查询岗位信息
      * 
      * @param postId 岗位ID

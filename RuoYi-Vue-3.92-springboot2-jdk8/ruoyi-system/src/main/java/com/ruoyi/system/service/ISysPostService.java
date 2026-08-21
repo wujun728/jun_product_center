@@ -96,4 +96,12 @@ public interface ISysPostService
      * @return 结果
      */
     public int updatePost(SysPost post);
+
+    /**
+     * [MIG] 根据用户ID列表查询岗位列表（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 岗位列表
+     */
+    public List<SysPost> listUserPostByUserIds(List<String> userIds);
 }

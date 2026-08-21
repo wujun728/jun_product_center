@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectReportMapper">
+    
+    <resultMap type="PjProjectReport" id="PjProjectReportResult">
+        <result property="id"    column="id"    />
+        <result property="reportName"    column="report_name"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="dictReportType"    column="dict_report_type"    />
+        <result property="reportDetail"    column="report_detail"    />
+        <result property="customerReq"    column="customer_req"    />
+        <result property="reportTime"    column="report_time"    />
+        <result property="refReportBy"    column="ref_report_by"    />
+        <result property="reportFinashDays"    column="report_finash_days"    />
+        <result property="dictReportStatus"    column="dict_report_status"    />
+        <result property="creator"    column="creator"    />
+        <result property="reportnumCode"    column="reportnum_code"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjProjectReportVo">
+        select id, report_name, ref_project_code, ref_project_name, dict_report_type, report_detail, customer_req, report_time, ref_report_by, report_finash_days, dict_report_status, creator, reportnum_code, remark, create_time, create_id, update_time, update_id, order_id, order_status from pj_project_report
+    </sql>
+
+    <select id="selectPjProjectReportList" parameterType="PjProjectReport" resultMap="PjProjectReportResult">
+        <include refid="selectPjProjectReportVo"/>
+        <where>  
+            <if test="reportName != null  and reportName != ''"> and report_name like concat('%', #{reportName}, '%')</if>
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="dictReportType != null  and dictReportType != ''"> and dict_report_type = #{dictReportType}</if>
+            <if test="reportDetail != null  and reportDetail != ''"> and report_detail = #{reportDetail}</if>
+            <if test="customerReq != null  and customerReq != ''"> and customer_req = #{customerReq}</if>
+            <if test="reportTime != null "> and report_time = #{reportTime}</if>
+            <if test="refReportBy != null  and refReportBy != ''"> and ref_report_by = #{refReportBy}</if>
+            <if test="reportFinashDays != null "> and report_finash_days = #{reportFinashDays}</if>
+            <if test="dictReportStatus != null  and dictReportStatus != ''"> and dict_report_status = #{dictReportStatus}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="reportnumCode != null  and reportnumCode != ''"> and reportnum_code = #{reportnumCode}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectReportById" parameterType="String" resultMap="PjProjectReportResult">
+        <include refid="selectPjProjectReportVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectReport" parameterType="PjProjectReport">
+        insert into pj_project_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="reportName != null and reportName != ''">report_name,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="dictReportType != null and dictReportType != ''">dict_report_type,</if>
+            <if test="reportDetail != null">report_detail,</if>
+            <if test="customerReq != null">customer_req,</if>
+            <if test="reportTime != null">report_time,</if>
+            <if test="refReportBy != null">ref_report_by,</if>
+            <if test="reportFinashDays != null">report_finash_days,</if>
+            <if test="dictReportStatus != null">dict_report_status,</if>
+            <if test="creator != null">creator,</if>
+            <if test="reportnumCode != null">reportnum_code,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="reportName != null and reportName != ''">#{reportName},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="dictReportType != null and dictReportType != ''">#{dictReportType},</if>
+            <if test="reportDetail != null">#{reportDetail},</if>
+            <if test="customerReq != null">#{customerReq},</if>
+            <if test="reportTime != null">#{reportTime},</if>
+            <if test="refReportBy != null">#{refReportBy},</if>
+            <if test="reportFinashDays != null">#{reportFinashDays},</if>
+            <if test="dictReportStatus != null">#{dictReportStatus},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="reportnumCode != null">#{reportnumCode},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectReport" parameterType="PjProjectReport">
+        update pj_project_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="reportName != null and reportName != ''">report_name = #{reportName},</if>
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="dictReportType != null and dictReportType != ''">dict_report_type = #{dictReportType},</if>
+            <if test="reportDetail != null">report_detail = #{reportDetail},</if>
+            <if test="customerReq != null">customer_req = #{customerReq},</if>
+            <if test="reportTime != null">report_time = #{reportTime},</if>
+            <if test="refReportBy != null">ref_report_by = #{refReportBy},</if>
+            <if test="reportFinashDays != null">report_finash_days = #{reportFinashDays},</if>
+            <if test="dictReportStatus != null">dict_report_status = #{dictReportStatus},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="reportnumCode != null">reportnum_code = #{reportnumCode},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectReportById" parameterType="String">
+        delete from pj_project_report where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectReportByIds" parameterType="String">
+        delete from pj_project_report where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

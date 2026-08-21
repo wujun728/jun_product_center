@@ -1,6 +1,7 @@
 package com.ruoyi.rabbitmq.controller;
 
 import java.util.Map;
+import java.util.Collections;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class SendMessageController {
         // 将消息携带绑定键值：TestDirectRouting 发送到交换机TestDirectExchange
         rabbitTemplate.convertAndSend("TestDirectExchange", "TestDirectRouting",
                 Message.builder()
-                        .payload(Map.of("message", "你好"))
+                        .payload(Collections.singletonMap("message", "你好"))   // [MIG] JDK8 兼容：原 Map.of() 为 JDK9+ API
                         .receiver("接收者")
                         .sender("发送者")
                         .build());

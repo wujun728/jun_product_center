@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrAssessmentTemplateDetailMapper">
+    
+    <resultMap type="HrAssessmentTemplateDetail" id="HrAssessmentTemplateDetailResult">
+        <result property="id"    column="id"    />
+        <result property="sortno"    column="sortno"    />
+        <result property="teamplateId"    column="teamplate_id"    />
+        <result property="refTeamplateName"    column="ref_teamplate_name"    />
+        <result property="assType"    column="ass_type"    />
+        <result property="assAttrType"    column="ass_attr_type"    />
+        <result property="assAttrName"    column="ass_attr_name"    />
+        <result property="attrScore"    column="attr_score"    />
+        <result property="attrDesc"    column="attr_desc"    />
+        <result property="assAttrDesc"    column="ass_attr_desc"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectHrAssessmentTemplateDetailVo">
+        select id, sortno, teamplate_id, ref_teamplate_name, ass_type, ass_attr_type, ass_attr_name, attr_score, attr_desc, ass_attr_desc, order_id, create_time, create_id, update_time, update_id, order_status from hr_assessment_template_detail
+    </sql>
+
+    <select id="selectHrAssessmentTemplateDetailList" parameterType="HrAssessmentTemplateDetail" resultMap="HrAssessmentTemplateDetailResult">
+        <include refid="selectHrAssessmentTemplateDetailVo"/>
+        <where>  
+            <if test="sortno != null "> and sortno = #{sortno}</if>
+            <if test="teamplateId != null  and teamplateId != ''"> and teamplate_id = #{teamplateId}</if>
+            <if test="refTeamplateName != null  and refTeamplateName != ''"> and ref_teamplate_name like concat('%', #{refTeamplateName}, '%')</if>
+            <if test="assType != null  and assType != ''"> and ass_type = #{assType}</if>
+            <if test="assAttrType != null  and assAttrType != ''"> and ass_attr_type = #{assAttrType}</if>
+            <if test="assAttrName != null  and assAttrName != ''"> and ass_attr_name like concat('%', #{assAttrName}, '%')</if>
+            <if test="attrScore != null "> and attr_score = #{attrScore}</if>
+            <if test="attrDesc != null  and attrDesc != ''"> and attr_desc = #{attrDesc}</if>
+            <if test="assAttrDesc != null  and assAttrDesc != ''"> and ass_attr_desc = #{assAttrDesc}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrAssessmentTemplateDetailById" parameterType="String" resultMap="HrAssessmentTemplateDetailResult">
+        <include refid="selectHrAssessmentTemplateDetailVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrAssessmentTemplateDetail" parameterType="HrAssessmentTemplateDetail">
+        insert into hr_assessment_template_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="sortno != null">sortno,</if>
+            <if test="teamplateId != null">teamplate_id,</if>
+            <if test="refTeamplateName != null and refTeamplateName != ''">ref_teamplate_name,</if>
+            <if test="assType != null and assType != ''">ass_type,</if>
+            <if test="assAttrType != null and assAttrType != ''">ass_attr_type,</if>
+            <if test="assAttrName != null and assAttrName != ''">ass_attr_name,</if>
+            <if test="attrScore != null">attr_score,</if>
+            <if test="attrDesc != null and attrDesc != ''">attr_desc,</if>
+            <if test="assAttrDesc != null and assAttrDesc != ''">ass_attr_desc,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="sortno != null">#{sortno},</if>
+            <if test="teamplateId != null">#{teamplateId},</if>
+            <if test="refTeamplateName != null and refTeamplateName != ''">#{refTeamplateName},</if>
+            <if test="assType != null and assType != ''">#{assType},</if>
+            <if test="assAttrType != null and assAttrType != ''">#{assAttrType},</if>
+            <if test="assAttrName != null and assAttrName != ''">#{assAttrName},</if>
+            <if test="attrScore != null">#{attrScore},</if>
+            <if test="attrDesc != null and attrDesc != ''">#{attrDesc},</if>
+            <if test="assAttrDesc != null and assAttrDesc != ''">#{assAttrDesc},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrAssessmentTemplateDetail" parameterType="HrAssessmentTemplateDetail">
+        update hr_assessment_template_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="sortno != null">sortno = #{sortno},</if>
+            <if test="teamplateId != null">teamplate_id = #{teamplateId},</if>
+            <if test="refTeamplateName != null and refTeamplateName != ''">ref_teamplate_name = #{refTeamplateName},</if>
+            <if test="assType != null and assType != ''">ass_type = #{assType},</if>
+            <if test="assAttrType != null and assAttrType != ''">ass_attr_type = #{assAttrType},</if>
+            <if test="assAttrName != null and assAttrName != ''">ass_attr_name = #{assAttrName},</if>
+            <if test="attrScore != null">attr_score = #{attrScore},</if>
+            <if test="attrDesc != null and attrDesc != ''">attr_desc = #{attrDesc},</if>
+            <if test="assAttrDesc != null and assAttrDesc != ''">ass_attr_desc = #{assAttrDesc},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrAssessmentTemplateDetailById" parameterType="String">
+        delete from hr_assessment_template_detail where id = #{id}
+    </delete>
+
+    <delete id="deleteHrAssessmentTemplateDetailByIds" parameterType="String">
+        delete from hr_assessment_template_detail where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

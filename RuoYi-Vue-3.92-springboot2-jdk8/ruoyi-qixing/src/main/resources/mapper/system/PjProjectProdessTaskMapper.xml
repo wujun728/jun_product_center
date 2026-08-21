@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectProdessTaskMapper">
+    
+    <resultMap type="PjProjectProdessTask" id="PjProjectProdessTaskResult">
+        <result property="id"    column="id"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="taskName"    column="task_name"    />
+        <result property="taskDetail"    column="task_detail"    />
+        <result property="costTime"    column="cost_time"    />
+        <result property="costMoney"    column="cost_money"    />
+        <result property="taskTimeStart"    column="task_time_start"    />
+        <result property="taskTimeEnd"    column="task_time_end"    />
+        <result property="taskProgress"    column="task_progress"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectPjProjectProdessTaskVo">
+        select id, ref_project_name, ref_project_code, task_name, task_detail, cost_time, cost_money, task_time_start, task_time_end, task_progress, remark, creator, create_time, create_id, update_time, update_id from pj_project_prodess_task
+    </sql>
+
+    <select id="selectPjProjectProdessTaskList" parameterType="PjProjectProdessTask" resultMap="PjProjectProdessTaskResult">
+        <include refid="selectPjProjectProdessTaskVo"/>
+        <where>  
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="taskName != null  and taskName != ''"> and task_name like concat('%', #{taskName}, '%')</if>
+            <if test="taskDetail != null  and taskDetail != ''"> and task_detail = #{taskDetail}</if>
+            <if test="costTime != null "> and cost_time = #{costTime}</if>
+            <if test="costMoney != null "> and cost_money = #{costMoney}</if>
+            <if test="taskTimeStart != null "> and task_time_start = #{taskTimeStart}</if>
+            <if test="taskTimeEnd != null "> and task_time_end = #{taskTimeEnd}</if>
+            <if test="taskProgress != null "> and task_progress = #{taskProgress}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectProdessTaskById" parameterType="String" resultMap="PjProjectProdessTaskResult">
+        <include refid="selectPjProjectProdessTaskVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectProdessTask" parameterType="PjProjectProdessTask">
+        insert into pj_project_prodess_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="taskName != null and taskName != ''">task_name,</if>
+            <if test="taskDetail != null and taskDetail != ''">task_detail,</if>
+            <if test="costTime != null">cost_time,</if>
+            <if test="costMoney != null">cost_money,</if>
+            <if test="taskTimeStart != null">task_time_start,</if>
+            <if test="taskTimeEnd != null">task_time_end,</if>
+            <if test="taskProgress != null">task_progress,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="taskName != null and taskName != ''">#{taskName},</if>
+            <if test="taskDetail != null and taskDetail != ''">#{taskDetail},</if>
+            <if test="costTime != null">#{costTime},</if>
+            <if test="costMoney != null">#{costMoney},</if>
+            <if test="taskTimeStart != null">#{taskTimeStart},</if>
+            <if test="taskTimeEnd != null">#{taskTimeEnd},</if>
+            <if test="taskProgress != null">#{taskProgress},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectProdessTask" parameterType="PjProjectProdessTask">
+        update pj_project_prodess_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="taskName != null and taskName != ''">task_name = #{taskName},</if>
+            <if test="taskDetail != null and taskDetail != ''">task_detail = #{taskDetail},</if>
+            <if test="costTime != null">cost_time = #{costTime},</if>
+            <if test="costMoney != null">cost_money = #{costMoney},</if>
+            <if test="taskTimeStart != null">task_time_start = #{taskTimeStart},</if>
+            <if test="taskTimeEnd != null">task_time_end = #{taskTimeEnd},</if>
+            <if test="taskProgress != null">task_progress = #{taskProgress},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectProdessTaskById" parameterType="String">
+        delete from pj_project_prodess_task where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectProdessTaskByIds" parameterType="String">
+        delete from pj_project_prodess_task where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

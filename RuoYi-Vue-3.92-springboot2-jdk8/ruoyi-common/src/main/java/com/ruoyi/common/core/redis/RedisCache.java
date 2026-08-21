@@ -265,4 +265,27 @@ public class RedisCache
     {
         return redisTemplate.keys(pattern);
     }
+
+    /**
+     * [MIG] 设置缓存对象（超时时间，毫秒）— OA 迁移引入的 3 参数重载（老 ruoyi-common 有）
+     *
+     * @param key Redis键
+     * @param value 缓存值
+     * @param timeout 超时毫秒数
+     */
+    public <T> void setCacheObject(final String key, final T value, final Long timeout)
+    {
+        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * [MIG] 获取自增长值 — OA 迁移引入（老 ruoyi-common 有）
+     *
+     * @param key Redis键
+     * @return 返回增长之后的值
+     */
+    public long getIncr(String key)
+    {
+        return redisTemplate.opsForValue().increment(key, 1L);
+    }
 }

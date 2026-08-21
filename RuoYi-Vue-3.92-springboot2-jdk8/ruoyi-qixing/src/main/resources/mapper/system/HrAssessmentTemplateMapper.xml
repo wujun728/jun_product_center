@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrAssessmentTemplateMapper">
+    
+    <resultMap type="HrAssessmentTemplate" id="HrAssessmentTemplateResult">
+        <result property="id"    column="id"    />
+        <result property="teamplateName"    column="teamplate_name"    />
+        <result property="scoreTotal"    column="score_total"    />
+        <result property="forUsePeoples"    column="for_use_peoples"    />
+        <result property="remark"    column="remark"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectHrAssessmentTemplateVo">
+        select id, teamplate_name, score_total, for_use_peoples, remark, order_id, create_time, create_id, update_time, update_id, order_status from hr_assessment_template
+    </sql>
+
+    <select id="selectHrAssessmentTemplateList" parameterType="HrAssessmentTemplate" resultMap="HrAssessmentTemplateResult">
+        <include refid="selectHrAssessmentTemplateVo"/>
+        <where>  
+            <if test="teamplateName != null  and teamplateName != ''"> and teamplate_name like concat('%', #{teamplateName}, '%')</if>
+            <if test="scoreTotal != null "> and score_total = #{scoreTotal}</if>
+            <if test="forUsePeoples != null  and forUsePeoples != ''"> and for_use_peoples = #{forUsePeoples}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrAssessmentTemplateById" parameterType="String" resultMap="HrAssessmentTemplateResult">
+        <include refid="selectHrAssessmentTemplateVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrAssessmentTemplate" parameterType="HrAssessmentTemplate">
+        insert into hr_assessment_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="teamplateName != null and teamplateName != ''">teamplate_name,</if>
+            <if test="scoreTotal != null">score_total,</if>
+            <if test="forUsePeoples != null">for_use_peoples,</if>
+            <if test="remark != null">remark,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="teamplateName != null and teamplateName != ''">#{teamplateName},</if>
+            <if test="scoreTotal != null">#{scoreTotal},</if>
+            <if test="forUsePeoples != null">#{forUsePeoples},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrAssessmentTemplate" parameterType="HrAssessmentTemplate">
+        update hr_assessment_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="teamplateName != null and teamplateName != ''">teamplate_name = #{teamplateName},</if>
+            <if test="scoreTotal != null">score_total = #{scoreTotal},</if>
+            <if test="forUsePeoples != null">for_use_peoples = #{forUsePeoples},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrAssessmentTemplateById" parameterType="String">
+        delete from hr_assessment_template where id = #{id}
+    </delete>
+
+    <delete id="deleteHrAssessmentTemplateByIds" parameterType="String">
+        delete from hr_assessment_template where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

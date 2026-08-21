@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.WorkflowCommonCommentMapper">
+    
+    <resultMap type="WorkflowCommonComment" id="WorkflowCommonCommentResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="comment"    column="comment"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowCommonCommentVo">
+        select id, user_id, comment, create_time from t_workflow_common_comment
+    </sql>
+
+    <select id="selectWorkflowCommonCommentList" parameterType="WorkflowCommonComment" resultMap="WorkflowCommonCommentResult">
+        <include refid="selectWorkflowCommonCommentVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="comment != null  and comment != ''"> and comment = #{comment}</if>
+        </where>
+        order by create_time asc
+    </select>
+    
+    <select id="selectWorkflowCommonCommentById" parameterType="String" resultMap="WorkflowCommonCommentResult">
+        <include refid="selectWorkflowCommonCommentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWorkflowCommonComment" parameterType="WorkflowCommonComment">
+        insert into t_workflow_common_comment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="comment != null and comment != ''">comment,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="comment != null and comment != ''">#{comment},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowCommonComment" parameterType="WorkflowCommonComment">
+        update t_workflow_common_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="comment != null and comment != ''">comment = #{comment},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowCommonCommentById" parameterType="String">
+        delete from t_workflow_common_comment where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowCommonCommentByIds" parameterType="String">
+        delete from t_workflow_common_comment where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

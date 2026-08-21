@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectMapper">
+    
+    <resultMap type="PjProject" id="PjProjectResult">
+        <result property="id"    column="id"    />
+        <result property="projectCode"    column="project_code"    />
+        <result property="projectName"    column="project_name"    />
+        <result property="dictProjectType"    column="dict_project_type"    />
+        <result property="dictProjectTypeSub"    column="dict_project_type_sub"    />
+        <result property="refIdCuscode"    column="ref_id_cuscode"    />
+        <result property="refCusname"    column="ref_cusname"    />
+        <result property="projectDesc"    column="project_desc"    />
+        <result property="projectStarttime"    column="project_starttime"    />
+        <result property="projectEndtime"    column="project_endtime"    />
+        <result property="cusnameTodo"    column="cusname_todo"    />
+        <result property="refProjectManager"    column="ref_project_manager"    />
+        <result property="refUndertakePerson"    column="ref_undertake_person"    />
+        <result property="refUndertakTpersonDo"    column="ref_undertak_tperson_do"    />
+        <result property="dictRiskAssessment"    column="dict_risk_assessment"    />
+        <result property="dictFirstUndertake"    column="dict_first_undertake"    />
+        <result property="customerReq"    column="customer_req"    />
+        <result property="projectProgress"    column="project_progress"    />
+        <result property="dictWfState"    column="dict_wf_state"    />
+        <result property="dictProjectStatus"    column="dict_project_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="delay"    column="delay"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="creator"    column="creator"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjProjectVo">
+        select id, project_code, project_name, dict_project_type, dict_project_type_sub, ref_id_cuscode, ref_cusname, project_desc, project_starttime, project_endtime, cusname_todo, ref_project_manager, ref_undertake_person, ref_undertak_tperson_do, dict_risk_assessment, dict_first_undertake, customer_req, project_progress, dict_wf_state, dict_project_status, remark, delay, create_time, create_id, creator, update_time, update_id, deleted, order_id, order_status from pj_project
+    </sql>
+
+    <select id="selectPjProjectList" parameterType="PjProject" resultMap="PjProjectResult">
+        <include refid="selectPjProjectVo"/>
+        <where>  
+            <if test="projectCode != null  and projectCode != ''"> and project_code = #{projectCode}</if>
+            <if test="projectName != null  and projectName != ''"> and project_name like concat('%', #{projectName}, '%')</if>
+            <if test="dictProjectType != null  and dictProjectType != ''"> and dict_project_type = #{dictProjectType}</if>
+            <if test="dictProjectTypeSub != null  and dictProjectTypeSub != ''"> and dict_project_type_sub = #{dictProjectTypeSub}</if>
+            <if test="refIdCuscode != null  and refIdCuscode != ''"> and ref_id_cuscode = #{refIdCuscode}</if>
+            <if test="refCusname != null  and refCusname != ''"> and ref_cusname like concat('%', #{refCusname}, '%')</if>
+            <if test="projectDesc != null  and projectDesc != ''"> and project_desc = #{projectDesc}</if>
+            <if test="projectStarttime != null "> and project_starttime = #{projectStarttime}</if>
+            <if test="projectEndtime != null "> and project_endtime = #{projectEndtime}</if>
+            <if test="cusnameTodo != null  and cusnameTodo != ''"> and cusname_todo = #{cusnameTodo}</if>
+            <if test="refProjectManager != null  and refProjectManager != ''"> and ref_project_manager = #{refProjectManager}</if>
+            <if test="refUndertakePerson != null  and refUndertakePerson != ''"> and ref_undertake_person = #{refUndertakePerson}</if>
+            <if test="refUndertakTpersonDo != null  and refUndertakTpersonDo != ''"> and ref_undertak_tperson_do = #{refUndertakTpersonDo}</if>
+            <if test="dictRiskAssessment != null  and dictRiskAssessment != ''"> and dict_risk_assessment = #{dictRiskAssessment}</if>
+            <if test="dictFirstUndertake != null  and dictFirstUndertake != ''"> and dict_first_undertake = #{dictFirstUndertake}</if>
+            <if test="customerReq != null  and customerReq != ''"> and customer_req = #{customerReq}</if>
+            <if test="projectProgress != null "> and project_progress = #{projectProgress}</if>
+            <if test="dictWfState != null  and dictWfState != ''"> and dict_wf_state = #{dictWfState}</if>
+            <if test="dictProjectStatus != null  and dictProjectStatus != ''"> and dict_project_status = #{dictProjectStatus}</if>
+            <if test="delay != null  and delay != ''"> and delay = #{delay}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectById" parameterType="String" resultMap="PjProjectResult">
+        <include refid="selectPjProjectVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProject" parameterType="PjProject">
+        insert into pj_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="projectCode != null and projectCode != ''">project_code,</if>
+            <if test="projectName != null and projectName != ''">project_name,</if>
+            <if test="dictProjectType != null and dictProjectType != ''">dict_project_type,</if>
+            <if test="dictProjectTypeSub != null and dictProjectTypeSub != ''">dict_project_type_sub,</if>
+            <if test="refIdCuscode != null">ref_id_cuscode,</if>
+            <if test="refCusname != null and refCusname != ''">ref_cusname,</if>
+            <if test="projectDesc != null">project_desc,</if>
+            <if test="projectStarttime != null">project_starttime,</if>
+            <if test="projectEndtime != null">project_endtime,</if>
+            <if test="cusnameTodo != null and cusnameTodo != ''">cusname_todo,</if>
+            <if test="refProjectManager != null and refProjectManager != ''">ref_project_manager,</if>
+            <if test="refUndertakePerson != null">ref_undertake_person,</if>
+            <if test="refUndertakTpersonDo != null">ref_undertak_tperson_do,</if>
+            <if test="dictRiskAssessment != null and dictRiskAssessment != ''">dict_risk_assessment,</if>
+            <if test="dictFirstUndertake != null">dict_first_undertake,</if>
+            <if test="customerReq != null">customer_req,</if>
+            <if test="projectProgress != null">project_progress,</if>
+            <if test="dictWfState != null">dict_wf_state,</if>
+            <if test="dictProjectStatus != null">dict_project_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delay != null">delay,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="creator != null">creator,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="projectCode != null and projectCode != ''">#{projectCode},</if>
+            <if test="projectName != null and projectName != ''">#{projectName},</if>
+            <if test="dictProjectType != null and dictProjectType != ''">#{dictProjectType},</if>
+            <if test="dictProjectTypeSub != null and dictProjectTypeSub != ''">#{dictProjectTypeSub},</if>
+            <if test="refIdCuscode != null">#{refIdCuscode},</if>
+            <if test="refCusname != null and refCusname != ''">#{refCusname},</if>
+            <if test="projectDesc != null">#{projectDesc},</if>
+            <if test="projectStarttime != null">#{projectStarttime},</if>
+            <if test="projectEndtime != null">#{projectEndtime},</if>
+            <if test="cusnameTodo != null and cusnameTodo != ''">#{cusnameTodo},</if>
+            <if test="refProjectManager != null and refProjectManager != ''">#{refProjectManager},</if>
+            <if test="refUndertakePerson != null">#{refUndertakePerson},</if>
+            <if test="refUndertakTpersonDo != null">#{refUndertakTpersonDo},</if>
+            <if test="dictRiskAssessment != null and dictRiskAssessment != ''">#{dictRiskAssessment},</if>
+            <if test="dictFirstUndertake != null">#{dictFirstUndertake},</if>
+            <if test="customerReq != null">#{customerReq},</if>
+            <if test="projectProgress != null">#{projectProgress},</if>
+            <if test="dictWfState != null">#{dictWfState},</if>
+            <if test="dictProjectStatus != null">#{dictProjectStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delay != null">#{delay},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProject" parameterType="PjProject">
+        update pj_project
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectCode != null and projectCode != ''">project_code = #{projectCode},</if>
+            <if test="projectName != null and projectName != ''">project_name = #{projectName},</if>
+            <if test="dictProjectType != null and dictProjectType != ''">dict_project_type = #{dictProjectType},</if>
+            <if test="dictProjectTypeSub != null and dictProjectTypeSub != ''">dict_project_type_sub = #{dictProjectTypeSub},</if>
+            <if test="refIdCuscode != null">ref_id_cuscode = #{refIdCuscode},</if>
+            <if test="refCusname != null and refCusname != ''">ref_cusname = #{refCusname},</if>
+            <if test="projectDesc != null">project_desc = #{projectDesc},</if>
+            <if test="projectStarttime != null">project_starttime = #{projectStarttime},</if>
+            <if test="projectEndtime != null">project_endtime = #{projectEndtime},</if>
+            <if test="cusnameTodo != null and cusnameTodo != ''">cusname_todo = #{cusnameTodo},</if>
+            <if test="refProjectManager != null and refProjectManager != ''">ref_project_manager = #{refProjectManager},</if>
+            <if test="refUndertakePerson != null">ref_undertake_person = #{refUndertakePerson},</if>
+            <if test="refUndertakTpersonDo != null">ref_undertak_tperson_do = #{refUndertakTpersonDo},</if>
+            <if test="dictRiskAssessment != null and dictRiskAssessment != ''">dict_risk_assessment = #{dictRiskAssessment},</if>
+            <if test="dictFirstUndertake != null">dict_first_undertake = #{dictFirstUndertake},</if>
+            <if test="customerReq != null">customer_req = #{customerReq},</if>
+            <if test="projectProgress != null">project_progress = #{projectProgress},</if>
+            <if test="dictWfState != null">dict_wf_state = #{dictWfState},</if>
+            <if test="dictProjectStatus != null">dict_project_status = #{dictProjectStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delay != null">delay = #{delay},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectById" parameterType="String">
+        delete from pj_project where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectByIds" parameterType="String">
+        delete from pj_project where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

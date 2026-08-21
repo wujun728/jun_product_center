@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectDailyMapper">
+    
+    <resultMap type="PjProjectDaily" id="PjProjectDailyResult">
+        <result property="id"    column="id"    />
+        <result property="planName"    column="plan_name"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="dictDailyType"    column="dict_daily_type"    />
+        <result property="dailyDate"    column="daily_date"    />
+        <result property="dailyDetail"    column="daily_detail"    />
+        <result property="costTime"    column="cost_time"    />
+        <result property="dictRisk"    column="dict_risk"    />
+        <result property="dictAskHelp"    column="dict_ask_help"    />
+        <result property="dictIsDelay"    column="dict_is_delay"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjProjectDailyVo">
+        select id, plan_name, ref_project_code, ref_project_name, dict_daily_type, daily_date, daily_detail, cost_time, dict_risk, dict_ask_help, dict_is_delay, remark, creator, create_time, create_id, update_time, update_id, order_id, order_status from pj_project_daily
+    </sql>
+
+    <select id="selectPjProjectDailyList" parameterType="PjProjectDaily" resultMap="PjProjectDailyResult">
+        <include refid="selectPjProjectDailyVo"/>
+        <where>  
+            <if test="planName != null  and planName != ''"> and plan_name like concat('%', #{planName}, '%')</if>
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="dictDailyType != null  and dictDailyType != ''"> and dict_daily_type = #{dictDailyType}</if>
+            <if test="dailyDate != null "> and daily_date = #{dailyDate}</if>
+            <if test="dailyDetail != null  and dailyDetail != ''"> and daily_detail = #{dailyDetail}</if>
+            <if test="costTime != null "> and cost_time = #{costTime}</if>
+            <if test="dictRisk != null  and dictRisk != ''"> and dict_risk = #{dictRisk}</if>
+            <if test="dictAskHelp != null  and dictAskHelp != ''"> and dict_ask_help = #{dictAskHelp}</if>
+            <if test="dictIsDelay != null  and dictIsDelay != ''"> and dict_is_delay = #{dictIsDelay}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectDailyById" parameterType="String" resultMap="PjProjectDailyResult">
+        <include refid="selectPjProjectDailyVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectDaily" parameterType="PjProjectDaily">
+        insert into pj_project_daily
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="planName != null and planName != ''">plan_name,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="dictDailyType != null">dict_daily_type,</if>
+            <if test="dailyDate != null">daily_date,</if>
+            <if test="dailyDetail != null and dailyDetail != ''">daily_detail,</if>
+            <if test="costTime != null">cost_time,</if>
+            <if test="dictRisk != null">dict_risk,</if>
+            <if test="dictAskHelp != null">dict_ask_help,</if>
+            <if test="dictIsDelay != null">dict_is_delay,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="planName != null and planName != ''">#{planName},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="dictDailyType != null">#{dictDailyType},</if>
+            <if test="dailyDate != null">#{dailyDate},</if>
+            <if test="dailyDetail != null and dailyDetail != ''">#{dailyDetail},</if>
+            <if test="costTime != null">#{costTime},</if>
+            <if test="dictRisk != null">#{dictRisk},</if>
+            <if test="dictAskHelp != null">#{dictAskHelp},</if>
+            <if test="dictIsDelay != null">#{dictIsDelay},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectDaily" parameterType="PjProjectDaily">
+        update pj_project_daily
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="planName != null and planName != ''">plan_name = #{planName},</if>
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="dictDailyType != null">dict_daily_type = #{dictDailyType},</if>
+            <if test="dailyDate != null">daily_date = #{dailyDate},</if>
+            <if test="dailyDetail != null and dailyDetail != ''">daily_detail = #{dailyDetail},</if>
+            <if test="costTime != null">cost_time = #{costTime},</if>
+            <if test="dictRisk != null">dict_risk = #{dictRisk},</if>
+            <if test="dictAskHelp != null">dict_ask_help = #{dictAskHelp},</if>
+            <if test="dictIsDelay != null">dict_is_delay = #{dictIsDelay},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectDailyById" parameterType="String">
+        delete from pj_project_daily where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectDailyByIds" parameterType="String">
+        delete from pj_project_daily where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

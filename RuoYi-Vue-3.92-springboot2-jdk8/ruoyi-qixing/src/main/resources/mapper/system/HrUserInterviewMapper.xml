@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserInterviewMapper">
+    
+    <resultMap type="HrUserInterview" id="HrUserInterviewResult">
+        <result property="id"    column="id"    />
+        <result property="refPeopleName"    column="ref_people_name"    />
+        <result property="ivTime"    column="iv_time"    />
+        <result property="dictIvType"    column="dict_iv_type"    />
+        <result property="refIvUsername"    column="ref_iv_username"    />
+        <result property="ivPhone"    column="iv_phone"    />
+        <result property="dictResult"    column="dict_result"    />
+        <result property="ivEvaluate"    column="iv_evaluate"    />
+        <result property="jobName"    column="job_name"    />
+        <result property="jobDesc"    column="job_desc"    />
+        <result property="workYear"    column="work_year"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="workContent"    column="work_content"    />
+        <result property="jobMoney"    column="job_money"    />
+        <result property="getInCompayTime"    column="get_in_compay_time"    />
+        <result property="outJobDesc"    column="out_job_desc"    />
+        <result property="jobSkill"    column="job_skill"    />
+        <result property="jobInterview"    column="job_interview"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectHrUserInterviewVo">
+        select id, ref_people_name, iv_time, dict_iv_type, ref_iv_username, iv_phone, dict_result, iv_evaluate, job_name, job_desc, work_year, work_location, work_content, job_money, get_in_compay_time, out_job_desc, job_skill, job_interview, remark, create_time, create_id, update_time, update_id from hr_user_interview
+    </sql>
+
+    <select id="selectHrUserInterviewList" parameterType="HrUserInterview" resultMap="HrUserInterviewResult">
+        <include refid="selectHrUserInterviewVo"/>
+        <where>  
+            <if test="refPeopleName != null  and refPeopleName != ''"> and ref_people_name like concat('%', #{refPeopleName}, '%')</if>
+            <if test="ivTime != null "> and iv_time = #{ivTime}</if>
+            <if test="dictIvType != null  and dictIvType != ''"> and dict_iv_type = #{dictIvType}</if>
+            <if test="refIvUsername != null  and refIvUsername != ''"> and ref_iv_username like concat('%', #{refIvUsername}, '%')</if>
+            <if test="ivPhone != null  and ivPhone != ''"> and iv_phone = #{ivPhone}</if>
+            <if test="dictResult != null  and dictResult != ''"> and dict_result = #{dictResult}</if>
+            <if test="ivEvaluate != null  and ivEvaluate != ''"> and iv_evaluate = #{ivEvaluate}</if>
+            <if test="jobName != null  and jobName != ''"> and job_name like concat('%', #{jobName}, '%')</if>
+            <if test="jobDesc != null  and jobDesc != ''"> and job_desc = #{jobDesc}</if>
+            <if test="workYear != null "> and work_year = #{workYear}</if>
+            <if test="workLocation != null  and workLocation != ''"> and work_location = #{workLocation}</if>
+            <if test="workContent != null  and workContent != ''"> and work_content = #{workContent}</if>
+            <if test="jobMoney != null "> and job_money = #{jobMoney}</if>
+            <if test="getInCompayTime != null "> and get_in_compay_time = #{getInCompayTime}</if>
+            <if test="outJobDesc != null  and outJobDesc != ''"> and out_job_desc = #{outJobDesc}</if>
+            <if test="jobSkill != null  and jobSkill != ''"> and job_skill = #{jobSkill}</if>
+            <if test="jobInterview != null  and jobInterview != ''"> and job_interview = #{jobInterview}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserInterviewById" parameterType="String" resultMap="HrUserInterviewResult">
+        <include refid="selectHrUserInterviewVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserInterview" parameterType="HrUserInterview">
+        insert into hr_user_interview
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refPeopleName != null and refPeopleName != ''">ref_people_name,</if>
+            <if test="ivTime != null">iv_time,</if>
+            <if test="dictIvType != null and dictIvType != ''">dict_iv_type,</if>
+            <if test="refIvUsername != null and refIvUsername != ''">ref_iv_username,</if>
+            <if test="ivPhone != null and ivPhone != ''">iv_phone,</if>
+            <if test="dictResult != null">dict_result,</if>
+            <if test="ivEvaluate != null and ivEvaluate != ''">iv_evaluate,</if>
+            <if test="jobName != null">job_name,</if>
+            <if test="jobDesc != null">job_desc,</if>
+            <if test="workYear != null">work_year,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="workContent != null">work_content,</if>
+            <if test="jobMoney != null">job_money,</if>
+            <if test="getInCompayTime != null">get_in_compay_time,</if>
+            <if test="outJobDesc != null">out_job_desc,</if>
+            <if test="jobSkill != null">job_skill,</if>
+            <if test="jobInterview != null and jobInterview != ''">job_interview,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refPeopleName != null and refPeopleName != ''">#{refPeopleName},</if>
+            <if test="ivTime != null">#{ivTime},</if>
+            <if test="dictIvType != null and dictIvType != ''">#{dictIvType},</if>
+            <if test="refIvUsername != null and refIvUsername != ''">#{refIvUsername},</if>
+            <if test="ivPhone != null and ivPhone != ''">#{ivPhone},</if>
+            <if test="dictResult != null">#{dictResult},</if>
+            <if test="ivEvaluate != null and ivEvaluate != ''">#{ivEvaluate},</if>
+            <if test="jobName != null">#{jobName},</if>
+            <if test="jobDesc != null">#{jobDesc},</if>
+            <if test="workYear != null">#{workYear},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="workContent != null">#{workContent},</if>
+            <if test="jobMoney != null">#{jobMoney},</if>
+            <if test="getInCompayTime != null">#{getInCompayTime},</if>
+            <if test="outJobDesc != null">#{outJobDesc},</if>
+            <if test="jobSkill != null">#{jobSkill},</if>
+            <if test="jobInterview != null and jobInterview != ''">#{jobInterview},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserInterview" parameterType="HrUserInterview">
+        update hr_user_interview
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refPeopleName != null and refPeopleName != ''">ref_people_name = #{refPeopleName},</if>
+            <if test="ivTime != null">iv_time = #{ivTime},</if>
+            <if test="dictIvType != null and dictIvType != ''">dict_iv_type = #{dictIvType},</if>
+            <if test="refIvUsername != null and refIvUsername != ''">ref_iv_username = #{refIvUsername},</if>
+            <if test="ivPhone != null and ivPhone != ''">iv_phone = #{ivPhone},</if>
+            <if test="dictResult != null">dict_result = #{dictResult},</if>
+            <if test="ivEvaluate != null and ivEvaluate != ''">iv_evaluate = #{ivEvaluate},</if>
+            <if test="jobName != null">job_name = #{jobName},</if>
+            <if test="jobDesc != null">job_desc = #{jobDesc},</if>
+            <if test="workYear != null">work_year = #{workYear},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="workContent != null">work_content = #{workContent},</if>
+            <if test="jobMoney != null">job_money = #{jobMoney},</if>
+            <if test="getInCompayTime != null">get_in_compay_time = #{getInCompayTime},</if>
+            <if test="outJobDesc != null">out_job_desc = #{outJobDesc},</if>
+            <if test="jobSkill != null">job_skill = #{jobSkill},</if>
+            <if test="jobInterview != null and jobInterview != ''">job_interview = #{jobInterview},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserInterviewById" parameterType="String">
+        delete from hr_user_interview where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserInterviewByIds" parameterType="String">
+        delete from hr_user_interview where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

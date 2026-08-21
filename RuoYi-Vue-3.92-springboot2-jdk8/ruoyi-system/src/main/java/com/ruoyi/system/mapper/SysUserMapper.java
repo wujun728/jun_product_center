@@ -53,6 +53,22 @@ public interface SysUserMapper
     public SysUser selectUserById(Long userId);
 
     /**
+     * [MIG] 根据用户ID列表查询用户（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户列表
+     */
+    public List<SysUser> selectByUserIds(List<String> userIds);
+
+    /**
+     * [MIG] 根据用户ID列表查询用户详情（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 用户详情列表
+     */
+    public List<SysUser> selectDetailByUserIds(List<String> userIds);
+
+    /**
      * 新增用户信息
      * 
      * @param user 用户信息

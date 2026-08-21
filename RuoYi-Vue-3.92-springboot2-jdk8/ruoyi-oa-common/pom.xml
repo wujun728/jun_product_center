@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent><groupId>com.ruoyi</groupId><artifactId>ruoyi</artifactId><version>3.9.2</version><relativePath>../pom.xml</relativePath></parent>
+    <artifactId>ruoyi-oa-common</artifactId><version>1.0.0</version><packaging>pom</packaging><description>工具/基础模块组</description>
+    <modules><module>ruoyi-tools</module><module>ruoyi-file</module><module>ruoyi-sms</module><module>ruoyi-todo</module></modules>
+</project>

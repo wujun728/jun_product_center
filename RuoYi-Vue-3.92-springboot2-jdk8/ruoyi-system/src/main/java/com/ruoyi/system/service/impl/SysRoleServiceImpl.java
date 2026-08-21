@@ -83,6 +83,18 @@ public class SysRoleServiceImpl implements ISysRoleService
     }
 
     /**
+     * [MIG] 根据用户ID列表查询角色列表（OA 迁移引入）
+     *
+     * @param userIds 用户ID列表
+     * @return 角色列表
+     */
+    @Override
+    public List<SysRole> selectRolesByUserIds(List<String> userIds)
+    {
+        return roleMapper.selectRolesByUserIds(userIds);
+    }
+
+    /**
      * 根据用户ID查询权限
      * 
      * @param userId 用户ID

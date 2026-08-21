@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.BizMailMapper">
+    <resultMap type="com.ruoyi.qixing.domain.BizMail" id="BizMailResult">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="desc1" column="desc1"/>
+        <result property="key1" column="key1"/>
+        <result property="value1" column="value1"/>
+        <result property="date1" column="date1"/>
+        <result property="remark" column="remark"/>
+        <result property="createId" column="create_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <sql id="selectBizMailVo">
+        select id, title, desc1, key1, value1, date1, remark, create_id, create_time, update_time from biz_mail
+    </sql>
+    <select id="selectBizMailList" parameterType="com.ruoyi.qixing.domain.BizMail" resultMap="BizMailResult">
+        <include refid="selectBizMailVo"/>
+        <where>
+            <if test="title != null and title != ''"> AND title like concat('%', #{title}, '%')</if>
+            <if test="desc1 != null and desc1 != ''"> AND desc1 like concat('%', #{desc1}, '%')</if>
+        </where>
+    </select>
+    <select id="selectBizMailById" parameterType="String" resultMap="BizMailResult">
+        <include refid="selectBizMailVo"/> where id = #{id}
+    </select>
+    <insert id="insertBizMail" parameterType="com.ruoyi.qixing.domain.BizMail">
+        insert into biz_mail <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="desc1 != null">desc1,</if>
+            <if test="key1 != null">key1,</if>
+            <if test="value1 != null">value1,</if>
+            <if test="date1 != null">date1,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            create_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="desc1 != null">#{desc1},</if>
+            <if test="key1 != null">#{key1},</if>
+            <if test="value1 != null">#{value1},</if>
+            <if test="date1 != null">#{date1},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            sysdate(),
+        </trim>
+    </insert>
+    <update id="updateBizMail" parameterType="com.ruoyi.qixing.domain.BizMail">
+        update biz_mail <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="desc1 != null">desc1 = #{desc1},</if>
+            <if test="key1 != null">key1 = #{key1},</if>
+            <if test="value1 != null">value1 = #{value1},</if>
+            <if test="date1 != null">date1 = #{date1},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate(),
+        </trim> where id = #{id}
+    </update>
+    <delete id="deleteBizMailByIds" parameterType="String">
+        delete from biz_mail where id in <foreach item="id" collection="array" open="(" separator="," close=")">#{id}</foreach>
+    </delete>
+</mapper>

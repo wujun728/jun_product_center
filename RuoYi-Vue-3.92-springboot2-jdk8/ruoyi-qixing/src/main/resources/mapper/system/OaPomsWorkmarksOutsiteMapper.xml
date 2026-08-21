@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.OaPomsWorkmarksOutsiteMapper">
+    
+    <resultMap type="OaPomsWorkmarksOutsite" id="OaPomsWorkmarksOutsiteResult">
+        <result property="id"    column="id"    />
+        <result property="usercode"    column="usercode"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="workDay"    column="work_day"    />
+        <result property="outsiteDesc"    column="outsite_desc"    />
+        <result property="beginTime"    column="begin_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="workTotalTime"    column="work_total_time"    />
+        <result property="dictWfstateOutsite"    column="dict_wfstate_outsite"    />
+        <result property="currTodo"    column="curr_todo"    />
+        <result property="creator"    column="creator"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+        <result property="createId"    column="create_id"    />
+    </resultMap>
+
+    <sql id="selectOaPomsWorkmarksOutsiteVo">
+        select id, usercode, ref_username, work_day, outsite_desc, begin_time, end_time, work_total_time, dict_wfstate_outsite, curr_todo, creator, remark, create_time, update_time, update_id, order_id, order_status, create_id from oa_poms_workmarks_outsite
+    </sql>
+
+    <select id="selectOaPomsWorkmarksOutsiteList" parameterType="OaPomsWorkmarksOutsite" resultMap="OaPomsWorkmarksOutsiteResult">
+        <include refid="selectOaPomsWorkmarksOutsiteVo"/>
+        <where>  
+            <if test="usercode != null  and usercode != ''"> and usercode = #{usercode}</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="workDay != null "> and work_day = #{workDay}</if>
+            <if test="outsiteDesc != null  and outsiteDesc != ''"> and outsite_desc = #{outsiteDesc}</if>
+            <if test="beginTime != null "> and begin_time = #{beginTime}</if>
+            <if test="endTime != null "> and end_time = #{endTime}</if>
+            <if test="workTotalTime != null "> and work_total_time = #{workTotalTime}</if>
+            <if test="dictWfstateOutsite != null  and dictWfstateOutsite != ''"> and dict_wfstate_outsite = #{dictWfstateOutsite}</if>
+            <if test="currTodo != null  and currTodo != ''"> and curr_todo = #{currTodo}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaPomsWorkmarksOutsiteById" parameterType="String" resultMap="OaPomsWorkmarksOutsiteResult">
+        <include refid="selectOaPomsWorkmarksOutsiteVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaPomsWorkmarksOutsite" parameterType="OaPomsWorkmarksOutsite">
+        insert into oa_poms_workmarks_outsite
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="usercode != null and usercode != ''">usercode,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="workDay != null">work_day,</if>
+            <if test="outsiteDesc != null and outsiteDesc != ''">outsite_desc,</if>
+            <if test="beginTime != null">begin_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="workTotalTime != null">work_total_time,</if>
+            <if test="dictWfstateOutsite != null">dict_wfstate_outsite,</if>
+            <if test="currTodo != null">curr_todo,</if>
+            <if test="creator != null">creator,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+            <if test="createId != null">create_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="usercode != null and usercode != ''">#{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="workDay != null">#{workDay},</if>
+            <if test="outsiteDesc != null and outsiteDesc != ''">#{outsiteDesc},</if>
+            <if test="beginTime != null">#{beginTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="workTotalTime != null">#{workTotalTime},</if>
+            <if test="dictWfstateOutsite != null">#{dictWfstateOutsite},</if>
+            <if test="currTodo != null">#{currTodo},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="createId != null">#{createId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaPomsWorkmarksOutsite" parameterType="OaPomsWorkmarksOutsite">
+        update oa_poms_workmarks_outsite
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usercode != null and usercode != ''">usercode = #{usercode},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="workDay != null">work_day = #{workDay},</if>
+            <if test="outsiteDesc != null and outsiteDesc != ''">outsite_desc = #{outsiteDesc},</if>
+            <if test="beginTime != null">begin_time = #{beginTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="workTotalTime != null">work_total_time = #{workTotalTime},</if>
+            <if test="dictWfstateOutsite != null">dict_wfstate_outsite = #{dictWfstateOutsite},</if>
+            <if test="currTodo != null">curr_todo = #{currTodo},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaPomsWorkmarksOutsiteById" parameterType="String">
+        delete from oa_poms_workmarks_outsite where id = #{id}
+    </delete>
+
+    <delete id="deleteOaPomsWorkmarksOutsiteByIds" parameterType="String">
+        delete from oa_poms_workmarks_outsite where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

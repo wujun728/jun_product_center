@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HolidaySettingMapper">
+    
+    <resultMap type="HolidaySetting" id="HolidaySettingResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="holidayName"    column="holiday_name"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectHolidaySettingVo">
+        select id, year, holiday_name, start_date, end_date, del_flag, remark, create_id, create_time, update_id, update_time from t_holiday_setting
+    </sql>
+
+    <select id="selectHolidaySettingList" parameterType="HolidaySetting" resultMap="HolidaySettingResult">
+        <include refid="selectHolidaySettingVo"/>
+        <where>
+            del_flag = '0'
+            <if test="year != null  and year != ''"> and year = #{year}</if>
+            <if test="holidayName != null  and holidayName != ''"> and holiday_name like concat('%', #{holidayName}, '%')</if>
+            <if test="params.beginStartDate != null and params.endStartDate != null">
+                <![CDATA[
+                    and date_format(start_date,'%Y-%m-%d') >= date_format(#{params.beginStartDate},'%Y-%m-%d')
+                    and date_format(start_date,'%Y-%m-%d') <= date_format(#{params.endStartDate},'%Y-%m-%d')
+                ]]>
+            </if>
+        </where>
+        order by year desc, start_date asc
+    </select>
+    
+    <select id="selectHolidaySettingById" parameterType="String" resultMap="HolidaySettingResult">
+        <include refid="selectHolidaySettingVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getYearHoliday" resultMap="HolidaySettingResult">
+        <include refid="selectHolidaySettingVo"/>
+        where year = #{year} and del_flag = '0'
+        order by start_date asc
+    </select>
+
+    <select id="selectHolidayByIds" resultMap="HolidaySettingResult">
+        <include refid="selectHolidaySettingVo"/>
+        where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="insertHolidaySetting" parameterType="HolidaySetting">
+        insert into t_holiday_setting
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="year != null and year != ''">year,</if>
+            <if test="holidayName != null and holidayName != ''">holiday_name,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="year != null and year != ''">#{year},</if>
+            <if test="holidayName != null and holidayName != ''">#{holidayName},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHolidaySetting" parameterType="HolidaySetting">
+        update t_holiday_setting
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null and year != ''">year = #{year},</if>
+            <if test="holidayName != null and holidayName != ''">holiday_name = #{holidayName},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHolidaySettingById" parameterType="String">
+        delete from t_holiday_setting where id = #{id}
+    </delete>
+
+    <delete id="deleteHolidaySettingByIds" parameterType="String">
+        delete from t_holiday_setting where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

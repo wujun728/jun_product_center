@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectDraftMapper">
+    
+    <resultMap type="PjProjectDraft" id="PjProjectDraftResult">
+        <result property="id"    column="id"    />
+        <result property="draftName"    column="draft_name"    />
+        <result property="dictDraftType"    column="dict_draft_type"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="draftDesc"    column="draft_desc"    />
+        <result property="draftTime"    column="draft_time"    />
+        <result property="refDraftBy"    column="ref_draft_by"    />
+        <result property="dictDraftStatus"    column="dict_draft_status"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjProjectDraftVo">
+        select id, draft_name, dict_draft_type, ref_project_code, ref_project_name, draft_desc, draft_time, ref_draft_by, dict_draft_status, remark, creator, create_time, create_id, update_time, update_id, order_id, order_status from pj_project_draft
+    </sql>
+
+    <select id="selectPjProjectDraftList" parameterType="PjProjectDraft" resultMap="PjProjectDraftResult">
+        <include refid="selectPjProjectDraftVo"/>
+        <where>  
+            <if test="draftName != null  and draftName != ''"> and draft_name like concat('%', #{draftName}, '%')</if>
+            <if test="dictDraftType != null  and dictDraftType != ''"> and dict_draft_type = #{dictDraftType}</if>
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="draftDesc != null  and draftDesc != ''"> and draft_desc = #{draftDesc}</if>
+            <if test="draftTime != null "> and draft_time = #{draftTime}</if>
+            <if test="refDraftBy != null  and refDraftBy != ''"> and ref_draft_by = #{refDraftBy}</if>
+            <if test="dictDraftStatus != null  and dictDraftStatus != ''"> and dict_draft_status = #{dictDraftStatus}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectDraftById" parameterType="String" resultMap="PjProjectDraftResult">
+        <include refid="selectPjProjectDraftVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectDraft" parameterType="PjProjectDraft">
+        insert into pj_project_draft
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="draftName != null and draftName != ''">draft_name,</if>
+            <if test="dictDraftType != null and dictDraftType != ''">dict_draft_type,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="draftDesc != null">draft_desc,</if>
+            <if test="draftTime != null">draft_time,</if>
+            <if test="refDraftBy != null">ref_draft_by,</if>
+            <if test="dictDraftStatus != null">dict_draft_status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="draftName != null and draftName != ''">#{draftName},</if>
+            <if test="dictDraftType != null and dictDraftType != ''">#{dictDraftType},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="draftDesc != null">#{draftDesc},</if>
+            <if test="draftTime != null">#{draftTime},</if>
+            <if test="refDraftBy != null">#{refDraftBy},</if>
+            <if test="dictDraftStatus != null">#{dictDraftStatus},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectDraft" parameterType="PjProjectDraft">
+        update pj_project_draft
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="draftName != null and draftName != ''">draft_name = #{draftName},</if>
+            <if test="dictDraftType != null and dictDraftType != ''">dict_draft_type = #{dictDraftType},</if>
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="draftDesc != null">draft_desc = #{draftDesc},</if>
+            <if test="draftTime != null">draft_time = #{draftTime},</if>
+            <if test="refDraftBy != null">ref_draft_by = #{refDraftBy},</if>
+            <if test="dictDraftStatus != null">dict_draft_status = #{dictDraftStatus},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectDraftById" parameterType="String">
+        delete from pj_project_draft where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectDraftByIds" parameterType="String">
+        delete from pj_project_draft where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

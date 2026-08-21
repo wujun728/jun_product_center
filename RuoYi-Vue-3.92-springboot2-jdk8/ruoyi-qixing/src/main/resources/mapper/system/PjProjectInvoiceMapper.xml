@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.PjProjectInvoiceMapper">
+    
+    <resultMap type="PjProjectInvoice" id="PjProjectInvoiceResult">
+        <result property="id"    column="id"    />
+        <result property="refCustomerCode"    column="ref_customer_code"    />
+        <result property="refCustomerName"    column="ref_customer_name"    />
+        <result property="refProjectCode"    column="ref_project_code"    />
+        <result property="refProjectName"    column="ref_project_name"    />
+        <result property="dictType"    column="dict_type"    />
+        <result property="invoiceCompanyName"    column="invoice_company_name"    />
+        <result property="invoiceTaxNo"    column="invoice_tax_no"    />
+        <result property="address"    column="address"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="dictBank"    column="dict_bank"    />
+        <result property="bankCardNo"    column="bank_card_no"    />
+        <result property="invoiceMoney"    column="invoice_money"    />
+        <result property="dictInvoiceState"    column="dict_invoice_state"    />
+        <result property="dictWfState"    column="dict_wf_state"    />
+        <result property="refInvoiceMan"    column="ref_invoice_man"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="deleted"    column="deleted"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectPjProjectInvoiceVo">
+        select id, ref_customer_code, ref_customer_name, ref_project_code, ref_project_name, dict_type, invoice_company_name, invoice_tax_no, address, telephone, dict_bank, bank_card_no, invoice_money, dict_invoice_state, dict_wf_state, ref_invoice_man, remark, create_time, create_id, update_time, update_id, deleted, order_id, order_status from pj_project_invoice
+    </sql>
+
+    <select id="selectPjProjectInvoiceList" parameterType="PjProjectInvoice" resultMap="PjProjectInvoiceResult">
+        <include refid="selectPjProjectInvoiceVo"/>
+        <where>  
+            <if test="refCustomerCode != null  and refCustomerCode != ''"> and ref_customer_code = #{refCustomerCode}</if>
+            <if test="refCustomerName != null  and refCustomerName != ''"> and ref_customer_name like concat('%', #{refCustomerName}, '%')</if>
+            <if test="refProjectCode != null  and refProjectCode != ''"> and ref_project_code = #{refProjectCode}</if>
+            <if test="refProjectName != null  and refProjectName != ''"> and ref_project_name like concat('%', #{refProjectName}, '%')</if>
+            <if test="dictType != null  and dictType != ''"> and dict_type = #{dictType}</if>
+            <if test="invoiceCompanyName != null  and invoiceCompanyName != ''"> and invoice_company_name like concat('%', #{invoiceCompanyName}, '%')</if>
+            <if test="invoiceTaxNo != null  and invoiceTaxNo != ''"> and invoice_tax_no = #{invoiceTaxNo}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="dictBank != null  and dictBank != ''"> and dict_bank = #{dictBank}</if>
+            <if test="bankCardNo != null  and bankCardNo != ''"> and bank_card_no = #{bankCardNo}</if>
+            <if test="invoiceMoney != null "> and invoice_money = #{invoiceMoney}</if>
+            <if test="dictInvoiceState != null  and dictInvoiceState != ''"> and dict_invoice_state = #{dictInvoiceState}</if>
+            <if test="dictWfState != null  and dictWfState != ''"> and dict_wf_state = #{dictWfState}</if>
+            <if test="refInvoiceMan != null  and refInvoiceMan != ''"> and ref_invoice_man = #{refInvoiceMan}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="deleted != null "> and deleted = #{deleted}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectPjProjectInvoiceById" parameterType="String" resultMap="PjProjectInvoiceResult">
+        <include refid="selectPjProjectInvoiceVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertPjProjectInvoice" parameterType="PjProjectInvoice">
+        insert into pj_project_invoice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refCustomerCode != null">ref_customer_code,</if>
+            <if test="refCustomerName != null and refCustomerName != ''">ref_customer_name,</if>
+            <if test="refProjectCode != null">ref_project_code,</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name,</if>
+            <if test="dictType != null and dictType != ''">dict_type,</if>
+            <if test="invoiceCompanyName != null and invoiceCompanyName != ''">invoice_company_name,</if>
+            <if test="invoiceTaxNo != null and invoiceTaxNo != ''">invoice_tax_no,</if>
+            <if test="address != null">address,</if>
+            <if test="telephone != null">telephone,</if>
+            <if test="dictBank != null and dictBank != ''">dict_bank,</if>
+            <if test="bankCardNo != null and bankCardNo != ''">bank_card_no,</if>
+            <if test="invoiceMoney != null">invoice_money,</if>
+            <if test="dictInvoiceState != null and dictInvoiceState != ''">dict_invoice_state,</if>
+            <if test="dictWfState != null">dict_wf_state,</if>
+            <if test="refInvoiceMan != null and refInvoiceMan != ''">ref_invoice_man,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="deleted != null">deleted,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refCustomerCode != null">#{refCustomerCode},</if>
+            <if test="refCustomerName != null and refCustomerName != ''">#{refCustomerName},</if>
+            <if test="refProjectCode != null">#{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">#{refProjectName},</if>
+            <if test="dictType != null and dictType != ''">#{dictType},</if>
+            <if test="invoiceCompanyName != null and invoiceCompanyName != ''">#{invoiceCompanyName},</if>
+            <if test="invoiceTaxNo != null and invoiceTaxNo != ''">#{invoiceTaxNo},</if>
+            <if test="address != null">#{address},</if>
+            <if test="telephone != null">#{telephone},</if>
+            <if test="dictBank != null and dictBank != ''">#{dictBank},</if>
+            <if test="bankCardNo != null and bankCardNo != ''">#{bankCardNo},</if>
+            <if test="invoiceMoney != null">#{invoiceMoney},</if>
+            <if test="dictInvoiceState != null and dictInvoiceState != ''">#{dictInvoiceState},</if>
+            <if test="dictWfState != null">#{dictWfState},</if>
+            <if test="refInvoiceMan != null and refInvoiceMan != ''">#{refInvoiceMan},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="deleted != null">#{deleted},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePjProjectInvoice" parameterType="PjProjectInvoice">
+        update pj_project_invoice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refCustomerCode != null">ref_customer_code = #{refCustomerCode},</if>
+            <if test="refCustomerName != null and refCustomerName != ''">ref_customer_name = #{refCustomerName},</if>
+            <if test="refProjectCode != null">ref_project_code = #{refProjectCode},</if>
+            <if test="refProjectName != null and refProjectName != ''">ref_project_name = #{refProjectName},</if>
+            <if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
+            <if test="invoiceCompanyName != null and invoiceCompanyName != ''">invoice_company_name = #{invoiceCompanyName},</if>
+            <if test="invoiceTaxNo != null and invoiceTaxNo != ''">invoice_tax_no = #{invoiceTaxNo},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="dictBank != null and dictBank != ''">dict_bank = #{dictBank},</if>
+            <if test="bankCardNo != null and bankCardNo != ''">bank_card_no = #{bankCardNo},</if>
+            <if test="invoiceMoney != null">invoice_money = #{invoiceMoney},</if>
+            <if test="dictInvoiceState != null and dictInvoiceState != ''">dict_invoice_state = #{dictInvoiceState},</if>
+            <if test="dictWfState != null">dict_wf_state = #{dictWfState},</if>
+            <if test="refInvoiceMan != null and refInvoiceMan != ''">ref_invoice_man = #{refInvoiceMan},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="deleted != null">deleted = #{deleted},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deletePjProjectInvoiceById" parameterType="String">
+        delete from pj_project_invoice where id = #{id}
+    </delete>
+
+    <delete id="deletePjProjectInvoiceByIds" parameterType="String">
+        delete from pj_project_invoice where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

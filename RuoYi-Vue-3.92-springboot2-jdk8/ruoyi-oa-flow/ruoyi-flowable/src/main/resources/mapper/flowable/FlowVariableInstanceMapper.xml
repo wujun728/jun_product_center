@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.flowable.mapper.FlowVariableInstanceMapper">
+
+    <select id="selectVariableInstances" resultType="com.ruoyi.flowable.domain.dto.FlowVariableInstanceDto">
+        select
+            id_ id,
+            proc_inst_id_ processInstanceId,
+            execution_id_ executionId,
+            task_id_ taskId,
+            rev_ revision,
+            type_ type,
+            name_ name,
+            bytearray_id_ bytearrayId,
+            double_ doubleValue,
+            long_ longValue,
+            text_ textValue,
+            text2_ textValue2,
+            scope_id_ scopeId,
+            sub_scope_id_ subscopeId,
+            scope_type_ scopeType
+        from act_ru_variable
+        <where>
+            <if test="id != null">
+                AND id_ = #{id, jdbcType=VARCHAR}
+            </if>
+            <if test="taskId != null">
+                AND task_id_ = #{taskId, jdbcType=VARCHAR}
+            </if>
+            <if test="taskIds != null and !taskIds.isEmpty()">
+                AND task_id_ in
+                <foreach collection="taskIds" item="item" open="(" separator="," close=")">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="processInstanceId != null">
+                AND proc_inst_id_ = #{processInstanceId, jdbcType=VARCHAR}
+            </if>
+            <if test="executionId != null">
+                AND execution_id_ = #{executionId, jdbcType=VARCHAR}
+            </if>
+            <if test="executionIds != null and !executionIds.isEmpty()">
+                AND execution_id_ in
+                <foreach collection="executionIds" item="item" open="(" separator="," close=")">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="withoutTaskId">
+                AND task_id_ is null
+            </if>
+            <if test="scopeId != null">
+                AND scope_id_ = #{scopeId, jdbcType=VARCHAR}
+            </if>
+            <if test="scopeIds != null and !scopeIds.isEmpty()">
+                AND scope_id_ in
+                <foreach collection="scopeIds" item="item" open="(" separator="," close=")">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="subScopeId != null">
+                AND sub_scope_id_ = #{subScopeId, jdbcType=VARCHAR}
+            </if>
+            <if test="subScopeIds != null and !subScopeIds.isEmpty()">
+                AND sub_scope_id_ in
+                <foreach collection="subScopeIds" item="item" open="(" separator="," close=")">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="withoutSubScopeId">
+                AND sub_scope_id_ is null
+            </if>
+            <if test="scopeType != null">
+                AND scope_type_ = #{scopeType, jdbcType=VARCHAR}
+            </if>
+            <if test="scopeTypes != null and !scopeTypes.isEmpty()">
+                AND scope_type_ in
+                <foreach collection="scopeTypes" item="item" open="(" separator="," close=")">
+                    #{item, jdbcType=VARCHAR}
+                </foreach>
+            </if>
+            <if test="name != null">
+                AND name_ = #{name, jdbcType=VARCHAR}
+            </if>
+            <if test="names != null and !names.isEmpty()">
+                AND (
+                <foreach collection="names" item="item" separator=" or ">
+                    name_= #{item, jdbcType=VARCHAR}
+                </foreach>
+                )
+            </if>
+        </where>
+    </select>
+</mapper>

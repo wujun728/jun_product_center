@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.OaPomsWorkmarksLeaveMapper">
+    
+    <resultMap type="OaPomsWorkmarksLeave" id="OaPomsWorkmarksLeaveResult">
+        <result property="id"    column="id"    />
+        <result property="refUsercoce"    column="ref_usercoce"    />
+        <result property="refUsername"    column="ref_username"    />
+        <result property="refUserdept"    column="ref_userdept"    />
+        <result property="leaveDate"    column="leave_date"    />
+        <result property="leaveDateEnd"    column="leave_date_end"    />
+        <result property="dictLeanveType"    column="dict_leanve_type"    />
+        <result property="leaveDesc"    column="leave_desc"    />
+        <result property="leaveHours"    column="leave_hours"    />
+        <result property="leaveHours2"    column="leave_hours2"    />
+        <result property="dictApproveStatus"    column="dict_approve_status"    />
+        <result property="refCurrTodoPerson"    column="ref_curr_todo_person"    />
+        <result property="creator"    column="creator"    />
+        <result property="createId"    column="create_id"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectOaPomsWorkmarksLeaveVo">
+        select id, ref_usercoce, ref_username, ref_userdept, leave_date, leave_date_end, dict_leanve_type, leave_desc, leave_hours, leave_hours2, dict_approve_status, ref_curr_todo_person, creator, create_id, remark, create_time, update_time, update_id, order_id, order_state, order_status from oa_poms_workmarks_leave
+    </sql>
+
+    <select id="selectOaPomsWorkmarksLeaveList" parameterType="OaPomsWorkmarksLeave" resultMap="OaPomsWorkmarksLeaveResult">
+        <include refid="selectOaPomsWorkmarksLeaveVo"/>
+        <where>  
+            <if test="refUsercoce != null  and refUsercoce != ''"> and ref_usercoce = #{refUsercoce}</if>
+            <if test="refUsername != null  and refUsername != ''"> and ref_username like concat('%', #{refUsername}, '%')</if>
+            <if test="refUserdept != null  and refUserdept != ''"> and ref_userdept = #{refUserdept}</if>
+            <if test="leaveDate != null  and leaveDate != ''"> and leave_date = #{leaveDate}</if>
+            <if test="leaveDateEnd != null "> and leave_date_end = #{leaveDateEnd}</if>
+            <if test="dictLeanveType != null  and dictLeanveType != ''"> and dict_leanve_type = #{dictLeanveType}</if>
+            <if test="leaveDesc != null  and leaveDesc != ''"> and leave_desc = #{leaveDesc}</if>
+            <if test="leaveHours != null "> and leave_hours = #{leaveHours}</if>
+            <if test="leaveHours2 != null "> and leave_hours2 = #{leaveHours2}</if>
+            <if test="dictApproveStatus != null  and dictApproveStatus != ''"> and dict_approve_status = #{dictApproveStatus}</if>
+            <if test="refCurrTodoPerson != null  and refCurrTodoPerson != ''"> and ref_curr_todo_person = #{refCurrTodoPerson}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaPomsWorkmarksLeaveById" parameterType="String" resultMap="OaPomsWorkmarksLeaveResult">
+        <include refid="selectOaPomsWorkmarksLeaveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaPomsWorkmarksLeave" parameterType="OaPomsWorkmarksLeave">
+        insert into oa_poms_workmarks_leave
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="refUsercoce != null and refUsercoce != ''">ref_usercoce,</if>
+            <if test="refUsername != null and refUsername != ''">ref_username,</if>
+            <if test="refUserdept != null and refUserdept != ''">ref_userdept,</if>
+            <if test="leaveDate != null and leaveDate != ''">leave_date,</if>
+            <if test="leaveDateEnd != null">leave_date_end,</if>
+            <if test="dictLeanveType != null and dictLeanveType != ''">dict_leanve_type,</if>
+            <if test="leaveDesc != null and leaveDesc != ''">leave_desc,</if>
+            <if test="leaveHours != null">leave_hours,</if>
+            <if test="leaveHours2 != null">leave_hours2,</if>
+            <if test="dictApproveStatus != null">dict_approve_status,</if>
+            <if test="refCurrTodoPerson != null">ref_curr_todo_person,</if>
+            <if test="creator != null and creator != ''">creator,</if>
+            <if test="createId != null and createId != ''">create_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderState != null">order_state,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="refUsercoce != null and refUsercoce != ''">#{refUsercoce},</if>
+            <if test="refUsername != null and refUsername != ''">#{refUsername},</if>
+            <if test="refUserdept != null and refUserdept != ''">#{refUserdept},</if>
+            <if test="leaveDate != null and leaveDate != ''">#{leaveDate},</if>
+            <if test="leaveDateEnd != null">#{leaveDateEnd},</if>
+            <if test="dictLeanveType != null and dictLeanveType != ''">#{dictLeanveType},</if>
+            <if test="leaveDesc != null and leaveDesc != ''">#{leaveDesc},</if>
+            <if test="leaveHours != null">#{leaveHours},</if>
+            <if test="leaveHours2 != null">#{leaveHours2},</if>
+            <if test="dictApproveStatus != null">#{dictApproveStatus},</if>
+            <if test="refCurrTodoPerson != null">#{refCurrTodoPerson},</if>
+            <if test="creator != null and creator != ''">#{creator},</if>
+            <if test="createId != null and createId != ''">#{createId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderState != null">#{orderState},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaPomsWorkmarksLeave" parameterType="OaPomsWorkmarksLeave">
+        update oa_poms_workmarks_leave
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="refUsercoce != null and refUsercoce != ''">ref_usercoce = #{refUsercoce},</if>
+            <if test="refUsername != null and refUsername != ''">ref_username = #{refUsername},</if>
+            <if test="refUserdept != null and refUserdept != ''">ref_userdept = #{refUserdept},</if>
+            <if test="leaveDate != null and leaveDate != ''">leave_date = #{leaveDate},</if>
+            <if test="leaveDateEnd != null">leave_date_end = #{leaveDateEnd},</if>
+            <if test="dictLeanveType != null and dictLeanveType != ''">dict_leanve_type = #{dictLeanveType},</if>
+            <if test="leaveDesc != null and leaveDesc != ''">leave_desc = #{leaveDesc},</if>
+            <if test="leaveHours != null">leave_hours = #{leaveHours},</if>
+            <if test="leaveHours2 != null">leave_hours2 = #{leaveHours2},</if>
+            <if test="dictApproveStatus != null">dict_approve_status = #{dictApproveStatus},</if>
+            <if test="refCurrTodoPerson != null">ref_curr_todo_person = #{refCurrTodoPerson},</if>
+            <if test="creator != null and creator != ''">creator = #{creator},</if>
+            <if test="createId != null and createId != ''">create_id = #{createId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderState != null">order_state = #{orderState},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaPomsWorkmarksLeaveById" parameterType="String">
+        delete from oa_poms_workmarks_leave where id = #{id}
+    </delete>
+
+    <delete id="deleteOaPomsWorkmarksLeaveByIds" parameterType="String">
+        delete from oa_poms_workmarks_leave where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

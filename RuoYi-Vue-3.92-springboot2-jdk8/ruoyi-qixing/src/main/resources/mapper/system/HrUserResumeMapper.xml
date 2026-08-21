@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.HrUserResumeMapper">
+    
+    <resultMap type="HrUserResume" id="HrUserResumeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="wechat"    column="wechat"    />
+        <result property="telephone"    column="telephone"    />
+        <result property="dictSex"    column="dict_sex"    />
+        <result property="cuntroy"    column="cuntroy"    />
+        <result property="dictMariage"    column="dict_mariage"    />
+        <result property="dictNation"    column="dict_nation"    />
+        <result property="dictIsborn"    column="dict_isborn"    />
+        <result property="homeAdress"    column="home_adress"    />
+        <result property="dictPoliticsStatus"    column="dict_politics_status"    />
+        <result property="dictIdType"    column="dict_id_type"    />
+        <result property="idNo"    column="id_no"    />
+        <result property="urgencyLinkMan"    column="urgency_link_man"    />
+        <result property="urgencyLinkPhone"    column="urgency_link_phone"    />
+        <result property="urgencyLinkRelation"    column="urgency_link_relation"    />
+        <result property="qqNo"    column="qq_no"    />
+        <result property="dictFirestDegree"    column="dict_firest_degree"    />
+        <result property="dictDegredd"    column="dict_degredd"    />
+        <result property="professional"    column="professional"    />
+        <result property="dictEduType"    column="dict_edu_type"    />
+        <result property="whichColledge"    column="which_colledge"    />
+        <result property="dictColledge"    column="dict_colledge"    />
+        <result property="graduationDate"    column="graduation_date"    />
+        <result property="remark"    column="remark"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectHrUserResumeVo">
+        select id, name, phone, email, wechat, telephone, dict_sex, cuntroy, dict_mariage, dict_nation, dict_isborn, home_adress, dict_politics_status, dict_id_type, id_no, urgency_link_man, urgency_link_phone, urgency_link_relation, qq_no, dict_firest_degree, dict_degredd, professional, dict_edu_type, which_colledge, dict_colledge, graduation_date, remark, create_time, create_id, update_time, update_id from hr_user_resume
+    </sql>
+
+    <select id="selectHrUserResumeList" parameterType="HrUserResume" resultMap="HrUserResumeResult">
+        <include refid="selectHrUserResumeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="wechat != null  and wechat != ''"> and wechat = #{wechat}</if>
+            <if test="telephone != null  and telephone != ''"> and telephone = #{telephone}</if>
+            <if test="dictSex != null  and dictSex != ''"> and dict_sex = #{dictSex}</if>
+            <if test="cuntroy != null  and cuntroy != ''"> and cuntroy = #{cuntroy}</if>
+            <if test="dictMariage != null  and dictMariage != ''"> and dict_mariage = #{dictMariage}</if>
+            <if test="dictNation != null  and dictNation != ''"> and dict_nation = #{dictNation}</if>
+            <if test="dictIsborn != null  and dictIsborn != ''"> and dict_isborn = #{dictIsborn}</if>
+            <if test="homeAdress != null  and homeAdress != ''"> and home_adress = #{homeAdress}</if>
+            <if test="dictPoliticsStatus != null  and dictPoliticsStatus != ''"> and dict_politics_status = #{dictPoliticsStatus}</if>
+            <if test="dictIdType != null  and dictIdType != ''"> and dict_id_type = #{dictIdType}</if>
+            <if test="idNo != null  and idNo != ''"> and id_no = #{idNo}</if>
+            <if test="urgencyLinkMan != null  and urgencyLinkMan != ''"> and urgency_link_man = #{urgencyLinkMan}</if>
+            <if test="urgencyLinkPhone != null  and urgencyLinkPhone != ''"> and urgency_link_phone = #{urgencyLinkPhone}</if>
+            <if test="urgencyLinkRelation != null  and urgencyLinkRelation != ''"> and urgency_link_relation = #{urgencyLinkRelation}</if>
+            <if test="qqNo != null  and qqNo != ''"> and qq_no = #{qqNo}</if>
+            <if test="dictFirestDegree != null  and dictFirestDegree != ''"> and dict_firest_degree = #{dictFirestDegree}</if>
+            <if test="dictDegredd != null  and dictDegredd != ''"> and dict_degredd = #{dictDegredd}</if>
+            <if test="professional != null  and professional != ''"> and professional = #{professional}</if>
+            <if test="dictEduType != null  and dictEduType != ''"> and dict_edu_type = #{dictEduType}</if>
+            <if test="whichColledge != null  and whichColledge != ''"> and which_colledge = #{whichColledge}</if>
+            <if test="dictColledge != null  and dictColledge != ''"> and dict_colledge = #{dictColledge}</if>
+            <if test="graduationDate != null "> and graduation_date = #{graduationDate}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+        </where>
+    </select>
+    
+    <select id="selectHrUserResumeById" parameterType="String" resultMap="HrUserResumeResult">
+        <include refid="selectHrUserResumeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertHrUserResume" parameterType="HrUserResume">
+        insert into hr_user_resume
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="email != null and email != ''">email,</if>
+            <if test="wechat != null and wechat != ''">wechat,</if>
+            <if test="telephone != null and telephone != ''">telephone,</if>
+            <if test="dictSex != null and dictSex != ''">dict_sex,</if>
+            <if test="cuntroy != null and cuntroy != ''">cuntroy,</if>
+            <if test="dictMariage != null and dictMariage != ''">dict_mariage,</if>
+            <if test="dictNation != null and dictNation != ''">dict_nation,</if>
+            <if test="dictIsborn != null and dictIsborn != ''">dict_isborn,</if>
+            <if test="homeAdress != null and homeAdress != ''">home_adress,</if>
+            <if test="dictPoliticsStatus != null and dictPoliticsStatus != ''">dict_politics_status,</if>
+            <if test="dictIdType != null and dictIdType != ''">dict_id_type,</if>
+            <if test="idNo != null and idNo != ''">id_no,</if>
+            <if test="urgencyLinkMan != null">urgency_link_man,</if>
+            <if test="urgencyLinkPhone != null">urgency_link_phone,</if>
+            <if test="urgencyLinkRelation != null">urgency_link_relation,</if>
+            <if test="qqNo != null">qq_no,</if>
+            <if test="dictFirestDegree != null">dict_firest_degree,</if>
+            <if test="dictDegredd != null">dict_degredd,</if>
+            <if test="professional != null">professional,</if>
+            <if test="dictEduType != null">dict_edu_type,</if>
+            <if test="whichColledge != null">which_colledge,</if>
+            <if test="dictColledge != null">dict_colledge,</if>
+            <if test="graduationDate != null">graduation_date,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="email != null and email != ''">#{email},</if>
+            <if test="wechat != null and wechat != ''">#{wechat},</if>
+            <if test="telephone != null and telephone != ''">#{telephone},</if>
+            <if test="dictSex != null and dictSex != ''">#{dictSex},</if>
+            <if test="cuntroy != null and cuntroy != ''">#{cuntroy},</if>
+            <if test="dictMariage != null and dictMariage != ''">#{dictMariage},</if>
+            <if test="dictNation != null and dictNation != ''">#{dictNation},</if>
+            <if test="dictIsborn != null and dictIsborn != ''">#{dictIsborn},</if>
+            <if test="homeAdress != null and homeAdress != ''">#{homeAdress},</if>
+            <if test="dictPoliticsStatus != null and dictPoliticsStatus != ''">#{dictPoliticsStatus},</if>
+            <if test="dictIdType != null and dictIdType != ''">#{dictIdType},</if>
+            <if test="idNo != null and idNo != ''">#{idNo},</if>
+            <if test="urgencyLinkMan != null">#{urgencyLinkMan},</if>
+            <if test="urgencyLinkPhone != null">#{urgencyLinkPhone},</if>
+            <if test="urgencyLinkRelation != null">#{urgencyLinkRelation},</if>
+            <if test="qqNo != null">#{qqNo},</if>
+            <if test="dictFirestDegree != null">#{dictFirestDegree},</if>
+            <if test="dictDegredd != null">#{dictDegredd},</if>
+            <if test="professional != null">#{professional},</if>
+            <if test="dictEduType != null">#{dictEduType},</if>
+            <if test="whichColledge != null">#{whichColledge},</if>
+            <if test="dictColledge != null">#{dictColledge},</if>
+            <if test="graduationDate != null">#{graduationDate},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateHrUserResume" parameterType="HrUserResume">
+        update hr_user_resume
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="email != null and email != ''">email = #{email},</if>
+            <if test="wechat != null and wechat != ''">wechat = #{wechat},</if>
+            <if test="telephone != null and telephone != ''">telephone = #{telephone},</if>
+            <if test="dictSex != null and dictSex != ''">dict_sex = #{dictSex},</if>
+            <if test="cuntroy != null and cuntroy != ''">cuntroy = #{cuntroy},</if>
+            <if test="dictMariage != null and dictMariage != ''">dict_mariage = #{dictMariage},</if>
+            <if test="dictNation != null and dictNation != ''">dict_nation = #{dictNation},</if>
+            <if test="dictIsborn != null and dictIsborn != ''">dict_isborn = #{dictIsborn},</if>
+            <if test="homeAdress != null and homeAdress != ''">home_adress = #{homeAdress},</if>
+            <if test="dictPoliticsStatus != null and dictPoliticsStatus != ''">dict_politics_status = #{dictPoliticsStatus},</if>
+            <if test="dictIdType != null and dictIdType != ''">dict_id_type = #{dictIdType},</if>
+            <if test="idNo != null and idNo != ''">id_no = #{idNo},</if>
+            <if test="urgencyLinkMan != null">urgency_link_man = #{urgencyLinkMan},</if>
+            <if test="urgencyLinkPhone != null">urgency_link_phone = #{urgencyLinkPhone},</if>
+            <if test="urgencyLinkRelation != null">urgency_link_relation = #{urgencyLinkRelation},</if>
+            <if test="qqNo != null">qq_no = #{qqNo},</if>
+            <if test="dictFirestDegree != null">dict_firest_degree = #{dictFirestDegree},</if>
+            <if test="dictDegredd != null">dict_degredd = #{dictDegredd},</if>
+            <if test="professional != null">professional = #{professional},</if>
+            <if test="dictEduType != null">dict_edu_type = #{dictEduType},</if>
+            <if test="whichColledge != null">which_colledge = #{whichColledge},</if>
+            <if test="dictColledge != null">dict_colledge = #{dictColledge},</if>
+            <if test="graduationDate != null">graduation_date = #{graduationDate},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHrUserResumeById" parameterType="String">
+        delete from hr_user_resume where id = #{id}
+    </delete>
+
+    <delete id="deleteHrUserResumeByIds" parameterType="String">
+        delete from hr_user_resume where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

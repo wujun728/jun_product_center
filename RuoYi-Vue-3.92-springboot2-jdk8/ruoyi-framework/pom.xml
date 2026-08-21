@@ -34,19 +34,28 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
-
-        <!-- 验证码 -->
+<!-- 验证码 -->
         <dependency>
             <groupId>com.github.whvcse</groupId>
-            <artifactId>easy-captcha</artifactId>
-            <version>1.6.2</version>
-        </dependency>
 
+            <artifactId>easy-captcha</artifactId>
+
+            <version>1.6.2</version>
+            <!-- [MIG] 排除 nashorn-core 15.4（JDK15+ 编译，class version 55），本项目仅 JDK8，用 JDK8 内置 jdk.nashorn -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.openjdk.nashorn</groupId>
+                    <artifactId>nashorn-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Nashorn 脚本引擎（JDK 15+ 已移除，EasyCaptcha 数学验证码需要） -->
         <dependency>
             <groupId>org.openjdk.nashorn</groupId>
             <artifactId>nashorn-core</artifactId>
             <version>15.4</version>
+            <!-- [MIG] provided：本项目仅 JDK8（用 JDK8 内置 jdk.nashorn），nashorn-core 15.4 为 JDK15+ 构建，运行时排除避免 class version 55 加载失败 -->
+            <scope>provided</scope>
         </dependency>
 
         <!-- 获取系统信息 -->

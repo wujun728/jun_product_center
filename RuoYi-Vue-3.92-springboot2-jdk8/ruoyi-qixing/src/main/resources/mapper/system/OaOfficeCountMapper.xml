@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.qixing.mapper.OaOfficeCountMapper">
+    
+    <resultMap type="OaOfficeCount" id="OaOfficeCountResult">
+        <result property="id"    column="id"    />
+        <result property="offiecProductName"    column="offiec_product_name"    />
+        <result property="dictProductType"    column="dict_product_type"    />
+        <result property="officeTodo"    column="office_todo"    />
+        <result property="reqNum"    column="req_num"    />
+        <result property="whyDesc"    column="why_desc"    />
+        <result property="remark"    column="remark"    />
+        <result property="creator"    column="creator"    />
+        <result property="dictApprove"    column="dict_approve"    />
+        <result property="descApprove"    column="desc_approve"    />
+        <result property="approvetor"    column="approvetor"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="orderState"    column="order_state"    />
+        <result property="orderStatus"    column="order_status"    />
+    </resultMap>
+
+    <sql id="selectOaOfficeCountVo">
+        select id, offiec_product_name, dict_product_type, office_todo, req_num, why_desc, remark, creator, dict_approve, desc_approve, approvetor, create_time, create_id, update_time, update_id, order_id, order_state, order_status from oa_office_count
+    </sql>
+
+    <select id="selectOaOfficeCountList" parameterType="OaOfficeCount" resultMap="OaOfficeCountResult">
+        <include refid="selectOaOfficeCountVo"/>
+        <where>  
+            <if test="offiecProductName != null  and offiecProductName != ''"> and offiec_product_name like concat('%', #{offiecProductName}, '%')</if>
+            <if test="dictProductType != null  and dictProductType != ''"> and dict_product_type = #{dictProductType}</if>
+            <if test="officeTodo != null  and officeTodo != ''"> and office_todo = #{officeTodo}</if>
+            <if test="reqNum != null "> and req_num = #{reqNum}</if>
+            <if test="whyDesc != null  and whyDesc != ''"> and why_desc = #{whyDesc}</if>
+            <if test="creator != null  and creator != ''"> and creator = #{creator}</if>
+            <if test="dictApprove != null  and dictApprove != ''"> and dict_approve = #{dictApprove}</if>
+            <if test="descApprove != null  and descApprove != ''"> and desc_approve = #{descApprove}</if>
+            <if test="approvetor != null  and approvetor != ''"> and approvetor = #{approvetor}</if>
+            <if test="createId != null  and createId != ''"> and create_id = #{createId}</if>
+            <if test="updateId != null  and updateId != ''"> and update_id = #{updateId}</if>
+            <if test="orderId != null  and orderId != ''"> and order_id = #{orderId}</if>
+            <if test="orderState != null  and orderState != ''"> and order_state = #{orderState}</if>
+            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectOaOfficeCountById" parameterType="String" resultMap="OaOfficeCountResult">
+        <include refid="selectOaOfficeCountVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOaOfficeCount" parameterType="OaOfficeCount">
+        insert into oa_office_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="offiecProductName != null and offiecProductName != ''">offiec_product_name,</if>
+            <if test="dictProductType != null and dictProductType != ''">dict_product_type,</if>
+            <if test="officeTodo != null and officeTodo != ''">office_todo,</if>
+            <if test="reqNum != null">req_num,</if>
+            <if test="whyDesc != null and whyDesc != ''">why_desc,</if>
+            <if test="remark != null">remark,</if>
+            <if test="creator != null">creator,</if>
+            <if test="dictApprove != null">dict_approve,</if>
+            <if test="descApprove != null">desc_approve,</if>
+            <if test="approvetor != null">approvetor,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="orderState != null">order_state,</if>
+            <if test="orderStatus != null">order_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="offiecProductName != null and offiecProductName != ''">#{offiecProductName},</if>
+            <if test="dictProductType != null and dictProductType != ''">#{dictProductType},</if>
+            <if test="officeTodo != null and officeTodo != ''">#{officeTodo},</if>
+            <if test="reqNum != null">#{reqNum},</if>
+            <if test="whyDesc != null and whyDesc != ''">#{whyDesc},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="creator != null">#{creator},</if>
+            <if test="dictApprove != null">#{dictApprove},</if>
+            <if test="descApprove != null">#{descApprove},</if>
+            <if test="approvetor != null">#{approvetor},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="orderState != null">#{orderState},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOaOfficeCount" parameterType="OaOfficeCount">
+        update oa_office_count
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="offiecProductName != null and offiecProductName != ''">offiec_product_name = #{offiecProductName},</if>
+            <if test="dictProductType != null and dictProductType != ''">dict_product_type = #{dictProductType},</if>
+            <if test="officeTodo != null and officeTodo != ''">office_todo = #{officeTodo},</if>
+            <if test="reqNum != null">req_num = #{reqNum},</if>
+            <if test="whyDesc != null and whyDesc != ''">why_desc = #{whyDesc},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="dictApprove != null">dict_approve = #{dictApprove},</if>
+            <if test="descApprove != null">desc_approve = #{descApprove},</if>
+            <if test="approvetor != null">approvetor = #{approvetor},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="orderState != null">order_state = #{orderState},</if>
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOaOfficeCountById" parameterType="String">
+        delete from oa_office_count where id = #{id}
+    </delete>
+
+    <delete id="deleteOaOfficeCountByIds" parameterType="String">
+        delete from oa_office_count where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
