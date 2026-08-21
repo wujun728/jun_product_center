@@ -177,17 +177,17 @@ export default {
       });
     },
     submitForm() {
-      this.["form"].validate(valid => {
+      this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.id != null) {
             updateWorktimes(this.form).then(response => {
-              this..msgSuccess("修改成功");
+              this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
             addWorktimes(this.form).then(response => {
-              this..msgSuccess("新增成功");
+              this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
             });
@@ -197,11 +197,11 @@ export default {
     },
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this..confirm('是否确认删除工时编号为"' + ids + '"的数据项？').then(function() {
+      this.$modal.confirm('是否确认删除工时编号为"' + ids + '"的数据项？').then(function() {
         return delWorktimes(ids);
       }).then(() => {
         this.getList();
-        this..msgSuccess("删除成功");
+        this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
     handleExport() {

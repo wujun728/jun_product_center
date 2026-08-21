@@ -49,7 +49,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="鍒涘缓浜篒D" prop="createId">
+      <el-form-item label="创建人ID" prop="createId">
         <el-input
           v-model="queryParams.createId"
           placeholder="请输入${comment}"
@@ -57,7 +57,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="鏇存柊浜篒D" prop="updateId">
+      <el-form-item label="更新人ID" prop="updateId">
         <el-input
           v-model="queryParams.updateId"
           placeholder="请输入${comment}"
@@ -65,7 +65,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="娴佺▼ID" prop="orderId">
+      <el-form-item label="流程ID" prop="orderId">
         <el-input
           v-model="queryParams.orderId"
           placeholder="请输入${comment}"
@@ -209,13 +209,13 @@
         <el-form-item label="审批人" prop="approvetor">
           <el-input v-model="form.approvetor" placeholder="请输入审批人" />
         </el-form-item>
-        <el-form-item label="鍒涘缓浜篒D" prop="createId">
+        <el-form-item label="创建人ID" prop="createId">
           <el-input v-model="form.createId" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="鏇存柊浜篒D" prop="updateId">
+        <el-form-item label="更新人ID" prop="updateId">
           <el-input v-model="form.updateId" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="娴佺▼ID" prop="orderId">
+        <el-form-item label="流程ID" prop="orderId">
           <el-input v-model="form.orderId" placeholder="请输入${comment}" />
         </el-form-item>
         <el-form-item label="${comment}" prop="orderState">

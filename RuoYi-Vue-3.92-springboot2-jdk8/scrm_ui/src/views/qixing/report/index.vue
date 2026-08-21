@@ -81,7 +81,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="娴佺▼ID" prop="orderId">
+      <el-form-item label="流程ID" prop="orderId">
         <el-input
           v-model="queryParams.orderId"
           placeholder="请输入${comment}"
@@ -240,7 +240,7 @@
         <el-form-item label="更新人" prop="updateId">
           <el-input v-model="form.updateId" placeholder="请输入更新人" />
         </el-form-item>
-        <el-form-item label="娴佺▼ID" prop="orderId">
+        <el-form-item label="流程ID" prop="orderId">
           <el-input v-model="form.orderId" placeholder="请输入${comment}" />
         </el-form-item>
       </el-form>

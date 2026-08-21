@@ -201,7 +201,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="鍒涘缓浜? prop="creator">
+      <el-form-item label="创建人 prop="creator">
         <el-input
           v-model="queryParams.creator"
           placeholder="请输入${comment}"
@@ -265,7 +265,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="娴佺▼ID" prop="orderId">
+      <el-form-item label="流程ID" prop="orderId">
         <el-input
           v-model="queryParams.orderId"
           placeholder="请输入${comment}"
@@ -532,7 +532,7 @@
         <el-form-item label="备注信息" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="鍒涘缓浜? prop="creator">
+        <el-form-item label="创建人 prop="creator">
           <el-input v-model="form.creator" placeholder="请输入${comment}" />
         </el-form-item>
         <el-form-item label="创建人" prop="createId">
@@ -556,7 +556,7 @@
         <el-form-item label="财务经理电话2" prop="fmPhone2">
           <el-input v-model="form.fmPhone2" placeholder="请输入财务经理电话2" />
         </el-form-item>
-        <el-form-item label="娴佺▼ID" prop="orderId">
+        <el-form-item label="流程ID" prop="orderId">
           <el-input v-model="form.orderId" placeholder="请输入${comment}" />
         </el-form-item>
         <el-form-item label="编辑权限人员" prop="editor">

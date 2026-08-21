@@ -1,50 +1,50 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="鍚嶇О" prop="title">
-        <el-input v-model="queryParams.title" placeholder="璇疯緭鍏ュ悕绉? clearable @keyup.enter.native="handleQuery" />
+      <el-form-item label="名称" prop="title">
+        <el-input v-model="queryParams.title" placeholder="请输入名称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
-      <el-form-item label="鎻忚堪" prop="desc1">
-        <el-input v-model="queryParams.desc1" placeholder="璇疯緭鍏ユ弿杩? clearable @keyup.enter.native="handleQuery" />
+      <el-form-item label="描述" prop="desc1">
+        <el-input v-model="queryParams.desc1" placeholder="请输入描述" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">鎼滅储</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">閲嶇疆</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
       </el-form-item>
     </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['system:common:add']">鏂板</el-button>
+        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['system:common:add']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate" v-hasPermi="['system:common:edit']">淇敼</el-button>
+        <el-button type="success" plain icon="el-icon-edit" size="mini" :disabled="single" @click="handleUpdate" v-hasPermi="['system:common:edit']">修改</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:common:remove']">鍒犻櫎</el-button>
+        <el-button type="danger" plain icon="el-icon-delete" size="mini" :disabled="multiple" @click="handleDelete" v-hasPermi="['system:common:remove']">删除</el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" v-hasPermi="['system:common:export']">瀵煎嚭</el-button>
+        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" v-hasPermi="['system:common:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="bizCommonList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="鍚嶇О" align="center" prop="title" />
-      <el-table-column label="鎻忚堪" align="center" prop="desc1" />
-      <el-table-column label="鏍囪" align="center" prop="key1" />
-      <el-table-column label="鏍囪鍊? align="center" prop="value1" />
-      <el-table-column label="鏃ユ湡" align="center" prop="date1" width="180">
+      <el-table-column label="名称" align="center" prop="title" />
+      <el-table-column label="描述" align="center" prop="desc1" />
+      <el-table-column label="标签" align="center" prop="key1" />
+      <el-table-column label="标签值" align="center" prop="value1" />
+      <el-table-column label="日期" align="center" prop="date1" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.date1, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="澶囨敞" align="center" prop="remark" />
-      <el-table-column label="鎿嶄綔" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="备注" align="center" prop="remark" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:common:edit']">淇敼</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['system:common:remove']">鍒犻櫎</el-button>
+          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:common:edit']">修改</el-button>
+          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['system:common:remove']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -53,28 +53,28 @@
 
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="鍚嶇О" prop="title">
-          <el-input v-model="form.title" placeholder="璇疯緭鍏ュ悕绉? />
+        <el-form-item label="名称" prop="title">
+          <el-input v-model="form.title" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="鎻忚堪" prop="desc1">
-          <el-input v-model="form.desc1" placeholder="璇疯緭鍏ユ弿杩? />
+        <el-form-item label="描述" prop="desc1">
+          <el-input v-model="form.desc1" placeholder="请输入描述" />
         </el-form-item>
-        <el-form-item label="鏍囪" prop="key1">
-          <el-input v-model="form.key1" placeholder="璇疯緭鍏ユ爣璁? />
+        <el-form-item label="标签" prop="key1">
+          <el-input v-model="form.key1" placeholder="请输入标签" />
         </el-form-item>
-        <el-form-item label="鏍囪鍊? prop="value1">
-          <el-input v-model="form.value1" placeholder="璇疯緭鍏ユ爣璁板€? />
+        <el-form-item label="标签值" prop="value1">
+          <el-input v-model="form.value1" placeholder="请输入标签值" />
         </el-form-item>
-        <el-form-item label="鏃ユ湡" prop="date1">
-          <el-date-picker clearable v-model="form.date1" type="date" value-format="yyyy-MM-dd" placeholder="璇烽€夋嫨鏃ユ湡" />
+        <el-form-item label="日期" prop="date1">
+          <el-date-picker clearable v-model="form.date1" type="date" value-format="yyyy-MM-dd" placeholder="请选择日期" />
         </el-form-item>
-        <el-form-item label="澶囨敞" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="璇疯緭鍏ュ娉? />
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" type="textarea" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">纭?瀹?/el-button>
-        <el-button @click="cancel">鍙?娑?/el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -104,7 +104,7 @@ export default {
       },
       form: {},
       rules: {
-        title: [{ required: true, message: "鍚嶇О涓嶈兘涓虹┖", trigger: "blur" }]
+        title: [{ required: true, message: "名称不能为空", trigger: "blur" }]
       }
     };
   },
@@ -152,7 +152,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "娣诲姞鍏叡淇℃伅";
+      this.title = "新增公共信息";
     },
     handleUpdate(row) {
       this.reset();
@@ -160,7 +160,7 @@ export default {
       getBizCommon(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "淇敼鍏叡淇℃伅";
+        this.title = "修改公共信息";
       });
     },
     submitForm() {
@@ -168,13 +168,13 @@ export default {
         if (valid) {
           if (this.form.id != null) {
             updateBizCommon(this.form).then(response => {
-              this.$modal.msgSuccess("淇敼鎴愬姛");
+              this.$modal.msgSuccess("修改成功");
               this.open = false;
               this.getList();
             });
           } else {
             addBizCommon(this.form).then(response => {
-              this.$modal.msgSuccess("鏂板鎴愬姛");
+              this.$modal.msgSuccess("新增成功");
               this.open = false;
               this.getList();
             });
@@ -184,11 +184,11 @@ export default {
     },
     handleDelete(row) {
       const ids = row.id || this.ids;
-      this.$modal.confirm('鏄惁纭鍒犻櫎鍏叡淇℃伅缂栧彿涓?' + ids + '"鐨勬暟鎹」锛?).then(function() {
+      this.$modal.confirm('是否确认删除公共信息编号为"' + ids + '"的数据项？').then(function() {
         return delBizCommon(ids);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("鍒犻櫎鎴愬姛");
+        this.$modal.msgSuccess("删除成功");
       }).catch(() => {});
     },
     handleExport() {

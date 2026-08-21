@@ -41,7 +41,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="鍒涘缓浜篒D" prop="createId">
+      <el-form-item label="创建人ID" prop="createId">
         <el-input
           v-model="queryParams.createId"
           placeholder="请输入${comment}"
@@ -49,7 +49,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="鏇存柊浜篒D" prop="updateId">
+      <el-form-item label="更新人ID" prop="updateId">
         <el-input
           v-model="queryParams.updateId"
           placeholder="请输入${comment}"
@@ -181,10 +181,10 @@
         <el-form-item label="创建人" prop="creator">
           <el-input v-model="form.creator" placeholder="请输入创建人" />
         </el-form-item>
-        <el-form-item label="鍒涘缓浜篒D" prop="createId">
+        <el-form-item label="创建人ID" prop="createId">
           <el-input v-model="form.createId" placeholder="请输入${comment}" />
         </el-form-item>
-        <el-form-item label="鏇存柊浜篒D" prop="updateId">
+        <el-form-item label="更新人ID" prop="updateId">
           <el-input v-model="form.updateId" placeholder="请输入${comment}" />
         </el-form-item>
       </el-form>
