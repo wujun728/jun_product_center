@@ -82,15 +82,15 @@ export default {
     },
     /** 待办 */
     goTodo() {
-      this.$router.push("/my/todo");
+      this.$router.push("/oa-office/my/todo");
     },
     /** 待阅 */
     goRead() {
-      this.$router.push({ path: "/my/todo", query: { type: "2" } });
+      this.$router.push({ path: "/oa-office/my/todo", query: { type: "2" } });
     },
     /** 我起草的 */
     goMyDraft() {
-      this.$router.push({ path: "/my/apply" });
+      this.$router.push({ path: "/oa-office/my/apply" });
     },
   },
 };

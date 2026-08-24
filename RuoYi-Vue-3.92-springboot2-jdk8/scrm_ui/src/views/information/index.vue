@@ -371,7 +371,7 @@ export default {
     /** 预览 */
     goDetail(row) {
       let params = { id: row.id };
-      this.$tab.openPage(row.title, "/news/information/i/detail/:t" + new Date().getTime(), params);
+      this.$tab.openPage(row.title, "/oa-office/news/information/i/detail/:t" + new Date().getTime(), params);
     },
   },
 };

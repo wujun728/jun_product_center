@@ -309,7 +309,7 @@ export default {
     /** 预览 */
     goDetail(row) {
       let params = { id: row.noticeId };
-      this.$tab.openPage(row.noticeTitle, "/news/notice/n/detail/:t" + new Date().getTime(), params);
+      this.$tab.openPage(row.noticeTitle, "/oa-office/news/notice/n/detail/:t" + new Date().getTime(), params);
     },
     /** 提交按钮 */
     submitForm: function () {

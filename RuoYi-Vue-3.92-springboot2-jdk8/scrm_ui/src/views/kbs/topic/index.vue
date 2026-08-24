@@ -228,7 +228,7 @@ export default {
     /** 预览 */
     goDetail(row) {
       let params = { id: row.id, title: row.name, isTree: true };
-      this.$tab.openPage("主题详情", "/kbs/detail", params);
+      this.$tab.openPage("主题详情", "/oa-office/kbs/detail", params);
     },
   },
 };

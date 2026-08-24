@@ -198,7 +198,7 @@ export default {
     },
     /** 查看更多 */
     loadMore() {
-      this.$router.push("/schedule/plan");
+      this.$router.push("/oa-office/schedule/plan");
     },
     /** 查看详情 */
     goDetail(item) {

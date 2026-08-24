@@ -75,7 +75,7 @@ export default {
     /** 查看详情 */
     goDetail(row) {
       let params = { id: row.id };
-      this.$tab.openPage(row.title, "/news/information/i/detail/" + new Date().getTime(), params);
+      this.$tab.openPage(row.title, "/oa-office/news/information/i/detail/" + new Date().getTime(), params);
       addReadNum(row.id).then((res) => {
         if (res.code === 200) {
           row.readTotal += 1;
@@ -84,7 +84,7 @@ export default {
     },
     /** 查看更多 */
     loadMore() {
-      this.$router.push("/news/information/i/list");
+      this.$router.push("/oa-office/news/information/i/list");
     },
   },
 };

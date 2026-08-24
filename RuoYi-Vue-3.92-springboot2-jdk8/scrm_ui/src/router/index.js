@@ -52,6 +52,28 @@ export const constantRoutes = [
     ],
   },
   {
+    // [MIG] 流程表单页（待办/已办/新启流程/我发起的 都会跳转到此路由），老项目在 constantRoutes 静态注册，迁移时遗漏导致 404
+    path: '/workflow',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'flowForm/:timer',
+        component: () => import('@/views/workflow/flow-form/index'),
+        name: 'FlowForm',
+        meta: { title: '流程表单' },
+        beforeEnter: (to, from, next) => {
+          if (to.query.pageType === '0' && to.query.templateName) {
+            to.meta.title = to.query.templateName + '-拟稿'
+          } else {
+            to.meta.title = to.query.title || '流程表单'
+          }
+          next()
+        },
+      },
+    ],
+  },
+  {
     // 个人中心 / 修改密码
     path: '/user',
     component: Layout,

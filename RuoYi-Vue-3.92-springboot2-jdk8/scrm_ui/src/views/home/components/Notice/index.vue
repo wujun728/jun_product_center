@@ -122,11 +122,11 @@ export default {
       readNotice(row.noticeId);
       row.readFlag = "1";
       let params = { id: row.noticeId };
-      this.$tab.openPage(row.noticeTitle, "/news/notice/n/detail/:t" + new Date().getTime(), params);
+      this.$tab.openPage(row.noticeTitle, "/oa-office/news/notice/n/detail/:t" + new Date().getTime(), params);
     },
     /** 查看更多 */
     loadMore() {
-      this.$router.push("/news/notice/n/list");
+      this.$router.push("/oa-office/news/notice/n/list");
     },
   },
 };

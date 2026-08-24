@@ -157,7 +157,7 @@ export default {
         docId = null;
       }
       let params = { id: row.objectId, docId: docId, title: row.objectName, isTree: isTree };
-      this.$tab.openPage("主题详情", "/kbs/detail", params);
+      this.$tab.openPage("主题详情", "/oa-office/kbs/detail", params);
     },
     /** 搜索按钮操作 */
     handleQuery() {

@@ -39,8 +39,10 @@ import store from './store';
 import router from './router';
 import base from '@/components/base/index'; // 公共组件
 import UploadFile from '@/components/Upload/uploadFile.vue';
+import FileUpload from '@/components/FileUpload';
 import Editor from '@/components/Editor';
 import TimeSelect from '@/components/TimeSelect';
+import uploader from 'vue-simple-uploader';
 import dialog from '@/libs/dialog';
 import scroll from '@/libs/loading';
 import schema from 'async-validator';
@@ -79,11 +81,13 @@ Vue.use(Viewer, {
 });
 Vue.use(plugins);
 Vue.use(directive);
+Vue.use(uploader);
 
 // [MIG] 老 OA UI 全局事件总线，待办/已办/我的/新启流程等页面通过 this.$eventBus 通信
 Vue.prototype.$eventBus = new Vue();
 
 Vue.component('uploadFile', UploadFile);
+Vue.component('FileUpload', FileUpload);
 Vue.component('timeSelect', TimeSelect);
 Vue.prototype.$dialog = dialog;
 Vue.prototype.$scroll = scroll;

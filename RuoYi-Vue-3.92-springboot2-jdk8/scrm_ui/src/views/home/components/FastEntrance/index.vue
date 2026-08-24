@@ -45,15 +45,15 @@ export default {
   methods: {
     /** 发起申请 */
     goApply() {
-      this.$router.push("/my/newstart");
+      this.$router.push("/oa-office/my/newstart");
     },
     /** 知识库 */
     goKbs() {
-      this.$router.push("/kbs/topic");
+      this.$router.push("/oa-office/kbs/topic");
     },
     /** 通讯录 */
     goContact() {
-      this.$router.push("/contact/book");
+      this.$router.push("/oa-office/contact/book");
     },
     /** 新增日程 */
     addSchedule() {
