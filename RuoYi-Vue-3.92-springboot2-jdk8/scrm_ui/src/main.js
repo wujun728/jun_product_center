@@ -29,6 +29,7 @@ import Pagination from '@/components/Pagination';
 import RightToolbar from '@/components/RightToolbar';
 import DictData from '@/components/DictData';
 import DictTag from '@/components/DictTag';
+import ImagePreview from '@/components/ImagePreview';
 // 懒加载
 import VueLazyload from 'vue-lazyload';
 
@@ -79,6 +80,9 @@ Vue.use(Viewer, {
 Vue.use(plugins);
 Vue.use(directive);
 
+// [MIG] 老 OA UI 全局事件总线，待办/已办/我的/新启流程等页面通过 this.$eventBus 通信
+Vue.prototype.$eventBus = new Vue();
+
 Vue.component('uploadFile', UploadFile);
 Vue.component('timeSelect', TimeSelect);
 Vue.prototype.$dialog = dialog;
@@ -103,6 +107,7 @@ Vue.component('Pagination', Pagination);
 Vue.component('RightToolbar', RightToolbar);
 Vue.component('DictTag', DictTag);
 Vue.component('Editor', Editor);
+Vue.component('ImagePreview', ImagePreview);
 
 DictData.install();
 

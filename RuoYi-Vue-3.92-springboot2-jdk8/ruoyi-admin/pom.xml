@@ -116,6 +116,27 @@
             <artifactId>ruoyi-qixing</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <!-- [MIG] OA 业务模块（kbs/schedule/serial/information）迁移接线，老项目 admin 显式依赖 -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-kbs</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-schedule</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-serial</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-information</artifactId>
+            <version>1.0.1</version>
+        </dependency>
 
     </dependencies>
 

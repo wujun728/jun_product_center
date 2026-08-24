@@ -134,3 +134,22 @@ export function deptTreeSelect() {
     method: 'get'
   })
 }
+
+// [MIG] 以下为老 OA UI 迁移的通讯录/选人组件依赖的接口，后端由 ruoyi-worksetting 的 OaUserContactController 提供
+// 获取单位树（通讯录组织树）
+export function corpTree(query) {
+  return request({
+    url: '/system/user/corpTree',
+    method: 'get',
+    params: query
+  })
+}
+
+// 获取部门人员（通讯录按部门查用户，自动含子部门）
+export function listDeptUser(query) {
+  return request({
+    url: '/system/user/listDeptUser',
+    method: 'get',
+    params: query
+  })
+}

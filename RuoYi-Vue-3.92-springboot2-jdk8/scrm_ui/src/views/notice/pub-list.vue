@@ -30,9 +30,9 @@
         </template>
       </el-table-column>
       <el-table-column label="创建者" align="center" prop="createBy" width="120" />
-      <el-table-column label="发布时间" align="center" prop="validStartTime" width="120">
+      <el-table-column label="发布时间" align="center" prop="createTime" width="120">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.validStartTime, '{y}-{m}-{d}') }}</span>
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="120">

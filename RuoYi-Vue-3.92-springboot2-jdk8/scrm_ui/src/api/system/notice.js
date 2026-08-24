@@ -77,3 +77,43 @@ export function listNoticeReadUsers(query) {
     params: query
   })
 }
+
+// [MIG] 以下为老 OA UI 迁移的公司公告/公司动态页面依赖的接口
+// 查询首页公告
+export function listHomeNotice(query) {
+  return request({
+    url: '/system/notice/home/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询用户公告（公司公告列表）
+export function listUserNotice(query) {
+  return request({
+    url: '/system/notice/user/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 状态调整
+export function changeStatus(noticeId, status) {
+  const data = {
+    noticeId,
+    status
+  }
+  return request({
+    url: '/system/notice/changeStatus',
+    method: 'put',
+    data: data
+  })
+}
+
+// 已读公告
+export function readNotice(noticeId) {
+  return request({
+    url: '/system/notice/readNotice/' + noticeId,
+    method: 'put'
+  })
+}
