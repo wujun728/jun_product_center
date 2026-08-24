@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaLawInfoServiceImpl implements IOaLawInfoService
      */
     @Override
     public int insertOaLawInfo(OaLawInfo oaLawInfo)
-    {
+    {if (oaLawInfo.getId() == null || oaLawInfo.getId().length() == 0)
+        {
+            oaLawInfo.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaLawInfo.setCreateTime(DateUtils.getNowDate());
         return oaLawInfoMapper.insertOaLawInfo(oaLawInfo);
     }

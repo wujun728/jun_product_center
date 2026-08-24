@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PjProjectPlanServiceImpl implements IPjProjectPlanService
      */
     @Override
     public int insertPjProjectPlan(PjProjectPlan pjProjectPlan)
-    {
+    {if (pjProjectPlan.getId() == null || pjProjectPlan.getId().length() == 0)
+        {
+            pjProjectPlan.setId(String.valueOf(IdWorker.getId()));
+        }
+
         pjProjectPlan.setCreateTime(DateUtils.getNowDate());
         return pjProjectPlanMapper.insertPjProjectPlan(pjProjectPlan);
     }

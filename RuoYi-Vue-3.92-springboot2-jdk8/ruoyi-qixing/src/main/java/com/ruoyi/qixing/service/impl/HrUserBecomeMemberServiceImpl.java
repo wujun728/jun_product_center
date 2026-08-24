@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrUserBecomeMemberServiceImpl implements IHrUserBecomeMemberService
      */
     @Override
     public int insertHrUserBecomeMember(HrUserBecomeMember hrUserBecomeMember)
-    {
+    {if (hrUserBecomeMember.getId() == null || hrUserBecomeMember.getId().length() == 0)
+        {
+            hrUserBecomeMember.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrUserBecomeMember.setCreateTime(DateUtils.getNowDate());
         return hrUserBecomeMemberMapper.insertHrUserBecomeMember(hrUserBecomeMember);
     }

@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PjProjectDailyServiceImpl implements IPjProjectDailyService
      */
     @Override
     public int insertPjProjectDaily(PjProjectDaily pjProjectDaily)
-    {
+    {if (pjProjectDaily.getId() == null || pjProjectDaily.getId().length() == 0)
+        {
+            pjProjectDaily.setId(String.valueOf(IdWorker.getId()));
+        }
+
         pjProjectDaily.setCreateTime(DateUtils.getNowDate());
         return pjProjectDailyMapper.insertPjProjectDaily(pjProjectDaily);
     }

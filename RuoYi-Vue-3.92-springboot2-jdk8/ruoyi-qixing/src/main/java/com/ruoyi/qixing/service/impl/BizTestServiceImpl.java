@@ -1,4 +1,5 @@
 package com.ruoyi.qixing.service.impl;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ public class BizTestServiceImpl implements IBizTestService {
     @Override
     public BizTest selectBizTestById(String id) { return bizTestMapper.selectBizTestById(id); }
     @Override
-    public int insertBizTest(BizTest bizTest) { return bizTestMapper.insertBizTest(bizTest); }
+    public int insertBizTest(BizTest bizTest) {if (bizTest.getId() == null || bizTest.getId().length() == 0)
+        {
+            bizTest.setId(String.valueOf(IdWorker.getId()));
+        }
+ return bizTestMapper.insertBizTest(bizTest); }
     @Override
     public int updateBizTest(BizTest bizTest) { return bizTestMapper.updateBizTest(bizTest); }
     @Override

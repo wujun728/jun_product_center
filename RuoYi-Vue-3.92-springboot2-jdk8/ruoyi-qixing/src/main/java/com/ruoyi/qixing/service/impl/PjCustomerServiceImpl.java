@@ -2,6 +2,7 @@ package com.ruoyi.qixing.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.qixing.mapper.PjCustomerMapper;
@@ -53,6 +54,11 @@ public class PjCustomerServiceImpl implements IPjCustomerService
     @Override
     public int insertPjCustomer(PjCustomer pjCustomer)
     {
+        // [MIG] 主键为空时生成雪花ID（老项目依赖 MyBatis-Plus 主键生成；迁到经典 MyBatis 后此处补齐）
+        if (pjCustomer.getId() == null || pjCustomer.getId().length() == 0)
+        {
+            pjCustomer.setId(String.valueOf(IdWorker.getId()));
+        }
         pjCustomer.setCreateTime(DateUtils.getNowDate());
         return pjCustomerMapper.insertPjCustomer(pjCustomer);
     }

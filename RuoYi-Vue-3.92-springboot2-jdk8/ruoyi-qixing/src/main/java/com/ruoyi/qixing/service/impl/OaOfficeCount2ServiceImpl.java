@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaOfficeCount2ServiceImpl implements IOaOfficeCount2Service
      */
     @Override
     public int insertOaOfficeCount2(OaOfficeCount2 oaOfficeCount2)
-    {
+    {if (oaOfficeCount2.getId() == null || oaOfficeCount2.getId().length() == 0)
+        {
+            oaOfficeCount2.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaOfficeCount2.setCreateTime(DateUtils.getNowDate());
         return oaOfficeCount2Mapper.insertOaOfficeCount2(oaOfficeCount2);
     }

@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PjProjectProdessTaskServiceImpl implements IPjProjectProdessTaskSer
      */
     @Override
     public int insertPjProjectProdessTask(PjProjectProdessTask pjProjectProdessTask)
-    {
+    {if (pjProjectProdessTask.getId() == null || pjProjectProdessTask.getId().length() == 0)
+        {
+            pjProjectProdessTask.setId(String.valueOf(IdWorker.getId()));
+        }
+
         pjProjectProdessTask.setCreateTime(DateUtils.getNowDate());
         return pjProjectProdessTaskMapper.insertPjProjectProdessTask(pjProjectProdessTask);
     }

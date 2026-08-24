@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrUserEntryReportedServiceImpl implements IHrUserEntryReportedServi
      */
     @Override
     public int insertHrUserEntryReported(HrUserEntryReported hrUserEntryReported)
-    {
+    {if (hrUserEntryReported.getId() == null || hrUserEntryReported.getId().length() == 0)
+        {
+            hrUserEntryReported.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrUserEntryReported.setCreateTime(DateUtils.getNowDate());
         return hrUserEntryReportedMapper.insertHrUserEntryReported(hrUserEntryReported);
     }

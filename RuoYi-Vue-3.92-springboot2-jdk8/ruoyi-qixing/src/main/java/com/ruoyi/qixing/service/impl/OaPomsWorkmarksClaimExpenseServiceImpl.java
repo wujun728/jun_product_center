@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaPomsWorkmarksClaimExpenseServiceImpl implements IOaPomsWorkmarksC
      */
     @Override
     public int insertOaPomsWorkmarksClaimExpense(OaPomsWorkmarksClaimExpense oaPomsWorkmarksClaimExpense)
-    {
+    {if (oaPomsWorkmarksClaimExpense.getId() == null || oaPomsWorkmarksClaimExpense.getId().length() == 0)
+        {
+            oaPomsWorkmarksClaimExpense.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaPomsWorkmarksClaimExpense.setCreateTime(DateUtils.getNowDate());
         return oaPomsWorkmarksClaimExpenseMapper.insertOaPomsWorkmarksClaimExpense(oaPomsWorkmarksClaimExpense);
     }

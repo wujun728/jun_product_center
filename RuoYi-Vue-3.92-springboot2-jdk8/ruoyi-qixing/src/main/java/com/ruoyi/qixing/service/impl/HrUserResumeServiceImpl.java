@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrUserResumeServiceImpl implements IHrUserResumeService
      */
     @Override
     public int insertHrUserResume(HrUserResume hrUserResume)
-    {
+    {if (hrUserResume.getId() == null || hrUserResume.getId().length() == 0)
+        {
+            hrUserResume.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrUserResume.setCreateTime(DateUtils.getNowDate());
         return hrUserResumeMapper.insertHrUserResume(hrUserResume);
     }

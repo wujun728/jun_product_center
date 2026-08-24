@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrAssessmentTemplateServiceImpl implements IHrAssessmentTemplateSer
      */
     @Override
     public int insertHrAssessmentTemplate(HrAssessmentTemplate hrAssessmentTemplate)
-    {
+    {if (hrAssessmentTemplate.getId() == null || hrAssessmentTemplate.getId().length() == 0)
+        {
+            hrAssessmentTemplate.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrAssessmentTemplate.setCreateTime(DateUtils.getNowDate());
         return hrAssessmentTemplateMapper.insertHrAssessmentTemplate(hrAssessmentTemplate);
     }

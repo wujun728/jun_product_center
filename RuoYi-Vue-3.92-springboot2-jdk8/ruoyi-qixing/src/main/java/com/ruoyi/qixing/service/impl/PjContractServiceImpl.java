@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PjContractServiceImpl implements IPjContractService
      */
     @Override
     public int insertPjContract(PjContract pjContract)
-    {
+    {if (pjContract.getId() == null || pjContract.getId().length() == 0)
+        {
+            pjContract.setId(String.valueOf(IdWorker.getId()));
+        }
+
         pjContract.setCreateTime(DateUtils.getNowDate());
         return pjContractMapper.insertPjContract(pjContract);
     }

@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PjProjectAppraiseServiceImpl implements IPjProjectAppraiseService
      */
     @Override
     public int insertPjProjectAppraise(PjProjectAppraise pjProjectAppraise)
-    {
+    {if (pjProjectAppraise.getId() == null || pjProjectAppraise.getId().length() == 0)
+        {
+            pjProjectAppraise.setId(String.valueOf(IdWorker.getId()));
+        }
+
         pjProjectAppraise.setCreateTime(DateUtils.getNowDate());
         return pjProjectAppraiseMapper.insertPjProjectAppraise(pjProjectAppraise);
     }

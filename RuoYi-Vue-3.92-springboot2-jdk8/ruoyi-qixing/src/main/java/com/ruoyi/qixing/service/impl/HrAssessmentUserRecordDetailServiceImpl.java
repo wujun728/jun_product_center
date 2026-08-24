@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrAssessmentUserRecordDetailServiceImpl implements IHrAssessmentUse
      */
     @Override
     public int insertHrAssessmentUserRecordDetail(HrAssessmentUserRecordDetail hrAssessmentUserRecordDetail)
-    {
+    {if (hrAssessmentUserRecordDetail.getId() == null || hrAssessmentUserRecordDetail.getId().length() == 0)
+        {
+            hrAssessmentUserRecordDetail.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrAssessmentUserRecordDetail.setCreateTime(DateUtils.getNowDate());
         return hrAssessmentUserRecordDetailMapper.insertHrAssessmentUserRecordDetail(hrAssessmentUserRecordDetail);
     }

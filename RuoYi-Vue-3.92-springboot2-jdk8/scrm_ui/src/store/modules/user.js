@@ -25,6 +25,8 @@ const state = {
   oneLvMenus: [],
   oneLvRoutes: JSON.parse(localStorage.getItem('MerPlatAdmin_oneLvRoutes')) || [],
   childMenuList: [],
+  // [MIG] 兼容老 OA UI: 页面/组件通过 store.user.userInfo 读取当前登录用户完整信息
+  userInfo: {},
 };
 
 const mutations = {
@@ -64,6 +66,10 @@ const mutations = {
   },
   childMenuList(state, list) {
     state.childMenuList = list;
+  },
+  // [MIG] 兼容老 OA UI: 保存当前登录用户完整信息
+  SET_USERINFO(state, userInfo) {
+    state.userInfo = userInfo;
   },
 };
 
@@ -110,6 +116,8 @@ const actions = {
           commit('SET_AVATAR', avatar);
           commit('SET_INTRODUCTION', user.nickName || '');
           commit('SET_PERMISSIONS', permissions);
+          // [MIG] 兼容老 OA UI 页面对 userInfo 的引用
+          commit('SET_USERINFO', user);
           resolve({ roles, permissions, user });
         })
         .catch((error) => {

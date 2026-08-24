@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaPomsWorkmarksLeaveServiceImpl implements IOaPomsWorkmarksLeaveSer
      */
     @Override
     public int insertOaPomsWorkmarksLeave(OaPomsWorkmarksLeave oaPomsWorkmarksLeave)
-    {
+    {if (oaPomsWorkmarksLeave.getId() == null || oaPomsWorkmarksLeave.getId().length() == 0)
+        {
+            oaPomsWorkmarksLeave.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaPomsWorkmarksLeave.setCreateTime(DateUtils.getNowDate());
         return oaPomsWorkmarksLeaveMapper.insertOaPomsWorkmarksLeave(oaPomsWorkmarksLeave);
     }

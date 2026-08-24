@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaLearnInfoServiceImpl implements IOaLearnInfoService
      */
     @Override
     public int insertOaLearnInfo(OaLearnInfo oaLearnInfo)
-    {
+    {if (oaLearnInfo.getId() == null || oaLearnInfo.getId().length() == 0)
+        {
+            oaLearnInfo.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaLearnInfo.setCreateTime(DateUtils.getNowDate());
         return oaLearnInfoMapper.insertOaLearnInfo(oaLearnInfo);
     }

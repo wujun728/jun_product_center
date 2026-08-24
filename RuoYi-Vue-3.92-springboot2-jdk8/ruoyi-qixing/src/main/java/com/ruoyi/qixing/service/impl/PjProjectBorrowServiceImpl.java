@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class PjProjectBorrowServiceImpl implements IPjProjectBorrowService
      */
     @Override
     public int insertPjProjectBorrow(PjProjectBorrow pjProjectBorrow)
-    {
+    {if (pjProjectBorrow.getId() == null || pjProjectBorrow.getId().length() == 0)
+        {
+            pjProjectBorrow.setId(String.valueOf(IdWorker.getId()));
+        }
+
         pjProjectBorrow.setCreateTime(DateUtils.getNowDate());
         return pjProjectBorrowMapper.insertPjProjectBorrow(pjProjectBorrow);
     }

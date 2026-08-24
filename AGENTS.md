@@ -13,6 +13,14 @@
 - 前端（`scrm_ui/`，Vue 2.6.10 + Element UI 2.15.6，Vue CLI 4）：先 `npm install` 再 `npm run dev`。`node_modules/` 和 `package-lock.json` 已存在——直接复用（Node < 17；sass v1.26.2 在新版 Node 上会失败）。
 - Lint：`npm run lint`（eslint，`.eslintrc.js`）。测试：`npm run test:unit`（jest）——很慢，很少跑。
 
+### 后端本地运行/调试注意事项（避免"卡死"假象，2026-08-21 实测定位）
+- **`mvn spring-boot:run` 是前台常驻进程**：`ruoyi-admin/pom.xml` 里 `spring-boot-maven-plugin` 是 `<fork>true</fork>`，且 `application.yml` 打开了 `spring.devtools.restart.enabled: true`。因此 `nginx`/`Start-Process` 启动后进程树是 `cmd → mvn(java) → 应用(java, devtools fork)`，属于**永不退出的前台进程**——不要在 shell 命令里用 `Start-Sleep` 长等待或用 `&&` 续接后续步骤，那会表现为"卡死"。正确姿势：
+  1. 用 `Start-Process -FilePath ...\mvn.cmd -ArgumentList 'spring-boot:run' -RedirectStandardOutput <log> -RedirectStandardError <log.err>` 后台启动，立即返回 PID，不要长 sleep；
+  2. 用**端口轮询**判断就绪：`Get-NetTCPConnection -LocalPort 8081 -State Listen` 或 `Invoke-WebRequest http://localhost:8081/captchaImage` 循环探测（超时控制在 60s 内、每 2s 一次）；
+  3. 关闭 devtools 自动重启以免构建后反复拉起：启动时附加 `-Dspring-boot.run.jvmArguments=-Dspring.devtools.restart.enabled=false`（仅命令行，不改基座配置）。
+- **停止后端**：`Get-NetTCPConnection -LocalPort 8081` 拿到 OwningProcess 后，连带杀进程树（`taskkill /PID <pid> /T /F` 或先杀应用 java 再杀 mvn），否则残留 `cmd/java` 会重新拉起或占住 8081。
+- **Redis 刷屏"假故障"**：lettuce 连接空闲超时/被服务端回收时会周期性打印 `ConnectionWatchdog Reconnecting to localhost:6379` 与 `java.io.IOException: 远端主机强制关闭连接`（每 ~60s 一条、连续几十条）——这是**正常重连噪音**，不是真故障；Redis 配置 `timeout 0 / tcp-keepalive 0`，属正常现象，运行时不用处理。
+
 ## 开发环境（写死在本地的个人配置）
 
 - MySQL `localhost:3307`，库 `ry-vue`，用户 `root`，密码 `mysqladmin` —— `ruoyi-admin/src/main/resources/application-druid.yml`。只有一个 profile（`spring.profiles.active: druid`）。
@@ -38,10 +46,35 @@
 
 1. 遵循 `MIGRATION_TODO.md` 的模块编译顺序（`tools → file → sms → mq-core → mq-async → im-* → message → flowable → template → seal → todo → workflow-file → workflow → biz-sdk → ... → qixing`）。不要打乱顺序。
 2. 任何 pom/模块改动后，用 `mvn clean install -DskipTests` 验证所涉及的子树。
-3. 尽量不修改ruoyi的原有模块，这块需要后续升级到最新版本 【D:\workspace_github_v1\product\jun_product_center_qixing\RuoYi-Vue-3.92-springboot2-jdk8\ruoyi-admin\
-D:\workspace_github_v1\product\jun_product_center_qixing\RuoYi-Vue-3.92-springboot2-jdk8\ruoyi-framework\
-D:\workspace_github_v1\product\jun_product_center_qixing\RuoYi-Vue-3.92-springboot2-jdk8\ruoyi-system\
-D:\workspace_github_v1\product\jun_product_center_qixing\RuoYi-Vue-3.92-springboot2-jdk8\ruoyi-common\】
+
+### 迁移铁律（前置条件，默认必须遵守，2026-08-21 用户确认）
+
+**1. RuoYi 基座只加不改（最高优先级）**
+> 以下四个模块是滚动升级区，后续会升级到 RuoYi 最新版本，只能做**增量**（新增类、新增方法、新增常量），**禁止修改原有类的既有逻辑与签名**：
+> - `RuoYi-Vue-3.92-springboot2-jdk8/ruoyi-admin/`
+> - `RuoYi-Vue-3.92-springboot2-jdk8/ruoyi-framework/`
+> - `RuoYi-Vue-3.92-springboot2-jdk8/ruoyi-system/`
+> - `RuoYi-Vue-3.92-springboot2-jdk8/ruoyi-common/`
+
+**2. 跨版本差异处理优先级（按顺序尝试，不得跳级）**
+> 老项目（ruoyi-vue-oa）对 RuoYi 3.9.0 做过改造，迁移到 3.9.2 基座时遇到 API 差异（例如 userId 体系 Long↔String），必须按以下优先级处理，**优先保证基座原貌**：
+> 1. **新增兼容方法/类**（在基座或 OA 侧新增 `getUserIdStr()` 之类，不碰原有 `getUserId()`）；
+> 2. **业务侧向基座靠齐**（调整 `ruoyi-oa-*` / `ruoyi-qixing` 内调用代码）；
+> 3. **新增适配层转换**（专门的兼容 Service/Tool/Adapter，在 OA 组内自持，不侵入基座）；
+> 4. 仅当上述都不可行时才允许最小化改动基座，且必须**逐处向用户确认**，并做好升级 diff 标记。
+
+**3. userId 数据类型决策（已确认）**
+> 老项目把用户 ID 体系整体字符串化（`SysUser.userId`/`LoginUser.userId`/`SecurityUtils.getUserId()` 均为 String，与业务表 varchar(64) 主键及实体 `createId/updateId`(String) 配套）。处理方案：
+> - **基座保持不变**（userId 仍为 Long）；
+> - OA/qixing 侧通过新增的兼容获取方法（如 `SecurityUtils.getUserIdStr()` 之类新增法）或适配层，把业务需要的 String 用户 ID 转换出来；
+> - 以业务实体（varchar 主键）为基准，不改变老业务主键语义。
+
+**4. ruoyi-system / ruoyi-framework 中的老业务不得回灌**
+> 老项目把部分业务（如 HolidaySetting/HolidayWorkSetting/SysNoticeReadRecord）放在了 ruoyi-system 层。迁移时这些业务要**迁移到 OA 组模块**（如 ruoyi-oa-common / 对应父 POM 子模块），**不得**改动基座 ruoyi-system 的原有类来承载它们。
+> 基座独有功能（SysTenant / SysNoticeRead 等）必须原样保留，不得被老代码覆盖。
+
+**5. 涉及基座的增量改动标记**
+> 任何对基座四模块（admin/framework/system/common）的**纯增量**修改，必须在代码注释中加 `[MIG]` 标记，便于后续升级时通过 `git grep MIG` 快速找到全部定制点。
 
 
 

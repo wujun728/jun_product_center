@@ -1,4 +1,5 @@
 package com.ruoyi.qixing.service.impl;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,11 @@ public class BizMailServiceImpl implements IBizMailService {
     @Override
     public BizMail selectBizMailById(String id) { return bizMailMapper.selectBizMailById(id); }
     @Override
-    public int insertBizMail(BizMail bizMail) { return bizMailMapper.insertBizMail(bizMail); }
+    public int insertBizMail(BizMail bizMail) {if (bizMail.getId() == null || bizMail.getId().length() == 0)
+        {
+            bizMail.setId(String.valueOf(IdWorker.getId()));
+        }
+ return bizMailMapper.insertBizMail(bizMail); }
     @Override
     public int updateBizMail(BizMail bizMail) { return bizMailMapper.updateBizMail(bizMail); }
     @Override

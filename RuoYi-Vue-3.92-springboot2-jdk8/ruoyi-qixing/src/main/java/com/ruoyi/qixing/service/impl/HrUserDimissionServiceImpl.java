@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrUserDimissionServiceImpl implements IHrUserDimissionService
      */
     @Override
     public int insertHrUserDimission(HrUserDimission hrUserDimission)
-    {
+    {if (hrUserDimission.getId() == null || hrUserDimission.getId().length() == 0)
+        {
+            hrUserDimission.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrUserDimission.setCreateTime(DateUtils.getNowDate());
         return hrUserDimissionMapper.insertHrUserDimission(hrUserDimission);
     }

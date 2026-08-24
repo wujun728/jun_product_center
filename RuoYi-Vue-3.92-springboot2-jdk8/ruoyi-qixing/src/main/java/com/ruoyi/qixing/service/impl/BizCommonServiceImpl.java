@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,11 @@ public class BizCommonServiceImpl implements IBizCommonService {
     }
 
     @Override
-    public int insertBizCommon(BizCommon bizCommon) {
+    public int insertBizCommon(BizCommon bizCommon) {if (bizCommon.getId() == null || bizCommon.getId().length() == 0)
+        {
+            bizCommon.setId(String.valueOf(IdWorker.getId()));
+        }
+
         return bizCommonMapper.insertBizCommon(bizCommon);
     }
 

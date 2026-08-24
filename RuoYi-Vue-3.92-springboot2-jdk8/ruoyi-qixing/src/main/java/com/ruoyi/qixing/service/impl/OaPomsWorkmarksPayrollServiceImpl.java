@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaPomsWorkmarksPayrollServiceImpl implements IOaPomsWorkmarksPayrol
      */
     @Override
     public int insertOaPomsWorkmarksPayroll(OaPomsWorkmarksPayroll oaPomsWorkmarksPayroll)
-    {
+    {if (oaPomsWorkmarksPayroll.getId() == null || oaPomsWorkmarksPayroll.getId().length() == 0)
+        {
+            oaPomsWorkmarksPayroll.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaPomsWorkmarksPayroll.setCreateTime(DateUtils.getNowDate());
         return oaPomsWorkmarksPayrollMapper.insertOaPomsWorkmarksPayroll(oaPomsWorkmarksPayroll);
     }

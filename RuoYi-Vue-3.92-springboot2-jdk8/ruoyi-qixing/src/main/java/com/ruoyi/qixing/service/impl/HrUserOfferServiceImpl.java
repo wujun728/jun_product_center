@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class HrUserOfferServiceImpl implements IHrUserOfferService
      */
     @Override
     public int insertHrUserOffer(HrUserOffer hrUserOffer)
-    {
+    {if (hrUserOffer.getId() == null || hrUserOffer.getId().length() == 0)
+        {
+            hrUserOffer.setId(String.valueOf(IdWorker.getId()));
+        }
+
         hrUserOffer.setCreateTime(DateUtils.getNowDate());
         return hrUserOfferMapper.insertHrUserOffer(hrUserOffer);
     }

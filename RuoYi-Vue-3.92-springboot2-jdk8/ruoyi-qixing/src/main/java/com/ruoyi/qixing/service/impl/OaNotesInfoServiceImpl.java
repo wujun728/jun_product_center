@@ -1,5 +1,6 @@
 package com.ruoyi.qixing.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,11 @@ public class OaNotesInfoServiceImpl implements IOaNotesInfoService
      */
     @Override
     public int insertOaNotesInfo(OaNotesInfo oaNotesInfo)
-    {
+    {if (oaNotesInfo.getId() == null || oaNotesInfo.getId().length() == 0)
+        {
+            oaNotesInfo.setId(String.valueOf(IdWorker.getId()));
+        }
+
         oaNotesInfo.setCreateTime(DateUtils.getNowDate());
         return oaNotesInfoMapper.insertOaNotesInfo(oaNotesInfo);
     }
