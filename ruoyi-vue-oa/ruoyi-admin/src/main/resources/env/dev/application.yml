@@ -95,6 +95,21 @@ spring:
         max-wait: -1ms
   rabbitmq:
     enabled: true
+    # 本机需维持 SSH 隧道: ssh -N -L 5672:127.0.0.1:5672 root@111.228.33.18
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动ACK
+        prefetch: 10
+        retry:
+          enabled: true
+          max-attempts: 3
     queue:
       # 流程处理
       async-flow-queue: flow-router,flow-exchange:topic

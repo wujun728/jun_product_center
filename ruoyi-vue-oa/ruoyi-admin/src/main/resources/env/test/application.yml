@@ -91,6 +91,12 @@ spring:
         max-wait: -1ms
   rabbitmq:
     enabled: true
+    # RabbitMQ连接配置（应用若在其他VM且同VPC，改填VPC内网IP）
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: /
     queue:
       # 流程处理
       async-flow-queue: flow-router,flow-exchange:topic

@@ -7,7 +7,7 @@ ruoyi:
   # 版权年份
   copyrightYear: 2025
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: /home/oa/uploadPath
+  profile: E:/ruoyi/uploadPath
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -25,8 +25,6 @@ server:
     uri-encoding: UTF-8
     # 连接数满后的排队数，默认为100
     accept-count: 1000
-    # 临时文件目录，解决启动后，临时目录长时间未访问自动清除，导致后续使用时报错（如文件、头像上传）
-    basedir: /home/oa/tmp
     threads:
       # tomcat最大线程数，默认为200
       max: 800
@@ -38,6 +36,12 @@ logging:
   level:
     com.ruoyi: debug
     org.springframework: warn
+    # Flowable 核心 SQL 日志
+    org.flowable.engine.impl.persistence.entity: TRACE      # 实体操作 SQL
+    org.flowable.common.engine.impl.persistence.entity: TRACE
+    org.flowable.engine.impl.cmd: DEBUG                     # 命令层 SQL
+    org.flowable.job.service.impl.persistence.entity: TRACE # 作业相关 SQL
+    org.flowable.task.service.impl.persistence.entity: TRACE # 任务相关 SQL
 
 # 用户配置
 user:
@@ -54,7 +58,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: prod
+    active: dev
   # 文件上传
   servlet:
     multipart:
@@ -90,13 +94,21 @@ spring:
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
   rabbitmq:
-    enabled: true
-    # RabbitMQ连接配置（应用若在其他VM且同VPC，改填VPC内网IP）
-    host: 127.0.0.1
+    enabled: false
+    host: 111.228.33.18
     port: 5672
     username: admin
     password: 123456
     virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动ACK
+        prefetch: 10
+        retry:
+          enabled: true
+          max-attempts: 3
     queue:
       # 流程处理
       async-flow-queue: flow-router,flow-exchange:topic
@@ -112,6 +124,7 @@ spring:
       async-sms-queue: sms-router,sms-exchange:topic
       # 我起草的流程
       async-my-draft-queue: my-draft-router,my-draft-exchange:topic
+
 # token配置
 token:
   # 令牌自定义标识
@@ -119,7 +132,7 @@ token:
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
   # 令牌有效期（默认30分钟）
-  expireTime: 480
+  expireTime: 120
 
 # MyBatis配置
 mybatis:
@@ -139,9 +152,9 @@ pagehelper:
 # Swagger配置
 swagger:
   # 是否开启swagger
-  enabled: false
+  enabled: true
   # 请求前缀
-  pathMapping: /prod-api
+  pathMapping: /dev-api
 
 # 防盗链配置
 referer:
