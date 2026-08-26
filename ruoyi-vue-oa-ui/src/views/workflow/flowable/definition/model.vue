@@ -84,6 +84,7 @@ export default {
     /** 保存xml */
     save(data) {
       const params = {
+        procDefKey: data.process.id,
         name: data.process.name,
         category: data.process.category,
         xml: data.xml,

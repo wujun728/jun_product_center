@@ -21,7 +21,7 @@
       </el-row>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="关联表单" prop="formId">
+          <el-form-item v-if="info.formType !== '3'" label="关联表单" prop="formId">
             <template>
               <el-select v-model="info.formId" clearable filterable placeholder="请选择">
                 <el-option v-for="form in formOptions" :key="form.formId" :label="form.formName" :value="form.formId">
@@ -69,7 +69,7 @@ export default {
   watch: {
     dynamicForm: {
       handler(newValue) {
-        if (Object.keys(newValue).length > 0) {
+        if (newValue && Object.keys(newValue).length > 0) {
           this.handleOldDynamicOption();
         }
       },

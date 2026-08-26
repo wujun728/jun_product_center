@@ -32,7 +32,8 @@
           <span v-else-if="item.tag === 'design-user-select'">
             <div class="text-content" v-if="item.value && item.value.length >0">
               <span v-for="(line, index) in item.value" :key="line.userId" class="org-select">
-                <el-avatar :size="24" :src="avatar(line.avatar)" />
+                <!-- 展示头像后，会导致高度不统一，最终将下方的el元素挤到最后去 -->
+                <!-- <el-avatar :size="24" :src="avatar(line.avatar)" /> -->
                 <span class="ml2">{{ line.nickName }}</span>
                 <span v-if="index < item.value.length-1">、</span>
               </span>
@@ -46,6 +47,7 @@
               </span>
             </div>
           </span>
+          <span v-else-if="item.tag === 'tinymce'" class="tinymce-content" v-html="item.value"></span>
           <div v-else class="text-content">{{ item.value }}</div>
         </el-form-item>
       </el-col>
@@ -133,7 +135,7 @@ export default {
           const selectVal = StrUtil.isBlank(_config.defaultValue) ? formDataCopy[prop] : _config.defaultValue;
           if (slot && slot.options) {
             slot.options.map((o) => {
-              if (o.value == selectVal) {
+              if (o.value == selectVal || o.label == selectVal) {
                 value = o.label;
               }
             });
@@ -261,5 +263,8 @@ export default {
 }
 .disabCheck >>> .el-checkbox__label {
   font-size: 12px;
+}
+.tinymce-content >>> p:first-child {
+  margin-top: 0;
 }
 </style>

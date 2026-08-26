@@ -69,7 +69,6 @@ public class OfficePluginManager {
             officeHome = getDefaultOfficeHome();
         }
         if (officeHome == null) {
-            log.error("找不到office组件，请确认'office.home'配置是否有误");
             return;
         }
         boolean killOffice = killProcess();

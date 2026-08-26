@@ -97,41 +97,41 @@
                 align="left"
                 key="nickName"
                 prop="nickName"
-                v-if="columns[2].visible"
+                v-if="columns.userName.visible"
                 :show-overflow-tooltip="true"
-                width="140"
+                width="120"
               />
               <el-table-column
                 label="所属部门"
                 align="left"
                 key="deptName"
                 prop="dept.deptName"
-                v-if="columns[3].visible"
+                v-if="columns.deptName.visible"
                 :show-overflow-tooltip="true"
-                width="160"
+                width="120"
               />
               <el-table-column
                 label="系统账号"
                 align="left"
                 key="userName"
                 prop="userName"
-                v-if="columns[1].visible"
+                v-if="columns.userName.visible"
                 :show-overflow-tooltip="true"
-                width="200"
+                width="110"
               />
-              <el-table-column label="系统编号" align="left" key="userId" prop="userId" v-if="columns[0].visible" />
-              <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
-              <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible" width="90">
+              <el-table-column label="系统编号" align="left" key="userId" prop="userId" v-if="columns.userId.visible" show-overflow-tooltip />
+              <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns.phonenumber.visible" width="110" />
+              <el-table-column label="状态" align="center" key="status" v-if="columns.status.visible" width="90">
                 <template slot-scope="scope">
                   <el-switch v-model="scope.row.status" active-value="0" inactive-value="1" @change="handleStatusChange(scope.row)"></el-switch>
                 </template>
               </el-table-column>
-              <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+              <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns.createTime.visible" width="150">
                 <template slot-scope="scope">
                   <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width">
+              <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
                 <template slot-scope="scope" v-if="scope.row.userId !== 'superAdmin'">
                   <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:user:edit']">修改</el-button>
                   <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)" v-hasPermi="['system:user:remove']">删除</el-button>
@@ -353,15 +353,15 @@ export default {
         deptId: undefined,
       },
       // 列信息
-      columns: [
-        { key: 0, label: `用户编号`, visible: true },
-        { key: 1, label: `系统账号`, visible: true },
-        { key: 2, label: `用户名称`, visible: true },
-        { key: 3, label: `部门`, visible: true },
-        { key: 4, label: `手机号码`, visible: true },
-        { key: 5, label: `状态`, visible: true },
-        { key: 6, label: `创建时间`, visible: true },
-      ],
+      columns: {
+        userId: { label: "用户编号", visible: true },
+        userName: { label: "用户名称", visible: true },
+        nickName: { label: "用户昵称", visible: true },
+        deptName: { label: "部门", visible: true },
+        phonenumber: { label: "手机号码", visible: true },
+        status: { label: "状态", visible: true },
+        createTime: { label: "创建时间", visible: true },
+      },
       // 表单校验
       rules: {
         userName: [
@@ -634,6 +634,11 @@ export default {
     },
     // 提交上传文件
     submitFileForm() {
+      const file = this.$refs.upload.uploadFiles;
+      if (!file || file.length === 0 || (!file[0].name.toLowerCase().endsWith(".xls") && !file[0].name.toLowerCase().endsWith(".xlsx"))) {
+        this.$modal.msgError("请选择后缀为 “xls”或“xlsx”的文件。");
+        return;
+      }
       this.$refs.upload.submit();
     },
   },

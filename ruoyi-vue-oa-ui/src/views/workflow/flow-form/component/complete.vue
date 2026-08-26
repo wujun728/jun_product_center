@@ -155,13 +155,31 @@ export default {
         if (res.code == 200 && res.data) {
           this.nextApprovers = res.data;
           const initialValues = {};
+          let isSingleNextUser = false;
           this.nextApprovers.forEach((item) => {
             if (item.dataType === "fixed") {
               this.isFixed = true;
               const users = item.assignees.map((u) => u.userId.toString());
               this.$set(this.taskForm.variables, item.vars, users.join(","));
+            } else {
+              if (item.assignees && item.assignees.length === 1) {
+                const defauleUser = [item.assignees[0]];
+                const nodeId = item.nodeId;
+                const nodeVar = item.vars;
+                this.$set(this.selectedUserMap, nodeId, defauleUser);
+                const selectVal = defauleUser.map((item) => item.userId.toString());
+                const selectUsers = defauleUser.length > 1 ? defauleUser.map((u) => u.nickName).join("、") : defauleUser[0].nickName;
+                this.$set(this.formData.approvers, nodeId, selectUsers);
+                if (item.type === "multiInstance") {
+                  this.$set(this.taskForm.variables, nodeVar, selectVal);
+                } else {
+                  this.$set(this.taskForm.variables, nodeVar, selectVal.join(","));
+                }
+                isSingleNextUser = true;
+              } else {
+                initialValues[item.nodeId] = "";
+              }
             }
-            initialValues[item.nodeId] = "";
           });
           // 生成校验规则
           this.dynamicRules = this.nextApprovers.reduce((acc, cur) => {
@@ -177,8 +195,9 @@ export default {
             }
             return acc;
           }, {});
-          this.formData.approvers = Object.assign({}, initialValues);
-
+          if (!isSingleNextUser) {
+            this.formData.approvers = Object.assign({}, initialValues);
+          }
           // 重置校验状态
           this.$nextTick(() => {
             if (this.$refs.taskForm) {

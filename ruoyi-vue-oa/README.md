@@ -2,7 +2,7 @@
 
 * 本项目前、后端代码全开源，没有任何保留，没有区分免费版、商业版或其他付费版；
 * 遵循MIT开源协议，100%免费使用；
-* 前端代码：[RuoYi-Vue-OA-UI](https://gitee.com/OpenJJ/ruoyi-vue-oa-ui)。
+* 前端代码：[仓库](https://gitee.com/OpenJJ/ruoyi-vue-oa-ui)
 * 快速启动及帮助：[wiki](https://gitee.com/OpenJJ/ruoyi-vue-oa/wikis/%E5%BF%AB%E9%80%9F%E5%90%AF%E5%8A%A8)
 * github地址：[github仓库](https://github.com/OnlyJJ/RuoYi-Vue-OA)
 
@@ -32,7 +32,7 @@
 * 支持流程在线设计，提供通用的参数配置，以满足复杂场景的流程定制；
 * 支持加载动态权限菜单，按钮级别权限控制；
 * 支持动态配置正文、附件，并且支持offic正文在线盖章；
-* 当前官方版本：[RuoYi-Vue 3.9.0](https://gitee.com/y_project/RuoYi-Vue)，后续保持同步更新。
+* 当前官方版本：[RuoYi-Vue 3.9.1](https://gitee.com/y_project/RuoYi-Vue)，后续保持同步更新。
 
 ## 功能简介
 
@@ -106,7 +106,10 @@
 ## 其他
 
 * 本项目不存在任何其他费用，请勿相信打着任何名义的付费“帮助”；
-* 欢迎加入下面的QQ群，与大家共同学习。
+* 欢迎加入下面的QQ群，与大家共同学习；
+
+## 关于商用
+* 本项目可个人学习使用或者企业内部使用，如果商用（二次销售），须保留源码中@author信息！
 
 
 QQ群：  **463654560** 

@@ -1,8 +1,10 @@
 ## 说明
 * 本项目前、后端代码全开源，没有任何保留，没有区分免费版、商业版或其他付费版；
 * 遵循MIT开源协议，100%免费使用；
-* 后端代码：[RuoYi-Vue-OA](https://gitee.com/OpenJJ/ruoyi-vue-oa)。
-* github仓库：[github](https://github.com/OnlyJJ/RuoYi-Vue-OA-UI)
+* 后端代码：[RuoYi-Vue-OA](https://gitee.com/OpenJJ/ruoyi-vue-oa)；
+* github仓库：[github](https://github.com/OnlyJJ/RuoYi-Vue-OA-UI)；
+* 版本要求：vue2、node 14+；
+* 启动见：README.en.md。
 
 如果本项目能对你有所帮助，请记得 ⭐️ **Star** ⭐️ 一下，这是对作者最好的鼓励和支持。
 
@@ -97,9 +99,7 @@
 ## 启动说明
 
 * 默认的快速启动仅系统基础功能；
-* 完整启动请加入星球后获取启动文档、使用帮助。
-（加入星球后，除了获得保姆级的超详细文档外，还可以获得作者提供的其他帮助）
-<img src="https://gitee.com/OpenJJ/imgs/raw/master/images/zsxq.jpg"/>
+* 完整启动请加入QQ群后联系群主。
 
 
 ## 其他

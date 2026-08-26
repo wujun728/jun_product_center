@@ -7,10 +7,14 @@
           <el-col :span="baseSpan">
             <div class="basic-title">{{ templateConf.name }} - {{ taskName }}</div>
             <div v-if="loadCompleted" class="basic-form">
-              <!-- 动态表单、业务表单使用的解析方式 -->
-              <ViewForm v-if="isDetail" :formConf="formConf" :formData="valData" />
-              <Parser v-else :key="parserkey" :form-conf="formConf" :val-data="valData" @submit="submitForm" @getFormConf="getFormConf" ref="parser" />
-              <!-- 自定义实现的表单，需要在这里自行扩展页面 -->
+              <div v-if="!isCustomForm">
+                <!-- 动态表单、业务表单使用的解析方式 -->
+                <ViewForm v-if="isDetail" :formConf="formConf" :formData="valData" />
+                <Parser v-else :key="parserkey" :form-conf="formConf" :val-data="valData" @submit="submitForm" @getFormConf="getFormConf" ref="parser" />
+              </div>
+              <div v-else>
+                <!-- 自定义实现的表单，需要在这里自行扩展页面 -->
+              </div>
             </div>
           </el-col>
           <el-col :span="6" v-if="pageType != '2'">
@@ -35,13 +39,7 @@
                     <i class="el-icon-question ml5"></i>
                   </el-tooltip>
                 </div>
-                <div
-                  class="comment-list pointer"
-                  id="suggestionList"
-                  v-infinite-scroll="loadMore"
-                  :infinite-scroll-disabled="loadingCmt"
-                  :infinite-scroll-distance="10"
-                >
+                <div class="comment-list pointer" id="suggestionList" v-infinite-scroll="loadMore" :infinite-scroll-disabled="loadingCmt" :infinite-scroll-distance="10">
                   <div v-for="item in cmtList" :key="item.id" class="suggestion-item" @click="handleOpinion(item)">
                     <span>{{ item.comment }}</span>
                     <el-button class="delete-btn" type="danger" plain size="mini" icon="el-icon-delete" circle @click.stop="delCmt(item.id)"></el-button>
@@ -211,6 +209,7 @@ export default {
       assignSelectType: "single", // 转办选人方式
       addMultiSelectType: "single", // 加签选人方式
       selectUserScope: "dept", // 选人范围，dept-部门级（当前操作人所属部门），corp-公司级
+      formType: null, // 表单类型，1-动态表单，2-业务表单，3-自定义表单
     };
   },
   watch: {
@@ -402,39 +401,43 @@ export default {
       }
     },
     /** 流程表单数据 */
-    getFormData(formId) {
+    async getFormData(formId) {
       // 获取模板配置
-      getTemplate(this.taskForm.templateId).then((res) => {
-        if (res.code === 200 && res.data) {
-          this.templateConf = res.data;
-          this.showAttachment = res.data.attachFlag === "1" ? true : false;
-          this.attachmentConf = res.data.attachment;
-          this.showMainText = res.data.mainTextFlag === "1" ? true : false;
-        }
-      });
+      const response = await getTemplate(this.taskForm.templateId);
+      if (response.code === 200 && response.data) {
+        this.templateConf = response.data;
+        this.showAttachment = response.data.attachFlag === "1" ? true : false;
+        this.attachmentConf = response.data.attachment;
+        this.showMainText = response.data.mainTextFlag === "1" ? true : false;
+        this.formType = this.templateConf.formType;
+      }
       let params = {
         bizId: formId,
         templateId: this.taskForm.templateId,
       };
       getForm(params).then((res) => {
         if (res.code == 200 && res.data) {
-          let formObj = JSON.parse(res.data.formData);
-          this.formConf = formObj.formData;
-          this.valData = formObj.valData;
-          if (this.pageType == "2" || (this.variablesData.save && this.variablesData.save === "0")) {
-            this.formConf.formBtns = false;
-            this.formConf.disabled = true;
-          }
-          this.parserkey = new Date().getTime();
-          if (this.pageType !== "0") {
-            this.title = this.getTitle(formObj);
+          if (this.isCustomForm) {
+            this.formConf = res.data;
+          } else {
+            let formObj = JSON.parse(res.data.formData);
+            this.formConf = formObj.formData;
+            this.valData = formObj.valData;
+            if (this.pageType == "2" || (this.variablesData.save && this.variablesData.save === "0")) {
+              this.formConf.formBtns = false;
+              this.formConf.disabled = true;
+            }
+            this.parserkey = new Date().getTime();
+            if (this.pageType !== "0") {
+              this.title = this.getTitle(formObj);
+            }
           }
           this.loading = false;
         }
       });
     },
     /** 保存或更新流程表单数据 */
-    async submitForm(formData) { 
+    async submitForm(formData) {
       this.loading = true;
       const title = this.getTitle(formData);
       this.taskForm.title = title;
@@ -451,15 +454,15 @@ export default {
         bizId: this.businessId,
         templateId: this.taskForm.templateId,
         formData: data,
-      }; 
+      };
       if (this.businessId) {
-        const result = await updateForm(formParams) 
+        const result = await updateForm(formParams);
         if (result.code === 200 && this.updateFormMsg) {
           this.$modal.msgSuccess("保存成功");
         }
-        this.loading = false;  
+        this.loading = false;
       } else {
-        const result = await addForm(formParams) 
+        const result = await addForm(formParams);
         if (result.code == 200 && result.data) {
           this.businessId = result.data;
           this.taskForm.businessId = this.businessId;
@@ -467,13 +470,16 @@ export default {
           if (this.updateFormMsg) {
             this.$modal.msgSuccess("保存成功");
           }
-          this.loading = false;  
-        } 
+          this.loading = false;
+        }
       }
     },
     /** 获取表单标题 */
     getTitle(form) {
       let title = "";
+      if (this.isCustomForm) {
+        return form.title;
+      }
       form.formData.fields.some((field) => {
         if (field.__config__) {
           let __config__ = field.__config__;
@@ -588,10 +594,15 @@ export default {
       this.$refs.deleteMultiTaskRef.init();
     },
     /** 保存表单 */
-    async saveForm(flag) { 
+    async saveForm(flag) {
       if (this.isDetail) return;
       this.updateFormMsg = flag;
-      this.$refs.parser.submitForm();
+      if (this.isCustomForm) {
+        // 自定义表单在此处实现
+      } else {
+        // 动态表单、业务表单
+        this.$refs.parser.submitForm();
+      }
     },
     /** 常用意见-加载更多数据 */
     async loadMore() {
@@ -645,35 +656,26 @@ export default {
       }
     },
     /** 提交 */
-    async completeBtn() {  
-      if (!this.isDetail) {
-        const isValid = await this.$refs.parser.refValidateForm();
-        if (!isValid) {
-          this.$message.error("请先填写表单");
-          return;
-        }
+    async completeBtn() {
+      const isValid = await this.validForm();
+      if (!isValid) {
+        this.$message.error("请先填写表单");
+        return;
       }
       if (this.requiredCmt && (!this.comment || this.comment.trim() === "")) {
         this.$message.error("请填写审批意见");
         return;
       }
-      this.updateFormMsg = false; 
-      if (!this.isDetail) { 
-        const formModel = this.$refs.parser[this.$refs.parser.formConf.formModel];
-        const formConfCopy = this.$refs.parser.formConfCopy;
-        const formData = {
-          formData: formConfCopy,
-          valData: formModel,
-        }; 
-        await this.submitForm(formData); 
-      } 
-      this.taskForm.comment = this.comment;
-      this.$refs.completeRef.initFlowNode();
+      if (this.isCustomForm) {
+        this.defineFormSubmit();
+      } else {
+        this.defaultFormSubmit();
+      }
     },
     /** 取回提交 */
     async returnCompleteBtn() {
       if (!this.businessId) {
-        const isValid = await this.$refs.parser.refValidateForm();
+        const isValid = await this.validForm();
         if (!isValid) {
           this.$message.error("请先填写表单");
           return;
@@ -695,7 +697,7 @@ export default {
     // 委派提交
     async delegateCompleteBtn() {
       if (!this.businessId) {
-        const isValid = await this.$refs.parser.refValidateForm();
+        const isValid = await this.validForm();
         if (!isValid) {
           this.$message.error("请先填写表单");
           return;
@@ -750,6 +752,46 @@ export default {
           name: "还原印章",
         });
       }
+    },
+    /** 默认的动态表单、业务表单提交 */
+    async defaultFormSubmit() {
+      this.updateFormMsg = false;
+      if (!this.isDetail) {
+        const formModel = this.$refs.parser[this.$refs.parser.formConf.formModel];
+        const formConfCopy = this.$refs.parser.formConfCopy;
+        const formData = {
+          formData: formConfCopy,
+          valData: formModel,
+        };
+        await this.submitForm(formData);
+      }
+      this.taskForm.comment = this.comment;
+      this.$refs.completeRef.initFlowNode();
+    },
+    /** 自定义表单提交 */
+    async defineFormSubmit() {
+      this.updateFormMsg = false;
+      if (!this.isDetail) {
+        // 自定义表单在此处实现
+      }
+      this.taskForm.comment = this.comment;
+      this.$refs.completeRef.initFlowNode();
+    },
+    /** 校验表单 */
+    async validForm() {
+      if (this.isDetail) return true;
+      let isValid = false;
+      if (this.isCustomForm) {
+        // 自定义表单在此处实现
+      } else {
+        isValid = await this.$refs.parser.refValidateForm();
+      }
+      return isValid;
+    },
+  },
+  computed: {
+    isCustomForm() {
+      return this.formType === "3";
     },
   },
 };

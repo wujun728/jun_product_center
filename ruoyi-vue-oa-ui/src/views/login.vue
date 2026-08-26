@@ -33,7 +33,7 @@
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2024 ruoyi.vip All Rights Reserved.</span>
+      <span>{{ footerContent }}</span>
     </div>
   </div>
 </template>
@@ -43,11 +43,13 @@ import { getCodeImg } from "@/api/login";
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
 import { connectWs } from "@/utils/socket/handleMessage.js";
+import defaultSettings from '@/settings'
 
 export default {
   name: "Login",
   data() {
     return {
+      footerContent: defaultSettings.footerContent,
       codeUrl: "",
       loginForm: {
         username: "",
@@ -133,7 +135,7 @@ export default {
 };
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .login {
   display: flex;
   justify-content: center;

@@ -33,19 +33,25 @@
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="deptName" label="机构名称" width="260"></el-table-column>
-      <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
-      <el-table-column prop="status" label="状态" width="100">
+      <el-table-column prop="deptName" label="机构名称" ></el-table-column>
+      <el-table-column label="机构类型" align="center" prop="orgType" width="200">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_org_type" :value="scope.row.orgType" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="leader" label="负责人" width="260" show-overflow-tooltip></el-table-column>
+      <el-table-column prop="orderNum" label="排序" align="center" width="100"></el-table-column>
+      <el-table-column prop="status" label="状态" align="center" width="100">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" width="200">
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="160">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)" v-hasPermi="['system:dept:edit']">修改</el-button>
           <el-button size="mini" type="text" icon="el-icon-plus" @click="handleAdd(scope.row)" v-hasPermi="['system:dept:add']">新增</el-button>
@@ -62,7 +68,8 @@
     </el-table>
 
     <!-- 添加或修改机构对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-divider />
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="24" v-if="form.parentId !== 0">
@@ -99,32 +106,28 @@
             </el-form-item>
           </el-col>
         </el-row>
+        <el-row> 
+          <el-form-item label="负责人" prop="leaders">
+            <form-user-select v-model="form.leaders" :checkedUsers="selectedUsers" :multiple="true" :placeholder="'请选择部门领导'" @input="confimUser" />
+          </el-form-item>  
+        </el-row>
         <el-row>
-          <el-col :span="12">
-            <el-form-item label="负责人" prop="leader">
-              <el-input v-model="form.leader" placeholder="请输入负责人" maxlength="20" />
-            </el-form-item>
-          </el-col>
           <el-col :span="12">
             <el-form-item label="联系电话" prop="phone">
               <el-input v-model="form.phone" placeholder="请输入联系电话" maxlength="11" />
             </el-form-item>
           </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
               <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="机构状态">
-              <el-radio-group v-model="form.status">
-                <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">{{dict.label}}</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
+          </el-col> 
         </el-row>
+        <el-form-item label="机构状态">
+          <el-radio-group v-model="form.status">
+            <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">{{dict.label}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -138,11 +141,12 @@
 import { listDept, getDept, delDept, addDept, updateDept, listDeptExcludeChild } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import FormUserSelect from "@/components/form/FormUserSelect.vue";
 
 export default {
   name: "Dept",
   dicts: ["sys_normal_disable", "sys_org_type"],
-  components: { Treeselect },
+  components: { Treeselect, FormUserSelect },
   data() {
     return {
       // 遮罩层
@@ -189,6 +193,8 @@ export default {
           },
         ],
       },
+      // 当前选择人
+      selectedUsers: [],
     };
   },
   created() {
@@ -226,12 +232,13 @@ export default {
         parentId: undefined,
         deptName: undefined,
         orderNum: undefined,
-        leader: undefined,
+        leaders: undefined,
         phone: undefined,
         email: undefined,
         status: "0",
       };
       this.resetForm("form");
+      this.selectedUsers = [];
     },
     /** 搜索按钮操作 */
     handleQuery() {
@@ -276,6 +283,9 @@ export default {
             this.deptOptions.push(noResultsOptions);
           }
         });
+        this.$nextTick(() => {
+            this.selectedUsers = response.data.leaders;
+          });
       });
     },
     /** 提交按钮 */
@@ -310,6 +320,11 @@ export default {
           this.$modal.msgSuccess("删除成功");
         })
         .catch(() => {});
+    },
+    /** 选人确认 */
+    confimUser(selection) { 
+      this.selectedUsers = selection || [];
+      this.form.beEntrust = selection && selection.length > 0 ? selection[0] : null;
     },
   },
 };

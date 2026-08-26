@@ -635,9 +635,7 @@ public abstract class SealUtil {
             int subIndex = isTop ? i : fontTextLen - 1 - i;
             String c = font.getFontText().substring(subIndex, subIndex + 1);
             // 获取文字高宽
-            //FontMetrics fm = sun.font.FontDesignMetrics.getMetrics(f);
-            // 替换后的标准写法
-            FontMetrics fm = Toolkit.getDefaultToolkit().getFontMetrics(f);
+            FontMetrics fm = sun.font.FontDesignMetrics.getMetrics(f);
             int w = fm.stringWidth(c), h = fm.getHeight();
             if (isTop) {
                 x += h * minRat * (float) Math.cos(fxang);
