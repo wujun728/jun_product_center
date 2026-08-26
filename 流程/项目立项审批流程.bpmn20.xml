@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" id="Defs_project_approval" targetNamespace="http://example.com/flowable/project">
+  <bpmn2:process id="project_approval_process" name="项目立项审批流程" isExecutable="true">
+    <bpmn2:startEvent id="start" name="开始">
+      <bpmn2:outgoing>flow_start_to_initiate</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="task_initiate" name="项目立项" flowable:assignee="${initiator}">
+      <bpmn2:incoming>flow_start_to_initiate</bpmn2:incoming>
+      <bpmn2:outgoing>flow_initiate_to_form</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_form" name="项目立项表" flowable:assignee="${initiator}">
+      <bpmn2:incoming>flow_initiate_to_form</bpmn2:incoming>
+      <bpmn2:outgoing>flow_form_to_pm</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_pm" name="项目经理" flowable:candidateGroups="pm">
+      <bpmn2:incoming>flow_form_to_pm</bpmn2:incoming>
+      <bpmn2:outgoing>flow_pm_to_sales</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_sales" name="销售" flowable:candidateGroups="sales">
+      <bpmn2:incoming>flow_pm_to_sales</bpmn2:incoming>
+      <bpmn2:outgoing>flow_sales_to_proj_mgr</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_proj_mgr" name="项目主管" flowable:candidateGroups="project_manager">
+      <bpmn2:incoming>flow_sales_to_proj_mgr</bpmn2:incoming>
+      <bpmn2:outgoing>flow_proj_mgr_to_sales_mgr</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_sales_mgr" name="销售主管" flowable:candidateGroups="sales_manager">
+      <bpmn2:incoming>flow_proj_mgr_to_sales_mgr</bpmn2:incoming>
+      <bpmn2:outgoing>flow_sales_mgr_to_bu_head</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_bu_head" name="事业部负责人" flowable:candidateGroups="bu_head">
+      <bpmn2:incoming>flow_sales_mgr_to_bu_head</bpmn2:incoming>
+      <bpmn2:outgoing>flow_bu_head_to_gw_need_rd</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:exclusiveGateway id="gw_need_rd" name="是否需要研发会签?" default="flow_skip_rd_to_finance">
+      <bpmn2:incoming>flow_bu_head_to_gw_need_rd</bpmn2:incoming>
+      <bpmn2:outgoing>flow_need_rd_to_rd</bpmn2:outgoing>
+      <bpmn2:outgoing>flow_skip_rd_to_finance</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:userTask id="task_rd" name="研发1部+2部（会签）" flowable:assignee="${assignee}">
+      <bpmn2:incoming>flow_need_rd_to_rd</bpmn2:incoming>
+      <bpmn2:outgoing>flow_rd_to_finance</bpmn2:outgoing>
+      <bpmn2:multiInstanceLoopCharacteristics flowable:collection="${rdAssignees}" flowable:elementVariable="assignee" />
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_finance" name="财务总监" flowable:candidateGroups="finance_director">
+      <bpmn2:incoming>flow_rd_to_finance</bpmn2:incoming>
+      <bpmn2:incoming>flow_skip_rd_to_finance</bpmn2:incoming>
+      <bpmn2:outgoing>flow_finance_to_audit</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_audit" name="审计部主任" flowable:candidateGroups="audit_director">
+      <bpmn2:incoming>flow_finance_to_audit</bpmn2:incoming>
+      <bpmn2:outgoing>flow_audit_to_gm</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="task_gm" name="总经理" flowable:candidateGroups="general_manager">
+      <bpmn2:incoming>flow_audit_to_gm</bpmn2:incoming>
+      <bpmn2:outgoing>flow_gm_to_end</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:endEvent id="end" name="结束">
+      <bpmn2:incoming>flow_gm_to_end</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="flow_start_to_initiate" sourceRef="start" targetRef="task_initiate" />
+    <bpmn2:sequenceFlow id="flow_initiate_to_form" sourceRef="task_initiate" targetRef="task_form" />
+    <bpmn2:sequenceFlow id="flow_form_to_pm" sourceRef="task_form" targetRef="task_pm" />
+    <bpmn2:sequenceFlow id="flow_pm_to_sales" sourceRef="task_pm" targetRef="task_sales" />
+    <bpmn2:sequenceFlow id="flow_sales_to_proj_mgr" sourceRef="task_sales" targetRef="task_proj_mgr" />
+    <bpmn2:sequenceFlow id="flow_proj_mgr_to_sales_mgr" sourceRef="task_proj_mgr" targetRef="task_sales_mgr" />
+    <bpmn2:sequenceFlow id="flow_sales_mgr_to_bu_head" sourceRef="task_sales_mgr" targetRef="task_bu_head" />
+    <bpmn2:sequenceFlow id="flow_bu_head_to_gw_need_rd" sourceRef="task_bu_head" targetRef="gw_need_rd" />
+    <bpmn2:sequenceFlow id="flow_need_rd_to_rd" sourceRef="gw_need_rd" targetRef="task_rd">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${needRd == true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="flow_skip_rd_to_finance" sourceRef="gw_need_rd" targetRef="task_finance" />
+    <bpmn2:sequenceFlow id="flow_rd_to_finance" sourceRef="task_rd" targetRef="task_finance" />
+    <bpmn2:sequenceFlow id="flow_finance_to_audit" sourceRef="task_finance" targetRef="task_audit" />
+    <bpmn2:sequenceFlow id="flow_audit_to_gm" sourceRef="task_audit" targetRef="task_gm" />
+    <bpmn2:sequenceFlow id="flow_gm_to_end" sourceRef="task_gm" targetRef="end" />
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_project_approval">
+    <bpmndi:BPMNPlane id="BPMNPlane_project_approval" bpmnElement="project_approval_process">
+      <bpmndi:BPMNShape id="shape_start" bpmnElement="start">
+        <dc:Bounds x="120" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_initiate" bpmnElement="task_initiate">
+        <dc:Bounds x="200" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_form" bpmnElement="task_form">
+        <dc:Bounds x="360" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_pm" bpmnElement="task_pm">
+        <dc:Bounds x="520" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_sales" bpmnElement="task_sales">
+        <dc:Bounds x="680" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_proj_mgr" bpmnElement="task_proj_mgr">
+        <dc:Bounds x="840" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_sales_mgr" bpmnElement="task_sales_mgr">
+        <dc:Bounds x="1000" y="160" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_bu_head" bpmnElement="task_bu_head">
+        <dc:Bounds x="1160" y="160" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_gw_need_rd" bpmnElement="gw_need_rd" isMarkerVisible="true">
+        <dc:Bounds x="1340" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_rd" bpmnElement="task_rd">
+        <dc:Bounds x="1440" y="70" width="160" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_finance" bpmnElement="task_finance">
+        <dc:Bounds x="1440" y="250" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_audit" bpmnElement="task_audit">
+        <dc:Bounds x="1620" y="250" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_task_gm" bpmnElement="task_gm">
+        <dc:Bounds x="1800" y="250" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_end" bpmnElement="end">
+        <dc:Bounds x="1960" y="272" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_flow_start_to_initiate" bpmnElement="flow_start_to_initiate">
+        <di:waypoint x="156" y="198" />
+        <di:waypoint x="200" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_initiate_to_form" bpmnElement="flow_initiate_to_form">
+        <di:waypoint x="320" y="200" />
+        <di:waypoint x="360" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_form_to_pm" bpmnElement="flow_form_to_pm">
+        <di:waypoint x="480" y="200" />
+        <di:waypoint x="520" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_pm_to_sales" bpmnElement="flow_pm_to_sales">
+        <di:waypoint x="640" y="200" />
+        <di:waypoint x="680" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_sales_to_proj_mgr" bpmnElement="flow_sales_to_proj_mgr">
+        <di:waypoint x="800" y="200" />
+        <di:waypoint x="840" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_proj_mgr_to_sales_mgr" bpmnElement="flow_proj_mgr_to_sales_mgr">
+        <di:waypoint x="960" y="200" />
+        <di:waypoint x="1000" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_sales_mgr_to_bu_head" bpmnElement="flow_sales_mgr_to_bu_head">
+        <di:waypoint x="1120" y="200" />
+        <di:waypoint x="1160" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_bu_head_to_gw_need_rd" bpmnElement="flow_bu_head_to_gw_need_rd">
+        <di:waypoint x="1300" y="200" />
+        <di:waypoint x="1340" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_need_rd_to_rd" bpmnElement="flow_need_rd_to_rd">
+        <di:waypoint x="1365" y="175" />
+        <di:waypoint x="1365" y="110" />
+        <di:waypoint x="1440" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_skip_rd_to_finance" bpmnElement="flow_skip_rd_to_finance">
+        <di:waypoint x="1365" y="225" />
+        <di:waypoint x="1365" y="290" />
+        <di:waypoint x="1440" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_rd_to_finance" bpmnElement="flow_rd_to_finance">
+        <di:waypoint x="1600" y="110" />
+        <di:waypoint x="1600" y="290" />
+        <di:waypoint x="1440" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_finance_to_audit" bpmnElement="flow_finance_to_audit">
+        <di:waypoint x="1580" y="290" />
+        <di:waypoint x="1620" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_audit_to_gm" bpmnElement="flow_audit_to_gm">
+        <di:waypoint x="1760" y="290" />
+        <di:waypoint x="1800" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_flow_gm_to_end" bpmnElement="flow_gm_to_end">
+        <di:waypoint x="1920" y="290" />
+        <di:waypoint x="1960" y="290" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

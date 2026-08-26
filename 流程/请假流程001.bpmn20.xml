@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="qingjia001" name="请假流程001">
+    <startEvent id="Event_1j7rdqi">
+      <outgoing>Flow_1m3hgal</outgoing>
+    </startEvent>
+    <userTask id="task01" name="一级审批" flowable:assignee="D289154047F44AFBA75FF139BAB33001" flowable:userType="assignee" flowable:dataType="fixed">
+      <extensionElements>
+        <flowable:taskListener class="com.ruoyi.workflow.listener.FlowTaskTimeOutListener" event="create" listenerType="classListener" />
+      </extensionElements>
+      <incoming>Flow_1m3hgal</incoming>
+      <outgoing>Flow_0ii8kjj</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1m3hgal" sourceRef="Event_1j7rdqi" targetRef="task01" />
+    <userTask id="task02" name="二级审批" flowable:candidateUsers="${task02_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="task02">
+      <extensionElements>
+        <flowable:taskListener class="com.ruoyi.workflow.listener.FlowTaskTimeOutListener" event="create" listenerType="classListener" />
+      </extensionElements>
+      <incoming>Flow_0ii8kjj</incoming>
+      <outgoing>Flow_10sezm8</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0ii8kjj" sourceRef="task01" targetRef="task02" />
+    <endEvent id="Event_1phy5hq">
+      <incoming>Flow_10sezm8</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_10sezm8" sourceRef="task02" targetRef="Event_1phy5hq" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="qingjia001">
+      <bpmndi:BPMNShape id="Event_1j7rdqi_di" bpmnElement="Event_1j7rdqi">
+        <omgdc:Bounds x="-288" y="-18" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mw4vyp_di" bpmnElement="task01">
+        <omgdc:Bounds x="-200" y="-40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0weoqj1_di" bpmnElement="task02">
+        <omgdc:Bounds x="-40" y="-40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1phy5hq_di" bpmnElement="Event_1phy5hq">
+        <omgdc:Bounds x="122" y="-18" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1m3hgal_di" bpmnElement="Flow_1m3hgal">
+        <di:waypoint x="-252" y="0" />
+        <di:waypoint x="-200" y="0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ii8kjj_di" bpmnElement="Flow_0ii8kjj">
+        <di:waypoint x="-100" y="0" />
+        <di:waypoint x="-40" y="0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10sezm8_di" bpmnElement="Flow_10sezm8">
+        <di:waypoint x="60" y="0" />
+        <di:waypoint x="122" y="0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

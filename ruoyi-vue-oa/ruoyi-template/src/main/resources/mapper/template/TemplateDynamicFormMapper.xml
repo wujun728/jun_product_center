@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.template.mapper.TemplateDynamicFormMapper">
+    
+    <resultMap type="TemplateDynamicForm" id="TemplateDynamicFormResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="content"    column="content"    />
+        <result property="enableFlag"    column="enable_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="formKey"    column="form_Key"    />
+        <result property="remark"    column="remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTemplateDynamicFormVo">
+        select id, name, content, enable_flag, del_flag, form_Key, remark, create_id, create_by, create_time, update_id, update_by, update_time from t_template_dynamic_form
+    </sql>
+
+    <select id="selectTemplateDynamicFormList" parameterType="TemplateDynamicForm" resultMap="TemplateDynamicFormResult">
+        <include refid="selectTemplateDynamicFormVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="enableFlag != null  and enableFlag != ''"> and enable_flag = #{enableFlag}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectTemplateDynamicFormById" parameterType="String" resultMap="TemplateDynamicFormResult">
+        <include refid="selectTemplateDynamicFormVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTemplateDynamicForm" parameterType="TemplateDynamicForm">
+        insert into t_template_dynamic_form
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null">name,</if>
+            <if test="content != null">content,</if>
+            <if test="enableFlag != null">enable_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="formKey != null">form_Key,</if>
+            <if test="remark != null">remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="content != null">#{content},</if>
+            <if test="enableFlag != null">#{enableFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="formKey != null">#{formKey},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTemplateDynamicForm" parameterType="TemplateDynamicForm">
+        update t_template_dynamic_form
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="formKey != null">form_Key = #{formKey},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTemplateDynamicFormById" parameterType="String">
+        update t_template_dynamic_form set del_flag = '1' where id = #{id}
+    </delete>
+
+    <delete id="deleteTemplateDynamicFormByIds" parameterType="String">
+        update t_template_dynamic_form set del_flag = '1' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectFormOptionList" resultType="com.ruoyi.template.module.FormOption">
+        select
+            id formId,
+            name formName,
+            form_Key formKey
+        from t_template_dynamic_form
+        where enable_flag = '1' and del_flag = '0'
+        order by create_time desc
+    </select>
+</mapper>

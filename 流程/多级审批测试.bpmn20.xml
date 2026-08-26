@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_7wd1963n" name="多级审批测试">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_176qjex</outgoing>
+    </startEvent>
+    <userTask id="Activity_16aq3bp" name="一级审批人" flowable:assignee="D289154047F44AFBA75FF139BAB33001" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_176qjex</incoming>
+      <outgoing>Flow_181xqoh</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_176qjex" sourceRef="start_event" targetRef="Activity_16aq3bp" />
+    <userTask id="Activity_1aaya3k" name="二级审批人" flowable:assignee="${assignee}" flowable:userType="assignee" flowable:dataType="dynamic" flowable:expId="6EC388ED053F464CA682A38EC145E18A">
+      <extensionElements>
+        <flowable:properties>
+          <flowable:property name="collection" value="&#34;1015&#34;,&#34;测试账户&#34;" />
+        </flowable:properties>
+      </extensionElements>
+      <incoming>Flow_181xqoh</incoming>
+      <outgoing>Flow_0va1w7c</outgoing>
+      <multiInstanceLoopCharacteristics flowable:collection="Activity_1aaya3k_approval" flowable:elementVariable="assignee">
+        <completionCondition xsi:type="tFormalExpression">${nrOfCompletedInstances/nrOfInstances &gt;= 1 }</completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <sequenceFlow id="Flow_181xqoh" sourceRef="Activity_16aq3bp" targetRef="Activity_1aaya3k" />
+    <userTask id="Activity_1gg8xff" name="三级审批人" flowable:assignee="D289154047F44AFBA75FF139BAB33001" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_0va1w7c</incoming>
+      <outgoing>Flow_0ysga2x</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0va1w7c" sourceRef="Activity_1aaya3k" targetRef="Activity_1gg8xff" />
+    <endEvent id="Event_1gg6gst">
+      <incoming>Flow_0ysga2x</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0ysga2x" sourceRef="Activity_1gg8xff" targetRef="Event_1gg6gst" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_7wd1963n">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="15" y="25" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="17" y="62" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16aq3bp_di" bpmnElement="Activity_16aq3bp">
+        <omgdc:Bounds x="100" y="0" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1aaya3k_di" bpmnElement="Activity_1aaya3k">
+        <omgdc:Bounds x="290" y="0" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gg8xff_di" bpmnElement="Activity_1gg8xff">
+        <omgdc:Bounds x="500" y="0" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gg6gst_di" bpmnElement="Event_1gg6gst">
+        <omgdc:Bounds x="532" y="132" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_176qjex_di" bpmnElement="Flow_176qjex">
+        <di:waypoint x="45" y="40" />
+        <di:waypoint x="100" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_181xqoh_di" bpmnElement="Flow_181xqoh">
+        <di:waypoint x="200" y="40" />
+        <di:waypoint x="290" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0va1w7c_di" bpmnElement="Flow_0va1w7c">
+        <di:waypoint x="390" y="40" />
+        <di:waypoint x="500" y="40" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ysga2x_di" bpmnElement="Flow_0ysga2x">
+        <di:waypoint x="550" y="80" />
+        <di:waypoint x="550" y="132" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

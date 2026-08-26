@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.worksetting.mapper.WorkflowEntrustTemplateMapper">
+    
+    <resultMap type="WorkflowEntrustTemplate" id="WorkflowEntrustTemplateResult">
+        <result property="id"    column="id"    />
+        <result property="entrustId"    column="entrust_id"    />
+        <result property="templateId"    column="template_id"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowEntrustTemplateVo">
+        select id, entrust_id, template_id, del_flag, create_id, create_time from t_workflow_entrust_template
+    </sql>
+
+    <select id="selectWorkflowEntrustTemplateList" parameterType="WorkflowEntrustTemplate" resultMap="WorkflowEntrustTemplateResult">
+        <include refid="selectWorkflowEntrustTemplateVo"/>
+        <where>
+            del_flag = '0'
+            <if test="entrustId != null  and entrustId != ''"> and entrust_id = #{entrustId}</if>
+            <if test="templateId != null  and templateId != ''"> and template_id = #{templateId}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+        </where>
+    </select>
+    
+    <select id="selectWorkflowEntrustTemplateById" parameterType="String" resultMap="WorkflowEntrustTemplateResult">
+        <include refid="selectWorkflowEntrustTemplateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWorkflowEntrustTemplate" parameterType="WorkflowEntrustTemplate">
+        insert into t_workflow_entrust_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="entrustId != null">entrust_id,</if>
+            <if test="templateId != null">template_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="entrustId != null">#{entrustId},</if>
+            <if test="templateId != null">#{templateId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowEntrustTemplate" parameterType="WorkflowEntrustTemplate">
+        update t_workflow_entrust_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="entrustId != null">entrust_id = #{entrustId},</if>
+            <if test="templateId != null">template_id = #{templateId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowEntrustTemplateById" parameterType="String">
+        delete from t_workflow_entrust_template where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowEntrustTemplateByIds" parameterType="String">
+        delete from t_workflow_entrust_template where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectListByEntrustIds" parameterType="List" resultMap="WorkflowEntrustTemplateResult">
+        <include refid="selectWorkflowEntrustTemplateVo"/>
+        where del_flag = '0' and entrust_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <insert id="batchInsert" parameterType="List">
+        insert into t_workflow_entrust_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            id,entrust_id,template_id,del_flag,create_id,create_time,
+        </trim>
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+                #{item.id},#{item.entrustId},#{item.templateId},#{item.delFlag},#{item.createId},#{item.createTime}
+            </trim>
+        </foreach>
+    </insert>
+
+    <delete id="deleteWorkflowEntrustTemplateByEntrustId">
+        delete from t_workflow_entrust_template where entrust_id = #{entrustId}
+    </delete>
+
+    <delete id="deleteWorkflowEntrustTemplateByEntrustIds" parameterType="String">
+        delete from t_workflow_entrust_template where entrust_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateDelFlagByEntrustIds" parameterType="String">
+        update t_workflow_entrust_template set del_flag = '1' where entrust_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

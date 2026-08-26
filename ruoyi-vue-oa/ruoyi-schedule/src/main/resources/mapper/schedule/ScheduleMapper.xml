@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.schedule.mapper.ScheduleMapper">
+    
+    <resultMap type="Schedule" id="ScheduleResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="partType"    column="part_type"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="repeatFlag"    column="repeat_flag"    />
+        <result property="repeatType"    column="repeat_type"    />
+        <result property="remindType"    column="remind_type"    />
+        <result property="remindTime"    column="remind_time"    />
+        <result property="level"    column="level"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="content"    column="content"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectScheduleVo">
+        select id, title, type_id, part_type, start_time, end_time, repeat_flag, repeat_type, remind_type, remind_time, level, status, del_flag, content, create_id, create_time, update_id, update_time from t_schedule
+    </sql>
+
+    <select id="selectScheduleList" parameterType="Schedule" resultMap="ScheduleResult">
+        <include refid="selectScheduleVo"/>
+        <where>
+            del_flag = '0'
+            <if test="title != null  and title != ''"> and title like concat('%', #{title}, '%')</if>
+            <if test="partType != null  and partType != ''"> and part_type = #{partType}</if>
+            <if test="params.beginStartTime != null and params.beginStartTime != '' and params.endStartTime != null and params.endStartTime != ''"> and start_time between #{params.beginStartTime} and #{params.endStartTime}</if>
+            <if test="params.beginEndTime != null and params.beginEndTime != '' and params.endEndTime != null and params.endEndTime != ''"> and end_time between #{params.beginEndTime} and #{params.endEndTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectScheduleById" parameterType="String" resultMap="ScheduleResult">
+        <include refid="selectScheduleVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectMonthScheduleList" resultMap="ScheduleResult">
+        select distinct t1.* from t_schedule t1, t_schedule_parts t2
+        <where>
+            t1.id = t2.schedule_id
+            and t1.del_flag = '0'
+            <![CDATA[
+                and date_format(t1.start_time,'%Y-%m-%d') >= date_format(#{startTime},'%Y-%m-%d')
+                and date_format(t1.start_time,'%Y-%m-%d') <= date_format(#{endTime},'%Y-%m-%d')
+            ]]>
+            <if test="title != null  and title != ''"> and t1.title like concat('%', #{title}, '%')</if>
+            <if test="typeId != null  and typeId != ''"> and t1.type_id = #{typeId}</if>
+            <if test="level != null  and level != ''"> and t1.level = #{level}</if>
+            <if test="status != null  and status != ''"> and t1.status = #{status}</if>
+            <choose>
+                <!-- 我创建的 -->
+                <when test='"0".equals(partType)'>
+                    and t1.part_type = '0' and t1.create_id = #{createId}
+                </when>
+                <!-- 我参与的 -->
+                <when test='"1".equals(partType)'>
+                    and t1.part_type = '1' and t2.user_id = #{createId}
+                </when>
+                <!-- 全部 -->
+                <otherwise>
+                    and ((t1.part_type = '0' and  t1.create_id = #{createId}) or (t1.part_type = '1' and t2.user_id = #{createId}))
+                </otherwise>
+            </choose>
+        </where>
+        order by t1.start_time asc, t1.create_time asc
+    </select>
+
+    <select id="selectRemindList" resultMap="ScheduleResult">
+        <include refid="selectScheduleVo"/>
+        <where>
+            del_flag = '0' and remind_type != '0'
+            <![CDATA[
+                and date_format(start_time,'%Y-%m-%d %H:%i:%s') >= date_format(#{startTime},'%Y-%m-%d %H:%i:%s')
+            ]]>
+        </where>
+    </select>
+
+    <select id="selectRepeatList" resultMap="ScheduleResult">
+        <include refid="selectScheduleVo"/>
+        <where>
+            del_flag = '0' and repeat_flag = '1'
+        </where>
+    </select>
+
+    <insert id="insertSchedule" parameterType="Schedule">
+        insert into t_schedule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="partType != null">part_type,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="repeatFlag != null">repeat_flag,</if>
+            <if test="repeatType != null">repeat_type,</if>
+            <if test="remindType != null">remind_type,</if>
+            <if test="remindTime != null">remind_time,</if>
+            <if test="level != null">level,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="content != null">content,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="partType != null">#{partType},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="repeatFlag != null">#{repeatFlag},</if>
+            <if test="repeatType != null">#{repeatType},</if>
+            <if test="remindType != null">#{remindType},</if>
+            <if test="remindTime != null">#{remindTime},</if>
+            <if test="level != null">#{level},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="content != null">#{content},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchInsertSchedule">
+        insert into t_schedule (id, title, type_id, part_type, start_time, end_time, repeat_flag, repeat_type,
+        remind_type, remind_time, level, status, del_flag, content, create_id, create_time) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.title}, #{item.typeId}, #{item.partType}, #{item.startTime}, #{item.endTime}, #{item.repeatFlag}, #{item.repeatType}, #{item.remindType},
+             #{item.remindTime}, #{item.level}, #{item.status}, #{item.delFlag}, #{item.content}, #{item.createId}, #{item.createTime})
+        </foreach>
+    </insert>
+
+    <update id="updateSchedule" parameterType="Schedule">
+        update t_schedule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="partType != null">part_type = #{partType},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="repeatFlag != null">repeat_flag = #{repeatFlag},</if>
+            <if test="repeatType != null">repeat_type = #{repeatType},</if>
+            <if test="remindType != null">remind_type = #{remindType},</if>
+            <if test="remindTime != null">remind_time = #{remindTime},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteScheduleById" parameterType="String">
+        delete from t_schedule where id = #{id}
+    </delete>
+
+    <delete id="deleteScheduleByIds" parameterType="String">
+        delete from t_schedule where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateDelFlagByIds" parameterType="ScheduleUpdateQo">
+        update t_schedule set del_flag = #{delFlag}, update_id = #{updateId}, update_time = #{updateTime} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateRepeatFlag" parameterType="ScheduleUpdateQo">
+        update t_schedule set repeat_flag = '0' where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+</mapper>

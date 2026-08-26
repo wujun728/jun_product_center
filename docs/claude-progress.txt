@@ -1,0 +1,682 @@
+# my-project - 进度跟踪
+
+## 项目概述
+将 OA 系统原前端 (ruoyi-vue-oa-ui, Vue 2 SPA) 的所有功能页面迁移到新前端 (jun_ui_sa_admin, sa-admin 框架)。
+新前端使用 httpVueLoader 动态加载 .vue 文件，无需 webpack 构建。
+迁移策略：直接复制原前端 .vue 文件，小改适配 loader 加载方式。
+
+## 架构决策
+- 加载方式：使用 httpVueLoader 加载 .vue 文件（非 iframe .html 方式）
+- API 适配：创建兼容层将原前端 axios request 映射为新前端 sa.ajax
+- 路由适配：将 Vue Router ($router.push) 映射为 sa_admin tab 机制
+- 状态管理：创建轻量适配层替代 Vuex store
+- 权限指令：在新前端全局注册 v-hasPermi / v-hasRole
+
+## 规模统计
+- 原前端：~149 个 .vue 组件，60+ 个 API 模块，14 个业务模块
+- 新前端：~159 个 .vue + 31 个 .html 页面（部分需清理）
+- 任务总数：52 个
+
+## 会话记录
+
+### Session #1 - 规划 (2026-04-03)
+- 盘点了原前端和新前端的完整页面清单
+- 分析了 httpVueLoader 加载机制和 API 适配层
+- 创建了 task_list.json (共 52 个任务)
+- 创建了 init.sh / init.bat
+- 状态: 规划完成
+
+### 任务分类统计
+- setup (环境/分析): 7 个 (T001-T007)
+- frontend (清理/适配/迁移): 42 个 (T008-T049)
+- integration (联调/测试): 3 个 (T050-T052)
+
+### Session #1 - T001 (2026-04-03)
+- 实现了: 盘点新前端现有页面清单
+- 修改的文件: [inventory-new.md (新建)]
+- 自测结果: 通过 — 190个文件全部收录，加载方式和功能状态已标注
+- Git 提交: bbe477b
+- 下一步建议: T002 可盘点原前端页面清单做对比，或直接进入 T008 开始清理冗余 .html 文件
+
+### Session #2 - T002 (2026-04-03)
+- 实现了: 盘点原前端页面清单
+- 修改的文件: [inventory-old.md (新建)]
+- 自测结果: 通过 — 149个.vue文件全部收录，按16个模块分类（workflow 45、system 17、tool 17、kbs 16 等）
+- Git 提交: 5d40ad9
+- 下一步建议: T003-T007 继续环境分析，或直接进入 T008 开始清理冗余 .html 文件
+
+### Session #3 - T003 (2026-04-03)
+- 实现了: 盘点原前端API模块清单
+- 修改的文件: [inventory-api.md (新建)]
+- 自测结果: 通过 — 59个API文件全部收录，321个导出方法，按14个模块分类（workflow 103方法、system 68方法、kbs 39方法等）
+- Git 提交: bfae0ea
+- 下一步建议: T004-T007 继续环境分析，或直接进入 T008 开始清理冗余 .html 文件
+
+### Session #4 - T004 (2026-04-03)
+- 实现了: 对比新旧前端页面差异，生成 gap-analysis.md
+- 修改的文件: [gap-analysis.md (新建)]
+- 自测结果: 通过 — 三类页面均已明确列出：149个正常页面、1个占位页面、0个缺失页面；27个冗余.html已标注
+- Git 提交: dc75fc8
+- 关键发现: 原前端149个.vue文件已全部在新前端有对应，无功能缺口；迁移重点在API/路由/状态管理适配层
+- 下一步建议: T005-T007 继续环境分析，或直接进入 T008 清理27个冗余.html文件
+
+### Session #5 - T005 (2026-04-03)
+- 实现了: 确认新前端 httpVueLoader 加载机制，输出 loader-mechanism.md
+- 修改的文件: [loader-mechanism.md (新建)]
+- 自测结果: 通过 — 文档涵盖：.vue加载流程、缓存策略（内存缓存+import预处理）、菜单/路由动态注册（/getRouters→convertRoutersToMenuList→setMenuList）、Hash-based Tab导航机制
+- Git 提交: 7930684
+- 关键发现: resolveComponentUrl() 当前统一映射为 .html 后缀，若要全面使用 .vue 加载需修改此函数
+- 下一步建议: T006-T007 继续环境分析，或直接进入 T008 清理27个冗余.html文件
+
+### Session #6 - T006 (2026-04-03)
+- 实现了: 确认新前端API适配层，输出 api-adapter-notes.md
+- 修改的文件: [api-adapter-notes.md (新建)]
+- 自测结果: 通过 — 文档涵盖：三层请求机制(sa.ajax/ruoyi.*/api-adapter)、原前端axios对比、4种迁移方式、通用改动清单、已知bug
+- Git 提交: 33282d4
+- 关键发现: api-adapter.js 的 Promise 包装有 bug（ruoyi.get 返回 jQuery Deferred 非原生 Promise）；推荐使用 importModule 桥接方式迁移，改动最小
+- 下一步建议: T007 继续环境分析，或直接进入 T008 清理27个冗余.html文件
+
+### Session #7 - T007 (2026-04-03)
+- 实现了: 确认新前端公共组件和依赖，输出 component-dependency-notes.md
+- 修改的文件: [component-dependency-notes.md (新建)]
+- 自测结果: 通过 — 已列出新前端全局可用的7个库、5个工具对象、6个全局函数、3个框架组件；已标注原前端使用但新前端缺少的9个组件、3个指令、6个原型方法、10+个第三方库
+- Git 提交: 6e16d1b
+- 关键发现:
+  - Element UI 版本差异(2.13 vs 2.15)风险极低
+  - sa-item 的 file/img/richtext 类型可替代部分原组件(FileUpload/ImageUpload/Editor)
+  - v-hasPermi/v-hasRole 指令未注册但底层函数(ruoyi.hasPermission)已有，注册成本低
+  - Vuex/Vue Router 不需要迁移，新前端用 sa_admin + Hash Tab 替代
+- 下一步建议: T008 开始清理27个冗余.html文件，或先做第一批通用适配(注册指令、挂载$modal等)
+
+### Session #8 - T008 (2026-04-03)
+- 实现了: 清理新前端无效页面 - 识别
+- 修改的文件: [cleanup-list.md (新建)]
+- 自测结果: 通过 — 识别出26个待清理文件：22个冗余.html（与.vue重复）、1个占位空壳(cfg/xxx.vue)、3个测试/demo页面；另标注7个不清理的保留页面及原因
+- Git 提交: 8b51951
+- 关键发现:
+  - 实际冗余.html为22个（非之前估计的27个），因5个.html无对应.vue版本需保留
+  - system/notice/index.html 是通知公告管理的唯一实现，不可清理
+  - console-main.html、error-page/*.html、cfg/system-cfg.html、sa-doc.html 均有独立功能
+- 下一步建议: T009 执行清理（删除26个文件），清理前需检查菜单路由中是否有硬编码引用这些.html路径
+
+### Session #2 - T009 (2026-04-03)
+- 实现了: 清理新前端无效页面 - 执行删除
+- 修改的文件: 删除26个文件（22个冗余.html + 1个占位cfg/xxx.vue + 3个test/demo页面），清除空目录test/、demo/
+- 自测结果: 通过 — 26个文件全部删除；22个对应.vue文件完好；7个保留页面未受影响；index.html正常
+- Git 提交: 84b4570
+- 下一步建议: T010+ 开始适配层开发（注册v-hasPermi/v-hasRole指令、修改resolveComponentUrl支持.vue加载等）
+
+### Session #3 - T010 (2026-04-03)
+- 实现了: 清理新前端多余的 .html 版本页面 — 修改 resolveComponentUrl() 默认映射从 .html 改为 .vue
+- 修改的文件: [jun_ui_sa_admin/static/ruoyi-util.js]
+- 自测结果: 通过 — 无.html/.vue重复文件；resolveComponentUrl已改为默认.vue；已有扩展名路径保持不变
+- Git 提交: 154f02d
+- 下一步建议: T011+ 继续适配层开发（注册v-hasPermi/v-hasRole指令、挂载$modal等全局方法）
+
+### Session #4 - T011 (2026-04-03)
+- 实现了: 创建迁移用公共工具 - request 适配（ruoyi-compat.js）
+- 修改的文件: [jun_ui_sa_admin/static/ruoyi-compat.js (新建), jun_ui_sa_admin/index.html]
+- 自测结果: 通过 — 文件已创建；request()函数接受axios风格config返回Promise，内部调用ruoyi.request()（自动携带JWT Token、处理401/500/601响应码）；index.html已在api-adapter.js之后引入，覆盖其有bug的request实现
+- Git 提交: f5757ea
+- 关键改进: 修复了api-adapter.js中request()的Promise包装bug（原实现调用ruoyi.get/post等无回调方法后尝试.then()，但这些方法不返回标准Promise）
+- 下一步建议: T012+ 继续适配层开发（注册v-hasPermi/v-hasRole指令、路由适配、Vuex替代等）
+
+### Session #5 - T012 (2026-04-03)
+- 实现了: 创建迁移用公共工具 - Vuex/Store 适配（store-compat.js）
+- 修改的文件: [jun_ui_sa_admin/static/store-compat.js (新建), jun_ui_sa_admin/index.html]
+- 自测结果: 通过 — store-compat.js 已创建；Vue.prototype.$store 已挂载；覆盖 user/dict/permission/app/settings/tagsView 六大模块
+- Git 提交: 1245de0
+- 关键功能:
+  - this.$store.getters.xxx: 支持 token/name/roles/permissions/sidebar/dict 等18个getter
+  - this.$store.dispatch(): 支持 user/GetInfo、user/LogOut、dict/setDict、app/toggleSideBar 等action
+  - this.$store.commit(): 支持 SET_TOKEN、CHANGE_SETTING 等mutation
+  - dict mixin: 组件声明 dicts:['sys_xx'] 自动加载字典到 this.dict.type/this.dict.label
+  - selectDictLabel/selectDictLabels: 全局字典标签查找方法
+  - mapGetters/mapState/mapActions: vuex辅助函数简易实现
+- 下一步建议: T013+ 继续适配层开发（路由适配、$modal挂载、其他全局方法）
+
+### Session #6 - T013 (2026-04-03)
+- 实现了: 创建迁移用公共工具 - 路由/导航适配（router-compat.js）
+- 修改的文件: [jun_ui_sa_admin/static/router-compat.js (新建), jun_ui_sa_admin/index.html]
+- 自测结果: 通过 — router-compat.js 已创建；Vue.prototype.$router/$route 已挂载
+- Git 提交: 47c0857
+- 关键功能:
+  - this.$router.push(path|{path,query}): 映射为 sa_admin.showTab()，自动将路径转为 sa-view/*.vue URL
+  - this.$router.replace(): 等同于 push（tab 机制无区别）
+  - this.$router.go(-1) / this.$router.back(): 关闭当前 tab 回到上一个
+  - this.$route.path: 从当前 sa_admin.nativeTab.url 反推路径
+  - this.$route.query: 从 URL hash/search 解析查询参数
+  - this.$route.params: 从路径中提取参数（如 /job-log/index/123 → {jobLogId: '123'}）
+- 下一步建议: T014+ 继续适配层开发（$modal挂载、v-hasPermi指令注册、其他全局方法）
+
+### Session #7 - T014 (2026-04-03)
+- 实现了: 创建迁移用公共工具 - 权限指令适配
+- 修改的文件: [jun_ui_sa_admin/static/ruoyi-util.js]
+- 自测结果: 通过 — v-hasPermi/v-hasRole 两个指令已通过 Vue.directive() 全局注册；指令在 inserted 钩子中调用 ruoyi.hasPermi()/ruoyi.hasRole() 检查权限，无权限时 removeChild 隐藏元素；增加了 Array 类型校验和 console.warn 提示；权限数据由 store-compat.js 的 GetInfo action 写入 localStorage
+- Git 提交: b272b29
+- 关键说明:
+  - 指令实现位于 ruoyi-util.js:770-800，在 index.html 加载时随 Vue 一起注册
+  - 权限数据流: 登录→GetInfo→ruoyi.setPermissions()→localStorage→ruoyi.hasPermi()→指令判断
+  - 与原前端(ruoyi-vue-oa-ui/src/directive/permission/)行为完全一致
+- 下一步建议: T015+ 继续适配层开发（$modal挂载、其他全局方法）
+
+### Session #8 - T015 (2026-04-03)
+- 实现了: 创建迁移用公共工具 - 全局混入适配（mixin-compat.js）
+- 修改的文件: [jun_ui_sa_admin/static/mixin-compat.js (新建), jun_ui_sa_admin/index.html]
+- 自测结果: 通过 — 所有验证步骤均满足
+- Git 提交: 7954e9c
+- 关键功能:
+  - 分页 mixin: Vue.mixin 注入 handleQuery/resetQuery/handleSizeChange/handleCurrentChange/handleSelectionChange 方法，自动操作 queryParams.pageNum/pageSize 并调用 getList()
+  - 字典数据加载 mixin: 已在 store-compat.js 中实现（dicts:[] 选项自动加载），本次补充 getDicts/getConfigKey 原型方法返回 Promise
+  - $tab: 页签操作（openPage/refreshPage/closePage/closeOpenPage/closeAllPage）映射到 sa_admin tab 机制
+  - $download: 文件下载方法（resource/zip/name）
+  - $eventBus: 全局事件总线（new Vue()）
+  - 全局组件: Pagination/RightToolbar/DictTag 通过 httpVueLoaderCached 全局注册
+  - index.html: 在 router-compat.js 之后引入 mixin-compat.js
+- 下一步建议: T016+ 开始业务页面迁移，或继续补充缺失的全局组件（Editor/FileUpload/ImageUpload 等）
+
+### Session #9 - T016 (2026-04-03)
+- 实现了: 迁移API模块 - system 系统管理
+- 修改的文件: [新建8个文件: config.js, menu.js, post.js, notice.js, holidaySetting.js, holidayWorkSetting.js, dict/type.js, dict/data.js；已有3个: user.js, role.js, dept.js]
+- 自测结果: 通过 — 11个API文件全部就位，无import语句，全部使用ruoyi.get/post/put/delete + defineModule模式
+- Git 提交: 4b66989
+- 下一步建议: T017+ 继续迁移其他模块的API文件，或开始业务页面迁移
+
+### Session #10 - T017 (2026-04-03)
+- 实现了: 迁移API模块 - monitor 监控
+- 修改的文件: [新建7个文件: cache.js, job.js, jobLog.js, logininfor.js, online.js, operlog.js, server.js]
+- 自测结果: 通过 — 7个API文件全部就位，无import语句，全部使用ruoyi.get/put/delete + defineModule模式
+- Git 提交: eebae27
+- 下一步建议: T018+ 继续迁移其他模块的API文件（tool/kbs/workflow等），或开始业务页面迁移
+
+### Session #11 - T018 (2026-04-03)
+- 实现了: 迁移API模块 - workflow 工作流
+- 修改的文件: [新建18个文件: attachment.js, comment.js, done.js, draft.js, dynamicForm.js, form.js, mainSeal.js, mainText.js, process.js, receTemplate.js, recycle.js, task.js, template.js, todo.js, flowable/definition.js, flowable/expression.js, flowable/listener.js, flowable/monitor.js]
+- 自测结果: 通过 — 18个API文件全部就位（14个根目录+4个flowable子目录），无import语句，全部使用ruoyi.get/post/put/delete + defineModule模式
+- Git 提交: 17afc5e
+- 下一步建议: T019+ 继续迁移其他模块的API文件（tool/kbs等），或开始业务页面迁移
+
+### Session #12 - T019 (2026-04-03)
+- 实现了: 迁移API模块 - kbs/schedule/serial/setting/information/mq/file/login/menu/tool
+- 修改的文件: [新建23个文件: kbs/document/comment.js, kbs/document/document.js, kbs/document/like.js, kbs/favorite/favorite.js, kbs/favorite/group.js, kbs/recycle/recycle.js, kbs/topic/category.js, kbs/topic/info.js, kbs/topic/user.js, schedule/parts.js, schedule/schedule.js, schedule/type.js, serial/config.js, serial/log.js, setting/entrust.js, setting/secretary.js, information/information.js, mq/async.js, file/index.js, file/operate.js, login.js, menu.js, tool/gen.js]
+- 自测结果: 通过 — 原前端59个API文件与新前端59个API文件完全一致，无import语句，全部使用ruoyi.get/post/put/delete + defineModule模式
+- Git 提交: 7054156
+- 下一步建议: API迁移全部完成，可开始业务页面迁移或其他适配工作
+
+### Session #13 - T020 (2026-04-03)
+- 实现了: 迁移API模块 - tool 工具（验证确认）
+- 修改的文件: 无新文件 — tool/gen.js 已在 Session #12 (T019) 中迁移完成
+- 自测结果: 通过 — static/api/tool/gen.js 已存在，无import语句，使用defineModule模式
+- Git 提交: 与T019同批（7054156），本次仅确认验证
+- 下一步建议: 开始业务页面迁移任务
+
+### Session #14 - T049 (2026-04-03)
+- 实现了: 迁移公共组件 - 原前端 components 目录适配为 httpVueLoader 兼容
+- 修改的文件: 63个文件（详见下方）
+  - 核心组件适配: Pagination, Editor, FileUpload, ImageUpload, ImagePreview, IconSelect(+requireIcons.js), SerialNo, RightToolbar, DictTag, iFrame
+  - 组织/表单组件: org/UserSelect, org/UserAllSelect, org/TreeSelect, form/FormUserSelect, form/FormDeptSelect, form/design/DesignUserSelect, form/design/DesignDeptSelect
+  - 流程组件: flow/User, flow/Expression, flow/ElInputTag, flow/Role
+  - Crontab组件: index + 8个子组件(second/min/hour/day/month/week/year/result)
+  - 其他组件: Breadcrumb, Hamburger, HeaderSearch, PanThumb, Screenfull, SizeSelect, SvgIcon, ThemePicker, TopNav, RuoYi/Doc, RuoYi/Git, tinymce, parser/Parser, WangEditorExtend/customUploadDialog
+  - Process组件: index, designer, viewer, 10个panel子组件（仅export→module.exports，bpmn-js依赖待引入CDN）
+  - 配置文件: component-loader.js（新增40+组件路径映射）, index.html（加载requireIcons.js）
+- 适配内容:
+  - export default → module.exports（所有.vue文件）
+  - import X from "@/api/..." → importModule('@/api/...')
+  - import { getToken } from "@/utils/auth" → ruoyi.getToken()
+  - process.env.VUE_APP_BASE_API → CONFIG.API_BASE_URL
+  - import axios → $.ajax
+  - import Sortable → window.Sortable（全局已加载）
+  - lang="scss" → 纯CSS（展平嵌套选择器）
+  - svg-icon → Element UI el-icon-*
+  - require.context → 静态图标列表（_elementIcons）
+- 自测结果: 通过 — 所有被迁移页面引用的20+公共组件均已适配，无import语句、无process.env、无require()
+- Git 提交: 7bded6b
+- 注意事项:
+  - Process/customBpmn/render等JS模块仍含ES6 import，需要bpmn-js CDN才能运行（属工作流模块迁移范畴）
+  - Editor组件需要Quill CDN才能使用
+  - flow/User组件需要vue-treeselect CDN
+- 下一步建议: 开始业务页面迁移（system/monitor/tool等模块），或引入Quill/vue-treeselect CDN
+
+### Session #16 - T021 (2026-04-03)
+- 实现了: 迁移页面 - system/user 用户管理（8个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/system/user/index.vue（用户列表主页）
+  - jun_ui_sa_admin/sa-view/system/user/authRole.vue（授权角色）
+  - jun_ui_sa_admin/sa-view/system/user/profile/index.vue（个人中心主页）
+  - jun_ui_sa_admin/sa-view/system/user/profile/userInfo.vue（基本资料）
+  - jun_ui_sa_admin/sa-view/system/user/profile/userAvatar.vue（头像裁剪）
+  - jun_ui_sa_admin/sa-view/system/user/profile/resetPwd.vue（修改密码）
+  - jun_ui_sa_admin/sa-view/system/user/contact/index.vue（通讯录列表）
+  - jun_ui_sa_admin/sa-view/system/user/contact/detail.vue（通讯录详情）
+  - jun_ui_sa_admin/index.html（新增vue-treeselect/splitpanes/vue-cropper CDN）
+- 适配内容:
+  - import → importModule() / httpVueLoader()
+  - export default → module.exports
+  - process.env.VUE_APP_BASE_API → CONFIG.API_BASE_URL
+  - lang="scss" → 纯CSS（展平嵌套选择器）
+  - svg-icon → el-icon-*
+  - store直接引用 → this.$store
+  - debounce import → 内联实现
+- 自测结果: 通过 — 无import语句、无export default、无process.env、无scss
+- Git 提交: 281c220
+- 下一步建议: 继续迁移其他system模块页面（role/menu/dept/dict/config/post/notice等）
+
+### Session #17 - T022 (2026-04-03)
+- 实现了: 迁移页面 - system/role 角色管理（3个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/system/role/index.vue（角色列表/增删改查/数据权限/菜单权限）
+  - jun_ui_sa_admin/sa-view/system/role/authUser.vue（已授权用户列表/取消授权）
+  - jun_ui_sa_admin/sa-view/system/role/selectUser.vue（选择用户弹窗/批量授权）
+- 适配内容:
+  - import → importModule() / httpVueLoader()
+  - export default → module.exports
+  - 箭头函数 → function()
+  - this绑定: .bind(this) 或 var self = this
+- 自测结果: 通过 — 无import语句、无export default
+- Git 提交: a1b7a4e
+- 下一步建议: 继续迁移其他system模块页面（menu/dept/dict/config/post/notice等）
+
+### Session #18 - T023 (2026-04-03)
+- 实现了: 迁移页面 - system/dept 部门管理（1个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/system/dept/index.vue（部门树形列表/增删改/展开折叠）
+- 适配内容:
+  - import → importModule() / httpVueLoaderCached()
+  - export default → module.exports
+  - 箭头函数 → function()
+  - this绑定: var self = this
+  - Treeselect: VueTreeselect.Treeselect（CDN全局已加载）
+  - FormUserSelect: httpVueLoaderCached加载
+- 自测结果: 通过 — 无import语句、无export default
+- Git 提交: fb99a36
+- 下一步建议: 继续迁移其他system模块页面（menu/dict/config/post/notice等）
+
+### Session #19 - T024 (2026-04-03)
+- 实现了: 迁移页面 - system/menu 菜单管理
+- 修改的文件: [jun_ui_sa_admin/sa-view/system/menu/index.vue]
+- 适配内容:
+  - import → importModule('@/api/system/menu')
+  - export default → module.exports
+  - 箭头函数 → function()
+  - this绑定: var self = this
+  - Treeselect: VueTreeselect.Treeselect（CDN全局已加载）
+  - IconSelect: httpVueLoaderCached加载
+  - svg-icon → Element UI <i :class="icon">
+- 自测结果: 通过 — 无import语句、无export default、无process.env、无scss
+- Git 提交: 15ea1fb
+- 下一步建议: 继续迁移其他system模块页面（dict/config/post/notice等）
+
+### Session #20 - T025 (2026-04-03)
+- 实现了: 迁移页面 - system/post 岗位管理
+- 修改的文件: [jun_ui_sa_admin/sa-view/system/post/index.vue, jun_ui_sa_admin/index.html]
+- 自测结果: 通过 — 适配 httpVueLoader 格式，API 模块已注册
+- Git 提交: 6b19836
+- 下一步建议: 继续迁移其他 system 页面（如 notice、config、dict 等）
+
+### Session #21 - T026 (2026-04-03)
+- 实现了: 迁移页面 - system/dict 字典管理（index.vue + data.vue）
+- 修改的文件: [jun_ui_sa_admin/sa-view/system/dict/index.vue, jun_ui_sa_admin/sa-view/system/dict/data.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), this绑定→var self, router-link→click handler
+- 自测结果: 通过 — 无import语句、无export default、无箭头函数
+- Git 提交: fdddc03
+- 下一步建议: 继续迁移其他 system 页面（如 notice、config 等）
+
+### Session #22 - T026 fix (2026-04-03)
+- 修复了: 字典数据页面路由跳转问题
+- 问题: handleDictData 使用 $router.push('/system/dict-data/index/' + dictId) 导致路径解析为不存在的 .vue 文件
+- 方案: 改为 sa_admin.showTab 直接打开 data.vue，dictId 通过 query 参数传递；data.vue 优先从 $route.query 读取 dictId
+- 修改的文件: [jun_ui_sa_admin/sa-view/system/dict/index.vue, jun_ui_sa_admin/sa-view/system/dict/data.vue]
+- 自测结果: 通过
+- Git 提交: 98ffa7b5
+- 下一步建议: 继续迁移其他 system 页面（如 notice、config 等）
+
+### Session #23 - T027 (2026-04-03)
+- 实现了: 迁移页面 - system/config 参数设置
+- 修改的文件: [jun_ui_sa_admin/sa-view/system/config/index.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), this绑定→var self
+- 自测结果: 通过 — 文件已在之前会话(d9c6b86a)中适配完成，本次确认无import/export default/箭头函数，API模块(config.js)已就位
+- Git 提交: 已包含在 d9c6b86a 中（文件无新变更）
+- 下一步建议: 继续迁移其他 system 页面（如 notice 等）或 monitor/tool 模块页面
+
+### Session #24 - T028 (2026-04-03)
+- 实现了: 迁移页面 - monitor 系统监控（全部9个页面）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/monitor/server/index.vue（服务监控）
+  - jun_ui_sa_admin/sa-view/monitor/online/index.vue（在线用户）
+  - jun_ui_sa_admin/sa-view/monitor/logininfor/index.vue（登录日志）
+  - jun_ui_sa_admin/sa-view/monitor/operlog/index.vue（操作日志）
+  - jun_ui_sa_admin/sa-view/monitor/job/index.vue（定时任务管理）
+  - jun_ui_sa_admin/sa-view/monitor/job/log.vue（调度日志）
+  - jun_ui_sa_admin/sa-view/monitor/cache/index.vue（缓存监控-ECharts图表）
+  - jun_ui_sa_admin/sa-view/monitor/cache/list.vue（缓存列表管理）
+  - jun_ui_sa_admin/sa-view/monitor/druid/index.vue（数据监控-iframe）
+  - jun_ui_sa_admin/index.html（新增ECharts CDN）
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), process.env→CONFIG, import echarts→window.echarts(CDN), iFrame组件→原生iframe标签
+- 自测结果: 通过 — 无import/export default/箭头函数/process.env残留
+- Git 提交: 690285aa
+- 下一步建议: 继续迁移 system/notice 或 tool 模块页面
+
+### Session #25 - T029 (2026-04-03)
+- 实现了: 迁移页面 - workflow/todo 待办任务（5个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/workflow/todo/index.vue（待办/待阅Tab切换主页）
+  - jun_ui_sa_admin/sa-view/workflow/todo/todo-list.vue（待办列表，含未读筛选、分组切换）
+  - jun_ui_sa_admin/sa-view/workflow/todo/read-list.vue（待阅列表，含分组切换）
+  - jun_ui_sa_admin/sa-view/workflow/todo/group-collapse.vue（折叠面板分组视图）
+  - jun_ui_sa_admin/sa-view/workflow/todo/group-table.vue（表格分页视图，含终止办理）
+- 适配内容: export default→module.exports, import→importModule/httpVueLoaderCached, 箭头函数→function(), lang="scss"→纯CSS, svg-icon→el-icon, eventType内联
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，API模块(todo.js/task.js)已就位
+- Git 提交: 99ac5b24
+- 下一步建议: 继续迁移其他workflow页面（如done/draft/flowForm等）或system/notice页面
+
+### Session #26 - T030 (2026-04-03)
+- 实现了: 迁移页面 - workflow/my-draft 我的草稿
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/my-draft/index.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, ::v-deep→普通选择器
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，API模块(draft.js)已就位
+- Git 提交: 41e0237d
+- 下一步建议: 继续迁移其他workflow页面（如done/flowForm等）或system/notice页面
+
+### Session #27 - T031 (2026-04-03)
+- 实现了: 迁移页面 - workflow/done 已办任务
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/done/index.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, svg-icon→el-icon, .catch(this.loading=false)→.catch(function(){})
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，API模块(done.js/task.js)已就位
+- Git 提交: 403b2236
+- 下一步建议: 继续迁移其他workflow页面（如flowForm/process等）或system/notice页面
+
+### Session #28 - T032 (2026-04-03)
+- 实现了: 迁移页面 - workflow/recycle 回收站
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/recycle/index.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), ::v-deep→普通选择器
+- 自测结果: 通过 — 无import/export default/箭头函数残留，API模块(recycle.js)已就位
+- Git 提交: 0d096c12
+- 下一步建议: 继续迁移其他workflow页面（如flowForm/process/template等）或system/notice页面
+
+### Session #29 - T033 (2026-04-03)
+- 实现了: 迁移页面 - workflow/newstart 发起流程
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/newstart/index.vue, jun_ui_sa_admin/sa-view/workflow/newstart/flow-template.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, ::v-deep→普通选择器, 背景图→纯色替代, 模板字符串→字符串拼接
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，API模块(template.js/receTemplate.js)已就位
+- Git 提交: 1bc75e39
+- 下一步建议: 继续迁移其他workflow页面（如flowForm/process/template管理等）或system/notice页面
+
+### Session #30 - T034 (2026-04-03)
+- 实现了: 迁移页面 - workflow/template 流程模板管理
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/template/index.vue, add.vue, basic-info.vue, main-text.vue, business-form-info.vue, attachment-info.vue, message-notice.vue, type/index.vue]
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), process.env→CONFIG, getToken→ruoyi.getToken(), async/await→Promise链
+- 自测结果: 通过 — 无import/export default/箭头函数/process.env残留，API模块(template.js/dynamicForm.js/flowable/definition.js)已就位
+- Git 提交: 232fbf04
+- 下一步建议: 继续迁移其他workflow页面（如flowForm/process等）或system/notice页面
+
+### Session #31 - T035 (2026-04-03)
+- 实现了: 迁移页面 - workflow/flow-form 流程表单（16个.vue文件适配httpVueLoader）
+- 修改的文件: index.vue + component/下15个子组件(complete, delete-multi, flow-approve, flow-attachment, flow-comment, flow-definition, flow-mainText, flow-process, main-preview, main-stamp, main-upload, reject, return, select-user, view-form)
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, getToken→ruoyi.getToken(), process.env→CONFIG, StrUtil/deepClone/fileImgMap内联定义
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，16个文件均有module.exports
+- Git 提交: 02b9a0ec
+- 注意事项: vue-pdf和SparkMD5 CDN尚未引入（盖章和附件MD5校验功能需要），BPMN查看器需CustomBpmnViewer全局变量
+- 下一步建议: 继续迁移其他workflow页面或引入vue-pdf/SparkMD5 CDN
+
+### Session #33 - T036 (2026-04-03)
+- 实现了: 迁移页面 - workflow/flowable 流程引擎管理（9个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/workflow/flowable/definition/index.vue（流程定义列表）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/definition/flow.vue（流程设计器包装）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/definition/flow-view.vue（流程图查看器）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/definition/model.vue（流程模型设计）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/instance/index.vue（流程实例管理）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/instance/jump-activity-user.vue（跳转环节选人）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/history/index.vue（流程历史）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/listener/index.vue（监听器配置）
+  - jun_ui_sa_admin/sa-view/workflow/flowable/expression/index.vue（表达式配置）
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), getToken→ruoyi.getToken(), process.env→CONFIG, lang="scss"→纯CSS, async/await→Promise链
+- 自测结果: 通过 — 无import/export default/箭头函数/scss/process.env残留，9个文件均有module.exports
+- Git 提交: 8dce9e92
+- 注意事项: flow-view.vue依赖CustomBpmnViewer全局变量（bpmn-js CDN），model.vue依赖vkbeautify全局变量
+- 下一步建议: 继续迁移其他页面或引入bpmn-js/vkbeautify CDN
+
+### Session #34 - T037 (2026-04-03)
+- 实现了: 迁移页面 - workflow/dynamic-form 动态表单
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/dynamic-form/index.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), data()→data:function(), lang="scss"→纯CSS, Editor/Parser→httpVueLoaderCached加载
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，API模块(dynamicForm.js)已就位
+- Git 提交: d09e4b56
+- 下一步建议: 继续迁移其他workflow页面或system/notice等页面
+
+### Session #35 - T038 (2026-04-03)
+- 实现了: 迁移页面 - workflow/main-seal 印章管理
+- 修改的文件: [jun_ui_sa_admin/sa-view/workflow/main-seal/index.vue]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), @/views/路径→相对路径, ::v-deep→移除, style type="scss"→纯CSS
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，API模块(mainSeal.js)已就位，印章图片(gongzhang.png/fapiaozhang.png)路径已改为相对路径且文件存在
+- Git 提交: 8846b182
+- 下一步建议: 继续迁移其他页面（如system/notice、kbs、schedule等）
+
+### Session #36 - T039 (2026-04-03)
+- 实现了: 迁移页面 - kbs 知识库（全部16个.vue + 1个.js）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/kbs/topic/index.vue（主题列表）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/add-topic.vue（添加主题）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/detail.vue（主题详情）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/category/index.vue（分类管理）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/auth/topic-auth-user.vue（授权用户）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/doc-editor.vue（文档编辑器）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/doc-info.vue（文档详情）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/topic-info.vue（主题信息）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/topic-tree.vue（文档树）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/comment.vue（评论）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/comment-input.vue（评论输入）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/favorite.vue（收藏弹框）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/favorite-group.vue（收藏组）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/outline-item.vue（大纲递归项）
+  - jun_ui_sa_admin/sa-view/kbs/topic/components/info/menu-conf.js（编辑器菜单配置）
+  - jun_ui_sa_admin/sa-view/kbs/favorite/index.vue（收藏管理）
+  - jun_ui_sa_admin/sa-view/kbs/recycle/index.vue（回收站）
+  - jun_ui_sa_admin/sa-view/kbs/images/（3个图片资源）
+  - jun_ui_sa_admin/index.html（新增wangeditor CDN + menu-conf.js）
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), async/await→Promise链, process.env→CONFIG, lang="scss"→纯CSS, require()→静态路径, svg-icon→el-icon, wangeditor/slate→CDN全局变量
+- 自测结果: 通过 — 无import/export default/箭头函数/scss/process.env残留，17个文件全部适配
+- Git 提交: 已包含在现有提交中
+- 注意事项:
+  - wangeditor Editor/Toolbar 组件依赖CDN全局变量 window.WangEditorForVue
+  - Slate API(SlateNode/SlateEditor/SlateTransforms) 依赖 window.wangEditor 全局对象
+  - menu-conf.js 作为全局脚本加载，通过 window.kbsMenuConf 暴露配置
+- 下一步建议: 继续迁移其他页面（schedule日程、information公告等）
+
+### Session #38 - T040 (2026-04-03)
+- 实现了: 迁移页面 - schedule 日程管理（全部13个文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/schedule/index.vue（日程主页面）
+  - jun_ui_sa_admin/sa-view/schedule/components/header/index.vue（搜索栏+新建日程）
+  - jun_ui_sa_admin/sa-view/schedule/components/calendar/index.vue（左侧日历组件）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-radio.vue（分类单选组件）
+  - jun_ui_sa_admin/sa-view/schedule/components/type/index.vue（我的分类管理）
+  - jun_ui_sa_admin/sa-view/schedule/components/schedule/detail.vue（日程详情弹窗）
+  - jun_ui_sa_admin/sa-view/schedule/components/schedule/save.vue（新建/编辑日程表单）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-calendar/index.vue（自定义日历包装器）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-calendar/full-calendar.vue（日历配置层）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-calendar/body.vue（日历主体渲染）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-calendar/date-func.js（日期工具函数）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-calendar/data-map/lang-sets.js（多语言配置）
+  - jun_ui_sa_admin/sa-view/schedule/components/custom-calendar/index.js（已废弃，改用httpVueLoaderCached）
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, process.env→CONFIG, svg-icon→el-icon, StrUtil→内联判断, async/await→Promise链
+- 自测结果: 通过 — 无import/export default/箭头函数/scss/process.env残留，13个文件全部适配
+- Git 提交: 32c15594
+- 注意事项: detail.vue背景图改为渐变色替代原图（schedule-header.jpg），Editor组件需Quill CDN
+- 下一步建议: 继续迁移其他页面（information公告、worksetting工作设置等）
+
+### Session #39 - T041 (2026-04-03)
+- 实现了: 迁移页面 - information 信息管理（3个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/information/index.vue（信息列表管理，含增删改查/发布/下架/置顶）
+  - jun_ui_sa_admin/sa-view/information/detail.vue（信息详情查看）
+  - jun_ui_sa_admin/sa-view/information/pub-list.vue（已发布信息列表，含无限滚动加载）
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), async/await→Promise链, process.env→CONFIG, lang="scss"→纯CSS（展平嵌套选择器）, ::v-deep→移除
+- 自测结果: 通过 — 无import/export default/箭头函数/scss/process.env残留，3个文件均有module.exports，API模块(information.js)已就位
+- Git 提交: 94160d8f
+- 下一步建议: 继续迁移其他页面（worksetting工作设置等）
+
+### Session #40 - T041修复 (2026-04-03)
+- 修复了: index.html 中缺少 information.js 的 script 标签
+- 修改的文件:
+  - jun_ui_sa_admin/index.html（添加 static/api/information/information.js 引用）
+- 关于菜单配置: menu-list.js 为空数组，菜单由后端路由动态转换（ruoyi-util.js中convertRoutersToMenuList），无需手动配置
+- 自测结果: 通过 — script标签已添加，API模块可在运行时加载
+- Git 提交: df35a6a2
+
+### Session #41 - T042 (2026-04-03)
+- 实现了: 迁移页面 - notice 通知公告（3个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/notice/index.vue（通知列表管理，含增删改/发布/下架/部门选择）
+  - jun_ui_sa_admin/sa-view/notice/detail.vue（通知详情查看）
+  - jun_ui_sa_admin/sa-view/notice/pub-list.vue（已发布通知列表）
+  - jun_ui_sa_admin/index.html（添加 notice.js API script标签）
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), async/await→Promise链, lang="scss"→纯CSS, ::v-deep→移除, svg-icon→el-icon, template #suffix→slot="suffix"
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，3个文件均有module.exports，API模块(notice.js)已就位且script标签已添加
+- Git 提交: db66d2f1
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、tool工具等）
+
+### Session #42 - T043 (2026-04-03)
+- 实现了: 迁移页面 - holiday 节假日管理（3个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/holiday/index.vue（节假日管理主页，Tab切换假日设置/补班设置）
+  - jun_ui_sa_admin/sa-view/holiday/holiday-setting/index.vue（假日设置，含增删改查/导出）
+  - jun_ui_sa_admin/sa-view/holiday/work-setting/index.vue（补班设置，含关联节假日选择）
+  - jun_ui_sa_admin/index.html（添加 holidaySetting.js/holidayWorkSetting.js API script标签）
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, this绑定→var self
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，3个文件均有module.exports，API模块已就位且script标签已添加
+- Git 提交: 57a1100d
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、tool工具等）
+
+### Session #43 - T044 (2026-04-03)
+- 实现了: 迁移页面 - serial 编号管理（2个.vue文件适配httpVueLoader）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/serial/config/index.vue（编号配置管理，含增删改查/启停/规则编辑/效果预览）
+  - jun_ui_sa_admin/sa-view/serial/log/index.vue（编号生成日志列表，含搜索/分页）
+  - jun_ui_sa_admin/index.html（添加 serial/config.js 和 serial/log.js API script标签）
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), this绑定→var self, ...展开运算符→JSON.parse(JSON.stringify())
+- 自测结果: 通过 — 无import/export default/箭头函数残留，2个文件均有module.exports，API模块(config.js/log.js)已就位且script标签已添加
+- Git 提交: e475a673
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、tool工具等）
+
+### Session #44 - T045 (2026-04-03)
+- 实现了: 迁移页面 - setting 个人设置（委托设置 + 秘书设置）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/setting/entrust/index.vue（委托设置，含增删改查/启停/模板选择）
+  - jun_ui_sa_admin/sa-view/setting/secretary/index.vue（秘书设置，含增删改查/启停）
+  - jun_ui_sa_admin/index.html（添加 setting/entrust.js 和 setting/secretary.js API script标签）
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), this绑定→var self, async→Promise链, lang="scss"→纯CSS
+- 自测结果: 通过 — 无import/export default/箭头函数/scss残留，2个文件均有module.exports，API模块(entrust.js/secretary.js)已就位且script标签已添加
+- Git 提交: 8118f32a
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、tool工具等）
+
+### Session #45 - T046 (2026-04-03)
+- 实现了: 迁移页面 - mq 消息队列（异步消息管理页面适配httpVueLoader）
+- 修改的文件: [jun_ui_sa_admin/sa-view/mq/async/index.vue, jun_ui_sa_admin/index.html]
+- 适配内容: import→importModule, export default→module.exports, 箭头函数→function(), data()→data:function(), ...展开运算符→JSON.parse(JSON.stringify()), 模板字符串→字符串拼接
+- 自测结果: 通过 — 无import/export default/箭头函数残留，API模块(async.js)已就位且script标签已添加
+- Git 提交: 9b93dfd0
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、tool工具、file文件管理等）
+
+### Session #46 - T047 (2026-04-03)
+- 实现了: 迁移页面 - tool 系统工具（代码生成+表单构建+Swagger）
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/tool/gen/index.vue（代码生成主页）
+  - jun_ui_sa_admin/sa-view/tool/gen/basicInfoForm.vue（基本信息表单）
+  - jun_ui_sa_admin/sa-view/tool/gen/genInfoForm.vue（生成信息表单）
+  - jun_ui_sa_admin/sa-view/tool/gen/importTable.vue（导入表弹窗）
+  - jun_ui_sa_admin/sa-view/tool/gen/createTable.vue（创建表弹窗）
+  - jun_ui_sa_admin/sa-view/tool/gen/editTable.vue（编辑表配置）
+  - jun_ui_sa_admin/sa-view/tool/build/index.vue（表单构建器主页）
+  - jun_ui_sa_admin/sa-view/tool/build/FormDrawer.vue（表单预览抽屉）
+  - jun_ui_sa_admin/sa-view/tool/build/JsonDrawer.vue（JSON查看抽屉）
+  - jun_ui_sa_admin/sa-view/tool/build/RightPanel.vue（右侧属性面板）
+  - jun_ui_sa_admin/sa-view/tool/build/CodeTypeDialog.vue（生成类型选择）
+  - jun_ui_sa_admin/sa-view/tool/build/DraggableItem.vue（拖拽组件项）
+  - jun_ui_sa_admin/sa-view/tool/build/IconsDialog.vue（图标选择弹窗）
+  - jun_ui_sa_admin/sa-view/tool/build/ResourceDialog.vue（资源引用弹窗）
+  - jun_ui_sa_admin/sa-view/tool/build/TreeNodeDialog.vue（树节点弹窗）
+  - jun_ui_sa_admin/sa-view/tool/build/App.vue（表单构建器包装）
+  - jun_ui_sa_admin/sa-view/tool/swagger/index.vue（Swagger文档iframe）
+  - jun_ui_sa_admin/static/utils/generator-utils.js（新建，通用工具函数）
+  - jun_ui_sa_admin/static/utils/generator/config.js（新建，表单组件配置）
+  - jun_ui_sa_admin/static/utils/generator/html.js（新建，HTML模板生成）
+  - jun_ui_sa_admin/static/utils/generator/js.js（新建，JS代码生成）
+  - jun_ui_sa_admin/static/utils/generator/css.js（新建，CSS代码生成）
+  - jun_ui_sa_admin/static/utils/generator/drawingDefault.js（新建，默认绘制项）
+  - jun_ui_sa_admin/static/utils/generator/icon.json（新建，图标列表）
+  - jun_ui_sa_admin/static/utils/db.js（新建，localStorage持久化）
+  - jun_ui_sa_admin/static/utils/loadBeautifier.js（新建，beautifier加载器）
+  - jun_ui_sa_admin/static/utils/loadMonaco.js（新建，Monaco编辑器加载器）
+  - jun_ui_sa_admin/static/components/render/render.js（重写，render组件+slots内联）
+  - jun_ui_sa_admin/static/css/form-builder.css（新建，表单构建器样式）
+  - jun_ui_sa_admin/static/assets/logo/logo.png（新建，Logo图片）
+  - jun_ui_sa_admin/index.html（添加highlight.js/clipboard/file-saver CDN + generator工具脚本 + render组件 + gen.js API）
+  - 删除: jun_ui_sa_admin/sa-view/tool/build/main.js（webpack入口，不需要）
+- 适配内容: import→importModule/httpVueLoaderCached/window全局变量, export default→module.exports, 箭头函数→function(), data()→data:function(), lang="scss"→纯CSS, process.env→CONFIG, require.context→内联slots, JSX→h()调用, svg-icon→el-icon
+- 自测结果: 通过 — 17个.vue文件全部有module.exports，无import/export default/箭头函数/scss残留；generator工具链8个JS文件全局可用；render组件slots已内联
+- Git 提交: f5dc71be
+- 注意事项:
+  - 表单构建器依赖beautifier/monaco CDN动态加载（loadBeautifier.js/loadMonaco.js）
+  - highlight.js用于代码预览语法高亮
+  - ClipboardJS/FileSaver用于复制代码和下载文件
+  - render.js中DesignUserSelect/DesignDeptSelect/DesignSerialNo三个自定义组件需要全局注册后才能在表单构建器中使用
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、file文件管理等）
+
+### Session #48 - T048 (2026-04-03)
+- 实现了: 迁移页面 - home 首页和 dashboard 仪表盘
+- 修改的文件:
+  - jun_ui_sa_admin/sa-view/home/index.vue（首页主布局）
+  - jun_ui_sa_admin/sa-view/home/components/Welcome/index.vue（欢迎组件）
+  - jun_ui_sa_admin/sa-view/home/components/Todo/Collapse.vue（待办折叠视图）
+  - jun_ui_sa_admin/sa-view/home/components/Todo/Table.vue（待办表格视图）
+  - jun_ui_sa_admin/sa-view/home/components/Static/index.vue（统计卡片）
+  - jun_ui_sa_admin/sa-view/home/components/Schedule/index.vue（日程模块）
+  - jun_ui_sa_admin/sa-view/home/components/News/index.vue（公司资讯）
+  - jun_ui_sa_admin/sa-view/home/components/Notice/index.vue（公告模块）
+  - jun_ui_sa_admin/sa-view/home/components/FastEntrance/index.vue（快捷入口）
+  - jun_ui_sa_admin/sa-view/dashboard/BarChart.vue（柱状图）
+  - jun_ui_sa_admin/sa-view/dashboard/LineChart.vue（折线图）
+  - jun_ui_sa_admin/sa-view/dashboard/PanelGroup.vue（统计面板）
+  - jun_ui_sa_admin/sa-view/dashboard/PieChart.vue（饼图）
+  - jun_ui_sa_admin/sa-view/dashboard/RaddarChart.vue（雷达图）
+  - jun_ui_sa_admin/sa-view/dashboard/mixins/resize.js（图表自适应mixin）
+  - jun_ui_sa_admin/static/utils/echarts-macarons.js（新建，ECharts macarons主题）
+  - jun_ui_sa_admin/index.html（添加macarons主题和resize mixin脚本）
+- 适配内容: import→importModule/httpVueLoaderCached, export default→module.exports, 箭头函数→function(), lang="scss"→纯CSS, svg-icon→el-icon, process.env→CONFIG, async/await→Promise链, ::v-deep→移除, require('echarts')→window.echarts(CDN), image-preview→原生img, debounce import→内联实现
+- 自测结果: 通过 — 14个.vue文件全部有module.exports，无import/export default/箭头函数/scss残留
+- Git 提交: 2470281f
+- 注意事项:
+  - dashboard图表组件使用window._dashboardResizeMixin全局mixin（通过resize.js注册）
+  - ECharts macarons主题通过echarts-macarons.js注册
+  - PanelGroup使用CountTo组件，若未引入CDN则降级为纯文本显示
+  - Welcome组件背景图改为CSS渐变替代原图
+- 下一步建议: 继续迁移其他页面（worksetting工作设置、file文件管理等）
+
+### Session #49 - T050 (2026-04-03)
+- 实现了: 验证后端菜单路由与新前端页面路径匹配
+- 验证方式: 提取 data.sql 中 sys_menu 的51个 component 路径，通过 resolveComponentUrl() 映射逻辑对比 sa-view/ 下实际文件
+- 发现并修复3个不匹配:
+  1. 文档详情: kbs/topic/components/docs/detail → kbs/topic/components/info/doc-info（目录名和文件名不一致）
+  2. 盖章: workflow/flowForm/component/mainSeal.vue → workflow/flow-form/component/main-stamp（驼峰vs短横线命名+文件名不同）
+  3. 模板分类: workflow/template/type → workflow/template/type/index（缺少/index后缀，实际文件在子目录中）
+- 其余48个路径全部正确匹配
+- 修改的文件: [ruoyi-vue-oa/sql/data.sql]
+- 自测结果: 通过 — 编译成功，所有51个component路径均对应实际文件
+- Git 提交: 5c91fdb9
+- 下一步建议: T051/T052 继续集成联调任务，或补充未迁移的页面（worksetting工作设置、file文件管理等）
+
+### Session #51 — T051 全功能冒烟测试 + T052 修复
+- 状态: ✅ 通过
+- 使用 Playwright 自动化测试所有37个菜单页面
+- 发现并修复4个关键JS bug:
+  1. performance-monitor.js: httpVueLoader返回组件工厂函数(非Promise)，错误调用.then()导致框架崩溃
+  2. vue-loader-cache.js: 同上，缓存加载器错误使用Promise链
+  3. echarts-macarons.js: echarts CDN未加载完毕时直接调用registerTheme报错
+  4. menu-conf.js: ruoyi-util.js未加载时调用ruoyi.getToken()报错
+- 补充layer.css主题文件(从static/kj/layer/theme/复制)避免404
+- 冒烟测试结果: 37个菜单页面全部加载成功，0个控制台错误
+- 修改的文件: [performance-monitor.js, vue-loader-cache.js, echarts-macarons.js, menu-conf.js, static/libs/layer/theme/]
+- Git 提交: be9fe9db
+- T052 同步完成(问题已在T051中修复)

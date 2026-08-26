@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.template.mapper.TemplateMapper">
+    
+    <resultMap type="Template" id="TemplateResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="defKey"    column="def_key"    />
+        <result property="formId"    column="form_id"    />
+        <result property="formKey"    column="form_key"    />
+        <result property="formType"    column="form_type"    />
+        <result property="formCode"    column="form_code"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="sort"    column="sort"    />
+        <result property="enableFlag"    column="enable_flag"    />
+        <result property="mainTextFlag"    column="main_text_flag"    />
+        <result property="attachFlag"    column="attach_flag"    />
+        <result property="messageNoticeFlag"    column="message_notice_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTemplateVo">
+        select id, name, type, def_key, form_id, form_key, form_type, form_code, del_flag, sort, main_text_flag, attach_flag, message_notice_flag, enable_flag, create_id, create_by, create_time, update_id, update_by, update_time from t_template
+    </sql>
+
+    <select id="selectTemplateList" parameterType="Template" resultMap="TemplateResult">
+        <include refid="selectTemplateVo"/>
+        <where>
+            del_flag = '0'
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="defKey != null  and defKey != ''"> and def_key = #{defKey}</if>
+            <if test="formId != null  and formId != ''"> and form_id = #{formId}</if>
+            <if test="formType != null  and formType != ''"> and form_type = #{formType}</if>
+            <if test="formCode != null  and formCode != ''"> and form_code = #{formCode}</if>
+            <if test="enableFlag != null  and enableFlag != ''"> and enable_flag = #{enableFlag}</if>
+            <if test="delFlag != null  and delFlag != ''"> and del_flag = #{delFlag}</if>
+            <if test="createId != null "> and create_id = #{createId}</if>
+            <if test="updateId != null "> and update_id = #{updateId}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectTemplateById" parameterType="String" resultMap="TemplateResult">
+        <include refid="selectTemplateVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertTemplate" parameterType="Template">
+        insert into t_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="type != null and type != ''">type,</if>
+            <if test="defKey != null and defKey != ''">def_key,</if>
+            <if test="formId != null and formId != ''">form_id,</if>
+            <if test="formKey != null and formKey != ''">form_key,</if>
+            <if test="formType != null and formType != ''">form_type,</if>
+            <if test="formCode != null and formCode != ''">form_code,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="sort != null">sort,</if>
+            <if test="mainTextFlag != null">main_text_flag,</if>
+            <if test="attachFlag != null">attach_flag,</if>
+            <if test="messageNoticeFlag != null">message_notice_flag,</if>
+            <if test="enableFlag != null">enable_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="type != null and type != ''">#{type},</if>
+            <if test="defKey != null and defKey != ''">#{defKey},</if>
+            <if test="formId != null and formId != ''">#{formId},</if>
+            <if test="formKey != null and formKey != ''">#{formKey},</if>
+            <if test="formType != null and formType != ''">#{formType},</if>
+            <if test="formCode != null and formCode != ''">#{formCode},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="mainTextFlag != null">#{mainTextFlag},</if>
+            <if test="attachFlag != null">#{attachFlag},</if>
+            <if test="messageNoticeFlag != null">#{messageNoticeFlag},</if>
+            <if test="enableFlag != null">#{enableFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTemplate" parameterType="Template">
+        update t_template
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="defKey != null and defKey != ''">def_key = #{defKey},</if>
+            <if test="formId != null and formId != ''">form_id = #{formId},</if>
+            <if test="formKey != null and formKey != ''">form_key = #{formKey},</if>
+            <if test="formType != null and formType != ''">form_type = #{formType},</if>
+            <if test="formCode != null and formCode != ''">form_code = #{formCode},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="mainTextFlag != null">main_text_flag = #{mainTextFlag},</if>
+            <if test="attachFlag != null">attach_flag = #{attachFlag},</if>
+            <if test="messageNoticeFlag != null">message_notice_flag = #{messageNoticeFlag},</if>
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <!--  模板不能进行硬删除  -->
+    <delete id="deleteTemplateById" parameterType="String">
+        update t_template set del_flag = '1'  where id = #{id}
+    </delete>
+
+    <delete id="deleteTemplateByIds" parameterType="String">
+        update t_template set del_flag = '1' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="changeEnableFlag" parameterType="Template">
+        update t_template set enable_flag = #{enableFlag}
+        where id = #{id}
+    </update>
+
+    <select id="selectNewStartTemplateList" parameterType="Template" resultMap="TemplateResult">
+        <include refid="selectTemplateVo"/>
+        <where>
+            del_flag = '0' and enable_flag = '1'
+            <if test="name != null  and name != ''">
+                and name like concat('%', #{name}, '%') escape '/'
+            </if>
+        </where>
+        order by sort asc, create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_3az0eud5" name="会议申请（基础测试数据）">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_1s0xoso</outgoing>
+    </startEvent>
+    <userTask id="Activity_0l7b7uy" name="会议申请" flowable:assignee="${initiator}" flowable:userType="assignee" flowable:dataType="fixed" flowable:expId="1">
+      <extensionElements>
+        <flowable:properties>
+          <flowable:property name="save" value="1" />
+          <flowable:property name="returnBtn" value="0" />
+          <flowable:property name="rejectBtn" value="0" />
+        </flowable:properties>
+      </extensionElements>
+      <incoming>Flow_1s0xoso</incoming>
+      <outgoing>Flow_0wnxj4o</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1s0xoso" sourceRef="start_event" targetRef="Activity_0l7b7uy" />
+    <userTask id="Activity_135if6x" name="主管审批" flowable:candidateUsers="${Activity_135if6x_user}" flowable:userType="candidateUsers" flowable:dataType="roles" flowable:expId="D26AEC23EA114AAAB5F58866BDAF33E5">
+      <extensionElements>
+        <flowable:properties>
+          <flowable:property name="selectRange" value="dept" />
+        </flowable:properties>
+      </extensionElements>
+      <incoming>Flow_0wnxj4o</incoming>
+      <outgoing>Flow_17rl6xt</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0wnxj4o" sourceRef="Activity_0l7b7uy" targetRef="Activity_135if6x" />
+    <userTask id="Activity_0f3i4vn" name="公司会议负责人审批" flowable:assignee="890413D273D54410A39CB7283C5AA103" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_17rl6xt</incoming>
+      <outgoing>Flow_0q74tfy</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_17rl6xt" sourceRef="Activity_135if6x" targetRef="Activity_0f3i4vn" />
+    <userTask id="Activity_03ktqzz" name="通知单盖章" flowable:candidateUsers="${Activity_03ktqzz_user}" flowable:userType="candidateUsers" flowable:dataType="roles" flowable:expId="517271E220FA417385D7C6BBBE4F308C">
+      <extensionElements>
+        <flowable:properties>
+          <flowable:property name="stamp" value="1" />
+        </flowable:properties>
+      </extensionElements>
+      <incoming>Flow_0q74tfy</incoming>
+      <outgoing>Flow_0at70or</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0q74tfy" sourceRef="Activity_0f3i4vn" targetRef="Activity_03ktqzz" />
+    <userTask id="Activity_0fxlp4o" name="各部门负责人报名" flowable:assignee="${assignee}" flowable:userType="assignee" flowable:dataType="dynamic" flowable:expId="3">
+      <incoming>Flow_0at70or</incoming>
+      <outgoing>Flow_1eu7e4n</outgoing>
+      <multiInstanceLoopCharacteristics flowable:collection="Activity_0fxlp4o_approval" flowable:elementVariable="assignee">
+        <completionCondition xsi:type="tFormalExpression">${nrOfCompletedInstances/nrOfInstances &gt;= 1 }</completionCondition>
+      </multiInstanceLoopCharacteristics>
+    </userTask>
+    <sequenceFlow id="Flow_0at70or" sourceRef="Activity_03ktqzz" targetRef="Activity_0fxlp4o" />
+    <userTask id="Activity_1xsrnzl" name="资料汇总" flowable:assignee="${initiator}" flowable:userType="assignee" flowable:dataType="fixed" flowable:expId="1">
+      <incoming>Flow_1eu7e4n</incoming>
+      <outgoing>Flow_0i9bp4o</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1eu7e4n" sourceRef="Activity_0fxlp4o" targetRef="Activity_1xsrnzl" />
+    <endEvent id="Event_1oi6ndh" name="结束">
+      <incoming>Flow_0i9bp4o</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_0i9bp4o" sourceRef="Activity_1xsrnzl" targetRef="Event_1oi6ndh" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_3az0eud5">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="55" y="225" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="57" y="262" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0l7b7uy_di" bpmnElement="Activity_0l7b7uy">
+        <omgdc:Bounds x="140" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_135if6x_di" bpmnElement="Activity_135if6x">
+        <omgdc:Bounds x="300" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0f3i4vn_di" bpmnElement="Activity_0f3i4vn">
+        <omgdc:Bounds x="460" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03ktqzz_di" bpmnElement="Activity_03ktqzz">
+        <omgdc:Bounds x="620" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fxlp4o_di" bpmnElement="Activity_0fxlp4o">
+        <omgdc:Bounds x="780" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xsrnzl_di" bpmnElement="Activity_1xsrnzl">
+        <omgdc:Bounds x="940" y="200" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1oi6ndh_di" bpmnElement="Event_1oi6ndh">
+        <omgdc:Bounds x="1102" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1109" y="265" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1s0xoso_di" bpmnElement="Flow_1s0xoso">
+        <di:waypoint x="85" y="240" />
+        <di:waypoint x="140" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wnxj4o_di" bpmnElement="Flow_0wnxj4o">
+        <di:waypoint x="240" y="240" />
+        <di:waypoint x="300" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17rl6xt_di" bpmnElement="Flow_17rl6xt">
+        <di:waypoint x="400" y="240" />
+        <di:waypoint x="460" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q74tfy_di" bpmnElement="Flow_0q74tfy">
+        <di:waypoint x="560" y="240" />
+        <di:waypoint x="620" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0at70or_di" bpmnElement="Flow_0at70or">
+        <di:waypoint x="720" y="240" />
+        <di:waypoint x="780" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eu7e4n_di" bpmnElement="Flow_1eu7e4n">
+        <di:waypoint x="880" y="240" />
+        <di:waypoint x="940" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0i9bp4o_di" bpmnElement="Flow_0i9bp4o">
+        <di:waypoint x="1040" y="240" />
+        <di:waypoint x="1102" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

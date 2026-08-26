@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_x395arwb" name="flow929测任务表单">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_0dr5gew</outgoing>
+    </startEvent>
+    <userTask id="Activity_11vqjxp" name="发起申请">
+      <incoming>Flow_0dr5gew</incoming>
+      <outgoing>Flow_1ag82pv</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0dr5gew" sourceRef="start_event" targetRef="Activity_11vqjxp" />
+    <userTask id="Activity_1emnxrg" name="财务主管审批" flowable:formKey="aApprovalForm" flowable:assignee="4267D64E13B44385A4E747BC05DB8614" flowable:userType="assignee" flowable:dataType="fixed">
+      <extensionElements>
+        <flowable:formProperty id="approverChoice" name="下一步" type="enum" required="true">
+          <flowable:value id="B" name="总经理审批" />
+          <flowable:value id="C" name="财务总监审批" />
+        </flowable:formProperty>
+        <flowable:formProperty id="comment" name="审批意见" type="string" />
+      </extensionElements>
+      <incoming>Flow_1ag82pv</incoming>
+      <outgoing>Flow_0bfe5vb</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1ag82pv" sourceRef="Activity_11vqjxp" targetRef="Activity_1emnxrg" />
+    <exclusiveGateway id="Gateway_1ewiv2w">
+      <incoming>Flow_0bfe5vb</incoming>
+      <outgoing>Flow_035d0f9</outgoing>
+      <outgoing>Flow_0zmug3b</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Flow_0bfe5vb" sourceRef="Activity_1emnxrg" targetRef="Gateway_1ewiv2w" />
+    <userTask id="Activity_0q485zr" name="财务总监审批" flowable:assignee="48BBCD9A61484814963DD58B500CE503" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_035d0f9</incoming>
+    </userTask>
+    <sequenceFlow id="Flow_035d0f9" sourceRef="Gateway_1ewiv2w" targetRef="Activity_0q485zr">
+      <conditionExpression xsi:type="tFormalExpression">${approverChoice == 'C'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="Activity_1216a3b" name="总经理审批" flowable:assignee="660EE18093A8404A867FCF052ECC8236" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_0zmug3b</incoming>
+      <outgoing>Flow_17lqty8</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0zmug3b" sourceRef="Gateway_1ewiv2w" targetRef="Activity_1216a3b">
+      <conditionExpression xsi:type="tFormalExpression"> ${approverChoice == 'B'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="Activity_0spxqef" name="财务总监审批" flowable:assignee="48BBCD9A61484814963DD58B500CE503" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_17lqty8</incoming>
+    </userTask>
+    <sequenceFlow id="Flow_17lqty8" sourceRef="Activity_1216a3b" targetRef="Activity_0spxqef" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_x395arwb">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-15" y="165" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-12" y="202" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_11vqjxp_di" bpmnElement="Activity_11vqjxp">
+        <omgdc:Bounds x="70" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1emnxrg_di" bpmnElement="Activity_1emnxrg">
+        <omgdc:Bounds x="230" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1ewiv2w_di" bpmnElement="Gateway_1ewiv2w" isMarkerVisible="true">
+        <omgdc:Bounds x="395" y="155" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q485zr_di" bpmnElement="Activity_0q485zr">
+        <omgdc:Bounds x="480" y="-20" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1216a3b_di" bpmnElement="Activity_1216a3b">
+        <omgdc:Bounds x="480" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0spxqef_di" bpmnElement="Activity_0spxqef">
+        <omgdc:Bounds x="620" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0dr5gew_di" bpmnElement="Flow_0dr5gew">
+        <di:waypoint x="15" y="180" />
+        <di:waypoint x="70" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ag82pv_di" bpmnElement="Flow_1ag82pv">
+        <di:waypoint x="170" y="180" />
+        <di:waypoint x="230" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bfe5vb_di" bpmnElement="Flow_0bfe5vb">
+        <di:waypoint x="330" y="180" />
+        <di:waypoint x="395" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_035d0f9_di" bpmnElement="Flow_035d0f9">
+        <di:waypoint x="420" y="155" />
+        <di:waypoint x="420" y="20" />
+        <di:waypoint x="480" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zmug3b_di" bpmnElement="Flow_0zmug3b">
+        <di:waypoint x="420" y="205" />
+        <di:waypoint x="420" y="290" />
+        <di:waypoint x="480" y="290" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17lqty8_di" bpmnElement="Flow_17lqty8">
+        <di:waypoint x="580" y="290" />
+        <di:waypoint x="620" y="290" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

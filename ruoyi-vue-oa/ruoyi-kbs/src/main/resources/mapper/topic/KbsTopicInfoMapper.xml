@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kbs.mapper.KbsTopicInfoMapper">
+
+    <resultMap type="KbsTopicInfo" id="KbsTopicInfoResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="visualScope" column="visual_scope"/>
+        <result property="operateType" column="operate_type"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="coverPicId" column="cover_pic_id"/>
+        <result property="remark" column="remark"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createId" column="create_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectKbsTopicInfoVo">
+        select id,
+               name,
+               visual_scope,
+               operate_type,
+               category_id,
+               cover_pic_id,
+               remark,
+               del_flag,
+               create_id,
+               create_by,
+               create_time,
+               update_id,
+               update_by,
+               update_time
+        from t_kbs_topic_info
+    </sql>
+
+    <select id="selectKbsTopicInfoList" parameterType="KbsTopicInfo" resultMap="KbsTopicInfoResult">
+        <include refid="selectKbsTopicInfoVo"/>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="visualScope != null  and visualScope != ''">and visual_scope = #{visualScope}</if>
+            <if test="operateType != null  and operateType != ''">and operate_type = #{operateType}</if>
+            <if test="categoryId != null  and categoryId != ''">and category_id = #{categoryId}</if>
+            <if test="delFlag != null and delFlag != ''">and del_flag = #{delFlag}</if>
+        </where>
+    </select>
+
+    <select id="selectKbsTopicInfoById" parameterType="String" resultMap="KbsTopicInfoResult">
+        <include refid="selectKbsTopicInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertKbsTopicInfo" parameterType="KbsTopicInfo">
+        insert into t_kbs_topic_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="visualScope != null and visualScope != ''">visual_scope,</if>
+            <if test="operateType != null and operateType != ''">operate_type,</if>
+            <if test="categoryId != null and categoryId != ''">category_id,</if>
+            <if test="coverPicId != null">cover_pic_id,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="visualScope != null and visualScope != ''">#{visualScope},</if>
+            <if test="operateType != null and operateType != ''">#{operateType},</if>
+            <if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+            <if test="coverPicId != null">#{coverPicId},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateKbsTopicInfo" parameterType="KbsTopicInfo">
+        update t_kbs_topic_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="visualScope != null and visualScope != ''">visual_scope = #{visualScope},</if>
+            <if test="operateType != null and operateType != ''">operate_type = #{operateType},</if>
+            <if test="categoryId != null and categoryId != ''">category_id = #{categoryId},</if>
+            <if test="coverPicId != null">cover_pic_id = #{coverPicId},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKbsTopicInfoById" parameterType="String">
+        delete
+        from t_kbs_topic_info
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteKbsTopicInfoByIds" parameterType="String">
+        delete from t_kbs_topic_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectListByCategoryIds" parameterType="String" resultMap="KbsTopicInfoResult">
+        <include refid="selectKbsTopicInfoVo"/>
+        where del_flag = '0' and category_id in
+        <foreach item="categoryId" collection="list" open="(" separator="," close=")">
+            #{categoryId}
+        </foreach>
+    </select>
+
+    <select id="selectKbsTopicInfoByIds" parameterType="String" resultMap="KbsTopicInfoResult">
+        <include refid="selectKbsTopicInfoVo"/>
+        where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="batchUpdate">
+        update t_kbs_topic_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where del_flag = '0' and id in
+        <foreach collection="ids" item="item" index="index" open="" close="" separator=";">
+            item.id
+        </foreach>
+    </update>
+
+     <select id="selectTopicListGroupByCategory" parameterType="KbsTopicInfoQo" resultType="KbsTopicInfoVo">
+         select t1.id id,
+                t1.name name,
+                t1.visual_scope visualScope,
+                t1.operate_type operateType,
+                t1.category_id categoryId,
+                t2.name categoryName,
+                t1.cover_pic_id coverPicId,
+                t1.del_flag delFlag,
+                t1.create_id createId,
+                t1.create_by creatBy,
+                t1.create_time creaetTime,
+                t1.update_id updateId,
+                t1.update_by updateBy,
+                t1.update_time updateTime
+        from t_kbs_topic_info t1
+        left join t_kbs_topic_category t2 on t2.id = t1.category_id
+        <where>
+         t1.del_flag = '0'
+         <if test="categoryId != null and categoryId != ''">
+             and t1.category_id = #{categoryId}
+         </if>
+         <if test="topicName != null  and topicName != ''">
+             and t1.name like concat('%', #{topicName}, '%')
+         </if>
+         <if test="categoryName != null  and categoryName != ''">
+             and t2.name like concat('%', #{categoryName}, '%')
+         </if>
+        </where>
+         order by t2.sort, t1.create_time
+     </select>
+</mapper>

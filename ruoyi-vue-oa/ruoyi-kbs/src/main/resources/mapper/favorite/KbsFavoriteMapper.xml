@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.kbs.mapper.KbsFavoriteMapper">
+
+    <resultMap type="KbsFavorite" id="KbsFavoriteResult">
+        <result property="id" column="id"/>
+        <result property="objectId" column="object_id"/>
+        <result property="objectType" column="object_type"/>
+        <result property="objectName" column="object_name"/>
+        <result property="rootObjectId" column="root_object_id"/>
+        <result property="parentObjectId" column="parent_object_id"/>
+        <result property="groupId" column="group_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="createId" column="create_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectKbsFavoriteVo">
+        select id,
+               object_id,
+               object_type,
+               object_name,
+               root_object_id,
+               parent_object_id,
+               group_id,
+               user_id,
+               create_id,
+               create_by,
+               create_time,
+               update_id,
+               update_by,
+               update_time
+        from t_kbs_favorite
+    </sql>
+
+    <select id="selectKbsFavoriteList" parameterType="KbsFavorite" resultMap="KbsFavoriteResult">
+        select f.* from t_kbs_favorite f, t_kbs_document_base b
+        where f.object_id = b.id and b.del_flag = '0'
+        <if test="objectName != null  and objectName != ''">and f.object_name like concat('%', #{objectName}, '%')</if>
+        order by create_time desc
+    </select>
+
+    <select id="selectKbsFavoriteById" parameterType="String" resultMap="KbsFavoriteResult">
+        <include refid="selectKbsFavoriteVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertKbsFavorite" parameterType="KbsFavorite">
+        insert into t_kbs_favorite
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="objectId != null">object_id,</if>
+            <if test="objectType != null and objectType != ''">object_type,</if>
+            <if test="objectName != null and objectName != ''">object_name,</if>
+            <if test="rootObjectId != null">root_object_id,</if>
+            <if test="parentObjectId != null">parent_object_id,</if>
+            <if test="groupId != null and groupId != ''">group_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="objectId != null">#{objectId},</if>
+            <if test="objectType != null and objectType != ''">#{objectType},</if>
+            <if test="objectName != null and objectName != ''">#{objectName},</if>
+            <if test="rootObjectId != null">#{rootObjectId},</if>
+            <if test="parentObjectId != null">#{parentObjectId},</if>
+            <if test="groupId != null and groupId != ''">#{groupId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateKbsFavorite" parameterType="KbsFavorite">
+        update t_kbs_favorite
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="objectId != null">object_id = #{objectId},</if>
+            <if test="objectType != null and objectType != ''">object_type = #{objectType},</if>
+            <if test="objectName != null and objectName != ''">object_name = #{objectName},</if>
+            <if test="rootObjectId != null">root_object_id = #{rootObjectId},</if>
+            <if test="parentObjectId != null">parent_object_id = #{parentObjectId},</if>
+            <if test="groupId != null and groupId != ''">group_id = #{groupId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteKbsFavoriteById" parameterType="String">
+        delete
+        from t_kbs_favorite
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteKbsFavoriteByIds" parameterType="String">
+        delete from t_kbs_favorite where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteKbsFavoriteByGroupIds" parameterType="String">
+        delete from t_kbs_favorite where group_id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="statDocumentFavoriteNum" parameterType="String" resultType="Long">
+        select count(1) from t_kbs_favorite where object_id = #{docId}
+    </select>
+
+    <select id="selectKbsFavoriteByUserId" parameterType="KbsFavoriteQo" resultMap="KbsFavoriteResult">
+        <include refid="selectKbsFavoriteVo"/>
+        where object_id = #{docId} and user_id = #{userId}
+    </select>
+
+    <delete id="deleteFavoriteByDocUser" parameterType="KbsFavoriteQo">
+        delete from t_kbs_favorite where object_id = #{docId} and user_id = #{userId}
+    </delete>
+
+    <delete id="deleteKbsFavoriteObjectIds">
+        delete from t_kbs_favorite where object_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

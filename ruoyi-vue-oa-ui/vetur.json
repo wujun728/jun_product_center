@@ -1,0 +1,56 @@
+// Vetur 全局设置
+{
+"vetur.format.options.tabSize": 2,
+"vetur.format.options.useTabs": false,
+// 各类型代码默认格式化方式
+"vetur.format.defaultFormatter.html": "prettyhtml",
+"vetur.format.defaultFormatter.css": "prettier",
+"vetur.format.defaultFormatter.postcss": "prettier",
+"vetur.format.defaultFormatter.scss": "prettier",
+"vetur.format.defaultFormatter.less": "prettier",
+"vetur.format.defaultFormatter.stylus": "stylus-supremacy",
+"vetur.format.defaultFormatter.js": "prettier",
+"vetur.format.defaultFormatter.ts": "prettier",
+"vetur.format.defaultFormatterOptions": {
+  // for html
+  "prettyhtml": {
+    "tabWidth": 2,
+    "wrapAttributes": false,
+    "sortAttributes": false,
+    "bracketSpacing": true,
+    "printWidth": 150 //可以根据自己的屏幕宽度配置对应的换行宽度
+  },
+  // for js css
+  "prettier": {
+    "eslintIntegration": true,
+    // 使用单引号
+    "singleQuote": false,
+    // 加分号
+    "semi": true,
+    "tabWidth": 2,
+    "printWidth": 150,
+    "bracketSpacing": true,
+    "useTabs": false
+  }
+},
+"vetur.completion.scaffoldSnippetSources": {
+
+  
+  "workspace": "💼",
+  "user": "🗒️",
+  "vetur": "✌"
+},
+"editor.formatOnSave": true,
+"vetur.grammar.customBlocks": {
+
+  "docs": "md",
+  "i18n": "json"
+},
+"Lingma.DisplayLanguage": "简体中文",
+"Lingma.PreferredLanguage for AI Chat": "简体中文",
+"Lingma.PreferredLanguage forCommitMessage": "简体中文",
+"Lingma.cloudModelEnable": false,
+"Lingma.cloudModelAutoTriggerDisplayRule": false,
+"Lingma.methodQuickOperation": false,
+"Lingma.aI Rules.projectRule": false
+}

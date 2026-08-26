@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_a804jlhx" name="公司发文（基础测试数据）">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_0cda28q</outgoing>
+    </startEvent>
+    <userTask id="Activity_0t00pwh" name="发文拟稿" flowable:candidateUsers="${Activity_0t00pwh_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_0t00pwh">
+      <extensionElements>
+        <flowable:properties>
+          <flowable:property name="save" value="1" />
+          <flowable:property name="returnBtn" value="0" />
+          <flowable:property name="rejectBtn" value="0" />
+        </flowable:properties>
+      </extensionElements>
+      <incoming>Flow_0cda28q</incoming>
+      <outgoing>Flow_0ph5pbk</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0cda28q" sourceRef="start_event" targetRef="Activity_0t00pwh" />
+    <sequenceFlow id="Flow_0ph5pbk" sourceRef="Activity_0t00pwh" targetRef="Activity_176doxr" />
+    <userTask id="Activity_176doxr" name="盖章" flowable:candidateUsers="18ED20181C994FCAB55CB83312E9E2CE,2021E908E1B4433DA1B3BB6BB4958270,00CE336D787C43518FCA3CD97687AF11,0230B2AD5E08402CA230389381DF8AD2,0AFC995AA59C45E89F7AF90D92E0268A,0B04AF760C92470F8B8D521C690BDF9B,0D6D939D686347879896924D7BE02F9D,1A73638A142A45BA961BB2A0FAB20D8F,1E7337906E3F4FC5A1B4C293F58E7DB1,23424010A41F4F7DAD7BDDAEA726939D,385301ACBD844F35A4045F6BC6D75816,3C19FAF843914F3491F01FB05B88911B,4267D64E13B44385A4E747BC05DB8614,48BBCD9A61484814963DD58B500CE503,4E5B678FF3094F08A662BF6C4E806CBB,5D8E4E6292FE4D21B63DE620B940BD0B,5E866566B5424F1E97D858EFA2FEE731,5ECBD4CCCDE1432DA9A4D0B3CBA478AC,602C071B7A25432CBB7C4DE714413B22,660EE18093A8404A867FCF052ECC8236,6B81195F365B4B10A2A9BE9F45933EE9,6EC388ED053F464CA682A48EC155E18A,7332FB5CDE9143179DD7F7B725E772C8,74BEF97730F04C0CA54AC5C8B21FF302,76A9C649BDB24A9C93BF52A5D81CD531,76E7B7D35D1242FFBD282BBB6C5463E2,78412BCB59CF4C68B25421999B76C67B,87EE854CA57441198C9BD5C272866E34,87FC7B7EBC7144988AB0AF22D6B85602,890413D273D54410A39CB7283C5AA103,94482121CDAA45D9B38031CD39B8F608,9CBC8CD670FE459FAA29CCA8FD459A0C,A1C0A1CDCC72433CAEEE74232651A290,AACC02718A78496F94CECC9D9A2D5A0B,AD662372640E4680A48B7F82EF0065A0,AE1978B56ED34C58989DFE21921CA4C8,B0636D723A0E460BA7993441054379D6,BF09397B54B24821AEACBAE94C5117C1,C36484CC7F6E4DB09083305A996D34F1,D289154047F44AFBA75FF139BAB33001,D2F9EAB2D19D41269710DE9EB293E973,D2FE2888BCA243E7B0D549C49D9E62F0,D4AB0C9479E2406F9783A864DFFEA878,D64E9696FDAD4333815C0C231BEBD9CD,D9B61149DABD4E98829A0FF0AA36F858,E5DFC442B31B4BCBA4888C95C40A665C,E836F19B35EF4BB1A92598DBAB01F7FD,E8B6280BD5A9406BA61FF1A2C686D9CC,EA07D8D2BFD34B7287AF459923E75916,EF7F56C2AEFD448DBB8704E80E1FD60E,F114145B8E2D40CC9587BBE5C793CEEF,F16F51507D9D4CFAAD7612D1F2F7183C,F25369CF21B04F549D1C9A3FE8888B6F,F6012D36604E4B4C87A393727564E5D9,FC7DFC11820549B98A3FA4401954199B" flowable:userType="candidateUsers" flowable:dataType="fixed">
+      <extensionElements>
+        <flowable:properties>
+          <flowable:property name="stamp" value="1" />
+        </flowable:properties>
+        <flowable:taskListener class="com.ruoyi.workflow.listener.FlowTaskTimeOutListener" event="create" listenerType="classListener" />
+      </extensionElements>
+      <incoming>Flow_0ph5pbk</incoming>
+      <outgoing>Flow_1xhm38q</outgoing>
+    </userTask>
+    <userTask id="Activity_1rrjofy" name="印发" flowable:candidateUsers="${Activity_1rrjofy_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_1rrjofy">
+      <incoming>Flow_1xhm38q</incoming>
+      <outgoing>Flow_067cjb7</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1xhm38q" sourceRef="Activity_176doxr" targetRef="Activity_1rrjofy" />
+    <endEvent id="Event_16tvqec" name="结束">
+      <incoming>Flow_067cjb7</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_067cjb7" sourceRef="Activity_1rrjofy" targetRef="Event_16tvqec" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_a804jlhx">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="75" y="75" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="77" y="112" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0t00pwh_di" bpmnElement="Activity_0t00pwh">
+        <omgdc:Bounds x="200" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_176doxr_di" bpmnElement="Activity_176doxr">
+        <omgdc:Bounds x="500" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rrjofy_di" bpmnElement="Activity_1rrjofy">
+        <omgdc:Bounds x="1000" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_16tvqec_di" bpmnElement="Event_16tvqec">
+        <omgdc:Bounds x="1162" y="72" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1169" y="115" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0cda28q_di" bpmnElement="Flow_0cda28q">
+        <di:waypoint x="105" y="90" />
+        <di:waypoint x="200" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ph5pbk_di" bpmnElement="Flow_0ph5pbk">
+        <di:waypoint x="300" y="90" />
+        <di:waypoint x="500" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xhm38q_di" bpmnElement="Flow_1xhm38q">
+        <di:waypoint x="600" y="90" />
+        <di:waypoint x="1000" y="90" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_067cjb7_di" bpmnElement="Flow_067cjb7">
+        <di:waypoint x="1100" y="90" />
+        <di:waypoint x="1162" y="90" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

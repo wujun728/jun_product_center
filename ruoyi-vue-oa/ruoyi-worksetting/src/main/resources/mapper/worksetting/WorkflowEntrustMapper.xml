@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.worksetting.mapper.WorkflowEntrustMapper">
+    
+    <resultMap type="WorkflowEntrust" id="WorkflowEntrustResult">
+        <result property="id"    column="id"    />
+        <result property="entrustId"    column="entrust_id"    />
+        <result property="entrustName"    column="entrust_name"    />
+        <result property="beEntrustId"    column="be_entrust_id"    />
+        <result property="beEntrustName"    column="be_entrust_name"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="endTime"    column="end_time"    />
+        <result property="type"    column="type"    />
+        <result property="enableFlag"    column="enable_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateId"    column="update_id"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectWorkflowEntrustVo">
+        select id, entrust_id, entrust_name, be_entrust_id, be_entrust_name, start_time, end_time, type, enable_flag, del_flag, create_id, create_time, update_id, update_time from t_workflow_entrust
+    </sql>
+
+    <select id="selectWorkflowEntrustList" parameterType="WorkflowEntrust" resultMap="WorkflowEntrustResult">
+        <include refid="selectWorkflowEntrustVo"/>
+        <where>
+            del_flag = '0'
+            <if test="createId != null and createId != ''"> and create_id = #{createId}</if>
+            <if test="entrustName != null  and entrustName != ''"> and entrust_name like concat('%', #{entrustName}, '%')</if>
+            <if test="beEntrustName != null  and beEntrustName != ''"> and be_entrust_name like concat('%', #{beEntrustName}, '%')</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != '' and params.endCreateTime != null and params.endCreateTime != ''">
+                <![CDATA[
+                    and ((start_time >= #{params.beginCreateTime} and start_time <= #{params.endCreateTime})
+                        or (end_time >= #{params.beginCreateTime} and end_time <= #{params.endCreateTime})
+                        or (start_time <= #{params.beginCreateTime} and end_time >= #{params.endCreateTime}) )
+                ]]>
+            </if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="enableFlag != null  and enableFlag != ''"> and enable_flag = #{enableFlag}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectWorkflowEntrustById" parameterType="String" resultMap="WorkflowEntrustResult">
+        <include refid="selectWorkflowEntrustVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertWorkflowEntrust" parameterType="WorkflowEntrust">
+        insert into t_workflow_entrust
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="entrustId != null">entrust_id,</if>
+            <if test="entrustName != null">entrust_name,</if>
+            <if test="beEntrustId != null">be_entrust_id,</if>
+            <if test="beEntrustName != null">be_entrust_name,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="type != null">type,</if>
+            <if test="enableFlag != null">enable_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateId != null">update_id,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="entrustId != null">#{entrustId},</if>
+            <if test="entrustName != null">#{entrustName},</if>
+            <if test="beEntrustId != null">#{beEntrustId},</if>
+            <if test="beEntrustName != null">#{beEntrustName},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="type != null">#{type},</if>
+            <if test="enableFlag != null">#{enableFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowEntrust" parameterType="WorkflowEntrust">
+        update t_workflow_entrust
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="entrustId != null">entrust_id = #{entrustId},</if>
+            <if test="entrustName != null">entrust_name = #{entrustName},</if>
+            <if test="beEntrustId != null">be_entrust_id = #{beEntrustId},</if>
+            <if test="beEntrustName != null">be_entrust_name = #{beEntrustName},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowEntrustById" parameterType="String">
+        delete from t_workflow_entrust where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowEntrustByIds" parameterType="String">
+        delete from t_workflow_entrust where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <sql id="customWorkflowEntrustVo">
+        select t.id, t.entrust_id, t.entrust_name, t.be_entrust_id, t.be_entrust_name, t.start_time, t.end_time, t.type, t.enable_flag, t.del_flag, t.create_id, t.create_time, t.update_id, t.update_time from t_workflow_entrust t
+    </sql>
+
+    <select id="selectListByEntrustIds" parameterType="Map" resultMap="WorkflowEntrustResult">
+        <include refid="customWorkflowEntrustVo"/>
+        <if test="type != null and type == 1">
+            -- 通过 JOIN 替代子查询
+            inner join (
+                select distinct entrust_id
+                from t_workflow_entrust_template
+                where template_id = #{templateId}
+            ) t1 on t.id = t1.entrust_id
+        </if>
+        where t.enable_flag = '1'
+        and t.del_flag = '0'
+        and t.entrust_id in
+        <foreach item="item" collection="entrustIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <![CDATA[ and t.start_time <= #{currentDate} and t.end_time >= #{currentDate} ]]>
+        <if test="type != null and type == 0">
+            and t.type = '0'
+        </if>
+        order by t.create_time desc
+    </select>
+
+    <select id="selectByEntrustRelation" parameterType="Map" resultMap="WorkflowEntrustResult">
+        <include refid="customWorkflowEntrustVo"/>
+        <if test="type != null and type == 1">
+            -- 通过 JOIN 替代子查询
+            inner join (
+                select distinct entrust_id
+                from t_workflow_entrust_template
+                <if test="templateIds != null and templateIds.size() > 0">
+                    where template_id in
+                    <foreach item="item" collection="templateIds" open="(" separator="," close=")">
+                        #{item}
+                    </foreach>
+                </if>
+            ) t1 on t.id = t1.entrust_id
+        </if>
+        where t.enable_flag = '1'
+        and t.del_flag = '0'
+        and t.entrust_id in
+        <foreach item="item" collection="entrustIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+        <if test="startDate != null and endDate != null">
+            <![CDATA[
+              and ((t.start_time >= #{startDate} and t.start_time <= #{endDate})
+                 or (t.end_time >= #{startDate} and t.end_time <= #{endDate})
+                 or (t.start_time <= #{startDate} and t.end_time >= #{endDate}) )
+            ]]>
+        </if>
+        <if test="type != null and type == 0">
+            and t.type = '0'
+        </if>
+        order by t.create_time desc
+    </select>
+
+    <select id="selectWorkflowEntrustByIds" parameterType="String" resultMap="WorkflowEntrustResult">
+        <include refid="selectWorkflowEntrustVo"/>
+        where del_flag = '0' and id in
+        <foreach item="item" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="updateDelFlagByIds" parameterType="WorkflowEntrustUpdateQo">
+        update t_workflow_entrust set del_flag = #{delFlag}, update_id = #{updateId}, update_time = #{updateTime} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateEnableFlag">
+        update t_workflow_entrust set enable_flag = #{enableFlag}, update_id = #{updateId}, update_time = #{updateTime} where id = #{id}
+    </update>
+</mapper>

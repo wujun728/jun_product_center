@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.flowable.mapper.FlowHistoryMapper">
+
+    <select id="selectHistoricProcessInstances" resultType="com.ruoyi.flowable.domain.dto.FlowHistoricProcessInstanceDto">
+        select
+            t1.id_ id,
+            t1.rev_ rev,
+            t1.proc_inst_id_ procInstId,
+            t1.business_key_ businessKey,
+            t1.proc_def_id_ procDefId,
+            t1.start_time_ startTime,
+            t1.end_time_ endTime,
+            t1.duration_ durationInMillis,
+            t1.start_user_id_ startUserId,
+            t1.start_act_id_ startActId,
+            t1.end_act_id_ endActId,
+            t1.super_process_instance_id_ superProcessInstanceId,
+            t1.delete_reason_ deleteReason,
+            t1.tenant_id_ tenantId,
+            t1.name_ name,
+            t1.callback_id_ callbackId,
+            t1.callback_type_ callbackType,
+            t1.reference_id_ referenceId,
+            t1.reference_type_ referenceType,
+            t1.propagated_stage_inst_id_ propagatedStageInstanceId,
+            t1.business_status_ businessStatus,
+            t2.key_ procDefKey,
+            t2.name_ procDefName,
+            t2.version_ procDefVersion,
+            t2.deployment_id_ deploymentId
+        from
+            act_hi_procinst t1
+        left outer join act_re_procdef t2 on t1.proc_def_id_ = t2.id_
+        <where>
+            <if test="procInstId != null and procInstId != ''">
+                and t1.proc_inst_id_ = #{procInstId}
+            </if>
+            <if test="businessKey != null and businessKey != ''">
+                and t1.business_key_ = #{businessKey}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and t1.id_ = #{taskId}
+            </if>
+            <if test="procDefName != null and procDefName != ''">
+                and t2.name_ like concat('%', #{procDefName}, '%')
+            </if>
+        </where>
+        <if test="orderBy">
+            order by ${orderBy}
+        </if>
+    </select>
+
+    <select id="selectHistoricActivityInstances" resultType="com.ruoyi.flowable.domain.dto.FlowHistoricActivityInstanceDto">
+        select
+            id_ id,
+            act_id_ activityId,
+            act_name_ activityName,
+            act_type_ activityType,
+            execution_id_ executionId,
+            assignee_ assignee,
+            task_id_ taskId,
+            proc_inst_id_ procInstId,
+            proc_def_id_ procDefId,
+            call_proc_inst_id_ callProcInstId,
+            start_time_ startTime,
+            end_time_ endTime,
+            delete_reason_ deleteReason,
+            duration_ durationInMillis
+        from
+            act_hi_actinst
+        <where>
+            <if test="procInstId != null and procInstId != ''">
+                proc_inst_id_ = #{procInstId}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and task_id_ = #{taskId}
+            </if>
+            <if test="taskIds != null and !taskIds.isEmpty()">
+                and task_id_ in
+                <foreach collection="taskIds" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="activityId != null and activityId != ''">
+                and act_id_ = #{activityId}
+            </if>
+            <if test="activityType != null and activityType != ''">
+                and act_type_ = #{activityType}
+            </if>
+            <if test="executionId != null and executionId != ''">
+                and execution_id_ = #{executionId}
+            </if>
+            <if test="procDefId != null and procDefId != ''">
+                and proc_def_id_ = #{procDefId}
+            </if>
+            <if test="isFinished != null and isFinished == true">
+                and end_time_ is not null
+            </if>
+        </where>
+        <if test="orderBy != null and orderBy != ''">
+            order by ${orderBy}
+        </if>
+    </select>
+
+    <select id="selectIdentityLinks" resultType="com.ruoyi.flowable.domain.dto.FlowIdentityLinkDto">
+        select
+            id_ id,
+            type_ type,
+            user_id_ userId,
+            task_id_ taskId,
+            proc_inst_id_ procInstId
+        from
+            act_hi_identitylink
+        <where>
+            <if test="procInstId != null and procInstId != ''">
+                proc_inst_id_ = #{procInstId}
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and task_id_ = #{taskId}
+            </if>
+            <if test="taskIds != null and !taskIds.isEmpty()">
+                and task_id_ in
+                <foreach collection="taskIds" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by
+            create_time_ desc
+    </select>
+</mapper>

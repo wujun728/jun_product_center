@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="rb" name="日报">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_1grapng</outgoing>
+    </startEvent>
+    <userTask id="Activity_13wtcgf" name="读取2" flowable:candidateUsers="00CE336D787C43518FCA3CD97687AF11,0230B2AD5E08402CA230389381DF8AD2" flowable:userType="candidateUsers" flowable:dataType="fixed">
+      <incoming>Flow_0pxpuat</incoming>
+    </userTask>
+    <parallelGateway id="Gateway_0voascu">
+      <incoming>Flow_1grapng</incoming>
+      <outgoing>Flow_0pxpuat</outgoing>
+      <outgoing>Flow_0u6true</outgoing>
+    </parallelGateway>
+    <sequenceFlow id="Flow_1grapng" sourceRef="start_event" targetRef="Gateway_0voascu" />
+    <sequenceFlow id="Flow_0pxpuat" sourceRef="Gateway_0voascu" targetRef="Activity_13wtcgf" />
+    <userTask id="Activity_1dzymm6" name="读取1" flowable:assignee="0B04AF760C92470F8B8D521C690BDF9B" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_0u6true</incoming>
+    </userTask>
+    <sequenceFlow id="Flow_0u6true" sourceRef="Gateway_0voascu" targetRef="Activity_1dzymm6" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="rb">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-215" y="-5" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-212" y="32" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13wtcgf_di" bpmnElement="Activity_13wtcgf">
+        <omgdc:Bounds x="90" y="-120" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0voascu_di" bpmnElement="Gateway_0voascu">
+        <omgdc:Bounds x="-105" y="-15" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1dzymm6_di" bpmnElement="Activity_1dzymm6">
+        <omgdc:Bounds x="90" y="40" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1grapng_di" bpmnElement="Flow_1grapng">
+        <di:waypoint x="-185" y="10" />
+        <di:waypoint x="-105" y="10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0pxpuat_di" bpmnElement="Flow_0pxpuat">
+        <di:waypoint x="-80" y="-15" />
+        <di:waypoint x="-80" y="-80" />
+        <di:waypoint x="90" y="-80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u6true_di" bpmnElement="Flow_0u6true">
+        <di:waypoint x="-80" y="35" />
+        <di:waypoint x="-80" y="80" />
+        <di:waypoint x="90" y="80" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

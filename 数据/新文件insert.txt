@@ -1,0 +1,258 @@
+curl 'http://175.178.78.162/prod-api/template/type/list?pageNum=1&pageSize=30' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Accept-Language: zh-CN,zh;q=0.9' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibG9naW5fdXNlcl9rZXkiOiJkMjJiYzYwYy1jODMwLTQyMWItOTU1Zi03NjM0ZTAzNzlhODMifQ.zUhLnyNTMtPR6QTxwhg_gvPYBH6NtUChgZrFlCPqf6IKVv-oUZ489ZCp4E41Jwlga0DYFh3Prle4Abz7uCPdqQ' \
+  -H 'Connection: keep-alive' \
+  -H 'Cookie: Admin-Token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwibG9naW5fdXNlcl9rZXkiOiJkMjJiYzYwYy1jODMwLTQyMWItOTU1Zi03NjM0ZTAzNzlhODMifQ.zUhLnyNTMtPR6QTxwhg_gvPYBH6NtUChgZrFlCPqf6IKVv-oUZ489ZCp4E41Jwlga0DYFh3Prle4Abz7uCPdqQ' \
+  -H 'Referer: http://175.178.78.162/workflow/template/template/type' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36' \
+  --insecure
+  
+  
+  
+  
+  {
+    "total": 17,
+    "rows": [
+        {
+            "createBy": null,
+            "createTime": "2026-03-06 14:52:48",
+            "updateBy": null,
+            "updateTime": "2026-03-24 14:32:20",
+            "remark": null,
+            "id": "393D351D40BF4DE28882D87BB513F120",
+            "name": "日常办公",
+            "sort": 0,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-03-06 11:07:57",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "ADF53B5D0E5248DA8A445EB9ADE4898C",
+            "name": "外出",
+            "sort": 0,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-02-11 13:45:55",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "222FD9C0611348C1BB8AF40763641B5E",
+            "name": "日报",
+            "sort": 0,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-01-28 11:38:52",
+            "updateBy": null,
+            "updateTime": "2026-02-10 09:45:37",
+            "remark": null,
+            "id": "E9791566FA0A4D0481E2515DAA659C0A",
+            "name": "审签流程",
+            "sort": 0,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-01-26 21:10:02",
+            "updateBy": null,
+            "updateTime": "2026-01-26 21:23:42",
+            "remark": "采购审批",
+            "id": "1B97CE14AC6B4AB1B4B53F16BFDE2CFC",
+            "name": "物料采购",
+            "sort": 0,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-09-10 17:42:47",
+            "updateBy": null,
+            "updateTime": "2026-02-23 17:23:14",
+            "remark": null,
+            "id": "9E5614958DAF45D9B849178654164EAD",
+            "name": "费用报销",
+            "sort": 0,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-03-11 13:05:38",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "A3F25DFBA3BC436CA215AD23336003A8",
+            "name": "长传文档附件",
+            "sort": 1,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-02-04 17:01:41",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "9A8AD48F8B114937801F7DDC906C84EC",
+            "name": "工资流程审批",
+            "sort": 1,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2026-01-20 09:50:19",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": "1",
+            "id": "D3C5B2B770F04A31A8D71D7E6633D212",
+            "name": "上传",
+            "sort": 1,
+            "enableFlag": "1",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-12-11 11:12:30",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "6B7F39CD8EE24DAD88C9D57E938A79C8",
+            "name": "用车",
+            "sort": 1,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-11-12 17:53:35",
+            "updateBy": null,
+            "updateTime": "2025-11-12 18:07:31",
+            "remark": null,
+            "id": "D6AA03886FFE423196DA761D12229B95",
+            "name": "请假申请测试",
+            "sort": 1,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-08-08 11:25:54",
+            "updateBy": null,
+            "updateTime": "2025-11-12 18:09:09",
+            "remark": null,
+            "id": "390BB8DBE13C46F49655BC828632A367",
+            "name": "公司发文测试",
+            "sort": 1,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "superAdmin",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-08-08 11:26:12",
+            "updateBy": null,
+            "updateTime": "2026-02-28 17:55:26",
+            "remark": null,
+            "id": "D0F5DB5F7179403C80B28F5AC7B3B208",
+            "name": "会议管理",
+            "sort": 2,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "superAdmin",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-08-08 11:26:01",
+            "updateBy": null,
+            "updateTime": "2025-11-01 11:36:01",
+            "remark": null,
+            "id": "BBC267FE04A842B98E0A09F4053FFB0D",
+            "name": "部门发文",
+            "sort": 2,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "superAdmin",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-08-08 11:26:42",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "D706EBD697464660AD9BABAD5C14452F",
+            "name": "行政事务",
+            "sort": 4,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "superAdmin",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-08-08 11:26:53",
+            "updateBy": null,
+            "updateTime": null,
+            "remark": null,
+            "id": "B92E456B138C454197CCE8A666D1DED3",
+            "name": "保密协议",
+            "sort": 5,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "superAdmin",
+            "updateId": null
+        },
+        {
+            "createBy": null,
+            "createTime": "2025-12-11 11:14:15",
+            "updateBy": null,
+            "updateTime": "2025-12-11 11:19:05",
+            "remark": null,
+            "id": "C3DC397D267D4696873207D161452955",
+            "name": "用车模块",
+            "sort": 3333,
+            "enableFlag": "0",
+            "delFlag": "0",
+            "createId": "D289154047F44AFBA75FF139BAB33001",
+            "updateId": "D289154047F44AFBA75FF139BAB33001"
+        }
+    ],
+    "code": 200,
+    "msg": "查询成功"
+}

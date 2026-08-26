@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.serial.mapper.CodeConfigRuleMapper">
+    
+    <resultMap type="CodeConfigRule" id="CodeConfigRuleResult">
+        <result property="id"    column="id"    />
+        <result property="configId"    column="config_id"    />
+        <result property="ruleType"    column="rule_type"    />
+        <result property="ruleValue"    column="rule_value"    />
+        <result property="padZero"    column="pad_zero"    />
+        <result property="seqResetType"    column="seq_reset_type"    />
+        <result property="sort"    column="sort"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectCodeConfigRuleVo">
+        select id, config_id, rule_type, rule_value, pad_zero, seq_reset_type, sort, del_flag, create_time from t_code_config_rule
+    </sql>
+
+    <select id="selectCodeConfigRuleList" parameterType="CodeConfigRule" resultMap="CodeConfigRuleResult">
+        <include refid="selectCodeConfigRuleVo"/>
+        <where>
+            del_flag = '0' and
+            <if test="configId != null  and configId != ''"> and config_id = #{configId}</if>
+            <if test="ruleType != null  and ruleType != ''"> and rule_type = #{ruleType}</if>
+            <if test="ruleValue != null  and ruleValue != ''"> and rule_value = #{ruleValue}</if>
+            <if test="padZero != null "> and pad_zero = #{padZero}</if>
+            <if test="seqResetType != null  and seqResetType != ''"> and seq_reset_type = #{seqResetType}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+        </where>
+    </select>
+    
+    <select id="selectCodeConfigRuleById" parameterType="String" resultMap="CodeConfigRuleResult">
+        <include refid="selectCodeConfigRuleVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectCodeConfigRuleListByConfigId" resultMap="CodeConfigRuleResult">
+        <include refid="selectCodeConfigRuleVo"/>
+        where del_flag = '0' and config_id = #{configId}
+        order by sort asc
+    </select>
+
+    <insert id="batchAdd">
+        insert into t_code_config_rule(id, config_id, rule_type, rule_value, pad_zero, seq_reset_type, sort, del_flag, create_time)
+        values
+        <foreach collection="list" item="rule" index="index" separator=",">
+            (#{rule.id}, #{rule.configId}, #{rule.ruleType}, #{rule.ruleValue}, #{rule.padZero}, #{rule.seqResetType}, #{rule.sort}, #{rule.delFlag}, #{rule.createTime})
+        </foreach>
+    </insert>
+
+    <insert id="insertCodeConfigRule" parameterType="CodeConfigRule">
+        insert into t_code_config_rule
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="configId != null and configId != ''">config_id,</if>
+            <if test="ruleType != null and ruleType != ''">rule_type,</if>
+            <if test="ruleValue != null">rule_value,</if>
+            <if test="padZero != null">pad_zero,</if>
+            <if test="seqResetType != null">seq_reset_type,</if>
+            <if test="sort != null">sort,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="configId != null and configId != ''">#{configId},</if>
+            <if test="ruleType != null and ruleType != ''">#{ruleType},</if>
+            <if test="ruleValue != null">#{ruleValue},</if>
+            <if test="padZero != null">#{padZero},</if>
+            <if test="seqResetType != null">#{seqResetType},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCodeConfigRule" parameterType="CodeConfigRule">
+        update t_code_config_rule
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="configId != null and configId != ''">config_id = #{configId},</if>
+            <if test="ruleType != null and ruleType != ''">rule_type = #{ruleType},</if>
+            <if test="ruleValue != null">rule_value = #{ruleValue},</if>
+            <if test="padZero != null">pad_zero = #{padZero},</if>
+            <if test="seqResetType != null">seq_reset_type = #{seqResetType},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCodeConfigRuleById" parameterType="String">
+        delete from t_code_config_rule where id = #{id}
+    </delete>
+
+    <delete id="deleteCodeConfigRuleByIds" parameterType="String">
+        delete from t_code_config_rule where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByConfigId">
+        delete from t_code_config_rule where config_id = #{configId}
+    </delete>
+
+    <update id="updateDelFlagByConfigId" parameterType="String">
+        update t_code_config_rule set del_flag = '1' where config_id = #{configId}
+    </update>
+</mapper>

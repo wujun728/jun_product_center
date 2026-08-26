@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg t="1747224259723" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="53359" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200">
+
+ <defs>
+    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d5fce2"/>
+      <stop offset="100%" stop-color="#0c7900"/>
+    </linearGradient>
+  </defs>
+
+<path d="M128 192v618.304l361.088 27.2v58.56H128a64 64 0 0 1-64-64V192h64z m832 0v640.064a64 64 0 0 1-64 64H534.912v-58.56L896 810.304V192h64zM192 160l288 115.2v509.248l-288-115.2V160z m640 0v509.248l-288 115.2V275.2L832 160z"  
+    fill="url(#orangeGradient)" p-id="53360">
+</path>
+</svg>

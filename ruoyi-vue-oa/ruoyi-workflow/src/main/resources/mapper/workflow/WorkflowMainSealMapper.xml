@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.WorkflowMainSealMapper">
+    
+    <resultMap type="WorkflowMainSeal" id="WorkflowMainSealResult">
+        <result property="id"    column="id"    />
+        <result property="fileId"    column="file_id"    />
+        <result property="sealName"    column="seal_name"    />
+        <result property="type"    column="type"    />
+        <result property="style"    column="style"    />
+        <result property="surroundWord"    column="surround_word"    />
+        <result property="centreWord"    column="centre_word"    />
+        <result property="underWord"    column="under_word"    />
+        <result property="color"    column="color"    />
+        <result property="width"    column="width"    />
+        <result property="height"    column="height"    />
+        <result property="enableFlag"    column="enable_flag"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createId"    column="create_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateId"    column="update_id"    />
+    </resultMap>
+
+    <sql id="selectWorkflowMainSealVo">
+        select id, file_id, seal_name, type, style, surround_word, centre_word, under_word, color, width, height, enable_flag, del_flag, create_time, create_id, update_time, update_id from t_workflow_main_seal
+    </sql>
+
+    <select id="selectWorkflowMainSealList" parameterType="WorkflowMainSeal" resultMap="WorkflowMainSealResult">
+        <include refid="selectWorkflowMainSealVo"/>
+        <where>
+            del_flag = '0'
+            <if test="sealName != null  and sealName != ''"> and seal_name like concat('%', #{sealName}, '%')</if>
+            <if test="enableFlag != null  and enableFlag != ''"> and enable_flag = #{enableFlag}</if>
+        </where>
+        order by enable_flag desc, create_time desc
+    </select>
+    
+    <select id="selectWorkflowMainSealById" parameterType="String" resultMap="WorkflowMainSealResult">
+        <include refid="selectWorkflowMainSealVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="listByName" resultMap="WorkflowMainSealResult">
+        <include refid="selectWorkflowMainSealVo"/>
+        where surround_word = #{surroundWord} and type = #{type} and del_flag = '0'
+    </select>
+
+    <insert id="insertWorkflowMainSeal" parameterType="WorkflowMainSeal">
+        insert into t_workflow_main_seal
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">id,</if>
+            <if test="fileId != null and fileId != ''">file_id,</if>
+            <if test="sealName != null">seal_name,</if>
+            <if test="type != null">type,</if>
+            <if test="style != null">style,</if>
+            <if test="surroundWord != null">surround_word,</if>
+            <if test="centreWord != null">centre_word,</if>
+            <if test="underWord != null">under_word,</if>
+            <if test="color != null">color,</if>
+            <if test="width != null">width,</if>
+            <if test="height != null">height,</if>
+            <if test="enableFlag != null">enable_flag,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateId != null">update_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">#{id},</if>
+            <if test="fileId != null and fileId != ''">#{fileId},</if>
+            <if test="sealName != null">#{sealName},</if>
+            <if test="type != null">#{type},</if>
+            <if test="style != null">#{style},</if>
+            <if test="surroundWord != null">#{surroundWord},</if>
+            <if test="centreWord != null">#{centreWord},</if>
+            <if test="underWord != null">#{underWord},</if>
+            <if test="color != null">#{color},</if>
+            <if test="width != null">#{width},</if>
+            <if test="height != null">#{height},</if>
+            <if test="enableFlag != null">#{enableFlag},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateId != null">#{updateId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateWorkflowMainSeal" parameterType="WorkflowMainSeal">
+        update t_workflow_main_seal
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileId != null and fileId != ''">file_id = #{fileId},</if>
+            <if test="sealName != null">seal_name = #{sealName},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="style != null">style = #{style},</if>
+            <if test="surroundWord != null">surround_word = #{surroundWord},</if>
+            <if test="centreWord != null">centre_word = #{centreWord},</if>
+            <if test="underWord != null">under_word = #{underWord},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="width != null">width = #{width},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="enableFlag != null">enable_flag = #{enableFlag},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateId != null">update_id = #{updateId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="changeEnableFlag">
+        update t_workflow_main_seal
+        set enable_flag = #{enableFlag}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteWorkflowMainSealById" parameterType="String">
+        update t_workflow_main_seal set del_flag = '1' where id = #{id}
+    </delete>
+
+    <delete id="deleteWorkflowMainSealByIds" parameterType="String">
+        update t_workflow_main_seal set del_flag = '1' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

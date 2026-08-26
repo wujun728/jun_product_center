@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:flowable="http://flowable.org/bpmn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="huakai_car_sale_approval" name="华楷汽车售车审批流程" isExecutable="true">
+    <startEvent id="start_event" name="服务店发起售车意向审批">
+      <extensionElements>
+        <flowable:formProperty id="dealerCode" name="服务店代码" type="string" required="true" />
+        <flowable:formProperty id="city" name="所属城市" type="string" required="true" />
+        <flowable:formProperty id="carBrand" name="意向品牌" type="string" required="true" />
+        <flowable:formProperty id="carModel" name="意向车型" type="string" required="true" />
+        <flowable:formProperty id="carSpecification" name="意向型号(含颜色、年份)" type="string" required="true" />
+        <flowable:formProperty id="intendedPrice" name="意向价格" type="double" required="true" />
+        <flowable:formProperty id="acceptAdjustment" name="是否接受调剂" type="boolean" required="true" />
+        <flowable:formProperty id="remarks" name="备注" type="string" required="false" />
+      </extensionElements>
+      <outgoing>Flow_140zyn8</outgoing>
+    </startEvent>
+    <sequenceFlow id="flow_start_to_checkStock" sourceRef="start_event" targetRef="task_carCenterCheckStock" />
+    <userTask id="task_carCenterCheckStock" name="车业调控中心核库与售车单位分配">
+      <extensionElements>
+        <flowable:assignee />
+        <flowable:formProperty id="stockResult" name="库存判断结果" type="enum" required="true">
+          <flowable:value id="有库存" name="有库存" />
+          <flowable:value id="无库存" name="无库存" />
+        </flowable:formProperty>
+        <flowable:formProperty id="sellerUnit" name="售车单位" type="string" required="false" />
+        <flowable:formProperty id="noStockReason" name="无库存原因" type="string" required="false" />
+      </extensionElements>
+      <incoming>Flow_140zyn8</incoming>
+      <outgoing>Flow_1f28zkj</outgoing>
+      <outgoing>Flow_1gz13fx</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_checkStock_to_gateway1" sourceRef="task_carCenterCheckStock" targetRef="gateway_stockDecision" />
+    <exclusiveGateway id="gateway_stockDecision" name="库存判断">
+      <incoming>Flow_1f28zkj</incoming>
+      <outgoing>Flow_0umbtmi</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow_noStock_to_end" sourceRef="gateway_stockDecision" targetRef="end_noStock">
+      <conditionExpression xsi:type="tFormalExpression">${stockResult == '无库存'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="end_noStock" name="无库存结束">
+      <incoming>Flow_1gz13fx</incoming>
+    </endEvent>
+    <sequenceFlow id="flow_hasStock_to_sellerVerify" sourceRef="gateway_stockDecision" targetRef="task_sellerVerify">
+      <conditionExpression xsi:type="tFormalExpression">${stockResult == '有库存'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="task_sellerVerify" name="售车单位核实库存与信息填报">
+      <extensionElements>
+        <flowable:assignee />
+        <flowable:formProperty id="matchResult" name="是否符合意向车型" type="enum" required="true">
+          <flowable:value id="是" name="是" />
+          <flowable:value id="否" name="否" />
+        </flowable:formProperty>
+        <flowable:formProperty id="actualBrand" name="实际品牌" type="string" required="true" />
+        <flowable:formProperty id="actualModel" name="实际车型" type="string" required="true" />
+        <flowable:formProperty id="actualSpecification" name="实际型号" type="string" required="true" />
+        <flowable:formProperty id="stockQuantity" name="库存数量" type="integer" required="true" />
+        <flowable:formProperty id="actualPrice" name="实际售价" type="double" required="true" />
+        <flowable:formProperty id="shippingFee" name="板车运费" type="double" required="true" />
+        <flowable:formProperty id="differenceReason" name="差异原因" type="string" required="false" />
+      </extensionElements>
+      <incoming>Flow_0umbtmi</incoming>
+      <outgoing>Flow_1xobl4w</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_sellerVerify_to_gateway2" sourceRef="task_sellerVerify" targetRef="gateway_stockValid" />
+    <exclusiveGateway id="gateway_stockValid" name="库存有效性判断">
+      <incoming>Flow_1xobl4w</incoming>
+      <outgoing>Flow_0knchpr</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow_stockInvalid_to_checkStock" sourceRef="gateway_stockValid" targetRef="task_carCenterCheckStock">
+      <conditionExpression xsi:type="tFormalExpression">${stockQuantity &lt; 1 or matchResult == '否'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_stockValid_to_dealerConfirm" sourceRef="gateway_stockValid" targetRef="task_dealerConfirm">
+      <conditionExpression xsi:type="tFormalExpression">${stockQuantity &gt;= 1 and matchResult == '是'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="task_dealerConfirm" name="服务店确认采购意向">
+      <extensionElements>
+        <flowable:assignee />
+        <flowable:formProperty id="purchaseDecision" name="采购决策" type="enum" required="true">
+          <flowable:value id="确认" name="确认采购" />
+          <flowable:value id="拒绝" name="拒绝采购" />
+        </flowable:formProperty>
+        <flowable:formProperty id="rejectReason" name="拒绝原因" type="string" required="false" />
+        <flowable:formProperty id="dealPrice" name="成交价格" type="double" required="false" />
+        <flowable:formProperty id="paymentProof" name="付款记录" type="file" required="false" />
+        <flowable:formProperty id="contractPhoto" name="合同照片" type="file" required="false" />
+        <flowable:formProperty id="giftList" name="销售赠品单" type="file" required="false" />
+      </extensionElements>
+      <incoming>Flow_0knchpr</incoming>
+      <outgoing>Flow_17nn7ee</outgoing>
+      <outgoing>Flow_056mr0f</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_dealerConfirm_to_gateway3" sourceRef="task_dealerConfirm" targetRef="gateway_purchaseDecision" />
+    <exclusiveGateway id="gateway_purchaseDecision" name="采购决策">
+      <incoming>Flow_17nn7ee</incoming>
+      <outgoing>Flow_0h1u9lq</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow_rejectPurchase_to_end" sourceRef="gateway_purchaseDecision" targetRef="end_rejectPurchase">
+      <conditionExpression xsi:type="tFormalExpression">${purchaseDecision == '拒绝'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="end_rejectPurchase" name="拒绝采购结束">
+      <incoming>Flow_056mr0f</incoming>
+    </endEvent>
+    <sequenceFlow id="flow_confirmPurchase_to_checkPayment" sourceRef="gateway_purchaseDecision" targetRef="task_carCenterCheckPayment">
+      <conditionExpression xsi:type="tFormalExpression">${purchaseDecision == '确认'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="task_carCenterCheckPayment" name="车业调控中心付款核实与流程转发">
+      <extensionElements>
+        <flowable:assignee />
+        <flowable:formProperty id="paymentResult" name="付款核实结果" type="enum" required="true">
+          <flowable:value id="通过" name="核实通过" />
+          <flowable:value id="不通过" name="核实不通过" />
+        </flowable:formProperty>
+        <flowable:formProperty id="returnReason" name="退回原因" type="string" required="false" />
+        <flowable:formProperty id="paymentRemark" name="付款说明" type="string" required="false" />
+      </extensionElements>
+      <incoming>Flow_0h1u9lq</incoming>
+      <outgoing>Flow_17p5r72</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_checkPayment_to_gateway4" sourceRef="task_carCenterCheckPayment" targetRef="gateway_paymentDecision" />
+    <exclusiveGateway id="gateway_paymentDecision" name="付款核实结果">
+      <incoming>Flow_17p5r72</incoming>
+      <outgoing>Flow_1yrjzf0</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow_paymentInvalid_to_dealerConfirm" sourceRef="gateway_paymentDecision" targetRef="task_dealerConfirm">
+      <conditionExpression xsi:type="tFormalExpression">${paymentResult == '不通过'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_paymentValid_to_sellerDispatch" sourceRef="gateway_paymentDecision" targetRef="task_sellerDispatch">
+      <conditionExpression xsi:type="tFormalExpression">${paymentResult == '通过'}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="task_sellerDispatch" name="售车单位车辆整备与发车资料提交">
+      <extensionElements>
+        <flowable:assignee />
+        <flowable:formProperty id="carPhotos" name="车辆照片" type="file" required="true" />
+        <flowable:formProperty id="certificatePhoto" name="车辆合格证照片" type="file" required="true" />
+        <flowable:formProperty id="shippingPhoto" name="拖车发车照片" type="file" required="true" />
+        <flowable:formProperty id="logisticsNo" name="物流单号" type="string" required="false" />
+        <flowable:formProperty id="estimatedArrival" name="预计到店时间" type="date" required="false" />
+        <flowable:formProperty id="disputeStatus" name="异议处理状态" type="enum" required="false">
+          <flowable:value id="已解决" name="已解决" />
+          <flowable:value id="未解决" name="未解决" />
+        </flowable:formProperty>
+      </extensionElements>
+      <incoming>Flow_1yrjzf0</incoming>
+      <incoming>Flow_1l0iqua</incoming>
+      <outgoing>Flow_022uu53</outgoing>
+      <outgoing>Flow_05n5156</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_sellerDispatch_to_dealerReceive" sourceRef="task_sellerDispatch" targetRef="task_dealerReceive" />
+    <userTask id="task_dealerReceive" name="服务店确认接收新车">
+      <extensionElements>
+        <flowable:assignee />
+        <flowable:formProperty id="receiveResult" name="收车结果" type="enum" required="true">
+          <flowable:value id="正常" name="正常收车" />
+          <flowable:value id="异议" name="收车异议" />
+        </flowable:formProperty>
+        <flowable:formProperty id="receiveDate" name="收车日期" type="date" required="false" />
+        <flowable:formProperty id="disputeDescription" name="异议描述" type="string" required="false" />
+        <flowable:formProperty id="disputePhotos" name="异议照片" type="file" required="false" />
+      </extensionElements>
+      <incoming>Flow_022uu53</incoming>
+      <outgoing>Flow_1fbxm85</outgoing>
+      <outgoing>Flow_1lgd596</outgoing>
+    </userTask>
+    <sequenceFlow id="flow_dealerReceive_to_gateway5" sourceRef="task_dealerReceive" targetRef="gateway_receiveDecision" />
+    <exclusiveGateway id="gateway_receiveDecision" name="收车结果判断">
+      <incoming>Flow_1fbxm85</incoming>
+      <outgoing>Flow_1l0iqua</outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="flow_receiveDispute_to_sellerDispatch" sourceRef="gateway_receiveDecision" targetRef="task_sellerDispatch">
+      <conditionExpression xsi:type="tFormalExpression">${receiveResult == '异议'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_normalReceive_to_end" sourceRef="gateway_receiveDecision" targetRef="end_normalReceive">
+      <conditionExpression xsi:type="tFormalExpression">${receiveResult == '正常'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="end_normalReceive" name="正常收车结束">
+      <incoming>Flow_1lgd596</incoming>
+    </endEvent>
+    <sequenceFlow id="flow_disputeUnresolved_to_end" sourceRef="task_sellerDispatch" targetRef="end_disputeUnresolved">
+      <conditionExpression xsi:type="tFormalExpression">${disputeStatus == '未解决'}</conditionExpression>
+    </sequenceFlow>
+    <endEvent id="end_disputeUnresolved" name="异议未解决结束">
+      <incoming>Flow_05n5156</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_140zyn8" sourceRef="start_event" targetRef="task_carCenterCheckStock" />
+    <sequenceFlow id="Flow_1f28zkj" sourceRef="task_carCenterCheckStock" targetRef="gateway_stockDecision" />
+    <sequenceFlow id="Flow_1gz13fx" sourceRef="task_carCenterCheckStock" targetRef="end_noStock" />
+    <sequenceFlow id="Flow_0umbtmi" sourceRef="gateway_stockDecision" targetRef="task_sellerVerify" />
+    <sequenceFlow id="Flow_1xobl4w" sourceRef="task_sellerVerify" targetRef="gateway_stockValid" />
+    <sequenceFlow id="Flow_0knchpr" sourceRef="gateway_stockValid" targetRef="task_dealerConfirm" />
+    <sequenceFlow id="Flow_17nn7ee" sourceRef="task_dealerConfirm" targetRef="gateway_purchaseDecision" />
+    <sequenceFlow id="Flow_056mr0f" sourceRef="task_dealerConfirm" targetRef="end_rejectPurchase" />
+    <sequenceFlow id="Flow_0h1u9lq" sourceRef="gateway_purchaseDecision" targetRef="task_carCenterCheckPayment" />
+    <sequenceFlow id="Flow_17p5r72" sourceRef="task_carCenterCheckPayment" targetRef="gateway_paymentDecision" />
+    <sequenceFlow id="Flow_1yrjzf0" sourceRef="gateway_paymentDecision" targetRef="task_sellerDispatch" />
+    <sequenceFlow id="Flow_022uu53" sourceRef="task_sellerDispatch" targetRef="task_dealerReceive" />
+    <sequenceFlow id="Flow_1fbxm85" sourceRef="task_dealerReceive" targetRef="gateway_receiveDecision" />
+    <sequenceFlow id="Flow_1lgd596" sourceRef="task_dealerReceive" targetRef="end_normalReceive" />
+    <sequenceFlow id="Flow_1l0iqua" sourceRef="gateway_receiveDecision" targetRef="task_sellerDispatch" />
+    <sequenceFlow id="Flow_05n5156" sourceRef="task_sellerDispatch" targetRef="end_disputeUnresolved" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_huakai">
+    <bpmndi:BPMNPlane id="BPMNPlane_huakai" bpmnElement="huakai_car_sale_approval">
+      <bpmndi:BPMNShape id="BPMNShape_start" bpmnElement="start_event">
+        <omgdc:Bounds x="100" y="200" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="95" y="235" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_checkStock" bpmnElement="task_carCenterCheckStock">
+        <omgdc:Bounds x="200" y="170" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_gateway1" bpmnElement="gateway_stockDecision" isMarkerVisible="true">
+        <omgdc:Bounds x="430" y="195" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_endNoStock" bpmnElement="end_noStock">
+        <omgdc:Bounds x="440" y="100" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="425" y="135" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_sellerVerify" bpmnElement="task_sellerVerify">
+        <omgdc:Bounds x="520" y="170" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_gateway2" bpmnElement="gateway_stockValid" isMarkerVisible="true">
+        <omgdc:Bounds x="750" y="195" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_dealerConfirm" bpmnElement="task_dealerConfirm">
+        <omgdc:Bounds x="840" y="170" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_gateway3" bpmnElement="gateway_purchaseDecision" isMarkerVisible="true">
+        <omgdc:Bounds x="1070" y="195" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_endReject" bpmnElement="end_rejectPurchase">
+        <omgdc:Bounds x="1080" y="100" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1055" y="135" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_checkPayment" bpmnElement="task_carCenterCheckPayment">
+        <omgdc:Bounds x="1160" y="170" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_gateway4" bpmnElement="gateway_paymentDecision" isMarkerVisible="true">
+        <omgdc:Bounds x="1390" y="195" width="40" height="40" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_sellerDispatch" bpmnElement="task_sellerDispatch">
+        <omgdc:Bounds x="1480" y="170" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_dealerReceive" bpmnElement="task_dealerReceive">
+        <omgdc:Bounds x="1710" y="170" width="180" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_gateway5" bpmnElement="gateway_receiveDecision" isMarkerVisible="true">
+        <omgdc:Bounds x="1940" y="195" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1926" y="171" width="67" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_endNormal" bpmnElement="end_normalReceive">
+        <omgdc:Bounds x="1950" y="100" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1925" y="135" width="80" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_endDispute" bpmnElement="end_disputeUnresolved">
+        <omgdc:Bounds x="1580" y="320" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1530" y="355" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_140zyn8_di" bpmnElement="Flow_140zyn8">
+        <omgdi:waypoint x="130" y="215" />
+        <omgdi:waypoint x="165" y="215" />
+        <omgdi:waypoint x="165" y="210" />
+        <omgdi:waypoint x="200" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1f28zkj_di" bpmnElement="Flow_1f28zkj">
+        <omgdi:waypoint x="380" y="210" />
+        <omgdi:waypoint x="405" y="210" />
+        <omgdi:waypoint x="405" y="215" />
+        <omgdi:waypoint x="430" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gz13fx_di" bpmnElement="Flow_1gz13fx">
+        <omgdi:waypoint x="380" y="210" />
+        <omgdi:waypoint x="410" y="210" />
+        <omgdi:waypoint x="410" y="115" />
+        <omgdi:waypoint x="440" y="115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0umbtmi_di" bpmnElement="Flow_0umbtmi">
+        <omgdi:waypoint x="470" y="215" />
+        <omgdi:waypoint x="495" y="215" />
+        <omgdi:waypoint x="495" y="210" />
+        <omgdi:waypoint x="520" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xobl4w_di" bpmnElement="Flow_1xobl4w">
+        <omgdi:waypoint x="700" y="210" />
+        <omgdi:waypoint x="725" y="210" />
+        <omgdi:waypoint x="725" y="215" />
+        <omgdi:waypoint x="750" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0knchpr_di" bpmnElement="Flow_0knchpr">
+        <omgdi:waypoint x="790" y="215" />
+        <omgdi:waypoint x="815" y="215" />
+        <omgdi:waypoint x="815" y="210" />
+        <omgdi:waypoint x="840" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17nn7ee_di" bpmnElement="Flow_17nn7ee">
+        <omgdi:waypoint x="1020" y="210" />
+        <omgdi:waypoint x="1045" y="210" />
+        <omgdi:waypoint x="1045" y="215" />
+        <omgdi:waypoint x="1070" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_056mr0f_di" bpmnElement="Flow_056mr0f">
+        <omgdi:waypoint x="1020" y="210" />
+        <omgdi:waypoint x="1050" y="210" />
+        <omgdi:waypoint x="1050" y="115" />
+        <omgdi:waypoint x="1080" y="115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h1u9lq_di" bpmnElement="Flow_0h1u9lq">
+        <omgdi:waypoint x="1110" y="215" />
+        <omgdi:waypoint x="1135" y="215" />
+        <omgdi:waypoint x="1135" y="210" />
+        <omgdi:waypoint x="1160" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_17p5r72_di" bpmnElement="Flow_17p5r72">
+        <omgdi:waypoint x="1340" y="210" />
+        <omgdi:waypoint x="1365" y="210" />
+        <omgdi:waypoint x="1365" y="215" />
+        <omgdi:waypoint x="1390" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yrjzf0_di" bpmnElement="Flow_1yrjzf0">
+        <omgdi:waypoint x="1430" y="215" />
+        <omgdi:waypoint x="1455" y="215" />
+        <omgdi:waypoint x="1455" y="210" />
+        <omgdi:waypoint x="1480" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_022uu53_di" bpmnElement="Flow_022uu53">
+        <omgdi:waypoint x="1660" y="210" />
+        <omgdi:waypoint x="1710" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fbxm85_di" bpmnElement="Flow_1fbxm85">
+        <omgdi:waypoint x="1890" y="210" />
+        <omgdi:waypoint x="1915" y="210" />
+        <omgdi:waypoint x="1915" y="215" />
+        <omgdi:waypoint x="1940" y="215" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1lgd596_di" bpmnElement="Flow_1lgd596">
+        <omgdi:waypoint x="1890" y="210" />
+        <omgdi:waypoint x="1920" y="210" />
+        <omgdi:waypoint x="1920" y="115" />
+        <omgdi:waypoint x="1950" y="115" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l0iqua_di" bpmnElement="Flow_1l0iqua">
+        <omgdi:waypoint x="1940" y="215" />
+        <omgdi:waypoint x="1800" y="215" />
+        <omgdi:waypoint x="1800" y="240" />
+        <omgdi:waypoint x="1660" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_05n5156_di" bpmnElement="Flow_05n5156">
+        <omgdi:waypoint x="1570" y="250" />
+        <omgdi:waypoint x="1570" y="285" />
+        <omgdi:waypoint x="1595" y="285" />
+        <omgdi:waypoint x="1595" y="320" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_z0y4jazm" name="测试上传功能">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_04xjx3o</outgoing>
+    </startEvent>
+    <userTask id="Activity_03jb60x" flowable:assignee="32A9F3C05D2B48549D1CE4683E59E556" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_04xjx3o</incoming>
+      <outgoing>Flow_1y24mpx</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_04xjx3o" sourceRef="start_event" targetRef="Activity_03jb60x" />
+    <endEvent id="Event_1xwfno6">
+      <incoming>Flow_1y24mpx</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1y24mpx" sourceRef="Activity_03jb60x" targetRef="Event_1xwfno6" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_z0y4jazm">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-165" y="-15" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-162" y="22" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_03jb60x_di" bpmnElement="Activity_03jb60x">
+        <omgdc:Bounds x="-80" y="-40" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1xwfno6_di" bpmnElement="Event_1xwfno6">
+        <omgdc:Bounds x="82" y="-18" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_04xjx3o_di" bpmnElement="Flow_04xjx3o">
+        <di:waypoint x="-135" y="0" />
+        <di:waypoint x="-80" y="0" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1y24mpx_di" bpmnElement="Flow_1y24mpx">
+        <di:waypoint x="20" y="0" />
+        <di:waypoint x="82" y="0" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

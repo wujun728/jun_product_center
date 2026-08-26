@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.flowable.mapper.FlowProcessInstanceMapper">
+
+    <select id="selectProcessInstances" resultType="com.ruoyi.flowable.domain.dto.FlowProcessInstanceDto">
+        SELECT
+            t1.id_ id,
+            t1.rev_ rev,
+            t1.proc_inst_id_ procInstId,
+            t1.business_key_ businessKey,
+            t1.parent_id_ parentId,
+            t1.proc_def_id_ procDefId,
+            t1.start_time_ startTime,
+            t1.start_user_id_ startUserId,
+            t1.start_act_id_ startActId,
+            t1.root_proc_inst_id_ rootProcInstId,
+            t1.tenant_id_ tenantId,
+            t1.name_ name,
+            t1.callback_id_ callbackId,
+            t1.callback_type_ callbackType,
+            t1.reference_id_ referenceId,
+            t1.reference_type_ referenceType,
+            t1.propagated_stage_inst_id_ propagatedStageInstanceId,
+            t1.business_status_ businessStatus,
+            t1.suspension_state_ suspensionState,
+            t2.key_ procDefKey,
+            t2.id_ procDefId,
+            t2.name_ procDefName,
+            t2.version_ procDefVersion,
+            t2.deployment_id_ deploymentId
+        from
+            act_ru_execution t1
+        inner join act_re_procdef t2 on t1.proc_def_id_ = t2.id_
+        <where>
+            <if test="isParentIdEmpty">
+                and t1.parent_id_ is null
+            </if>
+            <if test="procInstId != null and procInstId != ''">
+                and t1.proc_inst_id_ = #{procInstId}
+            </if>
+            <if test="businessKey != null and businessKey != ''">
+                and t1.business_key_ = #{businessKey}
+            </if>
+            <if test="isBusinessKeyNotEmpty">
+                and t1.business_key_ is not null
+            </if>
+            <if test="taskId != null and taskId != ''">
+                and t1.id_ = #{taskId}
+            </if>
+            <if test="procDefName != null and procDefName != ''">
+                and t2.name_ like concat('%', #{procDefName}, '%')
+            </if>
+        </where>
+        <if test="orderBy">
+            order by ${orderBy}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_itwemhkt" name="测试流程">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_0lxw2xg</outgoing>
+    </startEvent>
+    <userTask id="Activity_19rvqfz" name="任务下发" flowable:assignee="${initiator}" flowable:dueDate="" flowable:userType="assignee" flowable:dataType="fixed" flowable:expId="6EC388ED053F464CA682A48EC145E18A">
+      <incoming>Flow_0lxw2xg</incoming>
+      <outgoing>Flow_1juis5h</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0lxw2xg" sourceRef="start_event" targetRef="Activity_19rvqfz" />
+    <userTask id="Activity_1op9mbd" name="接收任务" flowable:assignee="660EE18093A8404A867FCF052ECC8236" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_1juis5h</incoming>
+      <outgoing>Flow_1sd21aj</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1juis5h" sourceRef="Activity_19rvqfz" targetRef="Activity_1op9mbd" />
+    <endEvent id="Event_0g7stzh">
+      <incoming>Flow_1sd21aj</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1sd21aj" sourceRef="Activity_1op9mbd" targetRef="Event_0g7stzh" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_itwemhkt">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-125" y="185" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-122" y="222" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19rvqfz_di" bpmnElement="Activity_19rvqfz">
+        <omgdc:Bounds x="-40" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1op9mbd_di" bpmnElement="Activity_1op9mbd">
+        <omgdc:Bounds x="120" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0g7stzh_di" bpmnElement="Event_0g7stzh">
+        <omgdc:Bounds x="282" y="182" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0lxw2xg_di" bpmnElement="Flow_0lxw2xg">
+        <di:waypoint x="-95" y="200" />
+        <di:waypoint x="-40" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1juis5h_di" bpmnElement="Flow_1juis5h">
+        <di:waypoint x="60" y="200" />
+        <di:waypoint x="120" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sd21aj_di" bpmnElement="Flow_1sd21aj">
+        <di:waypoint x="220" y="200" />
+        <di:waypoint x="282" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

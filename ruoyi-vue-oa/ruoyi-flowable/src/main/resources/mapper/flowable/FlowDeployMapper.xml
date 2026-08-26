@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.flowable.mapper.FlowDeployMapper">
+
+    <select id="selectDeployList" resultType="com.ruoyi.flowable.domain.dto.FlowProcDefDto">
+        SELECT
+            rp.key_ as flowKey,
+            rp.id_ as id,
+            rp.deployment_id_ as deploymentId,
+            rp.name_ as name,
+            rp.category_ as category,
+            rp.version_ as version,
+            rp.suspension_state_ as suspensionState,
+            rd.deploy_time_  as deploymentTime
+        FROM
+            act_re_procdef rp
+        INNER JOIN (
+            SELECT key_, MAX(version_) AS max_version
+            FROM ACT_RE_PROCDEF
+            GROUP BY key_
+        ) tmp ON rp.key_ = tmp.key_ AND rp.version_ = tmp.max_version
+        LEFT JOIN act_re_deployment rd ON rp.deployment_id_ = rd.id_
+        <where>
+            <if test="name != null and name != ''">
+                AND rp.name_ LIKE concat('%', #{name}, '%')
+            </if>
+        </where>
+        ORDER BY rd.deploy_time_ DESC
+    </select>
+</mapper>

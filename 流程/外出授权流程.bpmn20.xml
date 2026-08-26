@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_q0840rhu" name="外出授权流程">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_0977upq</outgoing>
+    </startEvent>
+    <userTask id="Activity_0y8l5qb" name="部门领导审核" flowable:assignee="660EE18093A8404A867FCF052ECC8236" flowable:userType="assignee" flowable:dataType="fixed">
+      <incoming>Flow_0977upq</incoming>
+    </userTask>
+    <sequenceFlow id="Flow_0977upq" sourceRef="start_event" targetRef="Activity_0y8l5qb" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_q0840rhu">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-105" y="75" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-102" y="112" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y8l5qb_di" bpmnElement="Activity_0y8l5qb">
+        <omgdc:Bounds x="-20" y="50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0977upq_di" bpmnElement="Flow_0977upq">
+        <di:waypoint x="-75" y="90" />
+        <di:waypoint x="-20" y="90" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_papdqzdt" name="四步审批流程">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_1ggpv0i</outgoing>
+    </startEvent>
+    <userTask id="Activity_0xzvz4b" name="编写">
+      <incoming>Flow_1ggpv0i</incoming>
+      <outgoing>Flow_0wxox1p</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1ggpv0i" sourceRef="start_event" targetRef="Activity_0xzvz4b" />
+    <userTask id="Activity_1v7qip9" name="校对">
+      <incoming>Flow_0wxox1p</incoming>
+      <outgoing>Flow_0g7szzx</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0wxox1p" sourceRef="Activity_0xzvz4b" targetRef="Activity_1v7qip9" />
+    <userTask id="Activity_1faiolw" name="审核">
+      <incoming>Flow_0g7szzx</incoming>
+      <outgoing>Flow_1qnizk9</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0g7szzx" sourceRef="Activity_1v7qip9" targetRef="Activity_1faiolw" />
+    <userTask id="Activity_1434umb" name="会签">
+      <incoming>Flow_1qnizk9</incoming>
+      <outgoing>Flow_18i969s</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1qnizk9" sourceRef="Activity_1faiolw" targetRef="Activity_1434umb" />
+    <userTask id="Activity_0uplvu8" name="批准">
+      <incoming>Flow_18i969s</incoming>
+      <outgoing>Flow_1pkwmo6</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_18i969s" sourceRef="Activity_1434umb" targetRef="Activity_0uplvu8" />
+    <endEvent id="Event_0vdbv77">
+      <incoming>Flow_1pkwmo6</incoming>
+    </endEvent>
+    <sequenceFlow id="Flow_1pkwmo6" sourceRef="Activity_0uplvu8" targetRef="Event_0vdbv77" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_papdqzdt">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-95" y="-25" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-93" y="12" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xzvz4b_di" bpmnElement="Activity_0xzvz4b">
+        <omgdc:Bounds x="-10" y="-50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1v7qip9_di" bpmnElement="Activity_1v7qip9">
+        <omgdc:Bounds x="150" y="-50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1faiolw_di" bpmnElement="Activity_1faiolw">
+        <omgdc:Bounds x="310" y="-50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1434umb_di" bpmnElement="Activity_1434umb">
+        <omgdc:Bounds x="470" y="-50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0uplvu8_di" bpmnElement="Activity_0uplvu8">
+        <omgdc:Bounds x="590" y="-250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0vdbv77_di" bpmnElement="Event_0vdbv77">
+        <omgdc:Bounds x="792" y="-28" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ggpv0i_di" bpmnElement="Flow_1ggpv0i">
+        <di:waypoint x="-65" y="-10" />
+        <di:waypoint x="-10" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wxox1p_di" bpmnElement="Flow_0wxox1p">
+        <di:waypoint x="90" y="-10" />
+        <di:waypoint x="150" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g7szzx_di" bpmnElement="Flow_0g7szzx">
+        <di:waypoint x="250" y="-10" />
+        <di:waypoint x="310" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1qnizk9_di" bpmnElement="Flow_1qnizk9">
+        <di:waypoint x="410" y="-10" />
+        <di:waypoint x="470" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18i969s_di" bpmnElement="Flow_18i969s">
+        <di:waypoint x="570" y="-10" />
+        <di:waypoint x="580" y="-10" />
+        <di:waypoint x="580" y="-210" />
+        <di:waypoint x="590" y="-210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pkwmo6_di" bpmnElement="Flow_1pkwmo6">
+        <di:waypoint x="690" y="-210" />
+        <di:waypoint x="741" y="-210" />
+        <di:waypoint x="741" y="-10" />
+        <di:waypoint x="792" y="-10" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

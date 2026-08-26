@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:flowable="http://flowable.org/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.flowable.org/processdef">
+  <process id="flow_oagenfcg" name="买菜-建议流程">
+    <startEvent id="start_event" name="开始">
+      <outgoing>Flow_1wdnad2</outgoing>
+    </startEvent>
+    <subProcess id="Activity_1ly9176" name="获取买菜流程">
+      <incoming>Flow_1wdnad2</incoming>
+      <outgoing>Flow_1v3fmuc</outgoing>
+      <userTask id="Activity_0lyv76j" name="下发买菜指令" flowable:candidateUsers="${Activity_0lyv76j_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_0lyv76j">
+        <outgoing>Flow_177xxra</outgoing>
+      </userTask>
+      <userTask id="Activity_0418tif" name="获取买菜商场" flowable:candidateUsers="${Activity_0418tif_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_0418tif">
+        <incoming>Flow_177xxra</incoming>
+        <outgoing>Flow_0lx1jch</outgoing>
+        <outgoing>Flow_0a52u49</outgoing>
+      </userTask>
+      <sequenceFlow id="Flow_177xxra" sourceRef="Activity_0lyv76j" targetRef="Activity_0418tif" />
+      <userTask id="Activity_1jqpdwv" name="购买菜品" flowable:candidateUsers="${Activity_1jqpdwv_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_1jqpdwv">
+        <incoming>Flow_1pfvu8b</incoming>
+        <outgoing>Flow_07qw1js</outgoing>
+      </userTask>
+      <parallelGateway id="Gateway_1aobp71">
+        <incoming>Flow_0lx1jch</incoming>
+        <outgoing>Flow_1pfvu8b</outgoing>
+        <outgoing>Flow_0x4vbf4</outgoing>
+      </parallelGateway>
+      <sequenceFlow id="Flow_0lx1jch" sourceRef="Activity_0418tif" targetRef="Gateway_1aobp71" />
+      <sequenceFlow id="Flow_1pfvu8b" sourceRef="Gateway_1aobp71" targetRef="Activity_1jqpdwv" />
+      <userTask id="Activity_00j4u53" name="标记缺失菜品" flowable:candidateUsers="${Activity_00j4u53_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_00j4u53">
+        <incoming>Flow_0x4vbf4</incoming>
+        <outgoing>Flow_15hw2ll</outgoing>
+      </userTask>
+      <sequenceFlow id="Flow_0x4vbf4" sourceRef="Gateway_1aobp71" targetRef="Activity_00j4u53" />
+      <sequenceFlow id="Flow_0a52u49" sourceRef="Activity_0418tif" targetRef="Event_0c1y2i7" />
+      <endEvent id="Event_0c1y2i7" name="结束流程">
+        <incoming>Flow_0a52u49</incoming>
+        <terminateEventDefinition id="TerminateEventDefinition_13xnngu" />
+      </endEvent>
+      <userTask id="Activity_0oqbd6u" name="标记菜品内容" flowable:candidateUsers="${Activity_0oqbd6u_user}" flowable:userType="candidateUsers" flowable:dataType="dynamic" flowable:expId="Activity_0oqbd6u">
+        <incoming>Flow_07qw1js</incoming>
+        <incoming>Flow_15hw2ll</incoming>
+      </userTask>
+      <sequenceFlow id="Flow_07qw1js" sourceRef="Activity_1jqpdwv" targetRef="Activity_0oqbd6u" />
+      <sequenceFlow id="Flow_15hw2ll" sourceRef="Activity_00j4u53" targetRef="Activity_0oqbd6u" />
+    </subProcess>
+    <sequenceFlow id="Flow_1wdnad2" sourceRef="start_event" targetRef="Activity_1ly9176" />
+    <endEvent id="Event_1mqd660" name="结束">
+      <incoming>Flow_0h5jaor</incoming>
+      <incoming>Flow_1kc5rv8</incoming>
+    </endEvent>
+    <userTask id="Activity_13ol926" name="获取菜品列表" flowable:candidateUsers="${Activity_13ol926_user}" flowable:userType="candidateUsers" flowable:dataType="roles" flowable:expId="5719A1A9980F40B4AC2EB3A2C00079E8">
+      <incoming>Flow_1v3fmuc</incoming>
+      <outgoing>Flow_0apf15b</outgoing>
+      <outgoing>Flow_02881z1</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_1v3fmuc" sourceRef="Activity_1ly9176" targetRef="Activity_13ol926" />
+    <userTask id="Activity_02pqr9y" name="炒菜" flowable:candidateUsers="${Activity_02pqr9y_user}" flowable:userType="candidateUsers" flowable:dataType="roles" flowable:expId="AA96721071E64CC9A8D663034D6EC954">
+      <incoming>Flow_0apf15b</incoming>
+      <outgoing>Flow_0h5jaor</outgoing>
+    </userTask>
+    <sequenceFlow id="Flow_0apf15b" sourceRef="Activity_13ol926" targetRef="Activity_02pqr9y" />
+    <sequenceFlow id="Flow_0h5jaor" sourceRef="Activity_02pqr9y" targetRef="Event_1mqd660" />
+    <intermediateThrowEvent id="Event_00mcm3z" name="获取失败时结束">
+      <incoming>Flow_02881z1</incoming>
+      <outgoing>Flow_1kc5rv8</outgoing>
+    </intermediateThrowEvent>
+    <sequenceFlow id="Flow_02881z1" sourceRef="Activity_13ol926" targetRef="Event_00mcm3z" />
+    <sequenceFlow id="Flow_1kc5rv8" sourceRef="Event_00mcm3z" targetRef="Event_1mqd660" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_flow">
+    <bpmndi:BPMNPlane id="BPMNPlane_flow" bpmnElement="flow_oagenfcg">
+      <bpmndi:BPMNShape id="BPMNShape_start_event" bpmnElement="start_event" bioc:stroke="">
+        <omgdc:Bounds x="-345" y="5" width="30" height="30" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-343" y="42" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ly9176_di" bpmnElement="Activity_1ly9176" isExpanded="true">
+        <omgdc:Bounds x="-240" y="-155" width="690" height="330" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lyv76j_di" bpmnElement="Activity_0lyv76j">
+        <omgdc:Bounds x="-220" y="-35" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0418tif_di" bpmnElement="Activity_0418tif">
+        <omgdc:Bounds x="-80" y="-35" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1jqpdwv_di" bpmnElement="Activity_1jqpdwv">
+        <omgdc:Bounds x="150" y="-135" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1aobp71_di" bpmnElement="Gateway_1aobp71">
+        <omgdc:Bounds x="55" y="-20" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00j4u53_di" bpmnElement="Activity_00j4u53">
+        <omgdc:Bounds x="150" y="55" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0viskpp_di" bpmnElement="Event_0c1y2i7">
+        <omgdc:Bounds x="-48" y="117" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="-52" y="160" width="45" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0oqbd6u_di" bpmnElement="Activity_0oqbd6u">
+        <omgdc:Bounds x="330" y="-55" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_177xxra_di" bpmnElement="Flow_177xxra">
+        <di:waypoint x="-120" y="5" />
+        <di:waypoint x="-80" y="5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lx1jch_di" bpmnElement="Flow_0lx1jch">
+        <di:waypoint x="20" y="5" />
+        <di:waypoint x="55" y="5" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pfvu8b_di" bpmnElement="Flow_1pfvu8b">
+        <di:waypoint x="80" y="-20" />
+        <di:waypoint x="80" y="-95" />
+        <di:waypoint x="150" y="-95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0x4vbf4_di" bpmnElement="Flow_0x4vbf4">
+        <di:waypoint x="80" y="30" />
+        <di:waypoint x="80" y="95" />
+        <di:waypoint x="150" y="95" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a52u49_di" bpmnElement="Flow_0a52u49">
+        <di:waypoint x="-30" y="45" />
+        <di:waypoint x="-30" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07qw1js_di" bpmnElement="Flow_07qw1js">
+        <di:waypoint x="250" y="-95" />
+        <di:waypoint x="290" y="-95" />
+        <di:waypoint x="290" y="-15" />
+        <di:waypoint x="330" y="-15" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15hw2ll_di" bpmnElement="Flow_15hw2ll">
+        <di:waypoint x="250" y="95" />
+        <di:waypoint x="290" y="95" />
+        <di:waypoint x="290" y="-15" />
+        <di:waypoint x="330" y="-15" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1mqd660_di" bpmnElement="Event_1mqd660">
+        <omgdc:Bounds x="882" y="-28" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="888" y="-52" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_13ol926_di" bpmnElement="Activity_13ol926">
+        <omgdc:Bounds x="540" y="-50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02pqr9y_di" bpmnElement="Activity_02pqr9y">
+        <omgdc:Bounds x="710" y="-50" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00mcm3z_di" bpmnElement="Event_00mcm3z">
+        <omgdc:Bounds x="662" y="139" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="641" y="182" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1wdnad2_di" bpmnElement="Flow_1wdnad2">
+        <di:waypoint x="-315" y="20" />
+        <di:waypoint x="-240" y="20" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v3fmuc_di" bpmnElement="Flow_1v3fmuc">
+        <di:waypoint x="450" y="-10" />
+        <di:waypoint x="540" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0apf15b_di" bpmnElement="Flow_0apf15b">
+        <di:waypoint x="640" y="-10" />
+        <di:waypoint x="710" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h5jaor_di" bpmnElement="Flow_0h5jaor">
+        <di:waypoint x="810" y="-10" />
+        <di:waypoint x="882" y="-10" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02881z1_di" bpmnElement="Flow_02881z1">
+        <di:waypoint x="640" y="-10" />
+        <di:waypoint x="680" y="-10" />
+        <di:waypoint x="680" y="139" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kc5rv8_di" bpmnElement="Flow_1kc5rv8">
+        <di:waypoint x="698" y="157" />
+        <di:waypoint x="900" y="157" />
+        <di:waypoint x="900" y="8" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
